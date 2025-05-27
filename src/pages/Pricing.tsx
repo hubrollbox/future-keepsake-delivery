@@ -8,73 +8,11 @@ import { useNavigate } from "react-router-dom";
 const Pricing = () => {
   const navigate = useNavigate();
 
-  const plans = [
-    {
-      name: "Gratuito",
-      price: "0€",
-      period: "/mês",
-      description: "Perfeito para começar",
-      features: [
-        "1 entrega digital por mês",
-        "Mensagens de texto simples",
-        "Suporte por email",
-        "Calendário básico"
-      ],
-      buttonText: "Começar Grátis",
-      popular: false,
-      color: "border-gray-200"
-    },
-    {
-      name: "Pessoal",
-      price: "3€",
-      period: "/mês",
-      description: "Para utilizadores regulares",
-      features: [
-        "5 entregas digitais por mês",
-        "10% desconto em entregas físicas",
-        "Upload de imagens e vídeos",
-        "Notificações prioritárias",
-        "Histórico completo"
-      ],
-      buttonText: "Escolher Pessoal",
-      popular: false,
-      color: "border-amber-200"
-    },
-    {
-      name: "Guardião do Tempo",
-      price: "5€",
-      period: "/mês",
-      description: "O mais popular",
-      features: [
-        "Entregas digitais ilimitadas",
-        "Acesso antecipado a funcionalidades",
-        "Sistema de selos e conquistas",
-        "Prioridade nas entregas",
-        "Árvore de memórias interativa",
-        "Acesso ao mural de cápsulas públicas"
-      ],
-      buttonText: "Tornar-me Guardião",
-      popular: true,
-      color: "border-amber-500"
-    },
-    {
-      name: "Família",
-      price: "12€",
-      period: "/mês",
-      description: "Para toda a família",
-      features: [
-        "Até 4 membros da família",
-        "Tudo do plano Guardião do Tempo",
-        "Cápsulas partilhadas",
-        "Gestão familiar centralizada",
-        "Descontos em eventos especiais",
-        "Timeline familiar colaborativa"
-      ],
-      buttonText: "Escolher Família",
-      popular: false,
-      color: "border-amber-300"
-    }
-  ];
+  import { plans, storageServices, digitalServices, physicalServices, timeCapsules, gamificationFeatures } from "@/lib/pricingData";
+import PlanCard from "@/components/PlanCard";
+import ServiceCard from "@/components/ServiceCard";
+import CapsuleCard from "@/components/CapsuleCard";
+import GamificationCard from "@/components/GamificationCard";
 
   const storageServices = [
     {
@@ -216,40 +154,8 @@ const Pricing = () => {
           <h3 className="text-3xl font-bold text-center text-gray-800 mb-12">Planos de Assinatura</h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {plans.map((plan, index) => (
-              <Card key={index} className={`relative ${plan.color} ${plan.popular ? 'scale-105 shadow-xl border-2' : 'shadow-lg'} hover:shadow-xl transition-all duration-300`}>
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <Badge className="bg-gradient-to-r from-amber-600 to-amber-700 text-white px-4 py-1">
-                      <Star className="h-4 w-4 mr-1" />
-                      Mais Popular
-                    </Badge>
-                  </div>
-                )}
-                <CardHeader className="text-center">
-                  <CardTitle className="text-2xl">{plan.name}</CardTitle>
-                  <div className="text-3xl font-bold text-amber-700">
-                    {plan.price}<span className="text-lg text-gray-600">{plan.period}</span>
-                  </div>
-                  <p className="text-gray-600">{plan.description}</p>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3 mb-6">
-                    {plan.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center">
-                        <Check className="h-5 w-5 text-green-600 mr-3 flex-shrink-0" />
-                        <span className="text-sm text-gray-700">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <Button 
-                    className={`w-full ${plan.popular ? 'bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'}`}
-                    onClick={() => navigate('/register')}
-                  >
-                    {plan.buttonText}
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+  <PlanCard key={index} plan={plan} />
+))}
           </div>
         </div>
 
@@ -264,19 +170,8 @@ const Pricing = () => {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {gamificationFeatures.map((feature, index) => (
-              <Card key={index} className="text-center p-6 hover:shadow-lg transition-shadow border-2 border-amber-200">
-                <CardContent className="pt-6">
-                  <div className="w-12 h-12 bg-gradient-to-r from-amber-600 to-amber-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                    {index === 0 && <Target className="h-6 w-6 text-white" />}
-                    {index === 1 && <Trophy className="h-6 w-6 text-white" />}
-                    {index === 2 && <Clock className="h-6 w-6 text-white" />}
-                    {index === 3 && <Zap className="h-6 w-6 text-white" />}
-                  </div>
-                  <h4 className="font-semibold text-lg mb-2">{feature.name}</h4>
-                  <p className="text-gray-600 text-sm">{feature.description}</p>
-                </CardContent>
-              </Card>
-            ))}
+  <GamificationCard key={index} feature={feature} iconIndex={index} />
+))}
           </div>
         </div>
 
@@ -291,17 +186,8 @@ const Pricing = () => {
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {storageServices.map((service, index) => (
-              <Card key={index} className="text-center p-6 hover:shadow-lg transition-shadow">
-                <CardContent className="pt-6">
-                  <h4 className="font-semibold text-lg mb-2">{service.name}</h4>
-                  <p className="text-2xl font-bold text-amber-700 mb-1">{service.price}</p>
-                  {service.yearlyPrice && (
-                    <p className="text-lg text-green-600 mb-2">({service.yearlyPrice} poupas 20%)</p>
-                  )}
-                  <p className="text-gray-600 text-sm">{service.description}</p>
-                </CardContent>
-              </Card>
-            ))}
+  <ServiceCard key={index} service={service} highlightYearly={true} />
+))}
           </div>
         </div>
 
@@ -316,14 +202,8 @@ const Pricing = () => {
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {digitalServices.map((service, index) => (
-              <Card key={index} className="text-center p-6 hover:shadow-lg transition-shadow">
-                <CardContent className="pt-6">
-                  <h4 className="font-semibold text-lg mb-2">{service.name}</h4>
-                  <p className="text-2xl font-bold text-amber-700 mb-2">{service.price}</p>
-                  <p className="text-gray-600 text-sm">{service.description}</p>
-                </CardContent>
-              </Card>
-            ))}
+  <ServiceCard key={index} service={service} />
+))}
           </div>
         </div>
 
@@ -338,14 +218,8 @@ const Pricing = () => {
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {physicalServices.map((service, index) => (
-              <Card key={index} className="text-center p-6 hover:shadow-lg transition-shadow">
-                <CardContent className="pt-6">
-                  <h4 className="font-semibold text-lg mb-2">{service.name}</h4>
-                  <p className="text-2xl font-bold text-amber-700 mb-2">{service.price}</p>
-                  <p className="text-gray-600 text-sm">{service.description}</p>
-                </CardContent>
-              </Card>
-            ))}
+  <ServiceCard key={index} service={service} />
+))}
           </div>
         </div>
 
@@ -360,14 +234,8 @@ const Pricing = () => {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {timeCapsules.map((capsule, index) => (
-              <Card key={index} className="text-center p-6 hover:shadow-lg transition-shadow border-2 border-amber-200">
-                <CardContent className="pt-6">
-                  <h4 className="font-semibold text-lg mb-2">{capsule.name}</h4>
-                  <p className="text-2xl font-bold text-amber-700 mb-2">{capsule.price}</p>
-                  <p className="text-gray-600 text-sm">{capsule.description}</p>
-                </CardContent>
-              </Card>
-            ))}
+  <CapsuleCard key={index} capsule={capsule} />
+))}
           </div>
         </div>
 
