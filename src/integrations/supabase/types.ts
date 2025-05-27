@@ -9,7 +9,132 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      deliveries: {
+        Row: {
+          created_at: string | null
+          delivery_address: string | null
+          delivery_date: string
+          delivery_type: string
+          id: string
+          message: string | null
+          status: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          delivery_address?: string | null
+          delivery_date: string
+          delivery_type: string
+          id?: string
+          message?: string | null
+          status?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          delivery_address?: string | null
+          delivery_date?: string
+          delivery_type?: string
+          id?: string
+          message?: string | null
+          status?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deliveries_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      digital_files: {
+        Row: {
+          delivery_id: string | null
+          file_type: string | null
+          file_url: string
+          id: string
+          uploaded_at: string | null
+        }
+        Insert: {
+          delivery_id?: string | null
+          file_type?: string | null
+          file_url: string
+          id?: string
+          uploaded_at?: string | null
+        }
+        Update: {
+          delivery_id?: string | null
+          file_type?: string | null
+          file_url?: string
+          id?: string
+          uploaded_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "digital_files_delivery_id_fkey"
+            columns: ["delivery_id"]
+            isOneToOne: false
+            referencedRelation: "deliveries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      digital_messages: {
+        Row: {
+          body: string | null
+          created_at: string | null
+          delivery_id: string | null
+          id: string
+          subject: string | null
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string | null
+          delivery_id?: string | null
+          id?: string
+          subject?: string | null
+        }
+        Update: {
+          body?: string | null
+          created_at?: string | null
+          delivery_id?: string | null
+          id?: string
+          subject?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "digital_messages_delivery_id_fkey"
+            columns: ["delivery_id"]
+            isOneToOne: false
+            referencedRelation: "deliveries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      users: {
+        Row: {
+          created_at: string | null
+          email: string
+          full_name: string | null
+          id: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          full_name?: string | null
+          id?: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          full_name?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

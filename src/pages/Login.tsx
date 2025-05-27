@@ -20,13 +20,13 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-amber-50 to-yellow-100 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center space-x-2 mb-4">
-            <Clock className="h-8 w-8 text-amber-600" />
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">
+            <Clock className="h-8 w-8 text-yellow-700" />
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-yellow-700 to-yellow-600 bg-clip-text text-transparent">
               FuturoPresente
             </h1>
           </div>
@@ -63,7 +63,10 @@ const Login = () => {
                 />
               </div>
 
-              <Button type="submit" className="w-full">
+              <Button 
+                type="submit" 
+                className="w-full bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800"
+              >
                 Entrar
               </Button>
             </form>
@@ -73,7 +76,7 @@ const Login = () => {
                 Ainda não tens conta?{" "}
                 <Button 
                   variant="link" 
-                  className="p-0 h-auto font-semibold"
+                  className="p-0 h-auto font-semibold text-yellow-700"
                   onClick={() => navigate('/register')}
                 >
                   Regista-te aqui
@@ -87,6 +90,7 @@ const Login = () => {
           <Button 
             variant="ghost" 
             onClick={() => navigate('/')}
+            className="text-yellow-700 hover:text-yellow-800"
           >
             ← Voltar ao início
           </Button>

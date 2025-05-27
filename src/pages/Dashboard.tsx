@@ -50,18 +50,21 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-amber-50 to-yellow-100">
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-2">
-            <Clock className="h-8 w-8 text-purple-600" />
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+            <Clock className="h-8 w-8 text-yellow-700" />
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-yellow-700 to-yellow-600 bg-clip-text text-transparent">
               FuturoPresente
             </h1>
           </div>
           <div className="flex items-center space-x-4">
-            <Button onClick={() => navigate('/create-delivery')}>
+            <Button 
+              onClick={() => navigate('/create-delivery')}
+              className="bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800"
+            >
               <Plus className="h-4 w-4 mr-2" />
               Nova Entrega
             </Button>
@@ -88,7 +91,7 @@ const Dashboard = () => {
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center space-x-2">
-                <Calendar className="h-8 w-8 text-purple-600" />
+                <Calendar className="h-8 w-8 text-yellow-700" />
                 <div>
                   <p className="text-2xl font-bold">2</p>
                   <p className="text-gray-600">Entregas Agendadas</p>
@@ -100,7 +103,7 @@ const Dashboard = () => {
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center space-x-2">
-                <Mail className="h-8 w-8 text-blue-600" />
+                <Mail className="h-8 w-8 text-amber-700" />
                 <div>
                   <p className="text-2xl font-bold">1</p>
                   <p className="text-gray-600">Presentes Digitais</p>
@@ -112,7 +115,7 @@ const Dashboard = () => {
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center space-x-2">
-                <Users className="h-8 w-8 text-green-600" />
+                <Users className="h-8 w-8 text-yellow-600" />
                 <div>
                   <p className="text-2xl font-bold">1</p>
                   <p className="text-gray-600">Presentes Físicos</p>
@@ -127,7 +130,10 @@ const Dashboard = () => {
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
               <span>As Tuas Entregas</span>
-              <Button onClick={() => navigate('/create-delivery')}>
+              <Button 
+                onClick={() => navigate('/create-delivery')}
+                className="bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800"
+              >
                 <Plus className="h-4 w-4 mr-2" />
                 Criar Nova
               </Button>
