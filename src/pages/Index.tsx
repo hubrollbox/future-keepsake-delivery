@@ -26,12 +26,12 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-amber-50 to-yellow-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100">
       {/* Header */}
       <header className="container mx-auto px-4 py-6 flex justify-between items-center">
         <div className="flex items-center space-x-2">
           <Clock className="h-8 w-8 text-yellow-700" />
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-yellow-700 to-yellow-600 bg-clip-text text-transparent">
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-yellow-700 to-amber-600 bg-clip-text text-transparent">
             FuturoPresente
           </h1>
         </div>
@@ -41,7 +41,7 @@ const Index = () => {
           </Button>
           <Button 
             onClick={() => navigate('/register')}
-            className="bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800"
+            className="bg-gradient-to-r from-yellow-600 to-amber-600 hover:from-yellow-700 hover:to-amber-700"
           >
             Registar
           </Button>
@@ -53,7 +53,7 @@ const Index = () => {
         <div className="text-center max-w-4xl mx-auto">
           <h2 className="text-5xl font-bold text-gray-800 mb-6 leading-tight">
             Envia hoje.
-            <span className="bg-gradient-to-r from-yellow-700 to-yellow-600 bg-clip-text text-transparent"> Surpreende no futuro.</span>
+            <span className="bg-gradient-to-r from-yellow-700 to-amber-600 bg-clip-text text-transparent"> Surpreende no futuro.</span>
           </h2>
           
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
@@ -64,10 +64,10 @@ const Index = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <Button 
               size="lg" 
-              className="text-lg px-8 py-6 bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800" 
+              className="text-lg px-8 py-6 bg-gradient-to-r from-yellow-600 to-amber-600 hover:from-yellow-700 hover:to-amber-700" 
               onClick={() => navigate('/create-delivery')}
             >
-              Começa Já
+              Criar Primeira Entrega
             </Button>
             <Button 
               variant="outline" 
@@ -85,7 +85,7 @@ const Index = () => {
             <div className="grid md:grid-cols-3 gap-8">
               <Card className="text-center p-6 hover:shadow-lg transition-shadow border-2 border-yellow-200">
                 <CardContent className="pt-6">
-                  <div className="w-16 h-16 bg-gradient-to-r from-yellow-600 to-yellow-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 bg-gradient-to-r from-yellow-600 to-amber-600 rounded-full flex items-center justify-center mx-auto mb-4">
                     <span className="text-white font-bold text-xl">1</span>
                   </div>
                   <Gift className="h-12 w-12 text-yellow-700 mx-auto mb-4" />
@@ -98,7 +98,7 @@ const Index = () => {
 
               <Card className="text-center p-6 hover:shadow-lg transition-shadow border-2 border-yellow-200">
                 <CardContent className="pt-6">
-                  <div className="w-16 h-16 bg-gradient-to-r from-yellow-600 to-yellow-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 bg-gradient-to-r from-yellow-600 to-amber-600 rounded-full flex items-center justify-center mx-auto mb-4">
                     <span className="text-white font-bold text-xl">2</span>
                   </div>
                   <Calendar className="h-12 w-12 text-yellow-700 mx-auto mb-4" />
@@ -111,7 +111,7 @@ const Index = () => {
 
               <Card className="text-center p-6 hover:shadow-lg transition-shadow border-2 border-yellow-200">
                 <CardContent className="pt-6">
-                  <div className="w-16 h-16 bg-gradient-to-r from-yellow-600 to-yellow-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 bg-gradient-to-r from-yellow-600 to-amber-600 rounded-full flex items-center justify-center mx-auto mb-4">
                     <span className="text-white font-bold text-xl">3</span>
                   </div>
                   <Clock className="h-12 w-12 text-yellow-700 mx-auto mb-4" />
@@ -190,7 +190,7 @@ const Index = () => {
             </p>
             <Button 
               size="lg" 
-              className="text-lg px-8 py-6 bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800"
+              className="text-lg px-8 py-6 bg-gradient-to-r from-yellow-600 to-amber-600 hover:from-yellow-700 hover:to-amber-700"
               onClick={() => navigate('/register')}
             >
               Criar Conta
