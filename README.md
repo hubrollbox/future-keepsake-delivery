@@ -1,73 +1,56 @@
-# Welcome to your Lovable project
+# Future Keepsake Delivery
 
-## Project info
+## Descrição do Projeto
 
-**URL**: https://lovable.dev/projects/6b25a51f-592a-44a6-8116-2a0c441ff7cd
+Esta aplicação permite gerir entregas de keepsakes (lembranças) de forma moderna e eficiente, utilizando React, TypeScript, Vite e Tailwind CSS. Inclui funcionalidades de autenticação, dashboards para administradores e utilizadores, e integração com Supabase.
 
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/6b25a51f-592a-44a6-8116-2a0c441ff7cd) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
+## Tecnologias Utilizadas
 
 - Vite
 - TypeScript
 - React
-- shadcn-ui
 - Tailwind CSS
+- Supabase
 
-## How can I deploy this project?
+## Como editar este código?
 
-Simply open [Lovable](https://lovable.dev/projects/6b25a51f-592a-44a6-8116-2a0c441ff7cd) and click on Share -> Publish.
+Pode editar o código da aplicação de várias formas:
 
-## Can I connect a custom domain to my Lovable project?
+### Usar o seu editor de código preferido
 
-Yes, you can!
+1. Clone o repositório usando o URL do projeto:
+   ```sh
+   git clone <URL_DO_SEU_REPOSITORIO>
+   ```
+2. Aceda à pasta do projeto:
+   ```sh
+   cd <NOME_DA_PASTA>
+   ```
+3. Instale as dependências necessárias:
+   ```sh
+   npm install
+   ```
+4. Inicie o servidor de desenvolvimento:
+   ```sh
+   npm run dev
+   ```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Editar ficheiros diretamente no GitHub
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- Navegue até ao(s) ficheiro(s) pretendido(s).
+- Clique no botão "Edit" (ícone de lápis) no topo direito da visualização do ficheiro.
+- Faça as alterações e confirme-as.
+
+### Usar GitHub Codespaces (opcional)
+
+- Na página principal do repositório, clique em "Code" e depois no separador "Codespaces".
+- Clique em "New codespace" para iniciar um novo ambiente.
+- Edite os ficheiros e faça commit/push das alterações.
+
+## Como fazer deploy deste projeto?
+
+Pode fazer deploy em plataformas como Vercel, Netlify ou no seu próprio servidor. Siga as instruções dessas plataformas para projetos baseados em Vite/React.
+
+## Contacto
+
+Para dúvidas ou sugestões, por favor abra uma issue neste repositório.
