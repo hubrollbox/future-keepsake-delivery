@@ -14,30 +14,51 @@ export type Database = {
           created_at: string | null
           delivery_address: string | null
           delivery_date: string
+          delivery_method: string | null
           delivery_type: string
           id: string
           message: string | null
+          points_earned: number | null
+          recipient_email: string | null
+          recipient_name: string | null
+          scheduled_time: string | null
           status: string | null
+          timezone: string | null
+          title: string | null
           user_id: string | null
         }
         Insert: {
           created_at?: string | null
           delivery_address?: string | null
           delivery_date: string
+          delivery_method?: string | null
           delivery_type: string
           id?: string
           message?: string | null
+          points_earned?: number | null
+          recipient_email?: string | null
+          recipient_name?: string | null
+          scheduled_time?: string | null
           status?: string | null
+          timezone?: string | null
+          title?: string | null
           user_id?: string | null
         }
         Update: {
           created_at?: string | null
           delivery_address?: string | null
           delivery_date?: string
+          delivery_method?: string | null
           delivery_type?: string
           id?: string
           message?: string | null
+          points_earned?: number | null
+          recipient_email?: string | null
+          recipient_name?: string | null
+          scheduled_time?: string | null
           status?: string | null
+          timezone?: string | null
+          title?: string | null
           user_id?: string | null
         }
         Relationships: [
@@ -113,6 +134,42 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          level: number | null
+          plan_type: string | null
+          total_points: number | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          level?: number | null
+          plan_type?: string | null
+          total_points?: number | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          level?: number | null
+          plan_type?: string | null
+          total_points?: number | null
+          updated_at?: string
+        }
+        Relationships: []
       }
       users: {
         Row: {

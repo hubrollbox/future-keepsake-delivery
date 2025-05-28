@@ -1,53 +1,43 @@
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Calendar, Mail, Users, Plus, Edit, Trash2 } from "lucide-react";
+import { Clock, Calendar, Mail, Users, Plus, Edit, Trash2, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { useDeliveries } from "@/hooks/useDeliveries";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  
-  // Mock data - será substituído pelos dados do Supabase
-  const [deliveries] = useState([
-    {
-      id: 1,
-      type: "digital",
-      title: "Carta para o meu aniversário",
-      recipient: "Eu mesmo",
-      deliveryDate: "2024-12-25",
-      status: "pending",
-      message: "Uma mensagem especial para o meu futuro eu..."
-    },
-    {
-      id: 2,
-      type: "physical",
-      title: "Presente de aniversário da Maria",
-      recipient: "Maria Silva",
-      deliveryDate: "2024-06-15",
-      status: "delivered",
-      location: "Rua das Flores, 123, Porto"
-    }
-  ]);
+  const { user, profile, signOut } = useAuth();
+  const { deliveries, loading, deleteDelivery } = useDeliveries();
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: string | null) => {
     switch (status) {
-      case "pending": return "bg-yellow-100 text-yellow-800";
-      case "delivered": return "bg-green-100 text-green-800";
-      case "cancelled": return "bg-red-100 text-red-800";
+      case "pendente": return "bg-yellow-100 text-yellow-800";
+      case "entregue": return "bg-green-100 text-green-800";
+      case "cancelado": return "bg-red-100 text-red-800";
       default: return "bg-gray-100 text-gray-800";
     }
   };
 
-  const getStatusText = (status: string) => {
+  const getStatusText = (status: string | null) => {
     switch (status) {
-      case "pending": return "Pendente";
-      case "delivered": return "Entregue";
-      case "cancelled": return "Cancelado";
+      case "pendente": return "Pendente";
+      case "entregue": return "Entregue";
+      case "cancelado": return "Cancelado";
       default: return "Desconhecido";
     }
   };
+
+  const handleDelete = async (id: string) => {
+    if (window.confirm("Tens a certeza que queres eliminar esta entrega?")) {
+      await deleteDelivery(id);
+    }
+  };
+
+  const digitalDeliveries = deliveries.filter(d => d.delivery_type === "digital");
+  const physicalDeliveries = deliveries.filter(d => d.delivery_type === "physical");
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-amber-50 to-yellow-100">
@@ -61,6 +51,9 @@ const Dashboard = () => {
             </h1>
           </div>
           <div className="flex items-center space-x-4">
+            <span className="text-sm text-gray-600">
+              Olá, {profile?.full_name || user?.email}!
+            </span>
             <Button 
               onClick={() => navigate('/create-delivery')}
               className="bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800"
@@ -68,7 +61,7 @@ const Dashboard = () => {
               <Plus className="h-4 w-4 mr-2" />
               Nova Entrega
             </Button>
-            <Button variant="ghost" onClick={() => navigate('/')}>
+            <Button variant="ghost" onClick={signOut}>
               Sair
             </Button>
           </div>
@@ -79,7 +72,7 @@ const Dashboard = () => {
         {/* Welcome Section */}
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-gray-800 mb-2">
-            Olá! 👋
+            Olá, {profile?.full_name || "Guardião"}! 👋
           </h2>
           <p className="text-gray-600 text-lg">
             Aqui estão as tuas entregas futuras. Cada uma delas é uma pequena cápsula do tempo.
@@ -93,7 +86,7 @@ const Dashboard = () => {
               <div className="flex items-center space-x-2">
                 <Calendar className="h-8 w-8 text-yellow-700" />
                 <div>
-                  <p className="text-2xl font-bold">2</p>
+                  <p className="text-2xl font-bold">{deliveries.length}</p>
                   <p className="text-gray-600">Entregas Agendadas</p>
                 </div>
               </div>
@@ -105,7 +98,7 @@ const Dashboard = () => {
               <div className="flex items-center space-x-2">
                 <Mail className="h-8 w-8 text-amber-700" />
                 <div>
-                  <p className="text-2xl font-bold">1</p>
+                  <p className="text-2xl font-bold">{digitalDeliveries.length}</p>
                   <p className="text-gray-600">Presentes Digitais</p>
                 </div>
               </div>
@@ -117,7 +110,7 @@ const Dashboard = () => {
               <div className="flex items-center space-x-2">
                 <Users className="h-8 w-8 text-yellow-600" />
                 <div>
-                  <p className="text-2xl font-bold">1</p>
+                  <p className="text-2xl font-bold">{physicalDeliveries.length}</p>
                   <p className="text-gray-600">Presentes Físicos</p>
                 </div>
               </div>
@@ -140,54 +133,79 @@ const Dashboard = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {deliveries.map((delivery) => (
-                <div key={delivery.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2 mb-2">
-                        <h3 className="font-semibold text-lg">{delivery.title}</h3>
-                        <Badge className={getStatusColor(delivery.status)}>
-                          {getStatusText(delivery.status)}
-                        </Badge>
-                        <Badge variant="outline">
-                          {delivery.type === "digital" ? "Digital" : "Físico"}
-                        </Badge>
+            {loading ? (
+              <div className="flex items-center justify-center py-8">
+                <Loader2 className="h-8 w-8 animate-spin text-yellow-700" />
+                <span className="ml-2 text-yellow-700">A carregar entregas...</span>
+              </div>
+            ) : deliveries.length === 0 ? (
+              <div className="text-center py-8">
+                <p className="text-gray-600 mb-4">Ainda não tens entregas agendadas.</p>
+                <Button
+                  onClick={() => navigate('/create-delivery')}
+                  className="bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800"
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Criar a Primeira Entrega
+                </Button>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {deliveries.map((delivery) => (
+                  <div key={delivery.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <h3 className="font-semibold text-lg">{delivery.title || "Entrega sem título"}</h3>
+                          <Badge className={getStatusColor(delivery.status)}>
+                            {getStatusText(delivery.status)}
+                          </Badge>
+                          <Badge variant="outline">
+                            {delivery.delivery_type === "digital" ? "Digital" : "Físico"}
+                          </Badge>
+                        </div>
+                        
+                        {delivery.recipient_name && (
+                          <p className="text-gray-600 mb-2">
+                            <strong>Para:</strong> {delivery.recipient_name}
+                          </p>
+                        )}
+                        
+                        <p className="text-gray-600 mb-2">
+                          <strong>Data de entrega:</strong> {new Date(delivery.delivery_date).toLocaleDateString('pt-PT')}
+                        </p>
+                        
+                        {delivery.delivery_address && (
+                          <p className="text-gray-600 mb-2">
+                            <strong>Local:</strong> {delivery.delivery_address}
+                          </p>
+                        )}
+                        
+                        {delivery.message && (
+                          <p className="text-gray-600 italic">
+                            "{delivery.message}"
+                          </p>
+                        )}
                       </div>
                       
-                      <p className="text-gray-600 mb-2">
-                        <strong>Para:</strong> {delivery.recipient}
-                      </p>
-                      
-                      <p className="text-gray-600 mb-2">
-                        <strong>Data de entrega:</strong> {new Date(delivery.deliveryDate).toLocaleDateString('pt-PT')}
-                      </p>
-                      
-                      {delivery.location && (
-                        <p className="text-gray-600 mb-2">
-                          <strong>Local:</strong> {delivery.location}
-                        </p>
-                      )}
-                      
-                      {delivery.message && (
-                        <p className="text-gray-600 italic">
-                          "{delivery.message}"
-                        </p>
-                      )}
-                    </div>
-                    
-                    <div className="flex space-x-2">
-                      <Button size="sm" variant="outline">
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      <Button size="sm" variant="outline" className="text-red-600 hover:text-red-700">
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                      <div className="flex space-x-2">
+                        <Button size="sm" variant="outline">
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                        <Button 
+                          size="sm" 
+                          variant="outline" 
+                          className="text-red-600 hover:text-red-700"
+                          onClick={() => handleDelete(delivery.id)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </CardContent>
         </Card>
 

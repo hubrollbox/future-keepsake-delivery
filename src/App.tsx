@@ -15,38 +15,9 @@ import Pricing from "./pages/Pricing";
 import TermsConditions from "./pages/TermsConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
-import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
-
-const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
-  const [loading, setLoading] = useState(true);
-  const [session, setSession] = useState<any>(null);
-  const navigate = window.location;
-
-  useEffect(() => {
-    const getSession = async () => {
-      const { data } = await supabase.auth.getSession();
-      setSession(data.session);
-      setLoading(false);
-    };
-    getSession();
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-    return () => {
-      listener?.subscription.unsubscribe();
-    };
-  }, []);
-
-  if (loading) return <div>Loading...</div>;
-  if (!session) {
-    window.location.href = "/login";
-    return null;
-  }
-  return children;
-};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -65,7 +36,6 @@ const App = () => (
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/terms-conditions" element={<TermsConditions />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
