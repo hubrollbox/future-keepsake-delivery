@@ -8,30 +8,89 @@ import { useNavigate } from "react-router-dom";
 const Pricing = () => {
   const navigate = useNavigate();
 
-  import { plans, storageServices, digitalServices, physicalServices, timeCapsules, gamificationFeatures } from "@/lib/pricingData";
-import PlanCard from "@/components/PlanCard";
-import ServiceCard from "@/components/ServiceCard";
-import CapsuleCard from "@/components/CapsuleCard";
-import GamificationCard from "@/components/GamificationCard";
+  const plans = [
+    {
+      name: "Explorador",
+      price: "Grátis",
+      yearlyPrice: "",
+      description: "Para começar a tua jornada temporal",
+      features: [
+        "1 entrega digital grátis por mês",
+        "Armazenamento grátis primeiros 30 dias",
+        "Acesso básico à árvore de memórias",
+        "Comunidade de guardiões"
+      ],
+      popular: false,
+      color: "from-gray-600 to-gray-700"
+    },
+    {
+      name: "Guardião",
+      price: "5€/mês",
+      yearlyPrice: "50€/ano",
+      description: "Para guardiões do tempo dedicados",
+      features: [
+        "Entregas digitais ilimitadas",
+        "Acesso prioritário a todas as funcionalidades",
+        "Selos e conquistas exclusivos",
+        "Desconto 10% em armazenamento físico",
+        "Mural de cápsulas públicas"
+      ],
+      popular: true,
+      color: "from-amber-600 to-amber-700"
+    },
+    {
+      name: "Mestre do Tempo",
+      price: "15€/mês",
+      yearlyPrice: "150€/ano",
+      description: "Para criadores de memórias épicas",
+      features: [
+        "Tudo do plano Guardião",
+        "Armazenamento físico incluído (até 1kg)",
+        "Edição profissional de vídeos incluída",
+        "Cápsulas coletivas com desconto",
+        "Suporte prioritário 24/7"
+      ],
+      popular: false,
+      color: "from-purple-600 to-purple-700"
+    },
+    {
+      name: "Cronos Elite",
+      price: "35€/mês",
+      yearlyPrice: "350€/ano",
+      description: "Para organizações e eventos especiais",
+      features: [
+        "Tudo do plano anterior",
+        "Armazenamento ilimitado",
+        "Gestão de equipas e eventos",
+        "Cápsulas empresariais personalizadas",
+        "API dedicada para integrações"
+      ],
+      popular: false,
+      color: "from-indigo-600 to-indigo-700"
+    }
+  ];
 
   const storageServices = [
     {
       name: "Armazenamento Pequeno",
       price: "1,90€/mês",
       yearlyPrice: "19€/ano",
-      description: "Até 1kg - perfeito para cartas, pequenos objectos"
+      description: "Até 1kg - perfeito para cartas, pequenos objectos",
+      savings: "Poupa 3,80€"
     },
     {
       name: "Armazenamento Médio",
       price: "3,90€/mês",
       yearlyPrice: "39€/ano", 
-      description: "Até 5kg - livros, roupas, presentes médios"
+      description: "Até 5kg - livros, roupas, presentes médios",
+      savings: "Poupa 7,80€"
     },
     {
       name: "Primeiros 30 dias",
       price: "Grátis",
       yearlyPrice: "",
-      description: "Armazenamento gratuito no primeiro mês"
+      description: "Experimenta sem compromisso",
+      savings: ""
     }
   ];
 
@@ -47,7 +106,7 @@ import GamificationCard from "@/components/GamificationCard";
       description: "Com verificação blockchain e formatação especial"
     },
     {
-      name: "Edição de Vídeo",
+      name: "Edição de Vídeo Profissional",
       price: "9,90€",
       description: "Vídeo editado profissionalmente (até 1 minuto)"
     }
@@ -55,7 +114,7 @@ import GamificationCard from "@/components/GamificationCard";
 
   const physicalServices = [
     {
-      name: "Entrega Programada",
+      name: "Entrega Programada Nacional",
       price: "Desde 6,50€",
       description: "Entrega em Portugal Continental na data exacta"
     },
@@ -75,17 +134,17 @@ import GamificationCard from "@/components/GamificationCard";
     {
       name: "Cápsula Individual",
       price: "Desde 15€",
-      description: "Caixa metálica personalizada para pequenos objectos"
+      description: "Caixa personalizada para pequenos objectos e memórias"
     },
     {
       name: "Cápsula Premium",
       price: "Desde 25€",
-      description: "Com fechadura e maior capacidade"
+      description: "Com fechadura especial e maior capacidade"
     },
     {
       name: "Cápsula Coletiva",
       price: "Desde 49€",
-      description: "Pack básico para eventos, escolas, empresas"
+      description: "Pack para eventos, escolas, empresas e grupos"
     },
     {
       name: "Cápsula Luxo",
@@ -97,24 +156,28 @@ import GamificationCard from "@/components/GamificationCard";
   const gamificationFeatures = [
     {
       name: "Selos Temporais",
-      description: "Conquista selos únicos baseados na distância temporal das tuas entregas"
+      description: "Conquista selos únicos baseados na distância temporal das tuas entregas",
+      icon: Target
     },
     {
       name: "Níveis de Guardião",
-      description: "Quanto mais distante a entrega, maior o prestígio desbloqueado"
+      description: "Quanto mais distante a entrega, maior o prestígio desbloqueado",
+      icon: Trophy
     },
     {
       name: "Árvore de Memórias",
-      description: "Timeline visual com todas as tuas cápsulas e entregas programadas"
+      description: "Timeline visual com todas as tuas cápsulas e entregas programadas",
+      icon: Star
     },
     {
       name: "Missões Temporais",
-      description: "Desafios especiais como 'Envia algo a ti próprio daqui a 5 anos'"
+      description: "Desafios especiais como 'Envia algo a ti próprio daqui a 5 anos'",
+      icon: Zap
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-stone-50 via-amber-50 to-stone-100">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100">
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-sm border-b border-gray-200">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -124,6 +187,14 @@ import GamificationCard from "@/components/GamificationCard";
               FuturoPresente
             </h1>
           </div>
+          <nav className="hidden md:flex space-x-6">
+            <Button variant="ghost" onClick={() => navigate('/how-it-works')}>
+              Como Funciona
+            </Button>
+            <Button variant="ghost" onClick={() => navigate('/pricing')}>
+              Preços & Planos
+            </Button>
+          </nav>
           <div className="flex items-center space-x-4">
             <Button variant="ghost" onClick={() => navigate('/')}>
               Voltar ao Início
@@ -145,7 +216,7 @@ import GamificationCard from "@/components/GamificationCard";
             Preços & Planos
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            O teu tempo, entregue. Escolhe o plano perfeito para criares memórias futuras e viveres experiências emocionais únicas.
+            <strong>O teu tempo, entregue.</strong> Escolhe o plano perfeito para criares memórias futuras e viveres experiências emocionais únicas como um verdadeiro Guardião do Tempo.
           </p>
         </div>
 
@@ -154,8 +225,42 @@ import GamificationCard from "@/components/GamificationCard";
           <h3 className="text-3xl font-bold text-center text-gray-800 mb-12">Planos de Assinatura</h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {plans.map((plan, index) => (
-  <PlanCard key={index} plan={plan} />
-))}
+              <Card key={index} className={`relative p-6 ${plan.popular ? 'ring-2 ring-amber-500 shadow-xl' : 'shadow-lg'} hover:shadow-xl transition-shadow`}>
+                {plan.popular && (
+                  <Badge className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-amber-500">
+                    Mais Popular
+                  </Badge>
+                )}
+                <CardHeader className="text-center pb-4">
+                  <CardTitle className="text-xl font-bold">{plan.name}</CardTitle>
+                  <div className="text-3xl font-bold text-gray-800">
+                    {plan.price}
+                    {plan.yearlyPrice && (
+                      <div className="text-sm text-gray-600 font-normal">
+                        ou {plan.yearlyPrice}
+                      </div>
+                    )}
+                  </div>
+                  <p className="text-gray-600 text-sm">{plan.description}</p>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2 mb-6">
+                    {plan.features.map((feature, i) => (
+                      <li key={i} className="flex items-start text-sm">
+                        <Check className="h-4 w-4 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                  <Button 
+                    className={`w-full bg-gradient-to-r ${plan.color} hover:opacity-90`}
+                    onClick={() => navigate('/register')}
+                  >
+                    {plan.price === "Grátis" ? "Começar Grátis" : "Escolher Plano"}
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
 
@@ -165,13 +270,19 @@ import GamificationCard from "@/components/GamificationCard";
             <Trophy className="h-12 w-12 text-amber-700 mx-auto mb-4" />
             <h3 className="text-3xl font-bold text-gray-800 mb-4">Sistema de Gamificação</h3>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Torna cada entrega numa aventura temporal. Conquista selos, desbloqueia níveis e cria a tua árvore de memórias.
+              Torna cada entrega numa aventura temporal. Conquista selos, desbloqueia níveis e cria a tua árvore de memórias como um verdadeiro Guardião do Tempo.
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {gamificationFeatures.map((feature, index) => (
-  <GamificationCard key={index} feature={feature} iconIndex={index} />
-))}
+              <Card key={index} className="p-6 text-center hover:shadow-lg transition-shadow bg-gradient-to-br from-amber-50 to-yellow-50">
+                <CardContent className="pt-6">
+                  <feature.icon className="h-12 w-12 text-amber-700 mx-auto mb-4" />
+                  <h4 className="font-semibold mb-2 text-amber-800">{feature.name}</h4>
+                  <p className="text-gray-600 text-sm">{feature.description}</p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
 
@@ -181,13 +292,25 @@ import GamificationCard from "@/components/GamificationCard";
             <Package className="h-12 w-12 text-amber-700 mx-auto mb-4" />
             <h3 className="text-3xl font-bold text-gray-800 mb-4">Armazenamento Seguro</h3>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Guardamos os teus presentes físicos com total segurança até à data de entrega.
+              Guardamos os teus presentes físicos com total segurança até à data de entrega. Vigilância 24/7 e controlo climático.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {storageServices.map((service, index) => (
-  <ServiceCard key={index} service={service} highlightYearly={true} />
-))}
+              <Card key={index} className="p-6 hover:shadow-lg transition-shadow">
+                <CardContent className="pt-6 text-center">
+                  <h4 className="font-semibold text-lg mb-2">{service.name}</h4>
+                  <div className="text-2xl font-bold text-amber-700 mb-2">{service.price}</div>
+                  {service.yearlyPrice && (
+                    <div className="text-amber-600 font-semibold mb-2">
+                      {service.yearlyPrice}
+                      {service.savings && <span className="text-green-600 text-sm block">{service.savings}</span>}
+                    </div>
+                  )}
+                  <p className="text-gray-600 text-sm">{service.description}</p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
 
@@ -202,8 +325,14 @@ import GamificationCard from "@/components/GamificationCard";
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {digitalServices.map((service, index) => (
-  <ServiceCard key={index} service={service} />
-))}
+              <Card key={index} className="p-6 hover:shadow-lg transition-shadow">
+                <CardContent className="pt-6 text-center">
+                  <h4 className="font-semibold text-lg mb-2">{service.name}</h4>
+                  <div className="text-2xl font-bold text-amber-700 mb-2">{service.price}</div>
+                  <p className="text-gray-600 text-sm">{service.description}</p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
 
@@ -213,13 +342,19 @@ import GamificationCard from "@/components/GamificationCard";
             <Package className="h-12 w-12 text-amber-700 mx-auto mb-4" />
             <h3 className="text-3xl font-bold text-gray-800 mb-4">Serviços Físicos</h3>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Recebemos, compramos e entregamos os teus presentes físicos na data exacta.
+              Recebemos, compramos e entregamos os teus presentes físicos na data exacta com garantia total.
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {physicalServices.map((service, index) => (
-  <ServiceCard key={index} service={service} />
-))}
+              <Card key={index} className="p-6 hover:shadow-lg transition-shadow">
+                <CardContent className="pt-6 text-center">
+                  <h4 className="font-semibold text-lg mb-2">{service.name}</h4>
+                  <div className="text-2xl font-bold text-amber-700 mb-2">{service.price}</div>
+                  <p className="text-gray-600 text-sm">{service.description}</p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
 
@@ -234,8 +369,14 @@ import GamificationCard from "@/components/GamificationCard";
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {timeCapsules.map((capsule, index) => (
-  <CapsuleCard key={index} capsule={capsule} />
-))}
+              <Card key={index} className="p-6 hover:shadow-lg transition-shadow">
+                <CardContent className="pt-6 text-center">
+                  <h4 className="font-semibold text-lg mb-2">{capsule.name}</h4>
+                  <div className="text-2xl font-bold text-amber-700 mb-2">{capsule.price}</div>
+                  <p className="text-gray-600 text-sm">{capsule.description}</p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
 
@@ -243,11 +384,11 @@ import GamificationCard from "@/components/GamificationCard";
         <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 text-center">
           <Users className="h-12 w-12 text-amber-700 mx-auto mb-4" />
           <h3 className="text-3xl font-bold text-gray-800 mb-4">
-            Pronto para Começar a Tua Jornada Temporal?
+            Pronto para Te Tornares um Guardião do Tempo?
           </h3>
           <p className="text-xl text-gray-600 mb-6 max-w-2xl mx-auto">
             Junta-te a milhares de guardiões do tempo que já estão a criar memórias para o futuro. 
-            Começa com o plano gratuito e torna-te num verdadeiro Guardião do Tempo.
+            Começa com o plano gratuito e descobre o poder de enviar presentes para o futuro.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 

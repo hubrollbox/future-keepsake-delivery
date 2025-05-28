@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Clock } from "lucide-react";
+import { Clock, Trophy } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -17,6 +17,9 @@ const Register = () => {
     password: "",
     confirmPassword: ""
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const { toast } = useToast();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -25,9 +28,6 @@ const Register = () => {
     });
   };
 
-  const { toast } = useToast();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -51,27 +51,30 @@ const Register = () => {
       toast({ title: "Erro ao registar", description: error.message, variant: "destructive" });
       return;
     }
-    toast({ title: "Conta criada!", description: "Verifica o teu email para confirmar o registo." });
+    toast({ title: "Bem-vindo, Guardião!", description: "Verifica o teu email para confirmar o registo e começar a tua jornada temporal." });
     navigate('/login');
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center space-x-2 mb-4">
-            <Clock className="h-8 w-8 text-purple-600" />
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+            <Clock className="h-8 w-8 text-amber-700" />
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-amber-700 to-amber-600 bg-clip-text text-transparent">
               FuturoPresente
             </h1>
           </div>
-          <p className="text-gray-600">Começa a criar memórias para o futuro</p>
+          <p className="text-gray-600">O teu tempo, entregue</p>
         </div>
 
         <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-semibold">Registar</CardTitle>
+            <div className="flex items-center justify-center space-x-2 mb-2">
+              <Trophy className="h-6 w-6 text-amber-700" />
+              <CardTitle className="text-2xl font-semibold">Torna-te um Guardião do Tempo</CardTitle>
+            </div>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleRegister} className="space-y-4">
@@ -130,17 +133,21 @@ const Register = () => {
               {error && (
                 <div className="text-red-600 text-sm text-center">{error}</div>
               )}
-              <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? "A criar conta..." : "Criar Conta"}
+              <Button 
+                type="submit" 
+                className="w-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800" 
+                disabled={loading}
+              >
+                {loading ? "A criar conta..." : "Tornar-me Guardião"}
               </Button>
             </form>
 
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
-                Já tens conta?{" "}
+                Já és um Guardião do Tempo?{" "}
                 <Button 
                   variant="link" 
-                  className="p-0 h-auto font-semibold"
+                  className="p-0 h-auto font-semibold text-amber-700"
                   onClick={() => navigate('/login')}
                 >
                   Entra aqui
@@ -149,9 +156,9 @@ const Register = () => {
             </div>
 
             {/* Motivational message */}
-            <div className="mt-6 p-4 bg-purple-50 rounded-lg">
-              <p className="text-sm text-purple-700 text-center italic">
-                💜 O teu eu do futuro vai agradecer por começares hoje
+            <div className="mt-6 p-4 bg-gradient-to-r from-amber-50 to-yellow-50 rounded-lg border border-amber-200">
+              <p className="text-sm text-amber-800 text-center italic font-medium">
+                🕰️ O teu eu do futuro vai agradecer por começares hoje esta jornada temporal
               </p>
             </div>
           </CardContent>
@@ -161,6 +168,7 @@ const Register = () => {
           <Button 
             variant="ghost" 
             onClick={() => navigate('/')}
+            className="text-amber-700 hover:text-amber-800"
           >
             ← Voltar ao início
           </Button>

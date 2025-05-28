@@ -13,6 +13,8 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const { toast } = useToast();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -28,26 +30,24 @@ const Login = () => {
     }
     navigate('/dashboard');
   };
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-amber-50 to-yellow-100 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center space-x-2 mb-4">
-            <Clock className="h-8 w-8 text-yellow-700" />
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-yellow-700 to-yellow-600 bg-clip-text text-transparent">
+            <Clock className="h-8 w-8 text-amber-700" />
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-amber-700 to-amber-600 bg-clip-text text-transparent">
               FuturoPresente
             </h1>
           </div>
-          <p className="text-gray-600">Bem-vindo de volta ao futuro</p>
+          <p className="text-gray-600">O teu tempo, entregue</p>
         </div>
 
         <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-semibold">Entrar</CardTitle>
+            <CardTitle className="text-2xl font-semibold">Entrar como Guardião</CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-4">
@@ -80,7 +80,7 @@ const Login = () => {
               )}
               <Button 
                 type="submit" 
-                className="w-full bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800"
+                className="w-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800"
                 disabled={loading}
               >
                 {loading ? "Entrando..." : "Entrar"}
@@ -89,13 +89,13 @@ const Login = () => {
 
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
-                Ainda não tens conta?{" "}
+                Ainda não és um Guardião do Tempo?{" "}
                 <Button 
                   variant="link" 
-                  className="p-0 h-auto font-semibold text-yellow-700"
+                  className="p-0 h-auto font-semibold text-amber-700"
                   onClick={() => navigate('/register')}
                 >
-                  Regista-te aqui
+                  Torna-te um aqui
                 </Button>
               </p>
             </div>
@@ -106,7 +106,7 @@ const Login = () => {
           <Button 
             variant="ghost" 
             onClick={() => navigate('/')}
-            className="text-yellow-700 hover:text-yellow-800"
+            className="text-amber-700 hover:text-amber-800"
           >
             ← Voltar ao início
           </Button>
