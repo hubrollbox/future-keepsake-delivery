@@ -8,6 +8,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Clock, Calendar, ArrowLeft, Upload } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const CreateDelivery = () => {
   const navigate = useNavigate();
@@ -38,10 +40,32 @@ const CreateDelivery = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implementar criação de entrega com Supabase
-    console.log("Creating delivery:", { deliveryType, ...formData });
+    setError("");
+    setLoading(true);
+    let delivery_address = deliveryType === "physical" ? formData.location : null;
+    let delivery_type = deliveryType;
+    let delivery_date = formData.deliveryDate + (formData.deliveryTime ? `T${formData.deliveryTime}` : "");
+    let message = formData.message;
+    // TODO: Upload digitalFile to Supabase Storage if present
+    const { error } = await supabase.from("deliveries").insert([
+      {
+        delivery_address,
+        delivery_date,
+        delivery_type,
+        message,
+        status: "scheduled",
+        // TODO: Add user_id from session
+      }
+    ]);
+    setLoading(false);
+    if (error) {
+      setError("Erro ao agendar entrega: " + error.message);
+      toast({ title: "Erro ao agendar entrega", description: error.message, variant: "destructive" });
+      return;
+    }
+    toast({ title: "Entrega agendada!", description: "A tua entrega foi criada com sucesso." });
     navigate('/dashboard');
   };
 
@@ -224,8 +248,8 @@ const CreateDelivery = () => {
                 />
               </div>
 
-              <Button type="submit" className="w-full" size="lg">
-                Agendar Entrega
+              <Button type="submit" className="w-full" size="lg" disabled={loading}>
+                {loading ? "A agendar..." : "Agendar Entrega"}
               </Button>
             </form>
           </CardContent>

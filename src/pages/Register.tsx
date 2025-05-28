@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -23,11 +25,34 @@ const Register = () => {
     });
   };
 
-  const handleRegister = (e: React.FormEvent) => {
+  const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implementar registo com Supabase
-    console.log("Registration attempt:", formData);
-    navigate('/dashboard');
+    setError("");
+    if (!formData.name.trim()) {
+      setError("O nome é obrigatório.");
+      return;
+    }
+    if (formData.password !== formData.confirmPassword) {
+      setError("As palavras-passe não coincidem.");
+      return;
+    }
+    setLoading(true);
+    const { error } = await supabase.auth.signUp({
+      email: formData.email,
+      password: formData.password,
+      options: { data: { name: formData.name } }
+    });
+    setLoading(false);
+    if (error) {
+      setError("Erro ao registar: " + error.message);
+      toast({ title: "Erro ao registar", description: error.message, variant: "destructive" });
+      return;
+    }
+    toast({ title: "Conta criada!", description: "Verifica o teu email para confirmar o registo." });
+    navigate('/login');
   };
 
   return (
@@ -102,8 +127,11 @@ const Register = () => {
                 />
               </div>
 
-              <Button type="submit" className="w-full">
-                Criar Conta
+              {error && (
+                <div className="text-red-600 text-sm text-center">{error}</div>
+              )}
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? "A criar conta..." : "Criar Conta"}
               </Button>
             </form>
 

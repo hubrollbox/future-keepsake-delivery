@@ -6,18 +6,30 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { toast } = useToast();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implementar autenticação com Supabase
-    console.log("Login attempt:", { email, password });
+    setLoading(true);
+    setError("");
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    setLoading(false);
+    if (error) {
+      setError("Email ou palavra-passe inválidos.");
+      toast({ title: "Erro ao entrar", description: error.message, variant: "destructive" });
+      return;
+    }
     navigate('/dashboard');
   };
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-amber-50 to-yellow-100 flex items-center justify-center px-4">
@@ -63,11 +75,15 @@ const Login = () => {
                 />
               </div>
 
+              {error && (
+                <div className="text-red-600 text-sm text-center">{error}</div>
+              )}
               <Button 
                 type="submit" 
                 className="w-full bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800"
+                disabled={loading}
               >
-                Entrar
+                {loading ? "Entrando..." : "Entrar"}
               </Button>
             </form>
 

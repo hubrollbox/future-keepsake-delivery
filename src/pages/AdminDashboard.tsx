@@ -1,50 +1,37 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Clock, Calendar, Mail, Users, Search, CheckCircle, XCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [searchTerm, setSearchTerm] = useState("");
+  const [deliveries, setDeliveries] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  // Mock data - será substituído pelos dados do Supabase
-  const [deliveries] = useState([
-    {
-      id: 1,
-      type: "digital",
-      title: "Carta para o meu aniversário",
-      recipient: "João Silva",
-      customerEmail: "joao@email.com",
-      deliveryDate: "2024-12-25",
-      status: "pending",
-      createdAt: "2024-01-15"
-    },
-    {
-      id: 2,
-      type: "physical",
-      title: "Presente de aniversário da Maria",
-      recipient: "Maria Silva",
-      customerEmail: "ana@email.com",
-      deliveryDate: "2024-06-15",
-      status: "delivered",
-      location: "Rua das Flores, 123, Porto",
-      createdAt: "2024-01-10"
-    },
-    {
-      id: 3,
-      type: "digital",
-      title: "Vídeo de parabéns",
-      recipient: "Pedro Santos",
-      customerEmail: "carlos@email.com",
-      deliveryDate: "2024-07-20",
-      status: "pending",
-      createdAt: "2024-01-20"
-    }
-  ]);
+  useEffect(() => {
+    const fetchDeliveries = async () => {
+      setLoading(true);
+      setError("");
+      const { data, error } = await supabase.from("deliveries").select("*");
+      if (error) {
+        setError("Erro ao buscar entregas.");
+        toast({ title: "Erro", description: "Erro ao buscar entregas.", variant: "destructive" });
+      } else {
+        setDeliveries(data || []);
+      }
+      setLoading(false);
+    };
+    fetchDeliveries();
+  }, [toast]);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -78,14 +65,32 @@ const AdminDashboard = () => {
     physical: deliveries.filter(d => d.type === "physical").length
   };
 
-  const markAsDelivered = (id: number) => {
-    // TODO: Implementar com Supabase
-    console.log("Marking delivery as delivered:", id);
+  const markAsDelivered = async (id: number) => {
+    setLoading(true);
+    setError("");
+    const { error } = await supabase.from("deliveries").update({ status: "delivered" }).eq("id", id);
+    if (error) {
+      setError("Erro ao marcar como entregue.");
+      toast({ title: "Erro", description: "Erro ao marcar como entregue.", variant: "destructive" });
+    } else {
+      toast({ title: "Sucesso", description: "Entrega marcada como entregue." });
+      setDeliveries(deliveries => deliveries.map(d => d.id === id ? { ...d, status: "delivered" } : d));
+    }
+    setLoading(false);
   };
 
-  const cancelDelivery = (id: number) => {
-    // TODO: Implementar com Supabase
-    console.log("Cancelling delivery:", id);
+  const cancelDelivery = async (id: number) => {
+    setLoading(true);
+    setError("");
+    const { error } = await supabase.from("deliveries").update({ status: "cancelled" }).eq("id", id);
+    if (error) {
+      setError("Erro ao cancelar entrega.");
+      toast({ title: "Erro", description: "Erro ao cancelar entrega.", variant: "destructive" });
+    } else {
+      toast({ title: "Sucesso", description: "Entrega cancelada." });
+      setDeliveries(deliveries => deliveries.map(d => d.id === id ? { ...d, status: "cancelled" } : d));
+    }
+    setLoading(false);
   };
 
   return (
@@ -193,7 +198,9 @@ const AdminDashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {filteredDeliveries.map((delivery) => (
+              {loading && <p className="text-center text-gray-500">Carregando entregas...</p>}
+              {error && <p className="text-center text-red-500">{error}</p>}
+              {!loading && !error && filteredDeliveries.map((delivery) => (
                 <div key={delivery.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -232,6 +239,7 @@ const AdminDashboard = () => {
                             size="sm" 
                             onClick={() => markAsDelivered(delivery.id)}
                             className="bg-green-600 hover:bg-green-700"
+                            disabled={loading}
                           >
                             <CheckCircle className="h-4 w-4 mr-1" />
                             Marcar Entregue
@@ -241,6 +249,7 @@ const AdminDashboard = () => {
                             variant="outline" 
                             onClick={() => cancelDelivery(delivery.id)}
                             className="text-red-600 hover:text-red-700"
+                            disabled={loading}
                           >
                             <XCircle className="h-4 w-4 mr-1" />
                             Cancelar
