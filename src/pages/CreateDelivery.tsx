@@ -10,6 +10,7 @@ import { Clock, Calendar, ArrowLeft, Upload } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useEffect } from "react";
 
 const CreateDelivery = () => {
   const navigate = useNavigate();
@@ -51,7 +52,26 @@ const CreateDelivery = () => {
     let delivery_type = deliveryType;
     let delivery_date = formData.deliveryDate + (formData.deliveryTime ? `T${formData.deliveryTime}` : "");
     let message = formData.message;
-    // TODO: Upload digitalFile to Supabase Storage if present
+    let digital_file_url = null;
+    let user_id = null;
+    // Get user session
+    const { data: sessionData } = await supabase.auth.getSession();
+    if (sessionData.session && sessionData.session.user) {
+      user_id = sessionData.session.user.id;
+    }
+    // Upload digital file if present
+    if (deliveryType === "digital" && formData.digitalFile) {
+      const file = formData.digitalFile;
+      const filePath = `deliveries/${user_id || "anonymous"}/${Date.now()}_${file.name}`;
+      const { data: uploadData, error: uploadError } = await supabase.storage.from("digital-files").upload(filePath, file);
+      if (uploadError) {
+        setLoading(false);
+        setError("Erro ao fazer upload do ficheiro: " + uploadError.message);
+        toast({ title: "Erro ao fazer upload do ficheiro", description: uploadError.message, variant: "destructive" });
+        return;
+      }
+      digital_file_url = uploadData?.path ? uploadData.path : null;
+    }
     const { error } = await supabase.from("deliveries").insert([
       {
         delivery_address,
@@ -59,7 +79,8 @@ const CreateDelivery = () => {
         delivery_type,
         message,
         status: "scheduled",
-        // TODO: Add user_id from session
+        user_id,
+        digital_file_url
       }
     ]);
     setLoading(false);
