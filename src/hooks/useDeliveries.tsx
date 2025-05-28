@@ -22,6 +22,21 @@ export interface Delivery {
   created_at: string | null;
 }
 
+export interface CreateDeliveryData {
+  title?: string;
+  delivery_type: string;
+  delivery_date: string;
+  delivery_address?: string;
+  delivery_method?: string;
+  scheduled_time?: string;
+  timezone?: string;
+  recipient_name?: string;
+  recipient_email?: string;
+  message?: string;
+  status?: string;
+  points_earned?: number;
+}
+
 export const useDeliveries = () => {
   const [deliveries, setDeliveries] = useState<Delivery[]>([]);
   const [loading, setLoading] = useState(true);
@@ -57,16 +72,32 @@ export const useDeliveries = () => {
     }
   };
 
-  const createDelivery = async (deliveryData: Partial<Delivery>) => {
+  const createDelivery = async (deliveryData: CreateDeliveryData) => {
     if (!user) return { error: "User not authenticated" };
+
+    // Garantir que os campos obrigatórios estão presentes
+    if (!deliveryData.delivery_type || !deliveryData.delivery_date) {
+      return { error: "Delivery type and delivery date are required" };
+    }
 
     try {
       const { data, error } = await supabase
         .from("deliveries")
         .insert([
           {
-            ...deliveryData,
             user_id: user.id,
+            delivery_type: deliveryData.delivery_type,
+            delivery_date: deliveryData.delivery_date,
+            title: deliveryData.title || null,
+            delivery_address: deliveryData.delivery_address || null,
+            delivery_method: deliveryData.delivery_method || 'email',
+            scheduled_time: deliveryData.scheduled_time || null,
+            timezone: deliveryData.timezone || 'Europe/Lisbon',
+            recipient_name: deliveryData.recipient_name || null,
+            recipient_email: deliveryData.recipient_email || null,
+            message: deliveryData.message || null,
+            status: deliveryData.status || 'pendente',
+            points_earned: deliveryData.points_earned || 0,
           },
         ])
         .select()
