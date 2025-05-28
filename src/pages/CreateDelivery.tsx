@@ -13,7 +13,10 @@ import { useToast } from "@/hooks/use-toast";
 
 const CreateDelivery = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [deliveryType, setDeliveryType] = useState("digital");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     title: "",
     recipient: "",

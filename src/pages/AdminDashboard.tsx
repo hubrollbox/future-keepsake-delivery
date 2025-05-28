@@ -68,7 +68,7 @@ const AdminDashboard = () => {
   const markAsDelivered = async (id: number) => {
     setLoading(true);
     setError("");
-    const { error } = await supabase.from("deliveries").update({ status: "delivered" }).eq("id", id);
+    const { error } = await supabase.from("deliveries").update({ status: "delivered" }).eq("id", id.toString());
     if (error) {
       setError("Erro ao marcar como entregue.");
       toast({ title: "Erro", description: "Erro ao marcar como entregue.", variant: "destructive" });
@@ -82,7 +82,7 @@ const AdminDashboard = () => {
   const cancelDelivery = async (id: number) => {
     setLoading(true);
     setError("");
-    const { error } = await supabase.from("deliveries").update({ status: "cancelled" }).eq("id", id);
+    const { error } = await supabase.from("deliveries").update({ status: "cancelled" }).eq("id", id.toString());
     if (error) {
       setError("Erro ao cancelar entrega.");
       toast({ title: "Erro", description: "Erro ao cancelar entrega.", variant: "destructive" });
