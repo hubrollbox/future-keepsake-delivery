@@ -11,37 +11,37 @@ const Navigation = ({ className }: NavigationProps) => {
   const navigate = useNavigate();
 
   return (
-    <header className={`container mx-auto px-4 py-6 flex justify-between items-center ${className || ""}`}>
+    <header className={`container mx-auto px-4 py-6 flex justify-between items-center bg-white ${className || ""}`}>
       <div className="flex items-center space-x-2 cursor-pointer" onClick={() => navigate('/')}>
-        <Clock className="h-8 w-8 text-amber-700" />
-        <h1 className="text-2xl font-bold bg-gradient-to-r from-amber-700 to-amber-600 bg-clip-text text-transparent">
+        <Clock className="h-8 w-8 text-gold" />
+        <h1 className="text-2xl font-bold text-black">
           FuturoPresente
         </h1>
       </div>
       <nav className="hidden md:flex space-x-6">
-        <Button variant="ghost" onClick={() => navigate('/how-it-works')}>
+        <Button variant="ghost" onClick={() => navigate('/how-it-works')} className="text-black hover-gold">
           Como Funciona
         </Button>
-        <Button variant="ghost" onClick={() => navigate('/pricing')}>
+        <Button variant="ghost" onClick={() => navigate('/pricing')} className="text-black hover-gold">
           Preços
         </Button>
-        <Button variant="ghost" onClick={() => navigate('/about')}>
+        <Button variant="ghost" onClick={() => navigate('/about')} className="text-black hover-gold">
           Sobre
         </Button>
-        <Button variant="ghost" onClick={() => navigate('/contact')}>
+        <Button variant="ghost" onClick={() => navigate('/contact')} className="text-black hover-gold">
           Contactos
         </Button>
-        <Button variant="ghost" onClick={() => navigate('/partnerships')}>
+        <Button variant="ghost" onClick={() => navigate('/partnerships')} className="text-black hover-gold">
           Parcerias
         </Button>
       </nav>
       <div className="space-x-4">
-        <Button variant="ghost" onClick={() => navigate('/login')}>
+        <Button variant="ghost" onClick={() => navigate('/login')} className="text-black hover-gold">
           Entrar
         </Button>
         <Button 
           onClick={() => navigate('/register')}
-          className="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800"
+          className="bg-gold-gradient text-black hover:opacity-90 font-semibold"
         >
           Registar
         </Button>
