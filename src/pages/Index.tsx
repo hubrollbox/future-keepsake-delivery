@@ -1,7 +1,10 @@
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Calendar, Mail, Users, Gift, Heart, Star, Trophy, Target } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -26,34 +29,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100">
-      {/* Header */}
-      <header className="container mx-auto px-4 py-6 flex justify-between items-center">
-        <div className="flex items-center space-x-2">
-          <Clock className="h-8 w-8 text-amber-700" />
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-amber-700 to-amber-600 bg-clip-text text-transparent">
-            FuturoPresente
-          </h1>
-        </div>
-        <nav className="hidden md:flex space-x-6">
-          <Button variant="ghost" onClick={() => navigate('/how-it-works')}>
-            Como Funciona
-          </Button>
-          <Button variant="ghost" onClick={() => navigate('/pricing')}>
-            Preços & Planos
-          </Button>
-        </nav>
-        <div className="space-x-4">
-          <Button variant="ghost" onClick={() => navigate('/login')}>
-            Entrar
-          </Button>
-          <Button 
-            onClick={() => navigate('/register')}
-            className="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800"
-          >
-            Registar
-          </Button>
-        </div>
-      </header>
+      <Navigation />
 
       {/* Hero Section */}
       <main className="container mx-auto px-4 py-16">
@@ -72,7 +48,7 @@ const Index = () => {
             <Button 
               size="lg" 
               className="text-lg px-8 py-6 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800" 
-              onClick={() => navigate('/create-delivery')}
+              onClick={() => navigate('/register')}
             >
               Criar Primeira Entrega
             </Button>
@@ -237,52 +213,7 @@ const Index = () => {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-white/30 backdrop-blur-sm mt-20">
-        <div className="container mx-auto px-4 py-12">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <Clock className="h-6 w-6 text-amber-700" />
-                <h4 className="font-bold text-amber-700">FuturoPresente</h4>
-              </div>
-              <p className="text-gray-600 text-sm">
-                O teu tempo, entregue. Criando memórias para o futuro, uma entrega de cada vez.
-              </p>
-            </div>
-            
-            <div>
-              <h5 className="font-semibold mb-3 text-gray-800">Empresa</h5>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="/about" className="hover:text-amber-700">Sobre</a></li>
-                <li><a href="/contact" className="hover:text-amber-700">Contactos</a></li>
-                <li><a href="/partnerships" className="hover:text-amber-700">Parcerias</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h5 className="font-semibold mb-3 text-gray-800">Serviços</h5>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="/pricing" className="hover:text-amber-700">Preços & Planos</a></li>
-                <li><a href="#" className="hover:text-amber-700">Cápsulas do Tempo</a></li>
-                <li><a href="/how-it-works" className="hover:text-amber-700">Como Funciona</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h5 className="font-semibold mb-3 text-gray-800">Legal</h5>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="/terms-conditions" className="hover:text-amber-700">Termos e Condições</a></li>
-                <li><a href="/privacy-policy" className="hover:text-amber-700">Política de Privacidade</a></li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-200 mt-8 pt-8 text-center text-gray-600">
-            <p>&copy; 2024 FuturoPresente™. O teu tempo, entregue.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

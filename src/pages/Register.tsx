@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Clock, Trophy } from "lucide-react";
+import { Clock, Trophy, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { z } from "zod";
@@ -79,8 +79,20 @@ const Register = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
+        {/* Back Button */}
+        <div className="mb-8">
+          <Button 
+            variant="ghost" 
+            onClick={() => navigate('/')} 
+            className="flex items-center space-x-2 text-amber-700 hover:text-amber-800"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span>Voltar ao Início</span>
+          </Button>
+        </div>
+
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center space-x-2 mb-4">
+          <div className="flex items-center justify-center space-x-2 mb-4 cursor-pointer" onClick={() => navigate('/')}>
             <Clock className="h-8 w-8 text-amber-700" />
             <h1 className="text-2xl font-bold bg-gradient-to-r from-amber-700 to-amber-600 bg-clip-text text-transparent">
               FuturoPresente
@@ -195,16 +207,6 @@ const Register = () => {
             </div>
           </CardContent>
         </Card>
-
-        <div className="mt-8 text-center">
-          <Button 
-            variant="ghost" 
-            onClick={() => navigate('/')}
-            className="text-amber-700 hover:text-amber-800"
-          >
-            ← Voltar ao início
-          </Button>
-        </div>
       </div>
     </div>
   );

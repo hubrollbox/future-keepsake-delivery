@@ -1,8 +1,10 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Clock, Users, Heart, Target, Award, Lightbulb } from "lucide-react";
+import { Clock, Users, Heart, Target, Award, Lightbulb, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 const About = () => {
   const navigate = useNavigate();
@@ -50,39 +52,21 @@ const About = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100">
-      {/* Header */}
-      <header className="container mx-auto px-4 py-6 flex justify-between items-center">
-        <div className="flex items-center space-x-2">
-          <Clock className="h-8 w-8 text-amber-700" />
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-amber-700 to-amber-600 bg-clip-text text-transparent">
-            FuturoPresente
-          </h1>
-        </div>
-        <nav className="hidden md:flex space-x-6">
-          <Button variant="ghost" onClick={() => navigate('/')}>
-            Início
-          </Button>
-          <Button variant="ghost" onClick={() => navigate('/how-it-works')}>
-            Como Funciona
-          </Button>
-          <Button variant="ghost" onClick={() => navigate('/pricing')}>
-            Preços
-          </Button>
-        </nav>
-        <div className="space-x-4">
-          <Button variant="ghost" onClick={() => navigate('/login')}>
-            Entrar
-          </Button>
-          <Button 
-            onClick={() => navigate('/register')}
-            className="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800"
-          >
-            Registar
-          </Button>
-        </div>
-      </header>
+      <Navigation />
 
       <main className="container mx-auto px-4 py-16">
+        {/* Back Button */}
+        <div className="mb-8">
+          <Button 
+            variant="ghost" 
+            onClick={() => navigate('/')} 
+            className="flex items-center space-x-2 text-amber-700 hover:text-amber-800"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            <span>Voltar ao Início</span>
+          </Button>
+        </div>
+
         {/* Hero Section */}
         <div className="text-center max-w-4xl mx-auto mb-16">
           <h2 className="text-5xl font-bold text-gray-800 mb-6">
@@ -197,16 +181,7 @@ const About = () => {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-white/30 backdrop-blur-sm mt-20">
-        <div className="container mx-auto px-4 py-8 text-center">
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <Clock className="h-6 w-6 text-amber-700" />
-            <span className="font-bold text-amber-700">FuturoPresente</span>
-          </div>
-          <p className="text-gray-600">&copy; 2024 FuturoPresente™. O teu tempo, entregue.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
