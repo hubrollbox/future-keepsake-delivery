@@ -30,26 +30,8 @@ const Partnerships = () => {
     }
   ];
 
-  const currentPartners = [
-    {
-      name: "TimeBox Stores",
-      type: "Retail Partner",
-      description: "Rede de lojas especializadas em presentes únicos"
-    },
-    {
-      name: "Memória Digital",
-      type: "Tech Partner",
-      description: "Soluções de digitalização e preservação de memórias"
-    },
-    {
-      name: "Correios Premium",
-      type: "Logistics Partner",
-      description: "Serviços de entrega especializada e segura"
-    }
-  ];
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100">
+    <div className="min-h-screen bg-white">
       <Navigation />
 
       <main className="container mx-auto px-4 py-16">
@@ -58,7 +40,7 @@ const Partnerships = () => {
           <Button 
             variant="ghost" 
             onClick={() => navigate('/')} 
-            className="flex items-center space-x-2 text-amber-700 hover:text-amber-800"
+            className="flex items-center space-x-2 text-gray-700 hover:text-black"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Voltar ao Início</span>
@@ -67,36 +49,36 @@ const Partnerships = () => {
 
         {/* Hero Section */}
         <div className="text-center max-w-4xl mx-auto mb-16">
-          <h2 className="text-5xl font-bold text-gray-800 mb-6">
-            <span className="bg-gradient-to-r from-amber-700 to-amber-600 bg-clip-text text-transparent">Parcerias</span>
+          <h2 className="text-5xl font-bold text-black mb-6">
+            <span className="text-gold">Parcerias</span>
             {" "}Estratégicas
           </h2>
           <p className="text-xl text-gray-600 mb-8">
             Junta-te à nossa rede de parceiros e ajuda-nos a transformar a forma como as pessoas experienciam o tempo e as memórias.
           </p>
           <div className="flex justify-center mb-8">
-            <Handshake className="h-16 w-16 text-amber-700" />
+            <Handshake className="h-16 w-16 text-gold" />
           </div>
         </div>
 
         {/* Tipos de Parcerias */}
         <div className="mb-16">
-          <h3 className="text-3xl font-bold text-gray-800 mb-8 text-center">Tipos de Parcerias</h3>
+          <h3 className="text-3xl font-bold text-black mb-8 text-center">Tipos de Parcerias</h3>
           <div className="grid md:grid-cols-3 gap-8">
             {partnershipTypes.map((type, index) => (
-              <Card key={index} className="bg-white/80 backdrop-blur-sm hover:shadow-lg transition-shadow">
+              <Card key={index} className="bg-white shadow-lg hover:shadow-xl transition-shadow border border-gray-200">
                 <CardHeader className="text-center">
-                  <type.icon className="h-12 w-12 text-amber-700 mx-auto mb-4" />
-                  <CardTitle className="text-xl text-gray-800">{type.title}</CardTitle>
+                  <type.icon className="h-12 w-12 text-gold mx-auto mb-4" />
+                  <CardTitle className="text-xl text-black">{type.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-600 mb-4">{type.description}</p>
                   <div className="space-y-2">
-                    <h4 className="font-semibold text-amber-700 text-sm">Benefícios:</h4>
+                    <h4 className="font-semibold text-gold text-sm">Benefícios:</h4>
                     <ul className="space-y-1">
                       {type.benefits.map((benefit, idx) => (
                         <li key={idx} className="text-sm text-gray-600 flex items-center">
-                          <Star className="h-3 w-3 text-amber-600 mr-2" />
+                          <Star className="h-3 w-3 text-gold mr-2" />
                           {benefit}
                         </li>
                       ))}
@@ -110,12 +92,12 @@ const Partnerships = () => {
 
         {/* Benefícios da Parceria */}
         <div className="mb-16">
-          <h3 className="text-3xl font-bold text-gray-800 mb-8 text-center">Por que Ser Nosso Parceiro?</h3>
+          <h3 className="text-3xl font-bold text-black mb-8 text-center">Por que Ser Nosso Parceiro?</h3>
           <div className="grid md:grid-cols-2 gap-8">
-            <Card className="bg-gradient-to-br from-amber-50 to-yellow-50">
+            <Card className="bg-white shadow-lg border border-gray-200">
               <CardContent className="p-8">
-                <Target className="h-12 w-12 text-amber-700 mb-4" />
-                <h4 className="text-xl font-semibold mb-4 text-gray-800">Mercado em Crescimento</h4>
+                <Target className="h-12 w-12 text-gold mb-4" />
+                <h4 className="text-xl font-semibold mb-4 text-black">Mercado em Crescimento</h4>
                 <p className="text-gray-600">
                   O mercado de experiências personalizadas e entregas programadas está em rápida expansão. 
                   Junta-te a nós enquanto pioneiro neste setor inovador.
@@ -123,46 +105,29 @@ const Partnerships = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-amber-50 to-yellow-50">
+            <Card className="bg-white shadow-lg border border-gray-200">
               <CardContent className="p-8">
-                <Award className="h-12 w-12 text-amber-700 mb-4" />
-                <h4 className="text-xl font-semibold mb-4 text-gray-800">Tecnologia Avançada</h4>
+                <Award className="h-12 w-12 text-gold mb-4" />
+                <h4 className="text-xl font-semibold mb-4 text-black">Tecnologia Avançada</h4>
                 <p className="text-gray-600">
-                  Acesso a tecnologia de ponta, incluindo blockchain para verificação de autenticidade 
-                  e sistemas de armazenamento seguros.
+                  Acesso a tecnologia de ponta, incluindo sistemas de armazenamento seguros 
+                  e plataformas de gestão temporal inovadoras.
                 </p>
               </CardContent>
             </Card>
           </div>
         </div>
 
-        {/* Parceiros Atuais */}
-        <div className="mb-16">
-          <h3 className="text-3xl font-bold text-gray-800 mb-8 text-center">Os Nossos Parceiros</h3>
-          <div className="grid md:grid-cols-3 gap-6">
-            {currentPartners.map((partner, index) => (
-              <Card key={index} className="bg-white/60 backdrop-blur-sm">
-                <CardContent className="p-6 text-center">
-                  <Building className="h-10 w-10 text-amber-700 mx-auto mb-4" />
-                  <h4 className="font-semibold text-lg mb-2">{partner.name}</h4>
-                  <p className="text-amber-600 text-sm font-medium mb-2">{partner.type}</p>
-                  <p className="text-gray-600 text-sm">{partner.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
         {/* Como Tornar-se Parceiro */}
         <div className="mb-16">
-          <Card className="bg-white/80 backdrop-blur-sm max-w-4xl mx-auto">
+          <Card className="bg-white shadow-lg max-w-4xl mx-auto border border-gray-200">
             <CardHeader className="text-center">
-              <CardTitle className="text-2xl text-amber-700">Como Tornar-se Parceiro</CardTitle>
+              <CardTitle className="text-2xl text-gold">Como Tornar-se Parceiro</CardTitle>
             </CardHeader>
             <CardContent className="p-8">
               <div className="grid md:grid-cols-3 gap-8">
                 <div className="text-center">
-                  <div className="w-12 h-12 bg-amber-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
+                  <div className="w-12 h-12 bg-gold text-black rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
                     1
                   </div>
                   <h4 className="font-semibold mb-2">Contacta-nos</h4>
@@ -171,7 +136,7 @@ const Partnerships = () => {
                   </p>
                 </div>
                 <div className="text-center">
-                  <div className="w-12 h-12 bg-amber-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
+                  <div className="w-12 h-12 bg-gold text-black rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
                     2
                   </div>
                   <h4 className="font-semibold mb-2">Avaliação</h4>
@@ -180,7 +145,7 @@ const Partnerships = () => {
                   </p>
                 </div>
                 <div className="text-center">
-                  <div className="w-12 h-12 bg-amber-700 text-white rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
+                  <div className="w-12 h-12 bg-gold text-black rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
                     3
                   </div>
                   <h4 className="font-semibold mb-2">Integração</h4>
@@ -194,8 +159,8 @@ const Partnerships = () => {
         </div>
 
         {/* CTA */}
-        <div className="text-center bg-white/60 backdrop-blur-sm rounded-2xl p-8 max-w-3xl mx-auto">
-          <h3 className="text-3xl font-bold text-gray-800 mb-4">
+        <div className="text-center bg-white shadow-lg rounded-2xl p-8 max-w-3xl mx-auto border border-gray-200">
+          <h3 className="text-3xl font-bold text-black mb-4">
             Pronto para Ser Nosso Parceiro?
           </h3>
           <p className="text-xl text-gray-600 mb-6">
@@ -204,7 +169,7 @@ const Partnerships = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
-              className="text-lg px-8 py-6 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800"
+              className="text-lg px-8 py-6 bg-gold text-black hover:bg-gold/90 font-semibold"
               onClick={() => navigate('/contact')}
             >
               Propor Parceria
@@ -212,7 +177,7 @@ const Partnerships = () => {
             <Button 
               variant="outline" 
               size="lg" 
-              className="text-lg px-8 py-6 border-amber-600 text-amber-700 hover:bg-amber-50"
+              className="text-lg px-8 py-6 border-gold text-gold hover:bg-gold/10"
               onClick={() => navigate('/contact')}
             >
               Saber Mais
