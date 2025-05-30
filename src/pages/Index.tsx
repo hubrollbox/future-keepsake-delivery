@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Clock, Calendar, Mail, Users, Gift, Heart, Star, Trophy, Target } from "lucide-react";
@@ -255,9 +254,9 @@ const Index = () => {
             <div>
               <h5 className="font-semibold mb-3 text-gray-800">Empresa</h5>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="#" className="hover:text-amber-700">Sobre</a></li>
-                <li><a href="#" className="hover:text-amber-700">Contactos</a></li>
-                <li><a href="#" className="hover:text-amber-700">Parcerias</a></li>
+                <li><a href="/about" className="hover:text-amber-700">Sobre</a></li>
+                <li><a href="/contact" className="hover:text-amber-700">Contactos</a></li>
+                <li><a href="/partnerships" className="hover:text-amber-700">Parcerias</a></li>
               </ul>
             </div>
             
