@@ -2,10 +2,13 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Calendar, Mail, Users, Plus, Edit, Trash2, Loader2 } from "lucide-react";
+import { Clock, Calendar, Mail, Users, Plus, Edit, Trash2, Loader2, Trophy, Target, Award, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useDeliveries } from "@/hooks/useDeliveries";
+import UserStats from "@/components/gamification/UserStats";
+import AchievementCard from "@/components/gamification/AchievementCard";
+import QuestCard from "@/components/gamification/QuestCard";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -39,6 +42,55 @@ const Dashboard = () => {
   const digitalDeliveries = deliveries.filter(d => d.delivery_type === "digital");
   const physicalDeliveries = deliveries.filter(d => d.delivery_type === "physical");
 
+  // Dados de gamificação (em produção viriam da base de dados)
+  const achievements = [
+    {
+      id: "1",
+      title: "Primeiro Passo",
+      description: "Criaste a tua primeira entrega",
+      icon: Target,
+      unlocked: deliveries.length > 0,
+      points: 50
+    },
+    {
+      id: "2", 
+      title: "Viajante Temporal",
+      description: "Agendaste 5 entregas",
+      icon: Clock,
+      unlocked: deliveries.length >= 5,
+      points: 100
+    },
+    {
+      id: "3",
+      title: "Mestre do Futuro",
+      description: "Completaste 10 entregas",
+      icon: Trophy,
+      unlocked: false,
+      points: 200
+    }
+  ];
+
+  const quests = [
+    {
+      id: "1",
+      title: "Explorador Temporal",
+      description: "Cria a tua primeira entrega para o futuro",
+      progress: deliveries.length > 0 ? 1 : 0,
+      target: 1,
+      reward: 50,
+      timeLimit: "Sem limite"
+    },
+    {
+      id: "2",
+      title: "Construtor de Memórias",
+      description: "Agenda 3 entregas diferentes",
+      progress: deliveries.length > 3 ? 3 : deliveries.length,
+      target: 3,
+      reward: 100,
+      timeLimit: "Esta semana"
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-amber-50 to-yellow-100">
       {/* Header */}
@@ -69,50 +121,94 @@ const Dashboard = () => {
       </header>
 
       <div className="container mx-auto px-4 py-8">
-        {/* Welcome Section */}
+        {/* Welcome Section with Gamification */}
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-gray-800 mb-2">
-            Olá, {profile?.full_name || "Guardião"}! 👋
+            Bem-vindo, Guardião {profile?.full_name || "Temporal"}! 🎮
           </h2>
-          <p className="text-gray-600 text-lg">
-            Aqui estão as tuas entregas futuras. Cada uma delas é uma pequena cápsula do tempo.
+          <p className="text-gray-600 text-lg mb-6">
+            Continue a tua jornada através do tempo. Cada entrega é uma nova aventura!
           </p>
+          
+          {/* User Stats Card */}
+          <UserStats profile={profile} />
         </div>
 
-        {/* Stats Cards */}
+        {/* Stats Cards with Game Elements */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <Card>
+          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
             <CardContent className="p-6">
               <div className="flex items-center space-x-2">
-                <Calendar className="h-8 w-8 text-yellow-700" />
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
+                  <Calendar className="h-6 w-6 text-white" />
+                </div>
                 <div>
-                  <p className="text-2xl font-bold">{deliveries.length}</p>
-                  <p className="text-gray-600">Entregas Agendadas</p>
+                  <p className="text-2xl font-bold text-blue-800">{deliveries.length}</p>
+                  <p className="text-blue-600">Missões Ativas</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
             <CardContent className="p-6">
               <div className="flex items-center space-x-2">
-                <Mail className="h-8 w-8 text-amber-700" />
+                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center">
+                  <Mail className="h-6 w-6 text-white" />
+                </div>
                 <div>
-                  <p className="text-2xl font-bold">{digitalDeliveries.length}</p>
-                  <p className="text-gray-600">Presentes Digitais</p>
+                  <p className="text-2xl font-bold text-purple-800">{digitalDeliveries.length}</p>
+                  <p className="text-purple-600">Portais Digitais</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
             <CardContent className="p-6">
               <div className="flex items-center space-x-2">
-                <Users className="h-8 w-8 text-yellow-600" />
-                <div>
-                  <p className="text-2xl font-bold">{physicalDeliveries.length}</p>
-                  <p className="text-gray-600">Presentes Físicos</p>
+                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center">
+                  <Users className="h-6 w-6 text-white" />
                 </div>
+                <div>
+                  <p className="text-2xl font-bold text-green-800">{physicalDeliveries.length}</p>
+                  <p className="text-green-600">Cápsulas Físicas</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Quests Section */}
+        <div className="grid lg:grid-cols-2 gap-6 mb-8">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Target className="h-5 w-5 text-blue-600" />
+                <span>Missões Ativas</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {quests.map((quest) => (
+                  <QuestCard key={quest.id} quest={quest} />
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Award className="h-5 w-5 text-amber-600" />
+                <span>Conquistas</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {achievements.map((achievement) => (
+                  <AchievementCard key={achievement.id} achievement={achievement} />
+                ))}
               </div>
             </CardContent>
           </Card>
@@ -122,13 +218,16 @@ const Dashboard = () => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
-              <span>As Tuas Entregas</span>
+              <span className="flex items-center space-x-2">
+                <Clock className="h-5 w-5 text-yellow-600" />
+                <span>As Tuas Entregas Temporais</span>
+              </span>
               <Button 
                 onClick={() => navigate('/create-delivery')}
                 className="bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800"
               >
                 <Plus className="h-4 w-4 mr-2" />
-                Criar Nova
+                Nova Missão
               </Button>
             </CardTitle>
           </CardHeader>
@@ -140,34 +239,37 @@ const Dashboard = () => {
               </div>
             ) : deliveries.length === 0 ? (
               <div className="text-center py-8">
-                <p className="text-gray-600 mb-4">Ainda não tens entregas agendadas.</p>
+                <div className="w-16 h-16 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Target className="h-8 w-8 text-white" />
+                </div>
+                <p className="text-gray-600 mb-4">A tua jornada temporal está prestes a começar!</p>
                 <Button
                   onClick={() => navigate('/create-delivery')}
                   className="bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800"
                 >
                   <Plus className="h-4 w-4 mr-2" />
-                  Criar a Primeira Entrega
+                  Iniciar Primeira Missão
                 </Button>
               </div>
             ) : (
               <div className="space-y-4">
                 {deliveries.map((delivery) => (
-                  <div key={delivery.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
+                  <div key={delivery.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow bg-gradient-to-r from-white to-yellow-50">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center space-x-2 mb-2">
-                          <h3 className="font-semibold text-lg">{delivery.title || "Entrega sem título"}</h3>
+                          <h3 className="font-semibold text-lg">{delivery.title || "Missão Temporal"}</h3>
                           <Badge className={getStatusColor(delivery.status)}>
                             {getStatusText(delivery.status)}
                           </Badge>
                           <Badge variant="outline">
-                            {delivery.delivery_type === "digital" ? "Digital" : "Físico"}
+                            {delivery.delivery_type === "digital" ? "Portal Digital" : "Cápsula Física"}
                           </Badge>
                         </div>
                         
                         {delivery.recipient_name && (
                           <p className="text-gray-600 mb-2">
-                            <strong>Para:</strong> {delivery.recipient_name}
+                            <strong>Destinatário:</strong> {delivery.recipient_name}
                           </p>
                         )}
                         
@@ -209,10 +311,10 @@ const Dashboard = () => {
           </CardContent>
         </Card>
 
-        {/* Motivational Quote */}
-        <div className="mt-8 bg-white/60 backdrop-blur-sm rounded-2xl p-6">
+        {/* Motivational Quote with Game Theme */}
+        <div className="mt-8 bg-gradient-to-r from-amber-100 to-yellow-100 border border-amber-200 rounded-2xl p-6">
           <p className="text-center text-lg font-medium text-gray-700 italic">
-            "Cada entrega agendada é uma promessa que fazes ao teu futuro eu. ✨"
+            "Cada missão completada te aproxima do título de Mestre Temporal! 🏆✨"
           </p>
         </div>
       </div>
