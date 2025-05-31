@@ -12,7 +12,7 @@ const Navigation = ({ className }: NavigationProps) => {
 
   return (
     <header className={`container mx-auto px-4 py-6 flex justify-between items-center bg-white ${className || ""}`}>
-      <div className="flex items-center space-x-2 cursor-pointer" onClick={() => navigate('/')}>
+      <div className="flex items-center space-x-2 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate('/')}>
         <Clock className="h-8 w-8 text-gold" />
         <h1 className="text-2xl font-bold text-black">
           FuturoPresente
@@ -26,7 +26,7 @@ const Navigation = ({ className }: NavigationProps) => {
           Preços
         </Button>
         <Button variant="ghost" onClick={() => navigate('/about')} className="text-black hover-gold">
-          Sobre
+          Sobre Nós
         </Button>
         <Button variant="ghost" onClick={() => navigate('/contact')} className="text-black hover-gold">
           Contactos
@@ -43,7 +43,7 @@ const Navigation = ({ className }: NavigationProps) => {
           onClick={() => navigate('/register')}
           className="bg-gold-gradient text-black hover:opacity-90 font-semibold"
         >
-          Registar
+          Começar Grátis
         </Button>
       </div>
     </header>
