@@ -33,7 +33,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100">
+    <div className="min-h-screen bg-white">
       <Navigation />
 
       <main className="container mx-auto px-4 py-16">
@@ -42,7 +42,7 @@ const Contact = () => {
           <Button 
             variant="ghost" 
             onClick={() => navigate('/')} 
-            className="flex items-center space-x-2 text-amber-700 hover:text-amber-800"
+            className="flex items-center space-x-2 text-gray-700 hover:text-black"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Voltar ao Início</span>
@@ -51,9 +51,9 @@ const Contact = () => {
 
         {/* Hero Section */}
         <div className="text-center max-w-4xl mx-auto mb-16">
-          <h2 className="text-5xl font-bold text-gray-800 mb-6">
+          <h2 className="text-5xl font-bold text-black mb-6">
             Entre em 
-            <span className="bg-gradient-to-r from-amber-700 to-amber-600 bg-clip-text text-transparent"> Contacto</span>
+            <span className="text-gold"> Contacto</span>
           </h2>
           <p className="text-xl text-gray-600 mb-8">
             Tens uma pergunta, sugestão ou precisas de ajuda? Estamos aqui para te apoiar na tua jornada temporal.
@@ -62,9 +62,9 @@ const Contact = () => {
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Formulário de Contacto */}
-          <Card className="bg-white/80 backdrop-blur-sm">
+          <Card className="bg-white shadow-lg border border-gray-200">
             <CardHeader>
-              <CardTitle className="text-2xl text-amber-700">Enviar Mensagem</CardTitle>
+              <CardTitle className="text-2xl text-gold">Enviar Mensagem</CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -122,7 +122,7 @@ const Contact = () => {
 
                 <Button 
                   type="submit" 
-                  className="w-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800"
+                  className="w-full bg-gold text-black hover:bg-gold/90 font-semibold"
                 >
                   Enviar Mensagem
                 </Button>
@@ -132,39 +132,40 @@ const Contact = () => {
 
           {/* Informações de Contacto */}
           <div className="space-y-8">
-            <Card className="bg-white/80 backdrop-blur-sm">
+            <Card className="bg-white shadow-lg border border-gray-200">
               <CardContent className="p-6">
                 <div className="flex items-center space-x-4 mb-4">
-                  <Mail className="h-6 w-6 text-amber-700" />
+                  <Mail className="h-6 w-6 text-gold" />
                   <div>
-                    <h3 className="font-semibold text-gray-800">Email</h3>
-                    <p className="text-gray-600">suporte@futuropresente.pt</p>
+                    <h3 className="font-semibold text-black">Email</h3>
+                    <p className="text-gray-600">geral@rollbox.pt</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-white/80 backdrop-blur-sm">
+            <Card className="bg-white shadow-lg border border-gray-200">
               <CardContent className="p-6">
                 <div className="flex items-center space-x-4 mb-4">
-                  <Phone className="h-6 w-6 text-amber-700" />
+                  <Phone className="h-6 w-6 text-gold" />
                   <div>
-                    <h3 className="font-semibold text-gray-800">Telefone</h3>
-                    <p className="text-gray-600">+351 123 456 789</p>
+                    <h3 className="font-semibold text-black">Telefone</h3>
+                    <p className="text-gray-600">220 145 169</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-white/80 backdrop-blur-sm">
+            <Card className="bg-white shadow-lg border border-gray-200">
               <CardContent className="p-6">
                 <div className="flex items-center space-x-4 mb-4">
-                  <MapPin className="h-6 w-6 text-amber-700" />
+                  <MapPin className="h-6 w-6 text-gold" />
                   <div>
-                    <h3 className="font-semibold text-gray-800">Morada</h3>
+                    <h3 className="font-semibold text-black">Morada</h3>
                     <p className="text-gray-600">
-                      Rua do Futuro, 123<br />
-                      1000-001 Lisboa<br />
+                      Rua Brito Capelo<br />
+                      Edifício Diplomata<br />
+                      4450 Matosinhos<br />
                       Portugal
                     </p>
                   </div>
@@ -172,22 +173,21 @@ const Contact = () => {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-amber-50 to-yellow-50">
+            <Card className="bg-light-gold border border-gold">
               <CardContent className="p-6">
-                <h3 className="font-semibold text-gray-800 mb-3">Horário de Atendimento</h3>
-                <div className="space-y-2 text-gray-600">
-                  <p>Segunda a Sexta: 9h - 18h</p>
-                  <p>Sábado: 10h - 14h</p>
-                  <p>Domingo: Encerrado</p>
+                <h3 className="font-semibold text-black mb-3">Horário de Atendimento</h3>
+                <div className="space-y-2 text-gray-700">
+                  <p className="font-medium">24 horas por dia, 7 dias por semana!</p>
+                  <p className="text-sm italic">Porque o tempo não para... e nós também não! ⏰</p>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-amber-50 to-yellow-50">
+            <Card className="bg-light-gold border border-gold">
               <CardContent className="p-6 text-center">
-                <Clock className="h-12 w-12 text-amber-700 mx-auto mb-4" />
-                <h3 className="font-semibold text-gray-800 mb-2">Resposta Rápida</h3>
-                <p className="text-gray-600 text-sm">
+                <Clock className="h-12 w-12 text-gold mx-auto mb-4" />
+                <h3 className="font-semibold text-black mb-2">Resposta Rápida</h3>
+                <p className="text-gray-700 text-sm">
                   Respondemos a todas as mensagens em menos de 24 horas. 
                   O teu tempo é precioso para nós!
                 </p>
