@@ -97,17 +97,35 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+  }
+
+  /* Improve link accessibility */
+  a, button {
+    @apply focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 rounded;
+  }
+
+  /* Ensure proper touch targets for mobile */
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Smooth scrolling for better UX */
+  html {
+    scroll-behavior: smooth;
   }
 }
 
-/* Custom utility classes for the new color scheme */
+/* Custom utility classes for the gold and black theme */
 @layer utilities {
   .bg-gold-gradient {
     background: linear-gradient(135deg, hsl(var(--gold-primary)) 0%, hsl(var(--gold-secondary)) 100%);
   }
   
   .bg-light-gold {
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 193, 7, 0.05) 100%);
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(255, 193, 7, 0.04) 100%);
   }
   
   .text-gold {
@@ -119,6 +137,50 @@
   }
   
   .hover-gold:hover {
-    background-color: rgba(255, 215, 0, 0.1);
+    background-color: rgba(255, 215, 0, 0.08);
+    transition: background-color 0.2s ease;
+  }
+
+  /* Improved button styles */
+  .btn-primary {
+    @apply bg-gold-gradient text-black font-semibold px-6 py-3 rounded-lg hover:opacity-90 transition-all duration-200 shadow-md hover:shadow-lg;
+  }
+
+  .btn-secondary {
+    @apply border-2 border-gold text-black font-semibold px-6 py-3 rounded-lg hover-gold transition-all duration-200;
+  }
+
+  /* Typography improvements */
+  .text-hero {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    font-weight: 800;
+  }
+
+  .text-hero-sm {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.1;
+    font-weight: 800;
+  }
+
+  /* Better spacing for sections */
+  .section-spacing {
+    @apply py-16 md:py-20;
+  }
+
+  /* Improved card styles */
+  .card-hover {
+    @apply hover:shadow-xl hover:scale-105 transition-all duration-300;
+  }
+}
+
+/* Performance optimizations */
+@layer utilities {
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  .gpu-accelerated {
+    transform: translateZ(0);
   }
 }
