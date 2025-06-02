@@ -1,4 +1,3 @@
-
 import { Clock, Mail, Phone, MapPin, Heart, Linkedin, Instagram } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -49,7 +48,7 @@ const Footer = () => {
           {/* Coluna 2: A Nossa Empresa */}
           <div>
             <h5 className="font-semibold mb-4 text-black text-base">A Nossa Empresa</h5>
-            <ul className="space-y-3 text-sm text-gray-700">
+            <ul className="space-y-2 text-sm text-gray-700">
               <li>
                 <button 
                   onClick={() => handleNavigation('/about')} 
@@ -80,7 +79,7 @@ const Footer = () => {
           {/* Coluna 3: Os Nossos Serviços */}
           <div>
             <h5 className="font-semibold mb-4 text-black text-base">Os Nossos Serviços</h5>
-            <ul className="space-y-3 text-sm text-gray-700">
+            <ul className="space-y-2 text-sm text-gray-700">
               <li>
                 <button 
                   onClick={() => handleNavigation('/how-it-works')} 
@@ -111,7 +110,7 @@ const Footer = () => {
           {/* Coluna 4: Informações Legais */}
           <div>
             <h5 className="font-semibold mb-4 text-black text-base">Informações Legais</h5>
-            <ul className="space-y-3 text-sm text-gray-700">
+            <ul className="space-y-2 text-sm text-gray-700">
               <li>
                 <button 
                   onClick={() => handleNavigation('/terms-conditions')} 
@@ -135,7 +134,7 @@ const Footer = () => {
         {/* Redes Sociais */}
         <div className="border-t border-gold pt-6 mb-6">
           <h5 className="font-semibold mb-4 text-black text-center">Segue-nos nas Redes Sociais</h5>
-          <div className="flex justify-center space-x-6">
+          <div className="flex justify-center space-x-4">
             <a 
               href="https://linkedin.com/company/futuropropresente" 
               target="_blank" 

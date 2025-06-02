@@ -9,6 +9,27 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      admin_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       deliveries: {
         Row: {
           created_at: string | null
@@ -135,6 +156,59 @@ export type Database = {
           },
         ]
       }
+      payments: {
+        Row: {
+          amount: number
+          client_email: string
+          client_name: string | null
+          created_at: string
+          currency: string
+          delivery_id: string | null
+          id: string
+          payment_date: string | null
+          service_type: string | null
+          status: string
+          stripe_payment_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          amount: number
+          client_email: string
+          client_name?: string | null
+          created_at?: string
+          currency?: string
+          delivery_id?: string | null
+          id?: string
+          payment_date?: string | null
+          service_type?: string | null
+          status: string
+          stripe_payment_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          amount?: number
+          client_email?: string
+          client_name?: string | null
+          created_at?: string
+          currency?: string
+          delivery_id?: string | null
+          id?: string
+          payment_date?: string | null
+          service_type?: string | null
+          status?: string
+          stripe_payment_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_delivery_id_fkey"
+            columns: ["delivery_id"]
+            isOneToOne: false
+            referencedRelation: "deliveries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -192,12 +266,62 @@ export type Database = {
         }
         Relationships: []
       }
+      warehouse_items: {
+        Row: {
+          client_name: string
+          created_at: string
+          delivery_id: string | null
+          id: string
+          photo_url: string | null
+          product_description: string
+          received_date: string
+          status: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          client_name: string
+          created_at?: string
+          delivery_id?: string | null
+          id?: string
+          photo_url?: string | null
+          product_description: string
+          received_date?: string
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          client_name?: string
+          created_at?: string
+          delivery_id?: string | null
+          id?: string
+          photo_url?: string | null
+          product_description?: string
+          received_date?: string
+          status?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "warehouse_items_delivery_id_fkey"
+            columns: ["delivery_id"]
+            isOneToOne: false
+            referencedRelation: "deliveries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      is_admin: {
+        Args: { user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
