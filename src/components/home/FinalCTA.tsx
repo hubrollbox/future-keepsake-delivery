@@ -21,7 +21,7 @@ const FinalCTA = () => {
           Pronto para a Tua Primeira Viagem no Tempo?
         </h2>
         <p className="text-body md:text-body-large text-gray-700 mb-6 md:mb-8 leading-relaxed max-w-4xl mx-auto font-medium">
-          Junta-te a <strong className="text-gold">milhares de pessoas</strong> que já estão a criar memórias para o futuro. 
+          Junta-te aos nossos <strong className="text-gold">primeiros utilizadores</strong> que já estão a criar memórias para o futuro. 
           Começa gratuitamente e descobre a magia de receber algo especial no momento perfeito.
         </p>
       </div>
