@@ -6,26 +6,26 @@ const TestimonialsSection = () => {
   const testimonials = [
     {
       name: "Maria Silva",
-      text: "Enviei uma carta para o meu aniversário de 30 anos. Quando a recebi, chorei de emoção! Foi como receber um abraço do passado.",
+      text: "Enviei uma carta para o meu futuro aniversário. A ideia de receber algo especial de mim mesma é fantástica! Mal posso esperar.",
       rating: 5
     },
     {
       name: "João Santos", 
-      text: "O meu presente físico chegou exactamente no dia certo. O meu filho ficou radiante ao receber o livro que escolhi para ele há 2 anos. Serviço impecável!",
+      text: "Criei a minha primeira entrega para surprender a minha namorada no nosso aniversário. O conceito é revolucionário!",
       rating: 5
     },
     {
       name: "Ana Costa",
-      text: "Criei uma cápsula do tempo para a minha filha quando ela tinha 8 anos. Agora aos 16, ficou emocionada ao ver as fotos e a carta que escrevi. Memórias preservadas para sempre!",
+      text: "Adorei a ideia de criar uma cápsula do tempo para a minha filha. Será uma surpresa incrível quando ela crescer!",
       rating: 5
     }
   ];
 
   return (
     <div className="mb-16 md:mb-20 animate-fade-in">
-      <h2 className="text-section-title-sm md:text-section-title text-black mb-4 md:mb-6 text-center">Histórias Reais dos Nossos Guardiões do Tempo</h2>
+      <h2 className="text-section-title-sm md:text-section-title text-black mb-4 md:mb-6 text-center">Primeiros Guardiões do Tempo</h2>
       <p className="text-body md:text-body-large text-gray-600 mb-8 md:mb-12 text-center max-w-4xl mx-auto leading-relaxed">
-        Mais de 10.000 pessoas já criaram memórias especiais connosco. Estas são algumas das suas histórias.
+        Os nossos primeiros utilizadores já estão a criar memórias especiais. Estas são algumas das suas experiências.
       </p>
       <div className="grid md:grid-cols-3 gap-6 md:gap-8">
         {testimonials.map((testimonial, index) => (

@@ -8,7 +8,7 @@ const TrustSection = () => {
         Porque Confiar em Nós?
       </h2>
       <p className="text-body md:text-body-large text-gray-600 mb-8 md:mb-10 text-center max-w-3xl mx-auto leading-relaxed">
-        Somos uma empresa <strong className="text-gold">100% portuguesa</strong> com mais de 3 anos de experiência em preservar memórias.
+        Somos uma empresa <strong className="text-gold">100% portuguesa</strong> focada em preservar as tuas memórias com total segurança.
       </p>
       
       <div className="grid md:grid-cols-3 gap-8 md:gap-10 text-center">
@@ -26,9 +26,9 @@ const TrustSection = () => {
           <div className="w-20 h-20 md:w-24 md:h-24 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 group-hover:bg-blue-200 transition-colors">
             <CheckCircle className="h-10 w-10 md:h-12 md:w-12 text-blue-600" />
           </div>
-          <h3 className="font-bold mb-3 md:mb-4 text-lg md:text-xl text-black">100% de Fiabilidade</h3>
+          <h3 className="font-bold mb-3 md:mb-4 text-lg md:text-xl text-black">Tecnologia Inovadora</h3>
           <p className="text-sm md:text-base text-gray-600 leading-relaxed">
-            Mais de <strong>50.000 entregas realizadas</strong> com sucesso e taxa de satisfação de 99,8%
+            Plataforma desenvolvida com as <strong>mais recentes tecnologias</strong> para garantir precisão nas entregas
           </p>
         </div>
         
