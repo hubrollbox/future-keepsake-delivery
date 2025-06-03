@@ -1,9 +1,10 @@
 
 import React, { useState, useEffect } from "react";
-import { Search, Package, CheckCircle, Clock, Truck } from "lucide-react";
+import { Search, Package, CheckCircle, Clock, Truck, Upload, X } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminData, WarehouseItem } from "@/hooks/useAdminData";
 import { useToast } from "@/hooks/use-toast";
@@ -13,8 +14,17 @@ const AdminWarehouse = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const { updateWarehouseItemStatus } = useAdminData();
   const { toast } = useToast();
+
+  const [newItem, setNewItem] = useState({
+    client_name: "",
+    product_description: "",
+    received_date: new Date().toISOString().split('T')[0],
+    photo: null as File | null,
+  });
 
   useEffect(() => {
     fetchWarehouseItems();
@@ -44,6 +54,82 @@ const AdminWarehouse = () => {
   const handleStatusUpdate = async (itemId: string, newStatus: string) => {
     await updateWarehouseItemStatus(itemId, newStatus);
     fetchWarehouseItems();
+  };
+
+  const uploadPhoto = async (file: File): Promise<string | null> => {
+    try {
+      setUploadingPhoto(true);
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+      
+      const { error: uploadError } = await supabase.storage
+        .from('warehouse-images')
+        .upload(fileName, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage
+        .from('warehouse-images')
+        .getPublicUrl(fileName);
+
+      return data.publicUrl;
+    } catch (error) {
+      console.error('Error uploading photo:', error);
+      toast({
+        title: "Erro",
+        description: "Não foi possível fazer upload da foto.",
+        variant: "destructive",
+      });
+      return null;
+    } finally {
+      setUploadingPhoto(false);
+    }
+  };
+
+  const handleAddItem = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      let photoUrl = null;
+      
+      if (newItem.photo) {
+        photoUrl = await uploadPhoto(newItem.photo);
+        if (!photoUrl) return; // Upload failed
+      }
+
+      const { error } = await supabase
+        .from("warehouse_items")
+        .insert({
+          client_name: newItem.client_name,
+          product_description: newItem.product_description,
+          received_date: newItem.received_date,
+          photo_url: photoUrl,
+          status: 'stored',
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: "Sucesso",
+        description: "Item adicionado ao armazém com sucesso.",
+      });
+
+      setNewItem({
+        client_name: "",
+        product_description: "",
+        received_date: new Date().toISOString().split('T')[0],
+        photo: null,
+      });
+      setShowAddForm(false);
+      fetchWarehouseItems();
+    } catch (error) {
+      console.error("Error adding warehouse item:", error);
+      toast({
+        title: "Erro",
+        description: "Não foi possível adicionar o item ao armazém.",
+        variant: "destructive",
+      });
+    }
   };
 
   const filteredItems = warehouseItems.filter((item) => {
@@ -115,6 +201,13 @@ const AdminWarehouse = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-2xl font-bold text-gray-900">Armazém</h1>
         <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+          <Button
+            onClick={() => setShowAddForm(true)}
+            className="bg-green-600 hover:bg-green-700 text-white"
+          >
+            <Package className="h-4 w-4 mr-2" />
+            Adicionar Item
+          </Button>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
             <Input
@@ -136,6 +229,91 @@ const AdminWarehouse = () => {
           </select>
         </div>
       </div>
+
+      {showAddForm && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between">
+              <span>Adicionar Novo Item</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowAddForm(false)}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleAddItem} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="client_name">Nome do Cliente</Label>
+                  <Input
+                    id="client_name"
+                    value={newItem.client_name}
+                    onChange={(e) => setNewItem(prev => ({ ...prev, client_name: e.target.value }))}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="received_date">Data de Receção</Label>
+                  <Input
+                    id="received_date"
+                    type="date"
+                    value={newItem.received_date}
+                    onChange={(e) => setNewItem(prev => ({ ...prev, received_date: e.target.value }))}
+                    required
+                  />
+                </div>
+              </div>
+              
+              <div>
+                <Label htmlFor="product_description">Descrição do Produto</Label>
+                <Input
+                  id="product_description"
+                  value={newItem.product_description}
+                  onChange={(e) => setNewItem(prev => ({ ...prev, product_description: e.target.value }))}
+                  required
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="photo">Foto do Item (opcional)</Label>
+                <Input
+                  id="photo"
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setNewItem(prev => ({ ...prev, photo: e.target.files?.[0] || null }))}
+                />
+              </div>
+
+              <div className="flex gap-2">
+                <Button type="submit" disabled={uploadingPhoto}>
+                  {uploadingPhoto ? (
+                    <>
+                      <Upload className="h-4 w-4 mr-2 animate-spin" />
+                      A carregar...
+                    </>
+                  ) : (
+                    <>
+                      <Package className="h-4 w-4 mr-2" />
+                      Adicionar Item
+                    </>
+                  )}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowAddForm(false)}
+                >
+                  Cancelar
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      )}
 
       <div className="grid gap-4">
         {filteredItems.map((item) => (
