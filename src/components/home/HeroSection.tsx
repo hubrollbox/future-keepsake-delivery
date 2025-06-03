@@ -42,15 +42,10 @@ const HeroSection = () => {
           variant="outline" 
           size="lg" 
           className="text-body md:text-body-large px-10 md:px-14 py-6 md:py-8 border-2 border-gold text-black hover-gold hover:scale-105 transition-all duration-300 font-semibold rounded-xl min-h-[64px] md:min-h-[72px]" 
-          onClick={() => handleNavigation('/how-it-works')}
+          onClick={() => handleNavigation('/products')}
         >
-          Descobrir Como Funciona
+          Ver Produtos e Serviços
         </Button>
-      </div>
-
-      <div className="text-sm md:text-base text-gray-600 animate-fade-in">
-        <p className="mb-2 font-medium">✓ Mais de 50.000 entregas realizadas com sucesso</p>
-        <p className="font-medium">✓ Empresa portuguesa com apoio local dedicado</p>
       </div>
     </div>
   );

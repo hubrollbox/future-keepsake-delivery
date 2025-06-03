@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import CreateDelivery from "./pages/CreateDelivery";
 import AdminDashboard from "./pages/AdminDashboard";
+import Products from "./pages/Products";
 import HowItWorks from "./pages/HowItWorks";
 import Pricing from "./pages/Pricing";
 import TermsConditions from "./pages/TermsConditions";
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/create-delivery" element={<ProtectedRoute><CreateDelivery /></ProtectedRoute>} />
           <Route path="/admin/*" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/products" element={<Products />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/about" element={<About />} />

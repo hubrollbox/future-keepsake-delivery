@@ -245,6 +245,21 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          role: string | null
+          user_id: string
+        }
+        Insert: {
+          role?: string | null
+          user_id: string
+        }
+        Update: {
+          role?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       users: {
         Row: {
           created_at: string | null

@@ -29,6 +29,9 @@ const Navigation = ({ className }: NavigationProps) => {
       
       {/* Desktop Navigation */}
       <nav className="hidden lg:flex space-x-6">
+        <Button variant="ghost" onClick={() => handleNavigation('/products')} className="text-black hover-gold font-medium">
+          Produtos
+        </Button>
         <Button variant="ghost" onClick={() => handleNavigation('/how-it-works')} className="text-black hover-gold font-medium">
           Como Funciona
         </Button>
@@ -72,6 +75,9 @@ const Navigation = ({ className }: NavigationProps) => {
       {isMenuOpen && (
         <div className="absolute top-full left-0 right-0 bg-white border-t border-gold shadow-lg z-50 lg:hidden">
           <nav className="container mx-auto px-4 py-6 space-y-4">
+            <Button variant="ghost" onClick={() => handleNavigation('/products')} className="w-full justify-start text-black hover-gold font-medium">
+              Produtos
+            </Button>
             <Button variant="ghost" onClick={() => handleNavigation('/how-it-works')} className="w-full justify-start text-black hover-gold font-medium">
               Como Funciona
             </Button>

@@ -6,6 +6,10 @@ import { useAdmin } from "@/hooks/useAdmin";
 import AdminLayout from "@/components/admin/AdminLayout";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 import AdminDeliveries from "@/components/admin/AdminDeliveries";
+import AdminWarehouse from "@/components/admin/AdminWarehouse";
+import AdminMessages from "@/components/admin/AdminMessages";
+import AdminPayments from "@/components/admin/AdminPayments";
+import AdminClients from "@/components/admin/AdminClients";
 import { Loader2 } from "lucide-react";
 
 const AdminDashboardPage = () => {
@@ -44,10 +48,10 @@ const AdminDashboardPage = () => {
       <Routes>
         <Route path="/" element={<AdminDashboard />} />
         <Route path="/deliveries" element={<AdminDeliveries />} />
-        <Route path="/warehouse" element={<div>Armazém - Em desenvolvimento</div>} />
-        <Route path="/messages" element={<div>Mensagens - Em desenvolvimento</div>} />
-        <Route path="/payments" element={<div>Pagamentos - Em desenvolvimento</div>} />
-        <Route path="/clients" element={<div>Clientes - Em desenvolvimento</div>} />
+        <Route path="/warehouse" element={<AdminWarehouse />} />
+        <Route path="/messages" element={<AdminMessages />} />
+        <Route path="/payments" element={<AdminPayments />} />
+        <Route path="/clients" element={<AdminClients />} />
       </Routes>
     </AdminLayout>
   );

@@ -2,6 +2,7 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import HeroSection from "@/components/home/HeroSection";
+import ManifestoSection from "@/components/home/ManifestoSection";
 import GamificationPreview from "@/components/home/GamificationPreview";
 import HowItWorksSection from "@/components/home/HowItWorksSection";
 import DeliveryTypesSection from "@/components/home/DeliveryTypesSection";
@@ -16,6 +17,7 @@ const Index = () => {
 
       <main className="container mx-auto px-4 py-16">
         <HeroSection />
+        <ManifestoSection />
         <GamificationPreview />
         <HowItWorksSection />
         <DeliveryTypesSection />
