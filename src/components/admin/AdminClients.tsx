@@ -1,79 +1,55 @@
 
 import React, { useState, useEffect } from "react";
-import { Search, Users, User, Package, MessageSquare } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { supabase } from "@/integrations/supabase/client";
+import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
+import { Users, Search, Shield, User } from "lucide-react";
 
-interface ClientData {
+interface Client {
   id: string;
   email: string;
   full_name: string | null;
+  plan_type: string;
+  total_points: number;
+  level: number;
   created_at: string;
-  deliveries_count: number;
-  messages_count: number;
-  last_delivery: string | null;
+  is_admin: boolean;
 }
 
 const AdminClients = () => {
-  const [clients, setClients] = useState<ClientData[]>([]);
+  const [clients, setClients] = useState<Client[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const { toast } = useToast();
 
-  useEffect(() => {
-    fetchClients();
-  }, []);
-
   const fetchClients = async () => {
     try {
-      // Get user profiles with delivery and message counts
+      // Fetch profiles with admin status
       const { data: profiles, error: profilesError } = await supabase
         .from("profiles")
-        .select("id, email, full_name, created_at");
+        .select("*")
+        .order("created_at", { ascending: false });
 
       if (profilesError) throw profilesError;
 
-      // Get delivery counts for each user
-      const clientsWithCounts = await Promise.all(
-        (profiles || []).map(async (profile) => {
-          const [deliveriesResult, messagesResult] = await Promise.all([
-            supabase
-              .from("deliveries")
-              .select("id, created_at")
-              .eq("user_id", profile.id),
-            supabase
-              .from("digital_messages")
-              .select("id")
-              .in("delivery_id", 
-                supabase
-                  .from("deliveries")
-                  .select("id")
-                  .eq("user_id", profile.id)
-              )
-          ]);
+      // Fetch admin roles
+      const { data: adminRoles, error: adminError } = await supabase
+        .from("admin_roles")
+        .select("user_id");
 
-          const deliveries = deliveriesResult.data || [];
-          const messages = messagesResult.data || [];
-          
-          // Get last delivery date
-          const lastDelivery = deliveries.length > 0 
-            ? deliveries.sort((a, b) => new Date(b.created_at!).getTime() - new Date(a.created_at!).getTime())[0].created_at
-            : null;
+      if (adminError) throw adminError;
 
-          return {
-            ...profile,
-            deliveries_count: deliveries.length,
-            messages_count: messages.length,
-            last_delivery: lastDelivery
-          };
-        })
-      );
+      const adminUserIds = adminRoles?.map(role => role.user_id) || [];
 
-      setClients(clientsWithCounts);
+      const clientsWithAdminStatus = profiles?.map(profile => ({
+        ...profile,
+        is_admin: adminUserIds.includes(profile.id)
+      })) || [];
+
+      setClients(clientsWithAdminStatus);
     } catch (error) {
       console.error("Error fetching clients:", error);
       toast({
@@ -86,27 +62,56 @@ const AdminClients = () => {
     }
   };
 
-  const filteredClients = clients.filter((client) => {
-    const matchesSearch = 
-      client.full_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      client.email?.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    return matchesSearch;
-  });
+  const toggleAdminStatus = async (userId: string, isCurrentlyAdmin: boolean) => {
+    try {
+      if (isCurrentlyAdmin) {
+        // Remove admin role
+        const { error } = await supabase
+          .from("admin_roles")
+          .delete()
+          .eq("user_id", userId);
+
+        if (error) throw error;
+      } else {
+        // Add admin role
+        const { error } = await supabase
+          .from("admin_roles")
+          .insert({ user_id: userId, role: "admin" });
+
+        if (error) throw error;
+      }
+
+      toast({
+        title: "Sucesso",
+        description: `Permissões ${isCurrentlyAdmin ? 'removidas' : 'concedidas'} com sucesso.`,
+      });
+
+      fetchClients();
+    } catch (error) {
+      console.error("Error updating admin status:", error);
+      toast({
+        title: "Erro",
+        description: "Não foi possível atualizar as permissões.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  useEffect(() => {
+    fetchClients();
+  }, []);
+
+  const filteredClients = clients.filter(client =>
+    client.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (client.full_name || "").toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   if (loading) {
     return (
-      <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900">Clientes</h1>
-        <div className="animate-pulse space-y-4">
-          {[...Array(3)].map((_, i) => (
-            <Card key={i}>
-              <CardContent className="p-6">
-                <div className="h-6 bg-gray-200 rounded w-1/2 mb-4"></div>
-                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-              </CardContent>
-            </Card>
-          ))}
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gold mx-auto mb-4"></div>
+          <p className="text-gray-600">A carregar clientes...</p>
         </div>
       </div>
     );
@@ -115,15 +120,20 @@ const AdminClients = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 className="text-2xl font-bold text-gray-900">Clientes</h1>
-        <div className="relative w-full sm:w-auto">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-          <Input
-            placeholder="Pesquisar clientes..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 w-full sm:w-64"
-          />
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Gestão de Clientes</h1>
+          <p className="text-gray-600">Gerir utilizadores e permissões</p>
+        </div>
+        <div className="flex items-center space-x-2 w-full sm:w-auto">
+          <div className="relative flex-1 sm:flex-none">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+            <Input
+              placeholder="Pesquisar clientes..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10 w-full sm:w-64"
+            />
+          </div>
         </div>
       </div>
 
@@ -131,73 +141,53 @@ const AdminClients = () => {
         {filteredClients.map((client) => (
           <Card key={client.id} className="hover:shadow-md transition-shadow">
             <CardContent className="p-6">
-              <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-                <div className="flex-1 space-y-2">
-                  <div className="flex items-center gap-2">
-                    <User className="h-4 w-4 text-blue-600" />
-                    <h3 className="text-lg font-semibold text-gray-900">
-                      {client.full_name || "Nome não fornecido"}
-                    </h3>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex-1">
+                  <div className="flex items-center space-x-3 mb-2">
+                    <div className="p-2 bg-gold/10 rounded-full">
+                      {client.is_admin ? (
+                        <Shield className="h-4 w-4 text-gold" />
+                      ) : (
+                        <User className="h-4 w-4 text-gray-600" />
+                      )}
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900">
+                        {client.full_name || "Nome não fornecido"}
+                      </h3>
+                      <p className="text-sm text-gray-600">{client.email}</p>
+                    </div>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-600">
-                    <div>
-                      <strong>Email:</strong> {client.email}
-                    </div>
-                    <div>
-                      <strong>Registado em:</strong> {new Date(client.created_at).toLocaleDateString('pt-PT')}
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Package className="h-4 w-4" />
-                      <strong>Entregas:</strong> {client.deliveries_count}
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <MessageSquare className="h-4 w-4" />
-                      <strong>Mensagens:</strong> {client.messages_count}
-                    </div>
-                    {client.last_delivery && (
-                      <div>
-                        <strong>Última entrega:</strong> {new Date(client.last_delivery).toLocaleDateString('pt-PT')}
-                      </div>
-                    )}
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    <Badge variant={client.is_admin ? "default" : "secondary"}>
+                      {client.is_admin ? "Administrador" : "Utilizador"}
+                    </Badge>
+                    <Badge variant="outline">
+                      Plano: {client.plan_type || "Free"}
+                    </Badge>
+                    <Badge variant="outline">
+                      Nível: {client.level || 1}
+                    </Badge>
+                    <Badge variant="outline">
+                      {client.total_points || 0} pontos
+                    </Badge>
                   </div>
+
+                  <p className="text-xs text-gray-500">
+                    Registado em: {new Date(client.created_at).toLocaleDateString('pt-PT')}
+                  </p>
                 </div>
 
-                <div className="flex gap-2">
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button size="sm" variant="outline">
-                        Ver Histórico
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent className="max-w-4xl">
-                      <DialogHeader>
-                        <DialogTitle>Histórico de {client.full_name || client.email}</DialogTitle>
-                      </DialogHeader>
-                      <div className="space-y-4">
-                        <div className="grid grid-cols-3 gap-4 text-center">
-                          <div className="bg-blue-50 p-4 rounded-md">
-                            <Package className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-                            <div className="text-2xl font-bold text-blue-600">{client.deliveries_count}</div>
-                            <div className="text-sm text-gray-600">Entregas</div>
-                          </div>
-                          <div className="bg-green-50 p-4 rounded-md">
-                            <MessageSquare className="h-8 w-8 text-green-600 mx-auto mb-2" />
-                            <div className="text-2xl font-bold text-green-600">{client.messages_count}</div>
-                            <div className="text-sm text-gray-600">Mensagens</div>
-                          </div>
-                          <div className="bg-purple-50 p-4 rounded-md">
-                            <Users className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-                            <div className="text-sm font-medium text-purple-600">Cliente desde</div>
-                            <div className="text-sm text-gray-600">{new Date(client.created_at).toLocaleDateString('pt-PT')}</div>
-                          </div>
-                        </div>
-                        <div className="text-center text-gray-600">
-                          <p>Histórico detalhado em desenvolvimento</p>
-                        </div>
-                      </div>
-                    </DialogContent>
-                  </Dialog>
+                <div className="flex space-x-2">
+                  <Button
+                    variant={client.is_admin ? "destructive" : "default"}
+                    size="sm"
+                    onClick={() => toggleAdminStatus(client.id, client.is_admin)}
+                    className={client.is_admin ? "" : "bg-gold hover:bg-gold/90 text-black"}
+                  >
+                    {client.is_admin ? "Remover Admin" : "Tornar Admin"}
+                  </Button>
                 </div>
               </div>
             </CardContent>
@@ -206,12 +196,12 @@ const AdminClients = () => {
       </div>
 
       {filteredClients.length === 0 && (
-        <Card>
-          <CardContent className="p-8 text-center">
-            <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-600">Nenhum cliente encontrado.</p>
-          </CardContent>
-        </Card>
+        <div className="text-center py-12">
+          <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+          <p className="text-gray-600">
+            {searchTerm ? "Nenhum cliente encontrado com esse termo." : "Nenhum cliente encontrado."}
+          </p>
+        </div>
       )}
     </div>
   );

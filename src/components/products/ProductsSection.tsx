@@ -3,11 +3,18 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Package, Gem, Book, Video, Headphones, PenTool } from "lucide-react";
+import { useCart } from "@/contexts/CartContext";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const ProductsSection = () => {
+  const { addToCart } = useCart();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
   const products = [
     {
-      id: 1,
+      id: "caixa-capsula",
       title: "Caixa Cápsula – Tempo de Guardar",
       description: "Uma pequena caixa, feita à mão, pensada para guardar segredos com data marcada. Quando escrevemos algo para o futuro, fazemos uma promessa de reencontro com quem seremos. Esta cápsula é o abraço que fica fechado até ser hora de abrir.",
       icon: Package,
@@ -20,7 +27,7 @@ const ProductsSection = () => {
       ]
     },
     {
-      id: 2,
+      id: "bau-memoria",
       title: "Baú da Memória – Edição Especial",
       description: "O tempo passa, mas o que tocamos e sentimos fica. Este baú é feito para guardar os momentos que marcam uma vida inteira — o dia do nascimento, o último verão com os avós, ou a carta que nunca teve resposta. É mais do que uma caixa: é um lugar onde o tempo repousa.",
       icon: Gem,
@@ -33,7 +40,7 @@ const ProductsSection = () => {
       ]
     },
     {
-      id: 3,
+      id: "caderno-cartas",
       title: "Caderno \"Cartas para o Futuro\"",
       description: "Escrever uma carta para alguém que ainda não existe, ou que ainda não está pronto para ouvir, é um gesto de fé. Este caderno tem envelopes para diferentes idades, datas ou momentos. Como um calendário de emoções que só se abre no tempo certo.",
       icon: Book,
@@ -46,7 +53,7 @@ const ProductsSection = () => {
       ]
     },
     {
-      id: 4,
+      id: "edicao-video",
       title: "Edição de Vídeo Emocional",
       description: "Grava um vídeo hoje para te veres daqui a 10 anos. Ou para deixares uma mensagem de amor, força ou despedida. Nós tratamos da edição com música, legendas e sensibilidade — para que o teu presente chegue ao futuro com a mesma emoção com que foi criado.",
       icon: Video,
@@ -59,7 +66,7 @@ const ProductsSection = () => {
       ]
     },
     {
-      id: 5,
+      id: "tratamento-audio",
       title: "Tratamento de Áudio com Música",
       description: "A tua voz, limpa e embalada em som suave, para que cada palavra ressoe como uma memória. Ideal para mensagens íntimas, histórias de vida ou despedidas sussurradas. Porque o som, como o amor, nunca envelhece.",
       icon: Headphones,
@@ -72,7 +79,7 @@ const ProductsSection = () => {
       ]
     },
     {
-      id: 6,
+      id: "escrita-assistida",
       title: "Escrita Assistida – Cartas com IA",
       description: "Nem sempre é fácil escrever o que sentimos. Às vezes, só precisamos de um empurrão. Com a ajuda da nossa inteligência emocional artificial, construímos contigo uma carta para o futuro que seja tua — verdadeira, tocante e com as palavras certas no tempo certo.",
       icon: PenTool,
@@ -85,6 +92,15 @@ const ProductsSection = () => {
       ]
     }
   ];
+
+  const handleAddToCart = async (product: typeof products[0]) => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+    
+    await addToCart(product.id, product.title, product.price);
+  };
 
   return (
     <div className="container mx-auto px-4 py-16">
@@ -136,12 +152,19 @@ const ProductsSection = () => {
 
                 <div className="pt-4">
                   {product.category === "físico" ? (
-                    <Button className="w-full bg-gold-gradient text-black hover:opacity-90 font-semibold">
+                    <Button 
+                      onClick={() => handleAddToCart(product)}
+                      className="w-full bg-gold-gradient text-black hover:opacity-90 font-semibold"
+                    >
                       Adicionar ao Carrinho
                     </Button>
                   ) : (
-                    <Button variant="outline" className="w-full border-gold text-gold hover:bg-gold/10 font-semibold">
-                      Saiba Mais
+                    <Button 
+                      variant="outline" 
+                      onClick={() => handleAddToCart(product)}
+                      className="w-full border-gold text-gold hover:bg-gold/10 font-semibold"
+                    >
+                      Adicionar ao Carrinho
                     </Button>
                   )}
                 </div>
@@ -160,7 +183,10 @@ const ProductsSection = () => {
             Cada história é única. Se precisas de algo personalizado ou tens uma ideia diferente 
             para a tua cápsula do tempo, vamos conversar e criar algo especial para ti.
           </p>
-          <Button className="bg-gold-gradient text-black hover:opacity-90 font-semibold px-8">
+          <Button 
+            onClick={() => navigate("/contact")}
+            className="bg-gold-gradient text-black hover:opacity-90 font-semibold px-8"
+          >
             Contacta-nos
           </Button>
         </div>
