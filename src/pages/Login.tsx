@@ -99,6 +99,8 @@ const Login = () => {
                   placeholder="teu@email.com"
                   className={errors.email ? "border-red-500" : ""}
                   required
+                  aria-required="true"
+                  aria-label="Email"
                 />
                 {errors.email && (
                   <p className="text-red-600 text-sm mt-1">{errors.email}</p>
@@ -113,9 +115,11 @@ const Login = () => {
                   type="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  placeholder="••••••••"
+                  placeholder="A tua palavra-passe"
                   className={errors.password ? "border-red-500" : ""}
                   required
+                  aria-required="true"
+                  aria-label="Palavra-passe"
                 />
                 {errors.password && (
                   <p className="text-red-600 text-sm mt-1">{errors.password}</p>

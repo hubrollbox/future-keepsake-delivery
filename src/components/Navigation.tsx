@@ -21,8 +21,8 @@ const Navigation = () => {
   return (
     <>
       <nav className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-40">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center h-16">
+        <div className="container mx-auto px-4 md:px-8">
+          <div className="flex justify-between items-center h-20">
             <Link to="/" className="flex items-center space-x-2 font-bold text-xl text-black">
               <Clock className="h-6 w-6 text-gold" />
               <span>Futuro Presente</span>
@@ -30,20 +30,20 @@ const Navigation = () => {
             </Link>
 
             {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-8">
-              <Link to="/products" className="text-gray-700 hover:text-gold transition-colors">
+            <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
+              <Link to="/products" className="text-gray-700 hover:text-gold transition-colors" aria-label="Navegar para Produtos">
                 Produtos
               </Link>
-              <Link to="/how-it-works" className="text-gray-700 hover:text-gold transition-colors">
+              <Link to="/how-it-works" className="text-gray-700 hover:text-gold transition-colors" aria-label="Navegar para Como Funciona">
                 Como Funciona
               </Link>
-              <Link to="/pricing" className="text-gray-700 hover:text-gold transition-colors">
+              <Link to="/pricing" className="text-gray-700 hover:text-gold transition-colors" aria-label="Navegar para Preços">
                 Preços
               </Link>
-              <Link to="/about" className="text-gray-700 hover:text-gold transition-colors">
+              <Link to="/about" className="text-gray-700 hover:text-gold transition-colors" aria-label="Navegar para Sobre">
                 Sobre
               </Link>
-              <Link to="/contact" className="text-gray-700 hover:text-gold transition-colors">
+              <Link to="/contact" className="text-gray-700 hover:text-gold transition-colors" aria-label="Navegar para Contacto">
                 Contacto
               </Link>
 
@@ -51,7 +51,7 @@ const Navigation = () => {
 
               {user ? (
                 <div className="flex items-center space-x-4">
-                  <Link to="/dashboard">
+                  <Link to="/dashboard" aria-label="Acessar Dashboard">
                     <Button variant="outline" size="sm" className="border-gold text-gold hover:bg-gold/10">
                       Dashboard
                     </Button>
@@ -61,18 +61,19 @@ const Navigation = () => {
                     variant="ghost" 
                     size="sm"
                     className="text-gray-600 hover:text-gray-800"
+                    aria-label="Sair da conta"
                   >
                     Sair
                   </Button>
                 </div>
               ) : (
                 <div className="flex items-center space-x-4">
-                  <Link to="/login">
+                  <Link to="/login" aria-label="Entrar na conta">
                     <Button variant="outline" size="sm" className="border-gold text-gold hover:bg-gold/10">
                       Entrar
                     </Button>
                   </Link>
-                  <Link to="/register">
+                  <Link to="/register" aria-label="Registrar nova conta">
                     <Button size="sm" className="bg-gold-gradient text-black hover:opacity-90">
                       Registar
                     </Button>
@@ -85,6 +86,7 @@ const Navigation = () => {
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+              aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -92,12 +94,13 @@ const Navigation = () => {
 
           {/* Mobile Menu */}
           {isOpen && (
-            <div className="md:hidden py-4 border-t border-gray-100">
+            <div className="md:hidden py-4 px-2 border-t border-gray-100">
               <div className="flex flex-col space-y-4">
                 <Link
                   to="/products"
                   className="text-gray-700 hover:text-gold transition-colors py-2"
                   onClick={() => setIsOpen(false)}
+                  aria-label="Navegar para Produtos"
                 >
                   Produtos
                 </Link>
@@ -105,6 +108,7 @@ const Navigation = () => {
                   to="/how-it-works"
                   className="text-gray-700 hover:text-gold transition-colors py-2"
                   onClick={() => setIsOpen(false)}
+                  aria-label="Navegar para Como Funciona"
                 >
                   Como Funciona
                 </Link>
@@ -112,6 +116,7 @@ const Navigation = () => {
                   to="/pricing"
                   className="text-gray-700 hover:text-gold transition-colors py-2"
                   onClick={() => setIsOpen(false)}
+                  aria-label="Navegar para Preços"
                 >
                   Preços
                 </Link>
@@ -119,6 +124,7 @@ const Navigation = () => {
                   to="/about"
                   className="text-gray-700 hover:text-gold transition-colors py-2"
                   onClick={() => setIsOpen(false)}
+                  aria-label="Navegar para Sobre"
                 >
                   Sobre
                 </Link>
@@ -126,6 +132,7 @@ const Navigation = () => {
                   to="/contact"
                   className="text-gray-700 hover:text-gold transition-colors py-2"
                   onClick={() => setIsOpen(false)}
+                  aria-label="Navegar para Contacto"
                 >
                   Contacto
                 </Link>
@@ -138,7 +145,7 @@ const Navigation = () => {
 
                 {user ? (
                   <div className="flex flex-col space-y-2 pt-4 border-t border-gray-100">
-                    <Link to="/dashboard" onClick={() => setIsOpen(false)}>
+                    <Link to="/dashboard" onClick={() => setIsOpen(false)} aria-label="Acessar Dashboard">
                       <Button variant="outline" size="sm" className="w-full border-gold text-gold hover:bg-gold/10">
                         Dashboard
                       </Button>
@@ -148,18 +155,19 @@ const Navigation = () => {
                       variant="ghost" 
                       size="sm"
                       className="w-full text-gray-600 hover:text-gray-800"
+                      aria-label="Sair da conta"
                     >
                       Sair
                     </Button>
                   </div>
                 ) : (
                   <div className="flex flex-col space-y-2 pt-4 border-t border-gray-100">
-                    <Link to="/login" onClick={() => setIsOpen(false)}>
+                    <Link to="/login" onClick={() => setIsOpen(false)} aria-label="Entrar na conta">
                       <Button variant="outline" size="sm" className="w-full border-gold text-gold hover:bg-gold/10">
                         Entrar
                       </Button>
                     </Link>
-                    <Link to="/register" onClick={() => setIsOpen(false)}>
+                    <Link to="/register" onClick={() => setIsOpen(false)} aria-label="Registrar nova conta">
                       <Button size="sm" className="w-full bg-gold-gradient text-black hover:opacity-90">
                         Registar
                       </Button>

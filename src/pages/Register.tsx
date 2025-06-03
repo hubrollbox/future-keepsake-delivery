@@ -121,6 +121,8 @@ const Register = () => {
                   placeholder="O teu nome"
                   className={errors.name ? "border-red-500" : ""}
                   required
+                  aria-required="true"
+                  aria-label="Nome completo"
                 />
                 {errors.name && (
                   <p className="text-red-600 text-sm mt-1">{errors.name}</p>
@@ -138,6 +140,8 @@ const Register = () => {
                   placeholder="teu@email.com"
                   className={errors.email ? "border-red-500" : ""}
                   required
+                  aria-required="true"
+                  aria-label="Email"
                 />
                 {errors.email && (
                   <p className="text-red-600 text-sm mt-1">{errors.email}</p>
@@ -152,9 +156,11 @@ const Register = () => {
                   type="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  placeholder="••••••••"
+                  placeholder="A tua palavra-passe"
                   className={errors.password ? "border-red-500" : ""}
                   required
+                  aria-required="true"
+                  aria-label="Palavra-passe"
                 />
                 {errors.password && (
                   <p className="text-red-600 text-sm mt-1">{errors.password}</p>
@@ -169,9 +175,11 @@ const Register = () => {
                   type="password"
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
-                  placeholder="••••••••"
+                  placeholder="Confirma a tua palavra-passe"
                   className={errors.confirmPassword ? "border-red-500" : ""}
                   required
+                  aria-required="true"
+                  aria-label="Confirmar palavra-passe"
                 />
                 {errors.confirmPassword && (
                   <p className="text-red-600 text-sm mt-1">{errors.confirmPassword}</p>

@@ -15,7 +15,7 @@ const Index = () => {
     <div className="min-h-screen bg-white">
       <Navigation />
 
-      <main className="container mx-auto px-4 py-16">
+      <main className="container mx-auto px-4 py-8">
         <HeroSection />
         <ManifestoSection />
         <GamificationPreview />

@@ -43,6 +43,8 @@ const ContactForm = () => {
               onChange={handleInputChange}
               placeholder="O teu nome"
               required
+              aria-required="true"
+              aria-label="Nome completo"
             />
           </div>
 
@@ -56,6 +58,8 @@ const ContactForm = () => {
               onChange={handleInputChange}
               placeholder="teu@email.com"
               required
+              aria-required="true"
+              aria-label="Email"
             />
           </div>
 
@@ -69,6 +73,8 @@ const ContactForm = () => {
               onChange={handleInputChange}
               placeholder="Como podemos ajudar?"
               required
+              aria-required="true"
+              aria-label="Assunto"
             />
           </div>
 
@@ -82,6 +88,8 @@ const ContactForm = () => {
               placeholder="Conta-nos mais detalhes..."
               rows={5}
               required
+              aria-required="true"
+              aria-label="Mensagem"
             />
           </div>
 
