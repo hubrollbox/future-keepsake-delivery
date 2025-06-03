@@ -84,24 +84,29 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
+				// Novas cores da paleta
+				beige: '#F5F5F5',
 				gold: {
-					DEFAULT: 'hsl(var(--gold-primary))',
-					50: '#fffef7',
-					100: '#fffbeb',
-					200: '#fef3c7',
-					300: '#fde68a',
-					400: '#fcd34d',
-					500: 'hsl(var(--gold-primary))',
-					600: 'hsl(var(--gold-secondary))',
-					700: '#d97706',
-					800: '#b45309',
-					900: '#92400e',
-				}
+					DEFAULT: '#FFD700',
+					50: '#FFFBE0', // Mais claro
+					100: '#FFF7C0',
+					200: '#FFF3A0',
+					300: '#FFEF80',
+					400: '#FFE040',
+					500: '#FFD700', // Dourado principal
+					600: '#CCAE00',
+					700: '#998200',
+					800: '#665700',
+					900: '#332B00' // Mais escuro
+				},
+				pastelBlue: '#B3CDE0',
+				darkGray: '#333333',
+				white: '#FFFFFF',
 			},
 			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+				lg: '8px',
+				md: 'calc(8px - 2px)',
+				sm: 'calc(8px - 4px)'
 			},
 			keyframes: {
 				'accordion-down': {
