@@ -31,8 +31,8 @@ const Navigation = () => {
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
-              <Link to="/products" className="text-gray-700 hover:text-gold transition-colors" aria-label="Navegar para Produtos">
-                Produtos
+              <Link to="/products" className="text-gray-700 hover:text-gold transition-colors" aria-label="Navegar para Presentes com Alma">
+                Presentes com Alma
               </Link>
               <Link to="/how-it-works" className="text-gray-700 hover:text-gold transition-colors" aria-label="Navegar para Como Funciona">
                 Como Funciona
@@ -40,8 +40,8 @@ const Navigation = () => {
               <Link to="/pricing" className="text-gray-700 hover:text-gold transition-colors" aria-label="Navegar para Preços">
                 Preços
               </Link>
-              <Link to="/about" className="text-gray-700 hover:text-gold transition-colors" aria-label="Navegar para Sobre">
-                Sobre
+              <Link to="/about" className="text-gray-700 hover:text-gold transition-colors" aria-label="Navegar para Manifesto">
+                Manifesto
               </Link>
               <Link to="/contact" className="text-gray-700 hover:text-gold transition-colors" aria-label="Navegar para Contacto">
                 Contacto
@@ -100,9 +100,9 @@ const Navigation = () => {
                   to="/products"
                   className="text-gray-700 hover:text-gold transition-colors py-2"
                   onClick={() => setIsOpen(false)}
-                  aria-label="Navegar para Produtos"
+                  aria-label="Navegar para Presentes com Alma"
                 >
-                  Produtos
+                  Presentes com Alma
                 </Link>
                 <Link
                   to="/how-it-works"
@@ -124,9 +124,9 @@ const Navigation = () => {
                   to="/about"
                   className="text-gray-700 hover:text-gold transition-colors py-2"
                   onClick={() => setIsOpen(false)}
-                  aria-label="Navegar para Sobre"
+                  aria-label="Navegar para Manifesto"
                 >
-                  Sobre
+                  Manifesto
                 </Link>
                 <Link
                   to="/contact"

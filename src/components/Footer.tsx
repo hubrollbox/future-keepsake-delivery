@@ -14,7 +14,7 @@ const Footer = () => {
     <footer className="bg-black text-white py-16 md:py-20">
       <div className="container mx-auto px-4 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Brand Section */}
+          {/* Brand/Story Section */}
           <div className="space-y-6">
             <div className="flex items-center space-x-2">
               <Clock className="h-8 w-8 text-gold" />
@@ -44,8 +44,8 @@ const Footer = () => {
             <h3 className="text-lg font-semibold text-gold">Navegação</h3>
             <ul className="space-y-3">
               <li>
-                <button onClick={() => handleNavigation('/products')} className="text-gray-300 hover:text-gold transition-colors text-sm" aria-label="Navegar para Produtos e Serviços">
-                  Produtos e Serviços
+                <button onClick={() => handleNavigation('/products')} className="text-gray-300 hover:text-gold transition-colors text-sm" aria-label="Navegar para Presentes com Alma">
+                  Presentes com Alma
                 </button>
               </li>
               <li>
@@ -59,8 +59,8 @@ const Footer = () => {
                 </button>
               </li>
               <li>
-                <button onClick={() => handleNavigation('/about')} className="text-gray-300 hover:text-gold transition-colors text-sm" aria-label="Navegar para Sobre Nós">
-                  Sobre Nós
+                <button onClick={() => handleNavigation('/about')} className="text-gray-300 hover:text-gold transition-colors text-sm" aria-label="Navegar para Manifesto">
+                  Manifesto
                 </button>
               </li>
               <li>
@@ -88,7 +88,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact Information */}
+          {/* Contact & App Download */}
           <div className="space-y-6">
             <h3 className="text-lg font-semibold text-gold">Contacto</h3>
             <div className="space-y-4">
@@ -114,6 +114,9 @@ const Footer = () => {
             >
               Falar Connosco
             </button>
+            <a href="#" className="block mt-4 bg-gold text-black px-4 py-2 rounded-md text-sm font-semibold text-center hover:bg-gold/90 transition-colors" aria-label="Download App">
+              Download App
+            </a>
           </div>
         </div>
 

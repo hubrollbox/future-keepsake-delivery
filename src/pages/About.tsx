@@ -96,7 +96,7 @@ const About = () => {
         {/* Hero Section */}
         <div className="text-center max-w-4xl mx-auto mb-16">
           <h2 className="text-5xl font-bold text-gray-800 mb-6">
-            A História do 
+            Manifesto do
             <span className="bg-gradient-to-r from-amber-700 to-amber-600 bg-clip-text text-transparent"> FuturoPresente</span>
           </h2>
           <p className="text-xl text-gray-600 mb-8">
