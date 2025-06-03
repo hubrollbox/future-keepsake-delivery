@@ -54,7 +54,7 @@ const Checkout = () => {
         status: 'pending',
         shipping_address: shippingInfo,
         contact_info: contactInfo,
-        items: items,
+        items: JSON.stringify(cartItems),
       };
 
       const { data, error } = await supabase
