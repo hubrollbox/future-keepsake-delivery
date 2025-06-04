@@ -103,92 +103,94 @@ const ProductsSection = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-16">
-      <div className="text-center mb-16">
-        <h1 className="text-section-title text-black mb-6 font-bold">
-          Produtos e Serviços
-        </h1>
-        <p className="text-body-large text-gray-700 max-w-3xl mx-auto leading-relaxed">
-          Cada produto e serviço é pensado para criar conexões emocionais através do tempo. 
-          Escolhe a forma perfeita de guardar e entregar os teus sentimentos no momento certo.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {products.map((product) => {
-          const Icon = product.icon;
-          return (
-            <Card key={product.id} className="hover:shadow-xl transition-all duration-300 hover:scale-105 border border-gold/20">
-              <CardHeader className="text-center pb-4">
-                <div className="flex justify-center mb-4">
-                  <div className="p-4 bg-gold/10 rounded-full">
-                    <Icon className="h-8 w-8 text-gold" />
-                  </div>
-                </div>
-                <CardTitle className="text-xl font-bold text-black mb-2">
-                  {product.title}
-                </CardTitle>
-                <div className="text-2xl font-bold text-gold">
-                  €{product.price}
-                </div>
-              </CardHeader>
-              
-              <CardContent className="space-y-6">
-                <p className="text-gray-700 leading-relaxed text-sm">
-                  {product.description}
-                </p>
-                
-                <div>
-                  <h4 className="font-semibold text-black mb-2">Inclui:</h4>
-                  <ul className="space-y-1">
-                    {product.includes.map((item, index) => (
-                      <li key={index} className="text-sm text-gray-600 flex items-start">
-                        <span className="text-gold mr-2">•</span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="pt-4">
-                  {product.category === "físico" ? (
-                    <Button 
-                      onClick={() => handleAddToCart(product)}
-                      className="w-full bg-gold-gradient text-black hover:opacity-90 font-semibold"
-                    >
-                      Adicionar ao Carrinho
-                    </Button>
-                  ) : (
-                    <Button 
-                      variant="outline" 
-                      onClick={() => handleAddToCart(product)}
-                      className="w-full border-gold text-gold hover:bg-gold/10 font-semibold"
-                    >
-                      Adicionar ao Carrinho
-                    </Button>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
-
-      <div className="text-center mt-16">
-        <div className="bg-light-gold rounded-xl p-8 max-w-4xl mx-auto">
-          <h3 className="text-xl font-bold text-black mb-4">
-            Tens alguma ideia especial?
-          </h3>
-          <p className="text-gray-700 mb-6">
-            Cada história é única. Se precisas de algo personalizado ou tens uma ideia diferente 
-            para a tua cápsula do tempo, vamos conversar e criar algo especial para ti.
+    <div className="min-h-screen bg-lavanda-palida">
+      <div className="container mx-auto px-4 py-16">
+        <div className="text-center mb-16">
+          <h1 className="text-title text-azul-petroleo mb-6 font-fraunces font-bold">
+            Presentes com Alma
+          </h1>
+          <p className="text-body-text text-azul-petroleo/80 max-w-3xl mx-auto leading-relaxed font-fraunces">
+            Cada produto e serviço é pensado para criar conexões emocionais através do tempo. 
+            Escolhe a forma perfeita de guardar e entregar os teus sentimentos no momento certo.
           </p>
-          <Button 
-            onClick={() => navigate("/contact")}
-            className="bg-gold-gradient text-black hover:opacity-90 font-semibold px-8"
-          >
-            Contacta-nos
-          </Button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {products.map((product) => {
+            const Icon = product.icon;
+            return (
+              <Card key={product.id} className="hover:shadow-soft-lg transition-all duration-300 hover:scale-105 border-rosa-antigo/20 bg-bege-areia card-soft">
+                <CardHeader className="text-center pb-4">
+                  <div className="flex justify-center mb-4">
+                    <div className="p-4 bg-rosa-antigo/20 rounded-full">
+                      <Icon className="h-8 w-8 text-rosa-antigo" />
+                    </div>
+                  </div>
+                  <CardTitle className="text-xl font-fraunces font-bold text-azul-petroleo mb-2">
+                    {product.title}
+                  </CardTitle>
+                  <div className="text-2xl font-fraunces font-bold text-rosa-antigo">
+                    €{product.price}
+                  </div>
+                </CardHeader>
+                
+                <CardContent className="space-y-6">
+                  <p className="text-azul-petroleo/80 leading-relaxed text-sm font-fraunces">
+                    {product.description}
+                  </p>
+                  
+                  <div>
+                    <h4 className="font-fraunces font-semibold text-azul-petroleo mb-2">Inclui:</h4>
+                    <ul className="space-y-1">
+                      {product.includes.map((item, index) => (
+                        <li key={index} className="text-sm text-azul-petroleo/70 flex items-start font-fraunces">
+                          <span className="text-rosa-antigo mr-2">•</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="pt-4">
+                    {product.category === "físico" ? (
+                      <Button 
+                        onClick={() => handleAddToCart(product)}
+                        className="w-full bg-azul-meia-noite text-lavanda-palida hover:bg-azul-meia-noite/90 font-fraunces font-semibold shadow-soft"
+                      >
+                        Adicionar ao Carrinho
+                      </Button>
+                    ) : (
+                      <Button 
+                        variant="outline" 
+                        onClick={() => handleAddToCart(product)}
+                        className="w-full border-rosa-antigo text-azul-petroleo hover:bg-rosa-antigo/10 font-fraunces font-semibold"
+                      >
+                        Adicionar ao Carrinho
+                      </Button>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+
+        <div className="text-center mt-16">
+          <div className="bg-bege-areia rounded-xl p-8 max-w-4xl mx-auto shadow-soft">
+            <h3 className="text-xl font-fraunces font-bold text-azul-petroleo mb-4">
+              Tens alguma ideia especial?
+            </h3>
+            <p className="text-azul-petroleo/80 mb-6 font-fraunces">
+              Cada história é única. Se precisas de algo personalizado ou tens uma ideia diferente 
+              para a tua cápsula do tempo, vamos conversar e criar algo especial para ti.
+            </p>
+            <Button 
+              onClick={() => navigate("/contact")}
+              className="bg-azul-meia-noite text-lavanda-palida hover:bg-azul-meia-noite/90 font-fraunces font-semibold px-8 shadow-soft"
+            >
+              Contacta-nos
+            </Button>
+          </div>
         </div>
       </div>
     </div>

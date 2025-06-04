@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Noto+Serif:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,88 +7,65 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 245 242 248; /* #F5F2F8 - Lavanda pálida */
+    --foreground: 61 74 90; /* #3D4A5A - Azul petróleo claro */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 236 229 218; /* #ECE5DA - Bege areia */
+    --card-foreground: 61 74 90;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 236 229 218;
+    --popover-foreground: 61 74 90;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 74 85 104; /* #4A5568 - Azul meia-noite suave */
+    --primary-foreground: 245 242 248;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 160 174 192; /* #A0AEC0 - Cinza esfumado */
+    --secondary-foreground: 61 74 90;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 218 184 195; /* #DAB8C3 - Rosa antigo */
+    --muted-foreground: 61 74 90;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 218 184 195; /* #DAB8C3 - Rosa antigo */
+    --accent-foreground: 61 74 90;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 239 68 68;
+    --destructive-foreground: 245 242 248;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 218 184 195;
+    --input: 218 184 195;
+    --ring: 218 184 195;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-
-    /* Custom variables for gold and black theme */
-    --gold-primary: 45 100% 51%;
-    --gold-secondary: 38 92% 50%;
-    --black-primary: 0 0% 9%;
-    --black-secondary: 0 0% 15%;
+    /* Custom brand variables */
+    --lavanda-palida: 245 242 248;
+    --azul-petroleo: 61 74 90;
+    --rosa-antigo: 218 184 195;
+    --bege-areia: 236 229 218;
+    --azul-meia-noite: 74 85 104;
+    --cinza-esfumado: 160 174 192;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --background: 61 74 90;
+    --foreground: 245 242 248;
+    --card: 74 85 104;
+    --card-foreground: 245 242 248;
+    --popover: 74 85 104;
+    --popover-foreground: 245 242 248;
+    --primary: 245 242 248;
+    --primary-foreground: 61 74 90;
+    --secondary: 160 174 192;
+    --secondary-foreground: 245 242 248;
+    --muted: 218 184 195;
+    --muted-foreground: 245 242 248;
+    --accent: 218 184 195;
+    --accent-foreground: 245 242 248;
+    --destructive: 239 68 68;
+    --destructive-foreground: 245 242 248;
+    --border: 218 184 195;
+    --input: 218 184 195;
+    --ring: 218 184 195;
   }
 }
 
@@ -99,107 +76,155 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Fraunces', 'Cormorant Garamond', 'Playfair Display', serif;
+    font-size: 16px;
     line-height: 1.6;
+    font-optical-sizing: auto;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Noto Serif', serif;
-    font-weight: 600;
+    font-family: 'Fraunces', 'Cormorant Garamond', 'Playfair Display', serif;
+    font-optical-sizing: auto;
+    font-variation-settings: "SOFT" 0, "WONK" 0;
   }
 
   h1 {
-    font-size: 36px;
+    font-size: clamp(36px, 5vw, 48px);
+    font-weight: 600;
+    line-height: 1.2;
   }
 
   h2 {
-    font-size: 24px;
+    font-size: clamp(24px, 4vw, 30px);
+    font-weight: 500;
+    line-height: 1.3;
   }
 
   body {
-    font-size: 16px;
+    font-size: clamp(16px, 2vw, 18px);
+    font-weight: 400;
   }
 
-  /* Improve link accessibility */
+  .text-secondary {
+    font-size: 14px;
+    color: hsl(var(--secondary));
+  }
+
+  /* Emotive, poetic styling */
+  .prose {
+    line-height: 1.8;
+    letter-spacing: 0.01em;
+  }
+
+  /* Soft UI elements */
+  .card-soft {
+    border-radius: 1rem;
+    box-shadow: 0 8px 32px rgba(218, 184, 195, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(218, 184, 195, 0.2);
+  }
+
+  /* Mobile-first focus */
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  /* Accessibility improvements */
   a, button {
-    @apply focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 rounded;
+    @apply focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 rounded-lg;
   }
 
-  /* Ensure proper touch targets for mobile */
   button, a {
     min-height: 44px;
     min-width: 44px;
   }
 
-  /* Smooth scrolling for better UX */
-  html {
-    scroll-behavior: smooth;
+  /* Smooth animations */
+  * {
+    transition: all 0.2s ease-in-out;
   }
 }
 
-/* Custom utility classes for the gold and black theme */
+/* Custom utility classes for the brand */
 @layer utilities {
-  .bg-gold-gradient {
-    background: linear-gradient(135deg, hsl(var(--gold-primary)) 0%, hsl(var(--gold-secondary)) 100%);
+  .bg-lavanda {
+    background-color: hsl(var(--lavanda-palida));
   }
   
-  .bg-light-gold {
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(255, 193, 7, 0.04) 100%);
+  .bg-bege-areia {
+    background-color: hsl(var(--bege-areia));
   }
   
-  .text-gold {
-    color: hsl(var(--gold-primary));
+  .text-azul-petroleo {
+    color: hsl(var(--azul-petroleo));
   }
   
-  .border-gold {
-    border-color: hsl(var(--gold-primary));
+  .text-rosa-antigo {
+    color: hsl(var(--rosa-antigo));
   }
   
-  .hover-gold:hover {
-    background-color: rgba(255, 215, 0, 0.08);
-    transition: background-color 0.2s ease;
+  .border-rosa-antigo {
+    border-color: hsl(var(--rosa-antigo));
   }
 
-  /* Improved button styles */
-  .btn-primary {
-    @apply bg-gold-gradient text-black font-semibold px-6 py-3 rounded-lg hover:opacity-90 transition-all duration-200 shadow-md hover:shadow-lg;
+  /* Typography utilities */
+  .font-fraunces {
+    font-family: 'Fraunces', 'Cormorant Garamond', 'Playfair Display', serif;
+    font-optical-sizing: auto;
+    font-variation-settings: "SOFT" 0, "WONK" 0;
   }
 
-  .btn-secondary {
-    @apply border-2 border-gold text-black font-semibold px-6 py-3 rounded-lg hover-gold transition-all duration-200;
+  .text-title {
+    font-size: clamp(36px, 5vw, 48px);
+    font-weight: 600;
+    line-height: 1.2;
   }
 
-  /* Typography improvements */
-  .text-hero {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    line-height: 1.1;
-    font-weight: 800;
+  .text-subtitle {
+    font-size: clamp(24px, 4vw, 30px);
+    font-weight: 500;
+    line-height: 1.3;
   }
 
-  .text-hero-sm {
-    font-size: clamp(2rem, 4vw, 3rem);
-    line-height: 1.1;
-    font-weight: 800;
+  .text-body {
+    font-size: clamp(16px, 2vw, 18px);
+    font-weight: 400;
+    line-height: 1.6;
   }
 
-  /* Better spacing for sections */
-  .section-spacing {
-    @apply py-16 md:py-20;
+  .text-small {
+    font-size: 14px;
+    font-weight: 400;
   }
 
-  /* Improved card styles */
-  .card-hover {
-    @apply hover:shadow-xl hover:scale-105 transition-all duration-300;
-  }
-}
-
-/* Performance optimizations */
-@layer utilities {
-  .will-change-transform {
-    will-change: transform;
+  /* Emotive spacing */
+  .space-emotive {
+    padding: 2rem;
   }
 
-  .gpu-accelerated {
-    transform: translateZ(0);
+  .space-emotive-sm {
+    padding: 1rem;
+  }
+
+  /* Soft shadows */
+  .shadow-soft {
+    box-shadow: 0 8px 32px rgba(218, 184, 195, 0.15);
+  }
+
+  .shadow-soft-lg {
+    box-shadow: 0 16px 48px rgba(218, 184, 195, 0.2);
+  }
+
+  /* Gradient overlays */
+  .gradient-overlay {
+    background: linear-gradient(135deg, rgba(245, 242, 248, 0.9) 0%, rgba(236, 229, 218, 0.9) 100%);
   }
 }
