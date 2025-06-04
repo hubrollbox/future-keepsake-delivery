@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Noto+Serif:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -35,60 +35,36 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-
-    /* Custom variables for gold and black theme */
+    /* Emotional brand colors */
     --gold-primary: 45 100% 51%;
     --gold-secondary: 38 92% 50%;
-    --black-primary: 0 0% 9%;
-    --black-secondary: 0 0% 15%;
+    --warm-neutral: 30 15% 96%;
+    --soft-gray: 220 9% 46%;
+    --gentle-black: 220 13% 18%;
   }
 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-
     --primary: 210 40% 98%;
     --primary-foreground: 222.2 47.4% 11.2%;
-
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -99,52 +75,80 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
-    line-height: 1.6;
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.7;
+    font-size: 16px;
+    letter-spacing: -0.01em;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Noto Serif', serif;
     font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
   }
 
   h1 {
-    font-size: 36px;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
   }
 
   h2 {
-    font-size: 24px;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
   }
 
-  body {
-    font-size: 16px;
+  h3 {
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
   }
 
-  /* Improve link accessibility */
-  a, button {
-    @apply focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 rounded;
+  /* Emotional spacing and rhythm */
+  .emotional-spacing {
+    @apply py-20 md:py-28;
   }
 
-  /* Ensure proper touch targets for mobile */
-  button, a {
-    min-height: 44px;
-    min-width: 44px;
+  .gentle-spacing {
+    @apply py-12 md:py-16;
   }
 
-  /* Smooth scrolling for better UX */
-  html {
-    scroll-behavior: smooth;
+  /* Soft, warm cards */
+  .emotion-card {
+    @apply bg-white/80 backdrop-blur-sm border border-gray-100/50 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300;
+  }
+
+  /* Gentle interactions */
+  .gentle-hover {
+    @apply hover:scale-[1.02] transition-transform duration-200;
+  }
+
+  /* Typography utilities */
+  .text-emotional {
+    line-height: 1.8;
+    color: hsl(var(--soft-gray));
+  }
+
+  .text-hero {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+
+  .text-subtitle {
+    font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+    line-height: 1.6;
+    font-weight: 400;
+    color: hsl(var(--soft-gray));
   }
 }
 
-/* Custom utility classes for the gold and black theme */
+/* Enhanced gold gradient with emotional touch */
 @layer utilities {
   .bg-gold-gradient {
     background: linear-gradient(135deg, hsl(var(--gold-primary)) 0%, hsl(var(--gold-secondary)) 100%);
   }
   
-  .bg-light-gold {
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.08) 0%, rgba(255, 193, 7, 0.04) 100%);
+  .bg-warm-gradient {
+    background: linear-gradient(135deg, hsl(var(--warm-neutral)) 0%, rgba(255, 248, 240, 0.5) 100%);
   }
   
   .text-gold {
@@ -154,47 +158,26 @@
   .border-gold {
     border-color: hsl(var(--gold-primary));
   }
-  
+
   .hover-gold:hover {
-    background-color: rgba(255, 215, 0, 0.08);
-    transition: background-color 0.2s ease;
+    background-color: rgba(255, 215, 0, 0.04);
+    transition: all 0.2s ease;
   }
 
-  /* Improved button styles */
+  /* Gentle button styles */
+  .btn-gentle {
+    @apply px-8 py-4 rounded-xl font-medium transition-all duration-200 shadow-sm hover:shadow-md;
+  }
+
   .btn-primary {
-    @apply bg-gold-gradient text-black font-semibold px-6 py-3 rounded-lg hover:opacity-90 transition-all duration-200 shadow-md hover:shadow-lg;
+    @apply bg-gold-gradient text-black btn-gentle hover:opacity-90;
   }
 
   .btn-secondary {
-    @apply border-2 border-gold text-black font-semibold px-6 py-3 rounded-lg hover-gold transition-all duration-200;
+    @apply border-2 border-gold text-black btn-gentle hover-gold;
   }
 
-  /* Typography improvements */
-  .text-hero {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    line-height: 1.1;
-    font-weight: 800;
-  }
-
-  .text-hero-sm {
-    font-size: clamp(2rem, 4vw, 3rem);
-    line-height: 1.1;
-    font-weight: 800;
-  }
-
-  /* Better spacing for sections */
-  .section-spacing {
-    @apply py-16 md:py-20;
-  }
-
-  /* Improved card styles */
-  .card-hover {
-    @apply hover:shadow-xl hover:scale-105 transition-all duration-300;
-  }
-}
-
-/* Performance optimizations */
-@layer utilities {
+  /* Smooth performance optimizations */
   .will-change-transform {
     will-change: transform;
   }

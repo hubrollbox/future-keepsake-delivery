@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Clock, Sparkles } from "lucide-react";
+import { Clock, Heart, Mail } from "lucide-react";
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -12,40 +12,56 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="text-center max-w-6xl mx-auto animate-fade-in">
-      <div className="flex justify-center mb-6">
-        <div className="flex items-center space-x-3 text-gold">
-          <Clock className="h-12 w-12 md:h-16 md:w-16" />
-          <Sparkles className="h-8 w-8 md:h-12 md:w-12" />
+    <div className="emotional-spacing text-center max-w-5xl mx-auto">
+      <div className="flex justify-center mb-8">
+        <div className="relative">
+          <div className="w-20 h-20 bg-gold-gradient rounded-full flex items-center justify-center shadow-lg">
+            <Clock className="h-10 w-10 text-black" />
+          </div>
+          <div className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md">
+            <Heart className="h-4 w-4 text-gold" />
+          </div>
         </div>
       </div>
       
-      <h1 className="text-hero-sm md:text-hero text-black mb-6 md:mb-8 leading-tight tracking-tight font-extrabold">
-        O teu tempo,
-        <span className="text-gold block md:inline"> entregue no futuro.</span>
+      <h1 className="text-hero text-gentle-black mb-6 leading-tight font-serif">
+        O que sentes hoje,
+        <span className="text-gold block"> no tempo de quem amas.</span>
       </h1>
       
-      <p className="text-subtitle md:text-body-large text-gray-700 mb-8 md:mb-10 max-w-4xl mx-auto leading-relaxed font-medium">
-        A <strong className="text-gold">primeira plataforma portuguesa</strong> que te permite agendar entregas de presentes físicos 
-        ou digitais para datas especiais no futuro. Cria memórias atemporais com armazenamento seguro e entrega garantida.
+      <p className="text-subtitle text-emotional mb-10 max-w-3xl mx-auto leading-relaxed">
+        Escreve uma mensagem para o teu futuro. Escolhe quando a queres receber e deixa que o tempo cuide do resto. 
+        <span className="text-gold font-medium"> Cada palavra guardada é uma promessa ao amanhã.</span>
       </p>
 
-      <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center mb-16 md:mb-20 animate-slide-up">
+      <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-fade-in">
         <Button 
           size="lg" 
-          className="text-body md:text-body-large px-10 md:px-14 py-6 md:py-8 bg-gold-gradient text-black hover:opacity-90 hover:scale-105 transition-all duration-300 font-bold rounded-xl shadow-lg min-h-[64px] md:min-h-[72px]" 
+          className="px-12 py-6 bg-gold-gradient text-black hover:opacity-90 hover:scale-105 transition-all duration-300 font-semibold rounded-2xl shadow-lg text-lg min-h-[60px]" 
           onClick={() => handleNavigation('/register')}
         >
-          Criar a Minha Primeira Entrega
+          <Mail className="h-5 w-5 mr-2" />
+          Escrever ao Futuro
         </Button>
         <Button 
           variant="outline" 
           size="lg" 
-          className="text-body md:text-body-large px-10 md:px-14 py-6 md:py-8 border-2 border-gold text-black hover-gold hover:scale-105 transition-all duration-300 font-semibold rounded-xl min-h-[64px] md:min-h-[72px]" 
+          className="px-12 py-6 border-2 border-gold text-gentle-black hover:bg-gold/5 hover:scale-105 transition-all duration-300 font-semibold rounded-2xl text-lg min-h-[60px]" 
           onClick={() => handleNavigation('/products')}
         >
-          Ver Produtos e Serviços
+          Descobrir Presentes
         </Button>
+      </div>
+
+      {/* Emotional highlight */}
+      <div className="bg-warm-gradient rounded-3xl p-8 emotion-card max-w-2xl mx-auto">
+        <p className="text-emotional italic leading-relaxed">
+          "Porque há coisas que só fazem sentido quando chegam no momento certo. 
+          E esse momento, só tu o conheces."
+        </p>
+        <p className="text-gold font-medium mt-3 text-sm font-serif">
+          — Presente no futuro
+        </p>
       </div>
     </div>
   );
