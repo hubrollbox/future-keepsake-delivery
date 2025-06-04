@@ -188,7 +188,7 @@ const Pricing = () => {
             Preços & Planos
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            <strong>O teu tempo, entregue.</strong> Escolhe o plano perfeito para criares memórias futuras e viveres experiências emocionais únicas como um verdadeiro Guardião do Tempo.
+            <strong className="text-gold">O teu tempo, entregue.</strong> Escolhe o plano perfeito para criares memórias futuras e viveres experiências emocionais únicas como um verdadeiro Guardião do Tempo.
           </p>
         </div>
 
@@ -197,18 +197,18 @@ const Pricing = () => {
           <h3 className="text-3xl font-bold text-center text-gray-800 mb-12">Planos de Assinatura</h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {plans.map((plan, index) => (
-              <Card key={index} className={`relative p-6 ${plan.popular ? 'ring-2 ring-amber-500 shadow-xl' : 'shadow-lg'} hover:shadow-xl transition-shadow`}>
+              <Card key={index} className={`relative p-6 ${plan.popular ? 'ring-2 ring-gold shadow-xl' : 'shadow-lg'} hover:shadow-xl transition-shadow`}>
                 {plan.popular && (
-                  <Badge className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-amber-500">
+                  <Badge className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-gold">
                     Mais Popular
                   </Badge>
                 )}
                 <CardHeader className="text-center pb-4">
-                  <CardTitle className="text-xl font-bold">{plan.name}</CardTitle>
+                  <CardTitle className="text-xl font-bold text-gold">{plan.name}</CardTitle>
                   <div className="text-3xl font-bold text-gray-800">
                     {plan.price}
                     {plan.yearlyPrice && (
-                      <div className="text-sm text-gray-600 font-normal">
+                      <div className="text-sm text-gold font-normal">
                         ou {plan.yearlyPrice}
                       </div>
                     )}
@@ -219,13 +219,13 @@ const Pricing = () => {
                   <ul className="space-y-2 mb-6">
                     {plan.features.map((feature, i) => (
                       <li key={i} className="flex items-start text-sm">
-                        <Check className="h-4 w-4 text-green-600 mr-2 mt-0.5 flex-shrink-0" />
+                        <Check className="h-4 w-4 text-gold mr-2 mt-0.5 flex-shrink-0" />
                         {feature}
                       </li>
                     ))}
                   </ul>
                   <Button 
-                    className={`w-full bg-gradient-to-r ${plan.color} hover:opacity-90`}
+                    className={`w-full bg-gradient-to-r from-gold to-amber-700 hover:opacity-90`}
                     onClick={() => navigate('/register')}
                   >
                     {plan.price === "Grátis" ? "Começar Grátis" : "Escolher Plano"}
@@ -239,7 +239,7 @@ const Pricing = () => {
         {/* Gamification Section */}
         <div className="mb-20">
           <div className="text-center mb-8">
-            <Trophy className="h-12 w-12 text-amber-700 mx-auto mb-4" />
+            <Trophy className="h-12 w-12 text-gold mx-auto mb-4" />
             <h3 className="text-3xl font-bold text-gray-800 mb-4">Sistema de Gamificação</h3>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Torna cada entrega numa aventura temporal. Conquista selos, desbloqueia níveis e cria a tua árvore de memórias como um verdadeiro Guardião do Tempo.
@@ -333,7 +333,7 @@ const Pricing = () => {
         {/* Time Capsules */}
         <div className="mb-16">
           <div className="text-center mb-8">
-            <Heart className="h-12 w-12 text-amber-700 mx-auto mb-4" />
+            <Heart className="h-12 w-12 text-gold mx-auto mb-4" />
             <h3 className="text-3xl font-bold text-gray-800 mb-4">Cápsulas do Tempo</h3>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Experiências únicas para indivíduos, casais, famílias, escolas e empresas. Cria memórias que duram para sempre.
@@ -354,7 +354,7 @@ const Pricing = () => {
 
         {/* CTA Section */}
         <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 text-center">
-          <Users className="h-12 w-12 text-amber-700 mx-auto mb-4" />
+          <Users className="h-12 w-12 text-gold mx-auto mb-4" />
           <h3 className="text-3xl font-bold text-gray-800 mb-4">
             Pronto para Te Tornares um Guardião do Tempo?
           </h3>
@@ -365,7 +365,7 @@ const Pricing = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
-              className="text-lg px-8 py-6 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800"
+              className="text-lg px-8 py-6 bg-gradient-to-r from-gold to-amber-700 hover:from-amber-700 hover:to-amber-800"
               onClick={() => navigate('/register')}
             >
               Começar Grátis
@@ -373,7 +373,7 @@ const Pricing = () => {
             <Button 
               variant="outline" 
               size="lg" 
-              className="text-lg px-8 py-6 border-amber-600 text-amber-700 hover:bg-amber-50"
+              className="text-lg px-8 py-6 border-gold text-gold hover:bg-gold/10"
               onClick={() => navigate('/how-it-works')}
             >
               Saber Mais
@@ -388,8 +388,8 @@ const Pricing = () => {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">
-                <Clock className="h-6 w-6 text-amber-700" />
-                <h4 className="font-bold text-amber-700">FuturoPresente</h4>
+                <Clock className="h-6 w-6 text-gold" />
+                <h4 className="font-bold text-gold">FuturoPresente</h4>
               </div>
               <p className="text-gray-600 text-sm">
                 O teu tempo, entregue. Criando memórias para o futuro, uma entrega de cada vez.
@@ -399,26 +399,26 @@ const Pricing = () => {
             <div>
               <h5 className="font-semibold mb-3 text-gray-800">Empresa</h5>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="#" className="hover:text-amber-700">Sobre</a></li>
-                <li><a href="#" className="hover:text-amber-700">Contactos</a></li>
-                <li><a href="#" className="hover:text-amber-700">Parcerias</a></li>
+                <li><a href="#" className="hover:text-gold">Sobre</a></li>
+                <li><a href="#" className="hover:text-gold">Contactos</a></li>
+                <li><a href="#" className="hover:text-gold">Parcerias</a></li>
               </ul>
             </div>
             
             <div>
               <h5 className="font-semibold mb-3 text-gray-800">Serviços</h5>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="/pricing" className="hover:text-amber-700">Preços & Planos</a></li>
-                <li><a href="#" className="hover:text-amber-700">Cápsulas do Tempo</a></li>
-                <li><a href="/how-it-works" className="hover:text-amber-700">Como Funciona</a></li>
+                <li><a href="/pricing" className="hover:text-gold">Preços & Planos</a></li>
+                <li><a href="#" className="hover:text-gold">Cápsulas do Tempo</a></li>
+                <li><a href="/how-it-works" className="hover:text-gold">Como Funciona</a></li>
               </ul>
             </div>
             
             <div>
               <h5 className="font-semibold mb-3 text-gray-800">Legal</h5>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="#" className="hover:text-amber-700">Termos e Condições</a></li>
-                <li><a href="#" className="hover:text-amber-700">Política de Privacidade</a></li>
+                <li><a href="#" className="hover:text-gold">Termos e Condições</a></li>
+                <li><a href="#" className="hover:text-gold">Política de Privacidade</a></li>
               </ul>
             </div>
           </div>

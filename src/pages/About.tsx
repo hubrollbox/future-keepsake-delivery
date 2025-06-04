@@ -77,7 +77,7 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100">
+    <div className="min-h-screen bg-lavender-mist">
       <Navigation />
 
       <main className="container mx-auto px-4 py-16">
@@ -86,9 +86,9 @@ const About = () => {
           <Button 
             variant="ghost" 
             onClick={() => navigate('/')} 
-            className="flex items-center space-x-2 text-amber-700 hover:text-amber-800"
+            className="flex items-center space-x-2 text-gold hover:text-amber-700"
           >
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft className="h-4 w-4 text-gold" />
             <span>Voltar ao Início</span>
           </Button>
         </div>
@@ -97,7 +97,7 @@ const About = () => {
         <div className="text-center max-w-4xl mx-auto mb-16">
           <h2 className="text-5xl font-bold text-gray-800 mb-6">
             Manifesto do
-            <span className="bg-gradient-to-r from-amber-700 to-amber-600 bg-clip-text text-transparent"> FuturoPresente</span>
+            <span className="bg-gradient-to-r from-gold to-amber-700 bg-clip-text text-transparent"> FuturoPresente</span>
           </h2>
           <p className="text-xl text-gray-600 mb-8">
             Somos uma empresa portuguesa nascida da paixão por preservar momentos especiais e criar experiências inesquecíveis. 
@@ -133,9 +133,9 @@ const About = () => {
                   </p>
                 </div>
                 <div className="flex justify-center">
-                  <div className="bg-gradient-to-r from-amber-200 to-yellow-200 rounded-2xl p-6">
-                    <Lightbulb className="h-32 w-32 text-amber-700 mx-auto mb-4" />
-                    <p className="text-center text-amber-800 font-medium">
+                  <div className="bg-gradient-to-r from-gold to-amber-100 rounded-2xl p-6">
+                    <Lightbulb className="h-32 w-32 text-gold mx-auto mb-4" />
+                    <p className="text-center text-gold font-medium">
                       "Cada memória é uma semente que pode florescer no futuro"
                     </p>
                   </div>
@@ -153,7 +153,7 @@ const About = () => {
               <Card key={index} className="p-6 bg-white/80 backdrop-blur-sm hover:shadow-lg transition-shadow">
                 <CardContent className="pt-0">
                   <div className="flex items-start space-x-4">
-                    <div className="bg-gradient-to-r from-amber-600 to-amber-700 text-white rounded-full w-16 h-16 flex items-center justify-center font-bold text-sm">
+                    <div className="bg-gradient-to-r from-gold to-amber-700 text-white rounded-full w-16 h-16 flex items-center justify-center font-bold text-sm">
                       {item.year}
                     </div>
                     <div className="flex-1">
@@ -169,7 +169,7 @@ const About = () => {
 
         {/* Missão e Visão */}
         <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <Card className="p-6 bg-gradient-to-br from-amber-50 to-yellow-50">
+          <Card className="p-6 bg-gradient-to-br from-gold to-amber-50">
             <CardContent className="pt-6">
               <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">A Nossa Missão</h3>
               <p className="text-gray-700 text-center leading-relaxed">
@@ -180,7 +180,7 @@ const About = () => {
             </CardContent>
           </Card>
           
-          <Card className="p-6 bg-gradient-to-br from-amber-50 to-yellow-50">
+          <Card className="p-6 bg-gradient-to-br from-gold to-amber-50">
             <CardContent className="pt-6">
               <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">A Nossa Visão</h3>
               <p className="text-gray-700 text-center leading-relaxed">
@@ -199,7 +199,7 @@ const About = () => {
             {values.map((value, index) => (
               <Card key={index} className="text-center p-6 hover:shadow-lg transition-shadow">
                 <CardContent className="pt-6">
-                  <value.icon className="h-12 w-12 text-amber-700 mx-auto mb-4" />
+                  <value.icon className="h-12 w-12 text-gold mx-auto mb-4" />
                   <h4 className="font-semibold mb-3 text-lg">{value.title}</h4>
                   <p className="text-gray-600 text-sm leading-relaxed">{value.description}</p>
                 </CardContent>
@@ -239,19 +239,19 @@ const About = () => {
               <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">O Nosso Impacto</h3>
               <div className="grid md:grid-cols-4 gap-6 text-center">
                 <div>
-                  <p className="text-3xl font-bold text-amber-700 mb-2">10.000+</p>
+                  <p className="text-3xl font-bold text-gold mb-2">10.000+</p>
                   <p className="text-gray-700">Entregas Criadas</p>
                 </div>
                 <div>
-                  <p className="text-3xl font-bold text-amber-700 mb-2">5.000+</p>
+                  <p className="text-3xl font-bold text-gold mb-2">5.000+</p>
                   <p className="text-gray-700">Clientes Felizes</p>
                 </div>
                 <div>
-                  <p className="text-3xl font-bold text-amber-700 mb-2">98%</p>
+                  <p className="text-3xl font-bold text-gold mb-2">98%</p>
                   <p className="text-gray-700">Taxa de Satisfação</p>
                 </div>
                 <div>
-                  <p className="text-3xl font-bold text-amber-700 mb-2">100%</p>
+                  <p className="text-3xl font-bold text-gold mb-2">100%</p>
                   <p className="text-gray-700">Entregas Bem-sucedidas</p>
                 </div>
               </div>
@@ -271,7 +271,7 @@ const About = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
-              className="text-lg px-8 py-6 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800"
+              className="text-lg px-8 py-6 bg-gradient-to-r from-gold to-amber-700 hover:from-amber-700 hover:to-amber-800"
               onClick={() => navigate('/register')}
             >
               Começar Agora
@@ -279,7 +279,7 @@ const About = () => {
             <Button 
               variant="outline" 
               size="lg" 
-              className="text-lg px-8 py-6 border-amber-600 text-amber-700 hover:bg-amber-50"
+              className="text-lg px-8 py-6 border-gold text-gold hover:bg-gold/10"
               onClick={() => navigate('/contact')}
             >
               Falar Connosco
