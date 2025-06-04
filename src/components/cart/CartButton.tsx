@@ -18,12 +18,12 @@ const CartButton: React.FC<CartButtonProps> = ({ onClick }) => {
       variant="outline"
       size="sm"
       onClick={onClick}
-      className="relative border-rosa-antigo text-azul-petroleo hover:bg-rosa-antigo/10 font-fraunces"
+      className="relative border-gold text-gold hover:bg-gold/10"
     >
       <ShoppingCart className="h-4 w-4" />
       {totalItems > 0 && (
         <Badge 
-          className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center bg-rosa-antigo text-azul-petroleo text-xs font-fraunces"
+          className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center bg-gold text-black text-xs"
         >
           {totalItems}
         </Badge>

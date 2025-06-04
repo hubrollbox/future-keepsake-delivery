@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Clock, Sparkles } from "lucide-react";
 import CartButton from "@/components/cart/CartButton";
 import CartModal from "@/components/cart/CartModal";
 
@@ -20,36 +20,30 @@ const Navigation = () => {
 
   return (
     <>
-      <nav className="bg-lavanda-palida shadow-soft border-b border-rosa-antigo/20 sticky top-0 z-40">
+      <nav className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-40">
         <div className="container mx-auto px-4 md:px-8">
           <div className="flex justify-between items-center h-20">
-            <Link to="/" className="flex items-center space-x-3 font-fraunces text-xl font-semibold text-azul-petroleo">
-              <img 
-                src="/lovable-uploads/b98ddc12-519a-49de-9acc-4f2e5c35c662.png" 
-                alt="Selo do Tempo FuturoPresente" 
-                className="h-10 w-10"
-              />
-              <div className="flex flex-col">
-                <span className="text-lg leading-tight">FuturoPresente</span>
-                <span className="text-xs text-cinza-esfumado leading-tight">Presente no futuro</span>
-              </div>
+            <Link to="/" className="flex items-center space-x-2 font-bold text-xl text-black">
+              <Clock className="h-6 w-6 text-gold" />
+              <span>Futuro Presente</span>
+              <Sparkles className="h-4 w-4 text-gold" />
             </Link>
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
-              <Link to="/products" className="text-azul-petroleo hover:text-rosa-antigo transition-colors font-fraunces" aria-label="Navegar para Presentes com Alma">
+              <Link to="/products" className="text-gray-700 hover:text-gold transition-colors" aria-label="Navegar para Presentes com Alma">
                 Presentes com Alma
               </Link>
-              <Link to="/how-it-works" className="text-azul-petroleo hover:text-rosa-antigo transition-colors font-fraunces" aria-label="Navegar para Como Funciona">
+              <Link to="/how-it-works" className="text-gray-700 hover:text-gold transition-colors" aria-label="Navegar para Como Funciona">
                 Como Funciona
               </Link>
-              <Link to="/pricing" className="text-azul-petroleo hover:text-rosa-antigo transition-colors font-fraunces" aria-label="Navegar para Preços">
+              <Link to="/pricing" className="text-gray-700 hover:text-gold transition-colors" aria-label="Navegar para Preços">
                 Preços
               </Link>
-              <Link to="/about" className="text-azul-petroleo hover:text-rosa-antigo transition-colors font-fraunces" aria-label="Navegar para Manifesto">
+              <Link to="/about" className="text-gray-700 hover:text-gold transition-colors" aria-label="Navegar para Manifesto">
                 Manifesto
               </Link>
-              <Link to="/contact" className="text-azul-petroleo hover:text-rosa-antigo transition-colors font-fraunces" aria-label="Navegar para Contacto">
+              <Link to="/contact" className="text-gray-700 hover:text-gold transition-colors" aria-label="Navegar para Contacto">
                 Contacto
               </Link>
 
@@ -58,7 +52,7 @@ const Navigation = () => {
               {user ? (
                 <div className="flex items-center space-x-4">
                   <Link to="/dashboard" aria-label="Acessar Dashboard">
-                    <Button variant="outline" size="sm" className="border-rosa-antigo text-azul-petroleo hover:bg-rosa-antigo/10 font-fraunces">
+                    <Button variant="outline" size="sm" className="border-gold text-gold hover:bg-gold/10">
                       Dashboard
                     </Button>
                   </Link>
@@ -66,7 +60,7 @@ const Navigation = () => {
                     onClick={handleSignOut}
                     variant="ghost" 
                     size="sm"
-                    className="text-cinza-esfumado hover:text-azul-petroleo font-fraunces"
+                    className="text-gray-600 hover:text-gray-800"
                     aria-label="Sair da conta"
                   >
                     Sair
@@ -75,12 +69,12 @@ const Navigation = () => {
               ) : (
                 <div className="flex items-center space-x-4">
                   <Link to="/login" aria-label="Entrar na conta">
-                    <Button variant="outline" size="sm" className="border-rosa-antigo text-azul-petroleo hover:bg-rosa-antigo/10 font-fraunces">
+                    <Button variant="outline" size="sm" className="border-gold text-gold hover:bg-gold/10">
                       Entrar
                     </Button>
                   </Link>
                   <Link to="/register" aria-label="Registrar nova conta">
-                    <Button size="sm" className="bg-azul-meia-noite text-lavanda-palida hover:bg-azul-meia-noite/90 font-fraunces">
+                    <Button size="sm" className="bg-gold-gradient text-black hover:opacity-90">
                       Registar
                     </Button>
                   </Link>
@@ -91,7 +85,7 @@ const Navigation = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 rounded-md text-azul-petroleo hover:text-rosa-antigo hover:bg-rosa-antigo/10"
+              className="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
               aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -100,11 +94,11 @@ const Navigation = () => {
 
           {/* Mobile Menu */}
           {isOpen && (
-            <div className="md:hidden py-4 px-2 border-t border-rosa-antigo/20">
+            <div className="md:hidden py-4 px-2 border-t border-gray-100">
               <div className="flex flex-col space-y-4">
                 <Link
                   to="/products"
-                  className="text-azul-petroleo hover:text-rosa-antigo transition-colors py-2 font-fraunces"
+                  className="text-gray-700 hover:text-gold transition-colors py-2"
                   onClick={() => setIsOpen(false)}
                   aria-label="Navegar para Presentes com Alma"
                 >
@@ -112,7 +106,7 @@ const Navigation = () => {
                 </Link>
                 <Link
                   to="/how-it-works"
-                  className="text-azul-petroleo hover:text-rosa-antigo transition-colors py-2 font-fraunces"
+                  className="text-gray-700 hover:text-gold transition-colors py-2"
                   onClick={() => setIsOpen(false)}
                   aria-label="Navegar para Como Funciona"
                 >
@@ -120,7 +114,7 @@ const Navigation = () => {
                 </Link>
                 <Link
                   to="/pricing"
-                  className="text-azul-petroleo hover:text-rosa-antigo transition-colors py-2 font-fraunces"
+                  className="text-gray-700 hover:text-gold transition-colors py-2"
                   onClick={() => setIsOpen(false)}
                   aria-label="Navegar para Preços"
                 >
@@ -128,7 +122,7 @@ const Navigation = () => {
                 </Link>
                 <Link
                   to="/about"
-                  className="text-azul-petroleo hover:text-rosa-antigo transition-colors py-2 font-fraunces"
+                  className="text-gray-700 hover:text-gold transition-colors py-2"
                   onClick={() => setIsOpen(false)}
                   aria-label="Navegar para Manifesto"
                 >
@@ -136,7 +130,7 @@ const Navigation = () => {
                 </Link>
                 <Link
                   to="/contact"
-                  className="text-azul-petroleo hover:text-rosa-antigo transition-colors py-2 font-fraunces"
+                  className="text-gray-700 hover:text-gold transition-colors py-2"
                   onClick={() => setIsOpen(false)}
                   aria-label="Navegar para Contacto"
                 >
@@ -150,9 +144,9 @@ const Navigation = () => {
                 )}
 
                 {user ? (
-                  <div className="flex flex-col space-y-2 pt-4 border-t border-rosa-antigo/20">
+                  <div className="flex flex-col space-y-2 pt-4 border-t border-gray-100">
                     <Link to="/dashboard" onClick={() => setIsOpen(false)} aria-label="Acessar Dashboard">
-                      <Button variant="outline" size="sm" className="w-full border-rosa-antigo text-azul-petroleo hover:bg-rosa-antigo/10 font-fraunces">
+                      <Button variant="outline" size="sm" className="w-full border-gold text-gold hover:bg-gold/10">
                         Dashboard
                       </Button>
                     </Link>
@@ -160,21 +154,21 @@ const Navigation = () => {
                       onClick={() => {handleSignOut(); setIsOpen(false);}}
                       variant="ghost" 
                       size="sm"
-                      className="w-full text-cinza-esfumado hover:text-azul-petroleo font-fraunces"
+                      className="w-full text-gray-600 hover:text-gray-800"
                       aria-label="Sair da conta"
                     >
                       Sair
                     </Button>
                   </div>
                 ) : (
-                  <div className="flex flex-col space-y-2 pt-4 border-t border-rosa-antigo/20">
+                  <div className="flex flex-col space-y-2 pt-4 border-t border-gray-100">
                     <Link to="/login" onClick={() => setIsOpen(false)} aria-label="Entrar na conta">
-                      <Button variant="outline" size="sm" className="w-full border-rosa-antigo text-azul-petroleo hover:bg-rosa-antigo/10 font-fraunces">
+                      <Button variant="outline" size="sm" className="w-full border-gold text-gold hover:bg-gold/10">
                         Entrar
                       </Button>
                     </Link>
                     <Link to="/register" onClick={() => setIsOpen(false)} aria-label="Registrar nova conta">
-                      <Button size="sm" className="w-full bg-azul-meia-noite text-lavanda-palida hover:bg-azul-meia-noite/90 font-fraunces">
+                      <Button size="sm" className="w-full bg-gold-gradient text-black hover:opacity-90">
                         Registar
                       </Button>
                     </Link>
