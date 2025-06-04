@@ -22,7 +22,7 @@ const HowItWorks = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100">
+    <div className="min-h-screen bg-lavender-mist">
       <Navigation />
       {/* Floating CTA Button */}
       <div className="fixed bottom-6 right-6 z-50 animate-pulse">
