@@ -1,125 +1,156 @@
 
-import React from "react";
-import { Package, Clock, MessageSquare, Warehouse, CreditCard } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAdminData } from "@/hooks/useAdminData";
+import { Badge } from "@/components/ui/badge";
+import { Users, Package, TrendingUp, Clock, Mail, Calendar, Database } from "lucide-react";
 
 const AdminDashboard = () => {
-  const { stats, loading } = useAdminData();
-
-  const statCards = [
+  const stats = [
     {
-      title: "Total de Entregas",
-      value: stats.totalDeliveries,
-      icon: Package,
-      color: "text-blue-600",
+      title: "Utilizadores Ativos",
+      value: "1,234",
+      change: "+12%",
+      trend: "up",
+      icon: <Users className="h-5 w-5" />
     },
     {
-      title: "Pendentes (7 dias)",
-      value: stats.pendingDeliveries,
-      icon: Clock,
-      color: "text-orange-600",
+      title: "Entregas Agendadas",
+      value: "567",
+      change: "+8%",
+      trend: "up",
+      icon: <Package className="h-5 w-5" />
     },
     {
-      title: "Mensagens Digitais",
-      value: stats.digitalMessages,
-      icon: MessageSquare,
-      color: "text-green-600",
+      title: "Taxa de Entrega",
+      value: "98.2%",
+      change: "+0.5%",
+      trend: "up",
+      icon: <TrendingUp className="h-5 w-5" />
     },
     {
-      title: "Itens no Armazém",
-      value: stats.warehouseItems,
-      icon: Warehouse,
-      color: "text-purple-600",
-    },
-    {
-      title: "Pagamentos (7 dias)",
-      value: stats.recentPayments,
-      icon: CreditCard,
-      color: "text-gold",
-    },
+      title: "Tempo Médio",
+      value: "3.2 min",
+      change: "-0.3 min",
+      trend: "down",
+      icon: <Clock className="h-5 w-5" />
+    }
   ];
 
-  if (loading) {
-    return (
-      <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900">Dashboard Administrativo</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[...Array(5)].map((_, i) => (
-            <Card key={i} className="animate-pulse">
-              <CardHeader className="pb-2">
-                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-              </CardHeader>
-              <CardContent>
-                <div className="h-8 bg-gray-200 rounded w-1/2"></div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-    );
-  }
+  const recentActivity = [
+    {
+      id: 1,
+      type: "delivery",
+      message: "Nova entrega criada por João Silva",
+      time: "há 5 minutos",
+      icon: <Mail className="h-4 w-4 text-earthy-burgundy" />
+    },
+    {
+      id: 2,
+      type: "user",
+      message: "Maria Santos registou-se na plataforma",
+      time: "há 12 minutos",
+      icon: <Users className="h-4 w-4 text-earthy-burgundy" />
+    },
+    {
+      id: 3,
+      type: "system",
+      message: "Backup da base de dados concluído",
+      time: "há 1 hora",
+      icon: <Database className="h-4 w-4 text-earthy-burgundy" />
+    }
+  ];
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900">Dashboard Administrativo</h1>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {statCards.map((stat, index) => {
-          const Icon = stat.icon;
-          return (
-            <Card key={index} className="hover:shadow-md transition-shadow">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-gray-700">
-                  {stat.title}
-                </CardTitle>
-                <Icon className={`h-5 w-5 ${stat.color}`} />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold text-gray-900">
-                  {stat.value}
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-hero-sm text-steel-blue font-fraunces mb-2">
+          Painel de <span className="text-earthy-burgundy">Administração</span>
+        </h1>
+        <p className="text-misty-gray">Visão geral da plataforma FuturoPresente</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
+      {/* Statistics Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {stats.map((stat, index) => (
+          <Card key={index} className="emotion-card border-dusty-rose/20">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div className="space-y-2">
+                  <p className="text-sm text-misty-gray">{stat.title}</p>
+                  <p className="text-2xl font-bold text-steel-blue">{stat.value}</p>
+                  <div className="flex items-center space-x-1">
+                    <Badge 
+                      className={`text-xs ${
+                        stat.trend === 'up' 
+                          ? 'bg-earthy-burgundy/10 text-earthy-burgundy' 
+                          : 'bg-sand-beige text-steel-blue'
+                      }`}
+                    >
+                      {stat.change}
+                    </Badge>
+                  </div>
+                </div>
+                <div className="p-3 bg-earthy-burgundy/10 rounded-xl text-earthy-burgundy">
+                  {stat.icon}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <div className="grid lg:grid-cols-2 gap-8">
+        {/* Recent Activity */}
+        <Card className="emotion-card border-dusty-rose/20">
           <CardHeader>
-            <CardTitle className="text-lg font-semibold">Resumo do Sistema</CardTitle>
+            <CardTitle className="text-steel-blue font-fraunces flex items-center space-x-2">
+              <Clock className="h-5 w-5 text-earthy-burgundy" />
+              <span>Atividade Recente</span>
+            </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex justify-between items-center">
-              <span className="text-gray-600">Sistema</span>
-              <span className="text-green-600 font-medium">Operacional</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-600">Última sincronização</span>
-              <span className="text-gray-900 font-medium">Agora mesmo</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-600">Base de dados</span>
-              <span className="text-green-600 font-medium">Conectada</span>
+          <CardContent>
+            <div className="space-y-4">
+              {recentActivity.map((activity) => (
+                <div key={activity.id} className="flex items-start space-x-3 p-3 rounded-lg bg-sand-beige/30">
+                  <div className="p-1.5 bg-white rounded-lg">
+                    {activity.icon}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-steel-blue text-sm font-medium">{activity.message}</p>
+                    <p className="text-misty-gray text-xs">{activity.time}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </CardContent>
         </Card>
 
-        <Card>
+        {/* Quick Actions */}
+        <Card className="emotion-card border-dusty-rose/20">
           <CardHeader>
-            <CardTitle className="text-lg font-semibold">Ações Rápidas</CardTitle>
+            <CardTitle className="text-steel-blue font-fraunces flex items-center space-x-2">
+              <Calendar className="h-5 w-5 text-earthy-burgundy" />
+              <span>Ações Rápidas</span>
+            </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3">
-            <button className="w-full text-left px-4 py-2 rounded-md bg-gold/10 text-gold hover:bg-gold/20 transition-colors">
-              Ver entregas pendentes
-            </button>
-            <button className="w-full text-left px-4 py-2 rounded-md bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors">
-              Processar novos itens
-            </button>
-            <button className="w-full text-left px-4 py-2 rounded-md bg-green-50 text-green-600 hover:bg-green-100 transition-colors">
-              Verificar pagamentos
-            </button>
+          <CardContent>
+            <div className="grid grid-cols-2 gap-4">
+              <button className="p-4 text-left bg-earthy-burgundy/5 hover:bg-earthy-burgundy/10 rounded-xl transition-colors duration-200 group">
+                <Users className="h-6 w-6 text-earthy-burgundy mb-2 group-hover:scale-105 transition-transform" />
+                <p className="text-steel-blue font-medium text-sm">Gerir Utilizadores</p>
+              </button>
+              <button className="p-4 text-left bg-earthy-burgundy/5 hover:bg-earthy-burgundy/10 rounded-xl transition-colors duration-200 group">
+                <Package className="h-6 w-6 text-earthy-burgundy mb-2 group-hover:scale-105 transition-transform" />
+                <p className="text-steel-blue font-medium text-sm">Ver Entregas</p>
+              </button>
+              <button className="p-4 text-left bg-earthy-burgundy/5 hover:bg-earthy-burgundy/10 rounded-xl transition-colors duration-200 group">
+                <Mail className="h-6 w-6 text-earthy-burgundy mb-2 group-hover:scale-105 transition-transform" />
+                <p className="text-steel-blue font-medium text-sm">Mensagens</p>
+              </button>
+              <button className="p-4 text-left bg-earthy-burgundy/5 hover:bg-earthy-burgundy/10 rounded-xl transition-colors duration-200 group">
+                <TrendingUp className="h-6 w-6 text-earthy-burgundy mb-2 group-hover:scale-105 transition-transform" />
+                <p className="text-steel-blue font-medium text-sm">Relatórios</p>
+              </button>
+            </div>
           </CardContent>
         </Card>
       </div>

@@ -1,75 +1,95 @@
 
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Clock, BarChart3, Package, MessageSquare, Warehouse, CreditCard, Users } from "lucide-react";
+import { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+import { 
+  Users, 
+  Package, 
+  MessageSquare, 
+  CreditCard, 
+  Warehouse, 
+  LayoutDashboard,
+  LogOut,
+  ArrowLeft
+} from "lucide-react";
+import SeloDoTempoIcon from "@/components/SeloDoTempoIcon";
 
 interface AdminLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
+  activeSection: string;
 }
 
-const AdminLayout = ({ children }: AdminLayoutProps) => {
-  const location = useLocation();
+const AdminLayout = ({ children, activeSection }: AdminLayoutProps) => {
+  const navigate = useNavigate();
 
-  const navItems = [
-    { path: "/admin", label: "Dashboard", icon: BarChart3 },
-    { path: "/admin/deliveries", label: "Entregas", icon: Package },
-    { path: "/admin/warehouse", label: "Armazém", icon: Warehouse },
-    { path: "/admin/messages", label: "Mensagens", icon: MessageSquare },
-    { path: "/admin/payments", label: "Pagamentos", icon: CreditCard },
-    { path: "/admin/clients", label: "Clientes", icon: Users },
+  const menuItems = [
+    { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, path: "/admin" },
+    { id: "clients", label: "Clientes", icon: Users, path: "/admin/clients" },
+    { id: "deliveries", label: "Entregas", icon: Package, path: "/admin/deliveries" },
+    { id: "messages", label: "Mensagens", icon: MessageSquare, path: "/admin/messages" },
+    { id: "payments", label: "Pagamentos", icon: CreditCard, path: "/admin/payments" },
+    { id: "warehouse", label: "Armazém", icon: Warehouse, path: "/admin/warehouse" },
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center space-x-2">
-              <Clock className="h-8 w-8 text-gold" />
-              <span className="text-xl font-bold text-black">FuturoPresente</span>
-            </Link>
-            <div className="text-sm text-gray-600 font-medium">
-              Painel de Administração
+    <div className="min-h-screen bg-lavender-mist">
+      <div className="flex">
+        {/* Sidebar */}
+        <div className="w-64 bg-white/80 backdrop-blur-sm border-r border-dusty-rose/20 min-h-screen">
+          <div className="p-6 border-b border-dusty-rose/20">
+            <div className="flex items-center space-x-3">
+              <SeloDoTempoIcon className="w-8 h-8" />
+              <div>
+                <h2 className="font-fraunces font-semibold text-steel-blue">FuturoPresente</h2>
+                <p className="text-xs text-misty-gray">Administração</p>
+              </div>
             </div>
           </div>
-        </div>
-      </header>
 
-      <div className="container mx-auto px-4 py-6">
-        <div className="grid lg:grid-cols-5 gap-6">
-          {/* Sidebar */}
-          <nav className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-sm p-4">
-              <h3 className="font-semibold text-gray-900 mb-4">Navegação</h3>
-              <ul className="space-y-2">
-                {navItems.map((item) => {
-                  const Icon = item.icon;
-                  const isActive = location.pathname === item.path;
-                  return (
-                    <li key={item.path}>
-                      <Link
-                        to={item.path}
-                        className={`flex items-center space-x-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                          isActive
-                            ? "bg-gold/10 text-gold"
-                            : "text-gray-700 hover:bg-gray-100"
-                        }`}
-                      >
-                        <Icon className="h-4 w-4" />
-                        <span>{item.label}</span>
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+          <nav className="p-4 space-y-2">
+            {menuItems.map((item) => {
+              const IconComponent = item.icon;
+              const isActive = activeSection === item.id;
+              
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => navigate(item.path)}
+                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-left transition-all duration-200 ${
+                    isActive
+                      ? "bg-earthy-burgundy/10 text-earthy-burgundy border border-earthy-burgundy/20"
+                      : "text-steel-blue hover:bg-sand-beige/50 hover:text-earthy-burgundy"
+                  }`}
+                >
+                  <IconComponent className="h-5 w-5" />
+                  <span className="font-medium">{item.label}</span>
+                </button>
+              );
+            })}
           </nav>
 
-          {/* Main Content */}
-          <main className="lg:col-span-4">
-            {children}
-          </main>
+          <div className="absolute bottom-4 left-4 right-4 space-y-2">
+            <Button
+              variant="ghost"
+              onClick={() => navigate('/')}
+              className="w-full justify-start text-steel-blue hover:text-earthy-burgundy hover:bg-sand-beige/50"
+            >
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Voltar ao Site
+            </Button>
+            <Button
+              variant="ghost"
+              className="w-full justify-start text-steel-blue hover:text-earthy-burgundy hover:bg-sand-beige/50"
+            >
+              <LogOut className="h-4 w-4 mr-2" />
+              Sair
+            </Button>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="flex-1 p-8">
+          {children}
         </div>
       </div>
     </div>
