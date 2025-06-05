@@ -34,6 +34,11 @@ export default {
 				'body-large': ['clamp(1rem, 1.5vw, 1.125rem)', { lineHeight: '1.6', fontWeight: '400' }],
 				'body': ['clamp(0.875rem, 1.2vw, 1rem)', { lineHeight: '1.6', fontWeight: '400' }],
 			},
+			fontFamily: {
+				'fraunces': ['Fraunces', 'serif'],
+				'sans': ['Inter', 'system-ui', 'sans-serif'],
+				'serif': ['Fraunces', 'serif'],
+			},
 			spacing: {
 				'safe-top': 'env(safe-area-inset-top)',
 				'safe-bottom': 'env(safe-area-inset-bottom)',
@@ -84,13 +89,15 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Emotional brand colors
-				'lavender-mist': '#F5F2F8',
+				// Paleta oficial da marca FuturoPresente conforme manual
+				'lavender-mist': '#F5F2F8', // Fundo principal
+				'steel-blue': '#3D4A5A', // Texto principal (azul petróleo claro)
+				'dusty-rose': '#DAB8C3', // Acento emocional (rosa antigo)
+				'sand-beige': '#ECE5DA', // Fundo de secções (bege areia)
+				'midnight-soft': '#4A5568', // Botão principal (azul meia-noite suave)
+				'misty-gray': '#A0AEC0', // Elementos secundários (cinza esfumado)
+				// Manter algumas cores para compatibilidade
 				'gentle-black': '#3D4A5A',
-				'dusty-rose': '#DAB8C3',
-				'sand-beige': '#ECE5DA',
-				'midnight-blue': '#4A5568',
-				'misty-gray': '#A0AEC0',
 				'soft-gray': '#718096',
 				'golden-honey': '#E6B800',
 				'warm-cream': '#FAF8F5',

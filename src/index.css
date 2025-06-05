@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -37,12 +37,11 @@
 
     --radius: 0.75rem;
 
-    /* Emotional brand colors */
-    --gold-primary: 45 100% 51%;
-    --gold-secondary: 38 92% 50%;
-    --warm-neutral: 30 15% 96%;
-    --soft-gray: 220 9% 46%;
-    --gentle-black: 220 13% 18%;
+    /* Cores oficiais da marca FuturoPresente */
+    --brand-primary: 218 184 195; /* Rosa antigo #DAB8C3 */
+    --brand-secondary: 61 20 35; /* Azul petróleo #3D4A5A */
+    --brand-background: 245 242 248; /* Lavanda pálida #F5F2F8 */
+    --brand-neutral: 236 229 218; /* Bege areia #ECE5DA */
   }
 
   .dark {
@@ -74,7 +73,7 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-lavender-mist text-steel-blue;
     font-family: 'Inter', system-ui, sans-serif;
     line-height: 1.7;
     font-size: 16px;
@@ -82,10 +81,11 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Noto Serif', serif;
+    font-family: 'Fraunces', serif;
     font-weight: 600;
     line-height: 1.3;
     letter-spacing: -0.02em;
+    color: theme('colors.steel-blue');
   }
 
   h1 {
@@ -101,7 +101,7 @@
     font-size: clamp(1.25rem, 3vw, 1.75rem);
   }
 
-  /* Emotional spacing and rhythm */
+  /* Emotional spacing and rhythm seguindo o manual */
   .emotional-spacing {
     @apply py-20 md:py-28;
   }
@@ -110,9 +110,9 @@
     @apply py-12 md:py-16;
   }
 
-  /* Soft, warm cards */
+  /* Soft, warm cards com cores da marca */
   .emotion-card {
-    @apply bg-white/80 backdrop-blur-sm border border-gray-100/50 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300;
+    @apply bg-white/80 backdrop-blur-sm border border-dusty-rose/20 rounded-2xl shadow-soft hover:shadow-md transition-all duration-300;
   }
 
   /* Gentle interactions */
@@ -120,10 +120,10 @@
     @apply hover:scale-[1.02] transition-transform duration-200;
   }
 
-  /* Typography utilities */
+  /* Typography utilities com cores da marca */
   .text-emotional {
     line-height: 1.8;
-    color: hsl(var(--soft-gray));
+    color: theme('colors.misty-gray');
   }
 
   .text-hero {
@@ -131,50 +131,51 @@
     line-height: 1.1;
     font-weight: 700;
     letter-spacing: -0.025em;
+    font-family: 'Fraunces', serif;
   }
 
   .text-subtitle {
     font-size: clamp(1.125rem, 2.5vw, 1.375rem);
     line-height: 1.6;
     font-weight: 400;
-    color: hsl(var(--soft-gray));
+    color: theme('colors.steel-blue');
   }
 }
 
-/* Enhanced gold gradient with emotional touch */
+/* Enhanced brand gradients seguindo o manual da marca */
 @layer utilities {
-  .bg-gold-gradient {
-    background: linear-gradient(135deg, hsl(var(--gold-primary)) 0%, hsl(var(--gold-secondary)) 100%);
+  .bg-brand-gradient {
+    background: linear-gradient(135deg, theme('colors.dusty-rose') 0%, rgba(218, 184, 195, 0.7) 100%);
   }
   
   .bg-warm-gradient {
-    background: linear-gradient(135deg, hsl(var(--warm-neutral)) 0%, rgba(255, 248, 240, 0.5) 100%);
+    background: linear-gradient(135deg, theme('colors.sand-beige') 0%, rgba(236, 229, 218, 0.5) 100%);
   }
   
-  .text-gold {
-    color: hsl(var(--gold-primary));
+  .text-brand-primary {
+    color: theme('colors.dusty-rose');
   }
   
-  .border-gold {
-    border-color: hsl(var(--gold-primary));
+  .border-brand-primary {
+    border-color: theme('colors.dusty-rose');
   }
 
-  .hover-gold:hover {
-    background-color: rgba(255, 215, 0, 0.04);
+  .hover-brand:hover {
+    background-color: rgba(218, 184, 195, 0.04);
     transition: all 0.2s ease;
   }
 
-  /* Gentle button styles */
+  /* Gentle button styles seguindo o manual */
   .btn-gentle {
     @apply px-8 py-4 rounded-xl font-medium transition-all duration-200 shadow-sm hover:shadow-md;
   }
 
   .btn-primary {
-    @apply bg-gold-gradient text-black btn-gentle hover:opacity-90;
+    @apply bg-brand-gradient text-steel-blue btn-gentle hover:opacity-90;
   }
 
   .btn-secondary {
-    @apply border-2 border-gold text-black btn-gentle hover-gold;
+    @apply border-2 border-dusty-rose text-steel-blue btn-gentle hover-brand;
   }
 
   /* Smooth performance optimizations */

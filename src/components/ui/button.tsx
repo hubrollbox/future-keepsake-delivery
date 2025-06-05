@@ -19,10 +19,13 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        // Emotional brand variants
-        gold: "bg-gold-gradient text-black hover:opacity-90 hover:scale-[1.02] shadow-md font-semibold",
-        "gold-outline": "border-2 border-gold text-gentle-black hover:bg-gold/5 hover:scale-[1.02] font-semibold",
-        gentle: "bg-white/80 backdrop-blur-sm border border-gray-200 text-gentle-black hover:bg-white hover:shadow-md",
+        // Variantes da marca FuturoPresente
+        brand: "bg-brand-gradient text-steel-blue hover:opacity-90 hover:scale-[1.02] shadow-soft font-semibold",
+        "brand-outline": "border-2 border-dusty-rose text-steel-blue hover:bg-dusty-rose/5 hover:scale-[1.02] font-semibold",
+        gentle: "bg-white/80 backdrop-blur-sm border border-dusty-rose/20 text-steel-blue hover:bg-white hover:shadow-gentle",
+        // Manter compatibilidade com variantes antigas
+        gold: "bg-brand-gradient text-steel-blue hover:opacity-90 hover:scale-[1.02] shadow-soft font-semibold",
+        "gold-outline": "border-2 border-dusty-rose text-steel-blue hover:bg-dusty-rose/5 hover:scale-[1.02] font-semibold",
       },
       size: {
         default: "h-12 px-6 py-3",
