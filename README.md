@@ -1,56 +1,86 @@
 # Future Keepsake Delivery
 
+![Logo FuturoPresente](public/placeholder.svg)
+
 ## Descrição do Projeto
 
 Esta aplicação permite gerir entregas de keepsakes (lembranças) de forma moderna e eficiente, utilizando React, TypeScript, Vite e Tailwind CSS. Inclui funcionalidades de autenticação, dashboards para administradores e utilizadores, e integração com Supabase.
 
-## Tecnologias Utilizadas
+## Identidade Visual e Marca
 
+A marca FuturoPresente utiliza uma identidade visual sofisticada e acolhedora, com destaque para o logotipo abaixo. Utilize sempre os ficheiros oficiais da marca para garantir consistência visual.
+
+### Logotipo
+
+- ![Logotipo principal](public/placeholder.svg)
+- ![Selo FuturoPresente](public/placeholder.svg)
+
+> **Nota:** Substitua os caminhos acima pelos ficheiros reais do logotipo e selo na pasta `public/`.
+
+### Paleta de Cores
+- Rosa antigo: #DAB8C3
+- Azul petróleo: #3D4A5A
+- Bege areia: #ECE5DA
+- Cinza esfumado: #A0AEC0
+- Branco lavanda: #F5F2F8
+
+### Tipografia
+- Títulos: Playfair Display (ou Fraunces)
+- Corpo de texto: Montserrat (ou Inter)
+
+## Funcionalidades
+- Gestão de keepsakes
+- Autenticação de utilizadores
+- Dashboard para admin e utilizadores
+- Integração com Supabase
+- ...
+
+## Tecnologias Utilizadas
 - Vite
 - TypeScript
 - React
 - Tailwind CSS
 - Supabase
 
-## Como editar este código?
+## Estrutura de Pastas
+```
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── hooks/
+│   └── ...
+├── public/
+├── package.json
+└── ...
+```
 
-Pode editar o código da aplicação de várias formas:
+## Instalação e Execução
+```sh
+git clone <URL_DO_SEU_REPOSITORIO>
+cd <NOME_DA_PASTA>
+npm install
+npm run dev
+```
 
-### Usar o seu editor de código preferido
+## Configuração
+- Crie um ficheiro `.env` com as variáveis necessárias:
+  - `VITE_SUPABASE_URL=...`
+  - `VITE_SUPABASE_ANON_KEY=...`
 
-1. Clone o repositório usando o URL do projeto:
-   ```sh
-   git clone <URL_DO_SEU_REPOSITORIO>
-   ```
-2. Aceda à pasta do projeto:
-   ```sh
-   cd <NOME_DA_PASTA>
-   ```
-3. Instale as dependências necessárias:
-   ```sh
-   npm install
-   ```
-4. Inicie o servidor de desenvolvimento:
-   ```sh
-   npm run dev
-   ```
+## Testes
+```sh
+npm run test
+```
 
-### Editar ficheiros diretamente no GitHub
+## Como contribuir
+1. Faça um fork do projeto
+2. Crie uma branch: `git checkout -b minha-feature`
+3. Faça commit das suas alterações: `git commit -m 'feat: minha nova feature'`
+4. Faça push para a branch: `git push origin minha-feature`
+5. Abra um Pull Request
 
-- Navegue até ao(s) ficheiro(s) pretendido(s).
-- Clique no botão "Edit" (ícone de lápis) no topo direito da visualização do ficheiro.
-- Faça as alterações e confirme-as.
-
-### Usar GitHub Codespaces (opcional)
-
-- Na página principal do repositório, clique em "Code" e depois no separador "Codespaces".
-- Clique em "New codespace" para iniciar um novo ambiente.
-- Edite os ficheiros e faça commit/push das alterações.
-
-## Como fazer deploy deste projeto?
-
-Pode fazer deploy em plataformas como Vercel, Netlify ou no seu próprio servidor. Siga as instruções dessas plataformas para projetos baseados em Vite/React.
+## Licença
+[MIT](LICENSE)
 
 ## Contacto
-
 Para dúvidas ou sugestões, por favor abra uma issue neste repositório.
