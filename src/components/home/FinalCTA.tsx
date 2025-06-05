@@ -15,15 +15,15 @@ const FinalCTA = () => {
     <div className="bg-white/60 backdrop-blur-sm border border-dusty-rose/30 rounded-3xl p-12 md:p-16 max-w-5xl mx-auto shadow-soft gentle-spacing">
       <div className="text-center mb-8">
         <div className="flex justify-center mb-6">
-          <div className="w-16 h-16 bg-golden-honey rounded-2xl flex items-center justify-center shadow-soft">
+          <div className="w-16 h-16 bg-gold rounded-2xl flex items-center justify-center shadow-soft">
             <Star className="h-8 w-8 text-gentle-black" />
           </div>
         </div>
         <h2 className="text-4xl md:text-5xl font-serif font-semibold text-gentle-black mb-6 leading-tight">
           Pronto para a Tua Primeira Viagem no Tempo?
         </h2>
-        <p className="text-lg md:text-xl text-soft-gray mb-8 leading-relaxed max-w-4xl mx-auto">
-          Junta-te aos nossos <strong className="text-golden-honey font-semibold">primeiros utilizadores</strong> que já estão a criar memórias para o futuro. 
+        <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-4xl mx-auto">
+          Junta-te aos nossos <strong className="text-gold font-semibold">primeiros utilizadores</strong> que já estão a criar memórias para o futuro. 
           Começa gratuitamente e descobre a magia de receber algo especial no momento perfeito.
         </p>
       </div>
@@ -31,7 +31,7 @@ const FinalCTA = () => {
       <div className="flex flex-col sm:flex-row gap-6 justify-center mb-8">
         <Button 
           size="lg" 
-          className="px-12 py-6 bg-golden-honey text-gentle-black hover:bg-golden-honey/90 hover:scale-105 transition-all duration-300 font-semibold rounded-2xl shadow-soft text-lg min-h-[60px] group"
+          className="px-12 py-6 bg-gradient-to-r from-gold to-amber-700 text-gentle-black hover:from-amber-700 hover:to-amber-800 hover:scale-105 transition-all duration-300 font-semibold rounded-2xl shadow-soft text-lg min-h-[60px] group"
           onClick={() => handleNavigation('/register')}
         >
           Começar Grátis Agora
@@ -40,7 +40,7 @@ const FinalCTA = () => {
         <Button 
           variant="outline" 
           size="lg" 
-          className="px-12 py-6 border-2 border-dusty-rose text-gentle-black hover:bg-dusty-rose/10 hover:scale-105 transition-all duration-300 font-semibold rounded-2xl text-lg min-h-[60px]"
+          className="px-12 py-6 border-2 border-gold text-gold hover:bg-gold/10 hover:scale-105 transition-all duration-300 font-semibold rounded-2xl text-lg min-h-[60px]"
           onClick={() => handleNavigation('/contact')}
         >
           Falar Connosco
@@ -48,7 +48,7 @@ const FinalCTA = () => {
       </div>
       
       <div className="text-center">
-        <p className="text-soft-gray font-medium leading-relaxed">
+        <p className="text-gray-600 font-medium leading-relaxed">
           ✓ Sem compromissos • ✓ Cancelamento a qualquer momento • ✓ Suporte português
         </p>
       </div>
