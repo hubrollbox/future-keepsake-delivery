@@ -18,10 +18,10 @@ const AdminDashboardPage = () => {
 
   if (authLoading || adminLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 flex items-center justify-center">
+      <div className="min-h-screen bg-lavender-mist flex items-center justify-center">
         <div className="flex items-center space-x-2">
-          <Loader2 className="h-8 w-8 animate-spin text-amber-700" />
-          <span className="text-amber-700 font-medium">A verificar permissões...</span>
+          <Loader2 className="h-8 w-8 animate-spin text-dusty-rose" />
+          <span className="text-steel-blue font-medium">A verificar permissões...</span>
         </div>
       </div>
     );
@@ -33,11 +33,11 @@ const AdminDashboardPage = () => {
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-amber-700 mb-4">Acesso Negado</h1>
-          <p className="text-amber-600 mb-4">Não tens permissões para aceder a esta área.</p>
-          <a href="/" className="text-gold hover:underline">Voltar ao início</a>
+      <div className="min-h-screen bg-lavender-mist flex items-center justify-center">
+        <div className="text-center emotion-card p-8">
+          <h1 className="text-2xl font-bold text-steel-blue mb-4 font-fraunces">Acesso Negado</h1>
+          <p className="text-misty-gray mb-4">Não tens permissões para aceder a esta área.</p>
+          <a href="/" className="text-dusty-rose hover:underline">Voltar ao início</a>
         </div>
       </div>
     );

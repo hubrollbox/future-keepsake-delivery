@@ -4,10 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Clock } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { z } from "zod";
+import SeloDoTempoIcon from "@/components/SeloDoTempoIcon";
 
 const loginSchema = z.object({
   email: z.string().email("Email inválido"),
@@ -70,26 +71,28 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-lavender-mist flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <Clock className="h-8 w-8 text-amber-700" />
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-amber-700 to-amber-600 bg-clip-text text-transparent">
+          <div className="flex items-center justify-center space-x-3 mb-4">
+            <SeloDoTempoIcon size={40} />
+            <h1 className="text-2xl font-bold text-steel-blue font-fraunces">
               FuturoPresente
             </h1>
           </div>
-          <p className="text-gray-600">O teu tempo, entregue</p>
+          <p className="text-misty-gray">Presente no futuro</p>
         </div>
 
-        <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
+        <Card className="emotion-card shadow-soft border-0">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-semibold">Entrar como Guardião</CardTitle>
+            <CardTitle className="text-2xl font-semibold text-steel-blue font-fraunces">
+              Entrar como Guardião
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-4">
               <div>
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className="text-steel-blue">Email</Label>
                 <Input
                   id="email"
                   name="email"
@@ -97,10 +100,8 @@ const Login = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="teu@email.com"
-                  className={errors.email ? "border-red-500" : ""}
+                  className={`border-dusty-rose/30 focus:border-dusty-rose ${errors.email ? "border-red-500" : ""}`}
                   required
-                  aria-required="true"
-                  aria-label="Email"
                 />
                 {errors.email && (
                   <p className="text-red-600 text-sm mt-1">{errors.email}</p>
@@ -108,7 +109,7 @@ const Login = () => {
               </div>
               
               <div>
-                <Label htmlFor="password">Palavra-passe</Label>
+                <Label htmlFor="password" className="text-steel-blue">Palavra-passe</Label>
                 <Input
                   id="password"
                   name="password"
@@ -116,10 +117,8 @@ const Login = () => {
                   value={formData.password}
                   onChange={handleInputChange}
                   placeholder="A tua palavra-passe"
-                  className={errors.password ? "border-red-500" : ""}
+                  className={`border-dusty-rose/30 focus:border-dusty-rose ${errors.password ? "border-red-500" : ""}`}
                   required
-                  aria-required="true"
-                  aria-label="Palavra-passe"
                 />
                 {errors.password && (
                   <p className="text-red-600 text-sm mt-1">{errors.password}</p>
@@ -128,7 +127,9 @@ const Login = () => {
 
               <Button 
                 type="submit" 
-                className="w-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800"
+                variant="brand"
+                size="lg"
+                className="w-full"
                 disabled={loading}
               >
                 {loading ? "Entrando..." : "Entrar"}
@@ -136,11 +137,11 @@ const Login = () => {
             </form>
 
             <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-misty-gray">
                 Ainda não és um Guardião do Tempo?{" "}
                 <Button 
                   variant="link" 
-                  className="p-0 h-auto font-semibold text-amber-700"
+                  className="p-0 h-auto font-semibold text-dusty-rose"
                   onClick={() => navigate('/register')}
                 >
                   Torna-te um aqui
@@ -154,9 +155,10 @@ const Login = () => {
           <Button 
             variant="ghost" 
             onClick={() => navigate('/')}
-            className="text-amber-700 hover:text-amber-800"
+            className="text-steel-blue hover:text-dusty-rose"
           >
-            ← Voltar ao início
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Voltar ao início
           </Button>
         </div>
       </div>

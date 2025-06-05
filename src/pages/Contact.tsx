@@ -12,7 +12,7 @@ const Contact = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-lavender-mist">
       <Navigation />
 
       <main className="container mx-auto px-4 py-16">
@@ -21,7 +21,7 @@ const Contact = () => {
           <Button 
             variant="ghost" 
             onClick={() => navigate('/')} 
-            className="flex items-center space-x-2 text-gray-700 hover:text-black"
+            className="flex items-center space-x-2 text-steel-blue hover:text-dusty-rose"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Voltar ao Início</span>

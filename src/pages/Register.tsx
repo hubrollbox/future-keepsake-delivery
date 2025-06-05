@@ -1,13 +1,13 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Clock, Trophy, ArrowLeft } from "lucide-react";
+import { Heart, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { z } from "zod";
+import SeloDoTempoIcon from "@/components/SeloDoTempoIcon";
 
 const registerSchema = z.object({
   name: z.string().min(2, "O nome deve ter pelo menos 2 caracteres"),
@@ -77,14 +77,14 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-lavender-mist flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* Back Button */}
         <div className="mb-8">
           <Button 
             variant="ghost" 
             onClick={() => navigate('/')} 
-            className="flex items-center space-x-2 text-amber-700 hover:text-amber-800"
+            className="flex items-center space-x-2 text-steel-blue hover:text-dusty-rose"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Voltar ao Início</span>
@@ -92,26 +92,28 @@ const Register = () => {
         </div>
 
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center space-x-2 mb-4 cursor-pointer" onClick={() => navigate('/')}>
-            <Clock className="h-8 w-8 text-amber-700" />
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-amber-700 to-amber-600 bg-clip-text text-transparent">
+          <div className="flex items-center justify-center space-x-3 mb-4 cursor-pointer" onClick={() => navigate('/')}>
+            <SeloDoTempoIcon size={40} />
+            <h1 className="text-2xl font-bold text-steel-blue font-fraunces">
               FuturoPresente
             </h1>
           </div>
-          <p className="text-gray-600">O teu tempo, entregue</p>
+          <p className="text-misty-gray">Presente no futuro</p>
         </div>
 
-        <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
+        <Card className="emotion-card shadow-soft border-0">
           <CardHeader className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-2">
-              <Trophy className="h-6 w-6 text-amber-700" />
-              <CardTitle className="text-2xl font-semibold">Torna-te um Guardião do Tempo</CardTitle>
+              <Heart className="h-6 w-6 text-dusty-rose" />
+              <CardTitle className="text-2xl font-semibold text-steel-blue font-fraunces">
+                Torna-te um Guardião do Tempo
+              </CardTitle>
             </div>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleRegister} className="space-y-4">
               <div>
-                <Label htmlFor="name">Nome completo</Label>
+                <Label htmlFor="name" className="text-steel-blue">Nome completo</Label>
                 <Input
                   id="name"
                   name="name"
@@ -119,10 +121,8 @@ const Register = () => {
                   value={formData.name}
                   onChange={handleInputChange}
                   placeholder="O teu nome"
-                  className={errors.name ? "border-red-500" : ""}
+                  className={`border-dusty-rose/30 focus:border-dusty-rose ${errors.name ? "border-red-500" : ""}`}
                   required
-                  aria-required="true"
-                  aria-label="Nome completo"
                 />
                 {errors.name && (
                   <p className="text-red-600 text-sm mt-1">{errors.name}</p>
@@ -130,7 +130,7 @@ const Register = () => {
               </div>
 
               <div>
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className="text-steel-blue">Email</Label>
                 <Input
                   id="email"
                   name="email"
@@ -138,10 +138,8 @@ const Register = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="teu@email.com"
-                  className={errors.email ? "border-red-500" : ""}
+                  className={`border-dusty-rose/30 focus:border-dusty-rose ${errors.email ? "border-red-500" : ""}`}
                   required
-                  aria-required="true"
-                  aria-label="Email"
                 />
                 {errors.email && (
                   <p className="text-red-600 text-sm mt-1">{errors.email}</p>
@@ -149,7 +147,7 @@ const Register = () => {
               </div>
               
               <div>
-                <Label htmlFor="password">Palavra-passe</Label>
+                <Label htmlFor="password" className="text-steel-blue">Palavra-passe</Label>
                 <Input
                   id="password"
                   name="password"
@@ -157,10 +155,8 @@ const Register = () => {
                   value={formData.password}
                   onChange={handleInputChange}
                   placeholder="A tua palavra-passe"
-                  className={errors.password ? "border-red-500" : ""}
+                  className={`border-dusty-rose/30 focus:border-dusty-rose ${errors.password ? "border-red-500" : ""}`}
                   required
-                  aria-required="true"
-                  aria-label="Palavra-passe"
                 />
                 {errors.password && (
                   <p className="text-red-600 text-sm mt-1">{errors.password}</p>
@@ -168,7 +164,7 @@ const Register = () => {
               </div>
 
               <div>
-                <Label htmlFor="confirmPassword">Confirmar palavra-passe</Label>
+                <Label htmlFor="confirmPassword" className="text-steel-blue">Confirmar palavra-passe</Label>
                 <Input
                   id="confirmPassword"
                   name="confirmPassword"
@@ -176,10 +172,8 @@ const Register = () => {
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
                   placeholder="Confirma a tua palavra-passe"
-                  className={errors.confirmPassword ? "border-red-500" : ""}
+                  className={`border-dusty-rose/30 focus:border-dusty-rose ${errors.confirmPassword ? "border-red-500" : ""}`}
                   required
-                  aria-required="true"
-                  aria-label="Confirmar palavra-passe"
                 />
                 {errors.confirmPassword && (
                   <p className="text-red-600 text-sm mt-1">{errors.confirmPassword}</p>
@@ -188,7 +182,9 @@ const Register = () => {
 
               <Button 
                 type="submit" 
-                className="w-full bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800" 
+                variant="brand"
+                size="lg"
+                className="w-full"
                 disabled={loading}
               >
                 {loading ? "A criar conta..." : "Tornar-me Guardião"}
@@ -196,11 +192,11 @@ const Register = () => {
             </form>
 
             <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-misty-gray">
                 Já és um Guardião do Tempo?{" "}
                 <Button 
                   variant="link" 
-                  className="p-0 h-auto font-semibold text-amber-700"
+                  className="p-0 h-auto font-semibold text-dusty-rose"
                   onClick={() => navigate('/login')}
                 >
                   Entra aqui
@@ -208,8 +204,8 @@ const Register = () => {
               </p>
             </div>
 
-            <div className="mt-6 p-4 bg-gradient-to-r from-amber-50 to-yellow-50 rounded-lg border border-amber-200">
-              <p className="text-sm text-amber-800 text-center italic font-medium">
+            <div className="mt-6 p-4 bg-sand-beige/30 rounded-xl border border-dusty-rose/20">
+              <p className="text-sm text-steel-blue text-center italic font-medium font-fraunces">
                 🕰️ O teu eu do futuro vai agradecer por começares hoje esta jornada temporal
               </p>
             </div>

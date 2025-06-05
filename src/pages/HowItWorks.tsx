@@ -24,10 +24,6 @@ const HowItWorks = () => {
   return (
     <div className="min-h-screen bg-lavender-mist">
       <Navigation />
-      {/* Floating CTA Button */}
-      <div className="fixed bottom-6 right-6 z-50 animate-pulse">
-        {/* Mantém o botão flutuante se for desejado, ou remova para consistência total */}
-      </div>
       <main className={`container mx-auto px-4 py-8 md:py-16 transition-opacity duration-300 ${isNavigating ? 'opacity-50' : 'opacity-100'}`}>
         <HowItWorksHero />
         <GamificationSystem />
