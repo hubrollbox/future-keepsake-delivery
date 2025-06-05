@@ -42,6 +42,7 @@
     --brand-secondary: 61 20 35; /* Azul petróleo #3D4A5A */
     --brand-background: 245 242 248; /* Lavanda pálida #F5F2F8 */
     --brand-neutral: 236 229 218; /* Bege areia #ECE5DA */
+    --brand-accent: 139 58 98; /* Bordô Terroso #8B3A62 */
   }
 
   .dark {
@@ -145,7 +146,7 @@
 /* Enhanced brand gradients seguindo o manual da marca */
 @layer utilities {
   .bg-brand-gradient {
-    background: linear-gradient(135deg, theme('colors.dusty-rose') 0%, rgba(218, 184, 195, 0.7) 100%);
+    background: linear-gradient(135deg, theme('colors.earthy-burgundy') 0%, rgba(139, 58, 98, 0.8) 100%);
   }
   
   .bg-warm-gradient {
@@ -153,15 +154,15 @@
   }
   
   .text-brand-primary {
-    color: theme('colors.dusty-rose');
+    color: theme('colors.earthy-burgundy');
   }
   
   .border-brand-primary {
-    border-color: theme('colors.dusty-rose');
+    border-color: theme('colors.earthy-burgundy');
   }
 
   .hover-brand:hover {
-    background-color: rgba(218, 184, 195, 0.04);
+    background-color: rgba(139, 58, 98, 0.04);
     transition: all 0.2s ease;
   }
 
@@ -171,11 +172,11 @@
   }
 
   .btn-primary {
-    @apply bg-brand-gradient text-steel-blue btn-gentle hover:opacity-90;
+    @apply bg-earthy-burgundy text-white btn-gentle hover:bg-earthy-burgundy/90;
   }
 
   .btn-secondary {
-    @apply border-2 border-dusty-rose text-steel-blue btn-gentle hover-brand;
+    @apply border-2 border-earthy-burgundy text-earthy-burgundy btn-gentle hover-brand;
   }
 
   /* Smooth performance optimizations */

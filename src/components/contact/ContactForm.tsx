@@ -27,14 +27,16 @@ const ContactForm = () => {
   };
 
   return (
-    <Card className="bg-white shadow-lg border border-gray-200">
+    <Card className="emotion-card border-dusty-rose/20">
       <CardHeader>
-        <CardTitle className="text-2xl text-gold">Enviar Mensagem</CardTitle>
+        <CardTitle className="text-section-title-sm text-steel-blue font-fraunces">
+          Enviar Mensagem
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <Label htmlFor="name">Nome completo</Label>
+            <Label htmlFor="name" className="text-steel-blue font-medium">Nome completo</Label>
             <Input
               id="name"
               name="name"
@@ -45,11 +47,12 @@ const ContactForm = () => {
               required
               aria-required="true"
               aria-label="Nome completo"
+              className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90"
             />
           </div>
 
           <div>
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="text-steel-blue font-medium">Email</Label>
             <Input
               id="email"
               name="email"
@@ -60,11 +63,12 @@ const ContactForm = () => {
               required
               aria-required="true"
               aria-label="Email"
+              className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90"
             />
           </div>
 
           <div>
-            <Label htmlFor="subject">Assunto</Label>
+            <Label htmlFor="subject" className="text-steel-blue font-medium">Assunto</Label>
             <Input
               id="subject"
               name="subject"
@@ -75,11 +79,12 @@ const ContactForm = () => {
               required
               aria-required="true"
               aria-label="Assunto"
+              className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90"
             />
           </div>
 
           <div>
-            <Label htmlFor="message">Mensagem</Label>
+            <Label htmlFor="message" className="text-steel-blue font-medium">Mensagem</Label>
             <Textarea
               id="message"
               name="message"
@@ -90,12 +95,13 @@ const ContactForm = () => {
               required
               aria-required="true"
               aria-label="Mensagem"
+              className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90"
             />
           </div>
 
           <Button 
             type="submit" 
-            className="w-full bg-gold text-black hover:bg-gold/90 font-semibold"
+            className="w-full bg-earthy-burgundy text-white hover:bg-earthy-burgundy/90 font-semibold py-3 rounded-xl transition-all duration-200"
           >
             Enviar Mensagem
           </Button>

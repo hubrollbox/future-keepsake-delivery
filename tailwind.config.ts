@@ -96,6 +96,7 @@ export default {
 				'sand-beige': '#ECE5DA', // Fundo de secções (bege areia)
 				'midnight-soft': '#4A5568', // Botão principal (azul meia-noite suave)
 				'misty-gray': '#A0AEC0', // Elementos secundários (cinza esfumado)
+				'earthy-burgundy': '#8B3A62', // Bordô Terroso - cor de contraste principal
 				// Manter algumas cores para compatibilidade
 				'gentle-black': '#3D4A5A',
 				'soft-gray': '#718096',
