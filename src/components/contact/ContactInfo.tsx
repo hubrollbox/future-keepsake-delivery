@@ -1,115 +1,69 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, Phone, MapPin, Clock, MessageCircle, Heart } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, Heart } from "lucide-react";
 
 const ContactInfo = () => {
   return (
     <div className="space-y-6">
       <Card className="emotion-card border-dusty-rose/20">
         <CardHeader>
-          <CardTitle className="flex items-center space-x-2 text-earthy-burgundy font-fraunces">
-            <MessageCircle className="h-5 w-5" />
-            <span>Vamos Conversar!</span>
+          <CardTitle className="text-section-title-sm text-steel-blue font-fraunces flex items-center space-x-2">
+            <Heart className="h-6 w-6 text-earthy-burgundy" />
+            <span>Como Te Podemos Ajudar</span>
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <p className="text-misty-gray mb-4 leading-relaxed">
-            Estamos sempre disponíveis para te ajudar a criar a entrega temporal perfeita. 
-            Seja uma dúvida simples ou um projecto especial, a nossa equipa está aqui para ti.
-          </p>
-        </CardContent>
-      </Card>
-
-      <Card className="emotion-card border-dusty-rose/20">
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2 text-earthy-burgundy font-fraunces">
-            <Mail className="h-5 w-5" />
-            <span>Email</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-steel-blue font-medium text-lg mb-2">geral@rollbox.pt</p>
-          <p className="text-misty-gray text-sm">
-            Para questões gerais, suporte técnico ou parcerias. 
-            Respondemos normalmente em menos de 2 horas durante o horário de funcionamento.
-          </p>
-        </CardContent>
-      </Card>
-
-      <Card className="emotion-card border-dusty-rose/20">
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2 text-earthy-burgundy font-fraunces">
-            <Phone className="h-5 w-5" />
-            <span>Telefone</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-steel-blue font-medium text-lg mb-2">220 145 169</p>
-          <p className="text-misty-gray text-sm">
-            Preferes falar directamente? Liga-nos! A nossa equipa de apoio está pronta 
-            para esclarecer todas as tuas dúvidas sobre entregas temporais.
-          </p>
-        </CardContent>
-      </Card>
-
-      <Card className="emotion-card border-dusty-rose/20">
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2 text-earthy-burgundy font-fraunces">
-            <MapPin className="h-5 w-5" />
-            <span>Morada</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="text-steel-blue font-medium mb-2">
-            <p>Rua Brito Capelo</p>
-            <p>Edifício Diplomata</p>
-            <p>4450 Matosinhos</p>
-            <p>Portugal</p>
+        <CardContent className="space-y-6">
+          <div className="flex items-start space-x-3">
+            <Mail className="h-5 w-5 text-earthy-burgundy mt-1 flex-shrink-0" />
+            <div>
+              <h3 className="font-semibold text-steel-blue mb-1">Email</h3>
+              <p className="text-misty-gray text-sm">geral@rollbox.pt</p>
+              <p className="text-earthy-burgundy text-xs">Respondemos em 24h</p>
+            </div>
           </div>
-          <p className="text-misty-gray text-sm">
-            A nossa sede fica no coração de Matosinhos, pertinho do Porto. 
-            És bem-vindo a visitar-nos (com marcação prévia).
-          </p>
-        </CardContent>
-      </Card>
 
-      <Card className="emotion-card border-dusty-rose/20">
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2 text-earthy-burgundy font-fraunces">
-            <Clock className="h-5 w-5" />
-            <span>Horário de Funcionamento</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-steel-blue font-medium text-lg mb-2">
-            Quase sempre disponíveis! 🚀
-          </p>
-          <div className="text-misty-gray text-sm space-y-1">
-            <p><strong>Segunda a Sexta:</strong> 9h00 - 18h00</p>
-            <p><strong>Sábados:</strong> 10h00 - 14h00</p>
-            <p><strong>Domingos:</strong> Só para emergências temporais urgentes!</p>
-            <p className="mt-3 italic">
-              Mas sejamos honestos... quem é que não verifica o email ao domingo? 
-              Se enviares uma mensagem, provavelmente vamos responder mesmo fora do horário. 
-              Somos assim um bocadinho viciados em ajudar! 😄
-            </p>
+          <div className="flex items-start space-x-3">
+            <Phone className="h-5 w-5 text-earthy-burgundy mt-1 flex-shrink-0" />
+            <div>
+              <h3 className="font-semibold text-steel-blue mb-1">Telefone</h3>
+              <p className="text-misty-gray text-sm">220 145 169</p>
+              <p className="text-earthy-burgundy text-xs">Seg-Sex, 9h-18h</p>
+            </div>
+          </div>
+
+          <div className="flex items-start space-x-3">
+            <MapPin className="h-5 w-5 text-earthy-burgundy mt-1 flex-shrink-0" />
+            <div>
+              <h3 className="font-semibold text-steel-blue mb-1">Morada</h3>
+              <div className="text-misty-gray text-sm">
+                <p>Rua Brito Capelo</p>
+                <p>Edifício Diplomata</p>
+                <p>4450 Matosinhos, Portugal</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex items-start space-x-3">
+            <Clock className="h-5 w-5 text-earthy-burgundy mt-1 flex-shrink-0" />
+            <div>
+              <h3 className="font-semibold text-steel-blue mb-1">Horário de Atendimento</h3>
+              <div className="text-misty-gray text-sm space-y-1">
+                <p>Segunda a Sexta: 9h - 18h</p>
+                <p>Sábado: 10h - 14h</p>
+                <p>Domingo: Fechado</p>
+              </div>
+            </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="bg-gradient-to-r from-dusty-rose/10 to-sand-beige/20 border-earthy-burgundy/30">
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2 text-earthy-burgundy font-fraunces">
-            <Heart className="h-5 w-5" />
-            <span>Algo Especial em Mente?</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-steel-blue text-sm leading-relaxed">
-            Tens uma ideia única para uma entrega temporal? Um projecto especial? 
-            Uma proposta de casamento que queres agendar? Ou simplesmente queres 
-            conversar sobre como o tempo funciona? Estamos aqui para transformar 
-            as tuas ideias mais malucas em realidade!
+      <Card className="emotion-card border-earthy-burgundy/20 bg-gradient-to-br from-earthy-burgundy/5 to-dusty-rose/10">
+        <CardContent className="p-6 text-center">
+          <Heart className="h-8 w-8 text-earthy-burgundy mx-auto mb-4" />
+          <h3 className="font-semibold text-steel-blue mb-2 font-fraunces">Apoio Dedicado</h3>
+          <p className="text-misty-gray text-sm leading-relaxed">
+            A nossa equipa está aqui para te ajudar a criar momentos especiais. 
+            <span className="text-earthy-burgundy font-medium"> Cada contacto é tratado com carinho e atenção.</span>
           </p>
         </CardContent>
       </Card>

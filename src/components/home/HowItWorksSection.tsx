@@ -1,53 +1,74 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Gift, Calendar, Clock } from "lucide-react";
+import { Gift, Calendar, Clock, ArrowRight } from "lucide-react";
 
 const HowItWorksSection = () => {
+  const steps = [
+    {
+      number: 1,
+      icon: Gift,
+      title: "Escolhe o Tipo de Presente",
+      description: "Presente físico que guardamos por ti, mensagem digital especial ou uma cápsula do tempo completa com múltiplos elementos."
+    },
+    {
+      number: 2,
+      icon: Calendar,
+      title: "Define Quando e Para Quem",
+      description: "Escolhe a data exacta da entrega (pode ser daqui a meses ou anos) e define o destinatário. Podes enviá-lo para ti próprio ou para alguém especial."
+    },
+    {
+      number: 3,
+      icon: Clock,
+      title: "Relaxa, Nós Tratamos do Resto",
+      description: "Armazenamento ultra-seguro e entrega garantida na data exacta. Recebes notificações sobre o progresso e podes acompanhar tudo no teu painel."
+    }
+  ];
+
   return (
-    <div className="mb-16 md:mb-20 animate-fade-in">
-      <h2 className="text-section-title-sm md:text-section-title text-black mb-4 md:mb-6 text-center">Como Funciona em 3 Passos Simples</h2>
-      <p className="text-body md:text-body-large text-gray-600 mb-8 md:mb-12 text-center max-w-3xl mx-auto leading-relaxed">
-        É mais fácil do que pensas. Em poucos minutos, podes criar a tua primeira entrega temporal.
-      </p>
-      <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-        <Card className="text-center p-6 md:p-8 hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-gold bg-white rounded-2xl group">
-          <CardContent className="pt-6">
-            <div className="w-16 h-16 md:w-20 md:h-20 bg-gold-gradient rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 group-hover:animate-bounce-gentle">
-              <span className="text-black font-bold text-xl md:text-2xl">1</span>
-            </div>
-            <Gift className="h-12 w-12 md:h-16 md:w-16 text-gold mx-auto mb-4 md:mb-6" />
-            <h3 className="font-bold mb-2 md:mb-3 text-lg md:text-xl text-black">Escolhe o Tipo de Presente</h3>
-            <p className="text-gray-600 text-sm md:text-base leading-relaxed">
-              Presente físico que guardamos por ti, mensagem digital especial ou uma cápsula do tempo completa com múltiplos elementos
-            </p>
-          </CardContent>
-        </Card>
+    <div className="emotional-spacing">
+      <div className="text-center mb-12">
+        <h2 className="text-section-title text-steel-blue mb-4 font-fraunces">
+          Como Funciona em
+          <span className="text-earthy-burgundy"> 3 Passos Simples</span>
+        </h2>
+        <p className="text-body-large text-misty-gray mb-8 leading-relaxed max-w-3xl mx-auto">
+          É mais fácil do que pensas. Em poucos minutos, podes criar a tua primeira entrega temporal. 
+          <span className="text-earthy-burgundy font-medium"> Deixa que te guiemos nesta jornada.</span>
+        </p>
+      </div>
 
-        <Card className="text-center p-6 md:p-8 hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-gold bg-white rounded-2xl group">
-          <CardContent className="pt-6">
-            <div className="w-16 h-16 md:w-20 md:h-20 bg-gold-gradient rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 group-hover:animate-bounce-gentle">
-              <span className="text-black font-bold text-xl md:text-2xl">2</span>
-            </div>
-            <Calendar className="h-12 w-12 md:h-16 md:w-16 text-gold mx-auto mb-4 md:mb-6" />
-            <h3 className="font-bold mb-2 md:mb-3 text-lg md:text-xl text-black">Define Quando e Para Quem</h3>
-            <p className="text-gray-600 text-sm md:text-base leading-relaxed">
-              Escolhe a data exacta da entrega (pode ser daqui a meses ou anos) e define o destinatário. Podes enviá-lo para ti próprio ou para alguém especial
-            </p>
-          </CardContent>
-        </Card>
+      <div className="grid md:grid-cols-3 gap-8">
+        {steps.map((step, index) => (
+          <div key={step.number} className="relative">
+            <Card className="emotion-card border-dusty-rose/20 hover:border-earthy-burgundy/40 gentle-hover group text-center h-full">
+              <CardContent className="p-8">
+                <div className="relative mb-6">
+                  <div className="w-16 h-16 bg-earthy-burgundy rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-white font-bold text-xl font-fraunces">{step.number}</span>
+                  </div>
+                  <div className="w-12 h-12 bg-earthy-burgundy/10 rounded-full flex items-center justify-center mx-auto">
+                    <step.icon className="h-6 w-6 text-earthy-burgundy" />
+                  </div>
+                </div>
 
-        <Card className="text-center p-6 md:p-8 hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-gold bg-white rounded-2xl group">
-          <CardContent className="pt-6">
-            <div className="w-16 h-16 md:w-20 md:h-20 bg-gold-gradient rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 group-hover:animate-bounce-gentle">
-              <span className="text-black font-bold text-xl md:text-2xl">3</span>
-            </div>
-            <Clock className="h-12 w-12 md:h-16 md:w-16 text-gold mx-auto mb-4 md:mb-6" />
-            <h3 className="font-bold mb-2 md:mb-3 text-lg md:text-xl text-black">Relaxa, Nós Tratamos do Resto</h3>
-            <p className="text-gray-600 text-sm md:text-base leading-relaxed">
-              Armazenamento ultra-seguro e entrega garantida na data exacta. Recebes notificações sobre o progresso e podes acompanhar tudo no teu painel
-            </p>
-          </CardContent>
-        </Card>
+                <h3 className="font-bold mb-3 text-lg text-steel-blue font-fraunces group-hover:text-earthy-burgundy transition-colors">
+                  {step.title}
+                </h3>
+                
+                <p className="text-misty-gray text-sm leading-relaxed">
+                  {step.description}
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Arrow for desktop */}
+            {index < steps.length - 1 && (
+              <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-10">
+                <ArrowRight className="h-6 w-6 text-earthy-burgundy" />
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
