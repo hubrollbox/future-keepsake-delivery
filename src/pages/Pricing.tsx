@@ -383,51 +383,7 @@ const Pricing = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-white/30 backdrop-blur-sm mt-20">
-        <div className="container mx-auto px-4 py-12">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <Clock className="h-6 w-6 text-gold" />
-                <h4 className="font-bold text-gold">FuturoPresente</h4>
-              </div>
-              <p className="text-gray-600 text-sm">
-                O teu tempo, entregue. Criando memórias para o futuro, uma entrega de cada vez.
-              </p>
-            </div>
-            
-            <div>
-              <h5 className="font-semibold mb-3 text-gray-800">Empresa</h5>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="#" className="hover:text-gold">Sobre</a></li>
-                <li><a href="#" className="hover:text-gold">Contactos</a></li>
-                <li><a href="#" className="hover:text-gold">Parcerias</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h5 className="font-semibold mb-3 text-gray-800">Serviços</h5>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="/pricing" className="hover:text-gold">Preços & Planos</a></li>
-                <li><a href="#" className="hover:text-gold">Cápsulas do Tempo</a></li>
-                <li><a href="/how-it-works" className="hover:text-gold">Como Funciona</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h5 className="font-semibold mb-3 text-gray-800">Legal</h5>
-              <ul className="space-y-2 text-sm text-gray-600">
-                <li><a href="#" className="hover:text-gold">Termos e Condições</a></li>
-                <li><a href="#" className="hover:text-gold">Política de Privacidade</a></li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-200 mt-8 pt-8 text-center text-gray-600">
-            <p>&copy; 2024 FuturoPresente™. O teu tempo, entregue.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
