@@ -1,193 +1,206 @@
 
-import React from "react";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Package, Gem, Book, Video, Headphones, PenTool } from "lucide-react";
-import { useCart } from "@/contexts/CartContext";
-import { useAuth } from "@/hooks/useAuth";
+import { Badge } from "@/components/ui/badge";
+import { Heart, Gift, Clock, Star, Calendar, Package } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const ProductsSection = () => {
-  const { addToCart } = useCart();
-  const { user } = useAuth();
   const navigate = useNavigate();
 
   const products = [
     {
-      id: "caixa-capsula",
-      title: "Caixa Cápsula – Tempo de Guardar",
-      description: "Uma pequena caixa, feita à mão, pensada para guardar segredos com data marcada. Quando escrevemos algo para o futuro, fazemos uma promessa de reencontro com quem seremos. Esta cápsula é o abraço que fica fechado até ser hora de abrir.",
+      title: "Carta Digital Simples",
+      description: "Uma mensagem do coração, guardada até ao momento perfeito",
+      price: "Grátis",
+      originalPrice: null,
+      icon: Heart,
+      features: ["Mensagem de texto", "Data programada", "Entrega por email"],
+      popular: false,
+      category: "Digital"
+    },
+    {
+      title: "Carta Digital Premium",
+      description: "Mensagem com verificação blockchain e formatação especial",
+      price: "2,50€",
+      originalPrice: null,
+      icon: Star,
+      features: ["Verificação blockchain", "Formatação rica", "Certificado de autenticidade"],
+      popular: true,
+      category: "Digital"
+    },
+    {
+      title: "Presente Físico Guardado",
+      description: "Guardamos o teu presente numa instalação ultra-segura",
+      price: "Desde 1,90€/mês",
+      originalPrice: null,
+      icon: Gift,
+      features: ["Armazenamento seguro", "Controlo climático", "Seguro incluído"],
+      popular: false,
+      category: "Físico"
+    },
+    {
+      title: "Cápsula Individual",
+      description: "Caixa personalizada para pequenos objectos e memórias",
+      price: "Desde 15€",
+      originalPrice: null,
       icon: Package,
-      category: "físico",
-      price: 49.99,
-      includes: [
-        "Caixa em madeira clara sustentável",
-        "Interior com espaço para cartas, objetos, pen drives ou lembranças",
-        "Fecho metálico e gravação opcional do nome/data"
-      ]
+      features: ["Caixa personalizada", "Múltiplos objectos", "Cerimónia de abertura"],
+      popular: false,
+      category: "Cápsula"
     },
     {
-      id: "bau-memoria",
-      title: "Baú da Memória – Edição Especial",
-      description: "O tempo passa, mas o que tocamos e sentimos fica. Este baú é feito para guardar os momentos que marcam uma vida inteira — o dia do nascimento, o último verão com os avós, ou a carta que nunca teve resposta. É mais do que uma caixa: é um lugar onde o tempo repousa.",
-      icon: Gem,
-      category: "físico",
-      price: 149.99,
-      includes: [
-        "Baú em madeira nobre com gravação personalizada",
-        "Compartimentos internos",
-        "Selo oficial \"Futuro Presente\" + certificado"
-      ]
+      title: "Cápsula Premium",
+      description: "Experiência completa com fechadura especial e maior capacidade",
+      price: "Desde 25€",
+      originalPrice: null,
+      icon: Clock,
+      features: ["Fechadura especial", "Maior capacidade", "Documentação especial"],
+      popular: true,
+      category: "Cápsula"
     },
     {
-      id: "caderno-cartas",
-      title: "Caderno \"Cartas para o Futuro\"",
-      description: "Escrever uma carta para alguém que ainda não existe, ou que ainda não está pronto para ouvir, é um gesto de fé. Este caderno tem envelopes para diferentes idades, datas ou momentos. Como um calendário de emoções que só se abre no tempo certo.",
-      icon: Book,
-      category: "físico",
-      price: 29.99,
-      includes: [
-        "Caderno de capa dura com embossing dourado",
-        "12 envelopes internos numerados",
-        "Sugestões de temas + capa de proteção"
-      ]
-    },
-    {
-      id: "edicao-video",
-      title: "Edição de Vídeo Emocional",
-      description: "Grava um vídeo hoje para te veres daqui a 10 anos. Ou para deixares uma mensagem de amor, força ou despedida. Nós tratamos da edição com música, legendas e sensibilidade — para que o teu presente chegue ao futuro com a mesma emoção com que foi criado.",
-      icon: Video,
-      category: "digital",
-      price: 79.99,
-      includes: [
-        "Edição de vídeo com trilha sonora",
-        "Legendas e personalização de capa",
-        "Opção de upload seguro e armazenamento"
-      ]
-    },
-    {
-      id: "tratamento-audio",
-      title: "Tratamento de Áudio com Música",
-      description: "A tua voz, limpa e embalada em som suave, para que cada palavra ressoe como uma memória. Ideal para mensagens íntimas, histórias de vida ou despedidas sussurradas. Porque o som, como o amor, nunca envelhece.",
-      icon: Headphones,
-      category: "digital",
-      price: 59.99,
-      includes: [
-        "Tratamento de áudio (limpeza de ruído, equalização)",
-        "Música de fundo emocional",
-        "Exportação em formato seguro"
-      ]
-    },
-    {
-      id: "escrita-assistida",
-      title: "Escrita Assistida – Cartas com IA",
-      description: "Nem sempre é fácil escrever o que sentimos. Às vezes, só precisamos de um empurrão. Com a ajuda da nossa inteligência emocional artificial, construímos contigo uma carta para o futuro que seja tua — verdadeira, tocante e com as palavras certas no tempo certo.",
-      icon: PenTool,
-      category: "digital",
-      price: 39.99,
-      includes: [
-        "Roteiro guiado para escrever",
-        "Sugestões automáticas com IA",
-        "Versões para revisão e aprovação"
-      ]
+      title: "Cápsula Coletiva",
+      description: "Perfeita para eventos, escolas, empresas e grupos especiais",
+      price: "Desde 49€",
+      originalPrice: null,
+      icon: Calendar,
+      features: ["Para grupos", "Múltiplas contribuições", "Evento especial"],
+      popular: false,
+      category: "Cápsula"
     }
   ];
 
-  const handleAddToCart = async (product: typeof products[0]) => {
-    if (!user) {
-      navigate("/login");
-      return;
-    }
-    
-    await addToCart(product.id, product.title, product.price);
-  };
+  const categories = ["Todos", "Digital", "Físico", "Cápsula"];
 
   return (
     <div className="container mx-auto px-4 py-16">
+      {/* Hero Section */}
       <div className="text-center mb-16">
-        <h1 className="text-section-title text-black mb-6 font-bold">
-          Produtos e Serviços
+        <h1 className="text-hero text-steel-blue mb-6 leading-tight font-fraunces">
+          Presentes com Alma
+          <span className="text-dusty-rose block">Para Quem Amas</span>
         </h1>
-        <p className="text-body-large text-gray-700 max-w-3xl mx-auto leading-relaxed">
-          Cada produto e serviço é pensado para criar conexões emocionais através do tempo. 
-          Escolhe a forma perfeita de guardar e entregar os teus sentimentos no momento certo.
+        <p className="text-subtitle text-misty-gray mb-8 leading-relaxed max-w-3xl mx-auto">
+          Cada presente é uma promessa ao futuro, guardada com o carinho do presente. 
+          Escolhe como queres tocar o coração de quem amas no momento perfeito.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {products.map((product) => {
-          const Icon = product.icon;
-          return (
-            <Card key={product.id} className="hover:shadow-xl transition-all duration-300 hover:scale-105 border border-gold/20">
-              <CardHeader className="text-center pb-4">
-                <div className="flex justify-center mb-4">
-                  <div className="p-4 bg-gold/10 rounded-full">
-                    <Icon className="h-8 w-8 text-gold" />
-                  </div>
-                </div>
-                <CardTitle className="text-xl font-bold text-black mb-2">
-                  {product.title}
-                </CardTitle>
-                <div className="text-2xl font-bold text-gold">
-                  €{product.price}
-                </div>
-              </CardHeader>
-              
-              <CardContent className="space-y-6">
-                <p className="text-gray-700 leading-relaxed text-sm">
-                  {product.description}
-                </p>
-                
-                <div>
-                  <h4 className="font-semibold text-black mb-2">Inclui:</h4>
-                  <ul className="space-y-1">
-                    {product.includes.map((item, index) => (
-                      <li key={index} className="text-sm text-gray-600 flex items-start">
-                        <span className="text-gold mr-2">•</span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="pt-4">
-                  {product.category === "físico" ? (
-                    <Button 
-                      onClick={() => handleAddToCart(product)}
-                      className="w-full bg-gold-gradient text-black hover:opacity-90 font-semibold"
-                    >
-                      Adicionar ao Carrinho
-                    </Button>
-                  ) : (
-                    <Button 
-                      variant="outline" 
-                      onClick={() => handleAddToCart(product)}
-                      className="w-full border-gold text-gold hover:bg-gold/10 font-semibold"
-                    >
-                      Adicionar ao Carrinho
-                    </Button>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
+      {/* Category Filters */}
+      <div className="flex flex-wrap justify-center gap-4 mb-12">
+        {categories.map((category) => (
+          <Button
+            key={category}
+            variant={category === "Todos" ? "brand" : "brand-outline"}
+            size="sm"
+            className="px-6"
+          >
+            {category}
+          </Button>
+        ))}
       </div>
 
+      {/* Products Grid */}
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        {products.map((product, index) => (
+          <Card key={index} className="emotion-card hover:shadow-soft hover:scale-105 transition-all duration-300 border border-dusty-rose/20 group relative">
+            {product.popular && (
+              <Badge className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-earthy-burgundy text-white">
+                Mais Popular
+              </Badge>
+            )}
+            <CardContent className="p-8">
+              <div className="w-16 h-16 bg-earthy-burgundy/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-earthy-burgundy/20 transition-colors">
+                <product.icon className="h-8 w-8 text-earthy-burgundy" />
+              </div>
+              
+              <h3 className="text-xl font-semibold text-steel-blue mb-3 text-center font-fraunces">
+                {product.title}
+              </h3>
+              
+              <p className="text-misty-gray text-sm mb-4 text-center leading-relaxed">
+                {product.description}
+              </p>
+              
+              <div className="text-center mb-6">
+                <div className="text-2xl font-bold text-earthy-burgundy">
+                  {product.price}
+                </div>
+                {product.originalPrice && (
+                  <div className="text-sm text-misty-gray line-through">
+                    {product.originalPrice}
+                  </div>
+                )}
+              </div>
+              
+              <ul className="space-y-2 mb-6">
+                {product.features.map((feature, i) => (
+                  <li key={i} className="flex items-center text-sm text-misty-gray">
+                    <Star className="h-4 w-4 text-dusty-rose mr-2 flex-shrink-0" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              
+              <Button 
+                variant="brand"
+                className="w-full"
+                onClick={() => navigate('/register')}
+              >
+                Escolher Este Presente
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* Additional Services */}
+      <div className="emotion-card p-8 text-center">
+        <h2 className="text-section-title text-steel-blue mb-6 font-fraunces">
+          Serviços Adicionais
+        </h2>
+        <div className="grid md:grid-cols-3 gap-6">
+          <div className="p-4">
+            <h3 className="font-semibold text-steel-blue mb-2 font-fraunces">Edição de Vídeo Profissional</h3>
+            <p className="text-misty-gray text-sm mb-2">Vídeo editado profissionalmente (até 1 minuto)</p>
+            <p className="text-earthy-burgundy font-bold">9,90€</p>
+          </div>
+          <div className="p-4">
+            <h3 className="font-semibold text-steel-blue mb-2 font-fraunces">Serviço de Compra</h3>
+            <p className="text-misty-gray text-sm mb-2">Compramos o produto por ti para entrega futura</p>
+            <p className="text-earthy-burgundy font-bold">10% + 5€ mín.</p>
+          </div>
+          <div className="p-4">
+            <h3 className="font-semibold text-steel-blue mb-2 font-fraunces">Entrega Programada</h3>
+            <p className="text-misty-gray text-sm mb-2">Entrega em Portugal Continental na data exacta</p>
+            <p className="text-earthy-burgundy font-bold">Desde 6,50€</p>
+          </div>
+        </div>
+      </div>
+
+      {/* CTA */}
       <div className="text-center mt-16">
-        <div className="bg-light-gold rounded-xl p-8 max-w-4xl mx-auto">
-          <h3 className="text-xl font-bold text-black mb-4">
-            Tens alguma ideia especial?
-          </h3>
-          <p className="text-gray-700 mb-6">
-            Cada história é única. Se precisas de algo personalizado ou tens uma ideia diferente 
-            para a tua cápsula do tempo, vamos conversar e criar algo especial para ti.
-          </p>
+        <h2 className="text-section-title text-steel-blue mb-4 font-fraunces">
+          Não Sabes Qual Escolher?
+        </h2>
+        <p className="text-misty-gray mb-8 max-w-2xl mx-auto">
+          A nossa equipa está aqui para te ajudar a encontrar o presente perfeito para cada momento especial.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button 
-            onClick={() => navigate("/contact")}
-            className="bg-gold-gradient text-black hover:opacity-90 font-semibold px-8"
+            size="lg" 
+            variant="brand"
+            onClick={() => navigate('/contact')}
           >
-            Contacta-nos
+            Falar com a Nossa Equipa
+          </Button>
+          <Button 
+            variant="brand-outline" 
+            size="lg" 
+            onClick={() => navigate('/how-it-works')}
+          >
+            Como Funciona
           </Button>
         </div>
       </div>

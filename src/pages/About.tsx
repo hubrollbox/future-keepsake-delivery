@@ -1,6 +1,5 @@
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Heart, ArrowLeft, Star, BookOpen } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
@@ -92,31 +91,6 @@ const About = () => {
                 <p className="text-misty-gray text-sm leading-relaxed">{value.description}</p>
               </div>
             ))}
-          </div>
-        </div>
-
-        {/* História */}
-        <div className="mb-16">
-          <div className="emotion-card p-8 max-w-4xl mx-auto">
-            <h2 className="text-section-title text-steel-blue mb-6 text-center font-fraunces">
-              Como Tudo Começou
-            </h2>
-            <div className="space-y-6 text-misty-gray leading-relaxed">
-              <p>
-                Em 2023, numa tarde chuvosa no Porto, a Ana estava a arrumar a casa da avó que tinha falecido. 
-                Entre os objectos antigos, encontrou uma carta que a avó tinha escrito para ela própria 
-                30 anos antes, guardada numa caixa especial.
-              </p>
-              <p>
-                Ao ler aquelas palavras carinhosas, percebeu o poder incrível que uma mensagem do passado 
-                pode ter no presente. Foi nesse momento que nasceu a ideia: 
-                <span className="text-dusty-rose font-medium italic"> "E se toda a gente pudesse enviar mensagens e presentes para o futuro?"</span>
-              </p>
-              <p>
-                Hoje, milhares de pessoas já usam o FuturoPresente para criar memórias atemporais, 
-                fortalecer laços familiares e surpreender pessoas queridas no momento perfeito.
-              </p>
-            </div>
           </div>
         </div>
 

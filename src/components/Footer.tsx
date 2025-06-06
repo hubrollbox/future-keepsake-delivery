@@ -1,5 +1,5 @@
 
-import { Facebook, Instagram, Twitter, Linkedin, Mail, Phone, MapPin, Download } from "lucide-react";
+import { Facebook, Instagram, Twitter, Linkedin, Mail, Phone, MapPin, Download, Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import SeloDoTempoIcon from "@/components/SeloDoTempoIcon";
 
@@ -18,8 +18,8 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
-              <SeloDoTempoIcon size={32} variant="negative" />
-              <span className="text-lg font-bold font-fraunces">FuturoPresente</span>
+              <SeloDoTempoIcon size={48} variant="negative" />
+              <span className="text-xl font-bold font-fraunces">FuturoPresente</span>
             </div>
             <p className="text-white/80 text-sm leading-relaxed">
               O que sentes hoje, no tempo de quem amas. Guardamos memórias e entregamos emoções no momento perfeito.
@@ -101,7 +101,7 @@ const Footer = () => {
             <div className="space-y-3">
               <a 
                 href="#" 
-                className="flex items-center space-x-2 bg-brand-gradient text-steel-blue px-4 py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity inline-flex w-fit"
+                className="flex items-center space-x-2 bg-earthy-burgundy text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-earthy-burgundy/90 transition-colors inline-flex w-fit"
                 aria-label="Download da App"
               >
                 <Download className="h-4 w-4" />
@@ -120,13 +120,15 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-white/20 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
+        <div className="border-t border-white/20 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <p className="text-white/60 text-sm">
-            © {new Date().getFullYear()} FuturoPresente. Todos os direitos reservados.
+            © 2025 rollbox. Todos os direitos reservados.
           </p>
-          <p className="text-dusty-rose text-sm font-medium font-fraunces">
-            Presente no futuro ✨
-          </p>
+          <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
+            <p className="text-dusty-rose text-sm font-medium font-fraunces flex items-center">
+              Desenvolvido com <Heart className="h-4 w-4 text-red-500 mx-1" /> em Portugal
+            </p>
+          </div>
         </div>
       </div>
     </footer>
