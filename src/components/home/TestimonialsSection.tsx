@@ -1,79 +1,43 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Star, Quote } from "lucide-react";
+import { Star } from "lucide-react";
 
 const TestimonialsSection = () => {
   const testimonials = [
     {
-      name: "Ana Sofia",
-      age: "28 anos",
-      location: "Porto",
-      text: "Enviei uma carta para mim própria há dois anos. Quando a recebi na semana passada, chorei de emoção. Era exatamente o que precisava de ouvir naquele momento.",
-      rating: 5,
-      type: "Mensagem pessoal"
+      name: "Maria Silva",
+      text: "Enviei uma carta para o meu futuro aniversário. A ideia de receber algo especial de mim mesma é fantástica! Mal posso esperar.",
+      rating: 5
     },
     {
-      name: "Carlos e Maria",
-      age: "Casal há 15 anos",
-      location: "Lisboa",
-      text: "Guardámos as nossas alianças de noivado para entregar à nossa filha no dia do seu casamento. O FuturoPresente tornou este sonho possível.",
-      rating: 5,
-      type: "Presente físico"
+      name: "João Santos", 
+      text: "Criei a minha primeira entrega para surprender a minha namorada no nosso aniversário. O conceito é revolucionário!",
+      rating: 5
     },
     {
-      name: "João Pedro",
-      age: "42 anos",
-      location: "Braga",
-      text: "Criei uma cápsula do tempo com fotos e uma mensagem para o meu filho receber aos 18 anos. É a forma mais bonita de mostrar amor através do tempo.",
-      rating: 5,
-      type: "Cápsula completa"
+      name: "Ana Costa",
+      text: "Adorei a ideia de criar uma cápsula do tempo para a minha filha. Será uma surpresa incrível quando ela crescer!",
+      rating: 5
     }
   ];
 
   return (
-    <div className="emotional-spacing">
-      <div className="text-center mb-12">
-        <h2 className="text-section-title text-steel-blue mb-4 font-fraunces">
-          Histórias que Tocam
-          <span className="text-earthy-burgundy"> o Coração</span>
-        </h2>
-        <p className="text-body-large text-misty-gray leading-relaxed max-w-3xl mx-auto">
-          Cada entrega é uma história única, um momento especial que transforma vidas. 
-          <span className="text-earthy-burgundy font-medium"> Estas são algumas das nossas favoritas.</span>
-        </p>
-      </div>
-
-      <div className="grid md:grid-cols-3 gap-8">
+    <div className="mb-16 md:mb-20 animate-fade-in">
+      <h2 className="text-section-title-sm md:text-section-title text-black mb-4 md:mb-6 text-center">Primeiros Guardiões do Tempo</h2>
+      <p className="text-body md:text-body-large text-gray-600 mb-8 md:mb-12 text-center max-w-4xl mx-auto leading-relaxed">
+        Os nossos primeiros utilizadores já estão a criar memórias especiais. Estas são algumas das suas experiências.
+      </p>
+      <div className="grid md:grid-cols-3 gap-6 md:gap-8">
         {testimonials.map((testimonial, index) => (
-          <Card key={index} className="emotion-card border-dusty-rose/20 hover:border-earthy-burgundy/40 gentle-hover group relative overflow-hidden">
-            <div className="absolute top-4 left-4">
-              <Quote className="h-8 w-8 text-earthy-burgundy/20" />
-            </div>
-            
-            <CardContent className="p-6 pt-12">
-              <div className="flex items-center mb-4">
+          <Card key={index} className="p-6 md:p-8 bg-white border-2 border-gold rounded-2xl hover:shadow-xl hover:scale-105 transition-all duration-300 group">
+            <CardContent className="pt-6">
+              <div className="flex justify-center mb-4 md:mb-6">
                 {[...Array(testimonial.rating)].map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-earthy-burgundy text-earthy-burgundy" />
+                  <Star key={i} className="h-5 w-5 md:h-6 md:w-6 text-gold fill-current group-hover:animate-bounce-gentle" style={{ animationDelay: `${i * 0.1}s` }} />
                 ))}
               </div>
-              
-              <p className="text-misty-gray leading-relaxed mb-6 italic font-fraunces">
-                "{testimonial.text}"
-              </p>
-              
-              <div className="border-t border-dusty-rose/20 pt-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-semibold text-steel-blue font-fraunces">{testimonial.name}</p>
-                    <p className="text-sm text-misty-gray">{testimonial.age} • {testimonial.location}</p>
-                  </div>
-                  <div className="text-right">
-                    <span className="inline-block px-3 py-1 bg-earthy-burgundy/10 text-earthy-burgundy text-xs rounded-full font-medium">
-                      {testimonial.type}
-                    </span>
-                  </div>
-                </div>
-              </div>
+              <p className="text-gray-700 italic mb-4 md:mb-6 leading-relaxed text-sm md:text-base">"{testimonial.text}"</p>
+              <p className="font-semibold text-gold text-base md:text-lg">— {testimonial.name}</p>
             </CardContent>
           </Card>
         ))}
