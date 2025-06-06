@@ -44,7 +44,7 @@ const AdminDashboardPage = () => {
   }
 
   return (
-    <AdminLayout>
+    <AdminLayout activeSection="dashboard">
       <Routes>
         <Route path="/" element={<AdminDashboard />} />
         <Route path="/deliveries" element={<AdminDeliveries />} />

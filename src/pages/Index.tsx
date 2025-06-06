@@ -2,8 +2,8 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import HeroSection from "@/components/home/HeroSection";
-import ProductHighlightSection from "@/components/home/ProductHighlightSection";
-import ManifestoSection from "@/components/home/ManifestoSection";
+import StorySection from "@/components/home/StorySection";
+import ProductsSection from "@/components/home/ProductsSection";
 import HowItWorksSection from "@/components/home/HowItWorksSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import TrustSection from "@/components/home/TrustSection";
@@ -14,10 +14,10 @@ const Index = () => {
     <div className="min-h-screen bg-lavender-mist">
       <Navigation />
 
-      <main className="container mx-auto px-4 py-8">
+      <main>
         <HeroSection />
-        <ProductHighlightSection />
-        <ManifestoSection />
+        <StorySection />
+        <ProductsSection />
         <HowItWorksSection />
         <TestimonialsSection />
         <TrustSection />

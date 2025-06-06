@@ -37,7 +37,7 @@ const About = () => {
           <Button 
             variant="ghost" 
             onClick={() => navigate('/')} 
-            className="flex items-center space-x-2 text-steel-blue hover:text-dusty-rose"
+            className="flex items-center space-x-2 text-steel-blue hover:text-dusty-rose transition-colors duration-200"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Voltar ao Início</span>
@@ -50,45 +50,44 @@ const About = () => {
             <SeloDoTempoIcon size={80} className="drop-shadow-sm" />
           </div>
           
-          <h1 className="text-hero text-steel-blue mb-6 leading-tight font-fraunces">
+          <h1 className="text-5xl md:text-6xl font-fraunces font-bold text-steel-blue mb-6 leading-tight">
             Manifesto
-            <span className="text-dusty-rose block">FuturoPresente</span>
+            <span className="text-earthy-burgundy block">FuturoPresente</span>
           </h1>
           
-          <p className="text-subtitle text-misty-gray mb-8 leading-relaxed">
-            Nascemos de um gesto íntimo: uma mensagem escrita por um pai para a filha, 
-            para ser lida aos 18 anos. Mais do que uma aplicação tecnológica, 
-            somos um espaço de <span className="text-dusty-rose font-medium">memória, sensibilidade e presença.</span>
+          <p className="text-xl md:text-2xl text-misty-gray mb-8 leading-relaxed">
+            Mais do que uma aplicação tecnológica, somos um espaço de 
+            <span className="text-earthy-burgundy font-semibold"> memória, sensibilidade e presença.</span>
           </p>
         </div>
 
         {/* Missão */}
-        <div className="emotion-card max-w-3xl mx-auto mb-16 p-8">
-          <h2 className="text-section-title text-steel-blue mb-6 text-center font-fraunces">
+        <div className="emotion-card max-w-4xl mx-auto mb-16 p-12">
+          <h2 className="text-3xl md:text-4xl font-fraunces font-bold text-steel-blue mb-6 text-center">
             A Nossa Missão
           </h2>
-          <p className="text-body text-misty-gray text-center leading-relaxed italic font-fraunces">
+          <blockquote className="text-xl md:text-2xl text-steel-blue text-center leading-relaxed italic font-fraunces mb-6">
             "Guardar emoções para o tempo certo. Porque há coisas que só fazem sentido 
             quando chegam no momento perfeito. E esse momento, só tu o conheces."
-          </p>
-          <p className="text-dusty-rose font-medium text-center mt-4 font-fraunces">
+          </blockquote>
+          <p className="text-earthy-burgundy font-semibold text-center text-lg font-fraunces">
             — Presente no futuro
           </p>
         </div>
 
         {/* Valores */}
         <div className="mb-16">
-          <h2 className="text-section-title text-steel-blue mb-8 text-center font-fraunces">
+          <h2 className="text-3xl md:text-4xl font-fraunces font-bold text-steel-blue mb-8 text-center">
             A Nossa Essência
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {values.map((value, index) => (
-              <div key={index} className="emotion-card text-center p-6 gentle-hover">
-                <div className="w-16 h-16 bg-dusty-rose/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <value.icon className="h-8 w-8 text-dusty-rose" />
+              <div key={index} className="emotion-card text-center p-8 hover:scale-105 transition-all duration-300 group">
+                <div className="w-16 h-16 bg-earthy-burgundy/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-earthy-burgundy/20 transition-colors">
+                  <value.icon className="h-8 w-8 text-earthy-burgundy" />
                 </div>
-                <h3 className="text-lg font-semibold text-steel-blue mb-3 font-fraunces">{value.title}</h3>
-                <p className="text-misty-gray text-sm leading-relaxed">{value.description}</p>
+                <h3 className="text-xl font-fraunces font-semibold text-steel-blue mb-4">{value.title}</h3>
+                <p className="text-misty-gray leading-relaxed">{value.description}</p>
               </div>
             ))}
           </div>
@@ -96,39 +95,41 @@ const About = () => {
 
         {/* Conceito Selo do Tempo */}
         <div className="mb-16">
-          <div className="emotion-card p-8 max-w-4xl mx-auto text-center">
-            <SeloDoTempoIcon size={60} className="mx-auto mb-6" />
-            <h2 className="text-section-title text-steel-blue mb-4 font-fraunces">
+          <div className="emotion-card p-12 max-w-5xl mx-auto text-center">
+            <SeloDoTempoIcon size={80} className="mx-auto mb-8" />
+            <h2 className="text-3xl md:text-4xl font-fraunces font-bold text-steel-blue mb-6">
               Conceito: Selo do Tempo
             </h2>
-            <p className="text-misty-gray leading-relaxed mb-6">
+            <p className="text-lg text-misty-gray leading-relaxed mb-8">
               O conceito "Selo do Tempo" foi inspirado em carimbos postais e marcações temporais, 
               evocando a ideia de autenticidade e oficialidade de uma correspondência especial. 
               O selo circular com marcações de tempo simboliza a validação da mensagem para o futuro.
             </p>
-            <div className="bg-sand-beige/50 rounded-xl p-6">
-              <p className="text-steel-blue font-medium italic font-fraunces">
+            <div className="bg-sand-beige/50 rounded-2xl p-8">
+              <blockquote className="text-xl font-fraunces italic text-steel-blue">
                 "Cada entrega é uma promessa ao futuro, selada com o carinho do presente."
-              </p>
+              </blockquote>
             </div>
           </div>
         </div>
 
         {/* CTA */}
-        <div className="text-center emotion-card p-8 max-w-3xl mx-auto">
-          <h2 className="text-section-title text-steel-blue mb-4 font-fraunces">
+        <div className="text-center emotion-card p-12 max-w-4xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-fraunces font-bold text-steel-blue mb-6">
             Quer Fazer Parte da Nossa História?
           </h2>
-          <p className="text-misty-gray mb-6 leading-relaxed">
+          <p className="text-lg text-misty-gray mb-8 leading-relaxed">
             Junta-te à nossa comunidade e ajuda-nos a continuar a criar 
             momentos mágicos para milhares de pessoas.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Button 
               size="lg" 
               variant="brand"
               onClick={() => navigate('/register')}
+              className="group"
             >
+              <Heart className="mr-2 h-5 w-5 group-hover:animate-bounce-gentle" />
               Começar Agora
             </Button>
             <Button 
