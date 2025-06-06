@@ -10,15 +10,15 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        default: "bg-dusty-rose text-steel-blue hover:bg-dusty-rose/90",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+          "bg-earthy-burgundy text-white hover:bg-earthy-burgundy/90",
         outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+          "border border-dusty-rose/30 bg-white/90 hover:bg-misty-gray hover:text-steel-blue",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
+          "bg-misty-gray text-steel-blue hover:bg-misty-gray/80",
+        ghost: "hover:bg-dusty-rose/10 hover:text-steel-blue",
+        link: "text-dusty-rose underline-offset-4 hover:underline",
         // Variantes da marca FuturoPresente com Bordô Terroso
         brand: "bg-earthy-burgundy text-white hover:bg-earthy-burgundy/90 hover:scale-[1.02] shadow-soft font-semibold",
         "brand-outline": "border-2 border-earthy-burgundy text-earthy-burgundy hover:bg-earthy-burgundy/5 hover:scale-[1.02] font-semibold",

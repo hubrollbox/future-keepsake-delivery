@@ -28,7 +28,7 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-lavender-mist">
+    <div className="min-h-screen bg-white/90">
       <Navigation />
 
       <main className="container mx-auto px-4 py-16">
