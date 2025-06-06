@@ -15,17 +15,17 @@ const Footer = () => {
             {/* Brand Section */}
             <div className="md:col-span-2">
               <div className="flex items-center space-x-4 mb-6">
-                <SeloDoTempoIcon size={80} className="text-white" />
+                <SeloDoTempoIcon size={100} className="text-white" />
                 <div>
-                  <h3 className="text-2xl font-fraunces font-bold">FuturoPresente</h3>
-                  <p className="text-dusty-rose font-fraunces italic">Presente no futuro</p>
+                  <h3 className="text-3xl font-fraunces font-bold">FuturoPresente</h3>
+                  <p className="text-dusty-rose font-fraunces italic text-lg">Presente no futuro</p>
                 </div>
               </div>
               <p className="text-misty-gray leading-relaxed mb-6 max-w-md">
                 Guardamos emoções para o tempo certo. Cada entrega é uma ponte entre o presente e o futuro, 
                 criada com sensibilidade e amor.
               </p>
-              <div className="flex items-center space-x-2 text-dusty-rose">
+              <div className="flex items-center space-x-2 text-dusty-rose mb-4">
                 <span className="text-sm">Desenvolvido com</span>
                 <Heart className="h-4 w-4 text-red-500 fill-current" />
                 <span className="text-sm">em Portugal</span>

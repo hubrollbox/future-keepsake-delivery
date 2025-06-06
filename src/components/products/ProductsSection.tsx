@@ -77,11 +77,11 @@ const ProductsSection = () => {
     <div className="container mx-auto px-4 py-16">
       {/* Hero Section */}
       <div className="text-center mb-16">
-        <h1 className="text-hero text-steel-blue mb-6 leading-tight font-fraunces">
+        <h1 className="text-4xl md:text-6xl font-fraunces font-bold text-steel-blue mb-6 leading-tight">
           Presentes com Alma
-          <span className="text-dusty-rose block">Para Quem Amas</span>
+          <span className="text-earthy-burgundy block">Para Quem Amas</span>
         </h1>
-        <p className="text-subtitle text-misty-gray mb-8 leading-relaxed max-w-3xl mx-auto">
+        <p className="text-xl text-misty-gray mb-8 leading-relaxed max-w-3xl mx-auto">
           Cada presente é uma promessa ao futuro, guardada com o carinho do presente. 
           Escolhe como queres tocar o coração de quem amas no momento perfeito.
         </p>
@@ -157,7 +157,7 @@ const ProductsSection = () => {
 
       {/* Additional Services */}
       <div className="emotion-card p-8 text-center">
-        <h2 className="text-section-title text-steel-blue mb-6 font-fraunces">
+        <h2 className="text-3xl font-fraunces font-bold text-steel-blue mb-6">
           Serviços Adicionais
         </h2>
         <div className="grid md:grid-cols-3 gap-6">
@@ -181,7 +181,7 @@ const ProductsSection = () => {
 
       {/* CTA */}
       <div className="text-center mt-16">
-        <h2 className="text-section-title text-steel-blue mb-4 font-fraunces">
+        <h2 className="text-3xl font-fraunces font-bold text-steel-blue mb-4">
           Não Sabes Qual Escolher?
         </h2>
         <p className="text-misty-gray mb-8 max-w-2xl mx-auto">
