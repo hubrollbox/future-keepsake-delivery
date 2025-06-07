@@ -14,12 +14,8 @@ const Footer = () => {
           <div className="grid md:grid-cols-4 gap-8 mb-12">
             {/* Brand Section */}
             <div className="md:col-span-2">
-              <div className="flex items-center space-x-4 mb-6">
-                <SeloDoTempoIcon size={100} className="text-white" />
-                <div>
-                  <h3 className="text-3xl font-fraunces font-bold">FuturoPresente</h3>
-                  <p className="text-dusty-rose font-fraunces italic text-lg">Presente no futuro</p>
-                </div>
+              <div className="flex items-center justify-center mb-6">
+                <SeloDoTempoIcon size={120} className="" />
               </div>
               <p className="text-misty-gray leading-relaxed mb-6 max-w-md">
                 Guardamos emoções para o tempo certo. Cada entrega é uma ponte entre o presente e o futuro, 
@@ -38,7 +34,7 @@ const Footer = () => {
               <ul className="space-y-3">
                 <li>
                   <button 
-                    onClick={() => navigate('/')}
+                    onClick={() => {window.scrollTo(0,0); navigate('/')}}
                     className="text-misty-gray hover:text-dusty-rose transition-colors duration-200"
                   >
                     Início
@@ -46,7 +42,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <button 
-                    onClick={() => navigate('/about')}
+                    onClick={() => {window.scrollTo(0,0); navigate('/about')}}
                     className="text-misty-gray hover:text-dusty-rose transition-colors duration-200"
                   >
                     Sobre Nós
@@ -54,7 +50,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <button 
-                    onClick={() => navigate('/products')}
+                    onClick={() => {window.scrollTo(0,0); navigate('/products')}}
                     className="text-misty-gray hover:text-dusty-rose transition-colors duration-200"
                   >
                     Produtos
@@ -62,7 +58,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <button 
-                    onClick={() => navigate('/how-it-works')}
+                    onClick={() => {window.scrollTo(0,0); navigate('/how-it-works')}}
                     className="text-misty-gray hover:text-dusty-rose transition-colors duration-200"
                   >
                     Como Funciona
@@ -70,7 +66,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <button 
-                    onClick={() => navigate('/contact')}
+                    onClick={() => {window.scrollTo(0,0); navigate('/contact')}}
                     className="text-misty-gray hover:text-dusty-rose transition-colors duration-200"
                   >
                     Contacto
@@ -85,7 +81,7 @@ const Footer = () => {
               <ul className="space-y-3">
                 <li>
                   <button 
-                    onClick={() => navigate('/terms-conditions')}
+                    onClick={() => {window.scrollTo(0,0); navigate('/terms-conditions')}}
                     className="text-misty-gray hover:text-dusty-rose transition-colors duration-200"
                   >
                     Termos e Condições
@@ -93,7 +89,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <button 
-                    onClick={() => navigate('/privacy-policy')}
+                    onClick={() => {window.scrollTo(0,0); navigate('/privacy-policy')}}
                     className="text-misty-gray hover:text-dusty-rose transition-colors duration-200"
                   >
                     Política de Privacidade
@@ -101,7 +97,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <button 
-                    onClick={() => navigate('/partnerships')}
+                    onClick={() => {window.scrollTo(0,0); navigate('/partnerships')}}
                     className="text-misty-gray hover:text-dusty-rose transition-colors duration-200"
                   >
                     Parcerias

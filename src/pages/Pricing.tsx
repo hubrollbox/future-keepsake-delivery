@@ -389,3 +389,94 @@ const Pricing = () => {
 };
 
 export default Pricing;
+
+const plans = [
+  {
+    name: "Essencial",
+    price: "Grátis",
+    features: [
+      "1 cápsula do tempo",
+      "Armazenamento digital: 100MB",
+      "Entrega digital",
+      "Personalização básica"
+    ],
+    // bg: "from-dusty-rose/20 to-white/90",
+    bg: "bg-gradient-to-br from-dusty-rose/20 to-white/90",
+    ring: "ring-2 ring-dusty-rose/40"
+  },
+  {
+    name: "Premium",
+    price: "9,99€/ano",
+    features: [
+      "5 cápsulas do tempo",
+      "Armazenamento digital: 1GB",
+      "Entrega digital e física",
+      "Personalização avançada",
+      "Prioridade no suporte"
+    ],
+    bg: "bg-gradient-to-br from-steel-blue/10 to-white/90",
+    ring: "ring-2 ring-steel-blue/40"
+  },
+  {
+    name: "Família",
+    price: "19,99€/ano",
+    features: [
+      "20 cápsulas do tempo",
+      "Armazenamento digital: 10GB",
+      "Entrega digital e física",
+      "Personalização premium",
+      "Acesso familiar",
+      "Suporte prioritário"
+    ],
+    bg: "bg-gradient-to-br from-earthy-burgundy/10 to-white/90",
+    ring: "ring-2 ring-earthy-burgundy/40"
+  }
+];
+  .map((plan, index) => (
+    <Card
+      key={plan.name}
+      className={`p-8 ${plan.bg} ${plan.ring} rounded-2xl shadow-soft flex flex-col items-center`}
+    >
+      <CardHeader className="text-center pb-4">
+        <CardTitle className="text-xl font-bold text-gold">{plan.name}</CardTitle>
+        <div className="text-3xl font-bold text-gray-800">
+          {plan.price}
+          {plan.yearlyPrice && (
+            <div className="text-sm text-gold font-normal">
+              ou {plan.yearlyPrice}
+            </div>
+          )}
+        </div>
+        <p className="text-gray-600 text-sm">{plan.description}</p>
+      </CardHeader>
+      <CardContent>
+        <ul className="space-y-2 mb-6">
+          {plan.features.map((feature, i) => (
+            <li key={i} className="flex items-start text-sm">
+              <Check className="h-4 w-4 text-gold mr-2 mt-0.5 flex-shrink-0" />
+              {feature}
+            </li>
+          ))}
+        </ul>
+        <Button 
+          className={`w-full bg-gradient-to-r from-gold to-amber-700 hover:opacity-90`}
+          onClick={() => navigate('/register')}
+        >
+          {plan.price === "Grátis" ? "Começar Grátis" : "Escolher Plano"}
+        </Button>
+      </CardContent>
+    </Card>
+  ))}
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>

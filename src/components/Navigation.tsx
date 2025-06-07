@@ -74,7 +74,11 @@ const Navigation = () => {
                     </Button>
                   </Link>
                   <Link to="/register" aria-label="Registrar nova conta">
-                    <Button size="sm" className="bg-brand-gradient text-steel-blue hover:opacity-90 rounded-xl font-medium">
+                    <Button
+                      variant="brand"
+                      className="px-6 py-2 rounded-lg font-semibold text-white shadow-soft bg-brand-gradient hover:opacity-90 focus-visible:ring-2 focus-visible:ring-dusty-rose/40 transition-all duration-200"
+                      onClick={() => navigate('/register')}
+                    >
                       Registar
                     </Button>
                   </Link>
