@@ -390,7 +390,6 @@ const Pricing = () => {
 
 export default Pricing;
 
-    price: "Grátis",
     features: [
       "1 cápsula do tempo",
       "Armazenamento digital: 100MB",
