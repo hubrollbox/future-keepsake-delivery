@@ -390,7 +390,6 @@ const Pricing = () => {
 
 export default Pricing;
 
-const plans = [
   {
     name: "Essencial",
     price: "Grátis",
