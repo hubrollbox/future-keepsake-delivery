@@ -71,8 +71,6 @@ const ProductsSection = () => {
     }
   ];
 
-  const categories = ["Todos", "Digital", "Físico", "Cápsula"];
-
   return (
     <div className="container mx-auto px-4 py-16">
       {/* Hero Section */}
@@ -85,20 +83,6 @@ const ProductsSection = () => {
           Cada presente é uma promessa ao futuro, guardada com o carinho do presente. 
           Escolhe como queres tocar o coração de quem amas no momento perfeito.
         </p>
-      </div>
-
-      {/* Category Filters */}
-      <div className="flex flex-wrap justify-center gap-4 mb-12">
-        {categories.map((category) => (
-          <Button
-            key={category}
-            variant={category === "Todos" ? "brand" : "brand-outline"}
-            size="sm"
-            className="px-6"
-          >
-            {category}
-          </Button>
-        ))}
       </div>
 
       {/* Products Grid */}

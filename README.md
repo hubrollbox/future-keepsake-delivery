@@ -2,85 +2,79 @@
 
 ![Logo FuturoPresente](public/placeholder.svg)
 
-## Descrição do Projeto
+## Sobre a Plataforma
 
-Esta aplicação permite gerir entregas de keepsakes (lembranças) de forma moderna e eficiente, utilizando React, TypeScript, Vite e Tailwind CSS. Inclui funcionalidades de autenticação, dashboards para administradores e utilizadores, e integração com Supabase.
+A Future Keepsake Delivery é uma solução moderna para gestão, armazenamento e entrega programada de keepsakes (lembranças e presentes para o futuro). Desenvolvida para empresas e consumidores finais, a plataforma oferece segurança, personalização e automação em todo o ciclo de vida do presente.
 
-## Identidade Visual e Marca
-
-A marca FuturoPresente utiliza uma identidade visual sofisticada e acolhedora, com destaque para o logotipo abaixo. Utilize sempre os ficheiros oficiais da marca para garantir consistência visual.
-
-### Logotipo
-
-- ![Logotipo principal](public/placeholder.svg)
-- ![Selo FuturoPresente](public/placeholder.svg)
-
-> **Nota:** Substitua os caminhos acima pelos ficheiros reais do logotipo e selo na pasta `public/`.
-
-### Paleta de Cores
-- Rosa antigo: #DAB8C3
-- Azul petróleo: #3D4A5A
-- Bege areia: #ECE5DA
-- Cinza esfumado: #A0AEC0
-- Branco lavanda: #F5F2F8
-
-### Tipografia
-- Títulos: Playfair Display (ou Fraunces)
-- Corpo de texto: Montserrat (ou Inter)
-
-## Funcionalidades
-- Gestão de keepsakes
-- Autenticação de utilizadores
-- Dashboard para admin e utilizadores
-- Integração com Supabase
-- ...
+## Principais Funcionalidades
+- Cadastro e autenticação de usuários
+- Gestão de keepsakes digitais e físicos
+- Entregas programadas e notificações automáticas
+- Dashboard intuitivo para administradores e usuários
+- Integração com Supabase para backend seguro
+- Interface responsiva e personalizável
+- Suporte a múltiplos métodos de pagamento (se aplicável)
 
 ## Tecnologias Utilizadas
+- React + TypeScript
 - Vite
-- TypeScript
-- React
 - Tailwind CSS
 - Supabase
 
-## Estrutura de Pastas
-```
-├── src/
-│   ├── components/
-│   ├── pages/
-│   ├── hooks/
-│   └── ...
-├── public/
-├── package.json
-└── ...
-```
+## Como Operar e Implantar
 
-## Instalação e Execução
+### Instalação
 ```sh
 git clone <URL_DO_SEU_REPOSITORIO>
 cd <NOME_DA_PASTA>
 npm install
+```
+
+### Configuração
+Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
+- `VITE_SUPABASE_URL=...`
+- `VITE_SUPABASE_ANON_KEY=...`
+
+### Execução em Desenvolvimento
+```sh
 npm run dev
 ```
 
-## Configuração
-- Crie um ficheiro `.env` com as variáveis necessárias:
-  - `VITE_SUPABASE_URL=...`
-  - `VITE_SUPABASE_ANON_KEY=...`
+### Build para Produção
+```sh
+npm run build
+```
+Os arquivos finais estarão na pasta `dist/`.
 
-## Testes
+### Testes
 ```sh
 npm run test
 ```
 
-## Como contribuir
+## Estrutura de Pastas
+```
+├── src/
+│   ├── components/   # Componentes reutilizáveis
+│   ├── pages/        # Páginas principais
+│   ├── hooks/        # Hooks customizados
+│   └── ...
+├── public/           # Arquivos estáticos
+├── package.json      # Dependências e scripts
+└── ...
+```
+
+## Manutenção e Suporte
+- Atualize dependências regularmente via `npm update`.
+- Consulte a documentação oficial das tecnologias utilizadas para troubleshooting.
+- Para dúvidas ou suporte, utilize o canal oficial da equipe Legalflux.
+
+## Contribuição
 1. Faça um fork do projeto
 2. Crie uma branch: `git checkout -b minha-feature`
-3. Faça commit das suas alterações: `git commit -m 'feat: minha nova feature'`
-4. Faça push para a branch: `git push origin minha-feature`
+3. Commit suas alterações: `git commit -m 'feat: minha nova feature'`
+4. Push para a branch: `git push origin minha-feature`
 5. Abra um Pull Request
 
-## Licença
-[MIT](LICENSE)
+---
 
-## Contacto
-Para dúvidas ou sugestões, por favor abra uma issue neste repositório.
+Legalflux © Todos os direitos reservados.
