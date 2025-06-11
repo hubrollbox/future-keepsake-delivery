@@ -44,8 +44,8 @@ const Dashboard = () => {
 
   // Gamification data should be fetched from the database in a production environment
   // Gamification data should be fetched from the database in a production environment
-  // const achievements: any[] = [];
-  // const quests: any[] = [];
+  const achievements: any[] = [];
+  const quests: any[] = [];
 
   return (
     <div className="min-h-screen bg-lavender-mist">
