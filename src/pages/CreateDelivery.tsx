@@ -96,8 +96,7 @@ const CreateDelivery = () => {
         digitalFileUrl = data.path;
       }
 
-      const { error } = await supabase.from("deliveries").insert([
-        {
+      const dataToInsert = {
           title: formData.title,
           recipient: formData.recipient,
           delivery_date: formData.deliveryDate,
@@ -106,7 +105,11 @@ const CreateDelivery = () => {
           delivery_type: deliveryType,
           location: formData.location,
           digital_file_url: digitalFileUrl,
-        },
+      };
+      console.log("Dados a serem inseridos:", dataToInsert); // Adicione esta linha
+
+      const { error } = await supabase.from("deliveries").insert([
+        dataToInsert,
       ]);
 
       if (error) {
