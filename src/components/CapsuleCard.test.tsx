@@ -9,7 +9,7 @@ describe('CapsuleCard', () => {
       id: '1',
       title: 'Minha Cápsula de Teste',
       description: 'Esta é uma descrição de teste.',
-      deliveryDate: '2024-12-31',
+      deliveryDate: '2025-12-31',
     status: 'scheduled',
       type: 'digital',
       recipient: 'test@example.com',

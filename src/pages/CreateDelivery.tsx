@@ -110,6 +110,7 @@ const CreateDelivery = () => {
       ]);
 
       if (error) {
+        console.log(error); // Adicione esta linha
         setError("Erro ao criar entrega.");
         toast({ title: "Erro", description: "Erro ao criar entrega." });
       } else {
