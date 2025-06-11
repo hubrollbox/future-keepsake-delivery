@@ -43,8 +43,9 @@ const Dashboard = () => {
   const physicalDeliveries = deliveries.filter(d => d.delivery_type === "physical");
 
   // Gamification data should be fetched from the database in a production environment
-  const achievements: any[] = [];
-  const quests: any[] = [];
+  // Gamification data should be fetched from the database in a production environment
+  // const achievements: any[] = [];
+  // const quests: any[] = [];
 
   return (
     <div className="min-h-screen bg-lavender-mist">
@@ -92,7 +93,7 @@ const Dashboard = () => {
           </p>
           
           {/* User Stats Card */}
-          <UserStats profile={profile} />
+          <UserStats profile={profile} totalDeliveries={deliveries.length} />
         </div>
 
         {/* Stats Cards with Game Elements */}

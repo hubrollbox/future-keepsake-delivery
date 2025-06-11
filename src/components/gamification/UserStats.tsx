@@ -7,9 +7,10 @@ import { UserProfile } from "@/hooks/useAuth";
 
 interface UserStatsProps {
   profile: UserProfile | null;
+  totalDeliveries: number;
 }
 
-const UserStats = ({ profile }: UserStatsProps) => {
+const UserStats = ({ profile, totalDeliveries }: UserStatsProps) => {
   const currentLevel = profile?.level || 1;
   const totalPoints = profile?.total_points || 0;
   const pointsForNextLevel = currentLevel * 100; // 100 pontos por nível
@@ -56,7 +57,7 @@ const UserStats = ({ profile }: UserStatsProps) => {
               <Target className="h-4 w-4 text-blue-600" />
             </div>
             <p className="text-xs text-gray-600">Entregas</p>
-            <p className="font-bold text-sm">0</p>
+            <p className="font-bold text-sm">{totalDeliveries}</p>
           </div>
           <div className="text-center">
             <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-1">
