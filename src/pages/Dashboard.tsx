@@ -42,54 +42,9 @@ const Dashboard = () => {
   const digitalDeliveries = deliveries.filter(d => d.delivery_type === "digital");
   const physicalDeliveries = deliveries.filter(d => d.delivery_type === "physical");
 
-  // Dados de gamificação (em produção viriam da base de dados)
-  const achievements = [
-    {
-      id: "1",
-      title: "Primeiro Passo",
-      description: "Criaste a tua primeira entrega",
-      icon: Target,
-      unlocked: deliveries.length > 0,
-      points: 50
-    },
-    {
-      id: "2", 
-      title: "Viajante Temporal",
-      description: "Agendaste 5 entregas",
-      icon: Clock,
-      unlocked: deliveries.length >= 5,
-      points: 100
-    },
-    {
-      id: "3",
-      title: "Mestre do Futuro",
-      description: "Completaste 10 entregas",
-      icon: Trophy,
-      unlocked: false,
-      points: 200
-    }
-  ];
-
-  const quests = [
-    {
-      id: "1",
-      title: "Explorador Temporal",
-      description: "Cria a tua primeira entrega para o futuro",
-      progress: deliveries.length > 0 ? 1 : 0,
-      target: 1,
-      reward: 50,
-      timeLimit: "Sem limite"
-    },
-    {
-      id: "2",
-      title: "Construtor de Memórias",
-      description: "Agenda 3 entregas diferentes",
-      progress: deliveries.length > 3 ? 3 : deliveries.length,
-      target: 3,
-      reward: 100,
-      timeLimit: "Esta semana"
-    }
-  ];
+  // Gamification data should be fetched from the database in a production environment
+  const achievements: any[] = [];
+  const quests: any[] = [];
 
   return (
     <div className="min-h-screen bg-lavender-mist">

@@ -46,12 +46,25 @@ const CreateDelivery = () => {
     }
   };
 
+  const isValidFutureDate = (dateString: string, timeString: string) => {
+    const deliveryDateTime = new Date(`${dateString}T${timeString}`);
+    const now = new Date();
+    return deliveryDateTime > now;
+  };
+
   const validateStep = () => {
     switch (currentStep) {
       case 0:
         return !!deliveryType; // Check if deliveryType is selected
       case 1:
-        return !!formData.title && !!formData.recipient && !!formData.deliveryDate && (deliveryType === "digital" || !!formData.location);
+        if (!formData.title || !formData.recipient || !formData.deliveryDate || !formData.deliveryTime) {
+          return false;
+        }
+        if (!isValidFutureDate(formData.deliveryDate, formData.deliveryTime)) {
+          toast({ title: "Erro de Validação", description: "A data e hora de entrega devem ser no futuro." });
+          return false;
+        }
+        return (deliveryType === "digital" || !!formData.location);
       case 2:
         return !!formData.message;
       case 3:
@@ -113,9 +126,9 @@ const CreateDelivery = () => {
       ]);
 
       if (error) {
-        console.log(error); // Adicione esta linha
-        setError("Erro ao criar entrega.");
-        toast({ title: "Erro", description: "Erro ao criar entrega." });
+        console.log(JSON.stringify(error)); // Adicione esta linha para depuração
+        setError(`Erro ao criar entrega: ${error.message}`);
+        toast({ title: "Erro", description: `Erro ao criar entrega: ${error.message}` });
       } else {
         toast({ title: "Sucesso", description: "Entrega criada com sucesso!" });
         setCurrentStep(4); // Move to confirmation step
