@@ -58,15 +58,28 @@ const CreateDelivery = () => {
         return !!deliveryType; // Check if deliveryType is selected
       case 1:
         if (!formData.title || !formData.recipient || !formData.deliveryDate || !formData.deliveryTime) {
+          toast({ title: "Erro de Validação", description: "Por favor, preencha todos os campos de Título, Destinatário, Data e Hora." });
           return false;
         }
         if (!isValidFutureDate(formData.deliveryDate, formData.deliveryTime)) {
           toast({ title: "Erro de Validação", description: "A data e hora de entrega devem ser no futuro." });
           return false;
         }
-        return (deliveryType === "digital" || !!formData.location);
+        if (deliveryType === "physical" && !formData.location) {
+          toast({ title: "Erro de Validação", description: "Por favor, preencha o campo de Localização para entregas físicas." });
+          return false;
+        }
+        if (deliveryType === "digital" && !formData.digitalFile) {
+          toast({ title: "Erro de Validação", description: "Por favor, selecione um ficheiro digital para a entrega." });
+          return false;
+        }
+        return true;
       case 2:
-        return !!formData.message;
+        if (!formData.message) {
+          toast({ title: "Erro de Validação", description: "Por favor, preencha o campo de Mensagem." });
+          return false;
+        }
+        return true;
       case 3:
         return true; // Review step doesn't require validation
       case 4:

@@ -14,6 +14,7 @@ export interface UserProfile {
   level: number;
   created_at: string;
   updated_at: string;
+  role: string | null;
 }
 
 export const useAuth = () => {
@@ -68,7 +69,7 @@ export const useAuth = () => {
     try {
       const { data, error } = await supabase
         .from("profiles")
-        .select("*")
+        .select("*, role")
         .eq("id", userId)
         .single();
 
@@ -118,7 +119,8 @@ export const useAuth = () => {
         password,
         options: {
           data: {
-            name: fullName,
+            full_name: fullName,
+            role: 'user', // Default role for new users
           },
         },
       });

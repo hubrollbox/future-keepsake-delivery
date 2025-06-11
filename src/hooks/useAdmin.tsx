@@ -18,29 +18,8 @@ export const useAdmin = () => {
         return;
       }
 
-      try {
-        const { data, error } = await supabase
-          .from("admin_roles")
-          .select("role")
-          .eq("user_id", user.id)
-          .single();
-
-        if (error && error.code !== 'PGRST116') {
-          console.error("Error checking admin status:", error);
-          toast({
-            title: "Erro",
-            description: "Não foi possível verificar as permissões de administrador.",
-            variant: "destructive",
-          });
-        }
-
-        setIsAdmin(!!data);
-      } catch (error) {
-        console.error("Error in admin check:", error);
-        setIsAdmin(false);
-      } finally {
-        setLoading(false);
-      }
+      setIsAdmin(user.role === 'admin');
+      setLoading(false);
     };
 
     checkAdminStatus();
