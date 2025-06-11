@@ -94,19 +94,49 @@ const CreateDelivery = () => {
       setLoading(true);
       setError("");
 
-      let digitalFileUrl = null;
-      if (deliveryType === "digital" && formData.digitalFile) {
+      const uploadFile = async (file: File) => {
         const { data, error } = await supabase.storage
           .from("digital-files")
-          .upload(`${Date.now()}-${formData.digitalFile.name}`, formData.digitalFile);
-
+          .upload(`${Date.now()}-${file.name}`, file);
         if (error) {
-          setError("Erro ao fazer upload do ficheiro digital.");
-          setLoading(false);
-          toast({ title: "Erro", description: "Erro ao fazer upload do ficheiro digital." });
-          return;
+          throw new Error(`Erro ao fazer upload do ficheiro digital: ${error.message}`);
         }
-        digitalFileUrl = data.path;
+        return data.path;
+      };
+
+      const insertDelivery = async (dataToInsert: any) => {
+        const { error } = await supabase.from("deliveries").insert([dataToInsert]);
+        if (error) {
+          throw new Error(`Erro ao criar entrega: ${error.message}`);
+        }
+      };
+
+      let digitalFileUrl = null;
+      try {
+        if (deliveryType === "digital" && formData.digitalFile) {
+          digitalFileUrl = await uploadFile(formData.digitalFile);
+        }
+
+        const dataToInsert = {
+          title: formData.title,
+          recipient: formData.recipient,
+          delivery_date: formData.deliveryDate,
+          delivery_time: formData.deliveryTime,
+          message: formData.message,
+          delivery_type: deliveryType,
+          location: formData.location,
+          digital_file_url: digitalFileUrl,
+        };
+        console.log("Dados a serem inseridos:", dataToInsert);
+
+        await insertDelivery(dataToInsert);
+
+        toast({ title: "Sucesso", description: "Entrega criada com sucesso!" });
+        setCurrentStep(4);
+      } catch (err: any) {
+        setError(err.message);
+        toast({ title: "Erro", description: err.message });
+        console.log(JSON.stringify(err));
       }
 
       const dataToInsert = {
@@ -121,18 +151,6 @@ const CreateDelivery = () => {
       };
       console.log("Dados a serem inseridos:", dataToInsert); // Adicione esta linha
 
-      const { error } = await supabase.from("deliveries").insert([
-        dataToInsert,
-      ]);
-
-      if (error) {
-        console.log(JSON.stringify(error)); // Adicione esta linha para depuração
-        setError(`Erro ao criar entrega: ${error.message}`);
-        toast({ title: "Erro", description: `Erro ao criar entrega: ${error.message}` });
-      } else {
-        toast({ title: "Sucesso", description: "Entrega criada com sucesso!" });
-        setCurrentStep(4); // Move to confirmation step
-      }
       setLoading(false);
     }
   };

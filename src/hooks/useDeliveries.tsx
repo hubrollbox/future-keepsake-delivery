@@ -58,7 +58,7 @@ export const useDeliveries = () => {
         console.error("Error fetching deliveries:", error);
         toast({
           title: "Erro",
-          description: "Não foi possível carregar as entregas.",
+          description: `Não foi possível carregar as entregas: ${error.message}`,
           variant: "destructive",
         });
         return;
@@ -107,7 +107,7 @@ export const useDeliveries = () => {
         console.error("Error creating delivery:", error);
         toast({
           title: "Erro",
-          description: "Não foi possível criar a entrega.",
+          description: `Não foi possível criar a entrega: ${error.message}`,
           variant: "destructive",
         });
         return { error };
@@ -139,7 +139,7 @@ export const useDeliveries = () => {
         console.error("Error updating delivery:", error);
         toast({
           title: "Erro",
-          description: "Não foi possível atualizar a entrega.",
+          description: `Não foi possível atualizar a entrega: ${error.message}`,
           variant: "destructive",
         });
         return { error };
@@ -172,7 +172,7 @@ export const useDeliveries = () => {
         console.error("Error deleting delivery:", error);
         toast({
           title: "Erro",
-          description: "Não foi possível eliminar a entrega.",
+          description: `Não foi possível eliminar a entrega: ${error.message}`,
           variant: "destructive",
         });
         return { error };

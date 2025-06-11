@@ -105,7 +105,7 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <p className="text-3xl font-serif font-semibold text-gentle-black">{deliveries.length}</p>
-                  <p className="text-soft-gray font-medium">Missões Ativas</p>
+                  <p className="text-soft-gray font-medium">Entregas Ativas</p>
                 </div>
               </div>
             </CardContent>
@@ -148,7 +148,7 @@ const Dashboard = () => {
                 <div className="w-6 h-6 bg-dusty-rose rounded-lg flex items-center justify-center">
                   <Target className="h-4 w-4 text-white" />
                 </div>
-                <span>Missões Ativas</span>
+                <span>Missões</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -194,7 +194,7 @@ const Dashboard = () => {
                 className="bg-golden-honey text-gentle-black hover:bg-golden-honey/90 rounded-xl font-medium shadow-soft"
               >
                 <Plus className="h-4 w-4 mr-2" />
-                Nova Missão
+                Nova Entrega
               </Button>
             </CardTitle>
           </CardHeader>
