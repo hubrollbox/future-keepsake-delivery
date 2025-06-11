@@ -1,6 +1,7 @@
 
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import Breadcrumb from "@/components/Breadcrumb";
 import HeroSection from "@/components/home/HeroSection";
 import StorySection from "@/components/home/StorySection";
 import ProductsSection from "@/components/home/ProductsSection";
@@ -15,6 +16,7 @@ const Index = () => {
       <Navigation />
 
       <main>
+        <Breadcrumb items={[{ label: 'Home', path: '/' }]} />
         <HeroSection />
         <StorySection />
         <ProductsSection />

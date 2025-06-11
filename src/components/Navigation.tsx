@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { Menu, X } from "lucide-react";
@@ -31,21 +31,21 @@ const Navigation = () => {
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8 lg:space-x-10">
-              <Link to="/products" className="text-misty-gray hover:text-dusty-rose transition-colors font-medium" aria-label="Navegar para Presentes com Alma">
+              <NavLink to="/products" className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors font-medium ${isActive ? 'active' : ''}`} aria-label="Navegar para Presentes com Alma">
                 Presentes com Alma
-              </Link>
-              <Link to="/how-it-works" className="text-misty-gray hover:text-dusty-rose transition-colors font-medium" aria-label="Navegar para Como Funciona">
+              </NavLink>
+              <NavLink to="/how-it-works" className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors font-medium ${isActive ? 'active' : ''}`} aria-label="Navegar para Como Funciona">
                 Como Funciona
-              </Link>
-              <Link to="/pricing" className="text-misty-gray hover:text-dusty-rose transition-colors font-medium" aria-label="Navegar para Preços">
+              </NavLink>
+              <NavLink to="/pricing" className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors font-medium ${isActive ? 'active' : ''}`} aria-label="Navegar para Preços">
                 Preços
-              </Link>
-              <Link to="/about" className="text-misty-gray hover:text-dusty-rose transition-colors font-medium" aria-label="Navegar para Manifesto">
+              </NavLink>
+              <NavLink to="/about" className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors font-medium ${isActive ? 'active' : ''}`} aria-label="Navegar para Manifesto">
                 Manifesto
-              </Link>
-              <Link to="/contact" className="text-misty-gray hover:text-dusty-rose transition-colors font-medium" aria-label="Navegar para Contacto">
+              </NavLink>
+              <NavLink to="/contact" className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors font-medium ${isActive ? 'active' : ''}`} aria-label="Navegar para Contacto">
                 Contacto
-              </Link>
+              </NavLink>
 
               {user && <CartButton onClick={() => setIsCartOpen(true)} />}
 
@@ -100,46 +100,46 @@ const Navigation = () => {
           {isOpen && (
             <div className="md:hidden py-6 px-2 border-t border-dusty-rose/20">
               <div className="flex flex-col space-y-6">
-                <Link
+                <NavLink
                   to="/products"
-                  className="text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium"
+                  className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium ${isActive ? 'active' : ''}`}
                   onClick={() => setIsOpen(false)}
                   aria-label="Navegar para Presentes com Alma"
                 >
                   Presentes com Alma
-                </Link>
-                <Link
+                </NavLink>
+                <NavLink
                   to="/how-it-works"
-                  className="text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium"
+                  className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium ${isActive ? 'active' : ''}`}
                   onClick={() => setIsOpen(false)}
                   aria-label="Navegar para Como Funciona"
                 >
                   Como Funciona
-                </Link>
-                <Link
+                </NavLink>
+                <NavLink
                   to="/pricing"
-                  className="text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium"
+                  className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium ${isActive ? 'active' : ''}`}
                   onClick={() => setIsOpen(false)}
                   aria-label="Navegar para Preços"
                 >
                   Preços
-                </Link>
-                <Link
+                </NavLink>
+                <NavLink
                   to="/about"
-                  className="text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium"
+                  className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium ${isActive ? 'active' : ''}`}
                   onClick={() => setIsOpen(false)}
                   aria-label="Navegar para Manifesto"
                 >
                   Manifesto
-                </Link>
-                <Link
+                </NavLink>
+                <NavLink
                   to="/contact"
-                  className="text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium"
+                  className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium ${isActive ? 'active' : ''}`}
                   onClick={() => setIsOpen(false)}
                   aria-label="Navegar para Contacto"
                 >
                   Contacto
-                </Link>
+                </NavLink>
 
                 {user && (
                   <div className="py-2">
