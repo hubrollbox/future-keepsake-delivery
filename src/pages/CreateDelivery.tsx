@@ -72,7 +72,7 @@ const CreateDelivery = () => {
       }
       digital_file_url = uploadData?.path ? uploadData.path : null;
     }
-    const { error } = await supabase.from("deliveries").insert([
+    const { data: deliveryData, error: deliveryError } = await supabase.from("deliveries").insert([
       {
         delivery_address,
         delivery_date,
@@ -82,12 +82,26 @@ const CreateDelivery = () => {
         user_id,
         digital_file_url
       }
-    ]);
+    ]).select().single();
     setLoading(false);
-    if (error) {
-      setError("Erro ao agendar entrega: " + error.message);
-      toast({ title: "Erro ao agendar entrega", description: error.message, variant: "destructive" });
+    if (deliveryError) {
+      setError("Erro ao agendar entrega: " + deliveryError.message);
+      toast({ title: "Erro ao agendar entrega", description: deliveryError.message, variant: "destructive" });
       return;
+    }
+    // Se for entrega digital, cria mensagem digital associada
+    if (deliveryType === "digital" && deliveryData) {
+      const { error: messageError } = await supabase.from("digital_messages").insert([
+        {
+          body: formData.message,
+          subject: formData.title,
+          delivery_id: deliveryData.id,
+        }
+      ]);
+      if (messageError) {
+        toast({ title: "Erro ao criar mensagem digital", description: messageError.message, variant: "destructive" });
+        // Não retorna aqui, pois a entrega já foi criada
+      }
     }
     toast({ title: "Entrega agendada!", description: "A tua entrega foi criada com sucesso." });
     navigate('/dashboard');
