@@ -29,7 +29,7 @@ export function useDeliveryFormState() {
     message: "",
     description: "",
     delivery_method: "email",
-    digitalFile: null,
+    digitalFile: null, // Garante sempre começar como null!
   });
 
   return {

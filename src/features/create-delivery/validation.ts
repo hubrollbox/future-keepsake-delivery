@@ -72,8 +72,11 @@ export const validateStep: DeliveryStepValidator = (
         return false;
       }
       // Para digital: ficheiro digital é OPCIONAL
-      // Só validar se existir ficheiro carregado!
-      if (deliveryType === "digital" && formData.digitalFile) {
+      // Só validar se existir ficheiro do tipo File (e não null/undefined/string)
+      if (
+        deliveryType === "digital" &&
+        formData.digitalFile instanceof File
+      ) {
         const { valid, error: errMsg } = isValidFile(formData.digitalFile);
         if (!valid) {
           toast({ title: "Tipo de ficheiro não permitido", description: errMsg });
