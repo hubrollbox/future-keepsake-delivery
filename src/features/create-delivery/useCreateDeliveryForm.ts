@@ -1,3 +1,4 @@
+
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -84,6 +85,8 @@ export const useCreateDeliveryForm = () => {
       const insertDelivery = async (dataToInsert: any) => {
         const { error } = await supabase.from("deliveries").insert([dataToInsert]);
         if (error) {
+          // Extra error context for debugging in the future
+          console.error("Erro ao criar entrega (insert):", error, dataToInsert);
           throw new Error(`Erro ao criar entrega: ${error.message}`);
         }
       };
@@ -94,6 +97,7 @@ export const useCreateDeliveryForm = () => {
           digitalFileUrl = await uploadFile(formData.digitalFile);
         }
 
+        // delivery_method now exists in table!
         const dataToInsert = {
           title: formData.title,
           recipient: formData.recipient,
@@ -102,7 +106,7 @@ export const useCreateDeliveryForm = () => {
           delivery_time: formData.deliveryTime,
           message: formData.message,
           description: formData.description,
-          delivery_method: formData.delivery_method,
+          delivery_method: formData.delivery_method || "email",
           type: deliveryType,
           location: formData.location,
           digital_file_url: digitalFileUrl,
