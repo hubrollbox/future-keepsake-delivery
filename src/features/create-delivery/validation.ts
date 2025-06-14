@@ -14,6 +14,9 @@ export const validateStep: DeliveryStepValidator = (
   formData,
   toast
 ) => {
+  // Debug log!
+  console.log('VALIDATE STEP:', { currentStep, deliveryType, formData });
+
   switch (currentStep) {
     case 0:
       return !!deliveryType;
@@ -58,12 +61,18 @@ export const validateStep: DeliveryStepValidator = (
       return true;
     case 2:
       if (!formData.message || !formData.description) {
+        let msg = "Por favor, preencha os campos de ";
+        if (!formData.message && !formData.description) msg += "Mensagem e Descrição.";
+        else if (!formData.message) msg += "Mensagem.";
+        else if (!formData.description) msg += "Descrição.";
         toast({
           title: "Erro de Validação",
-          description: "Por favor, preencha os campos de Mensagem e Descrição.",
+          description: msg,
         });
         return false;
       }
+      // Para digital: ficheiro digital é OPCIONAL
+      // Só validar se existir ficheiro carregado!
       if (deliveryType === "digital" && formData.digitalFile) {
         const { valid, error: errMsg } = isValidFile(formData.digitalFile);
         if (!valid) {
