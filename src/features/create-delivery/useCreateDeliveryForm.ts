@@ -67,19 +67,27 @@ export const useCreateDeliveryForm = () => {
       case 0:
         return !!deliveryType;
       case 1:
+        // Atualizar lógica para não obrigar campos que não aparecem conforme o tipo de entrega
         if (
           !formData.title ||
           !formData.recipient ||
           !formData.recipient_email ||
           !formData.deliveryDate ||
           !formData.deliveryTime ||
-          (deliveryType === "physical" && !formData.location) ||
           !formData.delivery_method
         ) {
           toast({
             title: "Erro de Validação",
             description:
-              "Preencha todos os campos obrigatórios do passo Detalhes: Título, Destinatário, Email, Data, Hora, Método, e Localização (no caso de entrega física).",
+              "Preencha todos os campos obrigatórios do passo Detalhes: Título, Destinatário, Email, Data, Hora e Método de entrega.",
+          });
+          return false;
+        }
+        if (deliveryType === "physical" && !formData.location) {
+          toast({
+            title: "Erro de Validação",
+            description:
+              "Preencha o campo de Local de Entrega para entregas físicas.",
           });
           return false;
         }
