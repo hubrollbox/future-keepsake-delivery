@@ -1,7 +1,5 @@
-
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import Breadcrumb from "@/components/Breadcrumb";
 import { plans } from "@/lib/pricingData";
 import PlanCard from "@/components/PlanCard";
 
@@ -11,11 +9,6 @@ function Pricing() {
       <Navigation />
       
       <main>
-        <Breadcrumb items={[
-          { label: 'Home', path: '/' },
-          { label: 'Preços', path: '/pricing' }
-        ]} />
-        
         <div className="py-16 px-4 md:px-0">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold text-earthy-burgundy mb-4 font-fraunces">Escolhe o Plano Perfeito</h1>
