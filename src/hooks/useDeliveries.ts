@@ -36,7 +36,16 @@ export const useDeliveries = () => {
         .order("delivery_date", { ascending: true });
 
       if (error) throw error;
-      setDeliveries(data || []);
+      
+      // Map the data to include missing fields as null if they don't exist
+      const mappedData = (data || []).map(delivery => ({
+        ...delivery,
+        recipient_name: delivery.recipient_name || null,
+        delivery_address: delivery.delivery_address || null,
+        message: delivery.message || null,
+      }));
+      
+      setDeliveries(mappedData);
     } catch (error) {
       console.error("Error fetching deliveries:", error);
       toast({
