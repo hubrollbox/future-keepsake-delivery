@@ -1,4 +1,3 @@
-
 import { Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import SeloDoTempoIcon from "@/components/SeloDoTempoIcon";
@@ -119,7 +118,7 @@ const Footer = () => {
           <div className="border-t border-misty-gray/20 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
               <p className="text-misty-gray text-sm">
-                © 2025 FuturoPresente. Todos os direitos reservados.
+                © 2025 rollbox. Todos os direitos reservados.
               </p>
               <div className="flex items-center space-x-2 text-misty-gray text-sm">
                 <span>Empresa 100% portuguesa</span>
