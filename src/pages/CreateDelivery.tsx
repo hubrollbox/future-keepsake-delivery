@@ -1,196 +1,30 @@
-import { useState } from "react";
+
 import ProgressStepper from "@/components/ProgressStepper";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Clock, Calendar, ArrowLeft, Upload } from "lucide-react";
+import { Calendar, ArrowLeft, Clock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { useEffect } from "react";
 import DeliveryFormStepper from "@/components/delivery/DeliveryFormStepper";
+import { useCreateDeliveryForm } from "@/features/create-delivery/useCreateDeliveryForm";
 
 const CreateDelivery = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [deliveryType, setDeliveryType] = useState("digital");
-  const [currentStep, setCurrentStep] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [formData, setFormData] = useState({
-    title: "",
-    recipient: "",
-    recipient_email: "",
-    deliveryDate: "",
-    deliveryTime: "",
-    location: "",
-    message: "",
-    description: "",
-    delivery_method: "email",
-    digitalFile: null as File | null
-  });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  // Helper for client-side file validation (type/size)
-  const isValidFile = (file: File) => {
-    const allowedTypes = ["application/pdf","application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document","image/jpeg","image/png","video/mp4","video/quicktime","audio/mpeg"];
-    const maxSizeMB = 20;
-    if (!allowedTypes.includes(file.type)) {
-      toast({ title: "Tipo de ficheiro não permitido", description: "Só são aceites PDF, DOC, JPG, PNG, MP4, MOV, MP3." });
-      return false;
-    }
-    if (file.size > maxSizeMB * 1024 * 1024) {
-      toast({ title: "Ficheiro demasiado grande", description: `O ficheiro não pode exceder ${maxSizeMB}MB.` });
-      return false;
-    }
-    return true;
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      if (!isValidFile(file)) return;
-      setFormData({
-        ...formData,
-        digitalFile: file
-      });
-    }
-  };
-
-  const isValidFutureDate = (dateString: string, timeString: string) => {
-    const deliveryDateTime = new Date(`${dateString}T${timeString}`);
-    const now = new Date();
-    return deliveryDateTime > now;
-  };
-
-  const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-  const validateStep = () => {
-    switch (currentStep) {
-      case 0:
-        return !!deliveryType; // Check if deliveryType is selected
-      case 1:
-        if (
-          !formData.title || 
-          !formData.recipient ||
-          !formData.recipient_email ||
-          !formData.deliveryDate ||
-          !formData.deliveryTime ||
-          (deliveryType === "physical" && !formData.location) ||
-          !formData.delivery_method
-        ) {
-          toast({ 
-            title: "Erro de Validação", 
-            description: "Preencha todos os campos obrigatórios do passo Detalhes: Título, Destinatário, Email, Data, Hora, Método, e Localização (no caso de entrega física)." 
-          });
-          return false;
-        }
-        if (!validateEmail(formData.recipient_email)) {
-          toast({ title: "Erro de Validação", description: "O email do destinatário é inválido." });
-          return false;
-        }
-        if (!isValidFutureDate(formData.deliveryDate, formData.deliveryTime)) {
-          toast({ title: "Erro de Validação", description: "A data e hora de entrega devem ser no futuro." });
-          return false;
-        }
-        if (deliveryType === "digital" && !formData.digitalFile) {
-          toast({ title: "Erro de Validação", description: "Por favor, selecione um ficheiro digital para a entrega." });
-          return false;
-        }
-        // Extra: Check digitalFile validity again for digital type
-        if (deliveryType === "digital" && formData.digitalFile && !isValidFile(formData.digitalFile)) {
-          return false;
-        }
-        return true;
-      case 2:
-        if (!formData.message || !formData.description) {
-          toast({ title: "Erro de Validação", description: "Por favor, preencha os campos de Mensagem e Descrição." });
-          return false;
-        }
-        return true;
-      case 3:
-      case 4:
-        return true;
-      default:
-        return false;
-    }
-  };
-
-  const prevStep = () => {
-    setCurrentStep((prevStep) => Math.max(prevStep - 1, 0));
-  };
-
-  const nextStep = () => {
-    if (validateStep()) {
-      setCurrentStep((prevStep) => Math.min(prevStep + 1, 4));
-    } else {
-      toast({ title: "Erro de Validação", description: "Por favor, preenche todos os campos obrigatórios." });
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (currentStep === 3) { // Only submit on the review step
-      setLoading(true);
-      setError("");
-
-      const uploadFile = async (file: File) => {
-        const { data, error } = await supabase.storage
-          .from("digital-files")
-          .upload(`${Date.now()}-${file.name}`, file);
-        if (error) {
-          throw new Error(`Erro ao fazer upload do ficheiro digital: ${error.message}`);
-        }
-        return data.path;
-      };
-
-      const insertDelivery = async (dataToInsert: any) => {
-        const { error } = await supabase.from("deliveries").insert([dataToInsert]);
-        if (error) {
-          throw new Error(`Erro ao criar entrega: ${error.message}`);
-        }
-      };
-
-      let digitalFileUrl = null;
-      try {
-        if (deliveryType === "digital" && formData.digitalFile) {
-          digitalFileUrl = await uploadFile(formData.digitalFile);
-        }
-
-        const dataToInsert = {
-          title: formData.title,
-          recipient: formData.recipient,
-          recipient_email: formData.recipient_email,
-          delivery_date: formData.deliveryDate,
-          delivery_time: formData.deliveryTime,
-          message: formData.message,
-          description: formData.description,
-          delivery_method: formData.delivery_method,
-          type: deliveryType,
-          location: formData.location,
-          digital_file_url: digitalFileUrl,
-        };
-
-        await insertDelivery(dataToInsert);
-
-        toast({ title: "Sucesso", description: "Entrega criada com sucesso!" });
-        setCurrentStep(4);
-      } catch (err: any) {
-        setError(err.message);
-        toast({ title: "Erro", description: err.message });
-      }
-      setLoading(false);
-    }
-  };
+  const {
+    deliveryType,
+    setDeliveryType,
+    currentStep,
+    loading,
+    error,
+    formData,
+    handleInputChange,
+    handleFileChange,
+    nextStep,
+    prevStep,
+    handleSubmit,
+  } = useCreateDeliveryForm();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
