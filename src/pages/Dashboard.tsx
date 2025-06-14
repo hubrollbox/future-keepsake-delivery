@@ -17,18 +17,18 @@ const Dashboard = () => {
 
   const getStatusColor = (status: string | null) => {
     switch (status) {
-      case "pendente": return "bg-warm-yellow text-warm-brown";
-      case "entregue": return "bg-sage-green text-gentle-black";
-      case "cancelado": return "bg-dusty-rose text-gentle-black";
+      case "scheduled": return "bg-warm-yellow text-warm-brown";
+      case "delivered": return "bg-sage-green text-gentle-black";
+      case "cancelled": return "bg-dusty-rose text-gentle-black";
       default: return "bg-misty-gray text-gentle-black";
     }
   };
 
   const getStatusText = (status: string | null) => {
     switch (status) {
-      case "pendente": return "Pendente";
-      case "entregue": return "Entregue";
-      case "cancelado": return "Cancelado";
+      case "scheduled": return "Agendado";
+      case "delivered": return "Entregue";
+      case "cancelled": return "Cancelado";
       default: return "Desconhecido";
     }
   };
@@ -39,10 +39,9 @@ const Dashboard = () => {
     }
   };
 
-  const digitalDeliveries = deliveries.filter(d => d.delivery_type === "digital");
-  const physicalDeliveries = deliveries.filter(d => d.delivery_type === "physical");
+  const digitalDeliveries = deliveries.filter(d => d.type === "digital");
+  const physicalDeliveries = deliveries.filter(d => d.type === "physical");
 
-  // Gamification data should be fetched from the database in a production environment
   // Gamification data should be fetched from the database in a production environment
   const achievements: any[] = [];
   const quests: any[] = [];
@@ -232,7 +231,7 @@ const Dashboard = () => {
                             {getStatusText(delivery.status)}
                           </Badge>
                           <Badge className="bg-misty-gray text-gentle-black rounded-full px-3 py-1 font-medium">
-                            {delivery.delivery_type === "digital" ? "Portal Digital" : "Cápsula Física"}
+                            {delivery.type === "digital" ? "Portal Digital" : "Cápsula Física"}
                           </Badge>
                         </div>
                         

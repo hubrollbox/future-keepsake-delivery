@@ -8,23 +8,24 @@ export interface Delivery {
   id: string;
   user_id: string;
   title: string | null;
-  delivery_type: string;
+  type: string; // Changed from delivery_type to type to match database schema
   delivery_date: string;
-  delivery_address: string | null;
+  delivery_address: string | null; // Added missing field
   delivery_method: string | null;
   scheduled_time: string | null;
   timezone: string | null;
-  recipient_name: string | null;
+  recipient_name: string | null; // Added missing field
   recipient_email: string | null;
-  message: string | null;
+  message: string | null; // Added missing field
   status: string | null;
+  description: string | null;
   points_earned: number | null;
   created_at: string | null;
 }
 
 export interface CreateDeliveryData {
   title?: string;
-  delivery_type: string;
+  type: string; // Changed from delivery_type to type
   delivery_date: string;
   delivery_address?: string;
   delivery_method?: string;
@@ -33,6 +34,7 @@ export interface CreateDeliveryData {
   recipient_name?: string;
   recipient_email?: string;
   message?: string;
+  description?: string;
   status?: string;
   points_earned?: number;
 }
@@ -75,8 +77,8 @@ export const useDeliveries = () => {
   const createDelivery = async (deliveryData: CreateDeliveryData) => {
     if (!user) return { error: "User not authenticated" };
 
-    // Garantir que os campos obrigatórios estão presentes
-    if (!deliveryData.delivery_type || !deliveryData.delivery_date) {
+    // Ensure required fields are present
+    if (!deliveryData.type || !deliveryData.delivery_date) {
       return { error: "Delivery type and delivery date are required" };
     }
 
@@ -86,7 +88,7 @@ export const useDeliveries = () => {
         .insert([
           {
             user_id: user.id,
-            delivery_type: deliveryData.delivery_type,
+            type: deliveryData.type, // Changed from delivery_type to type
             delivery_date: deliveryData.delivery_date,
             title: deliveryData.title || null,
             delivery_address: deliveryData.delivery_address || null,
@@ -96,7 +98,8 @@ export const useDeliveries = () => {
             recipient_name: deliveryData.recipient_name || null,
             recipient_email: deliveryData.recipient_email || null,
             message: deliveryData.message || null,
-            status: deliveryData.status || 'pendente',
+            description: deliveryData.description || null,
+            status: deliveryData.status || 'scheduled', // Changed from 'pendente' to 'scheduled'
             points_earned: deliveryData.points_earned || 0,
           },
         ])
