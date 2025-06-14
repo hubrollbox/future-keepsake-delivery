@@ -15,22 +15,22 @@ const Footer = () => {
             {/* Brand Section */}
             <div className="md:col-span-2">
               <div className="flex items-center justify-center mb-6">
-                <SeloDoTempoIcon size={120} className="" />
+                <SeloDoTempoIcon size={120} variant="negative" className="" />
               </div>
-              <p className="text-misty-gray leading-relaxed mb-6 max-w-md">
+              <p className="text-misty-gray leading-relaxed mb-6 max-w-md text-center md:text-left">
                 Guardamos emoções para o tempo certo. Cada entrega é uma ponte entre o presente e o futuro, 
                 criada com sensibilidade e amor.
               </p>
-              <div className="flex items-center space-x-2 text-dusty-rose mb-4">
+              <div className="flex items-center justify-center md:justify-start space-x-2 text-dusty-rose mb-4">
                 <span className="text-sm">Desenvolvido com</span>
-                <Heart className="h-4 w-4 text-red-500 fill-current" />
+                <Heart className="h-4 w-4 text-red-400 fill-current" />
                 <span className="text-sm">em Portugal</span>
               </div>
             </div>
 
             {/* Navigation Links */}
             <div>
-              <h4 className="font-fraunces font-semibold text-lg mb-4">Navegação</h4>
+              <h4 className="font-fraunces font-semibold text-lg mb-4 text-white">Navegação</h4>
               <ul className="space-y-3">
                 <li>
                   <button 
@@ -85,7 +85,7 @@ const Footer = () => {
 
             {/* Legal Links */}
             <div>
-              <h4 className="font-fraunces font-semibold text-lg mb-4">Legal</h4>
+              <h4 className="font-fraunces font-semibold text-lg mb-4 text-white">Legal</h4>
               <ul className="space-y-3">
                 <li>
                   <button 
@@ -119,7 +119,7 @@ const Footer = () => {
           <div className="border-t border-misty-gray/20 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
               <p className="text-misty-gray text-sm">
-                © 2025 rollbox. Todos os direitos reservados.
+                © 2025 FuturoPresente. Todos os direitos reservados.
               </p>
               <div className="flex items-center space-x-2 text-misty-gray text-sm">
                 <span>Empresa 100% portuguesa</span>
