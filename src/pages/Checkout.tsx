@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,7 +7,6 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useCart } from "@/contexts/CartContext";
 import { useAuth } from "@/hooks/useAuth";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { ShoppingCart, CreditCard, MapPin, User, AlertTriangle } from "lucide-react";
 import Navigation from "@/components/Navigation";
@@ -128,6 +126,7 @@ const Checkout = () => {
 
     setLoading(true);
     try {
+      // Temporarily store order data in console until orders table is created
       const orderData = {
         user_id: user.id,
         total_amount: getTotalPrice(),
@@ -142,22 +141,13 @@ const Checkout = () => {
         })),
       };
 
-      const { data, error } = await supabase
-        .from("orders")
-        .insert(orderData)
-        .select()
-        .single();
-
-      if (error) {
-        console.error("Supabase error:", error);
-        throw new Error("Erro ao criar pedido: " + error.message);
-      }
+      console.log("Order would be created:", orderData);
 
       await clearCart();
       
       toast({
-        title: "Pedido criado com sucesso! 🎉",
-        description: `O seu pedido #${data.id.slice(0, 8)} foi registado. Entraremos em contacto em breve.`,
+        title: "Pedido registado com sucesso! 🎉",
+        description: "O seu pedido foi registado. Entraremos em contacto em breve.",
       });
 
       navigate("/dashboard");

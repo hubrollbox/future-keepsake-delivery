@@ -12,6 +12,9 @@ interface Delivery {
   status: string;
   type: string;
   recipient_email: string | null;
+  recipient_name: string | null;
+  delivery_address: string | null;
+  message: string | null;
   created_at: string;
   user_id: string;
 }
