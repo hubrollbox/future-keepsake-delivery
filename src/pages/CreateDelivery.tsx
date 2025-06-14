@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import ProgressStepper from "@/components/ProgressStepper";
 import { Button } from "@/components/ui/button";
@@ -23,14 +22,17 @@ const CreateDelivery = () => {
   const [formData, setFormData] = useState({
     title: "",
     recipient: "",
+    recipient_email: "",
     deliveryDate: "",
     deliveryTime: "",
     location: "",
     message: "",
+    description: "",
+    delivery_method: "email",
     digitalFile: null as File | null
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -57,16 +59,23 @@ const CreateDelivery = () => {
       case 0:
         return !!deliveryType; // Check if deliveryType is selected
       case 1:
-        if (!formData.title || !formData.recipient || !formData.deliveryDate || !formData.deliveryTime) {
-          toast({ title: "Erro de Validação", description: "Por favor, preencha todos os campos de Título, Destinatário, Data e Hora." });
+        if (
+          !formData.title || 
+          !formData.recipient ||
+          !formData.recipient_email ||
+          !formData.deliveryDate ||
+          !formData.deliveryTime ||
+          (deliveryType === "physical" && !formData.location) ||
+          !formData.delivery_method
+        ) {
+          toast({ 
+            title: "Erro de Validação", 
+            description: "Preencha todos os campos obrigatórios do passo Detalhes: Título, Destinatário, Email, Data, Hora, Método, e Localização (no caso de entrega física)." 
+          });
           return false;
         }
         if (!isValidFutureDate(formData.deliveryDate, formData.deliveryTime)) {
           toast({ title: "Erro de Validação", description: "A data e hora de entrega devem ser no futuro." });
-          return false;
-        }
-        if (deliveryType === "physical" && !formData.location) {
-          toast({ title: "Erro de Validação", description: "Por favor, preencha o campo de Localização para entregas físicas." });
           return false;
         }
         if (deliveryType === "digital" && !formData.digitalFile) {
@@ -75,15 +84,14 @@ const CreateDelivery = () => {
         }
         return true;
       case 2:
-        if (!formData.message) {
-          toast({ title: "Erro de Validação", description: "Por favor, preencha o campo de Mensagem." });
+        if (!formData.message || !formData.description) {
+          toast({ title: "Erro de Validação", description: "Por favor, preencha os campos de Mensagem e Descrição." });
           return false;
         }
         return true;
       case 3:
-        return true; // Review step doesn't require validation
       case 4:
-        return true; // Confirmation step doesn't require validation
+        return true;
       default:
         return false;
     }
@@ -133,14 +141,16 @@ const CreateDelivery = () => {
         const dataToInsert = {
           title: formData.title,
           recipient: formData.recipient,
+          recipient_email: formData.recipient_email,
           delivery_date: formData.deliveryDate,
           delivery_time: formData.deliveryTime,
           message: formData.message,
-          delivery_type: deliveryType,
+          description: formData.description,
+          delivery_method: formData.delivery_method,
+          type: deliveryType,
           location: formData.location,
           digital_file_url: digitalFileUrl,
         };
-        console.log("Dados a serem inseridos:", dataToInsert);
 
         await insertDelivery(dataToInsert);
 
@@ -149,21 +159,7 @@ const CreateDelivery = () => {
       } catch (err: any) {
         setError(err.message);
         toast({ title: "Erro", description: err.message });
-        console.log(JSON.stringify(err));
       }
-
-      const dataToInsert = {
-          title: formData.title,
-          recipient: formData.recipient,
-          delivery_date: formData.deliveryDate,
-          delivery_time: formData.deliveryTime,
-          message: formData.message,
-          delivery_type: deliveryType,
-          location: formData.location,
-          digital_file_url: digitalFileUrl,
-      };
-      console.log("Dados a serem inseridos:", dataToInsert); // Adicione esta linha
-
       setLoading(false);
     }
   };
@@ -220,7 +216,6 @@ const CreateDelivery = () => {
                   required
                 />
               </div>
-
               <div>
                 <Label htmlFor="recipient">Destinatário</Label>
                 <Input
@@ -228,13 +223,22 @@ const CreateDelivery = () => {
                   name="recipient"
                   value={formData.recipient}
                   onChange={handleInputChange}
-                  placeholder="Para quem é o presente?"
+                  placeholder="Nome do destinatário"
                   required
                 />
               </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="recipient_email">Email do Destinatário</Label>
+                <Input
+                  id="recipient_email"
+                  name="recipient_email"
+                  value={formData.recipient_email}
+                  onChange={handleInputChange}
+                  placeholder="exemplo@email.com"
+                  type="email"
+                  required
+                />
+              </div>
               <div>
                 <Label htmlFor="deliveryDate">Data de Entrega</Label>
                 <Input
@@ -247,17 +251,31 @@ const CreateDelivery = () => {
                 />
               </div>
               <div>
-                <Label htmlFor="deliveryTime">Hora de Entrega (Opcional)</Label>
+                <Label htmlFor="deliveryTime">Hora de Entrega (Obrigatória)</Label>
                 <Input
                   id="deliveryTime"
                   name="deliveryTime"
                   type="time"
                   value={formData.deliveryTime}
                   onChange={handleInputChange}
+                  required
                 />
               </div>
+              <div>
+                <Label htmlFor="delivery_method">Método de Entrega</Label>
+                <select
+                  id="delivery_method"
+                  name="delivery_method"
+                  className="w-full border rounded-xl px-4 py-3"
+                  value={formData.delivery_method}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="email">E-mail</option>
+                  <option value="physical">Físico</option>
+                </select>
+              </div>
             </div>
-
             {deliveryType === "physical" && (
               <div>
                 <Label htmlFor="location">Local de Entrega</Label>
@@ -271,7 +289,6 @@ const CreateDelivery = () => {
                 />
               </div>
             )}
-
             <div className="flex justify-between mt-6">
               <Button variant="outline" onClick={prevStep}>
                 <ArrowLeft className="h-4 w-4 mr-2" /> Anterior
@@ -284,6 +301,18 @@ const CreateDelivery = () => {
         return (
           <>
             <div>
+              <Label htmlFor="description">Descrição</Label>
+              <Textarea
+                id="description"
+                name="description"
+                value={formData.description}
+                onChange={handleInputChange}
+                placeholder="Breve descrição da entrega"
+                rows={2}
+                required
+              />
+            </div>
+            <div>
               <Label htmlFor="message">Mensagem ou Instruções</Label>
               <Textarea
                 id="message"
@@ -295,7 +324,6 @@ const CreateDelivery = () => {
                 required
               />
             </div>
-
             {deliveryType === "digital" && (
               <div className="mt-4">
                 <Label htmlFor="digitalFile">Carregar Ficheiro Digital</Label>
@@ -305,13 +333,13 @@ const CreateDelivery = () => {
                   type="file"
                   onChange={handleFileChange}
                   accept=".pdf,.doc,.docx,.jpg,.png,.mp4,.mov,.mp3"
+                  required
                 />
                 {formData.digitalFile && (
                   <p className="text-sm text-gray-500 mt-1">Ficheiro selecionado: {formData.digitalFile.name}</p>
                 )}
               </div>
             )}
-
             <div className="flex justify-between mt-6">
               <Button variant="outline" onClick={prevStep}>
                 <ArrowLeft className="h-4 w-4 mr-2" /> Anterior
@@ -328,10 +356,13 @@ const CreateDelivery = () => {
               <p><strong>Tipo de Entrega:</strong> {deliveryType === "digital" ? "Digital" : "Físico"}</p>
               <p><strong>Título:</strong> {formData.title}</p>
               <p><strong>Destinatário:</strong> {formData.recipient}</p>
+              <p><strong>Email do destinatário:</strong> {formData.recipient_email}</p>
               <p><strong>Data de Entrega:</strong> {formData.deliveryDate}</p>
-              {formData.deliveryTime && <p><strong>Hora de Entrega:</strong> {formData.deliveryTime}</p>}
+              <p><strong>Hora de Entrega:</strong> {formData.deliveryTime}</p>
+              <p><strong>Método de entrega:</strong> {formData.delivery_method}</p>
               {deliveryType === "physical" && <p><strong>Local de Entrega:</strong> {formData.location}</p>}
               <p><strong>Mensagem:</strong> {formData.message}</p>
+              <p><strong>Descrição:</strong> {formData.description}</p>
               {formData.digitalFile && <p><strong>Ficheiro Digital:</strong> {formData.digitalFile.name}</p>}
             </div>
             <div className="flex justify-between mt-6">
