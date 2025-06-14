@@ -38,7 +38,7 @@ export const useDeliveries = () => {
       if (error) throw error;
       
       // Map the data to include missing fields as null if they don't exist
-      const mappedData = (data || []).map(delivery => ({
+      const mappedData = (data || []).map((delivery: any) => ({
         ...delivery,
         recipient_name: delivery.recipient_name || null,
         delivery_address: delivery.delivery_address || null,
