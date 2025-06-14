@@ -69,7 +69,7 @@ export const useAuth = () => {
     try {
       const { data, error } = await supabase
         .from("profiles")
-        .select("*, role")
+        .select("*")
         .eq("id", userId)
         .single();
 
@@ -78,7 +78,13 @@ export const useAuth = () => {
         return;
       }
 
-      setProfile(data);
+      // Add default role if not present
+      const profileWithRole = {
+        ...data,
+        role: data.role || 'user'
+      };
+
+      setProfile(profileWithRole);
     } catch (error) {
       console.error("Error fetching user profile:", error);
     }
