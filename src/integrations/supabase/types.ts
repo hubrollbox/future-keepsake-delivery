@@ -68,6 +68,7 @@ export type Database = {
           created_at: string | null
           delivery_date: string
           delivery_method: string | null
+          delivery_time: string | null
           description: string | null
           id: string
           recipient_email: string | null
@@ -81,6 +82,7 @@ export type Database = {
           created_at?: string | null
           delivery_date: string
           delivery_method?: string | null
+          delivery_time?: string | null
           description?: string | null
           id?: string
           recipient_email?: string | null
@@ -94,6 +96,7 @@ export type Database = {
           created_at?: string | null
           delivery_date?: string
           delivery_method?: string | null
+          delivery_time?: string | null
           description?: string | null
           id?: string
           recipient_email?: string | null
