@@ -8,25 +8,21 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
-interface DigitalMessage {
+interface Message {
   id: string;
-  subject: string | null;
-  body: string | null;
-  delivery_id: string | null;
-  created_at: string | null;
-  deliveries?: {
-    delivery_date: string;
-    delivery_type: string;
-    recipient_name: string | null;
-    recipient_email: string | null;
-  };
+  title: string;
+  content: string;
+  delivery_date: string;
+  status: string;
+  created_at: string;
+  user_id: string;
 }
 
 const AdminMessages = () => {
-  const [messages, setMessages] = useState<DigitalMessage[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [typeFilter, setTypeFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
   const { toast } = useToast();
 
   useEffect(() => {
@@ -36,25 +32,17 @@ const AdminMessages = () => {
   const fetchMessages = async () => {
     try {
       const { data, error } = await supabase
-        .from("digital_messages")
-        .select(`
-          *,
-          deliveries (
-            delivery_date,
-            delivery_type,
-            recipient_name,
-            recipient_email
-          )
-        `)
+        .from("messages")
+        .select("*")
         .order("created_at", { ascending: false });
 
       if (error) throw error;
       setMessages(data || []);
     } catch (error) {
-      console.error("Error fetching digital messages:", error);
+      console.error("Error fetching messages:", error);
       toast({
         title: "Erro",
-        description: "Não foi possível carregar as mensagens digitais.",
+        description: "Não foi possível carregar as mensagens.",
         variant: "destructive",
       });
     } finally {
@@ -64,20 +52,18 @@ const AdminMessages = () => {
 
   const filteredMessages = messages.filter((message) => {
     const matchesSearch = 
-      message.subject?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      message.body?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      message.deliveries?.recipient_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      message.deliveries?.recipient_email?.toLowerCase().includes(searchTerm.toLowerCase());
+      message.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      message.content?.toLowerCase().includes(searchTerm.toLowerCase());
     
-    const matchesType = typeFilter === "all" || message.deliveries?.delivery_type === typeFilter;
+    const matchesStatus = statusFilter === "all" || message.status === statusFilter;
     
-    return matchesSearch && matchesType;
+    return matchesSearch && matchesStatus;
   });
 
   if (loading) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900">Mensagens Digitais</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Mensagens</h1>
         <div className="animate-pulse space-y-4">
           {[...Array(3)].map((_, i) => (
             <Card key={i}>
@@ -95,7 +81,7 @@ const AdminMessages = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 className="text-2xl font-bold text-gray-900">Mensagens Digitais</h1>
+        <h1 className="text-2xl font-bold text-gray-900">Mensagens</h1>
         <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -107,14 +93,13 @@ const AdminMessages = () => {
             />
           </div>
           <select
-            value={typeFilter}
-            onChange={(e) => setTypeFilter(e.target.value)}
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
             className="px-3 py-2 border border-gray-300 rounded-md text-sm"
           >
-            <option value="all">Todos os tipos</option>
-            <option value="digital_message">Mensagem Digital</option>
-            <option value="video_message">Mensagem de Vídeo</option>
-            <option value="audio_message">Mensagem de Áudio</option>
+            <option value="all">Todos os estados</option>
+            <option value="scheduled">Agendada</option>
+            <option value="delivered">Entregue</option>
           </select>
         </div>
       </div>
@@ -128,46 +113,28 @@ const AdminMessages = () => {
                   <div className="flex items-center gap-2">
                     <MessageSquare className="h-4 w-4 text-blue-600" />
                     <h3 className="text-lg font-semibold text-gray-900">
-                      {message.subject || "Mensagem sem assunto"}
+                      {message.title}
                     </h3>
                   </div>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-600">
-                    {message.deliveries?.delivery_type && (
-                      <div>
-                        <strong>Tipo:</strong> {message.deliveries.delivery_type}
-                      </div>
-                    )}
-                    {message.deliveries?.delivery_date && (
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-4 w-4" />
-                        <strong>Entrega:</strong> {new Date(message.deliveries.delivery_date).toLocaleDateString('pt-PT')}
-                      </div>
-                    )}
-                    {message.deliveries?.recipient_name && (
-                      <div>
-                        <strong>Destinatário:</strong> {message.deliveries.recipient_name}
-                      </div>
-                    )}
-                    {message.deliveries?.recipient_email && (
-                      <div>
-                        <strong>Email:</strong> {message.deliveries.recipient_email}
-                      </div>
-                    )}
+                    <div className="flex items-center gap-1">
+                      <Calendar className="h-4 w-4" />
+                      <strong>Entrega:</strong> {new Date(message.delivery_date).toLocaleDateString('pt-PT')}
+                    </div>
+                    <div>
+                      <strong>Estado:</strong> {message.status}
+                    </div>
                   </div>
                   
-                  {message.body && (
-                    <p className="text-sm text-gray-600 mt-2">
-                      <strong>Preview:</strong> {message.body.substring(0, 100)}
-                      {message.body.length > 100 && "..."}
-                    </p>
-                  )}
+                  <p className="text-sm text-gray-600 mt-2">
+                    <strong>Preview:</strong> {message.content.substring(0, 100)}
+                    {message.content.length > 100 && "..."}
+                  </p>
 
-                  {message.created_at && (
-                    <p className="text-xs text-gray-500">
-                      Criada em: {new Date(message.created_at).toLocaleDateString('pt-PT')} às {new Date(message.created_at).toLocaleTimeString('pt-PT')}
-                    </p>
-                  )}
+                  <p className="text-xs text-gray-500">
+                    Criada em: {new Date(message.created_at).toLocaleDateString('pt-PT')} às {new Date(message.created_at).toLocaleTimeString('pt-PT')}
+                  </p>
                 </div>
 
                 <div className="flex gap-2">
@@ -180,24 +147,20 @@ const AdminMessages = () => {
                     </DialogTrigger>
                     <DialogContent className="max-w-2xl">
                       <DialogHeader>
-                        <DialogTitle>{message.subject || "Mensagem Digital"}</DialogTitle>
+                        <DialogTitle>{message.title}</DialogTitle>
                       </DialogHeader>
                       <div className="space-y-4">
-                        {message.deliveries && (
-                          <div className="bg-gray-50 p-4 rounded-md">
-                            <h4 className="font-semibold mb-2">Detalhes da Entrega</h4>
-                            <div className="grid grid-cols-2 gap-2 text-sm">
-                              <div><strong>Tipo:</strong> {message.deliveries.delivery_type}</div>
-                              <div><strong>Data:</strong> {new Date(message.deliveries.delivery_date).toLocaleDateString('pt-PT')}</div>
-                              <div><strong>Destinatário:</strong> {message.deliveries.recipient_name || "Não especificado"}</div>
-                              <div><strong>Email:</strong> {message.deliveries.recipient_email || "Não especificado"}</div>
-                            </div>
+                        <div className="bg-gray-50 p-4 rounded-md">
+                          <h4 className="font-semibold mb-2">Detalhes</h4>
+                          <div className="grid grid-cols-2 gap-2 text-sm">
+                            <div><strong>Data de entrega:</strong> {new Date(message.delivery_date).toLocaleDateString('pt-PT')}</div>
+                            <div><strong>Estado:</strong> {message.status}</div>
                           </div>
-                        )}
+                        </div>
                         <div>
                           <h4 className="font-semibold mb-2">Conteúdo da Mensagem</h4>
                           <div className="bg-white border p-4 rounded-md max-h-96 overflow-y-auto">
-                            {message.body || "Nenhum conteúdo disponível"}
+                            {message.content}
                           </div>
                         </div>
                       </div>
@@ -214,7 +177,7 @@ const AdminMessages = () => {
         <Card>
           <CardContent className="p-8 text-center">
             <MessageSquare className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-600">Nenhuma mensagem digital encontrada.</p>
+            <p className="text-gray-600">Nenhuma mensagem encontrada.</p>
           </CardContent>
         </Card>
       )}
