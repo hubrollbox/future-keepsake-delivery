@@ -40,11 +40,28 @@ const CreateDelivery = () => {
     });
   };
 
+  // Helper for client-side file validation (type/size)
+  const isValidFile = (file: File) => {
+    const allowedTypes = ["application/pdf","application/msword","application/vnd.openxmlformats-officedocument.wordprocessingml.document","image/jpeg","image/png","video/mp4","video/quicktime","audio/mpeg"];
+    const maxSizeMB = 20;
+    if (!allowedTypes.includes(file.type)) {
+      toast({ title: "Tipo de ficheiro não permitido", description: "Só são aceites PDF, DOC, JPG, PNG, MP4, MOV, MP3." });
+      return false;
+    }
+    if (file.size > maxSizeMB * 1024 * 1024) {
+      toast({ title: "Ficheiro demasiado grande", description: `O ficheiro não pode exceder ${maxSizeMB}MB.` });
+      return false;
+    }
+    return true;
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      if (!isValidFile(file)) return;
       setFormData({
         ...formData,
-        digitalFile: e.target.files[0]
+        digitalFile: file
       });
     }
   };
@@ -54,6 +71,8 @@ const CreateDelivery = () => {
     const now = new Date();
     return deliveryDateTime > now;
   };
+
+  const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const validateStep = () => {
     switch (currentStep) {
@@ -75,12 +94,20 @@ const CreateDelivery = () => {
           });
           return false;
         }
+        if (!validateEmail(formData.recipient_email)) {
+          toast({ title: "Erro de Validação", description: "O email do destinatário é inválido." });
+          return false;
+        }
         if (!isValidFutureDate(formData.deliveryDate, formData.deliveryTime)) {
           toast({ title: "Erro de Validação", description: "A data e hora de entrega devem ser no futuro." });
           return false;
         }
         if (deliveryType === "digital" && !formData.digitalFile) {
           toast({ title: "Erro de Validação", description: "Por favor, selecione um ficheiro digital para a entrega." });
+          return false;
+        }
+        // Extra: Check digitalFile validity again for digital type
+        if (deliveryType === "digital" && formData.digitalFile && !isValidFile(formData.digitalFile)) {
           return false;
         }
         return true;
