@@ -1,4 +1,3 @@
-
 import { isValidFile, isValidFutureDate, validateEmail } from "./utils";
 import { useToast } from "@/hooks/use-toast";
 
@@ -56,8 +55,6 @@ export const validateStep: DeliveryStepValidator = (
         });
         return false;
       }
-      // Removido: if (deliveryType === "digital" && !formData.digitalFile) ...  <-- Ficheiro só será exigido no passo seguinte
-      // Removido: if (deliveryType === "digital" && formData.digitalFile) ...   <-- Validar file apenas no passo 2/3, não aqui
       return true;
     case 2:
       if (!formData.message || !formData.description) {
@@ -67,14 +64,7 @@ export const validateStep: DeliveryStepValidator = (
         });
         return false;
       }
-      if (deliveryType === "digital") {
-        if (!formData.digitalFile) {
-          toast({
-            title: "Erro de Validação",
-            description: "Por favor, selecione um ficheiro digital para a entrega.",
-          });
-          return false;
-        }
+      if (deliveryType === "digital" && formData.digitalFile) {
         const { valid, error: errMsg } = isValidFile(formData.digitalFile);
         if (!valid) {
           toast({ title: "Tipo de ficheiro não permitido", description: errMsg });
