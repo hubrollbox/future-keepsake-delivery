@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect } from "react";
+import DeliveryFormStepper from "@/components/delivery/DeliveryFormStepper";
 
 const CreateDelivery = () => {
   const navigate = useNavigate();
@@ -164,234 +165,6 @@ const CreateDelivery = () => {
     }
   };
 
-  const renderStepContent = () => {
-    switch (currentStep) {
-      case 0:
-        return (
-          <>
-            <div>
-              <Label className="text-base font-semibold">Tipo de Presente</Label>
-              <RadioGroup
-                value={deliveryType}
-                onValueChange={setDeliveryType}
-                className="mt-2"
-              >
-                <div className="flex items-center space-x-2 p-4 border rounded-lg hover:bg-gray-50 transition-colors">
-                  <RadioGroupItem value="digital" id="digital" />
-                  <Label htmlFor="digital" className="flex-1 cursor-pointer">
-                    <div>
-                      <p className="font-medium">Presente Digital</p>
-                      <p className="text-sm text-gray-600">Carta, vídeo, ou ficheiro digital</p>
-                    </div>
-                  </Label>
-                </div>
-                <div className="flex items-center space-x-2 p-4 border rounded-lg hover:bg-gray-50 transition-colors">
-                  <RadioGroupItem value="physical" id="physical" />
-                  <Label htmlFor="physical" className="flex-1 cursor-pointer">
-                    <div>
-                      <p className="font-medium">Presente Físico</p>
-                      <p className="text-sm text-gray-600">Objeto que será guardado e entregue</p>
-                    </div>
-                  </Label>
-                </div>
-              </RadioGroup>
-            </div>
-            <div className="flex justify-end mt-6">
-              <Button onClick={nextStep}>Próximo</Button>
-            </div>
-          </>
-        );
-      case 1:
-        return (
-          <>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="title">Título da Entrega</Label>
-                <Input
-                  id="title"
-                  name="title"
-                  value={formData.title}
-                  onChange={handleInputChange}
-                  placeholder="Ex: Presente de aniversário"
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="recipient">Destinatário</Label>
-                <Input
-                  id="recipient"
-                  name="recipient"
-                  value={formData.recipient}
-                  onChange={handleInputChange}
-                  placeholder="Nome do destinatário"
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="recipient_email">Email do Destinatário</Label>
-                <Input
-                  id="recipient_email"
-                  name="recipient_email"
-                  value={formData.recipient_email}
-                  onChange={handleInputChange}
-                  placeholder="exemplo@email.com"
-                  type="email"
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="deliveryDate">Data de Entrega</Label>
-                <Input
-                  id="deliveryDate"
-                  name="deliveryDate"
-                  type="date"
-                  value={formData.deliveryDate}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="deliveryTime">Hora de Entrega (Obrigatória)</Label>
-                <Input
-                  id="deliveryTime"
-                  name="deliveryTime"
-                  type="time"
-                  value={formData.deliveryTime}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="delivery_method">Método de Entrega</Label>
-                <select
-                  id="delivery_method"
-                  name="delivery_method"
-                  className="w-full border rounded-xl px-4 py-3"
-                  value={formData.delivery_method}
-                  onChange={handleInputChange}
-                  required
-                >
-                  <option value="email">E-mail</option>
-                  <option value="physical">Físico</option>
-                </select>
-              </div>
-            </div>
-            {deliveryType === "physical" && (
-              <div>
-                <Label htmlFor="location">Local de Entrega</Label>
-                <Input
-                  id="location"
-                  name="location"
-                  value={formData.location}
-                  onChange={handleInputChange}
-                  placeholder="Ex: Rua da Felicidade, 123"
-                  required
-                />
-              </div>
-            )}
-            <div className="flex justify-between mt-6">
-              <Button variant="outline" onClick={prevStep}>
-                <ArrowLeft className="h-4 w-4 mr-2" /> Anterior
-              </Button>
-              <Button onClick={nextStep}>Próximo</Button>
-            </div>
-          </>
-        );
-      case 2:
-        return (
-          <>
-            <div>
-              <Label htmlFor="description">Descrição</Label>
-              <Textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleInputChange}
-                placeholder="Breve descrição da entrega"
-                rows={2}
-                required
-              />
-            </div>
-            <div>
-              <Label htmlFor="message">Mensagem ou Instruções</Label>
-              <Textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleInputChange}
-                placeholder="Deixe uma mensagem ou instruções especiais..."
-                rows={5}
-                required
-              />
-            </div>
-            {deliveryType === "digital" && (
-              <div className="mt-4">
-                <Label htmlFor="digitalFile">Carregar Ficheiro Digital</Label>
-                <Input
-                  id="digitalFile"
-                  name="digitalFile"
-                  type="file"
-                  onChange={handleFileChange}
-                  accept=".pdf,.doc,.docx,.jpg,.png,.mp4,.mov,.mp3"
-                  required
-                />
-                {formData.digitalFile && (
-                  <p className="text-sm text-gray-500 mt-1">Ficheiro selecionado: {formData.digitalFile.name}</p>
-                )}
-              </div>
-            )}
-            <div className="flex justify-between mt-6">
-              <Button variant="outline" onClick={prevStep}>
-                <ArrowLeft className="h-4 w-4 mr-2" /> Anterior
-              </Button>
-              <Button onClick={nextStep}>Próximo</Button>
-            </div>
-          </>
-        );
-      case 3:
-        return (
-          <>
-            <h2 className="text-xl font-semibold mb-4">Rever Detalhes da Entrega</h2>
-            <div className="space-y-2">
-              <p><strong>Tipo de Entrega:</strong> {deliveryType === "digital" ? "Digital" : "Físico"}</p>
-              <p><strong>Título:</strong> {formData.title}</p>
-              <p><strong>Destinatário:</strong> {formData.recipient}</p>
-              <p><strong>Email do destinatário:</strong> {formData.recipient_email}</p>
-              <p><strong>Data de Entrega:</strong> {formData.deliveryDate}</p>
-              <p><strong>Hora de Entrega:</strong> {formData.deliveryTime}</p>
-              <p><strong>Método de entrega:</strong> {formData.delivery_method}</p>
-              {deliveryType === "physical" && <p><strong>Local de Entrega:</strong> {formData.location}</p>}
-              <p><strong>Mensagem:</strong> {formData.message}</p>
-              <p><strong>Descrição:</strong> {formData.description}</p>
-              {formData.digitalFile && <p><strong>Ficheiro Digital:</strong> {formData.digitalFile.name}</p>}
-            </div>
-            <div className="flex justify-between mt-6">
-              <Button variant="outline" onClick={prevStep}>
-                <ArrowLeft className="h-4 w-4 mr-2" /> Anterior
-              </Button>
-              <Button onClick={handleSubmit} disabled={loading}>
-                {loading ? "A Enviar..." : "Confirmar e Criar Entrega"}
-              </Button>
-            </div>
-            {error && <p className="text-red-500 mt-2">{error}</p>}
-          </>
-        );
-      case 4:
-        return (
-          <>
-            <div className="text-center">
-              <h2 className="text-2xl font-bold text-green-600 mb-4">Entrega Criada com Sucesso!</h2>
-              <p className="text-lg">Obrigado por usar o Future Keepsake Delivery.</p>
-              <p className="text-md mt-2">A sua entrega para <strong>{formData.recipient}</strong> foi agendada para <strong>{formData.deliveryDate}</strong>.</p>
-              <Button onClick={() => navigate("/dashboard")} className="mt-6">Voltar ao Dashboard</Button>
-            </div>
-          </>
-        );
-      default:
-        return null;
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50">
       {/* Header */}
@@ -435,8 +208,24 @@ const CreateDelivery = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {renderStepContent()}
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-6"
+              autoComplete="off"
+            >
+              <DeliveryFormStepper
+                step={currentStep}
+                deliveryType={deliveryType}
+                setDeliveryType={setDeliveryType}
+                formData={formData}
+                handleInputChange={handleInputChange}
+                handleFileChange={handleFileChange}
+                nextStep={nextStep}
+                prevStep={prevStep}
+                onSubmit={handleSubmit}
+                loading={loading}
+                error={error}
+              />
             </form>
           </CardContent>
         </Card>
