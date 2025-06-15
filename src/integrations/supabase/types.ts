@@ -75,6 +75,7 @@ export type Database = {
           location: string | null
           message: string | null
           recipient_email: string | null
+          recipient_name: string | null
           status: string
           title: string
           type: string
@@ -92,6 +93,7 @@ export type Database = {
           location?: string | null
           message?: string | null
           recipient_email?: string | null
+          recipient_name?: string | null
           status?: string
           title: string
           type?: string
@@ -109,6 +111,7 @@ export type Database = {
           location?: string | null
           message?: string | null
           recipient_email?: string | null
+          recipient_name?: string | null
           status?: string
           title?: string
           type?: string
