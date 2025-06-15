@@ -5,10 +5,12 @@ import { useToast } from "@/hooks/use-toast";
 import { isValidFile } from "./utils";
 import { validateStep } from "./validation";
 import { useDeliveryFormState } from "./useDeliveryFormState";
+import { useAuth } from "@/hooks/useAuth"; // <-- Adiciona o hook de auth
 
 export const useCreateDeliveryForm = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { user } = useAuth(); // <-- Obtém o utilizador autenticado
   const {
     deliveryType,
     setDeliveryType,
@@ -97,10 +99,15 @@ export const useCreateDeliveryForm = () => {
           digitalFileUrl = await uploadFile(formData.digitalFile);
         }
 
+        if (!user) {
+          throw new Error("Utilizador não autenticado. Faça login para continuar.");
+        }
+
         // O formData usa camelCase, mas a base de dados espera snake_case (recipient_name em vez de recipient)
         const dataToInsert = {
+          user_id: user.id, // <--- user_id obrigatório para RLS
           title: formData.title,
-          recipient_name: formData.recipient, // <- ajustado aqui!
+          recipient_name: formData.recipient,
           recipient_email: formData.recipient_email,
           delivery_date: formData.deliveryDate,
           delivery_time: formData.deliveryTime,
