@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { z } from "zod";
 import SeloDoTempoIcon from "@/components/SeloDoTempoIcon";
+import { useToast } from "@/components/ui/use-toast";
 
 const registerSchema = z.object({
   name: z.string().min(2, "O nome deve ter pelo menos 2 caracteres"),
@@ -25,7 +26,8 @@ const registerSchema = z.object({
 
 const RegisterForm = () => {
   const navigate = useNavigate();
-  const { signUp, toast } = useAuth();
+  const { signUp } = useAuth();
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
