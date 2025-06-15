@@ -70,6 +70,7 @@ export type Database = {
           delivery_method: string | null
           delivery_time: string | null
           description: string | null
+          digital_file_url: string | null
           id: string
           recipient_email: string | null
           status: string
@@ -84,6 +85,7 @@ export type Database = {
           delivery_method?: string | null
           delivery_time?: string | null
           description?: string | null
+          digital_file_url?: string | null
           id?: string
           recipient_email?: string | null
           status?: string
@@ -98,6 +100,7 @@ export type Database = {
           delivery_method?: string | null
           delivery_time?: string | null
           description?: string | null
+          digital_file_url?: string | null
           id?: string
           recipient_email?: string | null
           status?: string
