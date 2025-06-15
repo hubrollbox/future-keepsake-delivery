@@ -245,7 +245,8 @@
 
 a, .underline-link, .brand-link {
   color: #8B3A62;
-  text-decoration: underline;
+  /* Remover sublinhado por defeito */
+  text-decoration: none;
   text-underline-offset: 3px;
   font-weight: 600;
   background-color: transparent;
@@ -260,6 +261,7 @@ a:focus-visible, .underline-link:focus-visible, .brand-link:focus-visible {
   box-shadow: 0 0 0 3px #DAB8C3aa;
   outline: 2px solid #DAB8C3;
   outline-offset: 2px;
+  /* Exibir sublinhado só em foco */
   text-decoration: underline;
   text-decoration-thickness: 2px;
 }
@@ -293,4 +295,9 @@ a:hover, .underline-link:hover, .brand-link:hover {
   font-weight: bold;
   text-decoration: none;
   transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+}
+
+/* Corrigir nav-link para remover sublinhado no menu */
+.nav-link, .nav-link.active {
+  text-decoration: none !important;
 }
