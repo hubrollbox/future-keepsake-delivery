@@ -1,0 +1,24 @@
+
+:root {
+  --brand-primary: #DAB8C3;
+  --brand-secondary: #3D4A5A;
+  --brand-background: #F5F2F8;
+  --brand-neutral: #ECE5DA;
+  --brand-accent: #8B3A62;
+  --text-main: #3D4A5A;
+  --text-secondary: #A0AEC0;
+  --error: #c00a42;
+  --success: #3D4A5A;
+  --muted: #ECE5DA;
+}
+
+.bg-lavender-mist { background-color: var(--brand-background); }
+.bg-sand-beige { background-color: var(--brand-neutral); }
+.bg-dusty-rose { background-color: var(--brand-primary); }
+.bg-earthy-burgundy { background-color: var(--brand-accent); }
+.text-steel-blue { color: var(--brand-secondary); }
+.text-dusty-rose { color: var(--brand-primary); }
+.text-earthy-burgundy { color: var(--brand-accent); }
+.text-misty-gray { color: var(--text-secondary); }
+.border-dusty-rose { border-color: var(--brand-primary); }
+.border-earthy-burgundy { border-color: var(--brand-accent); }

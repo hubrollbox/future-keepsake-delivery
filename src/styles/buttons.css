@@ -1,0 +1,48 @@
+
+.btn-gentle {
+  @apply px-8 py-4 rounded-xl font-medium transition-all duration-200 shadow-soft hover:shadow-md border-2 border-dusty-rose;
+}
+.btn-primary {
+  @apply bg-earthy-burgundy text-white btn-gentle hover:bg-earthy-burgundy/90 border-2 border-dusty-rose focus-visible:ring-2 focus-visible:ring-dusty-rose;
+}
+.btn-secondary {
+  @apply border-2 border-earthy-burgundy text-earthy-burgundy btn-gentle hover:bg-dusty-rose/20 hover:text-earthy-burgundy;
+}
+.btn-outline-brand {
+  @apply border-2 border-dusty-rose text-earthy-burgundy bg-transparent hover:bg-dusty-rose/10 transition-colors duration-200;
+}
+.btn-brand {
+  background: var(--brand-accent);
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 2px 18px 0 #dab8c31c;
+}
+
+.btn-brand-outline {
+  background: transparent;
+  color: var(--brand-accent);
+  border: 2px solid var(--brand-accent);
+}
+
+a, .underline-link, .brand-link {
+  color: var(--brand-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 600;
+  background-color: transparent;
+  border-radius: 3px;
+  transition: color 0.2s, background 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+a:focus-visible,
+.underline-link:focus-visible,
+.brand-link:focus-visible {
+  color: var(--brand-secondary);
+  background: #DAB8C322;
+  box-shadow: 0 0 0 3px #DAB8C3aa;
+  outline: 2px solid #DAB8C3;
+}
+a:hover, .underline-link:hover, .brand-link:hover {
+  color: #DAB8C3;
+  background-color: #8B3A6212;
+}

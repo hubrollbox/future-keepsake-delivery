@@ -6,6 +6,11 @@
 @tailwind utilities;
 /* purgecss end ignore */
 
+@import './styles/colors.css';
+@import './styles/typography.css';
+@import './styles/buttons.css';
+@import './styles/inputs.css';
+@import './styles/utilities.css';
 @import './styles/variables.css';
 
 @layer base {
