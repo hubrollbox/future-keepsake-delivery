@@ -69,23 +69,52 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }
-}
-
-@layer base {
-  * {
-    /* purgecss start ignore */
-    @apply border-border;
-    /* purgecss end ignore */
+  /* -------------------------------
+     ESPAÇAMENTOS SUAVES E RITMO
+     ------------------------------- */
+  .emotional-spacing {
+    @apply py-20 md:py-32 lg:py-40;
+  }
+  .gentle-spacing {
+    @apply py-8 md:py-14;
   }
 
-  body {
-    /* purgecss start ignore */
-    @apply bg-lavender-mist text-steel-blue;
-    /* purgecss end ignore */
-    font-family: 'Inter', system-ui, sans-serif;
-    line-height: 1.7;
-    font-size: 16px;
-    letter-spacing: -0.01em;
+  /* -------------------------------
+     BOTÕES E INTERAÇÕES
+     ------------------------------- */
+  .btn-gentle {
+    @apply px-8 py-4 rounded-xl font-medium transition-all duration-200 shadow-soft hover:shadow-md border-2 border-dusty-rose;
+  }
+  .btn-primary {
+    @apply bg-earthy-burgundy text-white btn-gentle hover:bg-earthy-burgundy/90 border-2 border-dusty-rose focus-visible:ring-2 focus-visible:ring-dusty-rose;
+  }
+  .btn-secondary {
+    @apply border-2 border-earthy-burgundy text-earthy-burgundy btn-gentle hover:bg-dusty-rose/20 hover:text-earthy-burgundy;
+  }
+  .btn-outline-brand {
+    @apply border-2 border-dusty-rose text-earthy-burgundy bg-transparent hover:bg-dusty-rose/10 transition-colors duration-200;
+  }
+
+  /* --------------------------------
+   CAMPOS DE INPUT E FOCO
+   -------------------------------- */
+  input, textarea, select {
+    @apply rounded-xl bg-white border border-dusty-rose/25 px-4 py-3 text-steel-blue placeholder:text-misty-gray focus:ring-2 focus:ring-dusty-rose focus:border-dusty-rose transition-all duration-200;
+    min-height: 44px; /* Acessibilidade touch */
+  }
+  input:focus-visible, textarea:focus-visible, select:focus-visible {
+    box-shadow: 0 0 0 3px #dab8c33c;
+    outline: 2px solid #DAB8C3;
+    border-color: #DAB8C3;
+  }
+
+  /* -------------------------------
+    PLACEHOLDER, TÍTULOS E DESTAQUE
+    ------------------------------- */
+  ::placeholder {
+    color: #A0AEC0;
+    opacity: 0.9;
+    font-style: italic;
   }
 
   h1, h2, h3, h4, h5, h5 {
@@ -94,71 +123,43 @@
     line-height: 1.3;
     letter-spacing: -0.02em;
     color: theme('colors.steel-blue');
+    text-shadow: 0 1px 0 #ECE5DA;
+    letter-spacing: -0.02em;
   }
 
-  h1 {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 700;
+  .brand-highlight, .text-brand-primary {
+    color: #DAB8C3;
+    font-weight: bold;
+    background: linear-gradient(90deg, #DAB8C3 60%, #ECE5DA 100%);
+    border-radius: 0.5em;
+    padding: 0 0.2em;
   }
 
-  h2 {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
+  /* -------------------------------
+     ERROS, SUCESSO E ALERTAS
+     ------------------------------- */
+  .form-error, .form-erro {
+    color: #c00a42;
+    background: #dab8c322;
+    border-radius: 6px;
+    padding: 0.25em 1em;
+    font-weight: 500;
+    margin-top: 0.3em;
+    margin-bottom: 0.6em;
+    font-size: 0.97em;
   }
-
-  h3 {
-    font-size: clamp(1.25rem, 3vw, 1.75rem);
-  }
-
-  /* Emotional spacing and rhythm seguindo o manual */
-  .emotional-spacing {
-    /* purgecss start ignore */
-    @apply py-20 md:py-28;
-    /* purgecss end ignore */
-  }
-
-  .gentle-spacing {
-    /* purgecss start ignore */
-    @apply py-12 md:py-16;
-    /* purgecss end ignore */
-  }
-
-  /* Soft, warm cards com cores da marca */
-  .emotion-card {
-    /* purgecss start ignore */
-    @apply bg-white/80 backdrop-blur-sm border border-dusty-rose/20 rounded-2xl shadow-soft hover:shadow-md transition-all duration-300;
-    /* purgecss end ignore */
-  }
-
-  /* Gentle interactions */
-  .gentle-hover {
-    /* purgecss start ignore */
-    @apply hover:scale-[1.02] transition-transform duration-200;
-    /* purgecss end ignore */
-  }
-
-  /* Typography utilities com cores da marca */
-  .text-emotional {
-    line-height: 1.8;
-    color: theme('colors.misty-gray');
-  }
-
-  .text-hero {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    line-height: 1.1;
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    font-family: 'Fraunces', serif;
-  }
-
-  .text-subtitle {
-    font-size: clamp(1.125rem, 2.5vw, 1.375rem);
-    line-height: 1.6;
-    font-weight: 400;
-    color: theme('colors.steel-blue');
+  .form-success {
+    color: #3D4A5A;
+    background: #dab8c345;
+    border-radius: 6px;
+    padding: 0.3em 1em;
+    font-weight: 500;
+    margin-top: 0.3em;
+    margin-bottom: 0.6em;
+    font-size: 0.97em;
   }
 }
 
-/* Enhanced brand gradients seguindo o manual da marca */
 @layer utilities {
   .bg-brand-gradient {
     background: linear-gradient(135deg, theme('colors.earthy-burgundy') 0%, rgba(139, 58, 98, 0.8) 100%);
@@ -207,6 +208,33 @@
 
   .gpu-accelerated {
     transform: translateZ(0);
+  }
+  .shadow-soft {
+    box-shadow: 0 2px 18px 0 #dab8c31c, 0 1.5px 5px 0 #8b3a6222;
+  }
+
+  .focus-ring-brand {
+    outline: 2px solid #DAB8C3;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px #dab8c355;
+    transition: outline 0.2s;
+  }
+
+  /* Uniformizar mínimo para atmosferas clicáveis (botões e inputs) */
+  .min-touch {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .underline-brand {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    color: #8B3A62;
+  }
+  .underline-brand:hover, .underline-brand:focus {
+    color: #3D4A5A;
+    background: #dab8c340;
   }
 }
 
