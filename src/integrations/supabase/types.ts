@@ -73,6 +73,7 @@ export type Database = {
           digital_file_url: string | null
           id: string
           location: string | null
+          message: string | null
           recipient_email: string | null
           status: string
           title: string
@@ -89,6 +90,7 @@ export type Database = {
           digital_file_url?: string | null
           id?: string
           location?: string | null
+          message?: string | null
           recipient_email?: string | null
           status?: string
           title: string
@@ -105,6 +107,7 @@ export type Database = {
           digital_file_url?: string | null
           id?: string
           location?: string | null
+          message?: string | null
           recipient_email?: string | null
           status?: string
           title?: string
