@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -73,11 +72,10 @@ const Navigation = () => {
                       Entrar
                     </Button>
                   </Link>
-                  <Link to="/register" aria-label="Registrar nova conta">
+                  <Link to="/register" aria-label="Registar nova conta">
                     <Button
                       variant="brand"
                       className="px-6 py-2 rounded-lg font-semibold text-white shadow-soft bg-brand-gradient hover:opacity-90 focus-visible:ring-2 focus-visible:ring-dusty-rose/40 transition-all duration-200"
-                      onClick={() => navigate('/register')}
                     >
                       Registar
                     </Button>
@@ -104,7 +102,7 @@ const Navigation = () => {
                   to="/products"
                   className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium ${isActive ? 'active' : ''}`}
                   onClick={() => setIsOpen(false)}
-                  aria-label="Navegar para Presentes com Alma"
+                  aria-label="Ir para Presentes com Alma"
                 >
                   Presentes com Alma
                 </NavLink>
@@ -112,7 +110,7 @@ const Navigation = () => {
                   to="/how-it-works"
                   className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium ${isActive ? 'active' : ''}`}
                   onClick={() => setIsOpen(false)}
-                  aria-label="Navegar para Como Funciona"
+                  aria-label="Ir para Como Funciona"
                 >
                   Como Funciona
                 </NavLink>
@@ -120,7 +118,7 @@ const Navigation = () => {
                   to="/pricing"
                   className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium ${isActive ? 'active' : ''}`}
                   onClick={() => setIsOpen(false)}
-                  aria-label="Navegar para Preços"
+                  aria-label="Ir para Preços"
                 >
                   Preços
                 </NavLink>
@@ -128,7 +126,7 @@ const Navigation = () => {
                   to="/about"
                   className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium ${isActive ? 'active' : ''}`}
                   onClick={() => setIsOpen(false)}
-                  aria-label="Navegar para Manifesto"
+                  aria-label="Ir para Manifesto"
                 >
                   Manifesto
                 </NavLink>
@@ -136,7 +134,7 @@ const Navigation = () => {
                   to="/contact"
                   className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium ${isActive ? 'active' : ''}`}
                   onClick={() => setIsOpen(false)}
-                  aria-label="Navegar para Contacto"
+                  aria-label="Ir para Contacto"
                 >
                   Contacto
                 </NavLink>
@@ -149,7 +147,7 @@ const Navigation = () => {
 
                 {user ? (
                   <div className="flex flex-col space-y-3 pt-4 border-t border-dusty-rose/20">
-                    <Link to="/dashboard" onClick={() => setIsOpen(false)} aria-label="Acessar Dashboard">
+                    <Link to="/dashboard" onClick={() => setIsOpen(false)} aria-label="Ir para Dashboard">
                       <Button variant="outline" size="sm" className="w-full border-dusty-rose text-dusty-rose hover:bg-dusty-rose/10 rounded-xl">
                         Dashboard
                       </Button>
@@ -166,12 +164,12 @@ const Navigation = () => {
                   </div>
                 ) : (
                   <div className="flex flex-col space-y-3 pt-4 border-t border-dusty-rose/20">
-                    <Link to="/login" onClick={() => setIsOpen(false)} aria-label="Entrar na conta">
+                    <Link to="/login" onClick={() => setIsOpen(false)} aria-label="Ir para login">
                       <Button variant="outline" size="sm" className="w-full border-dusty-rose text-dusty-rose hover:bg-dusty-rose/10 rounded-xl">
                         Entrar
                       </Button>
                     </Link>
-                    <Link to="/register" onClick={() => setIsOpen(false)} aria-label="Registrar nova conta">
+                    <Link to="/register" onClick={() => setIsOpen(false)} aria-label="Ir para registo">
                       <Button size="sm" className="w-full bg-brand-gradient text-steel-blue hover:opacity-90 rounded-xl font-medium">
                         Registar
                       </Button>

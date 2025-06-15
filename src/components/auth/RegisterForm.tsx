@@ -1,4 +1,3 @@
-
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -26,7 +25,7 @@ const registerSchema = z.object({
 
 const RegisterForm = () => {
   const navigate = useNavigate();
-  const { signUp } = useAuth();
+  const { signUp, toast } = useAuth();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -96,7 +95,14 @@ const RegisterForm = () => {
     setLoading(false);
     
     if (!error) {
-      navigate('/login');
+      toast && toast({
+        title: "Conta criada!",
+        description: "Verifica o teu email para confirmar o registo.",
+        duration: 2500
+      });
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
     }
   };
 
@@ -111,7 +117,7 @@ const RegisterForm = () => {
         </div>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleRegister} className="space-y-4">
+        <form onSubmit={handleRegister} className="space-y-6 md:space-y-4">
           <div>
             <Label htmlFor="name" className="text-steel-blue">Nome completo</Label>
             <Input
@@ -228,7 +234,7 @@ const RegisterForm = () => {
             type="submit" 
             variant="brand"
             size="lg"
-            className="w-full"
+            className="w-full py-4 text-base md:text-lg"
             disabled={loading}
           >
             {loading ? "A criar conta..." : "Tornar-me Guardião"}
