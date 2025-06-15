@@ -9,6 +9,9 @@ import { useAuth } from "@/hooks/useAuth";
 import { z } from "zod";
 import SeloDoTempoIcon from "@/components/SeloDoTempoIcon";
 import { useToast } from "@/components/ui/use-toast";
+import RegisterInputField from "./RegisterInputField";
+import RegisterCheckboxField from "./RegisterCheckboxField";
+import RegisterMotivation from "./RegisterMotivation";
 
 const registerSchema = z.object({
   name: z.string().min(2, "O nome deve ter pelo menos 2 caracteres"),
@@ -120,120 +123,90 @@ const RegisterForm = () => {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleRegister} className="space-y-6 md:space-y-4">
-          <div>
-            <Label htmlFor="name" className="text-steel-blue">Nome completo</Label>
-            <Input
-              id="name"
-              name="name"
-              type="text"
-              value={formData.name}
-              onChange={handleInputChange}
-              placeholder="O teu nome"
-              className={`border-dusty-rose/30 focus:border-dusty-rose ${errors.name ? "border-red-500" : ""}`}
-              required
-              ref={nameRef}
-            />
-            {errors.name && (
-              <p className="text-red-600 text-sm mt-1">{errors.name}</p>
-            )}
-          </div>
+          <RegisterInputField
+            id="name"
+            name="name"
+            label="Nome completo"
+            placeholder="O teu nome"
+            value={formData.name}
+            onChange={handleInputChange}
+            error={errors.name}
+            required
+            inputRef={nameRef}
+          />
+          <RegisterInputField
+            id="email"
+            name="email"
+            type="email"
+            label="Email"
+            placeholder="teu@email.com"
+            value={formData.email}
+            onChange={handleInputChange}
+            error={errors.email}
+            required
+            inputRef={emailRef}
+          />
+          <RegisterInputField
+            id="password"
+            name="password"
+            type="password"
+            label="Palavra-passe"
+            placeholder="A tua palavra-passe"
+            value={formData.password}
+            onChange={handleInputChange}
+            error={errors.password}
+            required
+            inputRef={passwordRef}
+          />
+          <RegisterInputField
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            label="Confirmar palavra-passe"
+            placeholder="Confirma a tua palavra-passe"
+            value={formData.confirmPassword}
+            onChange={handleInputChange}
+            error={errors.confirmPassword}
+            required
+            inputRef={confirmPasswordRef}
+          />
 
-          <div>
-            <Label htmlFor="email" className="text-steel-blue">Email</Label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              placeholder="teu@email.com"
-              className={`border-dusty-rose/30 focus:border-dusty-rose ${errors.email ? "border-red-500" : ""}`}
-              required
-              ref={emailRef}
-            />
-            {errors.email && (
-              <p className="text-red-600 text-sm mt-1">{errors.email}</p>
-            )}
-          </div>
-          
-          <div>
-            <Label htmlFor="password" className="text-steel-blue">Palavra-passe</Label>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              placeholder="A tua palavra-passe"
-              className={`border-dusty-rose/30 focus:border-dusty-rose ${errors.password ? "border-red-500" : ""}`}
-              required
-              ref={passwordRef}
-            />
-            {errors.password && (
-              <p className="text-red-600 text-sm mt-1">{errors.password}</p>
-            )}
-          </div>
+          <RegisterCheckboxField
+            id="termsAccepted"
+            name="termsAccepted"
+            label={
+              <>
+                Aceito os{" "}
+                <a
+                  href="/terms-conditions"
+                  target="_blank"
+                  className="underline text-dusty-rose hover:text-earthy-burgundy"
+                >
+                  Termos e Condições
+                </a>
+              </>
+            }
+            checked={formData.termsAccepted}
+            onChange={handleInputChange}
+            error={errors.termsAccepted}
+            required
+            inputRef={termsRef}
+          />
 
-          <div>
-            <Label htmlFor="confirmPassword" className="text-steel-blue">Confirmar palavra-passe</Label>
-            <Input
-              id="confirmPassword"
-              name="confirmPassword"
-              type="password"
-              value={formData.confirmPassword}
-              onChange={handleInputChange}
-              placeholder="Confirma a tua palavra-passe"
-              className={`border-dusty-rose/30 focus:border-dusty-rose ${errors.confirmPassword ? "border-red-500" : ""}`}
-              required
-              ref={confirmPasswordRef}
-            />
-            {errors.confirmPassword && (
-              <p className="text-red-600 text-sm mt-1">{errors.confirmPassword}</p>
-            )}
-          </div>
+          <RegisterCheckboxField
+            id="marketingAccepted"
+            name="marketingAccepted"
+            label={
+              <span className="text-misty-gray">
+                Gostaria de receber novidades da FuturoPresente (opcional)
+              </span>
+            }
+            checked={formData.marketingAccepted}
+            onChange={handleInputChange}
+          />
 
-          <div className="flex items-center space-x-2 mt-1">
-            <input
-              id="termsAccepted"
-              name="termsAccepted"
-              type="checkbox"
-              checked={formData.termsAccepted}
-              onChange={handleInputChange}
-              ref={termsRef}
-              className="h-5 w-5 rounded border border-dusty-rose/30 focus:outline-none focus:ring-2 focus:ring-dusty-rose/40 transition-all duration-200"
-              required
-            />
-            <Label htmlFor="termsAccepted" className="text-steel-blue">
-              Aceito os{" "}
-              <a 
-                href="/terms-conditions" 
-                target="_blank"
-                className="underline text-dusty-rose hover:text-earthy-burgundy"
-              >
-                Termos e Condições
-              </a>
-            </Label>
-          </div>
-          {errors.termsAccepted && (
-            <p className="text-red-600 text-sm mt-1">{errors.termsAccepted}</p>
-          )}
-
-          <div className="flex items-center space-x-2 mt-1">
-            <input
-              id="marketingAccepted"
-              name="marketingAccepted"
-              type="checkbox"
-              checked={formData.marketingAccepted}
-              onChange={handleInputChange}
-              className="h-5 w-5 rounded border border-dusty-rose/30 focus:outline-none focus:ring-2 focus:ring-dusty-rose/40 transition-all duration-200"
-            />
-            <Label htmlFor="marketingAccepted" className="text-misty-gray">
-              Gostaria de receber novidades da FuturoPresente (opcional)
-            </Label>
-          </div>
-
-          <Button 
-            type="submit" 
+          <Button
+            type="submit"
             variant="brand"
             size="lg"
             className="w-full py-4 text-base md:text-lg"
@@ -246,8 +219,8 @@ const RegisterForm = () => {
         <div className="mt-6 text-center">
           <p className="text-sm text-misty-gray">
             Já és um Guardião do Tempo?{" "}
-            <Button 
-              variant="link" 
+            <Button
+              variant="link"
               className="p-0 h-auto font-semibold text-dusty-rose"
               onClick={() => navigate('/login')}
             >
@@ -256,11 +229,7 @@ const RegisterForm = () => {
           </p>
         </div>
 
-        <div className="mt-6 p-4 bg-sand-beige/30 rounded-xl border border-dusty-rose/20">
-          <p className="text-sm text-steel-blue text-center italic font-medium font-fraunces">
-            🕰️ O teu eu do futuro vai agradecer por começares hoje esta jornada temporal
-          </p>
-        </div>
+        <RegisterMotivation />
       </CardContent>
     </Card>
   );
