@@ -7,9 +7,13 @@ const HeroSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section id="main-content" className="relative min-h-screen flex items-center justify-center px-4 py-16 md:py-20 bg-gradient-to-br from-lavender-mist via-sand-beige/30 to-lavender-mist">
+    <section
+      id="main-content"
+      className="relative min-h-screen flex items-center justify-center px-4 py-16 md:py-20 bg-gradient-to-br from-lavender-mist via-sand-beige/30 to-lavender-mist"
+      aria-label="Introdução e chamada inicial - FuturoPresente"
+    >
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
+      <div className="absolute inset-0 opacity-5" aria-hidden="true">
         <div className="absolute top-20 left-10 w-32 h-32 border-2 border-dusty-rose rounded-full"></div>
         <div className="absolute bottom-20 right-10 w-24 h-24 border-2 border-earthy-burgundy rounded-full"></div>
       </div>
@@ -18,12 +22,18 @@ const HeroSection = () => {
         <div className="text-center mb-12 md:mb-16">
           {/* Logo */}
           <div className="flex justify-center mb-8">
-            <SeloDoTempoIcon size={120} className="drop-shadow-sm animate-fade-in" />
+            <SeloDoTempoIcon
+              size={120}
+              className="drop-shadow-sm animate-fade-in"
+              aria-label="Símbolo Selo do Tempo"
+              loading="lazy"
+            />
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-5xl md:text-7xl font-fraunces font-bold text-steel-blue mb-6 leading-tight">
-            Futuro<span className="text-earthy-burgundy">Presente</span>
+          <h1 className="text-5xl md:text-7xl font-fraunces font-bold text-steel-blue mb-6 leading-tight" style={{ textShadow: "0 1px 0 #ECE5DA" }}>
+            Futuro
+            <span className="text-earthy-burgundy">Presente</span>
           </h1>
           
           <p className="text-2xl md:text-3xl text-dusty-rose font-fraunces italic mb-8">
@@ -32,7 +42,7 @@ const HeroSection = () => {
 
           {/* Story Introduction */}
           <div className="max-w-4xl mx-auto mb-12">
-            <p className="text-xl md:text-2xl text-steel-blue mb-6 leading-relaxed font-medium">
+            <p className="text-xl md:text-2xl text-steel-blue mb-6 leading-relaxed font-medium" style={{ textShadow: "0 1px 0 #ECE5DA" }}>
               Nascemos de um gesto íntimo: <span className="text-earthy-burgundy font-semibold">uma mensagem escrita por um pai para a filha, 
               para ser lida aos 18 anos.</span>
             </p>
@@ -47,8 +57,9 @@ const HeroSection = () => {
             <Button 
               size="lg" 
               variant="brand"
-              className="px-8 py-6 text-lg min-h-[60px] group transition-all duration-200"
+              className="px-8 py-6 text-lg min-h-[60px] group transition-all duration-200 border-2 border-dusty-rose focus-visible:ring-2 focus-visible:ring-dusty-rose focus:outline-none"
               onClick={() => navigate('/register')}
+              aria-label="Registar e criar conta gratuitamente"
             >
               <Heart className="mr-2 h-5 w-5 group-hover:animate-bounce-gentle" />
               Começar a Minha Jornada
@@ -57,13 +68,13 @@ const HeroSection = () => {
             <Button 
               variant="brand-outline" 
               size="lg" 
-              className="px-8 py-6 text-lg min-h-[60px] transition-all duration-200"
+              className="px-8 py-6 text-lg min-h-[60px] transition-all duration-200 border-2 border-earthy-burgundy focus-visible:ring-2 focus-visible:ring-dusty-rose"
               onClick={() => navigate('/about')}
+              aria-label="Conheça a história do FuturoPresente"
             >
-              Conhecer a Nossa História
+              <span className="text-earthy-burgundy font-semibold">Conhecer a Nossa História</span>
             </Button>
           </div>
-
           {/* Trust Indicators */}
           <div className="flex flex-col sm:flex-row gap-8 justify-center items-center text-misty-gray">
             <div className="flex items-center space-x-2">

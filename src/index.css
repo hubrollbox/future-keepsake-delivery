@@ -209,3 +209,22 @@
     transform: translateZ(0);
   }
 }
+
+a, .underline-link, .brand-link {
+  color: #8B3A62;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+
+a:hover, .underline-link:hover, .brand-link:hover {
+  color: #DAB8C3;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.focus-ring-brand {
+  outline: 2px solid #DAB8C3;
+  outline-offset: 2px;
+  transition: outline 0.2s;
+}

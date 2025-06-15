@@ -24,13 +24,14 @@ const Navigation = () => {
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only absolute top-2 left-2 z-50 bg-dusty-rose/90 text-steel-blue px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-earthy-burgundy font-semibold transition-all"
+        aria-label="Pular para o conteúdo principal"
       >
         Pular para Conteúdo
       </a>
-      <nav className="bg-white/95 backdrop-blur-md shadow-gentle border-b border-dusty-rose/20 sticky top-0 z-40">
+      <nav className="bg-white/95 backdrop-blur-md shadow-gentle border-b border-dusty-rose/20 sticky top-0 z-40" aria-label="Navegação principal">
         <div className="container mx-auto px-4 md:px-8">
           <div className="flex justify-between items-center h-20">
-            <Link to="/" className="flex items-center space-x-3 font-bold text-xl text-steel-blue">
+            <Link to="/" className="flex items-center space-x-3 font-bold text-xl text-steel-blue" aria-label="Página inicial FuturoPresente">
               <SeloDoTempoIcon size={40} />
               <span className="font-fraunces">FuturoPresente</span>
             </Link>
@@ -94,8 +95,8 @@ const Navigation = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 rounded-xl text-misty-gray hover:text-steel-blue hover:bg-sand-beige/50"
-              aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+              className="md:hidden p-2 rounded-xl text-misty-gray hover:text-steel-blue hover:bg-sand-beige/50 focus-visible:ring-2 focus-visible:ring-earthy-burgundy"
+              aria-label={isOpen ? "Fechar o menu de navegação" : "Abrir o menu de navegação"}
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
