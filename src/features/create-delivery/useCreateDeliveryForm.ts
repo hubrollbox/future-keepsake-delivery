@@ -97,13 +97,13 @@ export const useCreateDeliveryForm = () => {
           digitalFileUrl = await uploadFile(formData.digitalFile);
         }
 
-        // O formData usa camelCase, mas a base de dados espera snake_case (delivery_time)
+        // O formData usa camelCase, mas a base de dados espera snake_case (recipient_name em vez de recipient)
         const dataToInsert = {
           title: formData.title,
-          recipient: formData.recipient,
+          recipient_name: formData.recipient, // <- ajustado aqui!
           recipient_email: formData.recipient_email,
           delivery_date: formData.deliveryDate,
-          delivery_time: formData.deliveryTime, // garantir correspondência ao campo da base de dados
+          delivery_time: formData.deliveryTime,
           message: formData.message,
           description: formData.description,
           delivery_method: formData.delivery_method || "email",
