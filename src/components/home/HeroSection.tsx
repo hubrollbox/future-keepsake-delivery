@@ -30,7 +30,7 @@ const HeroSection = () => {
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-4xl md:text-7xl font-fraunces font-bold text-steel-blue mb-4 md:mb-6 leading-tight" style={{ textShadow: "0 1px 0 #ECE5DA" }}>
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-fraunces font-bold text-steel-blue mb-4 md:mb-6 leading-tight" style={{ textShadow: "0 1px 0 #ECE5DA" }}>
             Futuro
             <span className="text-earthy-burgundy">Presente</span>
           </h1>

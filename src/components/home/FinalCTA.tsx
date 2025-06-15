@@ -23,7 +23,7 @@ const FinalCTA = () => {
             <SeloDoTempoIcon size={100} className="text-earthy-burgundy drop-shadow-lg" aria-label="Símbolo Selo do Tempo" />
           </div>
           
-          <h2 className="text-3xl md:text-6xl font-fraunces font-bold mb-3 md:mb-4 leading-tight text-steel-blue" style={{ textShadow: "0 1px 0 #ECE5DA" }}>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-fraunces font-bold mb-3 md:mb-4 leading-tight text-steel-blue" style={{ textShadow: "0 1px 0 #ECE5DA" }}>
             Pronto para a Tua Primeira<br />
             <span className="text-earthy-burgundy font-fraunces">
               Viagem no Tempo?
