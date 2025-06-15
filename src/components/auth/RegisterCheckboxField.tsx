@@ -25,7 +25,7 @@ const RegisterCheckboxField: React.FC<RegisterCheckboxFieldProps> = ({
   inputRef,
   className = ""
 }) => (
-  <div className="flex items-center space-x-2 mt-1">
+  <div className="flex items-center space-x-2 mt-1 min-h-[44px]">
     <input
       id={id}
       name={name}
@@ -35,6 +35,7 @@ const RegisterCheckboxField: React.FC<RegisterCheckboxFieldProps> = ({
       className={`h-5 w-5 rounded border border-dusty-rose/30 focus:outline-none focus:ring-2 focus:ring-dusty-rose/40 transition-all duration-200 ${className}`}
       required={required}
       ref={inputRef}
+      aria-required={required}
     />
     <Label htmlFor={id}>{label}</Label>
     {error && (
@@ -44,4 +45,3 @@ const RegisterCheckboxField: React.FC<RegisterCheckboxFieldProps> = ({
 );
 
 export default RegisterCheckboxField;
-

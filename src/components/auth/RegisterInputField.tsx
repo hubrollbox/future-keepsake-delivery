@@ -1,4 +1,3 @@
-
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React from "react";
@@ -39,7 +38,7 @@ const RegisterInputField: React.FC<RegisterInputFieldProps> = ({
       value={value}
       onChange={onChange}
       placeholder={placeholder}
-      className={`border-dusty-rose/30 focus:border-dusty-rose ${error ? "border-red-500" : ""} ${className}`}
+      className={`border-dusty-rose/30 focus:border-dusty-rose ${error ? "border-red-500" : ""} ${className} h-12 min-h-[44px]`}
       required={required}
       ref={inputRef}
       autoComplete={type === "password" ? "new-password" : undefined}
@@ -51,4 +50,3 @@ const RegisterInputField: React.FC<RegisterInputFieldProps> = ({
 );
 
 export default RegisterInputField;
-

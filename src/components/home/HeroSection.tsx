@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Heart } from "lucide-react";
@@ -8,7 +7,7 @@ const HeroSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-4 py-20 bg-gradient-to-br from-lavender-mist via-sand-beige/30 to-lavender-mist">
+    <section id="main-content" className="relative min-h-screen flex items-center justify-center px-4 py-16 md:py-20 bg-gradient-to-br from-lavender-mist via-sand-beige/30 to-lavender-mist">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-20 left-10 w-32 h-32 border-2 border-dusty-rose rounded-full"></div>
@@ -16,7 +15,7 @@ const HeroSection = () => {
       </div>
 
       <div className="container mx-auto max-w-6xl relative z-10">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 md:mb-16">
           {/* Logo */}
           <div className="flex justify-center mb-8">
             <SeloDoTempoIcon size={120} className="drop-shadow-sm animate-fade-in" />
@@ -44,11 +43,11 @@ const HeroSection = () => {
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
+          <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center mb-10 md:mb-16">
             <Button 
               size="lg" 
               variant="brand"
-              className="px-8 py-6 text-lg min-h-[60px] group"
+              className="px-8 py-6 text-lg min-h-[60px] group transition-all duration-200"
               onClick={() => navigate('/register')}
             >
               <Heart className="mr-2 h-5 w-5 group-hover:animate-bounce-gentle" />
@@ -58,7 +57,7 @@ const HeroSection = () => {
             <Button 
               variant="brand-outline" 
               size="lg" 
-              className="px-8 py-6 text-lg min-h-[60px]"
+              className="px-8 py-6 text-lg min-h-[60px] transition-all duration-200"
               onClick={() => navigate('/about')}
             >
               Conhecer a Nossa História

@@ -20,6 +20,13 @@ const Navigation = () => {
 
   return (
     <>
+      {/* Link Skip to Content para acessibilidade */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only absolute top-2 left-2 z-50 bg-dusty-rose/90 text-steel-blue px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-earthy-burgundy font-semibold transition-all"
+      >
+        Pular para Conteúdo
+      </a>
       <nav className="bg-white/95 backdrop-blur-md shadow-gentle border-b border-dusty-rose/20 sticky top-0 z-40">
         <div className="container mx-auto px-4 md:px-8">
           <div className="flex justify-between items-center h-20">
