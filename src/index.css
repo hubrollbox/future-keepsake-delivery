@@ -235,10 +235,29 @@ a:hover, .underline-link:hover, .brand-link:hover {
   color: #DAB8C3;
   text-decoration: underline;
   text-decoration-thickness: 2px;
+  background-color: #8B3A6212;
 }
 
 .focus-ring-brand {
   outline: 2px solid #DAB8C3;
   outline-offset: 2px;
   transition: outline 0.2s;
+}
+
+.skip-link:focus-visible, .skip-link:focus {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  z-index: 50;
+  display: block !important;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 0.75rem;
+  background: #dab8c3;
+  color: #3D4A5A;
+  outline: 2px solid #8B3A62;
+  box-shadow: 0 2px 12px 0 #dab8c370;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
 }
