@@ -1,14 +1,20 @@
+
 import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
-import { Menu, X } from "lucide-react";
+import { Menu } from "lucide-react";
 import CartButton from "@/components/cart/CartButton";
 import CartModal from "@/components/cart/CartModal";
 import SeloDoTempoIcon from "@/components/SeloDoTempoIcon";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+} from "@/components/ui/drawer";
 
 const Navigation = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
@@ -16,7 +22,17 @@ const Navigation = () => {
   const handleSignOut = async () => {
     await signOut();
     navigate("/");
+    setIsDrawerOpen(false);
   };
+
+  // Links para usar no menu/mobile
+  const navLinks = [
+    { to: "/products", label: "Presentes com Alma", aria: "Ir para Presentes com Alma" },
+    { to: "/how-it-works", label: "Como Funciona", aria: "Ir para Como Funciona" },
+    { to: "/pricing", label: "Preços", aria: "Ir para Preços" },
+    { to: "/about", label: "Manifesto", aria: "Ir para Manifesto" },
+    { to: "/contact", label: "Contacto", aria: "Ir para Contacto" },
+  ];
 
   return (
     <>
@@ -38,61 +54,18 @@ const Navigation = () => {
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8 lg:space-x-10">
-              <NavLink
-                to="/products"
-                className={({ isActive }) =>
-                  `nav-link text-misty-gray hover:text-dusty-rose focus-visible:underline focus-visible:decoration-2 focus-visible:decoration-dusty-rose transition-colors font-medium ${
-                    isActive ? 'active' : ''
-                  }`
-                }
-                aria-label="Navegar para Presentes com Alma"
-              >
-                Presentes com Alma
-              </NavLink>
-              <NavLink
-                to="/how-it-works"
-                className={({ isActive }) =>
-                  `nav-link text-misty-gray hover:text-dusty-rose focus-visible:underline focus-visible:decoration-2 focus-visible:decoration-dusty-rose transition-colors font-medium ${
-                    isActive ? 'active' : ''
-                  }`
-                }
-                aria-label="Navegar para Como Funciona"
-              >
-                Como Funciona
-              </NavLink>
-              <NavLink
-                to="/pricing"
-                className={({ isActive }) =>
-                  `nav-link text-misty-gray hover:text-dusty-rose focus-visible:underline focus-visible:decoration-2 focus-visible:decoration-dusty-rose transition-colors font-medium ${
-                    isActive ? 'active' : ''
-                  }`
-                }
-                aria-label="Navegar para Preços"
-              >
-                Preços
-              </NavLink>
-              <NavLink
-                to="/about"
-                className={({ isActive }) =>
-                  `nav-link text-misty-gray hover:text-dusty-rose focus-visible:underline focus-visible:decoration-2 focus-visible:decoration-dusty-rose transition-colors font-medium ${
-                    isActive ? 'active' : ''
-                  }`
-                }
-                aria-label="Navegar para Manifesto"
-              >
-                Manifesto
-              </NavLink>
-              <NavLink
-                to="/contact"
-                className={({ isActive }) =>
-                  `nav-link text-misty-gray hover:text-dusty-rose focus-visible:underline focus-visible:decoration-2 focus-visible:decoration-dusty-rose transition-colors font-medium ${
-                    isActive ? 'active' : ''
-                  }`
-                }
-                aria-label="Navegar para Contacto"
-              >
-                Contacto
-              </NavLink>
+              {navLinks.map((link) => (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  className={({ isActive }) =>
+                    `nav-link text-misty-gray hover:text-dusty-rose focus-visible:underline focus-visible:decoration-2 focus-visible:decoration-dusty-rose transition-colors font-medium ${isActive ? "active" : ""}`
+                  }
+                  aria-label={link.aria}
+                >
+                  {link.label}
+                </NavLink>
+              ))}
 
               {user && <CartButton onClick={() => setIsCartOpen(true)} />}
 
@@ -134,101 +107,93 @@ const Navigation = () => {
 
             {/* Mobile Menu Button */}
             <button
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => setIsDrawerOpen(true)}
               className="md:hidden p-2 rounded-xl text-misty-gray hover:text-steel-blue hover:bg-sand-beige/50 focus-visible:ring-2 focus-visible:ring-earthy-burgundy"
-              aria-label={isOpen ? "Fechar o menu de navegação" : "Abrir o menu de navegação"}
+              aria-label="Abrir o menu de navegação"
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              <Menu className="h-6 w-6" />
             </button>
           </div>
-
-          {/* Mobile Menu */}
-          {isOpen && (
-            <div className="md:hidden py-6 px-2 border-t border-dusty-rose/20">
-              <div className="flex flex-col space-y-6">
-                <NavLink
-                  to="/products"
-                  className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium ${isActive ? 'active' : ''}`}
-                  onClick={() => setIsOpen(false)}
-                  aria-label="Ir para Presentes com Alma"
-                >
-                  Presentes com Alma
-                </NavLink>
-                <NavLink
-                  to="/how-it-works"
-                  className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium ${isActive ? 'active' : ''}`}
-                  onClick={() => setIsOpen(false)}
-                  aria-label="Ir para Como Funciona"
-                >
-                  Como Funciona
-                </NavLink>
-                <NavLink
-                  to="/pricing"
-                  className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium ${isActive ? 'active' : ''}`}
-                  onClick={() => setIsOpen(false)}
-                  aria-label="Ir para Preços"
-                >
-                  Preços
-                </NavLink>
-                <NavLink
-                  to="/about"
-                  className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium ${isActive ? 'active' : ''}`}
-                  onClick={() => setIsOpen(false)}
-                  aria-label="Ir para Manifesto"
-                >
-                  Manifesto
-                </NavLink>
-                <NavLink
-                  to="/contact"
-                  className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium ${isActive ? 'active' : ''}`}
-                  onClick={() => setIsOpen(false)}
-                  aria-label="Ir para Contacto"
-                >
-                  Contacto
-                </NavLink>
-
-                {user && (
-                  <div className="py-2">
-                    <CartButton onClick={() => {setIsCartOpen(true); setIsOpen(false);}} />
-                  </div>
-                )}
-
-                {user ? (
-                  <div className="flex flex-col space-y-3 pt-4 border-t border-dusty-rose/20">
-                    <Link to="/dashboard" onClick={() => setIsOpen(false)} aria-label="Ir para Dashboard">
-                      <Button variant="outline" size="sm" className="w-full border-dusty-rose text-dusty-rose hover:bg-dusty-rose/10 rounded-xl">
-                        Dashboard
-                      </Button>
-                    </Link>
-                    <Button 
-                      onClick={() => {handleSignOut(); setIsOpen(false);}}
-                      variant="ghost" 
-                      size="sm"
-                      className="w-full text-misty-gray hover:text-steel-blue rounded-xl"
-                      aria-label="Sair da conta"
-                    >
-                      Sair
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="flex flex-col space-y-3 pt-4 border-t border-dusty-rose/20">
-                    <Link to="/login" onClick={() => setIsOpen(false)} aria-label="Ir para login">
-                      <Button variant="outline" size="sm" className="w-full border-dusty-rose text-dusty-rose hover:bg-dusty-rose/10 rounded-xl">
-                        Entrar
-                      </Button>
-                    </Link>
-                    <Link to="/register" onClick={() => setIsOpen(false)} aria-label="Ir para registo">
-                      <Button size="sm" className="w-full bg-brand-gradient text-steel-blue hover:opacity-90 rounded-xl font-medium">
-                        Registar
-                      </Button>
-                    </Link>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
         </div>
       </nav>
+
+      {/* Drawer: Mobile Navigation */}
+      <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} shouldScaleBackground>
+        <DrawerContent className="pt-4 pb-8 px-4">
+          <div className="flex flex-col gap-7 mt-3">
+            <div className="flex justify-between items-center mb-4">
+              <Link to="/" onClick={() => setIsDrawerOpen(false)} className="flex items-center space-x-2 font-bold text-xl text-steel-blue" aria-label="Página inicial FuturoPresente">
+                <SeloDoTempoIcon size={34} />
+                <span className="font-fraunces">FuturoPresente</span>
+              </Link>
+              <DrawerClose asChild>
+                <button
+                  type="button"
+                  className="p-2 rounded-xl text-misty-gray hover:text-steel-blue hover:bg-sand-beige/50 focus-visible:ring-2 focus-visible:ring-earthy-burgundy"
+                  aria-label="Fechar o menu de navegação"
+                >
+                  <span aria-hidden="true" className="text-lg">&times;</span>
+                </button>
+              </DrawerClose>
+            </div>
+            <nav aria-label="Menu mobile principal" className="flex flex-col gap-5">
+              {navLinks.map((link) => (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  onClick={() => setIsDrawerOpen(false)}
+                  className={({ isActive }) =>
+                    `block py-3 px-3 text-lg font-medium rounded-xl transition-colors nav-link text-misty-gray hover:text-dusty-rose focus-visible:underline focus-visible:decoration-2 focus-visible:decoration-dusty-rose ${
+                      isActive ? "active text-dusty-rose" : ""
+                    }`
+                  }
+                  aria-label={link.aria}
+                  style={{ minHeight: 44 }}
+                >
+                  {link.label}
+                </NavLink>
+              ))}
+              {user && (
+                <div className="py-1">
+                  <CartButton onClick={() => {setIsCartOpen(true); setIsDrawerOpen(false);}} />
+                </div>
+              )}
+              {user ? (
+                <>
+                  <Link to="/dashboard" onClick={() => setIsDrawerOpen(false)} aria-label="Ir para Dashboard">
+                    <Button variant="outline" size="sm" className="w-full border-dusty-rose text-dusty-rose hover:bg-dusty-rose/10 rounded-xl" style={{ minHeight: 44 }}>
+                      Dashboard
+                    </Button>
+                  </Link>
+                  <Button 
+                    onClick={handleSignOut}
+                    variant="ghost" 
+                    size="sm"
+                    className="w-full mt-2 text-misty-gray hover:text-steel-blue rounded-xl"
+                    aria-label="Sair da conta"
+                    style={{ minHeight: 44 }}
+                  >
+                    Sair
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" onClick={() => setIsDrawerOpen(false)} aria-label="Ir para login">
+                    <Button variant="outline" size="sm" className="w-full border-dusty-rose text-dusty-rose hover:bg-dusty-rose/10 rounded-xl" style={{ minHeight: 44 }}>
+                      Entrar
+                    </Button>
+                  </Link>
+                  <Link to="/register" onClick={() => setIsDrawerOpen(false)} aria-label="Ir para registo">
+                    <Button size="sm" className="w-full bg-brand-gradient text-steel-blue hover:opacity-90 rounded-xl font-medium" style={{ minHeight: 44 }}>
+                      Registar
+                    </Button>
+                  </Link>
+                </>
+              )}
+            </nav>
+          </div>
+        </DrawerContent>
+      </Drawer>
 
       <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </>
