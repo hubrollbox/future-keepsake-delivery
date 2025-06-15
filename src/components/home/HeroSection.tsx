@@ -26,7 +26,6 @@ const HeroSection = () => {
               size={120}
               className="drop-shadow-sm animate-fade-in"
               aria-label="Símbolo Selo do Tempo"
-              loading="lazy"
             />
           </div>
           {/* Main Headline */}

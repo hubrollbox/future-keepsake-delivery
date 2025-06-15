@@ -20,7 +20,7 @@ const FinalCTA = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-5xl mx-auto text-center">
           <div className="flex justify-center mb-5 md:mb-12">
-            <SeloDoTempoIcon size={100} className="text-earthy-burgundy drop-shadow-lg" aria-label="Símbolo Selo do Tempo" loading="lazy" />
+            <SeloDoTempoIcon size={100} className="text-earthy-burgundy drop-shadow-lg" aria-label="Símbolo Selo do Tempo" />
           </div>
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-fraunces font-bold mb-2 md:mb-4 leading-tight text-steel-blue" style={{ textShadow: "0 1px 0 #ECE5DA" }}>
             Pronto para a Tua Primeira<br />
