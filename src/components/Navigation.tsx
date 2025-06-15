@@ -38,19 +38,59 @@ const Navigation = () => {
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8 lg:space-x-10">
-              <NavLink to="/products" className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors font-medium ${isActive ? 'active' : ''}`} aria-label="Navegar para Presentes com Alma">
+              <NavLink
+                to="/products"
+                className={({ isActive }) =>
+                  `nav-link text-misty-gray hover:text-dusty-rose focus-visible:underline focus-visible:decoration-2 focus-visible:decoration-dusty-rose transition-colors font-medium ${
+                    isActive ? 'active' : ''
+                  }`
+                }
+                aria-label="Navegar para Presentes com Alma"
+              >
                 Presentes com Alma
               </NavLink>
-              <NavLink to="/how-it-works" className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors font-medium ${isActive ? 'active' : ''}`} aria-label="Navegar para Como Funciona">
+              <NavLink
+                to="/how-it-works"
+                className={({ isActive }) =>
+                  `nav-link text-misty-gray hover:text-dusty-rose focus-visible:underline focus-visible:decoration-2 focus-visible:decoration-dusty-rose transition-colors font-medium ${
+                    isActive ? 'active' : ''
+                  }`
+                }
+                aria-label="Navegar para Como Funciona"
+              >
                 Como Funciona
               </NavLink>
-              <NavLink to="/pricing" className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors font-medium ${isActive ? 'active' : ''}`} aria-label="Navegar para Preços">
+              <NavLink
+                to="/pricing"
+                className={({ isActive }) =>
+                  `nav-link text-misty-gray hover:text-dusty-rose focus-visible:underline focus-visible:decoration-2 focus-visible:decoration-dusty-rose transition-colors font-medium ${
+                    isActive ? 'active' : ''
+                  }`
+                }
+                aria-label="Navegar para Preços"
+              >
                 Preços
               </NavLink>
-              <NavLink to="/about" className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors font-medium ${isActive ? 'active' : ''}`} aria-label="Navegar para Manifesto">
+              <NavLink
+                to="/about"
+                className={({ isActive }) =>
+                  `nav-link text-misty-gray hover:text-dusty-rose focus-visible:underline focus-visible:decoration-2 focus-visible:decoration-dusty-rose transition-colors font-medium ${
+                    isActive ? 'active' : ''
+                  }`
+                }
+                aria-label="Navegar para Manifesto"
+              >
                 Manifesto
               </NavLink>
-              <NavLink to="/contact" className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors font-medium ${isActive ? 'active' : ''}`} aria-label="Navegar para Contacto">
+              <NavLink
+                to="/contact"
+                className={({ isActive }) =>
+                  `nav-link text-misty-gray hover:text-dusty-rose focus-visible:underline focus-visible:decoration-2 focus-visible:decoration-dusty-rose transition-colors font-medium ${
+                    isActive ? 'active' : ''
+                  }`
+                }
+                aria-label="Navegar para Contacto"
+              >
                 Contacto
               </NavLink>
 
