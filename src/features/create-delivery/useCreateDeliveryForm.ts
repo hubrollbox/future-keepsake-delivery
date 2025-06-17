@@ -116,11 +116,23 @@ export const useCreateDeliveryForm = () => {
           type: deliveryType,
           location: formData.location,
           digital_file_url: digitalFileUrl,
+          payment_status: "pending", // novo campo
         };
 
         await insertDelivery(dataToInsert);
 
-        // Agendar notificação de entrega
+        // Inserir notificação agendada na base de dados
+        await supabase.from("scheduled_notifications").insert([
+          {
+            user_email: user.email!,
+            recipient_email: formData.recipient_email,
+            delivery_date: formData.deliveryDate,
+            message: formData.message,
+            status: "pending"
+          }
+        ]);
+
+        // Agendar notificação de entrega (mock local, opcional)
         onDeliveryCreated({
           id: `${Date.now()}`,
           userEmail: user.email!,
