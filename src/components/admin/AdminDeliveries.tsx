@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Search, Filter, CheckCircle, Clock, Package } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { exportToCSV } from "@/lib/exportToCSV";
 
 interface Delivery {
   id: string;
@@ -151,6 +151,15 @@ const AdminDeliveries = () => {
           </select>
         </div>
       </div>
+
+      <Button
+        variant="outline"
+        className="mb-4"
+        onClick={() => exportToCSV(deliveries, "entregas.csv")}
+        disabled={!deliveries.length}
+      >
+        Exportar CSV
+      </Button>
 
       <div className="grid gap-4">
         {filteredDeliveries.map((delivery) => (

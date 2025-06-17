@@ -1,9 +1,9 @@
-
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Session } from "@supabase/supabase-js";
 import { Loader2 } from "lucide-react";
+import { useAdmin } from "@/hooks/useAdmin";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -57,4 +57,55 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   return <>{children}</>;
 };
 
+const ProtectedAdminRoute = ({ children }: ProtectedRouteProps) => {
+  const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState(true);
+  const { isAdmin, loading: adminLoading } = useAdmin();
+
+  useEffect(() => {
+    // Get initial session
+    const getSession = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        setSession(session);
+      } catch (error) {
+        console.error("Error getting session:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getSession();
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      setSession(session);
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  if (loading || adminLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <span>A verificar permissões...</span>
+      </div>
+    );
+  }
+
+  if (!session) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!isAdmin) {
+    return <Navigate to="/" replace />;
+  }
+
+  return <>{children}</>;
+};
+
 export default ProtectedRoute;
+export { ProtectedAdminRoute };

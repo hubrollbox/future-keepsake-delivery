@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { Users, Search, Shield, User } from "lucide-react";
+import { exportToCSV } from "@/lib/exportToCSV";
 
 interface Client {
   id: string;
@@ -136,6 +136,15 @@ const AdminClients = () => {
           </div>
         </div>
       </div>
+
+      <Button
+        variant="outline"
+        className="mb-4"
+        onClick={() => exportToCSV(clients, "clientes.csv")}
+        disabled={!clients.length}
+      >
+        Exportar CSV
+      </Button>
 
       <div className="grid gap-4">
         {filteredClients.map((client) => (

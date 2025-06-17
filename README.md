@@ -6,131 +6,117 @@
 
 A Future Keepsake Delivery é uma solução moderna para gestão, armazenamento e entrega programada de keepsakes (lembranças e presentes para o futuro). Desenvolvida para empresas e consumidores finais, a plataforma oferece segurança, personalização e automação em todo o ciclo de vida do presente.
 
-## Principais Funcionalidades
-- Cadastro e autenticação de usuários
+## Funcionalidades Principais
+
+- Cadastro e autenticação de utilizadores
 - Gestão de keepsakes digitais e físicos
 - Entregas programadas e notificações automáticas
-- Dashboard intuitivo para administradores e usuários
+- Dashboard intuitivo para administradores e utilizadores
 - Integração com Supabase para backend seguro
 - Interface responsiva e personalizável
-- Suporte a múltiplos métodos de pagamento (se aplicável)
+- Exportação de dados (CSV)
+- Onboarding e tooltips para melhor experiência
+- Suporte a pagamentos por link externo
+- Testes automatizados (unitários e E2E)
+- Monitoramento de erros (Sentry) e métricas (Google Analytics)
 
 ## Tecnologias Utilizadas
+
 - React + TypeScript
 - Vite
 - Tailwind CSS
 - Supabase
+- Cypress (E2E)
+- Vitest (unitários)
+- Sentry, Google Analytics
 
-## Como Operar e Implantar
+## Instalação e Configuração
 
-### Instalação
+1. **Clone o repositório:**
+
+   ```sh
+   git clone <URL_DO_SEU_REPOSITORIO>
+   cd <NOME_DA_PASTA>
+   npm install
+   ```
+
+2. **Configuração de ambiente:**
+
+   - Copie `.env.example` para `.env` e preencha as variáveis:
+     - `VITE_SUPABASE_URL=...`
+     - `VITE_SUPABASE_ANON_KEY=...`
+     - `VITE_SENTRY_DSN=...` (opcional)
+     - `VITE_SENDGRID_API_KEY=...` (opcional)
+     - `VITE_SENDGRID_SENDER=...` (opcional)
+
+3. **Executar em desenvolvimento:**
+
+   ```sh
+   npm run dev
+   ```
+
+4. **Build para produção:**
+
+   ```sh
+   npm run build
+   ```
+
+   Os arquivos finais estarão na pasta `dist/`.
+
+## Testes
+
+- **Unitários:**
+
+  ```sh
+  npm test
+  ```
+
+  Usa Vitest e Testing Library.
+
+- **E2E (Cypress):**
+
+  Siga o guia em [`TESTES_E2E.md`](TESTES_E2E.md).
+
+## Geração de Tipos Supabase
+
+Para garantir a segurança de tipo e uma melhor experiência de desenvolvimento com o Supabase:
+
 ```sh
-git clone <URL_DO_SEU_REPOSITORIO>
-cd <NOME_DA_PASTA>
-npm install
-```
-
-### Configuração
-Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
-- `VITE_SUPABASE_URL=...`
-- `VITE_SUPABASE_ANON_KEY=...`
-
-### Execução em Desenvolvimento
-```sh
-npm run dev
-```
-
-### Build para Produção
-```sh
-npm run build
-```
-Os arquivos finais estarão na pasta `dist/`.
-
-### Testes
-
-Para executar os testes automatizados do projeto, utilize o seguinte comando:
-
-```bash
-npm test
-```
-
-Este comando irá iniciar o Vitest e executar todos os arquivos de teste (com extensão `.test.ts`, `.test.tsx`, `.spec.ts`, `.spec.tsx`).
-
-Os testes são configurados com `@testing-library/react` para garantir que os componentes funcionem como esperado do ponto de vista do usuário.
-
-### Geração de Tipos Supabase
-
-Para garantir a segurança de tipo e uma melhor experiência de desenvolvimento com o Supabase, é recomendável gerar os tipos TypeScript a partir do seu esquema de banco de dados. Para fazer isso, execute o seguinte comando:
-
-```bash
 npm run supabase:gen-types
 ```
 
-Este comando utiliza a CLI do Supabase para inspecionar seu banco de dados e gerar automaticamente as definições de tipo em `src/integrations/supabase/types.ts`. Certifique-se de ter a CLI do Supabase configurada e autenticada.
+Gera tipos em `src/integrations/supabase/types.ts`.
 
-### Estrutura de Pastas
+## Estrutura de Pastas
 
-```
+```text
 src/
-├── assets/
 ├── components/         # Componentes React reutilizáveis
-│   ├── ui/             # Componentes de UI genéricos (botões, inputs, etc.)
-├── hooks/              # Hooks React personalizados
-├── integrations/       # Integrações com serviços externos (ex: Supabase)
-│   └── supabase/
-├── lib/                # Funções utilitárias e helpers
-├── pages/              # Páginas da aplicação (rotas)
-├── styles/             # Arquivos de estilo globais e configurações do Tailwind CSS
-├── App.tsx             # Componente principal da aplicação
-├── main.tsx            # Ponto de entrada da aplicação
-├── vite-env.d.ts       # Declarações de tipo para variáveis de ambiente do Vite
-└── setupTests.ts       # Configuração para o ambiente de teste (Vitest/Testing Library)
+│   ├── ui/             # Componentes de UI genéricos
+├── hooks/              # Hooks personalizados
+├── integrations/       # Integrações externas (ex: Supabase)
+├── lib/                # Funções utilitárias
+├── pages/              # Páginas da aplicação
+├── styles/             # Estilos globais
+├── App.tsx             # Componente principal
+├── main.tsx            # Entry point
+└── setupTests.ts       # Configuração de testes
 ```
 
-### Configuração do Supabase
+## Monitoramento e Métricas
 
-Para otimizar o desempenho e a segurança da aplicação, é crucial configurar adequadamente o Supabase. Isso inclui:
+- **Sentry:** Para rastreamento de erros em produção.
+- **Google Analytics:** Para métricas de uso (ver `public/analytics_snippet.html`).
 
-- **Índices:** Adicione índices às colunas frequentemente consultadas para acelerar as operações de leitura. Exemplo:
+## Segurança e Boas Práticas
 
-  ```sql
-  CREATE INDEX ON public.your_table (your_column);
-  ```
+- Políticas RLS e constraints recomendadas em [`supabase/SEGURANCA_RLS.md`](supabase/SEGURANCA_RLS.md)
+- Notificações automáticas agendadas (ver scripts e migrations em `supabase/migrations` e `scripts/`)
 
-- **Funções Personalizadas (Functions):** Utilize funções PL/pgSQL para encapsular lógica de negócios complexa ou para operações que exigem maior controle transacional. Exemplo de uma função simples:
+## Contribuição
 
-  ```sql
-  CREATE FUNCTION public.get_user_capsules(user_id uuid)
-  RETURNS SETOF public.capsules
-  LANGUAGE plpgsql
-  AS $$
-  BEGIN
-    RETURN QUERY SELECT * FROM public.capsules WHERE user_id = get_user_capsules.user_id;
-  END;
-  $$;
-  ```
+Contribuições são bem-vindas! Siga as diretrizes e código de conduta do projeto.
 
-- **Validações (Constraints):** Implemente validações diretamente no esquema do banco de dados para garantir a integridade dos dados. Exemplo de uma validação para garantir que um valor seja positivo:
+## Suporte
 
-  ```sql
-  ALTER TABLE public.your_table
-  ADD CONSTRAINT positive_value CHECK (your_column > 0);
-  ```
-
-- **Row Level Security (RLS):** Certifique-se de que as políticas de RLS estejam configuradas corretamente para controlar o acesso aos dados com base nas permissões do usuário. Isso é fundamental para a segurança da aplicação.
-
-### Monitoramento de Erros
-
-Para um monitoramento robusto de erros em produção, é altamente recomendável integrar uma ferramenta como o Sentry. Isso permitirá o rastreamento e a análise de erros em tempo real, facilitando a depuração e a manutenção da aplicação.
-
-### Métricas de Performance
-
-Para garantir uma experiência de usuário otimizada, é importante configurar o monitoramento de métricas de performance. Isso pode incluir o uso de ferramentas como Google Analytics, New Relic, ou outras soluções de APM (Application Performance Monitoring) para rastrear o tempo de carregamento da página, interatividade, e outros indicadores vitais de performance.
-
-### Manutenção e Suporte
-
-Para questões de manutenção, suporte ou contribuições, por favor, entre em contato com a equipa de desenvolvimento.
-
-### Contribuição
-
-Contribuições são bem-vindas! Por favor, siga as diretrizes de contribuição e o código de conduta do projeto.
+Para dúvidas ou suporte, abra uma issue ou contacte a equipa de desenvolvimento.

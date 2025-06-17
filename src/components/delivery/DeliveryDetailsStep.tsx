@@ -1,8 +1,8 @@
-
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { TooltipHelp } from "@/components/ui/TooltipHelp";
 
 type Props = {
   formData: any;
@@ -16,7 +16,12 @@ const DeliveryDetailsStep = ({ formData, handleInputChange, deliveryType, prevSt
   <>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
-        <Label htmlFor="title">Título da Entrega</Label>
+        <Label htmlFor="title">
+          Título da Entrega
+          <TooltipHelp text="Dê um nome fácil de identificar para esta entrega.">
+            <span className="ml-1 text-blue-500 cursor-help">?</span>
+          </TooltipHelp>
+        </Label>
         <Input
           id="title"
           name="title"
@@ -27,7 +32,12 @@ const DeliveryDetailsStep = ({ formData, handleInputChange, deliveryType, prevSt
         />
       </div>
       <div>
-        <Label htmlFor="recipient">Destinatário</Label>
+        <Label htmlFor="recipient">
+          Destinatário
+          <TooltipHelp text="Nome da pessoa que irá receber a keepsake.">
+            <span className="ml-1 text-blue-500 cursor-help">?</span>
+          </TooltipHelp>
+        </Label>
         <Input
           id="recipient"
           name="recipient"

@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ShoppingCart, CreditCard, MapPin, User, AlertTriangle } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { generatePaymentLink } from "@/lib/paymentLink";
 
 const Checkout = () => {
   const { items, getTotalPrice, clearCart } = useCart();
@@ -141,13 +142,23 @@ const Checkout = () => {
         })),
       };
 
-      console.log("Order would be created:", orderData);
+      // Gerar link de pagamento (mock)
+      const paymentLink = await generatePaymentLink({
+        amount: getTotalPrice(),
+        description: `Pagamento de encomenda para ${user.email}`,
+        deliveryId: `${user.id}-${Date.now()}`
+      });
 
       await clearCart();
       
       toast({
         title: "Pedido registado com sucesso! 🎉",
-        description: "O seu pedido foi registado. Entraremos em contacto em breve.",
+        description: (
+          <span>
+            O seu pedido foi registado.<br />
+            <a href={paymentLink} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">Clique aqui para pagar</a>.
+          </span>
+        ),
       });
 
       navigate("/dashboard");
