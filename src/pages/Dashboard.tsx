@@ -60,14 +60,11 @@ const Dashboard = () => {
             <div className="w-10 h-10 bg-golden-honey rounded-full flex items-center justify-center shadow-soft">
               <Clock className="h-5 w-5 text-gentle-black" />
             </div>
-            <h1 className="text-2xl font-serif font-semibold text-gentle-black">
-              FuturoPresente
+            <h1 className="text-xl font-serif font-semibold text-gentle-black">
+              Dashboard
             </h1>
           </div>
           <div className="flex items-center space-x-4">
-            <span className="text-sm text-soft-gray font-medium">
-              Olá, {profile?.full_name || user?.email}!
-            </span>
             <CartButton onClick={() => setIsCartOpen(true)} />
             <Button 
               onClick={() => navigate('/create-delivery')}
@@ -75,13 +72,6 @@ const Dashboard = () => {
             >
               <Plus className="h-4 w-4 mr-2" />
               Nova Entrega
-            </Button>
-            <Button 
-              variant="ghost" 
-              onClick={signOut}
-              className="text-soft-gray hover:text-gentle-black rounded-xl"
-            >
-              Sair
             </Button>
           </div>
         </div>
