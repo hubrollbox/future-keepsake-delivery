@@ -8,7 +8,9 @@
     "types": ["vitest/globals"],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "react-quill": ["node_modules/react-quill"],
+      "react-calendar": ["node_modules/react-calendar"]
     },
     "noImplicitAny": true,
     "noUnusedParameters": true,
