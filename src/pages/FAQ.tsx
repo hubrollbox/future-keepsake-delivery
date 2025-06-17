@@ -41,10 +41,10 @@ export default function FAQ() {
 			<Navigation />
 
 			{/* Main Content */}
-			<main className="flex-grow max-w-2xl mx-auto py-12 px-4">
+			<main className="flex-grow max-w-4xl mx-auto py-12 px-4">
 				<Card>
 					<CardHeader>
-						<CardTitle>Ajuda e Perguntas Frequentes (FAQ)</CardTitle>
+						<CardTitle>Ajuda e Suporte</CardTitle>
 					</CardHeader>
 					<CardContent className="space-y-6">
 						<div className="mb-6">
@@ -57,9 +57,11 @@ export default function FAQ() {
 							/>
 						</div>
 						{filteredFaqs.map((faq, index) => (
-							<div key={index}>
-								<strong>{faq.question}</strong>
-								<p>{faq.answer}</p>
+							<div key={index} className="mb-4">
+								<strong className="block text-lg text-gray-800">
+									{faq.question}
+								</strong>
+								<p className="text-gray-600">{faq.answer}</p>
 							</div>
 						))}
 						{filteredFaqs.length === 0 && (
@@ -67,6 +69,74 @@ export default function FAQ() {
 						)}
 					</CardContent>
 				</Card>
+
+				{/* Contact Section */}
+				<section className="mt-12">
+					<h2 className="text-2xl font-semibold text-gray-800 mb-4">
+						Precisa de mais ajuda?
+					</h2>
+					<p className="text-gray-600 mb-4">
+						Se não encontrou a resposta que procurava, entre em contato conosco:
+					</p>
+					<ul className="list-disc list-inside text-gray-600">
+						<li>
+							Email:{" "}
+							<a
+								href="mailto:suporte@futurekeepsake.com"
+								className="text-blue-600 underline"
+							>
+								suporte@futurekeepsake.com
+							</a>
+						</li>
+						<li>
+							Telefone:{" "}
+							<a
+								href="tel:+351123456789"
+								className="text-blue-600 underline"
+							>
+								+351 123 456 789
+							</a>
+						</li>
+						<li>
+							<a href="/contact" className="text-blue-600 underline">
+								Formulário de Contato
+							</a>
+						</li>
+					</ul>
+				</section>
+
+				{/* Useful Links */}
+				<section className="mt-12">
+					<h2 className="text-2xl font-semibold text-gray-800 mb-4">
+						Links Úteis
+					</h2>
+					<ul className="list-disc list-inside text-gray-600">
+						<li>
+							<a
+								href="/terms-conditions"
+								className="text-blue-600 underline"
+							>
+								Termos e Condições
+							</a>
+						</li>
+						<li>
+							<a
+								href="/privacy-policy"
+								className="text-blue-600 underline"
+							>
+								Política de Privacidade
+							</a>
+						</li>
+						<li>
+							<a
+								href="/how-it-works"
+								className="text-blue-600 underline"
+							>
+								Como Funciona
+							</a>
+						</li>
+					</ul>
+				</section>
 			</main>
 
 			{/* Footer */}
