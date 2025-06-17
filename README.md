@@ -48,6 +48,7 @@ A Future Keepsake Delivery é uma solução moderna para gestão, armazenamento 
      - `VITE_SENTRY_DSN=...` (opcional)
      - `VITE_SENDGRID_API_KEY=...` (opcional)
      - `VITE_SENDGRID_SENDER=...` (opcional)
+     - `VITE_GA_MEASUREMENT_ID=...` (opcional, para Google Analytics)
 
 3. **Executar em desenvolvimento:**
 
@@ -160,3 +161,47 @@ Por favor, leia o [Código de Conduta](CONTRIBUTING.md) para detalhes sobre noss
 ## Suporte
 
 Para dúvidas ou suporte, abra uma issue ou contacte a equipa de desenvolvimento.
+
+---
+
+## Checklist MVP
+
+- [x] Cadastro e autenticação de utilizadores
+- [x] Gestão de keepsakes digitais e físicos
+- [x] Entregas programadas e notificações automáticas
+- [x] Dashboard para admin e utilizador
+- [x] Exportação de dados (CSV)
+- [x] Onboarding e tooltips
+- [x] Testes unitários e E2E
+- [x] Monitoramento de erros (Sentry)
+- [x] Métricas (Google Analytics)
+- [x] Políticas de segurança (RLS, constraints)
+- [x] Suporte a pagamentos por link externo (Stripe)
+
+## Fluxos Principais do Usuário
+
+### 1. Cadastro e Login
+
+- Usuário acessa `/register` e cria conta.
+- Recebe confirmação e faz login em `/login`.
+
+### 2. Compra e Pagamento
+
+- Usuário navega até `/products`.
+- Adiciona produto ao carrinho e acessa `/checkout`.
+- Preenche dados, finaliza compra e é redirecionado ao Stripe.
+- Após pagamento, recebe confirmação e entrega é agendada.
+
+### 3. Entregas e Notificações
+
+- Usuário pode consultar entregas agendadas no dashboard.
+- Notificações automáticas são enviadas conforme agendamento.
+
+### 4. Administração
+
+- Admin acessa `/admin` para gerenciar entregas, pagamentos, clientes e FAQs.
+
+---
+
+> Para detalhes técnicos de segurança, veja [`supabase/SEGURANCA_RLS.md`](supabase/SEGURANCA_RLS.md).
+> Para exemplos de testes E2E, veja `cypress/e2e/`.

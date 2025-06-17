@@ -1,37 +1,8 @@
-
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
-
-interface CartItem {
-  id: string;
-  product_id: string;
-  product_title: string;
-  product_price: number;
-  quantity: number;
-}
-
-interface CartContextType {
-  items: CartItem[];
-  loading: boolean;
-  addToCart: (productId: string, title: string, price: number) => Promise<void>;
-  updateQuantity: (itemId: string, quantity: number) => Promise<void>;
-  removeFromCart: (itemId: string) => Promise<void>;
-  clearCart: () => Promise<void>;
-  getTotalPrice: () => number;
-  getTotalItems: () => number;
-}
-
-const CartContext = createContext<CartContextType | undefined>(undefined);
-
-export const useCart = () => {
-  const context = useContext(CartContext);
-  if (!context) {
-    throw new Error("useCart must be used within a CartProvider");
-  }
-  return context;
-};
+import { CartContext, CartItem, CartContextType } from "./CartContext";
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [items, setItems] = useState<CartItem[]>([]);
@@ -39,7 +10,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const { user } = useAuth();
   const { toast } = useToast();
 
-  const fetchCartItems = async () => {
+  const fetchCartItems = useCallback(async () => {
     if (!user) return;
 
     try {
@@ -62,7 +33,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } finally {
       setLoading(false);
     }
-  };
+  }, [user, toast]);
 
   const addToCart = async (productId: string, title: string, price: number) => {
     if (!user) {
@@ -192,12 +163,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   useEffect(() => {
-    if (user) {
-      fetchCartItems();
-    } else {
-      setItems([]);
-    }
-  }, [user]);
+    fetchCartItems();
+  }, [user, fetchCartItems]);
 
   return (
     <CartContext.Provider
@@ -216,3 +183,5 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     </CartContext.Provider>
   );
 };
+
+// export { CartContext }; // Não exportar diretamente aqui para evitar Fast Refresh warning
