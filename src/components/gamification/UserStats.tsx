@@ -1,9 +1,9 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Trophy, Target, Zap, Award } from "lucide-react";
 import { UserProfile } from "@/hooks/useAuth";
+import { useGamification } from "@/hooks/useGamification";
 
 interface UserStatsProps {
   profile: UserProfile | null;
@@ -11,6 +11,12 @@ interface UserStatsProps {
 }
 
 const UserStats = ({ profile, totalDeliveries }: UserStatsProps) => {
+  const { achievements, loading } = useGamification();
+
+  if (loading) {
+    return <p>Carregando estatísticas...</p>;
+  }
+
   const currentLevel = profile?.level || 1;
   const totalPoints = profile?.total_points || 0;
   const pointsForNextLevel = currentLevel * 100; // 100 pontos por nível
@@ -71,7 +77,7 @@ const UserStats = ({ profile, totalDeliveries }: UserStatsProps) => {
               <Award className="h-4 w-4 text-purple-600" />
             </div>
             <p className="text-xs text-gray-600">Conquistas</p>
-            <p className="font-bold text-sm">0</p>
+            <p className="font-bold text-sm">{achievements.length}</p>
           </div>
         </div>
       </CardContent>
