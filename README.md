@@ -121,16 +121,19 @@ src/
 ## Atualizações Recentes
 
 ### Funcionalidades Adicionadas
+
 - **Gestão de FAQs**: Adicionada funcionalidade para criar, editar e excluir FAQs no painel admin.
 - **Editor de Conteúdo**: Implementado editor WYSIWYG utilizando `react-quill`.
 - **Calendário de Entregas**: Adicionado calendário interativo com suporte a intervalos de datas usando `react-calendar`.
 
 ### Correções
+
 - Corrigidos problemas de importação e tipos no arquivo `adminRoutes.ts`.
 - Ajustados tipos no `OrdersCalendar.tsx` para lidar com intervalos de datas.
 - Adicionado tipo `Database` no arquivo `supabase/types.ts` para resolver erro de importação.
 
 ### Melhorias Gerais
+
 - Reinstalação e configuração de dependências para resolver problemas de módulos ausentes.
 - Ajustes no `tsconfig.json` para incluir caminhos explícitos para módulos externos.
 
