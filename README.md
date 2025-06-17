@@ -113,9 +113,28 @@ src/
 - Políticas RLS e constraints recomendadas em [`supabase/SEGURANCA_RLS.md`](supabase/SEGURANCA_RLS.md)
 - Notificações automáticas agendadas (ver scripts e migrations em `supabase/migrations` e `scripts/`)
 
+## Melhorias Recentes
+
+- **Página de FAQ**: Agora inclui uma funcionalidade de busca para filtrar perguntas e respostas, além de um design consistente com o restante do site (header e footer).
+- **Botão de Suporte no Rodapé**: Adicionado um botão na seção "Legal" do rodapé que redireciona para a página de FAQ.
+
 ## Contribuição
 
 Contribuições são bem-vindas! Siga as diretrizes e código de conduta do projeto.
+
+### Como Contribuir
+
+1. **Fork o repositório**
+2. **Crie uma branch para sua feature ou correção**:
+   ```sh
+   git checkout -b minha-feature
+   ```
+3. **Faça commits claros e objetivos**
+4. **Abra um Pull Request**
+
+### Código de Conduta
+
+Por favor, leia o [Código de Conduta](CONTRIBUTING.md) para detalhes sobre nossos padrões de contribuição.
 
 ## Suporte
 
