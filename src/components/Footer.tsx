@@ -73,6 +73,14 @@ const Footer = () => {
                 </li>
                 <li>
                   <button 
+                    onClick={() => {window.scrollTo(0,0); navigate('/faq')}}
+                    className="text-misty-gray hover:text-dusty-rose transition-colors duration-200"
+                  >
+                    Suporte
+                  </button>
+                </li>
+                <li>
+                  <button 
                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                     className="text-misty-gray hover:text-dusty-rose transition-colors duration-200"
                   >
