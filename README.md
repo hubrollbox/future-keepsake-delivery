@@ -126,9 +126,11 @@ Contribuições são bem-vindas! Siga as diretrizes e código de conduta do proj
 
 1. **Fork o repositório**
 2. **Crie uma branch para sua feature ou correção**:
+
    ```sh
    git checkout -b minha-feature
    ```
+
 3. **Faça commits claros e objetivos**
 4. **Abra um Pull Request**
 
