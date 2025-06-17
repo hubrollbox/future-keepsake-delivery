@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -25,7 +25,7 @@ const AdminClients = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { toast } = useToast();
 
-  const fetchClients = async () => {
+  const fetchClients = useCallback(async () => {
     try {
       // Fetch profiles with admin status
       const { data: profiles, error: profilesError } = await supabase
@@ -38,18 +38,18 @@ const AdminClients = () => {
       // Fetch admin roles
       const { data: adminRoles, error: adminError } = await supabase
         .from("admin_roles")
-        .select("user_id");
+        .select("*");
 
       if (adminError) throw adminError;
 
-      const adminUserIds = adminRoles?.map(role => role.user_id) || [];
-
-      const clientsWithAdminStatus = profiles?.map(profile => ({
+      // Combine data
+      const combinedClients = profiles.map(profile => ({
         ...profile,
-        is_admin: adminUserIds.includes(profile.id)
-      })) || [];
+        isAdmin: adminRoles.some(role => role.user_id === profile.id),
+      }));
 
-      setClients(clientsWithAdminStatus);
+      setClients(combinedClients);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching clients:", error);
       toast({
@@ -57,10 +57,8 @@ const AdminClients = () => {
         description: "Não foi possível carregar os clientes.",
         variant: "destructive",
       });
-    } finally {
-      setLoading(false);
     }
-  };
+  }, [toast]);
 
   const toggleAdminStatus = async (userId: string, isCurrentlyAdmin: boolean) => {
     try {
@@ -99,7 +97,7 @@ const AdminClients = () => {
 
   useEffect(() => {
     fetchClients();
-  }, []);
+  }, [fetchClients]);
 
   const filteredClients = clients.filter(client =>
     client.email.toLowerCase().includes(searchTerm.toLowerCase()) ||

@@ -1,11 +1,3 @@
--- dialect: postgresql
-
-{
-  "compilerOptions": {
-    "types": ["jest"]
-  }
-}
-
 describe('Fluxo principal do utilizador', () => {
   it('deve permitir login e navegar até ao dashboard', () => {
     cy.visit('/login');

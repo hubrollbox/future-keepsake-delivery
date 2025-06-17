@@ -4,8 +4,18 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { TooltipHelp } from "@/components/ui/TooltipHelp";
 
+interface FormData {
+  title: string;
+  recipient: string;
+  recipient_email: string;
+  deliveryDate: string;
+  deliveryTime: string;
+  delivery_method: "email" | "physical";
+  location?: string;
+}
+
 type Props = {
-  formData: any;
+  formData: FormData;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
   deliveryType: string;
   prevStep: () => void;

@@ -1,10 +1,9 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Clock, Target } from "lucide-react";
 
-interface Quest {
+export interface Quest {
   id: string;
   title: string;
   description: string;

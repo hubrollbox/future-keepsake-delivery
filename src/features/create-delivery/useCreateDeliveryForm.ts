@@ -7,6 +7,22 @@ import { useDeliveryFormState } from "./useDeliveryFormState";
 import { useAuth } from "@/hooks/useAuth"; // <-- Adiciona o hook de auth
 import { onDeliveryCreated } from "@/features/create-delivery/onDeliveryCreated";
 
+interface DeliveryData {
+  title: string;
+  recipient_name: string; // <-- Adicionada propriedade recipient_name
+  recipient_email: string;
+  deliveryDate: string;
+  deliveryTime: string;
+  delivery_method: "email" | "physical";
+  location?: string;
+  message?: string;
+  digitalFileUrl?: string;
+  user_id: string;
+  description?: string;
+  type: "digital" | "physical";
+  payment_status: "pending" | "completed" | "failed"; // novo campo
+}
+
 export const useCreateDeliveryForm = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -84,7 +100,7 @@ export const useCreateDeliveryForm = () => {
         return data.path;
       };
 
-      const insertDelivery = async (dataToInsert: any) => {
+      const insertDelivery = async (dataToInsert: DeliveryData) => {
         const { error } = await supabase.from("deliveries").insert([dataToInsert]);
         if (error) {
           // Extra error context for debugging in the future
@@ -103,19 +119,19 @@ export const useCreateDeliveryForm = () => {
           throw new Error("Utilizador não autenticado. Faça login para continuar.");
         }
 
-        const dataToInsert = {
+        const dataToInsert: DeliveryData = {
           user_id: user.id,
           title: formData.title,
           recipient_name: formData.recipient,
           recipient_email: formData.recipient_email,
-          delivery_date: formData.deliveryDate,
-          delivery_time: formData.deliveryTime,
+          deliveryDate: formData.deliveryDate,
+          deliveryTime: formData.deliveryTime,
           message: formData.message,
           description: formData.description,
-          delivery_method: formData.delivery_method || "email",
-          type: deliveryType,
+          delivery_method: formData.delivery_method === "email" || formData.delivery_method === "physical" ? formData.delivery_method : "email",
+          type: deliveryType === "digital" || deliveryType === "physical" ? deliveryType : "digital",
           location: formData.location,
-          digital_file_url: digitalFileUrl,
+          digitalFileUrl: digitalFileUrl,
           payment_status: "pending", // novo campo
         };
 
@@ -143,9 +159,10 @@ export const useCreateDeliveryForm = () => {
 
         toast({ title: "Sucesso", description: "Entrega criada com sucesso!" });
         setCurrentStep(4);
-      } catch (err: any) {
-        setError(err.message);
-        toast({ title: "Erro", description: err.message });
+      } catch (err: unknown) {
+        const errorMessage = err instanceof Error ? err.message : "Erro desconhecido";
+        setError(errorMessage);
+        toast({ title: "Erro", description: errorMessage });
       }
       setLoading(false);
     }

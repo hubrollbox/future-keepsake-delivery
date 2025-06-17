@@ -1,9 +1,8 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { LucideIcon } from "lucide-react";
 
-interface Achievement {
+export interface Achievement {
   id: string;
   title: string;
   description: string;

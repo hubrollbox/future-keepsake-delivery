@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Search, Filter, CheckCircle, Clock, Package } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -26,11 +26,7 @@ const AdminDeliveries = () => {
   const [statusFilter, setStatusFilter] = useState("all");
   const { toast } = useToast();
 
-  useEffect(() => {
-    fetchDeliveries();
-  }, []);
-
-  const fetchDeliveries = async () => {
+  const fetchDeliveries = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from("deliveries")
@@ -38,7 +34,9 @@ const AdminDeliveries = () => {
         .order("delivery_date", { ascending: true });
 
       if (error) throw error;
+
       setDeliveries(data || []);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching deliveries:", error);
       toast({
@@ -46,10 +44,12 @@ const AdminDeliveries = () => {
         description: "Não foi possível carregar as entregas.",
         variant: "destructive",
       });
-    } finally {
-      setLoading(false);
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    fetchDeliveries();
+  }, [fetchDeliveries]);
 
   const handleStatusUpdate = async (deliveryId: string, newStatus: string) => {
     try {

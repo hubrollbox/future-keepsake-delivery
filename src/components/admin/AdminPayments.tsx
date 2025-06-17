@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Search, CreditCard, Check, X, Clock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -26,11 +26,7 @@ const AdminPayments = () => {
   const [statusFilter, setStatusFilter] = useState("all");
   const { toast } = useToast();
 
-  useEffect(() => {
-    fetchPayments();
-  }, []);
-
-  const fetchPayments = async () => {
+  const fetchPayments = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from("payments")
@@ -38,7 +34,9 @@ const AdminPayments = () => {
         .order("created_at", { ascending: false });
 
       if (error) throw error;
+
       setPayments(data || []);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching payments:", error);
       toast({
@@ -46,10 +44,12 @@ const AdminPayments = () => {
         description: "Não foi possível carregar os pagamentos.",
         variant: "destructive",
       });
-    } finally {
-      setLoading(false);
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    fetchPayments();
+  }, [fetchPayments]);
 
   const filteredPayments = payments.filter((payment) => {
     const matchesSearch = 
