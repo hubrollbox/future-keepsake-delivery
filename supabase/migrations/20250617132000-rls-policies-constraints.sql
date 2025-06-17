@@ -1,3 +1,5 @@
+-- dialect: postgresql
+
 -- Ativar RLS e adicionar políticas e constraints nas tabelas principais
 
 -- 1. Entregas

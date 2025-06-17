@@ -1,4 +1,4 @@
-
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -9,11 +9,16 @@ import { useDeliveries } from "@/hooks/useDeliveries";
 import UserStats from "@/components/gamification/UserStats";
 import AchievementCard from "@/components/gamification/AchievementCard";
 import QuestCard from "@/components/gamification/QuestCard";
+import CartButton from "@/components/cart/CartButton";
+import CartModal from "@/components/cart/CartModal";
+import type { Achievement } from "@/components/gamification/AchievementCard";
+import type { Quest } from "@/components/gamification/QuestCard";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user, profile, signOut } = useAuth();
   const { deliveries, loading, deleteDelivery } = useDeliveries();
+  const [isCartOpen, setIsCartOpen] = React.useState(false);
 
   const getStatusColor = (status: string | null) => {
     switch (status) {
@@ -43,8 +48,8 @@ const Dashboard = () => {
   const physicalDeliveries = deliveries.filter(d => d.type === "physical");
 
   // Gamification data should be fetched from the database in a production environment
-  const achievements: any[] = [];
-  const quests: any[] = [];
+  const achievements: Achievement[] = [];
+  const quests: Quest[] = [];
 
   return (
     <div className="min-h-screen bg-lavender-mist">
@@ -63,6 +68,7 @@ const Dashboard = () => {
             <span className="text-sm text-soft-gray font-medium">
               Olá, {profile?.full_name || user?.email}!
             </span>
+            <CartButton onClick={() => setIsCartOpen(true)} />
             <Button 
               onClick={() => navigate('/create-delivery')}
               className="bg-golden-honey text-gentle-black hover:bg-golden-honey/90 rounded-xl font-medium shadow-soft"
@@ -79,6 +85,7 @@ const Dashboard = () => {
             </Button>
           </div>
         </div>
+        <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
       </header>
 
       <div className="container mx-auto px-4 py-12">
