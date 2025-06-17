@@ -84,6 +84,17 @@ export const useCreateDeliveryForm = () => {
     }
   };
 
+  const validateDeliveryData = (data: DeliveryData): boolean => {
+    if (!data.title || !data.recipient_name || !data.recipient_email || !data.deliveryDate || !data.deliveryTime) {
+      toast({
+        title: "Erro de Validação",
+        description: "Campos obrigatórios estão faltando. Por favor, preencha todos os campos necessários.",
+      });
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (currentStep === 3) {
@@ -103,7 +114,6 @@ export const useCreateDeliveryForm = () => {
       const insertDelivery = async (dataToInsert: DeliveryData) => {
         const { error } = await supabase.from("deliveries").insert([dataToInsert]);
         if (error) {
-          // Extra error context for debugging in the future
           console.error("Erro ao criar entrega (insert):", error, dataToInsert);
           throw new Error(`Erro ao criar entrega: ${error.message}`);
         }
@@ -132,12 +142,16 @@ export const useCreateDeliveryForm = () => {
           type: deliveryType === "digital" || deliveryType === "physical" ? deliveryType : "digital",
           location: formData.location,
           digitalFileUrl: digitalFileUrl,
-          payment_status: "pending", // novo campo
+          payment_status: "pending",
         };
+
+        if (!validateDeliveryData(dataToInsert)) {
+          setLoading(false);
+          return;
+        }
 
         await insertDelivery(dataToInsert);
 
-        // Inserir notificação agendada na base de dados
         await supabase.from("scheduled_notifications").insert([
           {
             user_email: user.email!,
@@ -148,7 +162,6 @@ export const useCreateDeliveryForm = () => {
           }
         ]);
 
-        // Agendar notificação de entrega (mock local, opcional)
         onDeliveryCreated({
           id: `${Date.now()}`,
           userEmail: user.email!,
