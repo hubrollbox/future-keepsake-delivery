@@ -73,6 +73,13 @@ const Dashboard = () => {
               <Plus className="h-4 w-4 mr-2" />
               Nova Entrega
             </Button>
+            <Button
+              onClick={signOut}
+              variant="outline"
+              className="border-dusty-rose/50 text-dusty-rose hover:bg-dusty-rose/10 rounded-xl font-medium ml-2"
+            >
+              Logout
+            </Button>
           </div>
         </div>
         <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
