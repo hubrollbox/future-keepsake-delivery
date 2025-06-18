@@ -11,6 +11,7 @@ import AchievementCard from "@/components/gamification/AchievementCard";
 import QuestCard from "@/components/gamification/QuestCard";
 import CartButton from "@/components/cart/CartButton";
 import CartModal from "@/components/cart/CartModal";
+import { Skeleton } from "@/components/ui/skeleton";
 import type { Achievement } from "@/components/gamification/AchievementCard";
 import type { Quest } from "@/components/gamification/QuestCard";
 
@@ -204,9 +205,23 @@ const Dashboard = () => {
           </CardHeader>
           <CardContent>
             {loading ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="h-8 w-8 animate-spin text-golden-honey" />
-                <span className="ml-3 text-soft-gray font-medium">A carregar entregas...</span>
+              <div className="space-y-4 py-12">
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className="border border-dusty-rose/20 rounded-2xl p-6 bg-white/50 backdrop-blur-sm">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1 space-y-3">
+                        <Skeleton className="h-6 w-1/3 mb-2" />
+                        <Skeleton className="h-4 w-1/4 mb-2" />
+                        <Skeleton className="h-4 w-1/2 mb-2" />
+                        <Skeleton className="h-4 w-2/3" />
+                      </div>
+                      <div className="flex space-x-2 ml-6">
+                        <Skeleton className="h-8 w-8 rounded-xl" />
+                        <Skeleton className="h-8 w-8 rounded-xl" />
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             ) : deliveries.length === 0 ? (
               <div className="text-center py-12">
