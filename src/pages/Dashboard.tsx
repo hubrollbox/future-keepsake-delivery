@@ -12,6 +12,10 @@ import QuestCard from "@/components/gamification/QuestCard";
 import CartButton from "@/components/cart/CartButton";
 import CartModal from "@/components/cart/CartModal";
 import { Skeleton } from "@/components/ui/skeleton";
+import { exportToCSV } from "@/lib/exportToCSV";
+import DeliveriesBarChart from "@/components/dashboard/DeliveriesBarChart";
+import TopUsersRanking from "@/components/dashboard/TopUsersRanking";
+import AdminAchievementsQuests from "@/components/dashboard/AdminAchievementsQuests";
 import type { Achievement } from "@/components/gamification/AchievementCard";
 import type { Quest } from "@/components/gamification/QuestCard";
 
@@ -20,6 +24,8 @@ const Dashboard = () => {
   const { user, profile, signOut } = useAuth();
   const { deliveries, loading, deleteDelivery } = useDeliveries();
   const [isCartOpen, setIsCartOpen] = React.useState(false);
+  const [search, setSearch] = React.useState("");
+  const [statusFilter, setStatusFilter] = React.useState<string | null>(null);
 
   const getStatusColor = (status: string | null) => {
     switch (status) {
@@ -47,6 +53,50 @@ const Dashboard = () => {
 
   const digitalDeliveries = deliveries.filter(d => d.type === "digital");
   const physicalDeliveries = deliveries.filter(d => d.type === "physical");
+
+  const filteredDeliveries = deliveries.filter((delivery) => {
+    const matchesSearch =
+      delivery.title?.toLowerCase().includes(search.toLowerCase()) ||
+      delivery.recipient_name?.toLowerCase().includes(search.toLowerCase()) ||
+      delivery.message?.toLowerCase().includes(search.toLowerCase());
+    const matchesStatus = statusFilter ? delivery.status === statusFilter : true;
+    return matchesSearch && matchesStatus;
+  });
+
+  // Métricas
+  const total = deliveries.length;
+  const scheduled = deliveries.filter(d => d.status === "scheduled").length;
+  const delivered = deliveries.filter(d => d.status === "delivered").length;
+  const cancelled = deliveries.filter(d => d.status === "cancelled").length;
+
+  // Agrupa entregas por mês para o gráfico
+  const deliveriesByMonth = React.useMemo(() => {
+    const months: { [key: string]: number } = {};
+    deliveries.forEach((d) => {
+      const date = new Date(d.delivery_date);
+      const key = `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2, '0')}`;
+      months[key] = (months[key] || 0) + 1;
+    });
+    // Ordena por mês
+    return Object.entries(months).sort().map(([month, count]) => ({
+      month,
+      count,
+    }));
+  }, [deliveries]);
+
+  // Ranking dos usuários mais ativos (mock)
+  const topUsers = React.useMemo(() => {
+    // Agrupa por user_id
+    const counts: { [user_id: string]: { count: number; name: string } } = {};
+    deliveries.forEach((d) => {
+      if (!counts[d.user_id]) counts[d.user_id] = { count: 0, name: d.recipient_name || "Usuário" };
+      counts[d.user_id].count++;
+    });
+    return Object.entries(counts)
+      .map(([user_id, { count, name }]) => ({ user_id, count, name }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5);
+  }, [deliveries]);
 
   // Gamification data should be fetched from the database in a production environment
   const achievements: Achievement[] = [];
@@ -204,6 +254,50 @@ const Dashboard = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
+            {/* Filtros e busca */}
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+              <input
+                type="text"
+                placeholder="Buscar por título, destinatário ou mensagem..."
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                className="w-full md:w-1/3 px-4 py-2 border border-dusty-rose/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-golden-honey"
+              />
+              <div className="flex gap-2 items-center">
+                <button
+                  className={`px-4 py-2 rounded-xl border ${!statusFilter ? 'bg-golden-honey text-gentle-black' : 'bg-white text-soft-gray'} border-dusty-rose/30 font-medium`}
+                  onClick={() => setStatusFilter(null)}
+                >
+                  Todos
+                </button>
+                <button
+                  className={`px-4 py-2 rounded-xl border ${statusFilter==='scheduled' ? 'bg-golden-honey text-gentle-black' : 'bg-white text-soft-gray'} border-dusty-rose/30 font-medium`}
+                  onClick={() => setStatusFilter('scheduled')}
+                >
+                  Agendado
+                </button>
+                <button
+                  className={`px-4 py-2 rounded-xl border ${statusFilter==='delivered' ? 'bg-golden-honey text-gentle-black' : 'bg-white text-soft-gray'} border-dusty-rose/30 font-medium`}
+                  onClick={() => setStatusFilter('delivered')}
+                >
+                  Entregue
+                </button>
+                <button
+                  className={`px-4 py-2 rounded-xl border ${statusFilter==='cancelled' ? 'bg-golden-honey text-gentle-black' : 'bg-white text-soft-gray'} border-dusty-rose/30 font-medium`}
+                  onClick={() => setStatusFilter('cancelled')}
+                >
+                  Cancelado
+                </button>
+                <button
+                  className="ml-4 px-4 py-2 rounded-xl border border-sage-green bg-sage-green/10 text-sage-green font-medium hover:bg-sage-green/20 transition"
+                  onClick={() => exportToCSV(filteredDeliveries, "entregas.csv")}
+                  disabled={filteredDeliveries.length === 0}
+                >
+                  Exportar CSV
+                </button>
+              </div>
+            </div>
+
             {loading ? (
               <div className="space-y-4 py-12">
                 {[...Array(3)].map((_, i) => (
@@ -223,7 +317,7 @@ const Dashboard = () => {
                   </div>
                 ))}
               </div>
-            ) : deliveries.length === 0 ? (
+            ) : filteredDeliveries.length === 0 ? (
               <div className="text-center py-12">
                 <div className="w-20 h-20 bg-gradient-to-br from-golden-honey to-golden-honey/80 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-soft">
                   <Target className="h-10 w-10 text-gentle-black" />
@@ -240,7 +334,7 @@ const Dashboard = () => {
               </div>
             ) : (
               <div className="space-y-6">
-                {deliveries.map((delivery) => (
+                {filteredDeliveries.map((delivery) => (
                   <div key={delivery.id} className="border border-dusty-rose/20 rounded-2xl p-6 hover:shadow-soft transition-all duration-300 bg-white/50 backdrop-blur-sm">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
@@ -297,6 +391,47 @@ const Dashboard = () => {
             )}
           </CardContent>
         </Card>
+
+        {/* Métricas e gráfico */}
+        <div className="grid md:grid-cols-4 gap-6 mb-12">
+          <Card className="border-dusty-rose/20 shadow-soft">
+            <CardContent className="p-6 flex flex-col items-center">
+              <span className="text-3xl font-serif font-bold text-gentle-black">{total}</span>
+              <span className="text-soft-gray font-medium mt-2">Total de Entregas</span>
+            </CardContent>
+          </Card>
+          <Card className="border-dusty-rose/20 shadow-soft">
+            <CardContent className="p-6 flex flex-col items-center">
+              <span className="text-3xl font-serif font-bold text-warm-yellow">{scheduled}</span>
+              <span className="text-soft-gray font-medium mt-2">Agendadas</span>
+            </CardContent>
+          </Card>
+          <Card className="border-dusty-rose/20 shadow-soft">
+            <CardContent className="p-6 flex flex-col items-center">
+              <span className="text-3xl font-serif font-bold text-sage-green">{delivered}</span>
+              <span className="text-soft-gray font-medium mt-2">Entregues</span>
+            </CardContent>
+          </Card>
+          <Card className="border-dusty-rose/20 shadow-soft">
+            <CardContent className="p-6 flex flex-col items-center">
+              <span className="text-3xl font-serif font-bold text-dusty-rose">{cancelled}</span>
+              <span className="text-soft-gray font-medium mt-2">Canceladas</span>
+            </CardContent>
+          </Card>
+        </div>
+        <div className="mb-12">
+          <h3 className="text-lg font-serif font-semibold text-gentle-black mb-2">Entregas por mês</h3>
+          <DeliveriesBarChart data={deliveriesByMonth} />
+        </div>
+        <div className="mb-12">
+          <TopUsersRanking users={topUsers} />
+        </div>
+
+        {/* Admin Achievements and Quests Management (Mock) */}
+        <div className="mb-12">
+          <h3 className="text-lg font-serif font-semibold text-gentle-black mb-4">Administração de Conquistas e Missões</h3>
+          <AdminAchievementsQuests />
+        </div>
 
         {/* Motivational Quote with Game Theme */}
         <div className="mt-12 bg-gradient-to-r from-lavender-mist to-misty-gray/30 border border-dusty-rose/20 rounded-2xl p-8 shadow-soft">
