@@ -2,9 +2,27 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Heart } from "lucide-react";
 import SeloDoTempoIcon from "@/components/SeloDoTempoIcon";
+import React, { useState } from "react";
 
 const HeroSection = () => {
   const navigate = useNavigate();
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({
+    nomeIdade: "",
+    agendamento: "",
+    aceitaBeta: "",
+    email: ""
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+    // Aqui você pode adicionar lógica para enviar os dados
+  };
 
   return (
     <section
@@ -69,6 +87,15 @@ const HeroSection = () => {
             >
               <span className="text-earthy-burgundy font-semibold">Conhecer a Nossa História</span>
             </Button>
+            <Button 
+              variant="brand" 
+              size="lg" 
+              className="px-8 py-5 text-base md:text-lg min-h-[48px] md:min-h-[60px] bg-gradient-to-r from-earthy-burgundy to-dusty-rose text-white shadow-lg border-2 border-earthy-burgundy animate-pulse"
+              onClick={() => setShowForm(true)}
+              aria-label="Experimente a versão piloto (grátis)"
+            >
+              Experimente a versão piloto (grátis)
+            </Button>
           </div>
           {/* Trust Indicators */}
           <div className="flex flex-col sm:flex-row gap-4 md:gap-8 justify-center items-center text-misty-gray">
@@ -86,6 +113,42 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
+        {/* Modal and Form inside component scope */}
+        {showForm && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
+            <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full relative">
+              <button className="absolute top-2 right-2 text-xl" onClick={() => setShowForm(false)} aria-label="Fechar">×</button>
+              <h2 className="text-2xl font-bold mb-4 text-earthy-burgundy">Formulário de Interesse</h2>
+              {submitted ? (
+                <div className="text-green-700 font-semibold text-center">Obrigado pelo interesse! Entraremos em contato.</div>
+              ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <label className="block font-medium mb-1">Qual o nome e idade do seu filho(a)?</label>
+                  <input type="text" name="nomeIdade" value={form.nomeIdade} onChange={handleChange} required className="w-full border rounded px-3 py-2" />
+                </div>
+                <div>
+                  <label className="block font-medium mb-1">Para quando gostaria de agendar esta mensagem? (ex: 18º aniversário, formatura...)</label>
+                  <input type="text" name="agendamento" value={form.agendamento} onChange={handleChange} required className="w-full border rounded px-3 py-2" />
+                </div>
+                <div>
+                  <label className="block font-medium mb-1">Você aceita testar a versão beta e dar feedback honesto?</label>
+                  <select name="aceitaBeta" value={form.aceitaBeta} onChange={handleChange} required className="w-full border rounded px-3 py-2">
+                    <option value="">Selecione</option>
+                    <option value="Sim">Sim</option>
+                    <option value="Não">Não</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block font-medium mb-1">Email para contato:</label>
+                  <input type="email" name="email" value={form.email} onChange={handleChange} required className="w-full border rounded px-3 py-2" />
+                </div>
+                <button type="submit" className="w-full bg-earthy-burgundy text-white py-2 rounded font-semibold hover:bg-dusty-rose transition">Enviar</button>
+              </form>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
