@@ -195,10 +195,10 @@ export const useDeliveries = () => {
   };
 
   useEffect(() => {
-    if (user) {
+    if (!loading && user) {
       fetchDeliveries();
     }
-  }, [user]);
+  }, [user, loading]);
 
   return {
     deliveries,
