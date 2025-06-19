@@ -77,7 +77,7 @@ const Login = () => {
           <div className="flex items-center justify-center space-x-3 mb-4">
             <SeloDoTempoIcon size={40} />
             <h1 className="text-2xl font-bold text-steel-blue font-fraunces">
-              keeplar
+              80: keepla
             </h1>
           </div>
           <p className="text-misty-gray">Presente no futuro</p>

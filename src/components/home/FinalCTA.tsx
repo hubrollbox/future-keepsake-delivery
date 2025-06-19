@@ -12,7 +12,7 @@ const FinalCTA = () => {
   };
 
   return (
-    <section className="py-8 md:py-24 bg-sand-beige relative" aria-label="Convite final para criar conta no keeplar">
+    <section className="py-8 md:py-24 bg-sand-beige relative" aria-label="Convite final para criar conta no keepla">
       {/* Detalhe decorativo suave com gradiente rosa */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <div className="w-3/4 h-24 md:h-52 bg-dusty-rose/20 blur-3xl rounded-full absolute left-1/2 top-0 -translate-x-1/2" />
@@ -52,7 +52,7 @@ const FinalCTA = () => {
               size="lg" 
               className="px-8 py-5 text-base md:text-lg min-h-[48px] md:min-h-[56px] border-earthy-burgundy text-earthy-burgundy hover:bg-dusty-rose/20 hover:text-earthy-burgundy transition-all duration-200 focus-visible:ring-2 focus-visible:ring-dusty-rose underline underline-offset-2 decoration-dusty-rose"
               onClick={() => handleNavigation('/contact')}
-              aria-label="Falar com o suporte da keeplar"
+              aria-label="Falar com o suporte da keepla"
             >
               Falar Connosco
             </Button>

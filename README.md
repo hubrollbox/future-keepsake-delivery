@@ -1,6 +1,6 @@
 # Future Keepsake Delivery
 
-![Logo keeplar](public/placeholder.svg)
+![Logo keepla](public/placeholder.svg)
 
 ## Sobre a Plataforma
 

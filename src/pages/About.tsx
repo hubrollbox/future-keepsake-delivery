@@ -52,7 +52,7 @@ const About = () => {
           
           <h1 className="text-5xl md:text-6xl font-fraunces font-bold text-steel-blue mb-6 leading-tight">
             Manifesto
-            <span className="text-earthy-burgundy block">keeplar</span>
+            <span className="text-earthy-burgundy block">keepla</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-misty-gray mb-8 leading-relaxed">

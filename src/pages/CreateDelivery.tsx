@@ -39,7 +39,7 @@ const CreateDelivery = () => {
             <div className="flex items-center space-x-2">
               <Clock className="h-8 w-8 text-purple-600" />
               <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                keeplar
+                keepla
               </h1>
             </div>
           </div>

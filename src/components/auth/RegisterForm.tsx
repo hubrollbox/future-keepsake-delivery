@@ -198,7 +198,7 @@ const RegisterForm = () => {
             name="marketingAccepted"
             label={
               <span className="text-misty-gray">
-                Gostaria de receber novidades da keeplar (opcional)
+                Gostaria de receber novidades da keepla (opcional)
               </span>
             }
             checked={formData.marketingAccepted}

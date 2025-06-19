@@ -38,7 +38,7 @@ const TermsConditions = () => {
               <section>
                 <h2 className="text-xl font-semibold text-steel-blue mb-4 font-fraunces">1. Aceitação dos Termos</h2>
                 <p className="leading-relaxed">
-                  Ao aceder e utilizar a plataforma keeplar™, aceita estar vinculado a estes Termos e Condições. 
+                  Ao aceder e utilizar a plataforma keepla™, aceita estar vinculado a estes Termos e Condições. 
                   Se não concordar com qualquer parte destes termos, não deve utilizar o nosso serviço.
                 </p>
               </section>
@@ -46,7 +46,7 @@ const TermsConditions = () => {
               <section>
                 <h2 className="text-xl font-semibold text-steel-blue mb-4 font-fraunces">2. Descrição do Serviço</h2>
                 <p className="leading-relaxed">
-                  O keeplar™ é uma plataforma que permite agendar entregas de presentes físicos ou digitais 
+                  O keepla™ é uma plataforma que permite agendar entregas de presentes físicos ou digitais 
                   para datas específicas no futuro. Oferecemos armazenamento seguro e entrega garantida na data escolhida.
                 </p>
               </section>
@@ -111,7 +111,7 @@ const TermsConditions = () => {
               <section>
                 <h2 className="text-xl font-semibold text-steel-blue mb-4 font-fraunces">7. Limitação de Responsabilidade</h2>
                 <p className="leading-relaxed">
-                  O keeplar™ fará todos os esforços razoáveis para entregar os presentes na data especificada. 
+                  O keepla™ fará todos os esforços razoáveis para entregar os presentes na data especificada. 
                   No entanto, não nos responsabilizamos por atrasos causados por circunstâncias fora do nosso controlo, 
                   como desastres naturais ou alterações de endereço não comunicadas.
                 </p>
@@ -120,7 +120,7 @@ const TermsConditions = () => {
               <section>
                 <h2 className="text-xl font-semibold text-steel-blue mb-4 font-fraunces">8. Propriedade Intelectual</h2>
                 <p className="leading-relaxed">
-                  Todos os direitos de propriedade intelectual da plataforma keeplar™ pertencem-nos. 
+                  Todos os direitos de propriedade intelectual da plataforma keepla™ pertencem-nos. 
                   Os utilizadores mantêm os direitos sobre o conteúdo que carregam, mas concedem-nos uma 
                   licença para armazenar e entregar esse conteúdo.
                 </p>

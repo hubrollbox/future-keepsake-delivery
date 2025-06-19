@@ -10,7 +10,7 @@ const HeroSection = () => {
     <section
       id="main-content"
       className="relative min-h-screen flex items-center justify-center px-4 py-10 md:py-20 bg-gradient-to-br from-lavender-mist via-sand-beige/30 to-lavender-mist"
-      aria-label="Introdução e chamada inicial - keeplar"
+      aria-label="Introdução e chamada inicial - keepla"
     >
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5" aria-hidden="true">
@@ -65,7 +65,7 @@ const HeroSection = () => {
               size="lg" 
               className="px-8 py-5 text-base md:text-lg min-h-[48px] md:min-h-[60px] border-2 border-earthy-burgundy text-earthy-burgundy hover:bg-dusty-rose/20 hover:text-earthy-burgundy transition-all duration-200 focus-visible:ring-2 focus-visible:ring-dusty-rose underline underline-offset-2 decoration-dusty-rose"
               onClick={() => navigate('/about')}
-              aria-label="Conheça a história do keeplar"
+              aria-label="Conheça a história do keepla"
             >
               <span className="text-earthy-burgundy font-semibold">Conhecer a Nossa História</span>
             </Button>
