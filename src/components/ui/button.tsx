@@ -19,7 +19,7 @@ const buttonVariants = cva(
           "bg-misty-gray text-steel-blue hover:bg-misty-gray/80",
         ghost: "hover:bg-dusty-rose/10 hover:text-steel-blue",
         link: "text-dusty-rose underline-offset-4 hover:underline",
-        // Variantes da marca FuturoPresente com Bordô Terroso
+        // Variantes da marca keeplar com Bordô Terroso
         brand: "bg-earthy-burgundy text-white hover:bg-earthy-burgundy/90 hover:scale-[1.02] shadow-soft font-semibold",
         "brand-outline": "border-2 border-earthy-burgundy text-earthy-burgundy hover:bg-earthy-burgundy/5 hover:scale-[1.02] font-semibold",
         gentle: "bg-white/80 backdrop-blur-sm border border-dusty-rose/20 text-steel-blue hover:bg-white hover:shadow-gentle",

@@ -40,7 +40,7 @@ const AdminLayout = ({ children, activeSection }: AdminLayoutProps) => {
             <div className="flex items-center space-x-3">
               <SeloDoTempoIcon className="w-8 h-8" />
               <div>
-                <h2 className="font-fraunces font-semibold text-steel-blue">FuturoPresente</h2>
+                <h2 className="font-fraunces font-semibold text-steel-blue">keeplar</h2>
                 <p className="text-xs text-misty-gray">Administração</p>
               </div>
             </div>

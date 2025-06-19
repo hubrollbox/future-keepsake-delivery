@@ -1,6 +1,6 @@
 # Future Keepsake Delivery
 
-![Logo FuturoPresente](public/placeholder.svg)
+![Logo keeplar](public/placeholder.svg)
 
 ## Sobre a Plataforma
 

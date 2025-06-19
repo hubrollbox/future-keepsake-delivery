@@ -27,7 +27,7 @@ const Register = () => {
           <div className="flex items-center justify-center space-x-3 mb-4 cursor-pointer" onClick={() => navigate('/')}>
             <SeloDoTempoIcon size={40} />
             <h1 className="text-2xl font-bold text-steel-blue font-fraunces">
-              FuturoPresente
+              keeplar
             </h1>
           </div>
           <p className="text-misty-gray">Presente no futuro</p>

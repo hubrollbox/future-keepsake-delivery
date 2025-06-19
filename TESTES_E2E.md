@@ -27,7 +27,7 @@
    describe('Página inicial', () => {
      it('deve mostrar o título', () => {
        cy.visit('/');
-       cy.contains('FuturoPresente');
+       cy.contains('keeplar');
      });
    });
    ```

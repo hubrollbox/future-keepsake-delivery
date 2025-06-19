@@ -89,7 +89,7 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Paleta oficial da marca FuturoPresente conforme manual
+				// Paleta oficial da marca keeplar conforme manual
 				'lavender-mist': '#F5F2F8', // Fundo principal
 				'steel-blue': '#3D4A5A', // Texto principal (azul petróleo claro)
 				'dusty-rose': '#DAB8C3', // Acento emocional (rosa antigo)

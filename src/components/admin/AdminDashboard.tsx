@@ -52,7 +52,7 @@ const AdminDashboard = () => {
         <h1 className="text-hero-sm text-steel-blue font-fraunces mb-2">
           Painel de <span className="text-earthy-burgundy">Administração</span>
         </h1>
-        <p className="text-misty-gray">Visão geral da plataforma FuturoPresente</p>
+        <p className="text-misty-gray">Visão geral da plataforma keeplar</p>
       </div>
 
       {/* Statistics Grid */}

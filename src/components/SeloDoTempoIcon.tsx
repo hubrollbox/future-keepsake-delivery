@@ -46,7 +46,7 @@ const SeloDoTempoIcon: React.FC<SeloDoTempoIconProps> = ({
       viewBox="0 0 100 100" 
       className={className}
       role="img"
-      aria-label="Selo do Tempo - FuturoPresente"
+      aria-label="Selo do Tempo - keeplar"
     >
       {/* Círculo externo pontilhado */}
       <circle
@@ -111,7 +111,7 @@ const SeloDoTempoIcon: React.FC<SeloDoTempoIconProps> = ({
         strokeWidth="1"
       />
       
-      {/* Texto circular "FUTURO·PRESENTE" */}
+      {/* Texto circular "FUTURO·keeplar" */}
       <defs>
         <path
           id="circle-text"
@@ -127,7 +127,7 @@ const SeloDoTempoIcon: React.FC<SeloDoTempoIconProps> = ({
         letterSpacing="0.5"
       >
         <textPath href="#circle-text" startOffset="0%">
-          FUTURO·PRESENTE NO
+          FUTURO·keeplar NO
         </textPath>
       </text>
     </svg>

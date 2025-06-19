@@ -11,7 +11,7 @@ const HowItWorksHero = () => {
       
       <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-steel-blue mb-6 md:mb-8 leading-tight tracking-tight font-fraunces">
         Como Funciona o
-        <span className="text-earthy-burgundy block md:inline"> FuturoPresente</span>
+        <span className="text-earthy-burgundy block md:inline"> keeplar</span>
       </h1>
       
       <p className="text-xl md:text-2xl lg:text-3xl text-dusty-rose mb-6 md:mb-8 max-w-4xl mx-auto font-bold leading-relaxed font-fraunces italic">
