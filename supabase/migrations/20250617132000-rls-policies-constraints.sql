@@ -13,7 +13,7 @@ ALTER TABLE deliveries
 -- 2. Notificações agendadas
 ALTER TABLE scheduled_notifications ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "User can access own notifications" ON scheduled_notifications
-  FOR ALL USING (user_email = auth.uid());
+  FOR ALL USING (user_id = auth.uid());
 ALTER TABLE scheduled_notifications
   ADD CONSTRAINT email_valido_user CHECK (user_email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'),
   ADD CONSTRAINT email_valido_recipient CHECK (recipient_email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'),
