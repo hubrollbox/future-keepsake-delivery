@@ -68,17 +68,6 @@ const HeroSection = () => {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-3 md:gap-6 justify-center items-center mb-6 md:mb-12">
             <Button 
-              size="lg" 
-              variant="brand"
-              className="px-8 py-5 text-base md:text-lg min-h-[48px] md:min-h-[60px] group transition-all duration-200 border-2 border-dusty-rose focus-visible:ring-2 focus-visible:ring-dusty-rose focus:outline-none"
-              onClick={() => navigate('/register')}
-              aria-label="Registar e criar conta gratuitamente"
-            >
-              <Heart className="mr-2 h-5 w-5 group-hover:animate-bounce-gentle" />
-              Começar a Minha Jornada
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
-            <Button 
               variant="brand-outline" 
               size="lg" 
               className="px-8 py-5 text-base md:text-lg min-h-[48px] md:min-h-[60px] border-2 border-earthy-burgundy text-earthy-burgundy hover:bg-dusty-rose/20 hover:text-earthy-burgundy transition-all duration-200 focus-visible:ring-2 focus-visible:ring-dusty-rose underline underline-offset-2 decoration-dusty-rose"
@@ -95,6 +84,17 @@ const HeroSection = () => {
               aria-label="Experimente a versão piloto (grátis)"
             >
               Experimente a versão piloto (grátis)
+            </Button>
+            <Button 
+              variant="brand-outline" 
+              size="lg" 
+              className="px-8 py-5 text-base md:text-lg min-h-[48px] md:min-h-[60px] border-2 border-dusty-rose text-earthy-burgundy hover:bg-dusty-rose/20 hover:text-earthy-burgundy transition-all duration-200 focus-visible:ring-2 focus-visible:ring-dusty-rose"
+              onClick={() => navigate('/register')}
+              aria-label="Registar e criar conta gratuitamente"
+            >
+              <Heart className="mr-2 h-5 w-5 group-hover:animate-bounce-gentle" />
+              Começar a Minha Jornada
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>
           {/* Trust Indicators */}
