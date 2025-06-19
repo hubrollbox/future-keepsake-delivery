@@ -119,15 +119,16 @@ const Dashboard = () => {
             <CartButton onClick={() => setIsCartOpen(true)} />
             <Button 
               onClick={() => navigate('/create-delivery')}
-              className="bg-golden-honey text-gentle-black hover:bg-golden-honey/90 rounded-xl font-medium shadow-soft"
+              variant="brand"
+              className="rounded-xl font-medium shadow-soft"
             >
               <Plus className="h-4 w-4 mr-2" />
               Nova Entrega
             </Button>
             <Button
               onClick={signOut}
-              variant="outline"
-              className="border-dusty-rose/50 text-dusty-rose hover:bg-dusty-rose/10 rounded-xl font-medium ml-2"
+              variant="gentle"
+              className="rounded-xl font-medium ml-2"
             >
               Logout
             </Button>
@@ -246,7 +247,8 @@ const Dashboard = () => {
               </span>
               <Button 
                 onClick={() => navigate('/create-delivery')}
-                className="bg-golden-honey text-gentle-black hover:bg-golden-honey/90 rounded-xl font-medium shadow-soft"
+                variant="brand"
+                className="rounded-xl font-medium shadow-soft"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Nova Entrega
@@ -326,10 +328,11 @@ const Dashboard = () => {
                 <p className="text-soft-gray mb-6 leading-relaxed">Cada mensagem é uma ponte entre o presente e o futuro.</p>
                 <Button
                   onClick={() => navigate('/create-delivery')}
-                  className="bg-golden-honey text-gentle-black hover:bg-golden-honey/90 rounded-xl font-medium shadow-soft px-8 py-3"
+                  variant="brand"
+                  className="rounded-xl font-medium shadow-soft"
                 >
                   <Plus className="h-4 w-4 mr-2" />
-                  Iniciar Primeira Missão
+                  Nova Entrega
                 </Button>
               </div>
             ) : (
