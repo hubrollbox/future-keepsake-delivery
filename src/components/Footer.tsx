@@ -13,7 +13,7 @@ const Footer = () => {
           <div className="grid md:grid-cols-4 gap-8 mb-12">
             {/* Brand Section */}
             <div className="md:col-span-2">
-              <div className="flex items-center justify-center mb-6">
+              <div className="flex items-center justify-start mb-6">
                 <img src="/keepla%20logo%20monocromatico.png" alt="Logo Monocromático" style={{width: 120, height: 120}} />
               </div>
               <p className="text-misty-gray leading-relaxed mb-6 max-w-md text-center md:text-left">
