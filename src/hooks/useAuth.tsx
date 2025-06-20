@@ -17,67 +17,12 @@ export interface UserProfile {
   role: string | null;
 }
 
+import { useAuthContext } from "@/contexts/AuthContext";
+
 export const useAuth = () => {
-  const [session, setSession] = useState<Session | null>(null);
-  const [user, setUser] = useState<User | null>(null);
-  const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [loading, setLoading] = useState(true);
-  const { toast } = useToast();
+  return useAuthContext();
+}
 
-  useEffect(() => {
-    // Get initial session
-    const getSession = async () => {
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        setSession(session);
-        setUser(session?.user ?? null);
-        
-        if (session?.user) {
-          await fetchUserProfile(session.user.id);
-        }
-      } catch (error) {
-        console.error("Error getting session:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getSession();
-
-    // Listen for auth changes
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      
-      if (session?.user) {
-        setTimeout(() => {
-          fetchUserProfile(session.user.id);
-        }, 0);
-      } else {
-        setProfile(null);
-      }
-      
-      setLoading(false);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const fetchUserProfile = async (userId: string) => {
-    try {
-      // Fetch profile data
-      const { data: profileData, error: profileError } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", userId)
-        .single();
-
-      if (profileError) {
-        console.error("Error fetching profile:", profileError);
-        return;
-      }
 
       // Fetch admin role if exists
       const { data: adminRole } = await supabase
