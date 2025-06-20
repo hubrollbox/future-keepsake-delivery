@@ -203,5 +203,18 @@ Para dúvidas ou suporte, abra uma issue ou contacte a equipa de desenvolvimento
 
 ---
 
-> Para detalhes técnicos de segurança, veja [`supabase/SEGURANCA_RLS.md`](supabase/SEGURANCA_RLS.md).
+# FuturoPresente
+
+## Banco de Dados: Tabelas e Segurança
+
+A plataforma utiliza o Supabase como backend, com as principais tabelas:
+- **profiles**: informações dos usuários
+- **admin_roles**: permissões administrativas
+- **cart_items**: itens do carrinho
+- **warehouse_items**: estoque de cápsulas
+- **deliveries**: entregas agendadas
+- **messages**: mensagens entre usuários e sistema
+- **payments**: pagamentos e status
+
+A segurança é reforçada com Row Level Security (RLS) ativada nas tabelas sensíveis, garantindo que cada usuário só acesse seus próprios dados. As políticas de RLS e exemplos de uso estão detalhados em [`supabase/SEGURANCA_RLS.md`](supabase/SEGURANCA_RLS.md). Para detalhes sobre a estrutura das tabelas, consulte as [migrations](supabase/migrations/).
 > Para exemplos de testes E2E, veja `cypress/e2e/`.
