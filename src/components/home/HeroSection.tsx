@@ -72,15 +72,15 @@ const HeroSection = () => {
             >
               <span className="text-earthy-burgundy font-semibold">Conhecer a Nossa História</span>
             </Button>
-            <Button 
-              variant="brand" 
-              size="lg" 
-              className="px-8 py-5 text-base md:text-lg min-h-[48px] md:min-h-[60px] bg-gradient-to-r from-earthy-burgundy to-dusty-rose text-white shadow-lg border-2 border-earthy-burgundy animate-pulse"
-              onClick={() => setShowForm(true)}
+            <a
+              href="https://bit.ly/keepla-beta-tester"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-8 py-5 text-base md:text-lg min-h-[48px] md:min-h-[60px] bg-gradient-to-r from-earthy-burgundy to-dusty-rose text-white shadow-lg border-2 border-earthy-burgundy animate-pulse rounded-lg flex items-center justify-center font-semibold focus-visible:ring-2 focus-visible:ring-dusty-rose"
               aria-label="Experimente a versão piloto (grátis)"
             >
               Experimente a versão piloto (grátis)
-            </Button>
+            </a>
             <Button 
               variant="brand-outline" 
               size="lg" 
