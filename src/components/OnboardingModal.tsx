@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const ONBOARDING_KEY = "onboarding_seen";
 
@@ -33,7 +34,7 @@ export default function OnboardingModal() {
             <li>Crie e agende entregas digitais ou físicas para o futuro.</li>
             <li>Acompanhe o estado das suas entregas no dashboard.</li>
             <li>Receba notificações automáticas na data marcada.</li>
-            <li>Em caso de dúvida, consulte a <a href="/contact" className="text-blue-600 underline" target="_blank" rel="noopener noreferrer">página de suporte</a>.</li>
+            <li>Em caso de dúvida, consulte a <Link to="/contact" className="text-blue-600 underline">página de suporte</Link>.</li>
           </ul>
           <Button onClick={handleClose} className="w-full mt-4">Começar</Button>
         </CardContent>
