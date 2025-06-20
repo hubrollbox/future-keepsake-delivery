@@ -26,6 +26,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import OnboardingModal from "@/components/OnboardingModal";
 import FAQ from "@/pages/FAQ";
 import { GamificationProvider } from "@/contexts/GamificationContext";
+import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient();
 
