@@ -10,6 +10,7 @@ export default function OnboardingModal() {
 
   useEffect(() => {
     const seen = localStorage.getItem(ONBOARDING_KEY);
+    console.log('ONBOARDING_KEY in localStorage:', seen);
     if (!seen) setOpen(true);
   }, []);
 
@@ -18,7 +19,10 @@ export default function OnboardingModal() {
     setOpen(false);
   };
 
-  if (!open) return null;
+  if (!open) {
+    console.log('OnboardingModal not open');
+    return null;
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">

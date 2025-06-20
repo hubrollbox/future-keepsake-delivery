@@ -1,17 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap');
-
-/* purgecss start ignore */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-/* purgecss end ignore */
-
 @import './styles/colors.css';
 @import './styles/typography.css';
 @import './styles/buttons.css';
 @import './styles/inputs.css';
 @import './styles/utilities.css';
 @import './styles/variables.css';
+
+/* purgecss start ignore */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* purgecss end ignore */
 
 @layer base {
   :root {
