@@ -27,11 +27,11 @@ const Navigation = () => {
 
   // Links para usar no menu/mobile
   const navLinks = [
-    { to: "/products", label: "Presentes com Alma", aria: "Ir para Presentes com Alma" },
-    { to: "/how-it-works", label: "Como Funciona", aria: "Ir para Como Funciona" },
-    { to: "/pricing", label: "Preços", aria: "Ir para Preços" },
     { to: "/about", label: "Manifesto", aria: "Ir para Manifesto" },
     { to: "/contact", label: "Contacto", aria: "Ir para Contacto" },
+    { to: "/how-it-works", label: "Como Funciona", aria: "Ir para Como Funciona" },
+    { to: "/pricing", label: "Preços", aria: "Ir para Preços" },
+    { to: "/products", label: "Presentes com Alma", aria: "Ir para Presentes com Alma" },
   ];
 
   return (
