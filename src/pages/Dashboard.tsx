@@ -20,6 +20,7 @@ import type { Achievement } from "@/components/gamification/AchievementCard";
 import type { Quest } from "@/components/gamification/QuestCard";
 
 // === INÍCIO DA REFATORAÇÃO DO DASHBOARD ===
+// TODO: Refatoração visual - cards mais modernos, espaçamento aprimorado, divisores suaves entre seções, header mais compacto, responsividade melhorada
 // Melhorias visuais, layout, espaçamento e usabilidade
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -107,36 +108,26 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-lavender-mist">
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-dusty-rose/20">
-        <div className="container mx-auto px-4 py-6 flex justify-between items-center">
+      <header className="bg-white/90 backdrop-blur border-b border-dusty-rose/20 shadow-sm">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-golden-honey rounded-full flex items-center justify-center shadow-soft">
               <Clock className="h-5 w-5 text-gentle-black" />
             </div>
-            <h1 className="text-xl font-serif font-semibold text-gentle-black">
-              Dashboard
-            </h1>
+            <h1 className="text-2xl font-serif font-bold text-gentle-black">Dashboard</h1>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center gap-2">
             <CartButton onClick={() => setIsCartOpen(true)} />
-            <Button 
-              onClick={() => navigate('/create-delivery')}
-              variant="brand"
-              className="rounded-xl font-medium shadow-soft"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Nova Entrega
+            <Button onClick={() => navigate('/create-delivery')} variant="brand" className="rounded-xl font-medium shadow-soft">
+              <Plus className="h-4 w-4 mr-2" />Nova Entrega
             </Button>
-            <Button asChild variant="outline" className="ml-2">
-              <a href="/profile">Perfil</a>
+            <Button asChild variant="outline" className="ml-2 flex items-center gap-2 px-4 py-2 rounded-full">
+              <a href="/profile">
+                <span className="hidden md:inline">Perfil</span>
+                <span className="inline md:hidden"><Users className="h-4 w-4" /></span>
+              </a>
             </Button>
-            <Button
-              onClick={signOut}
-              variant="gentle"
-              className="rounded-xl font-medium ml-2"
-            >
-              Logout
-            </Button>
+            <Button onClick={signOut} variant="gentle" className="rounded-xl font-medium ml-2">Logout</Button>
           </div>
         </div>
         <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
