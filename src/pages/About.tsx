@@ -84,7 +84,7 @@ const About = () => {
         {/* Conceito Selo do Tempo */}
         <div className="mb-16">
           <div className="emotion-card p-12 max-w-5xl mx-auto text-center">
-            <SeloDoTempoIcon size={80} className="mx-auto mb-8" />
+            <img src="/keepla%20logo.png" alt="Logo" style={{width: 80, height: 80, margin: '0 auto 2rem auto'}} />
             <h2 className="text-3xl md:text-4xl font-fraunces font-bold text-steel-blue mb-6">
               Conceito: Selo do Tempo
             </h2>

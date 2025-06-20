@@ -35,7 +35,6 @@ const App = () => (
       <CartProvider>
         <GamificationProvider>
           {/* Logo no canto superior esquerdo */}
-          <img src="/keepla%20logo.png" alt="Logo" style={{position: 'fixed', top: 24, left: 24, width: 80, height: 80, zIndex: 1000}} />
           <Toaster />
           <Sonner />
           <OnboardingModal />

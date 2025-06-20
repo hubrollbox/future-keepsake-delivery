@@ -6,7 +6,7 @@ const HowItWorksHero = () => {
   return (
     <div className="text-center max-w-6xl mx-auto mb-12 md:mb-20">
       <div className="flex justify-center mb-8">
-        <SeloDoTempoIcon size={80} className="drop-shadow-sm" />
+        <img src="/keepla%20logo.png" alt="Logo" style={{width: 80, height: 80}} />
       </div>
       
       <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-steel-blue mb-6 md:mb-8 leading-tight tracking-tight font-fraunces">
