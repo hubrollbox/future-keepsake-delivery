@@ -1,10 +1,10 @@
-# Future Keepsake Delivery
+# keepla
 
-![Logo keepla](public/placeholder.svg)
+![Logo keepla](public/keepla%20logo.png)
 
 ## Sobre a Plataforma
 
-A Future Keepsake Delivery é uma solução moderna para gestão, armazenamento e entrega programada de keepsakes (lembranças e presentes para o futuro). Desenvolvida para empresas e consumidores finais, a plataforma oferece segurança, personalização e automação em todo o ciclo de vida do presente.
+A keepla é uma solução moderna para gestão, armazenamento e entrega programada de keepsakes (lembranças e presentes para o futuro). Desenvolvida para empresas e consumidores finais, a plataforma oferece segurança, personalização e automação em todo o ciclo de vida do presente.
 
 ## Funcionalidades Principais
 

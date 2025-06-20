@@ -22,11 +22,11 @@ export default function OnboardingModal() {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0">
-        <img src="/keepla logo.png" alt="Logo" width={300} height={300} className="opacity-10" />
+        <img src="/keepla logo.png" alt="Logo Keepla" width={320} height={320} className="opacity-10" />
       </div>
       <Card className="max-w-md w-full shadow-xl relative z-10">
         <CardHeader>
-          <CardTitle>Bem-vindo à Future Keepsake Delivery!</CardTitle>
+          <CardTitle>Bem-vindo à keepla!</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <ul className="list-disc pl-5 text-gray-700 text-sm">
