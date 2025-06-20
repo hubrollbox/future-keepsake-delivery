@@ -175,7 +175,15 @@ export const useCreateDeliveryForm = () => {
       } catch (err: unknown) {
         const errorMessage = err instanceof Error ? err.message : "Erro desconhecido";
         setError(errorMessage);
-        toast({ title: "Erro", description: errorMessage });
+        let toastMessage = errorMessage;
+        if (errorMessage.includes("new row violates row-level security policy")) {
+          toastMessage = "Permissão negada: faça login novamente ou contacte o suporte.";
+        } else if (errorMessage.includes("email_valido")) {
+          toastMessage = "O email do destinatário é inválido.";
+        } else if (errorMessage.includes("data_futura")) {
+          toastMessage = "A data de entrega deve ser hoje ou no futuro.";
+        }
+        toast({ title: "Erro ao criar entrega", description: toastMessage });
       }
       setLoading(false);
     }
