@@ -138,10 +138,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const getTotalItems = () => items.reduce((total, item) => total + item.quantity, 0);
 
   useEffect(() => {
-    if (!loading && user) {
+    if (user) {
       fetchCartItems();
     }
-  }, [user, loading, fetchCartItems]);
+  }, [user, fetchCartItems]);
 
   return (
     <CartContext.Provider

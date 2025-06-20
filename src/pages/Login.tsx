@@ -74,11 +74,14 @@ const Login = () => {
     <div className="min-h-screen bg-lavender-mist flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center space-x-3 mb-4">
-            <SeloDoTempoIcon size={40} />
-            <h1 className="text-2xl font-bold text-steel-blue font-fraunces">
-              80: keepla
-            </h1>
+          <div className="flex flex-col items-center justify-center mb-4">
+            <img src="/keepla logo monocromatico.png" alt="Keepla Logo" className="h-16 mb-2" />
+            <div className="flex items-center justify-center space-x-3">
+              <SeloDoTempoIcon size={40} />
+              <h1 className="text-2xl font-bold text-steel-blue font-fraunces">
+                keepla
+              </h1>
+            </div>
           </div>
           <p className="text-misty-gray">Presente no futuro</p>
         </div>
