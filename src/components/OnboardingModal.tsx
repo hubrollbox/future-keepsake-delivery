@@ -21,14 +21,11 @@ export default function OnboardingModal() {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="absolute inset-0 flex items-end justify-center pointer-events-none select-none">
-        <img src="/keepla logo.png" alt="Logo" width={120} height={120} className="mb-8 opacity-20" />
-      </div>
-      <Card className="max-w-md w-full shadow-xl relative z-10">
+      <Card className="max-w-md w-full shadow-xl relative z-10 flex flex-col">
         <CardHeader>
           <CardTitle>Bem-vindo à Future Keepsake Delivery!</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 flex-1 flex flex-col justify-between">
           <ul className="list-disc pl-5 text-gray-700 text-sm">
             <li>Crie e agende entregas digitais ou físicas para o futuro.</li>
             <li>Acompanhe o estado das suas entregas no dashboard.</li>
@@ -37,6 +34,9 @@ export default function OnboardingModal() {
           </ul>
           <Button onClick={handleClose} className="w-full mt-4">Começar</Button>
         </CardContent>
+        <div className="flex justify-center mt-4 mb-2">
+          <img src="/keepla logo.png" alt="Logo" width={120} height={120} className="opacity-20" />
+        </div>
       </Card>
     </div>
   );
