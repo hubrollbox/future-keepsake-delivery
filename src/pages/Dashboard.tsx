@@ -16,6 +16,7 @@ import { exportToCSV } from "@/lib/exportToCSV";
 import DeliveriesBarChart from "@/components/dashboard/DeliveriesBarChart";
 import TopUsersRanking from "@/components/dashboard/TopUsersRanking";
 import AdminAchievementsQuests from "@/components/dashboard/AdminAchievementsQuests";
+import { LogOut } from "lucide-react";
 import type { Achievement } from "@/components/gamification/AchievementCard";
 import type { Quest } from "@/components/gamification/QuestCard";
 
@@ -169,3 +170,45 @@ const Dashboard = () => {
 
 // === FIM DA REFATORAÇÃO DO DASHBOARD ===
 export default Dashboard;
+
+const getStatusColor = (status: string | null) => {
+  switch (status) {
+    case "scheduled": return "bg-warm-yellow text-warm-brown";
+    case "delivered": return "bg-sage-green text-gentle-black";
+    case "cancelled": return "bg-dusty-rose text-gentle-black";
+    default: return "bg-misty-gray text-gentle-black";
+  }
+};
+const getStatusText = (status: string | null) => {
+  switch (status) {
+    case "scheduled": return "Agendado";
+    case "delivered": return "Entregue";
+    case "cancelled": return "Cancelado";
+    default: return "Desconhecido";
+  }
+};
+const handleDelete = async (id: string) => {
+  if (window.confirm("Tens a certeza que queres eliminar esta entrega?")) {
+    await deleteDelivery(id);
+  }
+};
+const deliveriesByMonth = React.useMemo(() => {
+  const months: { [key: string]: number } = {};
+  deliveries.forEach((d) => {
+    const date = new Date(d.delivery_date);
+    const key = `${date.getFullYear()}-${(date.getMonth()+1).toString().padStart(2, '0')}`;
+    months[key] = (months[key] || 0) + 1;
+  });
+  return Object.entries(months).sort().map(([month, count]) => ({ month, count }));
+}, [deliveries]);
+const topUsers = React.useMemo(() => {
+  const counts: { [user_id: string]: { count: number; name: string } } = {};
+  deliveries.forEach((d) => {
+    if (!counts[d.user_id]) counts[d.user_id] = { count: 0, name: d.recipient_name || "Usuário" };
+    counts[d.user_id].count++;
+  });
+  return Object.entries(counts)
+    .map(([user_id, { count, name }]) => ({ user_id, count, name }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 5);
+}, [deliveries]);
