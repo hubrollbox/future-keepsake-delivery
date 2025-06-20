@@ -125,6 +125,9 @@ const Dashboard = () => {
               <Plus className="h-4 w-4 mr-2" />
               Nova Entrega
             </Button>
+            <Button asChild variant="outline" className="ml-2">
+              <a href="/profile">Perfil</a>
+            </Button>
             <Button
               onClick={signOut}
               variant="gentle"
