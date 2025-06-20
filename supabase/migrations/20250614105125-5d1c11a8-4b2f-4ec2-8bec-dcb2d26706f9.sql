@@ -102,66 +102,66 @@ ALTER TABLE public.payments ENABLE ROW LEVEL SECURITY;
 
 -- Create RLS policies for profiles
 CREATE POLICY "Users can view their own profile" ON public.profiles
-  FOR SELECT USING (auth.uid() = id);
+  FOR SELECT USING ((select auth.uid()) = id);
 
 CREATE POLICY "Users can update their own profile" ON public.profiles
-  FOR UPDATE USING (auth.uid() = id);
+  FOR UPDATE USING ((select auth.uid()) = id);
 
 CREATE POLICY "Users can insert their own profile" ON public.profiles
-  FOR INSERT WITH CHECK (auth.uid() = id);
+  FOR INSERT WITH CHECK ((select auth.uid()) = id);
 
 -- Create RLS policies for cart_items
 CREATE POLICY "Users can view their own cart items" ON public.cart_items
-  FOR SELECT USING (auth.uid() = user_id);
+  FOR SELECT USING ((select auth.uid()) = user_id);
 
 CREATE POLICY "Users can insert their own cart items" ON public.cart_items
-  FOR INSERT WITH CHECK (auth.uid() = user_id);
+  FOR INSERT WITH CHECK ((select auth.uid()) = user_id);
 
 CREATE POLICY "Users can update their own cart items" ON public.cart_items
-  FOR UPDATE USING (auth.uid() = user_id);
+  FOR UPDATE USING ((select auth.uid()) = user_id);
 
 CREATE POLICY "Users can delete their own cart items" ON public.cart_items
-  FOR DELETE USING (auth.uid() = user_id);
+  FOR DELETE USING ((select auth.uid()) = user_id);
 
 -- Create RLS policies for deliveries
 CREATE POLICY "Users can view their own deliveries" ON public.deliveries
-  FOR SELECT USING (auth.uid() = user_id);
+  FOR SELECT USING ((select auth.uid()) = user_id);
 
 CREATE POLICY "Users can insert their own deliveries" ON public.deliveries
-  FOR INSERT WITH CHECK (auth.uid() = user_id);
+  FOR INSERT WITH CHECK ((select auth.uid()) = user_id);
 
 CREATE POLICY "Users can update their own deliveries" ON public.deliveries
-  FOR UPDATE USING (auth.uid() = user_id);
+  FOR UPDATE USING ((select auth.uid()) = user_id);
 
 CREATE POLICY "Users can delete their own deliveries" ON public.deliveries
-  FOR DELETE USING (auth.uid() = user_id);
+  FOR DELETE USING ((select auth.uid()) = user_id);
 
 -- Create RLS policies for messages
 CREATE POLICY "Users can view their own messages" ON public.messages
-  FOR SELECT USING (auth.uid() = user_id);
+  FOR SELECT USING ((select auth.uid()) = user_id);
 
 CREATE POLICY "Users can insert their own messages" ON public.messages
-  FOR INSERT WITH CHECK (auth.uid() = user_id);
+  FOR INSERT WITH CHECK ((select auth.uid()) = user_id);
 
 CREATE POLICY "Users can update their own messages" ON public.messages
-  FOR UPDATE USING (auth.uid() = user_id);
+  FOR UPDATE USING ((select auth.uid()) = user_id);
 
 CREATE POLICY "Users can delete their own messages" ON public.messages
-  FOR DELETE USING (auth.uid() = user_id);
+  FOR DELETE USING ((select auth.uid()) = user_id);
 
 -- Create RLS policies for payments
 CREATE POLICY "Users can view their own payments" ON public.payments
-  FOR SELECT USING (auth.uid() = user_id);
+  FOR SELECT USING ((select auth.uid()) = user_id);
 
 CREATE POLICY "Users can insert their own payments" ON public.payments
-  FOR INSERT WITH CHECK (auth.uid() = user_id);
+  FOR INSERT WITH CHECK ((select auth.uid()) = user_id);
 
 -- Admin-only policies for warehouse_items
 CREATE POLICY "Admins can view all warehouse items" ON public.warehouse_items
   FOR SELECT USING (
     EXISTS (
       SELECT 1 FROM public.admin_roles 
-      WHERE user_id = auth.uid() AND role = 'admin'
+      WHERE user_id = (select auth.uid()) AND role = 'admin'
     )
   );
 
@@ -169,7 +169,7 @@ CREATE POLICY "Admins can insert warehouse items" ON public.warehouse_items
   FOR INSERT WITH CHECK (
     EXISTS (
       SELECT 1 FROM public.admin_roles 
-      WHERE user_id = auth.uid() AND role = 'admin'
+      WHERE user_id = (select auth.uid()) AND role = 'admin'
     )
   );
 
@@ -177,7 +177,7 @@ CREATE POLICY "Admins can update warehouse items" ON public.warehouse_items
   FOR UPDATE USING (
     EXISTS (
       SELECT 1 FROM public.admin_roles 
-      WHERE user_id = auth.uid() AND role = 'admin'
+      WHERE user_id = (select auth.uid()) AND role = 'admin'
     )
   );
 
@@ -186,7 +186,7 @@ CREATE POLICY "Admins can view all admin roles" ON public.admin_roles
   FOR SELECT USING (
     EXISTS (
       SELECT 1 FROM public.admin_roles ar 
-      WHERE ar.user_id = auth.uid() AND ar.role = 'admin'
+      WHERE ar.user_id = (select auth.uid()) AND ar.role = 'admin'
     )
   );
 
@@ -194,7 +194,7 @@ CREATE POLICY "Admins can insert admin roles" ON public.admin_roles
   FOR INSERT WITH CHECK (
     EXISTS (
       SELECT 1 FROM public.admin_roles ar 
-      WHERE ar.user_id = auth.uid() AND ar.role = 'admin'
+      WHERE ar.user_id = (select auth.uid()) AND ar.role = 'admin'
     )
   );
 
@@ -202,7 +202,7 @@ CREATE POLICY "Admins can delete admin roles" ON public.admin_roles
   FOR DELETE USING (
     EXISTS (
       SELECT 1 FROM public.admin_roles ar 
-      WHERE ar.user_id = auth.uid() AND ar.role = 'admin'
+      WHERE ar.user_id = (select auth.uid()) AND ar.role = 'admin'
     )
   );
 

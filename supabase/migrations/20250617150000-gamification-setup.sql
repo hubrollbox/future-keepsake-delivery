@@ -60,10 +60,10 @@ ALTER TABLE user_stats ENABLE ROW LEVEL SECURITY;
 
 -- Políticas RLS
 CREATE POLICY "User can access their achievements" ON user_achievements
-    FOR SELECT USING (auth.uid() = user_id);
+    FOR SELECT USING ((select auth.uid()) = user_id);
 
 CREATE POLICY "User can access their quests" ON user_quests
-    FOR SELECT USING (auth.uid() = user_id);
+    FOR SELECT USING ((select auth.uid()) = user_id);
 
 CREATE POLICY "User can access their stats" ON user_stats
-    FOR SELECT USING (auth.uid() = user_id);
+    FOR SELECT USING ((select auth.uid()) = user_id);
