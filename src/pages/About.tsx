@@ -32,18 +32,6 @@ const About = () => {
       <Navigation />
 
       <main className="container mx-auto px-4 py-16">
-        {/* Back Button */}
-        <div className="mb-8">
-          <Button 
-            variant="ghost" 
-            onClick={() => navigate('/')} 
-            className="flex items-center space-x-2 text-steel-blue hover:text-dusty-rose transition-colors duration-200"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span>Voltar ao Início</span>
-          </Button>
-        </div>
-
         {/* Hero Section */}
         <div className="text-center max-w-4xl mx-auto mb-16">
           <div className="flex justify-center mb-8">
