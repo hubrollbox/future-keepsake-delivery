@@ -76,6 +76,11 @@ const Navigation = () => {
                       Dashboard
                     </Button>
                   </Link>
+                  <Link to="/profile" aria-label="Acessar Perfil">
+                    <Button variant="outline" size="sm" className="border-golden-honey text-golden-honey hover:bg-golden-honey/10 rounded-xl">
+                      Perfil
+                    </Button>
+                  </Link>
                   <Button 
                     onClick={handleSignOut}
                     variant="ghost" 
@@ -162,6 +167,11 @@ const Navigation = () => {
                   <Link to="/dashboard" onClick={() => setIsDrawerOpen(false)} aria-label="Ir para Dashboard">
                     <Button variant="outline" size="sm" className="w-full border-dusty-rose text-dusty-rose hover:bg-dusty-rose/10 rounded-xl" style={{ minHeight: 44 }}>
                       Dashboard
+                    </Button>
+                  </Link>
+                  <Link to="/profile" onClick={() => setIsDrawerOpen(false)} aria-label="Ir para Perfil">
+                    <Button variant="outline" size="sm" className="w-full border-golden-honey text-golden-honey hover:bg-golden-honey/10 rounded-xl" style={{ minHeight: 44 }}>
+                      Perfil
                     </Button>
                   </Link>
                   <Button 

@@ -57,6 +57,7 @@ const App = () => (
                   <Route path="/partnerships" element={<Partnerships />} />
                   <Route path="/terms-conditions" element={<TermsConditions />} />
                   <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                  <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
                   <Route path="/faq" element={<FAQ />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
