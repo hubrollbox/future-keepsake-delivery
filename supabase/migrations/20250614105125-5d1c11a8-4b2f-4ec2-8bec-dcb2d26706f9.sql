@@ -182,29 +182,14 @@ CREATE POLICY "Admins can update warehouse items" ON public.warehouse_items
   );
 
 -- Admin policies for admin_roles
-CREATE POLICY "Admins can view all admin roles" ON public.admin_roles
-  FOR SELECT USING (
-    EXISTS (
-      SELECT 1 FROM public.admin_roles ar 
-      WHERE ar.user_id = (select auth.uid()) AND ar.role = 'admin'
-    )
-  );
+CREATE POLICY "Admins can view their own admin roles" ON public.admin_roles
+  FOR SELECT USING (user_id = (select auth.uid()));
 
 CREATE POLICY "Admins can insert admin roles" ON public.admin_roles
-  FOR INSERT WITH CHECK (
-    EXISTS (
-      SELECT 1 FROM public.admin_roles ar 
-      WHERE ar.user_id = (select auth.uid()) AND ar.role = 'admin'
-    )
-  );
+  FOR INSERT WITH CHECK (user_id = (select auth.uid()));
 
-CREATE POLICY "Admins can delete admin roles" ON public.admin_roles
-  FOR DELETE USING (
-    EXISTS (
-      SELECT 1 FROM public.admin_roles ar 
-      WHERE ar.user_id = (select auth.uid()) AND ar.role = 'admin'
-    )
-  );
+CREATE POLICY "Admins can delete their own admin roles" ON public.admin_roles
+  FOR DELETE USING (user_id = (select auth.uid()));
 
 -- Create trigger function to automatically create profile on user signup
 CREATE OR REPLACE FUNCTION public.handle_new_user()
