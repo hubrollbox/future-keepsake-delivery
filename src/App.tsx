@@ -37,10 +37,10 @@ const App = () => (
           {/* Logo no canto superior esquerdo */}
           <Toaster />
           <Sonner />
-          <OnboardingModal />
           <ErrorBoundaryComponent>
             <ErrorBoundary fallback={<div>Ocorreu um erro inesperado.</div>}>
               <BrowserRouter>
+                <OnboardingModal />
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/login" element={<Login />} />
