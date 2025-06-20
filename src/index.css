@@ -6,52 +6,38 @@
 @import './styles/utilities.css';
 @import './styles/variables.css';
 
-/* purgecss start ignore */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* purgecss end ignore */
 
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
-
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
-
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
-
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
-
     --radius: 0.75rem;
-
-    /* Cores oficiais da marca keepla */
-    --brand-primary: 218 184 195; /* Rosa antigo #DAB8C3 */
-    --brand-secondary: 61 20 35; /* Azul petróleo #3D4A5A */
-    --brand-background: 245 242 248; /* Lavanda pálida #F5F2F8 */
-    --brand-neutral: 236 229 218; /* Bege areia #ECE5DA */
-    --brand-accent: 139 58 98; /* Bordô Terroso #8B3A62 */
+    --brand-primary: 218 184 195;
+    --brand-secondary: 61 20 35;
+    --brand-background: 245 242 248;
+    --brand-neutral: 236 229 218;
+    --brand-accent: 139 58 98;
   }
-
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
@@ -73,31 +59,12 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }
-  /* -------------------------------
-     ESPAÇAMENTOS SUAVES E RITMO
-     ------------------------------- */
-  .emotional-spacing {
-    @apply py-20 md:py-32 lg:py-40;
-  }
-  .gentle-spacing {
-    @apply py-8 md:py-14;
-  }
-
-  /* -------------------------------
-     BOTÕES E INTERAÇÕES
-     ------------------------------- */
-  .btn-gentle {
-    @apply px-8 py-4 rounded-xl font-medium transition-all duration-200 shadow-soft hover:shadow-md border-2 border-dusty-rose;
-  }
-  .btn-primary {
-    @apply bg-earthy-burgundy text-white btn-gentle hover:bg-earthy-burgundy/90 border-2 border-dusty-rose focus-visible:ring-2 focus-visible:ring-dusty-rose;
-  }
-  .btn-secondary {
-    @apply border-2 border-earthy-burgundy text-earthy-burgundy btn-gentle hover:bg-dusty-rose/20 hover:text-earthy-burgundy;
-  }
-  .btn-outline-brand {
-    @apply border-2 border-dusty-rose text-earthy-burgundy bg-transparent hover:bg-dusty-rose/10 transition-colors duration-200;
-  }
+  .emotional-spacing { @apply py-20 md:py-32 lg:py-40; }
+  .gentle-spacing { @apply py-8 md:py-14; }
+  .btn-gentle { @apply px-8 py-4 rounded-xl font-medium transition-all duration-200 shadow-soft hover:shadow-md border-2 border-dusty-rose; }
+  .btn-primary { @apply bg-earthy-burgundy text-white btn-gentle hover:bg-earthy-burgundy/90 border-2 border-dusty-rose focus-visible:ring-2 focus-visible:ring-dusty-rose; }
+  .btn-secondary { @apply border-2 border-earthy-burgundy text-earthy-burgundy btn-gentle hover:bg-dusty-rose/20 hover:text-earthy-burgundy; }
+  .btn-outline-brand { @apply border-2 border-dusty-rose text-earthy-burgundy bg-transparent hover:bg-dusty-rose/10 transition-colors duration-200; }
 
   /* --------------------------------
    CAMPOS DE INPUT E FOCO
@@ -244,7 +211,6 @@
 
 a, .underline-link, .brand-link {
   color: #8B3A62;
-  /* Remover sublinhado por defeito */
   text-decoration: none;
   text-underline-offset: 3px;
   font-weight: 600;
@@ -253,31 +219,26 @@ a, .underline-link, .brand-link {
   transition: color 0.2s, background 0.2s, box-shadow 0.2s;
   outline: none;
 }
-
 a:focus-visible, .underline-link:focus-visible, .brand-link:focus-visible {
   color: #3D4A5A;
   background: #DAB8C322;
   box-shadow: 0 0 0 3px #DAB8C3aa;
   outline: 2px solid #DAB8C3;
   outline-offset: 2px;
-  /* Exibir sublinhado só em foco */
   text-decoration: underline;
   text-decoration-thickness: 2px;
 }
-
 a:hover, .underline-link:hover, .brand-link:hover {
   color: #DAB8C3;
   text-decoration: underline;
   text-decoration-thickness: 2px;
   background-color: #8B3A6212;
 }
-
 .focus-ring-brand {
   outline: 2px solid #DAB8C3;
   outline-offset: 2px;
   transition: outline 0.2s;
 }
-
 .skip-link:focus-visible, .skip-link:focus {
   position: absolute;
   left: 16px;
@@ -295,16 +256,150 @@ a:hover, .underline-link:hover, .brand-link:hover {
   text-decoration: none;
   transition: background 0.18s, color 0.18s, box-shadow 0.18s;
 }
+.nav-link, .nav-link.active { text-decoration: none !important; }
+html, body { max-width: 100vw; overflow-x: hidden; box-sizing: border-box; }
 
-/* Corrigir nav-link para remover sublinhado no menu */
-.nav-link, .nav-link.active {
-  text-decoration: none !important;
 }
-
-html, body {
-  max-width: 100vw;
-  overflow-x: hidden;
-  box-sizing: border-box;
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
+}
 }
 }
 }
