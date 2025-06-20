@@ -21,9 +21,6 @@ import { useAuthContext } from "@/contexts/AuthContext";
 export const useAuth = () => {
   return useAuthContext();
 }
-
-
-      // Fetch admin role if exists
       const { data: adminRole } = await supabase
         .from("admin_roles")
         .select("role")
