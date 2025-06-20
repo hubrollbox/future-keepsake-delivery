@@ -140,6 +140,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     if (user) {
       fetchCartItems();
+    } else {
+      setItems([]); // Limpa o carrinho quando o usuário faz logout ou user é null
     }
   }, [user, fetchCartItems]);
 
