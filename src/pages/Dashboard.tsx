@@ -19,6 +19,8 @@ import AdminAchievementsQuests from "@/components/dashboard/AdminAchievementsQue
 import type { Achievement } from "@/components/gamification/AchievementCard";
 import type { Quest } from "@/components/gamification/QuestCard";
 
+// === INÍCIO DA REFATORAÇÃO DO DASHBOARD ===
+// Melhorias visuais, layout, espaçamento e usabilidade
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user, profile, signOut } = useAuth();
@@ -453,4 +455,5 @@ const Dashboard = () => {
   );
 };
 
+// === FIM DA REFATORAÇÃO DO DASHBOARD ===
 export default Dashboard;
