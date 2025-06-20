@@ -106,10 +106,10 @@ const Dashboard = () => {
   const quests: Quest[] = [];
 
   return (
-    <div className="min-h-screen bg-lavender-mist">
+    <div className="min-h-screen bg-lavender-mist w-full overflow-x-hidden">
       {/* Header */}
-      <header className="bg-white/90 backdrop-blur border-b border-dusty-rose/20 shadow-sm">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+      <header className="bg-white/90 backdrop-blur border-b border-dusty-rose/20 shadow-sm w-full">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center max-w-full overflow-x-auto">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-golden-honey rounded-full flex items-center justify-center shadow-soft">
               <Clock className="h-5 w-5 text-gentle-black" />
@@ -133,7 +133,7 @@ const Dashboard = () => {
         <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
       </header>
 
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-12 max-w-full overflow-x-auto">
         {/* Welcome Section with Gamification */}
         <div className="mb-12">
           <h2 className="text-4xl font-serif font-semibold text-gentle-black mb-4">
