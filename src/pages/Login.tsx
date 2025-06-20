@@ -76,18 +76,6 @@ const Login = () => {
         <div className="text-center mb-8">
           <img src="/keepla logo.png" alt="Keepla Logo" className="h-20 mx-auto mb-4" />
         </div>
-          <div className="flex flex-col items-center justify-center mb-4">
-            <img src="/keepla logo monocromatico.png" alt="Keepla Logo" className="h-16 mb-2" />
-            <div className="flex items-center justify-center space-x-3">
-              <SeloDoTempoIcon size={40} />
-              <h1 className="text-2xl font-bold text-steel-blue font-fraunces">
-                keepla
-              </h1>
-            </div>
-          </div>
-          <p className="text-misty-gray">Presente no futuro</p>
-        </div>
-
         <Card className="emotion-card shadow-soft border-0">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-semibold text-steel-blue font-fraunces">
@@ -112,7 +100,6 @@ const Login = () => {
                   <p className="text-red-600 text-sm mt-1">{errors.email}</p>
                 )}
               </div>
-              
               <div>
                 <Label htmlFor="password" className="text-steel-blue">Palavra-passe</Label>
                 <Input
@@ -129,7 +116,6 @@ const Login = () => {
                   <p className="text-red-600 text-sm mt-1">{errors.password}</p>
                 )}
               </div>
-
               <Button 
                 type="submit" 
                 variant="brand"
@@ -140,7 +126,6 @@ const Login = () => {
                 {loading ? "Entrando..." : "Entrar"}
               </Button>
             </form>
-
             <div className="mt-6 text-center">
               <p className="text-sm text-misty-gray">
                 Ainda não és um Guardião do Tempo?{" "}
@@ -155,7 +140,6 @@ const Login = () => {
             </div>
           </CardContent>
         </Card>
-
         <div className="mt-8 text-center">
           <Button 
             variant="ghost" 

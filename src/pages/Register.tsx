@@ -22,13 +22,9 @@ const Register = () => {
             <span>Voltar ao Início</span>
           </Button>
         </div>
-
         <div className="text-center mb-8">
           <img src="/keepla logo.png" alt="Keepla Logo" className="h-20 mx-auto mb-4" />
         </div>
-          <p className="text-misty-gray">Presente no futuro</p>
-        </div>
-
         <RegisterForm />
       </div>
     </div>
