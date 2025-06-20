@@ -149,45 +149,31 @@ const Dashboard = () => {
 
         {/* Stats Cards with Game Elements */}
         <div className="grid md:grid-cols-3 gap-8 mb-12">
-          <Card className="emotion-card border-dusty-rose/20 shadow-soft">
-            <CardContent className="p-8">
-              <div className="flex items-center space-x-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-dusty-rose to-dusty-rose/80 rounded-2xl flex items-center justify-center shadow-soft">
-                  <Calendar className="h-7 w-7 text-white" />
-                </div>
-                <div>
-                  <p className="text-3xl font-serif font-semibold text-gentle-black">{deliveries.length}</p>
-                  <p className="text-soft-gray font-medium">Entregas Ativas</p>
-                </div>
+          <Card className="emotion-card border-none shadow-xl bg-gradient-to-br from-white via-lavender-mist to-dusty-rose/10">
+            <CardContent className="p-10 flex flex-col items-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-dusty-rose to-dusty-rose/80 rounded-2xl flex items-center justify-center mb-4">
+                <Calendar className="h-8 w-8 text-white" />
               </div>
+              <p className="text-4xl font-serif font-bold text-gentle-black">{deliveries.length}</p>
+              <p className="text-soft-gray font-medium mt-2">Entregas Ativas</p>
             </CardContent>
           </Card>
-
-          <Card className="emotion-card border-dusty-rose/20 shadow-soft">
-            <CardContent className="p-8">
-              <div className="flex items-center space-x-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-golden-honey to-golden-honey/80 rounded-2xl flex items-center justify-center shadow-soft">
-                  <Mail className="h-7 w-7 text-gentle-black" />
-                </div>
-                <div>
-                  <p className="text-3xl font-serif font-semibold text-gentle-black">{digitalDeliveries.length}</p>
-                  <p className="text-soft-gray font-medium">Portais Digitais</p>
-                </div>
+          <Card className="emotion-card border-none shadow-xl bg-gradient-to-br from-white via-lavender-mist to-golden-honey/10">
+            <CardContent className="p-10 flex flex-col items-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-golden-honey to-golden-honey/80 rounded-2xl flex items-center justify-center mb-4">
+                <Mail className="h-8 w-8 text-gentle-black" />
               </div>
+              <p className="text-4xl font-serif font-bold text-gentle-black">{digitalDeliveries.length}</p>
+              <p className="text-soft-gray font-medium mt-2">Portais Digitais</p>
             </CardContent>
           </Card>
-
-          <Card className="emotion-card border-dusty-rose/20 shadow-soft">
-            <CardContent className="p-8">
-              <div className="flex items-center space-x-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-sage-green to-sage-green/80 rounded-2xl flex items-center justify-center shadow-soft">
-                  <Users className="h-7 w-7 text-white" />
-                </div>
-                <div>
-                  <p className="text-3xl font-serif font-semibold text-gentle-black">{physicalDeliveries.length}</p>
-                  <p className="text-soft-gray font-medium">Cápsulas Físicas</p>
-                </div>
+          <Card className="emotion-card border-none shadow-xl bg-gradient-to-br from-white via-lavender-mist to-sage-green/10">
+            <CardContent className="p-10 flex flex-col items-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-sage-green to-sage-green/80 rounded-2xl flex items-center justify-center mb-4">
+                <Users className="h-8 w-8 text-white" />
               </div>
+              <p className="text-4xl font-serif font-bold text-gentle-black">{physicalDeliveries.length}</p>
+              <p className="text-soft-gray font-medium mt-2">Cápsulas Físicas</p>
             </CardContent>
           </Card>
         </div>
