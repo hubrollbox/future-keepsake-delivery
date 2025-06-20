@@ -21,22 +21,22 @@ export default function OnboardingModal() {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <Card className="max-w-md w-full shadow-xl relative z-10 flex flex-col">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0">
+        <img src="/keepla logo.png" alt="Logo" width={300} height={300} className="opacity-10" />
+      </div>
+      <Card className="max-w-md w-full shadow-xl relative z-10">
         <CardHeader>
           <CardTitle>Bem-vindo à Future Keepsake Delivery!</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4 flex-1 flex flex-col justify-between">
+        <CardContent className="space-y-4">
           <ul className="list-disc pl-5 text-gray-700 text-sm">
             <li>Crie e agende entregas digitais ou físicas para o futuro.</li>
             <li>Acompanhe o estado das suas entregas no dashboard.</li>
             <li>Receba notificações automáticas na data marcada.</li>
-            <li>Em caso de dúvida, consulte a <a href="/contact" className="text-blue-600 underline">página de suporte</a>.</li>
+            <li>Em caso de dúvida, consulte a <a href="/contact" className="text-blue-600 underline" target="_blank" rel="noopener noreferrer">página de suporte</a>.</li>
           </ul>
           <Button onClick={handleClose} className="w-full mt-4">Começar</Button>
         </CardContent>
-        <div className="flex justify-center mt-4 mb-2">
-          <img src="/keepla logo.png" alt="Logo" width={120} height={120} className="opacity-20" />
-        </div>
       </Card>
     </div>
   );
