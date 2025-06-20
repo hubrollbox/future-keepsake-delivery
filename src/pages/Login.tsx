@@ -74,6 +74,8 @@ const Login = () => {
     <div className="min-h-screen bg-lavender-mist flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
+          <img src="/keepla logo.png" alt="Keepla Logo" className="h-20 mx-auto mb-4" />
+        </div>
           <div className="flex flex-col items-center justify-center mb-4">
             <img src="/keepla logo monocromatico.png" alt="Keepla Logo" className="h-16 mb-2" />
             <div className="flex items-center justify-center space-x-3">

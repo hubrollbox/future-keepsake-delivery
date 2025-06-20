@@ -24,12 +24,8 @@ const Register = () => {
         </div>
 
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center space-x-3 mb-4 cursor-pointer" onClick={() => navigate('/')}>
-            <SeloDoTempoIcon size={40} />
-            <h1 className="text-2xl font-bold text-steel-blue font-fraunces">
-              keepla
-            </h1>
-          </div>
+          <img src="/keepla logo.png" alt="Keepla Logo" className="h-20 mx-auto mb-4" />
+        </div>
           <p className="text-misty-gray">Presente no futuro</p>
         </div>
 
