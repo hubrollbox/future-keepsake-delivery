@@ -210,3 +210,11 @@ const Navigation = () => {
 };
 
 export default Navigation;
+
+<nav className="flex flex-wrap justify-center items-center gap-4 w-full">
+  <a href="/contacto" className="nav-link">Contacto</a>
+  <a href="/como-funciona" className="nav-link">Como Funciona</a>
+  <a href="/manifesto" className="nav-link">Manifesto</a>
+  <a href="/precos" className="nav-link">Preços</a>
+  <a href="/" className="nav-link">Presentes com Alma</a>
+</nav>
