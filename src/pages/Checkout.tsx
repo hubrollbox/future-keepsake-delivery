@@ -149,7 +149,18 @@ const Checkout = () => {
         deliveryId: `${user.id}-${Date.now()}`
       });
 
-      await clearCart();
+      try {
+        await clearCart();
+      } catch (cartError) {
+        console.error("Erro ao limpar o carrinho:", cartError);
+        toast({
+          title: "Erro ao limpar o carrinho",
+          description: cartError instanceof Error ? cartError.message : "Erro desconhecido ao limpar o carrinho.",
+          variant: "destructive",
+        });
+        setLoading(false);
+        return;
+      }
       
       toast({
         title: "Pedido registado com sucesso! 🎉",
