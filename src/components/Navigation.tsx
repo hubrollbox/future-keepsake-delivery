@@ -48,9 +48,8 @@ const Navigation = () => {
       <nav className="bg-white/95 backdrop-blur-md shadow-gentle border-b border-dusty-rose/20 sticky top-0 z-40" aria-label="Navegação principal">
         <div className="container mx-auto px-4 md:px-8">
           <div className="flex justify-between items-center h-20">
-            <Link to="/" className="flex items-center space-x-3 font-bold text-xl text-steel-blue" aria-label="Página inicial keepla">
-              <SeloDoTempoIcon size={40} />
-              <span className="font-fraunces">keepla</span>
+            <Link to="/" className="flex items-center space-x-3 font-bold text-xl text-steel-blue" aria-label="Página inicial">
+              <img src="/keepla%20logo.png" alt="Logo" style={{width: 40, height: 40}} />
             </Link>
 
             {/* Desktop Menu */}
@@ -123,9 +122,8 @@ const Navigation = () => {
         <DrawerContent className="pt-4 pb-8 px-4">
           <div className="flex flex-col gap-7 mt-3">
             <div className="flex justify-between items-center mb-4">
-              <Link to="/" onClick={() => setIsDrawerOpen(false)} className="flex items-center space-x-2 font-bold text-xl text-steel-blue" aria-label="Página inicial keepla">
-                <SeloDoTempoIcon size={34} />
-                <span className="font-fraunces">keepla</span>
+              <Link to="/" onClick={() => setIsDrawerOpen(false)} className="flex items-center space-x-2 font-bold text-xl text-steel-blue" aria-label="Página inicial">
+                <img src="/keepla%20logo.png" alt="Logo" style={{width: 32, height: 32}} />
               </Link>
               <DrawerClose asChild>
                 <button

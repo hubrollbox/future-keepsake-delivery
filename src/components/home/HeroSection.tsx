@@ -40,11 +40,7 @@ const HeroSection = () => {
         <div className="text-center mb-6 md:mb-12">
           {/* Logo */}
           <div className="flex justify-center mb-5 md:mb-8">
-            <SeloDoTempoIcon
-              size={120}
-              className="drop-shadow-sm animate-fade-in"
-              aria-label="Símbolo Selo do Tempo"
-            />
+            <img src="/keepla%20logo.png" alt="Logo" style={{width: 120, height: 120}} />
           </div>
           {/* Main Headline */}
           <h1 className="text-5xl sm:text-6xl md:text-7xl font-fraunces font-bold text-steel-blue mb-3 md:mb-6 leading-tight" style={{ textShadow: "0 1px 0 #ECE5DA" }}>
