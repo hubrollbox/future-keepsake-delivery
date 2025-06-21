@@ -26,11 +26,16 @@ CREATE TABLE public.admin_roles (
 -- Create is_admin function to avoid RLS recursion
 DROP FUNCTION IF EXISTS public.is_admin(UUID);
 CREATE OR REPLACE FUNCTION public.is_admin(uid UUID)
-RETURNS BOOLEAN AS $$
+RETURNS BOOLEAN
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = public
+AS $$
   SELECT EXISTS (
     SELECT 1 FROM public.admin_roles WHERE user_id = uid AND role = 'admin'
   );
-$$ LANGUAGE sql STABLE;
+$$;
 
 -- Create cart_items table for shopping cart functionality
 CREATE TABLE public.cart_items (
