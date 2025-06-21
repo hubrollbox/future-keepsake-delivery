@@ -252,3 +252,5 @@ const Dashboard = () => {
 
 // === FIM DA REFATORAÇÃO DO DASHBOARD ===
 export default Dashboard;
+
+// Remover qualquer estilo ou div que defina imagem de fundo na Dashboard
