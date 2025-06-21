@@ -114,6 +114,51 @@ src/
 - Políticas RLS e constraints recomendadas em [`supabase/SEGURANCA_RLS.md`](supabase/SEGURANCA_RLS.md)
 - Notificações automáticas agendadas (ver scripts e migrations em `supabase/migrations` e `scripts/`)
 
+## Tabelas Sensíveis e Políticas RLS (Row Level Security)
+
+As seguintes tabelas possuem dados sensíveis e estão protegidas por políticas RLS no Supabase:
+
+| Tabela                   | Campo de Identificação do Usuário |
+|--------------------------|-----------------------------------|
+| admin_roles              | user_id                           |
+| cart_items               | user_id                           |
+| deliveries               | user_id                           |
+| messages                 | user_id                           |
+| notifications            | user_id                           |
+| payments                 | user_id                           |
+| scheduled_notifications  | user_email                        |
+| user_achievements        | user_id                           |
+| user_quests              | user_id                           |
+| user_stats               | user_id                           |
+
+### Políticas RLS Aplicadas
+
+- **Acesso do usuário:** Cada usuário autenticado só pode acessar, inserir, atualizar ou deletar registros onde o campo de identificação corresponde ao seu próprio `auth.uid()` (ou `auth.email()` para `scheduled_notifications`).
+- **Acesso de administrador:** Usuários com o claim JWT `role = 'admin'` têm acesso total a todas as linhas dessas tabelas.
+- **Acesso público:** Não há acesso público a dados sensíveis.
+
+#### Exemplo de política aplicada (cart_items):
+```sql
+-- Permitir acesso total para administradores
+CREATE POLICY "Admin full access" ON cart_items
+  FOR ALL USING (auth.role() = 'admin');
+
+-- Permitir acesso ao próprio dado para usuários autenticados
+CREATE POLICY "User access to own cart items" ON cart_items
+  FOR ALL USING (user_id = auth.uid());
+```
+
+> As demais tabelas seguem o mesmo padrão, trocando o campo de identificação conforme a tabela.
+
+#### scheduled_notifications
+```sql
+CREATE POLICY "User access to own scheduled notifications" ON scheduled_notifications
+  FOR ALL USING (user_email = auth.email());
+```
+
+- Todas as políticas exigem que o usuário esteja autenticado (`auth.uid() IS NOT NULL`).
+- As políticas são revisadas e mantidas em [`supabase/SEGURANCA_RLS.md`](supabase/SEGURANCA_RLS.md) e nos arquivos de migração em `supabase/migrations/`.
+
 ## Melhorias Recentes
 
 - **Página de FAQ**: Agora inclui uma funcionalidade de busca para filtrar perguntas e respostas, além de um design consistente com o restante do site (header e footer).
