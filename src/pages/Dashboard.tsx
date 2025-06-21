@@ -205,6 +205,22 @@ const Dashboard = () => {
 
   return (
     <main className="container mx-auto px-2 py-4 max-w-2xl flex flex-col gap-6">
+      // --- FEATURED PRODUCT PROMOTION SECTION ---
+      const FeaturedProductSection = () => (
+        <section className="mb-6">
+          <Card className="shadow-lg border-2 border-golden-honey bg-yellow-50 animate-pulse-slow">
+            <CardHeader className="flex flex-col items-center gap-2 pb-2">
+              <span className="uppercase tracking-widest text-xs font-bold text-golden-honey">Promoção</span>
+              <CardTitle className="text-2xl font-serif font-semibold text-gentle-black text-center">Produto em Destaque: Caixa do Tempo Premium</CardTitle>
+            </CardHeader>
+            <CardContent className="flex flex-col items-center gap-2">
+              <img src="/keepla%20logo.png" alt="Produto em promoção" className="w-24 h-24 object-contain mb-2" />
+              <p className="text-center text-gentle-black font-medium">Aproveita a oferta especial na Caixa do Tempo Premium! Só esta semana, com 20% de desconto. Ideal para guardar memórias inesquecíveis.</p>
+              <Button variant="gentle" className="mt-2" onClick={() => navigate('/products')}>Ver Produto</Button>
+            </CardContent>
+          </Card>
+        </section>
+      );
       <ProfileSection />
       <TimeCapsuleSection />
       <MemoryTreeSection />
