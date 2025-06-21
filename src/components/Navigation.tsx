@@ -49,7 +49,7 @@ const Navigation = () => {
         <div className="w-full max-w-full px-2 sm:px-4 md:px-8 mx-auto">
           <div className="flex justify-between items-center h-20 min-w-0 overflow-x-hidden max-w-full">
             <Link to="/" className="flex items-center space-x-3 font-bold text-xl text-steel-blue min-w-0 overflow-hidden" aria-label="Página inicial">
-              <img src="/keepla%20logo.png" alt="Logo" style={{width: 40, height: 40}} />
+              <img src="/keepla%20logo.png" alt="Logo" style={{width: 56, height: 56}} />
             </Link>
 
             {/* Desktop Menu */}
