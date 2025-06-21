@@ -193,7 +193,11 @@ CREATE POLICY "Admins can delete their own admin roles" ON public.admin_roles
 
 -- Create trigger function to automatically create profile on user signup
 CREATE OR REPLACE FUNCTION public.handle_new_user()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
 BEGIN
   INSERT INTO public.profiles (id, full_name, email)
   VALUES (
@@ -203,7 +207,7 @@ BEGIN
   );
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$;
 
 -- Create trigger to execute the function on new user creation
 CREATE TRIGGER on_auth_user_created

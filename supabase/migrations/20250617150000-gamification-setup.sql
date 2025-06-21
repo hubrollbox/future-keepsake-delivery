@@ -47,11 +47,15 @@ CREATE TABLE user_stats (
 );
 
 -- Função para calcular nível com base nos pontos
-CREATE FUNCTION calculate_level(points INTEGER) RETURNS INTEGER LANGUAGE plpgsql AS '
+CREATE FUNCTION calculate_level(points INTEGER) RETURNS INTEGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
 BEGIN
     RETURN (points / 100) + 1;
 END;
-';
+$$;
 
 -- Ativar Row Level Security
 ALTER TABLE user_achievements ENABLE ROW LEVEL SECURITY;
