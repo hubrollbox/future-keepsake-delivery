@@ -29,11 +29,14 @@ export default function OnboardingModal() {
       <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none select-none">
         <img src="/keepla%20logo%20monocromatico.png" alt="Logo" className="w-96 h-96 object-contain" />
       </div>
-      <Card className="max-w-md w-full shadow-xl relative z-10">
-        <CardHeader>
-          <CardTitle>Bem-vindo à keepla!</CardTitle>
+      <Card className="max-w-md w-full shadow-xl relative z-10 overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none select-none z-0">
+          <img src="/keepla%20logo%20monocromatico.png" alt="Logo" className="w-96 h-96 object-contain" />
+        </div>
+        <CardHeader className="relative z-10">
+          <CardTitle className="text-center w-full">Bem-vindo à keepla!</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 relative z-10">
           <ul className="list-disc pl-5 text-gray-700 text-sm">
             <li>Crie e agende entregas digitais ou físicas para o futuro.</li>
             <li>Acompanhe o estado das suas entregas no dashboard.</li>

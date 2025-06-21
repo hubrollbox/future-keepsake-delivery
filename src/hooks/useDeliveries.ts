@@ -53,7 +53,7 @@ export const useDeliveries = () => {
       }));
       setDeliveries(mappedData);
     } catch (error: any) {
-      console.error("Error fetching deliveries:", error);
+      console.error("Error fetching deliveries:", typeof error === "object" ? JSON.stringify(error, null, 2) : error);
       toast({
         title: "Erro",
         description: error.message || "Não foi possível carregar as entregas.",
@@ -80,7 +80,7 @@ export const useDeliveries = () => {
 
       fetchDeliveries();
     } catch (error) {
-      console.error("Error deleting delivery:", error);
+      console.error("Error deleting delivery:", typeof error === "object" ? JSON.stringify(error, null, 2) : error);
       toast({
         title: "Erro",
         description: "Não foi possível eliminar a entrega.",

@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         .eq("id", userId)
         .single();
       if (profileError) {
-        console.error("Error fetching profile:", profileError);
+        console.error("Error fetching profile:", typeof profileError === "object" ? JSON.stringify(profileError, null, 2) : profileError);
         return;
       }
       const { data: adminRole } = await supabase
@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       };
       setProfile(profileWithRole);
     } catch (error) {
-      console.error("Error fetching user profile:", error);
+      console.error("Error fetching user profile:", typeof error === "object" ? JSON.stringify(error, null, 2) : error);
     }
   };
 

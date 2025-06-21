@@ -23,6 +23,14 @@ CREATE TABLE public.admin_roles (
   UNIQUE(user_id, role)
 );
 
+-- Create is_admin function to avoid RLS recursion
+CREATE OR REPLACE FUNCTION public.is_admin(uid UUID)
+RETURNS BOOLEAN AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM public.admin_roles WHERE user_id = uid AND role = 'admin'
+  );
+$$ LANGUAGE sql STABLE;
+
 -- Create cart_items table for shopping cart functionality
 CREATE TABLE public.cart_items (
   id UUID NOT NULL DEFAULT gen_random_uuid(),
@@ -58,7 +66,6 @@ CREATE TABLE public.deliveries (
   delivery_date TIMESTAMP WITH TIME ZONE NOT NULL,
   status TEXT NOT NULL DEFAULT 'scheduled',
   type TEXT NOT NULL DEFAULT 'digital',
-  recipient_email TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   PRIMARY KEY (id)
@@ -156,30 +163,15 @@ CREATE POLICY "Users can view their own payments" ON public.payments
 CREATE POLICY "Users can insert their own payments" ON public.payments
   FOR INSERT WITH CHECK ((select auth.uid()) = user_id);
 
--- Admin-only policies for warehouse_items
+-- Admin-only policies for warehouse_items (now using is_admin)
 CREATE POLICY "Admins can view all warehouse items" ON public.warehouse_items
-  FOR SELECT USING (
-    EXISTS (
-      SELECT 1 FROM public.admin_roles 
-      WHERE user_id = (select auth.uid()) AND role = 'admin'
-    )
-  );
+  FOR SELECT USING (public.is_admin((select auth.uid())));
 
 CREATE POLICY "Admins can insert warehouse items" ON public.warehouse_items
-  FOR INSERT WITH CHECK (
-    EXISTS (
-      SELECT 1 FROM public.admin_roles 
-      WHERE user_id = (select auth.uid()) AND role = 'admin'
-    )
-  );
+  FOR INSERT WITH CHECK (public.is_admin((select auth.uid())));
 
 CREATE POLICY "Admins can update warehouse items" ON public.warehouse_items
-  FOR UPDATE USING (
-    EXISTS (
-      SELECT 1 FROM public.admin_roles 
-      WHERE user_id = (select auth.uid()) AND role = 'admin'
-    )
-  );
+  FOR UPDATE USING (public.is_admin((select auth.uid())));
 
 -- Admin policies for admin_roles
 CREATE POLICY "Admins can view their own admin roles" ON public.admin_roles
@@ -199,17 +191,12 @@ SECURITY DEFINER
 SET search_path = public
 AS $$
 BEGIN
-  INSERT INTO public.profiles (id, full_name, email)
-  VALUES (
-    NEW.id,
-    NEW.raw_user_meta_data ->> 'full_name',
-    NEW.email
-  );
+  INSERT INTO public.profiles (id, full_name, email, avatar_url)
+  VALUES (NEW.id, NEW.raw_user_meta_data->>'full_name', NEW.email, NEW.raw_user_meta_data->>'avatar_url');
   RETURN NEW;
 END;
 $$;
 
--- Create trigger to execute the function on new user creation
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
-  FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+  FOR EACH ROW EXECUTE PROCEDURE public.handle_new_user();
