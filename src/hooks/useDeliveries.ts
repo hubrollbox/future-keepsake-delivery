@@ -35,8 +35,15 @@ export const useDeliveries = () => {
         .eq("user_id", user.id)
         .order("delivery_date", { ascending: true });
 
-      if (error) throw error;
-      
+      if (error) {
+        toast({
+          title: "Erro",
+          description: error.message || "Não foi possível carregar as entregas.",
+          variant: "destructive",
+        });
+        setLoading(false);
+        return;
+      }
       // Map the data to include missing fields as null if they don't exist
       const mappedData = (data || []).map((delivery: any) => ({
         ...delivery,
@@ -44,13 +51,12 @@ export const useDeliveries = () => {
         delivery_address: delivery.delivery_address || null,
         message: delivery.message || null,
       }));
-      
       setDeliveries(mappedData);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error fetching deliveries:", error);
       toast({
         title: "Erro",
-        description: "Não foi possível carregar as entregas.",
+        description: error.message || "Não foi possível carregar as entregas.",
         variant: "destructive",
       });
     } finally {

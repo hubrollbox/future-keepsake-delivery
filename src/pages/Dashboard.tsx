@@ -31,6 +31,11 @@ const Dashboard = () => {
   const [search, setSearch] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState<string | null>(null);
 
+  React.useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user, navigate]);
   // --- Helper functions moved inside component ---
   const getStatusColor = (status: string | null) => {
     switch (status) {

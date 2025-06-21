@@ -22,7 +22,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (error) throw error;
       setItems(data || []);
     } catch (error) {
-      console.error("Error fetching cart items:", error);
+      console.error("Error fetching cart items:", typeof error === "object" ? JSON.stringify(error, null, 2) : error);
       toast({
         title: "Erro",
         description: "Não foi possível carregar o carrinho.",
@@ -66,7 +66,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         description: `${title} foi adicionado ao carrinho.`,
       });
     } catch (error) {
-      console.error("Error adding to cart:", error);
+      console.error("Error adding to cart:", typeof error === "object" ? JSON.stringify(error, null, 2) : error);
       toast({
         title: "Erro",
         description: "Não foi possível adicionar o produto ao carrinho.",
@@ -88,7 +88,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (error) throw error;
       setItems(prev => prev.map(item => item.id === itemId ? { ...item, quantity } : item));
     } catch (error) {
-      console.error("Error updating quantity:", error);
+      console.error("Error updating quantity:", typeof error === "object" ? JSON.stringify(error, null, 2) : error);
       toast({
         title: "Erro",
         description: "Não foi possível atualizar a quantidade.",
@@ -110,7 +110,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         description: "O produto foi removido do carrinho.",
       });
     } catch (error) {
-      console.error("Error removing from cart:", error);
+      console.error("Error removing from cart:", typeof error === "object" ? JSON.stringify(error, null, 2) : error);
       toast({
         title: "Erro",
         description: "Não foi possível remover o produto.",
@@ -129,7 +129,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (error) throw error;
       setItems([]);
     } catch (error) {
-      console.error("Error clearing cart:", error);
+      console.error("Error clearing cart:", typeof error === "object" ? JSON.stringify(error, null, 2) : error);
       throw error;
     }
   };

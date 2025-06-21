@@ -36,13 +36,21 @@ const AdminMessages = () => {
         .select("*")
         .order("created_at", { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        toast({
+          title: "Erro",
+          description: error.message || "Não foi possível carregar as mensagens.",
+          variant: "destructive",
+        });
+        setLoading(false);
+        return;
+      }
       setMessages(data || []);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error fetching messages:", error);
       toast({
         title: "Erro",
-        description: "Não foi possível carregar as mensagens.",
+        description: error.message || "Não foi possível carregar as mensagens.",
         variant: "destructive",
       });
     } finally {
