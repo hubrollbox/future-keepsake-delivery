@@ -212,9 +212,18 @@ const Dashboard = () => {
           <CardTitle className="text-2xl font-serif font-semibold text-gentle-black text-center">Produto em Destaque: Caixa do Tempo Premium</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col items-center gap-2">
-          <img src="/lovable-uploads/a58d6383-77f7-451e-b692-d10c4298397e.png" alt="Kit promocional: chupeta e mordedor" className="w-40 h-40 object-contain mb-2 rounded-xl shadow" />
-          <p className="text-center text-gentle-black font-medium">Aproveita a oferta especial na Caixa do Tempo Premium! Só esta semana, com 20% de desconto. Ideal para guardar memórias inesquecíveis.</p>
-          <Button variant="gentle" className="mt-2" onClick={() => navigate('/products')}>Ver Produto</Button>
+          <img
+            src="/Capsula do Tempo.png"
+            alt="Caixa do Tempo Premium"
+            className="w-32 h-32 object-contain rounded-lg shadow-md mb-2"
+          />
+          <h2 className="font-bold text-center text-lg">Caixa do Tempo Premium</h2>
+          <p className="text-center text-sm">Oferta especial: Ganhe um mimo exclusivo na sua primeira compra!</p>
+          <a href="/products" className="mt-2">
+            <Button variant="brand">
+              Aproveitar Oferta
+            </Button>
+          </a>
         </CardContent>
       </Card>
     </section>
