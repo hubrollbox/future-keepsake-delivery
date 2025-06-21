@@ -231,14 +231,17 @@ const Dashboard = () => {
 
   return (
     <main
-      className="container mx-auto px-2 py-4 max-w-2xl flex flex-col gap-6"
+      className="container mx-auto px-4 py-8 max-w-6xl grid grid-cols-1 lg:grid-cols-3 gap-8"
     >
-      {/* Conteúdo do Dashboard permanece igual, sem produto em destaque */}
-      <ProfileSection />
-      <FeaturedProductSection />
-      <TimeCapsuleSection />
-      <MemoryTreeSection />
-      <AdminSection />
+      <div className="flex flex-col gap-8 lg:col-span-1">
+        <ProfileSection />
+        <FeaturedProductSection />
+      </div>
+      <div className="flex flex-col gap-8 lg:col-span-2">
+        <TimeCapsuleSection />
+        <MemoryTreeSection />
+        <AdminSection />
+      </div>
     </main>
   );
 };
