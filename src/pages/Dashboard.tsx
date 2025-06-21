@@ -232,14 +232,6 @@ const Dashboard = () => {
   return (
     <main
       className="container mx-auto px-2 py-4 max-w-2xl flex flex-col gap-6"
-      style={{
-        backgroundImage: "url('/lovable-uploads/a58d6383-77f7-451e-b692-d10c4298397e.png')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        minHeight: '100vh',
-        borderRadius: '2rem',
-      }}
     >
       {/* Conteúdo do Dashboard permanece igual, sem produto em destaque */}
       <ProfileSection />
@@ -252,5 +244,3 @@ const Dashboard = () => {
 
 // === FIM DA REFATORAÇÃO DO DASHBOARD ===
 export default Dashboard;
-
-// Remover qualquer estilo ou div que defina imagem de fundo na Dashboard
