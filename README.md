@@ -250,16 +250,35 @@ Para dúvidas ou suporte, abra uma issue ou contacte a equipa de desenvolvimento
 
 # FuturoPresente
 
-## Banco de Dados: Tabelas e Segurança
+## Banco de Dados e Segurança (Supabase)
 
-A plataforma utiliza o Supabase como backend, com as principais tabelas:
-- **profiles**: informações dos usuários
-- **admin_roles**: permissões administrativas
-- **cart_items**: itens do carrinho
-- **warehouse_items**: estoque de cápsulas
-- **deliveries**: entregas agendadas
-- **messages**: mensagens entre usuários e sistema
-- **payments**: pagamentos e status
+A plataforma utiliza Supabase como backend, com autenticação, políticas de segurança (RLS) e migrations versionadas. Principais tabelas e políticas:
 
-A segurança é reforçada com Row Level Security (RLS) ativada nas tabelas sensíveis, garantindo que cada usuário só acesse seus próprios dados. As políticas de RLS e exemplos de uso estão detalhados em [`supabase/SEGURANCA_RLS.md`](supabase/SEGURANCA_RLS.md). Para detalhes sobre a estrutura das tabelas, consulte as [migrations](supabase/migrations/).
+- **Tabelas:**
+  - `profiles`: dados do usuário
+  - `admin_roles`: controle de administradores
+  - `cart_items`, `warehouse_items`, `deliveries`, `messages`, `payments`
+  - `scheduled_notifications`: notificações agendadas associadas ao `user_id`
+  - Gamificação: `achievements`, `user_achievements`, `quests`, `user_quests`, `user_stats`
+
+- **Funções e triggers:**
+  - `is_admin(uuid)`: verifica se o usuário é admin
+  - `handle_new_user()`: cria perfil automaticamente ao registrar
+
+- **RLS (Row Level Security):**
+  - Ativada em todas as tabelas sensíveis
+  - Usuários só acessam seus próprios dados (`user_id = auth.uid()`)
+  - Admins podem gerenciar itens do warehouse
+  - Políticas específicas para UPDATE/DELETE em `scheduled_notifications`
+
+- **Migrations:**
+  - Arquivos SQL em `supabase/migrations/`
+  - Execute as migrations no painel do Supabase ou CLI para garantir o schema e as políticas corretas
+
+## Como rodar as migrations no Supabase
+
+1. Acesse o painel do Supabase ou utilize a CLI
+2. Execute cada arquivo `.sql` da pasta `supabase/migrations/` na ordem de criação
+3. Confirme que as funções, triggers e políticas foram aplicadas corretamente
+
 > Para exemplos de testes E2E, veja `cypress/e2e/`.

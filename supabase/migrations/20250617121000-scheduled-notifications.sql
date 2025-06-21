@@ -1,7 +1,7 @@
--- Tabela para notificações agendadas (PostgreSQL padrão, sem IF NOT EXISTS)
+-- Tabela para notificações agendadas (padronizada com user_id)
 CREATE TABLE scheduled_notifications (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_email text NOT NULL,
+  user_id uuid NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   recipient_email text NOT NULL,
   delivery_date timestamptz NOT NULL,
   message text NOT NULL,
