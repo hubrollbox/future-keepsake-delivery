@@ -24,6 +24,7 @@ CREATE TABLE public.admin_roles (
 );
 
 -- Create is_admin function to avoid RLS recursion
+DROP FUNCTION IF EXISTS public.is_admin(UUID);
 CREATE OR REPLACE FUNCTION public.is_admin(uid UUID)
 RETURNS BOOLEAN AS $$
   SELECT EXISTS (
