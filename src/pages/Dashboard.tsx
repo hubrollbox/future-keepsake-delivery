@@ -212,7 +212,7 @@ const Dashboard = () => {
           <CardTitle className="text-2xl font-serif font-semibold text-gentle-black text-center">Produto em Destaque: Caixa do Tempo Premium</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col items-center gap-2">
-          <img src="/keepla%20logo.png" alt="Produto em promoção" className="w-24 h-24 object-contain mb-2" />
+          <img src="/lovable-uploads/a58d6383-77f7-451e-b692-d10c4298397e.png" alt="Kit promocional: chupeta e mordedor" className="w-40 h-40 object-contain mb-2 rounded-xl shadow" />
           <p className="text-center text-gentle-black font-medium">Aproveita a oferta especial na Caixa do Tempo Premium! Só esta semana, com 20% de desconto. Ideal para guardar memórias inesquecíveis.</p>
           <Button variant="gentle" className="mt-2" onClick={() => navigate('/products')}>Ver Produto</Button>
         </CardContent>
