@@ -235,6 +235,7 @@ const Dashboard = () => {
     >
       {/* Conteúdo do Dashboard permanece igual, sem produto em destaque */}
       <ProfileSection />
+      <FeaturedProductSection />
       <TimeCapsuleSection />
       <MemoryTreeSection />
       <AdminSection />
