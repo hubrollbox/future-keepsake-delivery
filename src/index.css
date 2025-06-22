@@ -116,19 +116,36 @@
   .btn-secondary {
     border: 2px solid var(--earthy-burgundy);
     color: var(--earthy-burgundy);
-    @apply px-8 py-4 rounded-xl font-medium transition-all duration-200 shadow-sm hover:shadow-md;
+    padding: 2rem 1rem;
+    border-radius: 0.75rem;
+    font-weight: 500;
+    transition: all 200ms;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   }
   .btn-secondary:hover {
     background-color: rgba(var(--dusty-rose), 0.2);
     color: var(--earthy-burgundy);
   }
-  .btn-outline-brand { @apply border-2 border-dusty-rose text-earthy-burgundy bg-transparent hover:bg-dusty-rose/10 transition-colors duration-200; }
+  .btn-outline-brand {
+    border: 2px solid var(--dusty-rose);
+    color: var(--earthy-burgundy);
+    background-color: transparent;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  .btn-outline-brand:hover {
+    background-color: rgba(var(--dusty-rose), 0.1);
+  }
 
   /* --------------------------------
    CAMPOS DE INPUT E FOCO
    -------------------------------- */
   input, textarea, select {
-    @apply rounded-xl bg-white border border-dusty-rose/25 px-4 py-3 text-steel-blue placeholder:text-misty-gray focus:ring-2 focus:ring-dusty-rose focus:border-dusty-rose transition-all duration-200;
+    border-radius: 0.75rem;
+    background-color: white;
+    border: 1px solid rgba(218, 184, 195, 0.25);
+    padding: 0.75rem 1rem;
+    color: #3D4A5A;
+    transition: all 200ms;
     min-height: 44px; /* Acessibilidade touch */
   }
   input:focus-visible, textarea:focus-visible, select:focus-visible {
@@ -214,7 +231,11 @@
   /* Gentle button styles seguindo o manual */
   .btn-gentle {
     /* purgecss start ignore */
-    @apply px-8 py-4 rounded-xl font-medium transition-all duration-200 shadow-sm hover:shadow-md;
+    padding: 2rem 1rem;
+    border-radius: 0.75rem;
+    font-weight: 500;
+    transition: all 200ms;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     /* purgecss end ignore */
   }
 
@@ -222,7 +243,11 @@
     /* purgecss start ignore */
     background-color: var(--earthy-burgundy);
     color: white;
-    @apply px-8 py-4 rounded-xl font-medium transition-all duration-200 shadow-sm hover:shadow-md;
+    padding: 2rem 1rem;
+    border-radius: 0.75rem;
+    font-weight: 500;
+    transition: all 200ms;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     /* purgecss end ignore */
   }
 
@@ -230,7 +255,11 @@
     /* purgecss start ignore */
     border: 2px solid theme('colors.earthy-burgundy');
     color: theme('colors.earthy-burgundy');
-    @apply px-8 py-4 rounded-xl font-medium transition-all duration-200 shadow-sm hover:shadow-md hover:bg-[rgba(139,58,98,0.04)];
+    padding: 2rem 1rem;
+    border-radius: 0.75rem;
+    font-weight: 500;
+    transition: all 200ms;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     /* purgecss end ignore */
   }
 
