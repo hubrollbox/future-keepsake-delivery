@@ -8,7 +8,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           react: ['react', 'react-dom'],
-          vendor: ['@supabase/supabase-js', 'axios', 'lodash'] // adicione libs grandes aqui
+          vendor: ['@supabase/supabase-js', 'axios', 'lodash']
         }
       }
     }
