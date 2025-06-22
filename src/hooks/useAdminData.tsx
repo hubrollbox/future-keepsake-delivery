@@ -1,8 +1,13 @@
 
 import { useState, useEffect } from "react";
-import { supabase } from '@/integrations/supabase/client';
-import { useToast } from "@/hooks/use-toast";
-import { fetchAdminStats } from "@/services/adminService";
+import { createClient } from '@supabase/supabase-js';
+
+// Initialize Supabase client
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+export const supabase = createClient(supabaseUrl, supabaseKey);
+import { useToast } from "../components/ui/use-toast";
+import { fetchAdminStats } from "../services/adminService";
 
 export interface AdminStats {
   totalDeliveries: number;

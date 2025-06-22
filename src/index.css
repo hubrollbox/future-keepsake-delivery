@@ -6,9 +6,10 @@
 @import './styles/utilities.css';
 @import './styles/variables.css';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Import Tailwind base styles */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 @layer base {
   :root {
@@ -59,11 +60,68 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }
-  .emotional-spacing { @apply py-20 md:py-32 lg:py-40; }
-  .gentle-spacing { @apply py-8 md:py-14; }
-  .btn-gentle { @apply px-8 py-4 rounded-xl font-medium transition-all duration-200 shadow-soft hover:shadow-md border-2 border-dusty-rose; }
-  .btn-primary { @apply bg-earthy-burgundy text-white btn-gentle hover:bg-earthy-burgundy/90 border-2 border-dusty-rose focus-visible:ring-2 focus-visible:ring-dusty-rose; }
-  .btn-secondary { @apply border-2 border-earthy-burgundy text-earthy-burgundy btn-gentle hover:bg-dusty-rose/20 hover:text-earthy-burgundy; }
+  .emotional-spacing { 
+    padding-top: 5rem; /* py-20 */
+    padding-bottom: 5rem;
+    
+    @media (min-width: 768px) { /* md: breakpoint */
+      padding-top: 8rem; /* py-32 */
+      padding-bottom: 8rem;
+    }
+    
+    @media (min-width: 1024px) { /* lg: breakpoint */
+      padding-top: 10rem; /* py-40 */
+      padding-bottom: 10rem;
+    }
+  }
+  .gentle-spacing { 
+    padding-top: 2rem; /* py-8 */
+    padding-bottom: 2rem;
+  }
+  @media (min-width: 768px) { /* md: breakpoint */
+    .gentle-spacing {
+      padding-top: 3.5rem; /* py-14 */
+      padding-bottom: 3.5rem;
+    }
+  }
+  .btn-gentle { 
+    padding: 1rem 2rem; /* px-8 py-4 */
+    border-radius: 0.75rem; /* rounded-xl */ 
+    font-weight: 500; /* font-medium */
+    transition: all 200ms; /* transition-all duration-200 */
+    box-shadow: 0 2px 18px 0 rgba(218, 184, 195, 0.11), 0 1.5px 5px 0 rgba(139, 58, 98, 0.13); /* shadow-soft */
+    border: 2px solid var(--dusty-rose); /* border-2 border-dusty-rose */
+  }
+  .btn-gentle:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* hover:shadow-md */
+  }
+  .btn-primary { 
+    background-color: var(--earthy-burgundy);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 0.75rem;
+    font-weight: 500;
+    transition: all 200ms;
+    box-shadow: 0 2px 18px 0 rgba(218, 184, 195, 0.11), 0 1.5px 5px 0 rgba(139, 58, 98, 0.13);
+    border: 2px solid var(--dusty-rose);
+  }
+  .btn-primary:hover {
+    background-color: rgba(var(--earthy-burgundy), 0.9);
+  }
+  .btn-primary:focus-visible {
+    outline: none;
+    outline-width: 2px;
+    --ring-color: var(--dusty-rose);
+  }
+  .btn-secondary {
+    border: 2px solid var(--earthy-burgundy);
+    color: var(--earthy-burgundy);
+    @apply px-8 py-4 rounded-xl font-medium transition-all duration-200 shadow-sm hover:shadow-md;
+  }
+  .btn-secondary:hover {
+    background-color: rgba(var(--dusty-rose), 0.2);
+    color: var(--earthy-burgundy);
+  }
   .btn-outline-brand { @apply border-2 border-dusty-rose text-earthy-burgundy bg-transparent hover:bg-dusty-rose/10 transition-colors duration-200; }
 
   /* --------------------------------
@@ -162,13 +220,17 @@
 
   .btn-primary {
     /* purgecss start ignore */
-    @apply bg-earthy-burgundy text-white btn-gentle hover:bg-earthy-burgundy/90;
+    background-color: var(--earthy-burgundy);
+    color: white;
+    @apply px-8 py-4 rounded-xl font-medium transition-all duration-200 shadow-sm hover:shadow-md;
     /* purgecss end ignore */
   }
 
   .btn-secondary {
     /* purgecss start ignore */
-    @apply border-2 border-earthy-burgundy text-earthy-burgundy btn-gentle hover-brand;
+    border: 2px solid theme('colors.earthy-burgundy');
+    color: theme('colors.earthy-burgundy');
+    @apply px-8 py-4 rounded-xl font-medium transition-all duration-200 shadow-sm hover:shadow-md hover:bg-[rgba(139,58,98,0.04)];
     /* purgecss end ignore */
   }
 
