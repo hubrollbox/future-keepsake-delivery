@@ -10,7 +10,8 @@ import OnboardingModal from "@/components/OnboardingModal";
 import { GamificationProvider } from "@/contexts/GamificationContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Index = lazy(() => import("./pages/Index"));
 const Login = lazy(() => import("./pages/Login"));
@@ -33,49 +34,65 @@ const Profile = lazy(() => import("./pages/Profile"));
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <AuthProvider>
-        <CartProvider>
-          <GamificationProvider>
-            {/* Logo no canto superior esquerdo */}
-            <Toaster />
-            <Sonner />
-            <ErrorBoundaryComponent>
-              <ErrorBoundary fallback={<div>Ocorreu um erro inesperado.</div>}>
-                <BrowserRouter>
-                  <OnboardingModal />
-                  <Suspense fallback={<div>Carregando...</div>}>
-                    <Routes>
-                      <Route path="/" element={<Index />} />
-                      <Route path="/login" element={<Login />} />
-                      <Route path="/register" element={<Register />} />
-                      <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-                      <Route path="/create-delivery" element={<ProtectedRoute><CreateDelivery /></ProtectedRoute>} />
-                      <Route path="/admin/*" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-                      <Route path="/products" element={<Products />} />
-                      <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
-                      <Route path="/how-it-works" element={<HowItWorks />} />
-                      <Route path="/pricing" element={<Pricing />} />
-                      <Route path="/about" element={<About />} />
-                      <Route path="/contact" element={<Contact />} />
-                      <Route path="/partnerships" element={<Partnerships />} />
-                      <Route path="/terms-conditions" element={<TermsConditions />} />
-                      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-                      <Route path="/faq" element={<FAQ />} />
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                  </Suspense>
-                </BrowserRouter>
-              </ErrorBoundary>
-            </ErrorBoundaryComponent>
-          </GamificationProvider>
-        </CartProvider>
-      </AuthProvider>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        console.warn("Sem sessão – redirecionando para login");
+        // window.location.href = "/login"; // ou usa o teu router, ex: navigate("/login")
+      } else {
+        const { data: { user } } = await supabase.auth.getUser();
+        console.log("Utilizador:", user);
+      }
+    };
+    checkSession();
+  }, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <AuthProvider>
+          <CartProvider>
+            <GamificationProvider>
+              {/* Logo no canto superior esquerdo */}
+              <Toaster />
+              <Sonner />
+              <ErrorBoundaryComponent>
+                <ErrorBoundary fallback={<div>Ocorreu um erro inesperado.</div>}>
+                  <BrowserRouter>
+                    <OnboardingModal />
+                    <Suspense fallback={<div>Carregando...</div>}>
+                      <Routes>
+                        <Route path="/" element={<Index />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+                        <Route path="/create-delivery" element={<ProtectedRoute><CreateDelivery /></ProtectedRoute>} />
+                        <Route path="/admin/*" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+                        <Route path="/products" element={<Products />} />
+                        <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
+                        <Route path="/how-it-works" element={<HowItWorks />} />
+                        <Route path="/pricing" element={<Pricing />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="/contact" element={<Contact />} />
+                        <Route path="/partnerships" element={<Partnerships />} />
+                        <Route path="/terms-conditions" element={<TermsConditions />} />
+                        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+                        <Route path="/faq" element={<FAQ />} />
+                        <Route path="*" element={<NotFound />} />
+                      </Routes>
+                    </Suspense>
+                  </BrowserRouter>
+                </ErrorBoundary>
+              </ErrorBoundaryComponent>
+            </GamificationProvider>
+          </CartProvider>
+        </AuthProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
