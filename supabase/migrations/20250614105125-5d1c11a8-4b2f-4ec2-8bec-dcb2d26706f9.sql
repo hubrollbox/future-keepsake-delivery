@@ -181,7 +181,8 @@ CREATE POLICY "Admins can update warehouse items" ON public.warehouse_items
 
 -- Admin policies for admin_roles
 CREATE POLICY "Admins can view their own admin roles" ON public.admin_roles
-  FOR SELECT USING (user_id = (select auth.uid()));
+  FOR SELECT USING (user_id = (select auth.uid()) OR (EXISTS (SELECT 1 FROM public.admin_roles ar2 WHERE ar2.user_id = (select auth.uid()) AND ar2.role = 'admin')));
+-- Agora, um admin pode ver todos os admin_roles, e um usuário comum só pode ver o seu próprio registro.
 
 CREATE POLICY "Admins can insert admin roles" ON public.admin_roles
   FOR INSERT WITH CHECK (user_id = (select auth.uid()));
