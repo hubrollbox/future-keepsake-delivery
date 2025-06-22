@@ -4,18 +4,12 @@ import type { Database } from './types';
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-console.log("SUPABASE_URL:", SUPABASE_URL);
-console.log("SUPABASE_PUBLISHABLE_KEY:", SUPABASE_PUBLISHABLE_KEY);
-
-// Import the supabase client like this:
-// import { supabase } from "@/integrations/supabase/client";
-
 export const supabase = createBrowserClient<Database>(
   SUPABASE_URL,
   SUPABASE_PUBLISHABLE_KEY,
   {
     auth: {
-      flowType: 'implicit', // To support magic links and OAuth on multiple devices
+      flowType: 'implicit',
       autoRefreshToken: true,
       persistSession: true,
     },
