@@ -66,7 +66,16 @@ const Login = () => {
     setLoading(false);
     
     if (!error) {
-      navigate('/dashboard');
+      // Aguarda a sessão estar disponível antes de navegar
+      const checkSession = () => {
+        const session = localStorage.getItem('sb-'.concat(import.meta.env.VITE_SUPABASE_URL?.split('https://')[1] || '', '-auth-token'));
+        if (session) {
+          navigate('/dashboard');
+        } else {
+          setTimeout(checkSession, 100);
+        }
+      };
+      checkSession();
     }
   };
 
