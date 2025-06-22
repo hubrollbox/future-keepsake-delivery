@@ -223,3 +223,4 @@ $$;
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE PROCEDURE public.handle_new_user();
+-- Importante: NÃO use public.is_admin em políticas da tabela admin_roles para evitar recursão infinita.
