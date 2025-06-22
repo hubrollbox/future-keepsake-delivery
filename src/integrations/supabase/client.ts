@@ -34,3 +34,19 @@ export const supabase = createBrowserClient<Database>(
     },
   }
 );
+
+
+export async function verificarUsuarioLogado() {
+  const { data: { session }, error } = await supabase.auth.getSession();
+  if (error) {
+    console.error('Erro ao obter a sessão:', error.message);
+    return false;
+  }
+  if (session && session.user) {
+    console.log('Usuário está logado:', session.user);
+    return true;
+  } else {
+    console.log('Nenhum usuário logado.');
+    return false;
+  }
+}
