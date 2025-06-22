@@ -11,9 +11,11 @@ console.log("SUPABASE_PUBLISHABLE_KEY:", SUPABASE_PUBLISHABLE_KEY);
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
 
+const isBrowser = typeof window !== "undefined" && !!window.localStorage;
+
 export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
   auth: {
-    persistSession: true,
-    storage: typeof window !== "undefined" ? window.localStorage : undefined
+    persistSession: isBrowser,
+    storage: isBrowser ? window.localStorage : undefined
   }
 });
