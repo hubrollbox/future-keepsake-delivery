@@ -20,7 +20,11 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
         const { data: { session } } = await supabase.auth.getSession();
         setSession(session);
       } catch (error) {
-        console.error("Error getting session:", error);
+        if (error && typeof error === "object" && "name" in error && error.name === "AuthSessionMissingError") {
+          setSession(null);
+        } else {
+          console.error("Error getting session:", error);
+        }
       } finally {
         setLoading(false);
       }

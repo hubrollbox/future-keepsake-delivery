@@ -45,7 +45,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           await fetchUserProfile(session.user.id);
         }
       } catch (error) {
-        console.error("Error getting session:", error);
+        if (error && typeof error === "object" && "name" in error && error.name === "AuthSessionMissingError") {
+          toast({ title: "Sessão ausente", description: "Por favor, faça login novamente.", variant: "destructive" });
+          setSession(null);
+          setUser(null);
+          setProfile(null);
+        } else {
+          console.error("Error getting session:", error);
+        }
       } finally {
         setLoading(false);
       }
