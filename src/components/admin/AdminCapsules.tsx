@@ -2,22 +2,22 @@ import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { fetchCapsules } from "@/services/capsuleService";
+import { fetchCapsules, Capsule } from "@/services/capsuleService";
 
-interface Capsule {
-  id: string;
-  type: "Física" | "Digital";
-  physical_location?: string;
-  digital_link?: string;
-  created_at: string;
-  delivery_date: string;
-  status: string;
-  sender_name: string;
-  sender_contact: string;
-  recipient_name: string;
-  recipient_contact: string;
-  notes?: string;
-}
+// interface Capsule {
+//   id: string;
+//   type: "Física" | "Digital";
+//   physical_location?: string;
+//   digital_link?: string;
+//   created_at: string;
+//   delivery_date: string;
+//   status: string;
+//   sender_name: string;
+//   sender_contact: string;
+//   recipient_name: string;
+//   recipient_contact: string;
+//   notes?: string;
+// }
 
 const AdminCapsules = () => {
   const [capsules, setCapsules] = useState<Capsule[]>([]);
