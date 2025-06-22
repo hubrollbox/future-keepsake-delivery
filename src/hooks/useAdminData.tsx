@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { fetchAdminStats } from "@/services/adminService";
 
 export interface AdminStats {
   totalDeliveries: number;
@@ -49,22 +50,14 @@ export const useAdminData = () => {
 
   const fetchStats = async () => {
     try {
-      const [deliveriesRes, digitalMsgRes, warehouseRes, paymentsRes] = await Promise.all([
-        supabase.from("deliveries").select("id, delivery_date, status"),
-        supabase.from("digital_messages").select("id"),
-        supabase.from("warehouse_items").select("id"),
-        supabase.from("payments").select("id, created_at").gte("created_at", new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()),
-      ]);
-
+      const { deliveriesRes, digitalMsgRes, warehouseRes, paymentsRes } = await fetchAdminStats();
       const totalDeliveries = deliveriesRes.data?.length || 0;
       const now = new Date();
       const nextWeek = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
-      
       const pendingDeliveries = deliveriesRes.data?.filter(delivery => {
         const deliveryDate = new Date(delivery.delivery_date);
         return delivery.status === 'pendente' && deliveryDate >= now && deliveryDate <= nextWeek;
       }).length || 0;
-
       setStats({
         totalDeliveries,
         pendingDeliveries,
@@ -79,9 +72,8 @@ export const useAdminData = () => {
         description: "Não foi possível carregar as estatísticas.",
         variant: "destructive",
       });
-    } finally {
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   const updateDeliveryStatus = async (deliveryId: string, status: string) => {

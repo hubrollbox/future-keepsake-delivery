@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import useAchievements, { Achievement } from "@/hooks/useAchievements";
-import { supabase } from "@/integrations/supabase/client";
+import { getCurrentUser } from "@/services/userService";
 
 interface GamificationContextProps {
   achievements: Achievement[];
@@ -17,14 +17,13 @@ export const GamificationProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const { data: { user }, error } = await supabase.auth.getUser();
-      if (error) {
+      try {
+        const user = await getCurrentUser();
+        setUserId(user?.id || null);
+      } catch (error) {
         console.error("Error fetching user:", error);
-        return;
       }
-      setUserId(user?.id || null);
     };
-
     fetchUser();
   }, []);
 

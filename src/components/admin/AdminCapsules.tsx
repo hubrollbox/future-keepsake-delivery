@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { supabase } from "@/integrations/supabase/client";
+import { fetchCapsules } from "@/services/capsuleService";
 
 interface Capsule {
   id: string;
@@ -25,15 +25,13 @@ const AdminCapsules = () => {
   // ... filtros, busca, etc.
 
   useEffect(() => {
-    fetchCapsules();
+    fetchCapsules()
+      .then(setCapsules)
+      .catch(() => setCapsules([]))
+      .finally(() => setLoading(false));
   }, []);
 
-  const fetchCapsules = async () => {
-    const { data, error } = await supabase.from("capsules").select("*");
-    if (!error) setCapsules(data || []);
-    setLoading(false);
-  };
-
+  // Remove fetchCapsules definition from here
   // ... renderização da tabela, filtros, ações, etc.
 
   return (

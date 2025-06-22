@@ -5,17 +5,26 @@ import { Link } from "react-router-dom";
 
 const ONBOARDING_KEY = "onboarding_seen";
 
+// Hook customizado para localStorage
+function useLocalStorage(key: string, initial: string) {
+  const [value, setValue] = useState(() => localStorage.getItem(key) || initial);
+  const setStored = (val: string) => {
+    localStorage.setItem(key, val);
+    setValue(val);
+  };
+  return [value, setStored] as const;
+}
+
 export default function OnboardingModal() {
   const [open, setOpen] = useState(false);
+  const [seen, setSeen] = useLocalStorage(ONBOARDING_KEY, "0");
 
   useEffect(() => {
-    const seen = localStorage.getItem(ONBOARDING_KEY);
-    console.log('ONBOARDING_KEY in localStorage:', seen);
-    if (!seen) setOpen(true);
-  }, []);
+    if (seen !== "1") setOpen(true);
+  }, [seen]);
 
   const handleClose = () => {
-    localStorage.setItem(ONBOARDING_KEY, "1");
+    setSeen("1");
     setOpen(false);
   };
 
