@@ -182,7 +182,6 @@ CREATE POLICY "Admins can update warehouse items" ON public.warehouse_items
 -- Admin policies for admin_roles
 CREATE POLICY "Users can view their own admin role" ON public.admin_roles
   FOR SELECT USING (user_id = (select auth.uid()));
--- Atenção: Não é possível permitir que admins vejam todos os admin_roles sem causar recursão. Recomendo criar uma view materializada ou usar uma função com SECURITY DEFINER para consultas administrativas.
 
 CREATE POLICY "Admins can insert admin roles" ON public.admin_roles
   FOR INSERT WITH CHECK (user_id = (select auth.uid()));
