@@ -14,7 +14,15 @@ export default defineConfig({
       output: {
         manualChunks: {
           react: ['react', 'react-dom'],
-          vendor: ['@supabase/supabase-js', 'axios', 'lodash']
+          vendor: [
+            '@supabase/supabase-js',
+            'axios',
+            'lodash',
+            'date-fns',
+            'react-router-dom',
+            'recharts',
+            // add more as needed
+          ]
         }
       }
     }
