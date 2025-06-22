@@ -8,12 +8,12 @@ A keepla é uma solução moderna para gestão, armazenamento e entrega programa
 
 ## Funcionalidades Principais
 
-- Cadastro e autenticação de utilizadores
+- Cadastro e autenticação de utilizadores (Supabase Auth)
 - Gestão de keepsakes digitais e físicos
 - Entregas programadas e notificações automáticas
 - Dashboard intuitivo para administradores e utilizadores
-- Integração com Supabase para backend seguro
-- Interface responsiva e personalizável
+- Integração com Supabase (banco de dados, autenticação, storage)
+- Interface responsiva e personalizável (React + Tailwind CSS)
 - Exportação de dados (CSV)
 - Onboarding e tooltips para melhor experiência
 - Suporte a pagamentos por link externo
@@ -42,21 +42,32 @@ A keepla é uma solução moderna para gestão, armazenamento e entrega programa
 
 2. **Configuração de ambiente:**
 
-   - Copie `.env.example` para `.env` e preencha as variáveis:
-     - `VITE_SUPABASE_URL=...`
-     - `VITE_SUPABASE_ANON_KEY=...`
-     - `VITE_SENTRY_DSN=...` (opcional)
-     - `VITE_SENDGRID_API_KEY=...` (opcional)
-     - `VITE_SENDGRID_SENDER=...` (opcional)
-     - `VITE_GA_MEASUREMENT_ID=...` (opcional, para Google Analytics)
+   - Copie `.env.example` para `.env` e preencha as variáveis obrigatórias:
+     - `VITE_SUPABASE_URL=...` (URL do seu projeto Supabase)
+     - `VITE_SUPABASE_ANON_KEY=...` (chave anônima do Supabase)
+   - Variáveis opcionais:
+     - `VITE_SENTRY_DSN=...` (monitoramento de erros)
+     - `VITE_GA_MEASUREMENT_ID=...` (Google Analytics)
+     - `VITE_STRIPE_PUBLIC_KEY=...` (pagamentos)
+   - **Importante:** O arquivo `.env` não é versionado por segurança. Certifique-se de que ele existe localmente.
 
-3. **Executar em desenvolvimento:**
+3. **Configuração do Supabase:**
+
+   - Crie um projeto no [Supabase](https://supabase.com/).
+   - Importe as migrações SQL da pasta `supabase/migrations` para criar as tabelas e políticas necessárias.
+   - Ative o Row Level Security (RLS) nas tabelas e configure as policies conforme os exemplos das migrações.
+   - Certifique-se de que o usuário autenticado tem permissão para acessar sua própria linha na tabela `profiles`.
+   - Preencha a tabela `profiles` com os dados dos usuários, se necessário.
+
+4. **Executar em desenvolvimento:**
 
    ```sh
    npm run dev
    ```
 
-4. **Build para produção:**
+   O app estará disponível em [http://localhost:5173](http://localhost:5173).
+
+5. **Build para produção:**
 
    ```sh
    npm run build
@@ -78,236 +89,25 @@ A keepla é uma solução moderna para gestão, armazenamento e entrega programa
 
   Siga o guia em [`TESTES_E2E.md`](TESTES_E2E.md).
 
-## Geração de Tipos Supabase
+## Solução de Problemas
 
-Para garantir a segurança de tipo e uma melhor experiência de desenvolvimento com o Supabase:
+- **Erro de sessão/autenticação:**
+  - Verifique se as variáveis do Supabase estão corretas no `.env`.
+  - Confirme que o projeto Supabase está ativo e as policies de RLS permitem acesso ao usuário autenticado.
+  - Certifique-se de que o usuário existe na tabela `profiles`.
+  - Reinicie o servidor de desenvolvimento após alterar o `.env`.
 
-```sh
-npm run supabase:gen-types
-```
+- **Erro 406 ao buscar perfil:**
+  - Ocorre quando não há linha correspondente na tabela `profiles` para o usuário autenticado.
+  - Solução: crie o perfil manualmente ou ajuste a lógica de criação de perfil após o registro.
 
-Gera tipos em `src/integrations/supabase/types.ts`.
-
-## Estrutura de Pastas
-
-```text
-src/
-├── components/         # Componentes React reutilizáveis
-│   ├── ui/             # Componentes de UI genéricos
-├── hooks/              # Hooks personalizados
-├── integrations/       # Integrações externas (ex: Supabase)
-├── lib/                # Funções utilitárias
-├── pages/              # Páginas da aplicação
-├── styles/             # Estilos globais
-├── App.tsx             # Componente principal
-├── main.tsx            # Entry point
-└── setupTests.ts       # Configuração de testes
-```
-
-## Monitoramento e Métricas
-
-- **Sentry:** Para rastreamento de erros em produção.
-- **Google Analytics:** Para métricas de uso (ver `public/analytics_snippet.html`).
-
-## Segurança e Boas Práticas
-
-- Políticas RLS e constraints recomendadas em [`supabase/SEGURANCA_RLS.md`](supabase/SEGURANCA_RLS.md)
-- Notificações automáticas agendadas (ver scripts e migrations em `supabase/migrations` e `scripts/`)
-
-## Tabelas Sensíveis e Políticas RLS (Row Level Security)
-
-As seguintes tabelas possuem dados sensíveis e estão protegidas por políticas RLS no Supabase:
-
-| Tabela                   | Campo de Identificação do Usuário |
-|--------------------------|-----------------------------------|
-| admin_roles              | user_id                           |
-| cart_items               | user_id                           |
-| deliveries               | user_id                           |
-| messages                 | user_id                           |
-| notifications            | user_id                           |
-| payments                 | user_id                           |
-| scheduled_notifications  | user_email                        |
-| user_achievements        | user_id                           |
-| user_quests              | user_id                           |
-| user_stats               | user_id                           |
-
-### Políticas RLS Aplicadas
-
-- **Acesso do usuário:** Cada usuário autenticado só pode acessar, inserir, atualizar ou deletar registros onde o campo de identificação corresponde ao seu próprio `auth.uid()` (ou `auth.email()` para `scheduled_notifications`).
-- **Acesso de administrador:** Usuários com o claim JWT `role = 'admin'` têm acesso total a todas as linhas dessas tabelas.
-- **Acesso público:** Não há acesso público a dados sensíveis.
-
-#### Exemplo de política aplicada (cart_items):
-```sql
--- Permitir acesso total para administradores
-CREATE POLICY "Admin full access" ON cart_items
-  FOR ALL USING (auth.role() = 'admin');
-
--- Permitir acesso ao próprio dado para usuários autenticados
-CREATE POLICY "User access to own cart items" ON cart_items
-  FOR ALL USING (user_id = auth.uid());
-```
-
-> As demais tabelas seguem o mesmo padrão, trocando o campo de identificação conforme a tabela.
-
-#### scheduled_notifications
-```sql
-CREATE POLICY "User access to own scheduled notifications" ON scheduled_notifications
-  FOR ALL USING (user_email = auth.email());
-```
-
-- Todas as políticas exigem que o usuário esteja autenticado (`auth.uid() IS NOT NULL`).
-- As políticas são revisadas e mantidas em [`supabase/SEGURANCA_RLS.md`](supabase/SEGURANCA_RLS.md) e nos arquivos de migração em `supabase/migrations/`.
-
-## Melhorias Recentes
-
-- **Página de FAQ**: Agora inclui uma funcionalidade de busca para filtrar perguntas e respostas, além de um design consistente com o restante do site (header e footer).
-- **Botão de Suporte no Rodapé**: Adicionado um botão na seção "Legal" do rodapé que redireciona para a página de FAQ.
-
-## Atualizações Recentes
-
-### Funcionalidades Adicionadas
-
-- **Gestão de FAQs**: Adicionada funcionalidade para criar, editar e excluir FAQs no painel admin.
-- **Editor de Conteúdo**: Implementado editor WYSIWYG utilizando `react-quill`.
-- **Calendário de Entregas**: Adicionado calendário interativo com suporte a intervalos de datas usando `react-calendar`.
-
-### Correções
-
-- Corrigidos problemas de importação e tipos no arquivo `adminRoutes.ts`.
-- Ajustados tipos no `OrdersCalendar.tsx` para lidar com intervalos de datas.
-- Adicionado tipo `Database` no arquivo `supabase/types.ts` para resolver erro de importação.
-
-### Melhorias Gerais
-
-- Reinstalação e configuração de dependências para resolver problemas de módulos ausentes.
-- Ajustes no `tsconfig.json` para incluir caminhos explícitos para módulos externos.
+- **Problemas com dependências:**
+  - Execute `npm install` para garantir que todas as dependências estejam presentes.
 
 ## Contribuição
 
-Contribuições são bem-vindas! Siga as diretrizes e código de conduta do projeto.
+Pull requests são bem-vindos! Para grandes mudanças, abra uma issue primeiro para discutir o que você gostaria de modificar.
 
-### Como Contribuir
+## Licença
 
-1. **Fork o repositório**
-2. **Crie uma branch para sua feature ou correção**:
-
-   ```sh
-   git checkout -b minha-feature
-   ```
-
-3. **Faça commits claros e objetivos**
-4. **Abra um Pull Request**
-
-### Código de Conduta
-
-Por favor, leia o [Código de Conduta](CONTRIBUTING.md) para detalhes sobre nossos padrões de contribuição.
-
-## Suporte
-
-Para dúvidas ou suporte, abra uma issue ou contacte a equipa de desenvolvimento.
-
----
-
-## Checklist MVP
-
-- [x] Cadastro e autenticação de utilizadores
-- [x] Gestão de keepsakes digitais e físicos
-- [x] Entregas programadas e notificações automáticas
-- [x] Dashboard para admin e utilizador
-- [x] Exportação de dados (CSV)
-- [x] Onboarding e tooltips
-- [x] Testes unitários e E2E
-- [x] Monitoramento de erros (Sentry)
-- [x] Métricas (Google Analytics)
-- [x] Políticas de segurança (RLS, constraints)
-- [x] Suporte a pagamentos por link externo (Stripe)
-
-## Fluxos Principais do Usuário
-
-### 1. Cadastro e Login
-
-- Usuário acessa `/register` e cria conta.
-- Recebe confirmação e faz login em `/login`.
-
-### 2. Compra e Pagamento
-
-- Usuário navega até `/products`.
-- Adiciona produto ao carrinho e acessa `/checkout`.
-- Preenche dados, finaliza compra e é redirecionado ao Stripe.
-- Após pagamento, recebe confirmação e entrega é agendada.
-
-### 3. Entregas e Notificações
-
-- Usuário pode consultar entregas agendadas no dashboard.
-- Notificações automáticas são enviadas conforme agendamento.
-
-### 4. Administração
-
-- Admin acessa `/admin` para gerenciar entregas, pagamentos, clientes e FAQs.
-
----
-
-# FuturoPresente
-
-## Banco de Dados e Segurança (Supabase)
-
-A plataforma utiliza Supabase como backend, com autenticação, políticas de segurança (RLS) e migrations versionadas. Principais tabelas e políticas:
-
-- **Tabelas:**
-  - `profiles`: dados do usuário
-  - `admin_roles`: controle de administradores
-  - `cart_items`, `warehouse_items`, `deliveries`, `messages`, `payments`
-  - `scheduled_notifications`: notificações agendadas associadas ao `user_id`
-  - Gamificação: `achievements`, `user_achievements`, `quests`, `user_quests`, `user_stats`
-
-- **Funções e triggers:**
-  - `is_admin(uuid)`: verifica se o usuário é admin
-  - `handle_new_user()`: cria perfil automaticamente ao registrar
-
-- **RLS (Row Level Security):**
-  - Ativada em todas as tabelas sensíveis
-  - Usuários só acessam seus próprios dados (`user_id = auth.uid()`)
-  - Admins podem gerenciar itens do warehouse
-  - Políticas específicas para UPDATE/DELETE em `scheduled_notifications`
-
-- **Migrations:**
-  - Arquivos SQL em `supabase/migrations/`
-  - Execute as migrations no painel do Supabase ou CLI para garantir o schema e as políticas corretas
-
-## Como rodar as migrations no Supabase
-
-1. Acesse o painel do Supabase ou utilize a CLI
-2. Execute cada arquivo `.sql` da pasta `supabase/migrations/` na ordem de criação
-3. Confirme que as funções, triggers e políticas foram aplicadas corretamente
-
-> Para exemplos de testes E2E, veja `cypress/e2e/`.
-
-## Estrutura das Tabelas Digitais (Supabase)
-
-### Tabela: digital_messages
-
-- **id**: UUID, chave primária
-- **delivery_id**: UUID, referência para deliveries(id)
-- **message**: TEXT, mensagem digital
-- **created_at**: timestamp, data de criação
-- **user_id**: UUID, referência para profiles(id)
-
-### Tabela: digital_files
-
-- **id**: UUID, chave primária
-- **delivery_id**: UUID, referência para deliveries(id)
-- **file_url**: TEXT, URL do arquivo
-- **file_name**: TEXT, nome do arquivo
-- **file_type**: TEXT, tipo MIME
-- **created_at**: timestamp, data de criação
-- **user_id**: UUID, referência para profiles(id)
-
-### Políticas de Row Level Security (RLS)
-
-As tabelas digitais possuem RLS ativado. Cada usuário só pode acessar, inserir, atualizar ou deletar registros onde `user_id = auth.uid()`.
-
-### Relações
-
-- `digital_messages` e `digital_files` referenciam `deliveries` via `delivery_id`.
-- Ambas referenciam o usuário dono via `user_id` (relacionado à tabela `profiles`).
+[MIT](LICENSE)
