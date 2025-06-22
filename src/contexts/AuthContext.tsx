@@ -35,41 +35,31 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
+  // Centralize profile fetching only in onAuthStateChange
   useEffect(() => {
-    const getSession = async () => {
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        setSession(session);
-        setUser(session?.user ?? null);
-        if (session?.user) {
-          await fetchUserProfile(session.user.id);
-        }
-      } catch (error) {
-        if (error && typeof error === "object" && "name" in error && error.name === "AuthSessionMissingError") {
-          toast({ title: "Sessão ausente", description: "Por favor, faça login novamente.", variant: "destructive" });
-          setSession(null);
-          setUser(null);
-          setProfile(null);
-        } else {
-          console.error("Error getting session:", error);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-    getSession();
+    setLoading(true);
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       setSession(session);
       setUser(session?.user ?? null);
       if (session?.user) {
-        setTimeout(() => {
-          fetchUserProfile(session.user.id);
-        }, 0);
+        await fetchUserProfile(session.user.id);
       } else {
         setProfile(null);
       }
       setLoading(false);
     });
+    // On mount, get current session and trigger profile load if needed
+    (async () => {
+      const { data: { session: currentSession } } = await supabase.auth.getSession();
+      setSession(currentSession);
+      setUser(currentSession?.user ?? null);
+      if (currentSession?.user) {
+        await fetchUserProfile(currentSession.user.id);
+      } else {
+        setProfile(null);
+      }
+      setLoading(false);
+    })();
     return () => subscription.unsubscribe();
   }, []);
 
