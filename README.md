@@ -282,3 +282,32 @@ A plataforma utiliza Supabase como backend, com autenticação, políticas de se
 3. Confirme que as funções, triggers e políticas foram aplicadas corretamente
 
 > Para exemplos de testes E2E, veja `cypress/e2e/`.
+
+## Estrutura das Tabelas Digitais (Supabase)
+
+### Tabela: digital_messages
+
+- **id**: UUID, chave primária
+- **delivery_id**: UUID, referência para deliveries(id)
+- **message**: TEXT, mensagem digital
+- **created_at**: timestamp, data de criação
+- **user_id**: UUID, referência para profiles(id)
+
+### Tabela: digital_files
+
+- **id**: UUID, chave primária
+- **delivery_id**: UUID, referência para deliveries(id)
+- **file_url**: TEXT, URL do arquivo
+- **file_name**: TEXT, nome do arquivo
+- **file_type**: TEXT, tipo MIME
+- **created_at**: timestamp, data de criação
+- **user_id**: UUID, referência para profiles(id)
+
+### Políticas de Row Level Security (RLS)
+
+As tabelas digitais possuem RLS ativado. Cada usuário só pode acessar, inserir, atualizar ou deletar registros onde `user_id = auth.uid()`.
+
+### Relações
+
+- `digital_messages` e `digital_files` referenciam `deliveries` via `delivery_id`.
+- Ambas referenciam o usuário dono via `user_id` (relacionado à tabela `profiles`).
