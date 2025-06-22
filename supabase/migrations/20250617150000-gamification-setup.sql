@@ -47,10 +47,10 @@ CREATE TABLE user_stats (
 );
 
 -- Função para calcular nível com base nos pontos
-CREATE FUNCTION calculate_level(points INTEGER) RETURNS INTEGER
+CREATE OR REPLACE FUNCTION calculate_level(points INTEGER) RETURNS INTEGER
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = public
+SET search_path = pg_catalog, public
 AS $$
 BEGIN
     RETURN (points / 100) + 1;
