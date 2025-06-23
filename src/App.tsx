@@ -37,14 +37,18 @@ const queryClient = new QueryClient();
 const App = () => {
   useEffect(() => {
     const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      if (sessionError || !session) {
         console.warn("Sem sessão – redirecionando para login");
-        // window.location.href = "/login"; // ou usa o teu router, ex: navigate("/login")
-      } else {
-        const { data: { user } } = await supabase.auth.getUser();
-        console.log("Utilizador:", user);
+        // window.location.href = "/login";
+        return;
       }
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      if (userError) {
+        console.error("Erro ao obter utilizador:", userError.message);
+        return;
+      }
+      console.log("Utilizador:", user);
     };
     checkSession();
   }, []);

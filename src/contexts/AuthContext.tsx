@@ -71,7 +71,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         .eq("id", userId)
         .single();
       if (profileError) {
-        console.error("Error fetching profile:", typeof profileError === "object" ? JSON.stringify(profileError, null, 2) : profileError);
+        toast({ title: "Perfil não encontrado", description: "Nenhum perfil correspondente encontrado para o usuário autenticado. Faça login novamente ou contate o suporte.", variant: "destructive" });
+        setProfile(null);
+        // window.location.href = "/login";
         return;
       }
       const { data: adminRole } = await supabase
@@ -85,7 +87,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       };
       setProfile(profileWithRole);
     } catch (error) {
-      console.error("Error fetching user profile:", typeof error === "object" ? JSON.stringify(error, null, 2) : error);
+      toast({ title: "Erro ao buscar perfil", description: "Ocorreu um erro ao buscar o perfil do usuário.", variant: "destructive" });
+      setProfile(null);
     }
   };
 
