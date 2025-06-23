@@ -39,6 +39,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     setLoading(true);
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log("[Auth] onAuthStateChange event:", event, session);
       setSession(session);
       setUser(session?.user ?? null);
       if (session?.user) {
@@ -48,9 +49,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
       setLoading(false);
     });
-    // On mount, get current session and trigger profile load if needed
     (async () => {
       const { data: { session: currentSession } } = await supabase.auth.getSession();
+      console.log("[Auth] getSession:", currentSession);
       setSession(currentSession);
       setUser(currentSession?.user ?? null);
       if (currentSession?.user) {
@@ -65,15 +66,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchUserProfile = async (userId: string) => {
     try {
+      console.log("[Auth] fetchUserProfile userId:", userId);
       const { data: profileData, error: profileError } = await supabase
         .from("profiles")
         .select("*")
         .eq("id", userId)
         .single();
+      console.log("[Auth] profileData:", profileData, profileError);
       if (profileError) {
         toast({ title: "Perfil não encontrado", description: "Nenhum perfil correspondente encontrado para o usuário autenticado. Faça login novamente ou contate o suporte.", variant: "destructive" });
         setProfile(null);
-        // window.location.href = "/login";
         return;
       }
       const { data: adminRole } = await supabase
@@ -81,6 +83,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         .select("role")
         .eq("user_id", userId)
         .single();
+      console.log("[Auth] adminRole:", adminRole);
       const profileWithRole = {
         ...profileData,
         role: adminRole?.role || 'user'
