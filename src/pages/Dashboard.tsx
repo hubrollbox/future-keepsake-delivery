@@ -106,7 +106,7 @@ const Dashboard = () => {
             <span className="font-medium text-gentle-black">Pontos:</span>
             <span className="font-serif text-xl text-gentle-black">{profile?.total_points || 0}</span>
           </div>
-          <Button variant="gentle" className="rounded-xl font-medium mt-4" onClick={signOut}>
+          <Button variant="outline" className="rounded-xl font-medium mt-4 border-dusty-rose text-dusty-rose hover:bg-dusty-rose/10" onClick={signOut}>
             <LogOut className="h-5 w-5 mr-2" /> Sair
           </Button>
         </CardContent>
