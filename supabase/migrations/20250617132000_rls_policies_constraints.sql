@@ -7,7 +7,6 @@ ALTER TABLE deliveries ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "User can access own deliveries" ON deliveries
   FOR ALL USING (user_id = (select auth.uid()));
 ALTER TABLE deliveries
-  ADD CONSTRAINT email_valido CHECK (recipient_email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'),
   ADD CONSTRAINT data_futura CHECK (delivery_date >= CURRENT_DATE);
 
 -- 2. Notificações agendadas
