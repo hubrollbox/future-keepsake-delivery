@@ -12,7 +12,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        external: ['@vercel/speed-insights/react', '@tanstack/react-query'],
+        external: ['@vercel/speed-insights/react', '@tanstack/react-query', 'react-router-dom'],
         manualChunks: {
           react: ['react', 'react-dom'],
           vendor: [
