@@ -5,7 +5,8 @@
     "react-dom": "^18.2.0",
     "@radix-ui/react-tooltip": "^1.0.0",
     "@radix-ui/react-toast": "^1.1.5",
-    "next-themes": "^0.3.0"
+    "next-themes": "^0.3.0",
+    "tailwind-merge": "^2.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",
