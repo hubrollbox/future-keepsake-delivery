@@ -1,6 +1,10 @@
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import { resolve } from 'path';
+ import react from '@vitejs/plugin-react';
+ import { resolve } from 'path';
+ import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = resolve(__filename, '..');
 
 export default defineConfig({
   plugins: [react()],
@@ -11,8 +15,8 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
+      external: ['@vercel/speed-insights/react', '@tanstack/react-query', 'react-router-dom', '@sentry/react', 'lucide-react', 'next-themes', '@radix-ui/react-tooltip'],
       output: {
-        external: ['@vercel/speed-insights/react', '@tanstack/react-query', 'react-router-dom', '@sentry/react', 'lucide-react', '@radix-ui/react-tooltip'],
         manualChunks: {
           react: ['react', 'react-dom'],
           vendor: [

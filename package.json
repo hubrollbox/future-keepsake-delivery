@@ -3,7 +3,8 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@radix-ui/react-tooltip": "^1.0.0"
+    "@radix-ui/react-tooltip": "^1.0.0",
+    "next-themes": "^0.3.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",
@@ -18,6 +19,7 @@
     "react-router-dom": "^6.0.0",
     "@sentry/react": "^8.12.0",
     "lucide-react": "^0.395.0",
-    "supabase": "^2.26.9"
+    "supabase": "^2.26.9",
+    "@types/node": "^20.0.0"
   }
 }
