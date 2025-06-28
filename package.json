@@ -20,6 +20,7 @@
     "@sentry/react": "^8.12.0",
     "lucide-react": "^0.395.0",
     "supabase": "^2.26.9",
-    "@types/node": "^20.0.0"
+    "@types/node": "^20.0.0",
+    "sonner": "^1.0.0"
   }
 }
