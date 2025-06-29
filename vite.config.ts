@@ -20,7 +20,8 @@ export default defineConfig({
         'next-themes',
         'tailwind-merge',
         'vaul',
-        '@radix-ui/react-progress'
+        '@radix-ui/react-progress',
+        '@radix-ui/react-radio-group'
       ],
       output: {
         manualChunks: {
