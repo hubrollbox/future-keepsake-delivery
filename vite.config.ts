@@ -16,7 +16,6 @@ export default defineConfig({
   build: {
     rollupOptions: {
       external: [
-        '@radix-ui/react-radio-group'
       ],
       output: {
         manualChunks: {
