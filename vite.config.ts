@@ -15,7 +15,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ['@vercel/speed-insights/react', '@tanstack/react-query', 'react-router-dom', '@sentry/react', 'lucide-react', 'next-themes', '@radix-ui/react-tooltip', 'sonner', 'zod', '@supabase/ssr', '@radix-ui/react-label',
+      external: ['@vercel/speed-insights/react', '@tanstack/react-query', 'react-router-dom', '@sentry/react', 'next-themes', '@radix-ui/react-tooltip', 'sonner', 'zod', '@supabase/ssr', '@radix-ui/react-label',
         'next-themes',
         'tailwind-merge',
         'vaul',
