@@ -17,7 +17,6 @@ export default defineConfig({
     rollupOptions: {
       external: ['@vercel/speed-insights/react', '@tanstack/react-query', 'react-router-dom', '@sentry/react', 'next-themes', '@radix-ui/react-tooltip', 'sonner', 'zod', '@supabase/ssr', '@radix-ui/react-label',
         'next-themes',
-        'tailwind-merge',
         'vaul',
         '@radix-ui/react-progress',
         '@radix-ui/react-radio-group'
