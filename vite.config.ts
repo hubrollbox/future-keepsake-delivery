@@ -28,11 +28,6 @@ export default defineConfig({
           react: ['react', 'react-dom'],
           vendor: [
             '@supabase/supabase-js',
-            'axios',
-            'lodash',
-            'date-fns',
-            'react-router-dom',
-            'recharts',
             // add more as needed
           ]
         }
