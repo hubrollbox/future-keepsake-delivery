@@ -15,7 +15,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: ['@radix-ui/react-label',
+      external: [
         '@radix-ui/react-radio-group'
       ],
       output: {
