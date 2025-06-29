@@ -16,7 +16,6 @@ export default defineConfig({
   build: {
     rollupOptions: {
       external: ['zod', '@radix-ui/react-label',
-        'vaul',
         '@radix-ui/react-progress',
         '@radix-ui/react-radio-group'
       ],
