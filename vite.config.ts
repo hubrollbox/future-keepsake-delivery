@@ -19,7 +19,8 @@ export default defineConfig({
         '@radix-ui/react-toast',
         'next-themes',
         'tailwind-merge',
-        'vaul'
+        'vaul',
+        '@radix-ui/react-progress'
       ],
       output: {
         manualChunks: {
