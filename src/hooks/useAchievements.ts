@@ -1,9 +1,10 @@
-import { Database } from "@/integrations/supabase/types";
-import { supabase } from "@/integrations/supabase/client";
-import { useEffect, useState } from "react";
 
-export interface Achievement {
-  id: string;
+import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from './useAuth';
+
+interface Achievement {
+  id: number;
   title: string;
   description: string;
   icon: string;
@@ -11,51 +12,60 @@ export interface Achievement {
   unlocked: boolean;
 }
 
-type UserAchievementRow = Database["user_achievements"];
-type AchievementRow = Database["achievements"];
-
-const useAchievements = (userId: string | null) => {
+export const useAchievements = () => {
   const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { user } = useAuth();
 
   useEffect(() => {
-    if (!userId) return;
-
     const fetchAchievements = async () => {
-      setLoading(true);
+      if (!user) return;
+      
       try {
-        const { data, error } = await supabase
-          .from("user_achievements")
-          .select(`achievement_id (id, title, description, icon, points), unlocked_at`)
-          .eq("user_id", userId);
+        // Get user's unlocked achievements
+        const { data: userAchievements } = await supabase
+          .from('user_achievements')
+          .select(`
+            achievement_id,
+            unlocked_at,
+            achievements (
+              id,
+              title,
+              description,
+              icon,
+              points
+            )
+          `)
+          .eq('user_id', user.id);
 
-        if (error) throw error;
+        // Get all achievements
+        const { data: allAchievements } = await supabase
+          .from('achievements')
+          .select('*');
 
-        const formattedAchievements = data.map((item: { achievement_id: { id: string; title: string; description: string; icon: string; points: number }[]; unlocked_at: string | null }) => {
-          const achievement = item.achievement_id[0]; // Extrair o primeiro elemento do array
-          return {
-            id: achievement.id,
-            title: achievement.title,
-            description: achievement.description,
-            icon: achievement.icon,
-            points: achievement.points,
-            unlocked: !!item.unlocked_at,
-          };
-        });
+        if (allAchievements) {
+          const unlockedIds = new Set(
+            (userAchievements || [])
+              .filter(ua => ua.achievements)
+              .map(ua => ua.achievement_id)
+          );
 
-        setAchievements(formattedAchievements);
-      } catch (err) {
-        setError((err as Error).message);
+          const achievementsWithStatus = allAchievements.map(achievement => ({
+            ...achievement,
+            unlocked: unlockedIds.has(achievement.id)
+          }));
+
+          setAchievements(achievementsWithStatus);
+        }
+      } catch (error) {
+        console.error('Erro ao carregar conquistas:', error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchAchievements();
-  }, [userId]);
+  }, [user]);
 
-  return { achievements, loading, error };
+  return { achievements, loading };
 };
-
-export default useAchievements;

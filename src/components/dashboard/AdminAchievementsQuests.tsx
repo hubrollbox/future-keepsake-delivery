@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 
 interface Achievement {
-  id: number; // Changed from string to number to match database
+  id: number;
   title: string;
   description: string;
   icon?: string;
@@ -12,7 +12,7 @@ interface Achievement {
 }
 
 interface Quest {
-  id: number; // Changed from string to number to match database
+  id: number;
   title: string;
   description: string;
   target?: number;
@@ -32,7 +32,6 @@ const AdminAchievementsQuests: React.FC = () => {
   const [editingQuest, setEditingQuest] = React.useState<number | null>(null);
   const [editValues, setEditValues] = React.useState<{ title: string; description: string }>({ title: "", description: "" });
 
-  // Fetch achievements and quests from Supabase
   React.useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -48,14 +47,20 @@ const AdminAchievementsQuests: React.FC = () => {
   const addAchievement = async () => {
     if (!newAchievement.title.trim()) return;
     const { data, error } = await supabase.from("achievements").insert([{ title: newAchievement.title, description: newAchievement.description, icon: "star", points: 10 }]).select();
-    if (!error && data) setAchievements((prev) => [...prev, ...data]);
+    if (!error && data) {
+      const newAchievements = data.map(item => ({ ...item, id: item.id }));
+      setAchievements(prev => [...prev, ...newAchievements]);
+    }
     setNewAchievement({ title: "", description: "" });
   };
 
   const addQuest = async () => {
     if (!newQuest.title.trim()) return;
     const { data, error } = await supabase.from("quests").insert([{ title: newQuest.title, description: newQuest.description, target: 1, reward: 10 }]).select();
-    if (!error && data) setQuests((prev) => [...prev, ...data]);
+    if (!error && data) {
+      const newQuests = data.map(item => ({ ...item, id: item.id, time_limit: item.time_limit ? String(item.time_limit) : null }));
+      setQuests(prev => [...prev, ...newQuests]);
+    }
     setNewQuest({ title: "", description: "" });
   };
 
