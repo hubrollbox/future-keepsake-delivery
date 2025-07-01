@@ -1,32 +1,33 @@
+
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { isValidFile } from "./utils";
 import { validateStep } from "./validation";
 import { useDeliveryFormState } from "./useDeliveryFormState";
-import { useAuth } from "@/hooks/useAuth"; // <-- Adiciona o hook de auth
+import { useAuth } from "@/hooks/useAuth";
 import { onDeliveryCreated } from "@/features/create-delivery/onDeliveryCreated";
 
-interface DeliveryData {
+interface DeliveryInsertData {
   title: string;
-  recipient_name: string; // <-- Adicionada propriedade recipient_name
+  recipient_name: string;
   recipient_email: string;
-  deliveryDate: string;
-  deliveryTime: string;
+  delivery_date: string;
+  delivery_time: string;
   delivery_method: "email" | "physical";
   location?: string;
   message?: string;
-  digitalFileUrl?: string;
+  digital_file_url?: string;
   user_id: string;
   description?: string;
   type: "digital" | "physical";
-  payment_status: "pending" | "completed" | "failed"; // novo campo
+  payment_status: "pending" | "completed" | "failed";
 }
 
 export const useCreateDeliveryForm = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { user } = useAuth(); // <-- Obtém o utilizador autenticado
+  const { user } = useAuth();
   const {
     deliveryType,
     setDeliveryType,
@@ -84,8 +85,8 @@ export const useCreateDeliveryForm = () => {
     }
   };
 
-  const validateDeliveryData = (data: DeliveryData): boolean => {
-    if (!data.title || !data.recipient_name || !data.recipient_email || !data.deliveryDate || !data.deliveryTime) {
+  const validateDeliveryData = (data: DeliveryInsertData): boolean => {
+    if (!data.title || !data.recipient_name || !data.recipient_email || !data.delivery_date || !data.delivery_time) {
       toast({
         title: "Erro de Validação",
         description: "Campos obrigatórios estão faltando. Por favor, preencha todos os campos necessários.",
@@ -111,7 +112,7 @@ export const useCreateDeliveryForm = () => {
         return data.path;
       };
 
-      const insertDelivery = async (dataToInsert: DeliveryData) => {
+      const insertDelivery = async (dataToInsert: DeliveryInsertData) => {
         const { error } = await supabase.from("deliveries").insert([dataToInsert]);
         if (error) {
           console.error("Erro ao criar entrega (insert):", error, dataToInsert);
@@ -129,19 +130,19 @@ export const useCreateDeliveryForm = () => {
           throw new Error("Utilizador não autenticado. Faça login para continuar.");
         }
 
-        const dataToInsert: DeliveryData = {
+        const dataToInsert: DeliveryInsertData = {
           user_id: user.id,
           title: formData.title,
           recipient_name: formData.recipient,
           recipient_email: formData.recipient_email,
-          deliveryDate: formData.deliveryDate,
-          deliveryTime: formData.deliveryTime,
+          delivery_date: formData.deliveryDate,
+          delivery_time: formData.deliveryTime,
           message: formData.message,
           description: formData.description,
           delivery_method: formData.delivery_method === "email" || formData.delivery_method === "physical" ? formData.delivery_method : "email",
           type: deliveryType === "digital" || deliveryType === "physical" ? deliveryType : "digital",
           location: formData.location,
-          digitalFileUrl: digitalFileUrl,
+          digital_file_url: digitalFileUrl,
           payment_status: "pending",
         };
 
