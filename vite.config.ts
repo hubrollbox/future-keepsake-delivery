@@ -24,7 +24,7 @@ export default defineConfig(({ mode }) => ({
   build: {
     rollupOptions: {
       external: [
-        '@supabase/supabase-js'
+        // '@supabase/supabase-js'
       ],
       output: {
         manualChunks: {
