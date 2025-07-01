@@ -24,14 +24,12 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     rollupOptions: {
-      external: [
-      ],
       output: {
         manualChunks: {
           react: ['react', 'react-dom'],
+          supabase: ['@supabase/supabase-js', '@supabase/ssr'],
           vendor: [
-            '@supabase/supabase-js',
-            // add more as needed
+            // removed supabase from here since it has its own chunk now
           ]
         }
       }
