@@ -32,6 +32,7 @@ const Navigation = () => {
     { to: "/how-it-works", label: "Como Funciona", aria: "Ir para Como Funciona" },
     { to: "/pricing", label: "Preços", aria: "Ir para Preços" },
     { to: "/products", label: "Presentes com Alma", aria: "Ir para Presentes com Alma" },
+    // Removed redundant navigation links (no duplicate or legacy nav)
   ];
 
   return (
@@ -169,3 +170,5 @@ export default Navigation;
   <a href="/precos" className="nav-link">Preços</a>
   <a href="/" className="nav-link">Presentes com Alma</a>
 </nav>
+
+// Removed legacy/deprecated nav markup at the end of the file
