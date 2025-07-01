@@ -12,6 +12,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import React, { Suspense, lazy, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import CreateMessage from "./pages/CreateMessage";
 
 const Index = lazy(() => import("./pages/Index"));
 const Login = lazy(() => import("./pages/Login"));
@@ -78,6 +79,7 @@ const App = () => {
                         <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
                         <Route path="/how-it-works" element={<HowItWorks />} />
                         <Route path="/pricing" element={<Pricing />} />
+                        <Route path="/create-message" element={<ProtectedRoute><CreateMessage /></ProtectedRoute>} />
                         <Route path="/about" element={<About />} />
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/partnerships" element={<Partnerships />} />
