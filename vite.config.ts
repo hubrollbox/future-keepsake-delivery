@@ -1,4 +1,3 @@
-
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
@@ -24,12 +23,15 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     rollupOptions: {
+      external: [
+        '@supabase/supabase-js'
+      ],
       output: {
         manualChunks: {
           react: ['react', 'react-dom'],
-          supabase: ['@supabase/supabase-js', '@supabase/ssr'],
+          supabase: ['@supabase/ssr'],
           vendor: [
-            // removed supabase from here since it has its own chunk now
+            // other vendor packages can go here
           ]
         }
       }
