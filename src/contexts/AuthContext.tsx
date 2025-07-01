@@ -180,7 +180,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       const redirectUrl = `${window.location.origin}/`;
       
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email: email.trim().toLowerCase(),
         password,
         options: {
@@ -191,6 +191,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       });
 
+      if (!error && data.user) {
+        // Insert profile row after successful sign up
+        await supabase.from('profiles').insert([
+          {
+            id: data.user.id,
+            email: data.user.email,
+            full_name: fullName?.trim() || '',
+            avatar_url: null,
+            plan_type: 'free',
+            total_points: 0,
+            level: 1,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
+          }
+        ]);
+      }
       if (error) {
         let errorMessage = 'Erro ao criar conta';
         if (error.message.includes('User already registered')) {

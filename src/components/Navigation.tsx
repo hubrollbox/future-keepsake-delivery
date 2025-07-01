@@ -66,6 +66,7 @@ const Navigation = () => {
                   {link.label}
                 </NavLink>
               ))}
+              <NavLink to="/products" className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose focus-visible:underline focus-visible:decoration-2 focus-visible:decoration-dusty-rose transition-colors font-medium ${isActive ? "active" : ""}`} aria-label="Ir para Loja">Loja</NavLink>
 
               {user && <CartButton onClick={() => setIsCartOpen(true)} />}
 
@@ -157,6 +158,7 @@ const Navigation = () => {
                   {link.label}
                 </NavLink>
               ))}
+              <NavLink to="/products" onClick={() => setIsDrawerOpen(false)} className={({ isActive }) => `block py-3 px-3 text-lg font-medium rounded-xl transition-colors nav-link text-misty-gray hover:text-dusty-rose focus-visible:underline focus-visible:decoration-2 focus-visible:decoration-dusty-rose ${isActive ? "active text-dusty-rose" : ""}`} aria-label="Ir para Loja" style={{ minHeight: 44 }}>Loja</NavLink>
               {user && (
                 <div className="py-1">
                   <CartButton onClick={() => {setIsCartOpen(true); setIsDrawerOpen(false);}} />
