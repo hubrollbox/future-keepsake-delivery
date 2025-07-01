@@ -122,6 +122,9 @@ const Dashboard = () => {
           <CardTitle className="text-xl font-serif text-blue-900">Cápsula do Tempo</CardTitle>
         </CardHeader>
         <CardContent>
+          <div className="flex justify-end mb-4">
+            <Button variant="brand" onClick={() => navigate("/create-message")}> <Plus className="h-4 w-4 mr-1" /> Criar Mensagem </Button>
+          </div>
           {loading ? (
             <Skeleton className="h-24 w-full" />
           ) : (
