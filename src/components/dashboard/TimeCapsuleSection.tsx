@@ -57,7 +57,7 @@ const TimeCapsuleSection = ({ deliveries, loading, onDelete }: TimeCapsuleSectio
             <Mail className="h-5 w-5" />
             Cápsula do Tempo
           </CardTitle>
-          <Button variant="brand" onClick={() => navigate("/create-message")}>
+          <Button variant="brand" onClick={() => navigate("/create-message")}> 
             <Plus className="h-4 w-4 mr-2" />
             Criar Mensagem
           </Button>
@@ -73,9 +73,7 @@ const TimeCapsuleSection = ({ deliveries, loading, onDelete }: TimeCapsuleSectio
             <div className="text-center py-8">
               <Mail className="h-12 w-12 mx-auto text-blue-300 mb-4" />
               <p className="text-gray-500 mb-4">Ainda não tens mensagens na tua cápsula do tempo.</p>
-              <Button variant="brand" onClick={() => navigate("/create-message")}>
-                Criar a Primeira Mensagem
-              </Button>
+              {/* Removido o botão duplicado de criar mensagem */}
             </div>
           ) : (
             <div className="space-y-4 max-h-96 overflow-y-auto">

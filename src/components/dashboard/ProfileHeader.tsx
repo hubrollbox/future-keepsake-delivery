@@ -24,12 +24,9 @@ const ProfileHeader = () => {
         </div>
       </div>
       <div className="flex gap-2">
-        <Button variant="outline" onClick={() => navigate("/profile")}>
-          <Settings className="h-4 w-4 mr-2" />
-          Perfil
-        </Button>
+        {/* Removido o botão de perfil duplicado, pois já está presente na Navigation */}
         {isAdmin && (
-          <Button variant="brand" onClick={() => navigate("/admin")}>
+          <Button variant="brand" onClick={() => navigate("/admin")}> 
             <BarChart3 className="h-4 w-4 mr-2" />
             Admin
           </Button>
