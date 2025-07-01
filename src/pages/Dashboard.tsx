@@ -8,6 +8,7 @@ import ProfileHeader from "@/components/dashboard/ProfileHeader";
 import AdminStatsSection from "@/components/dashboard/AdminStatsSection";
 import UserStatsSection from "@/components/dashboard/UserStatsSection";
 import TimeCapsuleSection from "@/components/dashboard/TimeCapsuleSection";
+import DashboardMenu from "@/components/dashboard/DashboardMenu";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-lavender-mist">
       <Navigation />
+      {user && <DashboardMenu />}
       <main className="container mx-auto px-4 py-8 max-w-7xl">
         <ProfileHeader />
         
