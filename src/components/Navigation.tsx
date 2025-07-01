@@ -66,32 +66,8 @@ const Navigation = () => {
                   {link.label}
                 </NavLink>
               ))}
-
               {user && <CartButton onClick={() => setIsCartOpen(true)} />}
-
-              {user ? (
-                <div className="flex items-center space-x-4">
-                  <Link to="/dashboard" aria-label="Acessar Dashboard">
-                    <Button variant="outline" size="sm" className="border-dusty-rose text-dusty-rose hover:bg-dusty-rose/10 rounded-xl">
-                      Dashboard
-                    </Button>
-                  </Link>
-                  <Link to="/profile" aria-label="Acessar Perfil">
-                    <Button variant="outline" size="sm" className="border-golden-honey text-golden-honey hover:bg-golden-honey/10 rounded-xl">
-                      Perfil
-                    </Button>
-                  </Link>
-                  <Button 
-                    onClick={handleSignOut}
-                    variant="ghost" 
-                    size="sm"
-                    className="text-misty-gray hover:text-steel-blue rounded-xl"
-                    aria-label="Sair da conta"
-                  >
-                    Sair
-                  </Button>
-                </div>
-              ) : (
+              {!user && (
                 <div className="flex items-center space-x-4">
                   <Link to="/login" aria-label="Entrar na conta">
                     <Button variant="outline" size="sm" className="border-dusty-rose text-dusty-rose hover:bg-dusty-rose/10 rounded-xl">
@@ -147,9 +123,7 @@ const Navigation = () => {
                   to={link.to}
                   onClick={() => setIsDrawerOpen(false)}
                   className={({ isActive }) =>
-                    `block py-3 px-3 text-lg font-medium rounded-xl transition-colors nav-link text-misty-gray hover:text-dusty-rose focus-visible:underline focus-visible:decoration-2 focus-visible:decoration-dusty-rose ${
-                      isActive ? "active text-dusty-rose" : ""
-                    }`
+                    `block py-3 px-3 text-lg font-medium rounded-xl transition-colors nav-link text-misty-gray hover:text-dusty-rose focus-visible:underline focus-visible:decoration-2 focus-visible:decoration-dusty-rose ${isActive ? "active text-dusty-rose" : ""}`
                   }
                   aria-label={link.aria}
                   style={{ minHeight: 44 }}
@@ -157,36 +131,12 @@ const Navigation = () => {
                   {link.label}
                 </NavLink>
               ))}
-              <NavLink to="/products" onClick={() => setIsDrawerOpen(false)} className={({ isActive }) => `block py-3 px-3 text-lg font-medium rounded-xl transition-colors nav-link text-misty-gray hover:text-dusty-rose focus-visible:underline focus-visible:decoration-2 focus-visible:decoration-dusty-rose ${isActive ? "active text-dusty-rose" : ""}`} aria-label="Ir para Loja" style={{ minHeight: 44 }}>Loja</NavLink>
               {user && (
                 <div className="py-1">
                   <CartButton onClick={() => {setIsCartOpen(true); setIsDrawerOpen(false);}} />
                 </div>
               )}
-              {user ? (
-                <>
-                  <Link to="/dashboard" onClick={() => setIsDrawerOpen(false)} aria-label="Ir para Dashboard">
-                    <Button variant="outline" size="sm" className="w-full border-dusty-rose text-dusty-rose hover:bg-dusty-rose/10 rounded-xl" style={{ minHeight: 44 }}>
-                      Dashboard
-                    </Button>
-                  </Link>
-                  <Link to="/profile" onClick={() => setIsDrawerOpen(false)} aria-label="Ir para Perfil">
-                    <Button variant="outline" size="sm" className="w-full border-golden-honey text-golden-honey hover:bg-golden-honey/10 rounded-xl" style={{ minHeight: 44 }}>
-                      Perfil
-                    </Button>
-                  </Link>
-                  <Button 
-                    onClick={handleSignOut}
-                    variant="ghost" 
-                    size="sm"
-                    className="w-full mt-2 text-misty-gray hover:text-steel-blue rounded-xl"
-                    aria-label="Sair da conta"
-                    style={{ minHeight: 44 }}
-                  >
-                    Sair
-                  </Button>
-                </>
-              ) : (
+              {!user && (
                 <>
                   <Link to="/login" onClick={() => setIsDrawerOpen(false)} aria-label="Ir para login">
                     <Button variant="outline" size="sm" className="w-full border-dusty-rose text-dusty-rose hover:bg-dusty-rose/10 rounded-xl" style={{ minHeight: 44 }}>
