@@ -9,3 +9,6 @@ export const useGamification = () => {
   }
   return context;
 };
+
+// Export types for better TypeScript support
+export type { Achievement } from "./useAchievements";
