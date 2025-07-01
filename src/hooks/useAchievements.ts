@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from './useAuth';
 
-interface Achievement {
+export interface Achievement {
   id: number;
   title: string;
   description: string;

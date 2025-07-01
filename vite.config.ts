@@ -3,13 +3,18 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import { fileURLToPath } from 'node:url';
+import { componentTagger } from "lovable-tagger";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = resolve(__filename, '..');
 
-export default defineConfig({
-  plugins: [react()],
+export default defineConfig(({ mode }) => ({
+  plugins: [
+    react(),
+    mode === 'development' && componentTagger(),
+  ].filter(Boolean),
   server: {
+    host: "::",
     port: 8080
   },
   resolve: {
@@ -32,4 +37,4 @@ export default defineConfig({
       }
     }
   }
-});
+}));

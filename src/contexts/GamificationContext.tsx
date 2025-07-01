@@ -1,5 +1,6 @@
+
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import useAchievements, { Achievement } from "@/hooks/useAchievements";
+import { useAchievements, Achievement } from "@/hooks/useAchievements";
 import { getCurrentUser } from "@/services/userService";
 
 interface GamificationContextProps {
@@ -13,7 +14,8 @@ const GamificationContext = createContext<GamificationContextProps | undefined>(
 
 export const GamificationProvider = ({ children }: { children: ReactNode }) => {
   const [userId, setUserId] = useState<string | null>(null);
-  const { achievements, loading, error } = useAchievements(userId);
+  const { achievements, loading } = useAchievements();
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -22,6 +24,7 @@ export const GamificationProvider = ({ children }: { children: ReactNode }) => {
         setUserId(user?.id || null);
       } catch (error) {
         console.error("Error fetching user:", error);
+        setError("Failed to fetch user");
       }
     };
     fetchUser();
