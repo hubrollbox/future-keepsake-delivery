@@ -23,9 +23,6 @@ const DashboardMenu = () => {
       <Link to="/create-message" className="nav-link">
         <Button variant="outline" className="rounded-xl border-steel-blue text-steel-blue hover:bg-steel-blue/10">Criar Mensagem</Button>
       </Link>
-      <Link to="/products" className="nav-link">
-        <Button variant="outline" className="rounded-xl border-brand-gradient text-brand-gradient hover:bg-brand-gradient/10">Loja</Button>
-      </Link>
       <Button onClick={handleSignOut} variant="ghost" className="rounded-xl text-misty-gray hover:text-steel-blue">Sair</Button>
     </nav>
   );
