@@ -26,8 +26,8 @@ const HeroSection = () => {
 
       <div className="container mx-auto px-4 text-center relative z-10">
         <div className="max-w-4xl mx-auto">
-          {/* Logo/Selo */}
-          <div className="mb-8">
+          {/* Logo/Selo com mais espaço superior */}
+          <div className="mb-8 mt-16">
             <div className="w-24 h-24 mx-auto mb-6 relative">
               <img src="/lovable-uploads/63935007-5aa4-4a0f-8ff5-f6bb5674cc7d.png" alt="keepla Logo" className="w-24 h-24 mx-auto" />
             </div>

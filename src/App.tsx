@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContextProvider";
+import { GamificationProvider } from "@/contexts/GamificationContext";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -34,34 +35,36 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <AuthProvider>
-          <CartProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/create-message" element={<CreateMessage />} />
-                <Route path="/create-keepsake" element={<CreateKeepsake />} />
-                <Route path="/create-delivery" element={<CreateDelivery />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/how-it-works" element={<HowItWorks />} />
-                <Route path="/pricing" element={<Pricing />} />
-                <Route path="/products" element={<Products />} />
-                <Route path="/faq" element={<FAQ />} />
-                <Route path="/partnerships" element={<Partnerships />} />
-                <Route path="/checkout" element={<Checkout />} />
-                <Route path="/admin" element={<AdminDashboard />} />
-                <Route path="/terms" element={<TermsConditions />} />
-                <Route path="/privacy" element={<PrivacyPolicy />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </CartProvider>
+          <GamificationProvider>
+            <CartProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/create-message" element={<CreateMessage />} />
+                  <Route path="/create-keepsake" element={<CreateKeepsake />} />
+                  <Route path="/create-delivery" element={<CreateDelivery />} />
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/how-it-works" element={<HowItWorks />} />
+                  <Route path="/pricing" element={<Pricing />} />
+                  <Route path="/products" element={<Products />} />
+                  <Route path="/faq" element={<FAQ />} />
+                  <Route path="/partnerships" element={<Partnerships />} />
+                  <Route path="/checkout" element={<Checkout />} />
+                  <Route path="/admin" element={<AdminDashboard />} />
+                  <Route path="/terms" element={<TermsConditions />} />
+                  <Route path="/privacy" element={<PrivacyPolicy />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </BrowserRouter>
+            </CartProvider>
+          </GamificationProvider>
         </AuthProvider>
       </TooltipProvider>
     </QueryClientProvider>
