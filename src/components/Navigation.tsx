@@ -74,7 +74,7 @@ const Navigation = () => {
                   {link.label}
                 </NavLink>
               ))}
-              {user && <CartButton onClick={() => setIsCartOpen(true)} />}
+              {user && null}
               {!user && (
                 <Button
                   onClick={handleStartJourney}
