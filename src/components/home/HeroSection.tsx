@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import SeloDoTempoIcon from "@/components/SeloDoTempoIcon";
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -29,11 +30,7 @@ const HeroSection = () => {
           {/* Logo/Selo */}
           <div className="mb-8">
             <div className="w-24 h-24 mx-auto mb-6 relative">
-              <div className="absolute inset-0 rounded-full border-4 border-dusty-rose/30 animate-spin-slow"></div>
-              <div className="absolute inset-2 rounded-full border-2 border-steel-blue/40"></div>
-              <div className="absolute inset-4 rounded-full bg-dusty-rose/20 flex items-center justify-center">
-                <span className="text-2xl">⏰</span>
-              </div>
+              <SeloDoTempoIcon size={96} className="mx-auto" />
             </div>
           </div>
 

@@ -30,6 +30,7 @@ const Login = () => {
       navigate('/dashboard');
     }
   }, [user, navigate]);
+  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -71,16 +72,8 @@ const Login = () => {
     setLoading(false);
     
     if (!error) {
-      // Aguarda a sessão estar disponível antes de navegar
-      const checkSession = () => {
-        const session = localStorage.getItem('sb-'.concat(import.meta.env.VITE_SUPABASE_URL?.split('https://')[1] || '', '-auth-token'));
-        if (session) {
-          navigate('/dashboard');
-        } else {
-          setTimeout(checkSession, 100);
-        }
-      };
-      checkSession();
+      // Navigate directly to dashboard after successful login
+      navigate('/dashboard');
     }
   };
 

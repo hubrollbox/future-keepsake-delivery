@@ -76,20 +76,13 @@ const Navigation = () => {
               ))}
               {user && <CartButton onClick={() => setIsCartOpen(true)} />}
               {!user && (
-                <div className="flex items-center space-x-4">
-                  <Link to="/login" aria-label="Entrar na conta">
-                    <Button variant="outline" size="sm" className="border-dusty-rose text-dusty-rose hover:bg-dusty-rose/10 rounded-xl">
-                      Entrar
-                    </Button>
-                  </Link>
-                  <Button
-                    onClick={handleStartJourney}
-                    variant="brand"
-                    className="px-6 py-2 rounded-lg font-semibold text-white shadow-soft bg-brand-gradient hover:opacity-90 focus-visible:ring-2 focus-visible:ring-dusty-rose/40 transition-all duration-200"
-                  >
-                    Começar Jornada
-                  </Button>
-                </div>
+                <Button
+                  onClick={handleStartJourney}
+                  variant="brand"
+                  className="px-6 py-2 rounded-lg font-semibold text-white shadow-soft bg-brand-gradient hover:opacity-90 focus-visible:ring-2 focus-visible:ring-dusty-rose/40 transition-all duration-200"
+                >
+                  Começar Jornada
+                </Button>
               )}
             </div>
 
@@ -144,24 +137,17 @@ const Navigation = () => {
                 </div>
               )}
               {!user && (
-                <>
-                  <Link to="/login" onClick={() => setIsDrawerOpen(false)} aria-label="Ir para login">
-                    <Button variant="outline" size="sm" className="w-full border-dusty-rose text-dusty-rose hover:bg-dusty-rose/10 rounded-xl" style={{ minHeight: 44 }}>
-                      Entrar
-                    </Button>
-                  </Link>
-                  <Button 
-                    onClick={() => {
-                      handleStartJourney();
-                      setIsDrawerOpen(false);
-                    }}
-                    size="sm" 
-                    className="w-full bg-brand-gradient text-steel-blue hover:opacity-90 rounded-xl font-medium" 
-                    style={{ minHeight: 44 }}
-                  >
-                    Começar Jornada
-                  </Button>
-                </>
+                <Button 
+                  onClick={() => {
+                    handleStartJourney();
+                    setIsDrawerOpen(false);
+                  }}
+                  size="sm" 
+                  className="w-full bg-brand-gradient text-steel-blue hover:opacity-90 rounded-xl font-medium" 
+                  style={{ minHeight: 44 }}
+                >
+                  Começar Jornada
+                </Button>
               )}
             </nav>
           </div>
