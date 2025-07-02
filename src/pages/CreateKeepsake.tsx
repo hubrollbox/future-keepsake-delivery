@@ -103,10 +103,57 @@ const CreateKeepsake = () => {
     }
   };
 
-  const StepComponent = steps[currentStep].component;
   const progress = ((currentStep + 1) / steps.length) * 100;
 
   if (!user) return null;
+
+  const renderStepComponent = () => {
+    switch (currentStep) {
+      case 0:
+        return (
+          <MessageStep
+            formData={formData}
+            updateFormData={updateFormData}
+            nextStep={nextStep}
+          />
+        );
+      case 1:
+        return (
+          <RecipientStep
+            formData={formData}
+            updateFormData={updateFormData}
+            nextStep={nextStep}
+            prevStep={prevStep}
+          />
+        );
+      case 2:
+        return (
+          <ProductsStep
+            formData={formData}
+            updateFormData={updateFormData}
+            nextStep={nextStep}
+            prevStep={prevStep}
+          />
+        );
+      case 3:
+        return (
+          <ReviewStep
+            formData={formData}
+            prevStep={prevStep}
+            onSubmit={handleSubmit}
+            loading={loading}
+          />
+        );
+      case 4:
+        return (
+          <SuccessStep
+            formData={formData}
+          />
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-lavender-mist">
@@ -160,15 +207,7 @@ const CreateKeepsake = () => {
 
         <Card className="shadow-soft border-dusty-rose/20">
           <CardContent className="p-8">
-            <StepComponent
-              formData={formData}
-              updateFormData={updateFormData}
-              nextStep={nextStep}
-              prevStep={prevStep}
-              currentStep={currentStep}
-              loading={loading}
-              onSubmit={handleSubmit}
-            />
+            {renderStepComponent()}
           </CardContent>
         </Card>
       </div>
