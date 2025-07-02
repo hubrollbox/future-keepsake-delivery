@@ -7,9 +7,9 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 const createDemoUsers = async () => {
   try {
     // Admin Demo User
-    const { error: adminError } = await supabase.auth.signUp({
-      email: 'admin.demo@example.com',
-      password: 'admin123',
+    const { data: adminData, error: adminError } = await supabase.auth.signUp({
+      email: 'admin@keepla.pt',
+      password: 'senha123',
     });
 
     if (adminError) {
@@ -19,15 +19,26 @@ const createDemoUsers = async () => {
     }
 
     // Cliente Demo User
-    const { error: clienteError } = await supabase.auth.signUp({
-      email: 'cliente.demo@example.com',
-      password: 'cliente123',
+    const { data: demoData, error: demoError } = await supabase.auth.signUp({
+      email: 'demo@keepla.pt',
+      password: 'senha123',
     });
 
-    if (clienteError) {
-      console.error('Erro ao criar usuário cliente demo:', clienteError.message);
+    if (demoError) {
+      console.error('Erro ao criar usuário demo:', demoError.message);
     } else {
-      console.log('Usuário cliente demo criado com sucesso.');
+      console.log('Usuário demo criado com sucesso.');
+      // Criar cápsula para o usuário demo
+      if (demoData?.user?.id) {
+        const { error: capsuleError } = await supabase
+          .from('keepsakes')
+          .insert([{ title: 'Cápsula de Teste', description: 'Cápsula criada para o usuário demo.', user_id: demoData.user.id, delivery_date: new Date().toISOString() }]);
+        if (capsuleError) {
+          console.error('Erro ao criar cápsula para usuário demo:', capsuleError.message);
+        } else {
+          console.log('Cápsula criada para usuário demo com sucesso.');
+        }
+      }
     }
   } catch (error) {
     console.error('Erro ao criar usuários demo:', error);

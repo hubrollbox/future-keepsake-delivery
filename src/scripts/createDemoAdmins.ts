@@ -8,9 +8,7 @@ const createDemoAdmins = async () => {
   try {
     // Cria usuários demo admin
     const demoAdmins = [
-      { email: 'admin@exemplo.com', password: 'admin123' },
-      { email: 'admin.demo1@example.com', password: 'admin123' },
-      { email: 'admin.demo2@example.com', password: 'admin123' }
+      { email: 'admin@keepla.pt', password: 'senha123' }
     ];
 
     for (const admin of demoAdmins) {
