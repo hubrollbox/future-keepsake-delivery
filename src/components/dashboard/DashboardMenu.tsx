@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -20,8 +21,8 @@ const DashboardMenu = () => {
       <Link to="/profile" className="nav-link">
         <Button variant="outline" className="rounded-xl border-golden-honey text-golden-honey hover:bg-golden-honey/10">Perfil</Button>
       </Link>
-      <Link to="/create-message" className="nav-link">
-        <Button variant="outline" className="rounded-xl border-steel-blue text-steel-blue hover:bg-steel-blue/10">Criar Mensagem</Button>
+      <Link to="/create-keepsake" className="nav-link">
+        <Button variant="outline" className="rounded-xl border-steel-blue text-steel-blue hover:bg-steel-blue/10">Criar Cápsula</Button>
       </Link>
       <Button onClick={handleSignOut} variant="ghost" className="rounded-xl text-misty-gray hover:text-steel-blue">Sair</Button>
     </nav>

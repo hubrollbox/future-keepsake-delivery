@@ -6,7 +6,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { Menu } from "lucide-react";
 import CartButton from "@/components/cart/CartButton";
 import CartModal from "@/components/cart/CartModal";
-import SeloDoTempoIcon from "@/components/SeloDoTempoIcon";
 import {
   Drawer,
   DrawerClose,
@@ -25,6 +24,14 @@ const Navigation = () => {
     setIsDrawerOpen(false);
   };
 
+  const handleStartJourney = () => {
+    if (user) {
+      navigate("/dashboard");
+    } else {
+      navigate("/login");
+    }
+  };
+
   // Links para usar no menu/mobile
   const navLinks = [
     { to: "/about", label: "Manifesto", aria: "Ir para Manifesto" },
@@ -32,7 +39,7 @@ const Navigation = () => {
     { to: "/how-it-works", label: "Como Funciona", aria: "Ir para Como Funciona" },
     { to: "/pricing", label: "Preços", aria: "Ir para Preços" },
     { to: "/products", label: "Presentes com Alma", aria: "Ir para Presentes com Alma" },
-    // Removed redundant navigation links (no duplicate or legacy nav)
+    { to: "/faq", label: "Suporte", aria: "Ir para Suporte" },
   ];
 
   return (
@@ -75,14 +82,13 @@ const Navigation = () => {
                       Entrar
                     </Button>
                   </Link>
-                  <Link to="/register" aria-label="Registar nova conta">
-                    <Button
-                      variant="brand"
-                      className="px-6 py-2 rounded-lg font-semibold text-white shadow-soft bg-brand-gradient hover:opacity-90 focus-visible:ring-2 focus-visible:ring-dusty-rose/40 transition-all duration-200"
-                    >
-                      Registar
-                    </Button>
-                  </Link>
+                  <Button
+                    onClick={handleStartJourney}
+                    variant="brand"
+                    className="px-6 py-2 rounded-lg font-semibold text-white shadow-soft bg-brand-gradient hover:opacity-90 focus-visible:ring-2 focus-visible:ring-dusty-rose/40 transition-all duration-200"
+                  >
+                    Começar Jornada
+                  </Button>
                 </div>
               )}
             </div>
@@ -144,11 +150,17 @@ const Navigation = () => {
                       Entrar
                     </Button>
                   </Link>
-                  <Link to="/register" onClick={() => setIsDrawerOpen(false)} aria-label="Ir para registo">
-                    <Button size="sm" className="w-full bg-brand-gradient text-steel-blue hover:opacity-90 rounded-xl font-medium" style={{ minHeight: 44 }}>
-                      Registar
-                    </Button>
-                  </Link>
+                  <Button 
+                    onClick={() => {
+                      handleStartJourney();
+                      setIsDrawerOpen(false);
+                    }}
+                    size="sm" 
+                    className="w-full bg-brand-gradient text-steel-blue hover:opacity-90 rounded-xl font-medium" 
+                    style={{ minHeight: 44 }}
+                  >
+                    Começar Jornada
+                  </Button>
                 </>
               )}
             </nav>
@@ -162,13 +174,3 @@ const Navigation = () => {
 };
 
 export default Navigation;
-
-<nav className="flex flex-wrap justify-center items-center gap-4 w-full">
-  <a href="/contacto" className="nav-link">Contacto</a>
-  <a href="/como-funciona" className="nav-link">Como Funciona</a>
-  <a href="/manifesto" className="nav-link">Manifesto</a>
-  <a href="/precos" className="nav-link">Preços</a>
-  <a href="/" className="nav-link">Presentes com Alma</a>
-</nav>
-
-// Removed legacy/deprecated nav markup at the end of the file

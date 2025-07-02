@@ -150,6 +150,84 @@ export type Database = {
         }
         Relationships: []
       }
+      keepsake_products: {
+        Row: {
+          created_at: string | null
+          id: string
+          keepsake_id: string | null
+          product_id: string | null
+          quantity: number | null
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          keepsake_id?: string | null
+          product_id?: string | null
+          quantity?: number | null
+          unit_price: number
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          keepsake_id?: string | null
+          product_id?: string | null
+          quantity?: number | null
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "keepsake_products_keepsake_id_fkey"
+            columns: ["keepsake_id"]
+            isOneToOne: false
+            referencedRelation: "keepsakes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "keepsake_products_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      keepsakes: {
+        Row: {
+          created_at: string | null
+          delivery_date: string
+          id: string
+          message: string
+          payment_status: string | null
+          status: string | null
+          title: string
+          total_cost: number | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          delivery_date: string
+          id?: string
+          message: string
+          payment_status?: string | null
+          status?: string | null
+          title: string
+          total_cost?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          delivery_date?: string
+          id?: string
+          message?: string
+          payment_status?: string | null
+          status?: string | null
+          title?: string
+          total_cost?: number | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       messages: {
         Row: {
           content: string
@@ -229,7 +307,9 @@ export type Database = {
           amount: number
           created_at: string | null
           currency: string
+          external_reference: string | null
           id: string
+          keepsake_id: string | null
           payment_method: string | null
           status: string
           transaction_id: string | null
@@ -240,7 +320,9 @@ export type Database = {
           amount: number
           created_at?: string | null
           currency?: string
+          external_reference?: string | null
           id?: string
+          keepsake_id?: string | null
           payment_method?: string | null
           status?: string
           transaction_id?: string | null
@@ -251,12 +333,55 @@ export type Database = {
           amount?: number
           created_at?: string | null
           currency?: string
+          external_reference?: string | null
           id?: string
+          keepsake_id?: string | null
           payment_method?: string | null
           status?: string
           transaction_id?: string | null
           updated_at?: string | null
           user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_keepsake_id_fkey"
+            columns: ["keepsake_id"]
+            isOneToOne: false
+            referencedRelation: "keepsakes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          active: boolean | null
+          created_at: string | null
+          description: string | null
+          icon: string | null
+          id: string
+          name: string
+          price: number
+          type: string
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string | null
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name: string
+          price: number
+          type: string
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string | null
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name?: string
+          price?: number
+          type?: string
         }
         Relationships: []
       }
@@ -325,6 +450,50 @@ export type Database = {
           title?: string
         }
         Relationships: []
+      }
+      recipients: {
+        Row: {
+          address: string | null
+          channel_cost: number | null
+          delivery_channel: string
+          email: string | null
+          id: string
+          keepsake_id: string | null
+          name: string
+          phone: string | null
+          relationship: string | null
+        }
+        Insert: {
+          address?: string | null
+          channel_cost?: number | null
+          delivery_channel: string
+          email?: string | null
+          id?: string
+          keepsake_id?: string | null
+          name: string
+          phone?: string | null
+          relationship?: string | null
+        }
+        Update: {
+          address?: string | null
+          channel_cost?: number | null
+          delivery_channel?: string
+          email?: string | null
+          id?: string
+          keepsake_id?: string | null
+          name?: string
+          phone?: string | null
+          relationship?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recipients_keepsake_id_fkey"
+            columns: ["keepsake_id"]
+            isOneToOne: false
+            referencedRelation: "keepsakes"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       scheduled_notifications: {
         Row: {
