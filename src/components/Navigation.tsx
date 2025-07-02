@@ -34,9 +34,9 @@ const Navigation = () => {
 
   // Links para usar no menu/mobile
   const navLinks = [
-    { to: "/about", label: "Manifesto", aria: "Ir para Manifesto" },
-    { to: "/contact", label: "Contacto", aria: "Ir para Contacto" },
     { to: "/how-it-works", label: "Como Funciona", aria: "Ir para Como Funciona" },
+    { to: "/contact", label: "Contacto", aria: "Ir para Contacto" },
+    { to: "/about", label: "Manifesto", aria: "Ir para Manifesto" },
     { to: "/pricing", label: "Preços", aria: "Ir para Preços" },
     { to: "/products", label: "Presentes com Alma", aria: "Ir para Presentes com Alma" },
     { to: "/faq", label: "Suporte", aria: "Ir para Suporte" },
