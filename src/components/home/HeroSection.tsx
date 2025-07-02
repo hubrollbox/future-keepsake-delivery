@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import SeloDoTempoIcon from "@/components/SeloDoTempoIcon";
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -30,7 +29,7 @@ const HeroSection = () => {
           {/* Logo/Selo */}
           <div className="mb-8">
             <div className="w-24 h-24 mx-auto mb-6 relative">
-              <SeloDoTempoIcon size={96} className="mx-auto" />
+              <img src="/lovable-uploads/63935007-5aa4-4a0f-8ff5-f6bb5674cc7d.png" alt="keepla Logo" className="w-24 h-24 mx-auto" />
             </div>
           </div>
 
