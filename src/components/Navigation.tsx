@@ -74,7 +74,18 @@ const Navigation = () => {
                   {link.label}
                 </NavLink>
               ))}
-              {user && null}
+              {user && (
+                <>
+                  <CartButton onClick={() => setIsCartOpen(true)} />
+                  <Button
+                    onClick={handleSignOut}
+                    variant="outline"
+                    className="ml-4 px-6 py-2 rounded-lg font-semibold text-steel-blue shadow-soft hover:bg-dusty-rose/10 focus-visible:ring-2 focus-visible:ring-dusty-rose/40 transition-all duration-200"
+                  >
+                    Sair
+                  </Button>
+                </>
+              )}
               {!user && (
                 <Button
                   onClick={handleStartJourney}

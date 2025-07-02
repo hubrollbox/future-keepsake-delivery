@@ -17,9 +17,7 @@ const DashboardMenu = () => {
 
   return (
     <nav className="flex flex-wrap justify-center items-center gap-4 w-full mb-8">
-      <Link to="/profile" className="nav-link">
-        <Button variant="outline" className="rounded-xl border-golden-honey text-golden-honey hover:bg-golden-honey/10">Perfil</Button>
-      </Link>
+
       <CartButton onClick={() => setIsCartOpen(true)} />
       <Button onClick={handleSignOut} variant="ghost" className="rounded-xl text-misty-gray hover:text-steel-blue">Sair</Button>
     </nav>
