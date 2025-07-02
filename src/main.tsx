@@ -6,6 +6,12 @@ import { SpeedInsights } from "@vercel/speed-insights/react"
 
 initGA();
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js');
+  });
+}
+
 createRoot(document.getElementById("root")!).render(<App />);
 
 <SpeedInsights />
