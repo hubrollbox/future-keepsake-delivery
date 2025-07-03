@@ -157,7 +157,7 @@ const ReviewStep = ({ formData, prevStep, onSubmit, loading }: ReviewStepProps) 
         </Card>
       </div>
 
-      <div className="flex justify-between pt-6">
+      <div className="flex flex-col-reverse gap-4 sm:flex-row sm:justify-between pt-6">
         <Button variant="outline" onClick={prevStep} disabled={loading}>
           Voltar
         </Button>
