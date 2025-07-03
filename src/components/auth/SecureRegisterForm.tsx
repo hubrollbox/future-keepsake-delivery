@@ -57,6 +57,8 @@ const SecureRegisterForm = () => {
     e.preventDefault();
 
     try {
+      const userEmail = getFieldValue('email');
+      
       await submitForm(async (formValues) => {
         if (formValues.password !== formValues.confirmPassword) {
           throw new Error('As palavras-passe não coincidem');
@@ -76,7 +78,7 @@ const SecureRegisterForm = () => {
           title: 'Conta criada com sucesso',
           description: 'Verifique o seu email para confirmar a conta.',
         });
-      }, formValues.email);
+      }, userEmail);
     } catch (error: any) {
       toast({
         title: 'Erro no registo',
