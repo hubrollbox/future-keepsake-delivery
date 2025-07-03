@@ -1,3 +1,4 @@
+
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -36,6 +37,7 @@ const RegisterForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     password: "",
     confirmPassword: "",
     termsAccepted: false,
@@ -99,7 +101,7 @@ const RegisterForm = () => {
     
     setLoading(true);
     
-    const { error } = await signUp(formData.email, formData.password, formData.name, formData.phone);
+    const { error } = await signUp(formData.email, formData.password, formData.name);
     
     setLoading(false);
     
