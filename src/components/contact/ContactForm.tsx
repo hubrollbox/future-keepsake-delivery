@@ -5,6 +5,38 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
+import { z } from "zod";
+
+const contactSchema = z.object({
+  name: z.string().min(2, "Nome obrigatório"),
+  email: z.string().email("Email inválido"),
+  subject: z.string().min(2, "Assunto obrigatório"),
+  message: z.string().min(5, "Mensagem muito curta")
+});
+
+async function sendResendEmail({ to, subject, text }: { to: string; subject: string; text: string }) {
+  const RESEND_API_KEY = import.meta.env.VITE_RESEND_API_KEY;
+  const RESEND_SENDER = import.meta.env.VITE_RESEND_SENDER;
+  if (!RESEND_API_KEY || !RESEND_SENDER) throw new Error("Resend API key ou sender não configurados");
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${RESEND_API_KEY}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      from: RESEND_SENDER,
+      to: [to],
+      subject,
+      text
+    })
+  });
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(`Erro ao enviar email: ${error}`);
+  }
+  return true;
+}
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -13,17 +45,42 @@ const ContactForm = () => {
     subject: "",
     message: ""
   });
+  const [errors, setErrors] = useState<{ [k: string]: string }>({});
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+    setErrors(prev => ({ ...prev, [name]: "" }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    alert("Mensagem enviada com sucesso! Entraremos em contacto brevemente.");
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    setSuccess("");
+    const result = contactSchema.safeParse(formData);
+    if (!result.success) {
+      const fieldErrors: { [k: string]: string } = {};
+      result.error.errors.forEach(err => {
+        if (err.path[0]) fieldErrors[err.path[0]] = err.message;
+      });
+      setErrors(fieldErrors);
+      return;
+    }
+    setLoading(true);
+    try {
+      await sendResendEmail({
+        to: "contato@keepla.pt",
+        subject: formData.subject,
+        text: `Nome: ${formData.name}\nEmail: ${formData.email}\nMensagem: ${formData.message}`
+      });
+      setSuccess("Mensagem enviada com sucesso! Entraremos em contacto brevemente.");
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch (err: any) {
+      setErrors({ global: err.message || "Erro ao enviar mensagem." });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -49,6 +106,7 @@ const ContactForm = () => {
               aria-label="Nome completo"
               className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90"
             />
+            {errors.name && <span className="text-red-500 text-xs">{errors.name}</span>}
           </div>
 
           <div>
@@ -65,6 +123,7 @@ const ContactForm = () => {
               aria-label="Email"
               className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90"
             />
+            {errors.email && <span className="text-red-500 text-xs">{errors.email}</span>}
           </div>
 
           <div>
@@ -81,6 +140,7 @@ const ContactForm = () => {
               aria-label="Assunto"
               className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90"
             />
+            {errors.subject && <span className="text-red-500 text-xs">{errors.subject}</span>}
           </div>
 
           <div>
@@ -97,13 +157,18 @@ const ContactForm = () => {
               aria-label="Mensagem"
               className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90"
             />
+            {errors.message && <span className="text-red-500 text-xs">{errors.message}</span>}
           </div>
+
+          {errors.global && <div className="text-red-500 text-sm">{errors.global}</div>}
+          {success && <div className="text-green-600 text-sm">{success}</div>}
 
           <Button 
             type="submit" 
             className="w-full bg-earthy-burgundy text-white hover:bg-earthy-burgundy/90 font-semibold py-3 rounded-xl transition-all duration-200"
+            disabled={loading}
           >
-            Enviar Mensagem
+            {loading ? "A enviar..." : "Enviar Mensagem"}
           </Button>
         </form>
       </CardContent>
