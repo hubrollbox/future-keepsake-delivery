@@ -70,7 +70,7 @@ const ContactForm = () => {
     setLoading(true);
     try {
       await sendResendEmail({
-        to: "contato@keepla.pt",
+        to: "brandadministration@gmail.com",
         subject: formData.subject,
         text: `Nome: ${formData.name}\nEmail: ${formData.email}\nMensagem: ${formData.message}`
       });
