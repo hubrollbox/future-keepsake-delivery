@@ -12,6 +12,7 @@ import RecipientStep from "@/components/keepsake/RecipientStep";
 import ProductsStep from "@/components/keepsake/ProductsStep";
 import ReviewStep from "@/components/keepsake/ReviewStep";
 import SuccessStep from "@/components/keepsake/SuccessStep";
+import { supabase } from "@/integrations/supabase/client";
 
 export interface KeepsakeFormData {
   title: string;
@@ -82,22 +83,26 @@ const CreateKeepsake = () => {
   };
 
   const handleSubmit = async () => {
-    // Esta função será implementada com integração Stripe
     setLoading(true);
     try {
-      // Simular criação da cápsula
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      nextStep(); // Ir para o passo de sucesso
-      toast({
-        title: "Cápsula Criada!",
-        description: "A tua cápsula foi selada com sucesso.",
-      });
+      const { error } = await supabase.from("deliveries").insert([
+        {
+          title: formData.title,
+          message: formData.message,
+          delivery_date: formData.delivery_date,
+          recipient_name: formData.recipient_name,
+          recipient_email: formData.recipient_contact,
+          type: formData.delivery_channel === 'physical' ? 'physical' : 'digital',
+          status: 'scheduled',
+          // outros campos relevantes
+          user_id: user.id
+        }
+      ]);
+      if (error) throw error;
+      nextStep();
+      toast({ title: "Cápsula Criada!", description: "A tua cápsula foi selada com sucesso." });
     } catch (error) {
-      toast({
-        title: "Erro",
-        description: "Não foi possível criar a cápsula.",
-        variant: "destructive"
-      });
+      toast({ title: "Erro", description: "Não foi possível criar a cápsula.", variant: "destructive" });
     } finally {
       setLoading(false);
     }

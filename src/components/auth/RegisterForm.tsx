@@ -16,13 +16,15 @@ import RegisterMotivation from "./RegisterMotivation";
 const registerSchema = z.object({
   name: z.string().min(2, "O nome deve ter pelo menos 2 caracteres"),
   email: z.string().email("Email inválido"),
+  phone: z.string().min(9, "O telemóvel deve ter pelo menos 9 dígitos").regex(/^\d+$/, "O telemóvel deve conter apenas números"),
   password: z.string().min(6, "A palavra-passe deve ter pelo menos 6 caracteres"),
   confirmPassword: z.string(),
   termsAccepted: z.literal(true, {
     errorMap: () => ({ message: "É obrigatório aceitar os Termos e Condições." }),
   }),
   marketingAccepted: z.boolean().optional(),
-}).refine((data) => data.password === data.confirmPassword, {
+})
+.refine((data) => data.password === data.confirmPassword, {
   message: "As palavras-passe não coincidem",
   path: ["confirmPassword"],
 });
@@ -48,6 +50,7 @@ const RegisterForm = () => {
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
   const termsRef = useRef<HTMLInputElement>(null);
+  const phoneRef = useRef<HTMLInputElement>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -80,6 +83,7 @@ const RegisterForm = () => {
         // Foca no primeiro erro
         if (newErrors.name) nameRef.current?.focus();
         else if (newErrors.email) emailRef.current?.focus();
+        else if (newErrors.phone) phoneRef.current?.focus();
         else if (newErrors.password) passwordRef.current?.focus();
         else if (newErrors.confirmPassword) confirmPasswordRef.current?.focus();
         else if (newErrors.termsAccepted) termsRef.current?.focus();
@@ -95,7 +99,7 @@ const RegisterForm = () => {
     
     setLoading(true);
     
-    const { error } = await signUp(formData.email, formData.password, formData.name);
+    const { error } = await signUp(formData.email, formData.password, formData.name, formData.phone);
     
     setLoading(false);
     
@@ -145,6 +149,18 @@ const RegisterForm = () => {
             error={errors.email}
             required
             inputRef={emailRef}
+          />
+          <RegisterInputField
+            id="phone"
+            name="phone"
+            type="tel"
+            label="Telemóvel"
+            placeholder="O teu número de telemóvel"
+            value={formData.phone}
+            onChange={handleInputChange}
+            error={errors.phone}
+            required
+            inputRef={phoneRef}
           />
           <RegisterInputField
             id="password"
