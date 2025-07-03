@@ -8,6 +8,7 @@ import HowItWorksSection from "@/components/home/HowItWorksSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import TrustSection from "@/components/home/TrustSection";
 import FinalCTA from "@/components/home/FinalCTA";
+import OnboardingModal from "@/components/OnboardingModal";
 import { Suspense } from "react";
 import LoadingSpinner from "@/components/ui/loading-spinner";
 
@@ -15,6 +16,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-lavender-mist">
       <Navigation />
+      <OnboardingModal />
 
       <main>
         <HeroSection />
