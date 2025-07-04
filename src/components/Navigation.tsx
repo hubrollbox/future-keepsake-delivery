@@ -1,172 +1,172 @@
 
-import { useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
-import { Menu } from "lucide-react";
-import CartButton from "@/components/cart/CartButton";
-import CartModal from "@/components/cart/CartModal";
+import { Menu, X, User, LogOut, Settings } from "lucide-react";
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-} from "@/components/ui/drawer";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import NotificationBell from "./notifications/NotificationBell";
 
 const Navigation = () => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const { user, signOut } = useAuth();
+  const { user, profile } = useAuth();
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleSignOut = async () => {
-    await signOut();
-    navigate("/");
-    setIsDrawerOpen(false);
-  };
-
-  const handleStartJourney = () => {
-    if (user) {
-      navigate("/dashboard");
-    } else {
-      navigate("/login");
+    try {
+      await supabase.auth.signOut();
+      navigate("/");
+      toast({
+        title: "Sessão terminada",
+        description: "Até breve!",
+      });
+    } catch (error) {
+      console.error("Error signing out:", error);
+      toast({
+        title: "Erro",
+        description: "Não foi possível terminar a sessão.",
+        variant: "destructive",
+      });
     }
   };
 
-  // Links para usar no menu/mobile
-  const navLinks = [
-    { to: "/how-it-works", label: "Como Funciona", aria: "Ir para Como Funciona" },
-    { to: "/contact", label: "Contacto", aria: "Ir para Contacto" },
-    { to: "/about", label: "Manifesto", aria: "Ir para Manifesto" },
-    { to: "/pricing", label: "Preços", aria: "Ir para Preços" },
-    { to: "/products", label: "Presentes com Alma", aria: "Ir para Presentes com Alma" },
-    { to: "/faq", label: "Suporte", aria: "Ir para Suporte" },
+  const menuItems = [
+    { name: "Início", href: "/" },
+    { name: "Produtos", href: "/products" },
+    { name: "Como Funciona", href: "/how-it-works" },
+    { name: "Preços", href: "/pricing" },
+    { name: "Contacto", href: "/contact" },
   ];
 
   return (
-    <>
-      {/* Link Skip to Content para acessibilidade */}
-      <a
-        href="#main-content"
-        className="skip-link sr-only focus:not-sr-only absolute top-2 left-2 z-50 bg-dusty-rose/90 text-steel-blue px-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-earthy-burgundy font-semibold transition-all"
-        aria-label="Pular para o conteúdo principal"
-        tabIndex={0}
-      >
-        Pular para Conteúdo
-      </a>
-      <nav className="bg-white/95 backdrop-blur-md shadow-gentle border-b border-dusty-rose/20 sticky top-0 z-40" aria-label="Navegação principal">
-        <div className="w-full max-w-full px-2 sm:px-4 md:px-8 mx-auto">
-          <div className="flex justify-between items-center h-20 min-w-0 overflow-x-hidden max-w-full">
-            <Link to="/" className="flex items-center space-x-3 font-bold text-xl text-steel-blue min-w-0 overflow-hidden" aria-label="Página inicial">
-              <img src="/keepla%20logo.png" alt="Logo" style={{width: 56, height: 56}} />
-            </Link>
-
-            {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-8 lg:space-x-10">
-              {navLinks.map((link) => (
-                <NavLink
-                  key={link.to}
-                  to={link.to}
-                  className={({ isActive }) =>
-                    `nav-link text-misty-gray hover:text-dusty-rose focus-visible:underline focus-visible:decoration-2 focus-visible:decoration-dusty-rose transition-colors font-medium ${isActive ? "active" : ""}`
-                  }
-                  aria-label={link.aria}
-                >
-                  {link.label}
-                </NavLink>
-              ))}
-              {user && (
-                <>
-                  <CartButton onClick={() => setIsCartOpen(true)} />
-                  <Button
-                    onClick={handleSignOut}
-                    variant="outline"
-                    className="ml-4 px-6 py-2 rounded-lg font-semibold text-steel-blue shadow-soft hover:bg-dusty-rose/10 focus-visible:ring-2 focus-visible:ring-dusty-rose/40 transition-all duration-200"
-                  >
-                    Sair
-                  </Button>
-                </>
-              )}
-              {!user && (
-                <Button
-                  onClick={handleStartJourney}
-                  variant="brand"
-                  className="px-6 py-2 rounded-lg font-semibold text-white shadow-soft bg-brand-gradient hover:opacity-90 focus-visible:ring-2 focus-visible:ring-dusty-rose/40 transition-all duration-200"
-                >
-                  Começar Jornada
-                </Button>
-              )}
+    <nav className="bg-white shadow-sm border-b border-lavender-mist sticky top-0 z-50">
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-gradient-to-br from-dusty-rose to-earthy-burgundy rounded-full flex items-center justify-center">
+              <span className="text-white font-bold text-sm">FP</span>
             </div>
+            <span className="font-fraunces text-xl font-semibold text-steel-blue">
+              FuturoPresente
+            </span>
+          </Link>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsDrawerOpen(true)}
-              className="md:hidden p-2 rounded-xl text-misty-gray hover:text-steel-blue hover:bg-sand-beige/50 focus-visible:ring-2 focus-visible:ring-earthy-burgundy"
-              aria-label="Abrir o menu de navegação"
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center space-x-8">
+            {menuItems.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className="text-steel-blue hover:text-dusty-rose transition-colors font-medium"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+
+          {/* Right side - Auth and Notifications */}
+          <div className="flex items-center space-x-4">
+            {user ? (
+              <>
+                <NotificationBell />
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                      <Avatar className="h-8 w-8">
+                        <AvatarImage src={profile?.avatar_url || ""} alt={profile?.full_name || ""} />
+                        <AvatarFallback className="bg-dusty-rose text-white">
+                          {profile?.full_name
+                            ? profile.full_name.charAt(0).toUpperCase()
+                            : user.email?.charAt(0).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56" align="end" forceMount>
+                    <div className="flex items-center justify-start gap-2 p-2">
+                      <div className="flex flex-col space-y-1 leading-none">
+                        <p className="font-medium">{profile?.full_name || "Utilizador"}</p>
+                        <p className="w-[200px] truncate text-sm text-muted-foreground">
+                          {user.email}
+                        </p>
+                      </div>
+                    </div>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => navigate("/dashboard")}>
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Dashboard</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate("/profile")}>
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>Perfil</span>
+                    </DropdownMenuItem>
+                    {profile?.role === "admin" && (
+                      <DropdownMenuItem onClick={() => navigate("/admin")}>
+                        <Settings className="mr-2 h-4 w-4" />
+                        <span>Admin</span>
+                      </DropdownMenuItem>
+                    )}
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={handleSignOut}>
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>Sair</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
+            ) : (
+              <div className="flex items-center space-x-2">
+                <Button variant="ghost" onClick={() => navigate("/login")}>
+                  Entrar
+                </Button>
+                <Button variant="brand" onClick={() => navigate("/register")}>
+                  Registar
+                </Button>
+              </div>
+            )}
+
+            {/* Mobile menu button */}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="md:hidden"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              <Menu className="h-6 w-6" />
-            </button>
+              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </Button>
           </div>
         </div>
-      </nav>
 
-      {/* Drawer: Mobile Navigation */}
-      <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen} shouldScaleBackground>
-        <DrawerContent className="pt-4 pb-8 px-4">
-          <div className="flex flex-col gap-7 mt-3">
-            <div className="flex justify-between items-center mb-4">
-              <Link to="/" onClick={() => setIsDrawerOpen(false)} className="flex items-center space-x-2 font-bold text-xl text-steel-blue" aria-label="Página inicial">
-                <img src="/keepla%20logo.png" alt="Logo" style={{width: 32, height: 32}} />
-              </Link>
-              <DrawerClose asChild>
-                <button
-                  type="button"
-                  className="p-2 rounded-xl text-misty-gray hover:text-steel-blue hover:bg-sand-beige/50 focus-visible:ring-2 focus-visible:ring-earthy-burgundy"
-                  aria-label="Fechar o menu de navegação"
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden border-t border-lavender-mist py-4">
+            <div className="flex flex-col space-y-4">
+              {menuItems.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="text-steel-blue hover:text-dusty-rose transition-colors font-medium px-2"
+                  onClick={() => setIsMenuOpen(false)}
                 >
-                  <span aria-hidden="true" className="text-lg">&times;</span>
-                </button>
-              </DrawerClose>
-            </div>
-            <nav aria-label="Menu mobile principal" className="flex flex-col gap-5">
-              {navLinks.map((link) => (
-                <NavLink
-                  key={link.to}
-                  to={link.to}
-                  onClick={() => setIsDrawerOpen(false)}
-                  className={({ isActive }) =>
-                    `block py-3 px-3 text-lg font-medium rounded-xl transition-colors nav-link text-misty-gray hover:text-dusty-rose focus-visible:underline focus-visible:decoration-2 focus-visible:decoration-dusty-rose ${isActive ? "active text-dusty-rose" : ""}`
-                  }
-                  aria-label={link.aria}
-                  style={{ minHeight: 44 }}
-                >
-                  {link.label}
-                </NavLink>
+                  {item.name}
+                </Link>
               ))}
-              {user && (
-                <div className="py-1">
-                  <CartButton onClick={() => {setIsCartOpen(true); setIsDrawerOpen(false);}} />
-                </div>
-              )}
-              {!user && (
-                <Button 
-                  onClick={() => {
-                    handleStartJourney();
-                    setIsDrawerOpen(false);
-                  }}
-                  size="sm" 
-                  className="w-full bg-brand-gradient text-steel-blue hover:opacity-90 rounded-xl font-medium" 
-                  style={{ minHeight: 44 }}
-                >
-                  Começar Jornada
-                </Button>
-              )}
-            </nav>
+            </div>
           </div>
-        </DrawerContent>
-      </Drawer>
-
-      <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-    </>
+        )}
+      </div>
+    </nav>
   );
 };
 

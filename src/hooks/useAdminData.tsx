@@ -64,7 +64,7 @@ export const useAdminData = () => {
       // Fetch total deliveries
       const { data: deliveries, error: deliveriesError } = await supabase
         .from("deliveries")
-        .select("id, delivery_date, status, created_at");
+        .select("id, delivery_date, status, created_at, user_id");
       
       if (deliveriesError) throw deliveriesError;
 
