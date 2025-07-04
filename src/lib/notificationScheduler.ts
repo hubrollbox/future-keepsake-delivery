@@ -1,7 +1,8 @@
+
 // Utilitário para agendar e enviar notificações de entrega
 // NOTA: Em produção, o agendamento deve ser feito por backend/cronjob. Aqui é um mock para MVP.
 
-import { sendNotificationEmail } from "@/lib/emailService";
+import { supabase } from "@/integrations/supabase/client";
 
 export interface DeliveryNotification {
   id: string;
@@ -24,19 +25,31 @@ export async function processScheduledNotifications() {
   for (const notif of scheduledNotifications) {
     const deliveryTime = new Date(notif.deliveryDate);
     if (deliveryTime <= now) {
-      // Enviar email para utilizador e destinatário
-      await sendNotificationEmail({
-        to: notif.userEmail,
-        subject: "Entrega programada enviada!",
-        text: notif.message
-      });
-      await sendNotificationEmail({
-        to: notif.recipientEmail,
-        subject: "Recebeste uma keepsake!",
-        text: notif.message
-      });
-      // Remover da lista (simula envio)
-      scheduledNotifications.splice(scheduledNotifications.indexOf(notif), 1);
+      // Enviar email através da edge function
+      try {
+        await supabase.functions.invoke('send-contact-email', {
+          body: {
+            name: 'Sistema FuturoPresente',
+            email: notif.userEmail,
+            subject: 'Entrega programada enviada!',
+            message: notif.message
+          }
+        });
+
+        await supabase.functions.invoke('send-contact-email', {
+          body: {
+            name: 'Sistema FuturoPresente',
+            email: notif.recipientEmail,
+            subject: 'Recebeste uma keepsake!',
+            message: notif.message
+          }
+        });
+
+        // Remover da lista (simula envio)
+        scheduledNotifications.splice(scheduledNotifications.indexOf(notif), 1);
+      } catch (error) {
+        console.error('Erro ao enviar notificação:', error);
+      }
     }
   }
 }
