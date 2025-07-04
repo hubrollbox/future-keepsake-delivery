@@ -26,6 +26,17 @@ export interface Payment {
   updated_at: string;
 }
 
+export interface DeliveriesByMonth {
+  month: string;
+  count: number;
+}
+
+export interface TopUser {
+  user_id: string;
+  name: string;
+  count: number;
+}
+
 interface AdminStats {
   totalDeliveries: number;
   pendingDeliveries: number;
@@ -42,6 +53,8 @@ export const useAdminData = () => {
     warehouseItems: 0,
     recentPayments: 0,
   });
+  const [deliveriesByMonth, setDeliveriesByMonth] = useState<DeliveriesByMonth[]>([]);
+  const [topUsers, setTopUsers] = useState<TopUser[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
@@ -81,6 +94,51 @@ export const useAdminData = () => {
         .select("*", { count: "exact", head: true })
         .gte("created_at", sevenDaysAgo.toISOString());
 
+      // Fetch deliveries for monthly chart
+      const { data: deliveries } = await supabase
+        .from("deliveries")
+        .select("created_at")
+        .order("created_at", { ascending: false });
+
+      // Group deliveries by month
+      const monthlyData: { [key: string]: number } = {};
+      deliveries?.forEach(delivery => {
+        const date = new Date(delivery.created_at);
+        const monthKey = date.toLocaleDateString('pt-PT', { month: 'short', year: '2-digit' });
+        monthlyData[monthKey] = (monthlyData[monthKey] || 0) + 1;
+      });
+
+      const deliveriesMonthly = Object.entries(monthlyData)
+        .map(([month, count]) => ({ month, count }))
+        .sort((a, b) => new Date(`01 ${a.month}`).getTime() - new Date(`01 ${b.month}`).getTime())
+        .slice(-6);
+
+      // Fetch top users
+      const { data: allDeliveries } = await supabase
+        .from("deliveries")
+        .select("user_id");
+
+      const userDeliveryCount: { [key: string]: number } = {};
+      allDeliveries?.forEach(delivery => {
+        userDeliveryCount[delivery.user_id] = (userDeliveryCount[delivery.user_id] || 0) + 1;
+      });
+
+      const topUserIds = Object.entries(userDeliveryCount)
+        .sort(([,a], [,b]) => b - a)
+        .slice(0, 5)
+        .map(([userId]) => userId);
+
+      const { data: profiles } = await supabase
+        .from("profiles")
+        .select("id, full_name")
+        .in("id", topUserIds);
+
+      const topUsersData = topUserIds.map(userId => ({
+        user_id: userId,
+        name: profiles?.find(p => p.id === userId)?.full_name || "Utilizador Anónimo",
+        count: userDeliveryCount[userId]
+      }));
+
       setStats({
         totalDeliveries: totalDeliveries || 0,
         pendingDeliveries: pendingDeliveries || 0,
@@ -88,6 +146,9 @@ export const useAdminData = () => {
         warehouseItems: warehouseItems || 0,
         recentPayments: recentPayments || 0,
       });
+
+      setDeliveriesByMonth(deliveriesMonthly);
+      setTopUsers(topUsersData);
     } catch (error) {
       console.error("Error fetching admin stats:", error);
       toast({
@@ -152,6 +213,8 @@ export const useAdminData = () => {
 
   return {
     stats,
+    deliveriesByMonth,
+    topUsers,
     loading,
     updateDeliveryStatus,
     updateWarehouseItemStatus,

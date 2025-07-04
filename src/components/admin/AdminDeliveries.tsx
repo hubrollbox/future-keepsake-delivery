@@ -1,11 +1,13 @@
+
 import React, { useState, useEffect, useCallback } from "react";
-import { Search, Filter, CheckCircle, Clock, Package } from "lucide-react";
+import { CheckCircle, Clock, Package, Download } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { exportToCSV } from "@/lib/exportToCSV";
+import SearchFilters from "@/components/search/SearchFilters";
+import { useSearchFilters } from "@/hooks/useSearchFilters";
 
 interface Delivery {
   id: string;
@@ -15,6 +17,7 @@ interface Delivery {
   delivery_date: string;
   status: string;
   recipient_email: string | null;
+  recipient_name: string | null;
   created_at: string;
   user_id: string;
 }
@@ -22,9 +25,14 @@ interface Delivery {
 const AdminDeliveries = () => {
   const [deliveries, setDeliveries] = useState<Delivery[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
   const { toast } = useToast();
+
+  const {
+    filters,
+    setFilters,
+    filteredData: filteredDeliveries,
+    clearFilters,
+  } = useSearchFilters(deliveries, ["title", "recipient_email", "recipient_name", "description"]);
 
   const fetchDeliveries = useCallback(async () => {
     try {
@@ -34,9 +42,7 @@ const AdminDeliveries = () => {
         .order("delivery_date", { ascending: true });
 
       if (error) throw error;
-
       setDeliveries(data || []);
-      setLoading(false);
     } catch (error) {
       console.error("Error fetching deliveries:", error);
       toast({
@@ -44,6 +50,8 @@ const AdminDeliveries = () => {
         description: "Não foi possível carregar as entregas.",
         variant: "destructive",
       });
+    } finally {
+      setLoading(false);
     }
   }, [toast]);
 
@@ -76,16 +84,6 @@ const AdminDeliveries = () => {
     }
   };
 
-  const filteredDeliveries = deliveries.filter((delivery) => {
-    const matchesSearch = 
-      delivery.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      delivery.recipient_email?.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesStatus = statusFilter === "all" || delivery.status === statusFilter;
-    
-    return matchesSearch && matchesStatus;
-  });
-
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "delivered":
@@ -107,6 +105,19 @@ const AdminDeliveries = () => {
         return "bg-gray-100 text-gray-800";
     }
   };
+
+  const statusOptions = [
+    { value: "all", label: "Todos os estados" },
+    { value: "scheduled", label: "Agendado" },
+    { value: "delivered", label: "Entregue" },
+    { value: "cancelled", label: "Cancelado" },
+  ];
+
+  const categoryOptions = [
+    { value: "all", label: "Todos os tipos" },
+    { value: "digital", label: "Digital" },
+    { value: "physical", label: "Físico" },
+  ];
 
   if (loading) {
     return (
@@ -130,36 +141,26 @@ const AdminDeliveries = () => {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <h1 className="text-2xl font-bold text-gray-900">Entregas</h1>
-        <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-            <Input
-              placeholder="Pesquisar entregas..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 w-full sm:w-64"
-            />
-          </div>
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-md text-sm"
-          >
-            <option value="all">Todos os estados</option>
-            <option value="scheduled">Agendada</option>
-            <option value="delivered">Entregue</option>
-          </select>
-        </div>
+        <Button
+          variant="outline"
+          onClick={() => exportToCSV(filteredDeliveries, "entregas.csv")}
+          disabled={!filteredDeliveries.length}
+          className="flex items-center gap-2"
+        >
+          <Download className="h-4 w-4" />
+          Exportar CSV
+        </Button>
       </div>
 
-      <Button
-        variant="outline"
-        className="mb-4"
-        onClick={() => exportToCSV(deliveries, "entregas.csv")}
-        disabled={!deliveries.length}
-      >
-        Exportar CSV
-      </Button>
+      <SearchFilters
+        filters={filters}
+        onFiltersChange={setFilters}
+        onClearFilters={clearFilters}
+        statusOptions={statusOptions}
+        categoryOptions={categoryOptions}
+        showCategoryFilter={true}
+        placeholder="Pesquisar entregas por título, destinatário ou descrição..."
+      />
 
       <div className="grid gap-4">
         {filteredDeliveries.map((delivery) => (
@@ -173,7 +174,9 @@ const AdminDeliveries = () => {
                       {delivery.title}
                     </h3>
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(delivery.status)}`}>
-                      {delivery.status}
+                      {delivery.status === "scheduled" ? "Agendado" : 
+                       delivery.status === "delivered" ? "Entregue" : 
+                       delivery.status}
                     </span>
                   </div>
                   
@@ -187,6 +190,11 @@ const AdminDeliveries = () => {
                     {delivery.recipient_email && (
                       <div>
                         <strong>Email:</strong> {delivery.recipient_email}
+                      </div>
+                    )}
+                    {delivery.recipient_name && (
+                      <div>
+                        <strong>Nome:</strong> {delivery.recipient_name}
                       </div>
                     )}
                   </div>
@@ -229,7 +237,11 @@ const AdminDeliveries = () => {
         <Card>
           <CardContent className="p-8 text-center">
             <Package className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-600">Nenhuma entrega encontrada.</p>
+            <p className="text-gray-600">
+              {deliveries.length === 0 
+                ? "Nenhuma entrega encontrada." 
+                : "Nenhuma entrega corresponde aos filtros aplicados."}
+            </p>
           </CardContent>
         </Card>
       )}
