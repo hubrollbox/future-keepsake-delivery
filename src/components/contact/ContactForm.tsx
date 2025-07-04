@@ -5,79 +5,106 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
-import { z } from "zod";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
-const contactSchema = z.object({
-  name: z.string().min(2, "Nome obrigatório"),
-  email: z.string().email("Email inválido"),
-  subject: z.string().min(2, "Assunto obrigatório"),
-  message: z.string().min(5, "Mensagem muito curta")
-});
-
-async function sendResendEmail({ to, subject, text }: { to: string; subject: string; text: string }) {
-  const RESEND_API_KEY = import.meta.env.VITE_RESEND_API_KEY;
-  const RESEND_SENDER = import.meta.env.VITE_RESEND_SENDER;
-  if (!RESEND_API_KEY || !RESEND_SENDER) throw new Error("Resend API key ou sender não configurados");
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${RESEND_API_KEY}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      from: RESEND_SENDER,
-      to: [to],
-      subject,
-      text
-    })
-  });
-  if (!response.ok) {
-    const error = await response.text();
-    throw new Error(`Erro ao enviar email: ${error}`);
-  }
-  return true;
+interface ContactFormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
 }
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
     subject: "",
     message: ""
   });
-  const [errors, setErrors] = useState<{ [k: string]: string }>({});
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState("");
+  const { toast } = useToast();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    setErrors(prev => ({ ...prev, [name]: "" }));
+  };
+
+  const validateForm = (): boolean => {
+    if (!formData.name.trim()) {
+      toast({
+        title: "Erro",
+        description: "Nome é obrigatório",
+        variant: "destructive"
+      });
+      return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim() || !emailRegex.test(formData.email)) {
+      toast({
+        title: "Erro",
+        description: "Email válido é obrigatório",
+        variant: "destructive"
+      });
+      return false;
+    }
+
+    if (!formData.subject.trim()) {
+      toast({
+        title: "Erro",
+        description: "Assunto é obrigatório",
+        variant: "destructive"
+      });
+      return false;
+    }
+
+    if (!formData.message.trim() || formData.message.length < 10) {
+      toast({
+        title: "Erro",
+        description: "Mensagem deve ter pelo menos 10 caracteres",
+        variant: "destructive"
+      });
+      return false;
+    }
+
+    return true;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSuccess("");
-    const result = contactSchema.safeParse(formData);
-    if (!result.success) {
-      const fieldErrors: { [k: string]: string } = {};
-      result.error.errors.forEach(err => {
-        if (err.path[0]) fieldErrors[err.path[0]] = err.message;
-      });
-      setErrors(fieldErrors);
-      return;
-    }
+    
+    if (!validateForm()) return;
+
     setLoading(true);
+
     try {
-      await sendResendEmail({
-        to: "brandadministration@gmail.com",
-        subject: formData.subject,
-        text: `Nome: ${formData.name}\nEmail: ${formData.email}\nMensagem: ${formData.message}`
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+        body: {
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          subject: formData.subject.trim(),
+          message: formData.message.trim()
+        }
       });
-      setSuccess("Mensagem enviada com sucesso! Entraremos em contacto brevemente.");
+
+      if (error) throw error;
+
+      toast({
+        title: "Mensagem enviada!",
+        description: "Obrigado pelo seu contacto. Entraremos em contacto em breve.",
+      });
+
+      // Reset form
       setFormData({ name: "", email: "", subject: "", message: "" });
-    } catch (err: any) {
-      setErrors({ global: err.message || "Erro ao enviar mensagem." });
+
+    } catch (error: any) {
+      console.error('Error sending contact form:', error);
+      toast({
+        title: "Erro",
+        description: "Não foi possível enviar a mensagem. Tente novamente.",
+        variant: "destructive"
+      });
     } finally {
       setLoading(false);
     }
@@ -102,11 +129,9 @@ const ContactForm = () => {
               onChange={handleInputChange}
               placeholder="O teu nome"
               required
-              aria-required="true"
-              aria-label="Nome completo"
+              maxLength={100}
               className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90"
             />
-            {errors.name && <span className="text-red-500 text-xs">{errors.name}</span>}
           </div>
 
           <div>
@@ -119,11 +144,9 @@ const ContactForm = () => {
               onChange={handleInputChange}
               placeholder="teu@email.com"
               required
-              aria-required="true"
-              aria-label="Email"
+              maxLength={254}
               className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90"
             />
-            {errors.email && <span className="text-red-500 text-xs">{errors.email}</span>}
           </div>
 
           <div>
@@ -136,11 +159,9 @@ const ContactForm = () => {
               onChange={handleInputChange}
               placeholder="Como podemos ajudar?"
               required
-              aria-required="true"
-              aria-label="Assunto"
+              maxLength={200}
               className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90"
             />
-            {errors.subject && <span className="text-red-500 text-xs">{errors.subject}</span>}
           </div>
 
           <div>
@@ -153,15 +174,13 @@ const ContactForm = () => {
               placeholder="Conta-nos mais detalhes..."
               rows={5}
               required
-              aria-required="true"
-              aria-label="Mensagem"
-              className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90"
+              maxLength={2000}
+              className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90 resize-none"
             />
-            {errors.message && <span className="text-red-500 text-xs">{errors.message}</span>}
+            <p className="text-xs text-misty-gray mt-1">
+              {formData.message.length}/2000 caracteres
+            </p>
           </div>
-
-          {errors.global && <div className="text-red-500 text-sm">{errors.global}</div>}
-          {success && <div className="text-green-600 text-sm">{success}</div>}
 
           <Button 
             type="submit" 
