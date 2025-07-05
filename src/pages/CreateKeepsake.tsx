@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import Navigation from "@/components/Navigation";
 import { Card, CardContent } from "@/components/ui/card";
@@ -83,26 +82,98 @@ const CreateKeepsake = () => {
   };
 
   const handleSubmit = async () => {
+    if (!user) {
+      toast({ 
+        title: "Erro", 
+        description: "É necessário fazer login para criar uma cápsula.", 
+        variant: "destructive" 
+      });
+      navigate("/login");
+      return;
+    }
+
     setLoading(true);
+    
     try {
-      const { error } = await supabase.from("deliveries").insert([
-        {
-          title: formData.title,
-          message: formData.message,
-          delivery_date: formData.delivery_date,
-          recipient_name: formData.recipient_name,
-          recipient_email: formData.recipient_contact,
-          type: formData.delivery_channel === 'physical' ? 'physical' : 'digital',
-          status: 'scheduled',
-          // outros campos relevantes
-          user_id: user.id
+      console.log("Creating keepsake with data:", formData);
+      
+      // Criar a keepsake
+      const { data: keepsakeData, error: keepsakeError } = await supabase
+        .from("keepsakes")
+        .insert([
+          {
+            title: formData.title,
+            message: formData.message,
+            delivery_date: formData.delivery_date,
+            user_id: user.id,
+            status: 'scheduled',
+            payment_status: 'pending',
+            total_cost: formData.total_cost
+          }
+        ])
+        .select()
+        .single();
+
+      if (keepsakeError) {
+        console.error("Erro ao criar keepsake:", keepsakeError);
+        throw keepsakeError;
+      }
+
+      console.log("Keepsake created:", keepsakeData);
+
+      // Criar o destinatário
+      const { error: recipientError } = await supabase
+        .from("recipients")
+        .insert([
+          {
+            name: formData.recipient_name,
+            relationship: formData.relationship,
+            delivery_channel: formData.delivery_channel,
+            email: formData.delivery_channel === 'email' ? formData.recipient_contact : null,
+            phone: formData.delivery_channel === 'sms' ? formData.recipient_contact : null,
+            address: formData.delivery_channel === 'physical' ? formData.recipient_contact : null,
+            channel_cost: formData.channel_cost,
+            keepsake_id: keepsakeData.id
+          }
+        ]);
+
+      if (recipientError) {
+        console.error("Erro ao criar destinatário:", recipientError);
+        throw recipientError;
+      }
+
+      // Criar os produtos selecionados
+      if (formData.selected_products.length > 0) {
+        const keepsakeProducts = formData.selected_products.map(product => ({
+          keepsake_id: keepsakeData.id,
+          product_id: product.id,
+          quantity: product.quantity,
+          unit_price: product.price
+        }));
+
+        const { error: productsError } = await supabase
+          .from("keepsake_products")
+          .insert(keepsakeProducts);
+
+        if (productsError) {
+          console.error("Erro ao adicionar produtos:", productsError);
+          throw productsError;
         }
-      ]);
-      if (error) throw error;
+      }
+
       nextStep();
-      toast({ title: "Cápsula Criada!", description: "A tua cápsula foi selada com sucesso." });
-    } catch (error) {
-      toast({ title: "Erro", description: "Não foi possível criar a cápsula.", variant: "destructive" });
+      toast({ 
+        title: "Cápsula Criada!", 
+        description: "A tua cápsula foi selada com sucesso." 
+      });
+      
+    } catch (error: any) {
+      console.error("Erro detalhado:", error);
+      toast({ 
+        title: "Erro", 
+        description: error?.message || "Não foi possível criar a cápsula.", 
+        variant: "destructive" 
+      });
     } finally {
       setLoading(false);
     }

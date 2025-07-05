@@ -14,7 +14,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import NotificationBell from "./notifications/NotificationBell";
 
 const Navigation = () => {
   const { user, profile } = useAuth();
@@ -55,10 +54,10 @@ const Navigation = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gradient-to-br from-dusty-rose to-earthy-burgundy rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-sm">FP</span>
+              <span className="text-white font-bold text-sm">K</span>
             </div>
             <span className="font-fraunces text-xl font-semibold text-steel-blue">
-              FuturoPresente
+              keepla
             </span>
           </Link>
 
@@ -75,63 +74,60 @@ const Navigation = () => {
             ))}
           </div>
 
-          {/* Right side - Auth and Notifications */}
+          {/* Right side - Auth */}
           <div className="flex items-center space-x-4">
             {user ? (
-              <>
-                <NotificationBell />
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                      <Avatar className="h-8 w-8">
-                        <AvatarImage src={profile?.avatar_url || ""} alt={profile?.full_name || ""} />
-                        <AvatarFallback className="bg-dusty-rose text-white">
-                          {profile?.full_name
-                            ? profile.full_name.charAt(0).toUpperCase()
-                            : user.email?.charAt(0).toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56" align="end" forceMount>
-                    <div className="flex items-center justify-start gap-2 p-2">
-                      <div className="flex flex-col space-y-1 leading-none">
-                        <p className="font-medium">{profile?.full_name || "Utilizador"}</p>
-                        <p className="w-[200px] truncate text-sm text-muted-foreground">
-                          {user.email}
-                        </p>
-                      </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={profile?.avatar_url || ""} alt={profile?.full_name || ""} />
+                      <AvatarFallback className="bg-dusty-rose text-white">
+                        {profile?.full_name
+                          ? profile.full_name.charAt(0).toUpperCase()
+                          : user.email?.charAt(0).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end" forceMount>
+                  <div className="flex items-center justify-start gap-2 p-2">
+                    <div className="flex flex-col space-y-1 leading-none">
+                      <p className="font-medium">{profile?.full_name || "Utilizador"}</p>
+                      <p className="w-[200px] truncate text-sm text-muted-foreground">
+                        {user.email}
+                      </p>
                     </div>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => navigate("/dashboard")}>
-                      <User className="mr-2 h-4 w-4" />
-                      <span>Dashboard</span>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => navigate("/profile")}>
+                  </div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => navigate("/dashboard")}>
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Dashboard</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate("/profile")}>
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Perfil</span>
+                  </DropdownMenuItem>
+                  {profile?.role === "admin" && (
+                    <DropdownMenuItem onClick={() => navigate("/admin")}>
                       <Settings className="mr-2 h-4 w-4" />
-                      <span>Perfil</span>
+                      <span>Admin</span>
                     </DropdownMenuItem>
-                    {profile?.role === "admin" && (
-                      <DropdownMenuItem onClick={() => navigate("/admin")}>
-                        <Settings className="mr-2 h-4 w-4" />
-                        <span>Admin</span>
-                      </DropdownMenuItem>
-                    )}
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleSignOut}>
-                      <LogOut className="mr-2 h-4 w-4" />
-                      <span>Sair</span>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </>
+                  )}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleSignOut}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Sair</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
               <div className="flex items-center space-x-2">
                 <Button variant="ghost" onClick={() => navigate("/login")}>
                   Entrar
                 </Button>
-                <Button variant="brand" onClick={() => navigate("/register")}>
-                  Registar
+                <Button variant="brand" onClick={() => navigate("/create-keepsake")}>
+                  Começar
                 </Button>
               </div>
             )}
