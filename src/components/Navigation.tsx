@@ -53,9 +53,6 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-dusty-rose to-earthy-burgundy rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-sm">K</span>
-            </div>
             <span className="font-fraunces text-xl font-semibold text-steel-blue">
               keepla
             </span>
@@ -122,14 +119,9 @@ const Navigation = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <div className="flex items-center space-x-2">
-                <Button variant="ghost" onClick={() => navigate("/login")}>
-                  Entrar
-                </Button>
-                <Button variant="brand" onClick={() => navigate("/create-keepsake")}>
-                  Começar
-                </Button>
-              </div>
+              <Button variant="brand" onClick={() => navigate("/create-keepsake")}>
+                Começar
+              </Button>
             )}
 
             {/* Mobile menu button */}

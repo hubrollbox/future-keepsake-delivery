@@ -83,6 +83,7 @@ const CreateKeepsake = () => {
 
   const handleSubmit = async () => {
     if (!user) {
+      console.log("DEBUG: No user found");
       toast({ 
         title: "Erro", 
         description: "É necessário fazer login para criar uma cápsula.", 
@@ -92,10 +93,22 @@ const CreateKeepsake = () => {
       return;
     }
 
+    console.log("DEBUG: Starting keepsake creation with user:", user.id);
+    console.log("DEBUG: Form data:", formData);
+
     setLoading(true);
     
     try {
-      console.log("Creating keepsake with data:", formData);
+      // Validações básicas
+      if (!formData.title || !formData.message || !formData.delivery_date) {
+        throw new Error("Título, mensagem e data de entrega são obrigatórios");
+      }
+
+      if (!formData.recipient_name || !formData.recipient_contact) {
+        throw new Error("Nome e contacto do destinatário são obrigatórios");
+      }
+
+      console.log("DEBUG: Creating keepsake...");
       
       // Criar a keepsake
       const { data: keepsakeData, error: keepsakeError } = await supabase
@@ -115,13 +128,14 @@ const CreateKeepsake = () => {
         .single();
 
       if (keepsakeError) {
-        console.error("Erro ao criar keepsake:", keepsakeError);
+        console.error("DEBUG: Erro ao criar keepsake:", keepsakeError);
         throw keepsakeError;
       }
 
-      console.log("Keepsake created:", keepsakeData);
+      console.log("DEBUG: Keepsake created successfully:", keepsakeData);
 
       // Criar o destinatário
+      console.log("DEBUG: Creating recipient...");
       const { error: recipientError } = await supabase
         .from("recipients")
         .insert([
@@ -138,12 +152,15 @@ const CreateKeepsake = () => {
         ]);
 
       if (recipientError) {
-        console.error("Erro ao criar destinatário:", recipientError);
+        console.error("DEBUG: Erro ao criar destinatário:", recipientError);
         throw recipientError;
       }
 
+      console.log("DEBUG: Recipient created successfully");
+
       // Criar os produtos selecionados
       if (formData.selected_products.length > 0) {
+        console.log("DEBUG: Creating products...");
         const keepsakeProducts = formData.selected_products.map(product => ({
           keepsake_id: keepsakeData.id,
           product_id: product.id,
@@ -156,11 +173,14 @@ const CreateKeepsake = () => {
           .insert(keepsakeProducts);
 
         if (productsError) {
-          console.error("Erro ao adicionar produtos:", productsError);
+          console.error("DEBUG: Erro ao adicionar produtos:", productsError);
           throw productsError;
         }
+
+        console.log("DEBUG: Products created successfully");
       }
 
+      console.log("DEBUG: All operations completed successfully");
       nextStep();
       toast({ 
         title: "Cápsula Criada!", 
@@ -168,10 +188,19 @@ const CreateKeepsake = () => {
       });
       
     } catch (error: any) {
-      console.error("Erro detalhado:", error);
+      console.error("DEBUG: Erro detalhado na criação da cápsula:", error);
+      
+      let errorMessage = "Não foi possível criar a cápsula.";
+      
+      if (error?.message) {
+        errorMessage = error.message;
+      } else if (error?.details) {
+        errorMessage = error.details;
+      }
+      
       toast({ 
         title: "Erro", 
-        description: error?.message || "Não foi possível criar a cápsula.", 
+        description: errorMessage, 
         variant: "destructive" 
       });
     } finally {
