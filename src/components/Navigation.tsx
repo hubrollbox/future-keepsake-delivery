@@ -53,9 +53,11 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <span className="font-fraunces text-xl font-semibold text-steel-blue">
-              keepla
-            </span>
+            <img 
+              src="/lovable-uploads/63935007-5aa4-4a0f-8ff5-f6bb5674cc7d.png" 
+              alt="keepla Logo" 
+              className="w-10 h-10"
+            />
           </Link>
 
           {/* Desktop Menu */}
