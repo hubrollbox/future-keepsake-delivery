@@ -32,11 +32,20 @@ export function useSecureForm<T extends Record<string, any>>({
     }
   }, [errors, sanitizeFields]);
 
+  const getFieldValue = useCallback((field: keyof T) => {
+    return data[field] || '';
+  }, [data]);
+
+  const getFieldErrors = useCallback((field: keyof T) => {
+    const error = errors[field];
+    return error ? [error] : [];
+  }, [errors]);
+
   const validateField = useCallback((field: keyof T, value: any) => {
     try {
-      // Create a partial schema for single field validation
-      const fieldSchema = schema.pick({ [field]: true } as any);
-      fieldSchema.parse({ [field]: value });
+      // For single field validation, we need to create a partial validation
+      const fieldValue = { [field]: value } as Partial<T>;
+      schema.partial().parse(fieldValue);
       setErrors(prev => ({ ...prev, [field]: undefined }));
       return true;
     } catch (error) {
@@ -82,6 +91,36 @@ export function useSecureForm<T extends Record<string, any>>({
     }
   }, [data, schema, onSubmit]);
 
+  const submitForm = useCallback(async (submitHandler: (data: T) => Promise<void>, userEmail?: string) => {
+    try {
+      setIsSubmitting(true);
+      setErrors({});
+      
+      // Validate all data
+      const validatedData = schema.parse(data);
+      
+      // Submit the validated data
+      await submitHandler(validatedData);
+      
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const fieldErrors: Partial<Record<keyof T, string>> = {};
+        error.errors.forEach(err => {
+          if (err.path.length > 0) {
+            const field = err.path[0] as keyof T;
+            fieldErrors[field] = err.message;
+          }
+        });
+        setErrors(fieldErrors);
+      } else {
+        console.error('Form submission error:', error);
+        throw error;
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [data, schema]);
+
   const reset = useCallback(() => {
     setData({});
     setErrors({});
@@ -93,8 +132,11 @@ export function useSecureForm<T extends Record<string, any>>({
     errors,
     isSubmitting,
     updateField,
+    getFieldValue,
+    getFieldErrors,
     validateField,
     handleSubmit,
+    submitForm,
     reset,
     isValid: Object.keys(errors).length === 0 && Object.keys(data).length > 0
   };

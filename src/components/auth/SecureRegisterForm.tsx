@@ -6,14 +6,20 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
 import { useSecureForm } from '@/hooks/useSecureForm';
-import { VALIDATION_PATTERNS } from '@/utils/inputValidation';
+import { secureEmailSchema, securePasswordSchema, secureNameSchema } from '@/components/auth/SecureInputValidation';
+import { z } from 'zod';
 
-interface RegisterFormData {
-  fullName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+const registerSchema = z.object({
+  fullName: secureNameSchema,
+  email: secureEmailSchema,
+  password: securePasswordSchema,
+  confirmPassword: z.string().min(1, "Confirmação de palavra-passe é obrigatória")
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "As palavras-passe não coincidem",
+  path: ["confirmPassword"],
+});
+
+type RegisterFormData = z.infer<typeof registerSchema>;
 
 const SecureRegisterForm = () => {
   const { signUp } = useAuth();
@@ -23,62 +29,32 @@ const SecureRegisterForm = () => {
     updateField,
     getFieldValue,
     getFieldErrors,
-    submitForm,
+    handleSubmit,
     isSubmitting
   } = useSecureForm<RegisterFormData>({
-    fullName: {
-      required: true,
-      minLength: 2,
-      maxLength: 100,
-      pattern: VALIDATION_PATTERNS.name
+    schema: registerSchema,
+    onSubmit: async (validatedData) => {
+      const { error } = await signUp(
+        validatedData.email,
+        validatedData.password,
+        validatedData.fullName
+      );
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      toast({
+        title: 'Conta criada com sucesso',
+        description: 'Verifique o seu email para confirmar a conta.',
+      });
     },
-    email: {
-      required: true,
-      maxLength: 254,
-      pattern: VALIDATION_PATTERNS.email
-    },
-    password: {
-      required: true,
-      minLength: 8,
-      pattern: VALIDATION_PATTERNS.strongPassword
-    },
-    confirmPassword: {
-      required: true,
-      customValidator: (value) => value === getFieldValue('password')
-    }
-  }, {
-    rateLimit: {
-      maxAttempts: 3,
-      windowMs: 300000 // 5 minutes
-    }
+    sanitizeFields: ['fullName']
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const onSubmit = async (e: React.FormEvent) => {
     try {
-      const userEmail = getFieldValue('email');
-      
-      await submitForm(async (formValues) => {
-        if (formValues.password !== formValues.confirmPassword) {
-          throw new Error('As palavras-passe não coincidem');
-        }
-
-        const { error } = await signUp(
-          formValues.email!,
-          formValues.password!,
-          formValues.fullName!
-        );
-
-        if (error) {
-          throw new Error(error.message);
-        }
-
-        toast({
-          title: 'Conta criada com sucesso',
-          description: 'Verifique o seu email para confirmar a conta.',
-        });
-      }, userEmail);
+      await handleSubmit(e);
     } catch (error: any) {
       toast({
         title: 'Erro no registo',
@@ -96,7 +72,7 @@ const SecureRegisterForm = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={onSubmit} className="space-y-4">
           <div>
             <Input
               type="text"
@@ -137,7 +113,7 @@ const SecureRegisterForm = () => {
               <p key={index} className="text-sm text-red-600 mt-1">{error}</p>
             ))}
             <p className="text-xs text-misty-gray mt-1">
-              Mínimo 8 caracteres, deve incluir maiúscula, minúscula, número e símbolo
+              Mínimo 8 caracteres, deve incluir maiúscula, minúscula, número
             </p>
           </div>
 

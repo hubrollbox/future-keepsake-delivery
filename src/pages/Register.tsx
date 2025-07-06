@@ -2,8 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import SeloDoTempoIcon from "@/components/SeloDoTempoIcon";
-import RegisterForm from "@/components/auth/RegisterForm";
+import SecureRegisterForm from "@/components/auth/SecureRegisterForm";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -25,7 +24,7 @@ const Register = () => {
         <div className="text-center mb-8">
           <img src="/keepla logo.png" alt="Keepla Logo" className="h-20 mx-auto mb-4" />
         </div>
-        <RegisterForm />
+        <SecureRegisterForm />
       </div>
     </div>
   );
