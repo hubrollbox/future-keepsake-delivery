@@ -12,18 +12,48 @@ import TimeCapsuleSection from "@/components/dashboard/TimeCapsuleSection";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { user, profile } = useAuth();
-  const { deliveries, loading, deleteDelivery } = useDeliveries();
+  const { user, profile, loading } = useAuth();
+  const { deliveries, loading: deliveriesLoading, deleteDelivery } = useDeliveries();
   const isAdmin = profile?.role === "admin";
 
   // Initialize real-time notifications
   useRealtimeDeliveries();
 
+  console.log('📊 Dashboard render state:', { 
+    user: !!user, 
+    profile: !!profile, 
+    loading,
+    profileData: profile 
+  });
+
   React.useEffect(() => {
-    if (!user) {
+    if (!loading && !user) {
+      console.log('🚪 No user found, redirecting to login');
       navigate("/login");
     }
-  }, [user, navigate]);
+  }, [user, loading, navigate]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-lavender-mist flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-dusty-rose mx-auto mb-4"></div>
+          <h2 className="text-xl font-serif text-steel-blue">A carregar o seu dashboard...</h2>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-lavender-mist flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-xl font-serif text-steel-blue mb-4">Sessão não encontrada</h2>
+          <p className="text-soft-gray">A redireccionar para o login...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-lavender-mist">
@@ -37,7 +67,7 @@ const Dashboard = () => {
           <div className="xl:col-span-2">
             <TimeCapsuleSection 
               deliveries={deliveries}
-              loading={loading}
+              loading={deliveriesLoading}
               onDelete={deleteDelivery}
             />
           </div>
