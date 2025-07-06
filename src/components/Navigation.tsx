@@ -40,8 +40,8 @@ const Navigation = () => {
   };
 
   const menuItems = [
-    { name: "Início", href: "/" },
-    { name: "Produtos", href: "/products" },
+    { name: "Presentes com Alma", href: "/products" },
+    { name: "Manifesto", href: "/about" },
     { name: "Como Funciona", href: "/how-it-works" },
     { name: "Preços", href: "/pricing" },
     { name: "Contacto", href: "/contact" },
@@ -56,7 +56,7 @@ const Navigation = () => {
             <img 
               src="/lovable-uploads/63935007-5aa4-4a0f-8ff5-f6bb5674cc7d.png" 
               alt="keepla Logo" 
-              className="w-10 h-10"
+              className="w-16 h-16"
             />
           </Link>
 
@@ -122,7 +122,7 @@ const Navigation = () => {
               </DropdownMenu>
             ) : (
               <Button variant="brand" onClick={() => navigate("/create-keepsake")}>
-                Começar
+                Criar Cápsula
               </Button>
             )}
 
