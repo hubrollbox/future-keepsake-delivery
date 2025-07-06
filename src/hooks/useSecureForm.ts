@@ -1,158 +1,101 @@
 
 import { useState, useCallback } from 'react';
-import { validateField, sanitizeInput, ValidationRule, RateLimiter } from '@/utils/inputValidation';
+import { z } from 'zod';
+import { sanitizeInput } from '@/components/auth/SecureInputValidation';
 
-interface FormField {
-  value: string;
-  rules: ValidationRule;
-  errors: string[];
+interface UseSecureFormOptions<T> {
+  schema: z.ZodSchema<T>;
+  onSubmit: (data: T) => Promise<void> | void;
+  sanitizeFields?: (keyof T)[];
 }
 
-interface UseSecureFormOptions {
-  rateLimit?: {
-    maxAttempts: number;
-    windowMs: number;
-  };
-}
-
-export const useSecureForm = <T extends Record<string, any>>(
-  initialFields: Record<keyof T, ValidationRule>,
-  options: UseSecureFormOptions = {}
-) => {
-  const [fields, setFields] = useState<Record<keyof T, FormField>>(() => {
-    const initialFieldState: Record<keyof T, FormField> = {} as any;
-    
-    Object.keys(initialFields).forEach((key) => {
-      initialFieldState[key as keyof T] = {
-        value: '',
-        rules: initialFields[key as keyof T],
-        errors: []
-      };
-    });
-    
-    return initialFieldState;
-  });
-
+export function useSecureForm<T extends Record<string, any>>({
+  schema,
+  onSubmit,
+  sanitizeFields = []
+}: UseSecureFormOptions<T>) {
+  const [data, setData] = useState<Partial<T>>({});
+  const [errors, setErrors] = useState<Partial<Record<keyof T, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const rateLimiter = new RateLimiter();
 
-  const updateField = useCallback((fieldName: keyof T, value: string) => {
-    const sanitizedValue = sanitizeInput(value);
+  const updateField = useCallback((field: keyof T, value: any) => {
+    // Sanitize input if field is in sanitizeFields array
+    const sanitizedValue = sanitizeFields.includes(field) && typeof value === 'string'
+      ? sanitizeInput(value)
+      : value;
+
+    setData(prev => ({ ...prev, [field]: sanitizedValue }));
     
-    setFields(prev => ({
-      ...prev,
-      [fieldName]: {
-        ...prev[fieldName],
-        value: sanitizedValue,
-        errors: []
-      }
-    }));
-  }, []);
-
-  const validateForm = useCallback(() => {
-    let isValid = true;
-    const updatedFields = { ...fields };
-
-    Object.keys(fields).forEach((key) => {
-      const fieldKey = key as keyof T;
-      const field = fields[fieldKey];
-      const validation = validateField(field.value, String(fieldKey), field.rules);
-      
-      updatedFields[fieldKey] = {
-        ...field,
-        errors: validation.errors
-      };
-
-      if (!validation.isValid) {
-        isValid = false;
-      }
-    });
-
-    setFields(updatedFields);
-    return isValid;
-  }, [fields]);
-
-  const getFieldValue = useCallback((fieldName: keyof T): string => {
-    return fields[fieldName]?.value || '';
-  }, [fields]);
-
-  const getFieldErrors = useCallback((fieldName: keyof T): string[] => {
-    return fields[fieldName]?.errors || [];
-  }, [fields]);
-
-  const getAllValues = useCallback((): Partial<T> => {
-    const values: Partial<T> = {};
-    
-    Object.keys(fields).forEach((key) => {
-      const fieldKey = key as keyof T;
-      values[fieldKey] = fields[fieldKey].value as any;
-    });
-    
-    return values;
-  }, [fields]);
-
-  const resetForm = useCallback(() => {
-    const resetFields: Record<keyof T, FormField> = {} as any;
-    
-    Object.keys(fields).forEach((key) => {
-      const fieldKey = key as keyof T;
-      resetFields[fieldKey] = {
-        value: '',
-        rules: fields[fieldKey].rules,
-        errors: []
-      };
-    });
-    
-    setFields(resetFields);
-  }, [fields]);
-
-  const checkRateLimit = useCallback((identifier: string = 'default') => {
-    if (!options.rateLimit) return true;
-    
-    return rateLimiter.isAllowed(
-      identifier,
-      options.rateLimit.maxAttempts,
-      options.rateLimit.windowMs
-    );
-  }, [options.rateLimit, rateLimiter]);
-
-  const submitForm = useCallback(async (
-    onSubmit: (values: Partial<T>) => Promise<void>,
-    identifier: string = 'default'
-  ) => {
-    if (isSubmitting) return false;
-
-    // Check rate limit
-    if (!checkRateLimit(identifier)) {
-      throw new Error('Muitas tentativas. Tente novamente mais tarde.');
+    // Clear error for this field when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: undefined }));
     }
+  }, [errors, sanitizeFields]);
 
-    // Validate form
-    if (!validateForm()) {
-      throw new Error('Por favor, corrija os erros no formulário.');
-    }
-
-    setIsSubmitting(true);
-
+  const validateField = useCallback((field: keyof T, value: any) => {
     try {
-      const values = getAllValues();
-      await onSubmit(values);
-      resetForm();
+      // Create a partial schema for single field validation
+      const fieldSchema = schema.pick({ [field]: true } as any);
+      fieldSchema.parse({ [field]: value });
+      setErrors(prev => ({ ...prev, [field]: undefined }));
       return true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const fieldError = error.errors.find(e => e.path.includes(field as string));
+        if (fieldError) {
+          setErrors(prev => ({ ...prev, [field]: fieldError.message }));
+        }
+      }
+      return false;
+    }
+  }, [schema]);
+
+  const handleSubmit = useCallback(async (e?: React.FormEvent) => {
+    e?.preventDefault();
+    
+    try {
+      setIsSubmitting(true);
+      setErrors({});
+      
+      // Validate all data
+      const validatedData = schema.parse(data);
+      
+      // Submit the validated data
+      await onSubmit(validatedData);
+      
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const fieldErrors: Partial<Record<keyof T, string>> = {};
+        error.errors.forEach(err => {
+          if (err.path.length > 0) {
+            const field = err.path[0] as keyof T;
+            fieldErrors[field] = err.message;
+          }
+        });
+        setErrors(fieldErrors);
+      } else {
+        console.error('Form submission error:', error);
+        throw error;
+      }
     } finally {
       setIsSubmitting(false);
     }
-  }, [isSubmitting, checkRateLimit, validateForm, getAllValues, resetForm]);
+  }, [data, schema, onSubmit]);
+
+  const reset = useCallback(() => {
+    setData({});
+    setErrors({});
+    setIsSubmitting(false);
+  }, []);
 
   return {
-    updateField,
-    validateForm,
-    getFieldValue,
-    getFieldErrors,
-    getAllValues,
-    resetForm,
-    submitForm,
+    data,
+    errors,
     isSubmitting,
-    checkRateLimit
+    updateField,
+    validateField,
+    handleSubmit,
+    reset,
+    isValid: Object.keys(errors).length === 0 && Object.keys(data).length > 0
   };
-};
+}

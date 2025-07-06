@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import Navigation from "@/components/Navigation";
 import { Card, CardContent } from "@/components/ui/card";
@@ -6,7 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-import MessageStep from "@/components/keepsake/MessageStep";
+import SecureMessageStep from "@/components/keepsake/SecureMessageStep";
 import RecipientStep from "@/components/keepsake/RecipientStep";
 import ProductsStep from "@/components/keepsake/ProductsStep";
 import ReviewStep from "@/components/keepsake/ReviewStep";
@@ -58,7 +59,7 @@ const CreateKeepsake = () => {
   }, [user, navigate]);
 
   const steps = [
-    { title: "Mensagem", component: MessageStep },
+    { title: "Mensagem", component: SecureMessageStep },
     { title: "Destinatário", component: RecipientStep },
     { title: "Extras", component: ProductsStep },
     { title: "Revisão", component: ReviewStep },
@@ -99,13 +100,30 @@ const CreateKeepsake = () => {
     setLoading(true);
     
     try {
-      // Validações básicas
-      if (!formData.title || !formData.message || !formData.delivery_date) {
+      // Enhanced validations with security checks
+      if (!formData.title?.trim() || !formData.message?.trim() || !formData.delivery_date) {
         throw new Error("Título, mensagem e data de entrega são obrigatórios");
       }
 
-      if (!formData.recipient_name || !formData.recipient_contact) {
+      if (!formData.recipient_name?.trim() || !formData.recipient_contact?.trim()) {
         throw new Error("Nome e contacto do destinatário são obrigatórios");
+      }
+
+      // Validate delivery date is in the future
+      const deliveryDate = new Date(formData.delivery_date);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      if (deliveryDate <= today) {
+        throw new Error("Data de entrega deve ser no futuro");
+      }
+
+      // Validate email format if email delivery
+      if (formData.delivery_channel === 'email') {
+        const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+        if (!emailRegex.test(formData.recipient_contact)) {
+          throw new Error("Email do destinatário inválido");
+        }
       }
 
       console.log("DEBUG: Creating keepsake...");
@@ -115,8 +133,8 @@ const CreateKeepsake = () => {
         .from("keepsakes")
         .insert([
           {
-            title: formData.title,
-            message: formData.message,
+            title: formData.title.trim(),
+            message: formData.message.trim(),
             delivery_date: formData.delivery_date,
             user_id: user.id,
             status: 'scheduled',
@@ -129,23 +147,26 @@ const CreateKeepsake = () => {
 
       if (keepsakeError) {
         console.error("DEBUG: Erro ao criar keepsake:", keepsakeError);
+        if (keepsakeError.code === '23505') {
+          throw new Error("Já existe uma cápsula com este título");
+        }
         throw keepsakeError;
       }
 
       console.log("DEBUG: Keepsake created successfully:", keepsakeData);
 
-      // Criar o destinatário
+      // Create the recipient with enhanced validation
       console.log("DEBUG: Creating recipient...");
       const { error: recipientError } = await supabase
         .from("recipients")
         .insert([
           {
-            name: formData.recipient_name,
-            relationship: formData.relationship,
+            name: formData.recipient_name.trim(),
+            relationship: formData.relationship?.trim() || null,
             delivery_channel: formData.delivery_channel,
-            email: formData.delivery_channel === 'email' ? formData.recipient_contact : null,
-            phone: formData.delivery_channel === 'sms' ? formData.recipient_contact : null,
-            address: formData.delivery_channel === 'physical' ? formData.recipient_contact : null,
+            email: formData.delivery_channel === 'email' ? formData.recipient_contact.trim() : null,
+            phone: formData.delivery_channel === 'sms' ? formData.recipient_contact.trim() : null,
+            address: formData.delivery_channel === 'physical' ? formData.recipient_contact.trim() : null,
             channel_cost: formData.channel_cost,
             keepsake_id: keepsakeData.id
           }
@@ -158,14 +179,14 @@ const CreateKeepsake = () => {
 
       console.log("DEBUG: Recipient created successfully");
 
-      // Criar os produtos selecionados
+      // Create the products with validation
       if (formData.selected_products.length > 0) {
         console.log("DEBUG: Creating products...");
         const keepsakeProducts = formData.selected_products.map(product => ({
           keepsake_id: keepsakeData.id,
           product_id: product.id,
-          quantity: product.quantity,
-          unit_price: product.price
+          quantity: Math.max(1, product.quantity), // Ensure positive quantity
+          unit_price: Math.max(0, product.price) // Ensure non-negative price
         }));
 
         const { error: productsError } = await supabase
@@ -196,6 +217,8 @@ const CreateKeepsake = () => {
         errorMessage = error.message;
       } else if (error?.details) {
         errorMessage = error.details;
+      } else if (error?.code === 'PGRST301') {
+        errorMessage = "Dados inválidos. Verifica se todos os campos estão preenchidos corretamente.";
       }
       
       toast({ 
@@ -216,7 +239,7 @@ const CreateKeepsake = () => {
     switch (currentStep) {
       case 0:
         return (
-          <MessageStep
+          <SecureMessageStep
             formData={formData}
             updateFormData={updateFormData}
             nextStep={nextStep}
