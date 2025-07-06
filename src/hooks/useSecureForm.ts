@@ -43,9 +43,10 @@ export function useSecureForm<T extends Record<string, any>>({
 
   const validateField = useCallback((field: keyof T, value: any) => {
     try {
-      // For single field validation, we need to create a partial validation
-      const fieldValue = { [field]: value } as Partial<T>;
-      schema.partial().parse(fieldValue);
+      // For single field validation, we'll try to validate the entire object
+      // but only show errors for the specific field
+      const testData = { ...data, [field]: value };
+      schema.parse(testData);
       setErrors(prev => ({ ...prev, [field]: undefined }));
       return true;
     } catch (error) {
@@ -57,7 +58,7 @@ export function useSecureForm<T extends Record<string, any>>({
       }
       return false;
     }
-  }, [schema]);
+  }, [schema, data]);
 
   const handleSubmit = useCallback(async (e?: React.FormEvent) => {
     e?.preventDefault();
@@ -91,7 +92,7 @@ export function useSecureForm<T extends Record<string, any>>({
     }
   }, [data, schema, onSubmit]);
 
-  const submitForm = useCallback(async (submitHandler: (data: T) => Promise<void>, userEmail?: string) => {
+  const submitForm = useCallback(async (submitHandler: (data: T) => Promise<void>) => {
     try {
       setIsSubmitting(true);
       setErrors({});
