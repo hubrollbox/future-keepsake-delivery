@@ -57,6 +57,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .eq('id', userId)
         .single();
 
+      console.log('DEBUG: profileData', profileData);
+      console.log('DEBUG: profileError', profileError);
+
       if (profileError) {
         console.error('❌ [AuthContext] Error fetching profile:', profileError.message, profileError);
         throw profileError;
@@ -90,6 +93,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setProfile(null);
       setIsAdmin(false);
     }
+    return; // Explicit return to avoid 'control reached end of function without RETURN' warning
   };
 
   const refreshProfile = async () => {
