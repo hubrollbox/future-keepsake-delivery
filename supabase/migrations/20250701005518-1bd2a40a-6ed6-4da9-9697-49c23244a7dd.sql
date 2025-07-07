@@ -206,6 +206,7 @@ CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER
 LANGUAGE plpgsql
 SECURITY DEFINER
+IMMUTABLE -- Adicionado IMMUTABLE
 SET search_path = public
 AS $$
 BEGIN
@@ -218,7 +219,7 @@ BEGIN
     0,
     1
   );
-  RETURN NEW;
+  RETURN NEW; -- Adicionado RETURN NEW;
 END;
 $$;
 
