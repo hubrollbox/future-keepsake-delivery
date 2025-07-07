@@ -77,7 +77,7 @@ const TimeCapsuleSection = ({ deliveries, loading, onDelete }: TimeCapsuleSectio
             </div>
           ) : (
             <div className="space-y-4 max-h-96 overflow-y-auto">
-              {deliveries.slice(0, 5).map((delivery) => (
+              {deliveries.map((delivery) => (
                 <Card key={delivery.id} className="border border-blue-100 bg-blue-50/50">
                   <CardContent className="p-4">
                     <div className="flex justify-between items-start mb-2">

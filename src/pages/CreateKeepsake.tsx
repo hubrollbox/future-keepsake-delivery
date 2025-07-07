@@ -7,6 +7,8 @@ import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { useDeliveries } from "@/hooks/useDeliveries";
+import { useGamification } from "@/hooks/useGamification";
 import SecureMessageStep from "@/components/keepsake/SecureMessageStep";
 import RecipientStep from "@/components/keepsake/RecipientStep";
 import ProductsStep from "@/components/keepsake/ProductsStep";
@@ -36,6 +38,8 @@ const CreateKeepsake = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { refetch: refetchDeliveries } = useDeliveries();
+  const { addPoints } = useGamification();
   const [currentStep, setCurrentStep] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -178,6 +182,12 @@ const CreateKeepsake = () => {
       }
 
       console.log("DEBUG: Recipient created successfully");
+
+      // Add points for creating a keepsake
+      addPoints(100, "Criação de Cápsula"); // Example: 100 points for creating a keepsake
+
+      // Refetch deliveries to update the list
+      refetchDeliveries();
 
       // Create the products with validation
       if (formData.selected_products.length > 0) {

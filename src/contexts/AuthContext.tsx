@@ -49,7 +49,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const fetchProfile = async (userId: string) => {
     try {
-      console.log('🔍 Fetching profile for user:', userId);
+      console.log('🔍 [AuthContext] Fetching profile for user:', userId);
       
       const { data: profileData, error: profileError } = await supabase
         .from('profiles')
@@ -57,13 +57,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .eq('id', userId)
         .single();
 
-      console.log('📊 Profile data received:', profileData);
-      console.log('❌ Profile error:', profileError);
-
       if (profileError) {
-        console.error('Error fetching profile:', profileError);
+        console.error('❌ [AuthContext] Error fetching profile:', profileError.message, profileError);
         throw profileError;
       }
+
+      console.log('📊 [AuthContext] Profile data received:', profileData);
 
       // Check admin status
       const { data: adminData, error: adminError } = await supabase
@@ -72,19 +71,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .eq('user_id', userId)
         .single();
 
-      console.log('👑 Admin data received:', adminData);
-      console.log('❌ Admin error (normal if not admin):', adminError);
+      if (adminError && adminError.code !== 'PGRST116') { // PGRST116 means no rows found, which is fine for non-admins
+        console.warn('⚠️ [AuthContext] Warning fetching admin role:', adminError.message, adminError);
+      }
+
+      console.log('👑 [AuthContext] Admin data received:', adminData);
 
       const userProfile = {
         ...profileData,
         role: adminData?.role || null
       };
 
-      console.log('✅ Final profile set:', userProfile);
+      console.log('✅ [AuthContext] Final profile set:', userProfile);
       setProfile(userProfile);
       setIsAdmin(adminData?.role === 'admin');
     } catch (error) {
-      console.error('❌ Error in fetchProfile:', error);
+      console.error('❌ [AuthContext] Error in fetchProfile:', error);
       setProfile(null);
       setIsAdmin(false);
     }
@@ -92,29 +94,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const refreshProfile = async () => {
     if (user?.id) {
-      console.log('🔄 Refreshing profile for user:', user.id);
+      console.log('🔄 [AuthContext] Refreshing profile for user:', user.id);
       await fetchProfile(user.id);
     }
   };
 
   useEffect(() => {
-    console.log('🚀 AuthProvider initializing...');
+    console.log('🚀 [AuthContext] AuthProvider initializing...');
     
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, currentSession) => {
-        console.log('🔐 Auth state changed:', event, currentSession?.user?.id);
+        console.log('🔐 [AuthContext] Auth state changed:', event, currentSession?.user?.id);
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
         
         if (currentSession?.user) {
-          console.log('👤 User found, fetching profile...');
+          console.log('👤 [AuthContext] User found, fetching profile...');
           // Use setTimeout to avoid blocking the auth callback
           setTimeout(() => {
             fetchProfile(currentSession.user.id);
           }, 0);
         } else {
-          console.log('👤 No user, clearing profile...');
+          console.log('👤 [AuthContext] No user, clearing profile...');
           setProfile(null);
           setIsAdmin(false);
         }
@@ -125,12 +127,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     // THEN check for existing session
     supabase.auth.getSession().then(({ data: { session: existingSession } }) => {
-      console.log('🔍 Checking existing session:', existingSession?.user?.id);
+      console.log('🔍 [AuthContext] Checking existing session:', existingSession?.user?.id);
       setSession(existingSession);
       setUser(existingSession?.user ?? null);
       
       if (existingSession?.user) {
-        console.log('👤 Existing user found, fetching profile...');
+        console.log('👤 [AuthContext] Existing user found, fetching profile...');
         fetchProfile(existingSession.user.id);
       }
       
@@ -138,7 +140,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
 
     return () => {
-      console.log('🧹 Cleaning up auth subscription');
+      console.log('🧹 [AuthContext] Cleaning up auth subscription');
       subscription.unsubscribe();
     };
   }, []);
@@ -282,17 +284,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const value = {
-    user,
-    session,
-    profile,
-    loading,
-    signIn,
-    signUp,
-    signOut,
-    isAdmin,
-    refreshProfile
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        session,
+        profile,
+        loading,
+        signIn,
+        signUp,
+        signOut,
+        isAdmin,
+        refreshProfile
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
