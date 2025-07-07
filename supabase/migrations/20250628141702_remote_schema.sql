@@ -66,17 +66,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA "extensions";
 
 
 
-CREATE OR REPLACE FUNCTION "public"."calculate_level"() RETURNS "void"
-    LANGUAGE "plpgsql"
-    SET "search_path" TO 'public'
-    AS $$
-BEGIN
-    -- Function logic here
-END;
-$$;
 
-
-ALTER FUNCTION "public"."calculate_level"() OWNER TO "postgres";
 
 
 CREATE OR REPLACE FUNCTION "public"."calculate_level"("points" integer) RETURNS integer
