@@ -61,11 +61,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.log('DEBUG: profileError', JSON.stringify(profileError, null, 2));
 
       if (profileError) {
-        console.error('❌ [AuthContext] Error fetching profile:', profileError.message, JSON.stringify(profileError, null, 2));
-        throw profileError;
+        if (profileError.code === 'PGRST116') { // PGRST116 means no rows found
+          console.warn('⚠️ [AuthContext] Profile not found for user:', userId, profileError.message);
+          setProfile(null);
+          setIsAdmin(false);
+          return; // Exit early as no profile to process
+        } else {
+          console.error('❌ [AuthContext] Error fetching profile:', profileError.message, JSON.stringify(profileError, null, 2));
+          throw profileError;
+        }
       }
 
       console.log('📊 [AuthContext] Profile data received:', profileData);
+
+      // If profileData is null, it means no profile was found or an error occurred that was handled above.
+      // In this case, we should not proceed with fetching admin roles.
+      if (!profileData) {
+        setProfile(null);
+        setIsAdmin(false);
+        return;
+      }
 
       // Check admin status
       const { data: adminData, error: adminError } = await supabase
