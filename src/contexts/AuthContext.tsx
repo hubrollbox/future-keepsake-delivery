@@ -58,10 +58,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .single();
 
       console.log('DEBUG: profileData', profileData);
-      console.log('DEBUG: profileError', profileError);
+      console.log('DEBUG: profileError', JSON.stringify(profileError, null, 2));
 
       if (profileError) {
-        console.error('❌ [AuthContext] Error fetching profile:', profileError.message, profileError);
+        console.error('❌ [AuthContext] Error fetching profile:', profileError.message, JSON.stringify(profileError, null, 2));
         throw profileError;
       }
 
@@ -89,7 +89,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setProfile(userProfile);
       setIsAdmin(adminData?.role === 'admin');
     } catch (error) {
-      console.error('❌ [AuthContext] Error in fetchProfile:', error);
+      console.error('❌ [AuthContext] Error in fetchProfile:', JSON.stringify(error, null, 2));
       setProfile(null);
       setIsAdmin(false);
     }
