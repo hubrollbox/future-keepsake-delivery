@@ -71,11 +71,12 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA "extensions";
 
 CREATE OR REPLACE FUNCTION "public"."calculate_level"("points" integer) RETURNS integer
     LANGUAGE "plpgsql"
+    IMMUTABLE
     AS $$
 BEGIN
-    SET search_path = '';  -- Set to a specific schema if needed
+    SET search_path = 'pg_catalog, public';
 
-    RETURN (points / 100) + 1;  -- Function logic
+    RETURN (points / 100) + 1;
 END;
 $$;
 
@@ -85,6 +86,7 @@ ALTER FUNCTION "public"."calculate_level"("points" integer) OWNER TO "postgres";
 
 CREATE OR REPLACE FUNCTION "public"."handle_new_user"() RETURNS "trigger"
     LANGUAGE "plpgsql"
+    IMMUTABLE
     SET "search_path" TO 'public'
     AS $$
 BEGIN
