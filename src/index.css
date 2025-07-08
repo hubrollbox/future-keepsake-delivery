@@ -136,7 +136,12 @@
     background-color: rgba(var(--dusty-rose), 0.1);
   }
 
-  /* --------------------------------
+  [data-sonner-toast][data-swiped=true] {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* --------------------------------
    CAMPOS DE INPUT E FOCO
    -------------------------------- */
   input, textarea, select {
