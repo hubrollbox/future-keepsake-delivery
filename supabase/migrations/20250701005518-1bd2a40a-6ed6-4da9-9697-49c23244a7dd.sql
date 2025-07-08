@@ -210,6 +210,8 @@ SECURITY DEFINER
 SET search_path = public, auth, pg_temp
 AS $$
 BEGIN
+  RAISE NOTICE 'handle_new_user triggered for user: %', NEW.id;
+  RAISE NOTICE 'full_name: %, email: %, avatar_url: %', NEW.raw_user_meta_data->>'full_name', NEW.email, NEW.raw_user_meta_data->>'avatar_url';
   INSERT INTO public.profiles (id, full_name, email, avatar_url)
   VALUES (NEW.id, NEW.raw_user_meta_data->>'full_name', NEW.email, NEW.raw_user_meta_data->>'avatar_url')
   ON CONFLICT (id) DO NOTHING;
