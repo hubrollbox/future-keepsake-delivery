@@ -131,9 +131,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (currentSession?.user) {
           console.log('👤 [AuthContext] User found, fetching profile...');
           // Use setTimeout to avoid blocking the auth callback
+          // Adiciona um pequeno atraso para dar tempo ao trigger de criar o perfil
           setTimeout(() => {
-            fetchProfile(currentSession.user.id);
-          }, 0);
+            if (currentSession.user?.id) {
+              console.log('⏳ [AuthContext] Attempting to fetch profile after delay for user:', currentSession.user.id);
+              fetchProfile(currentSession.user.id);
+            } else {
+              console.warn('⚠️ [AuthContext] User ID not available after delay, cannot fetch profile.');
+            }
+          }, 1000); // Atraso de 1 segundo
         } else {
           console.log('👤 [AuthContext] No user, clearing profile...');
           setProfile(null);
@@ -152,7 +158,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       
       if (existingSession?.user) {
         console.log('👤 [AuthContext] Existing user found, fetching profile...');
-        fetchProfile(existingSession.user.id);
+        if (existingSession.user?.id) {
+          console.log('⏳ [AuthContext] Attempting to fetch profile for existing session user:', existingSession.user.id);
+          fetchProfile(existingSession.user.id);
+        } else {
+          console.warn('⚠️ [AuthContext] Existing session user ID not available, cannot fetch profile.');
+        }
       }
       
       setLoading(false);

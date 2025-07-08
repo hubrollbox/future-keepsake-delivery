@@ -11,4 +11,5 @@ LEFT JOIN
 ON
   au.id = p.id
 WHERE
-  p.id IS NULL;
+  p.id IS NULL
+ON CONFLICT (id) DO NOTHING;

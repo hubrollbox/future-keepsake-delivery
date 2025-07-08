@@ -215,7 +215,7 @@ BEGIN
   RETURN NEW; -- Adicionado para garantir que a função retorne NEW
 END;
 $$
-IMMUTABLE;
+VOLATILE;
 
 -- Ensure the trigger exists
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
