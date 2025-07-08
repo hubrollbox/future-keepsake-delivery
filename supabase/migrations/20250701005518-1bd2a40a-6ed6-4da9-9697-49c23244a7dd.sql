@@ -202,6 +202,7 @@ CREATE POLICY "Admins can manage quests" ON public.quests
   FOR ALL USING (public.is_admin_user());
 
 -- Update the handle_new_user function to properly create profiles
+DROP FUNCTION IF EXISTS public.handle_new_user();
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER
 LANGUAGE plpgsql
