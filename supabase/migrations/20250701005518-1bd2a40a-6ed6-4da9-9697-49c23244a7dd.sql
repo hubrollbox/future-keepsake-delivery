@@ -207,11 +207,12 @@ CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = public
+SET search_path = public, auth, pg_temp
 AS $$
 BEGIN
-  INSERT INTO public.profiles (id, raw_user_meta_data, email)
-  VALUES (NEW.id, NEW.raw_user_meta_data, NEW.email);
+  INSERT INTO public.profiles (id, full_name, email, avatar_url)
+  VALUES (NEW.id, NEW.raw_user_meta_data->>'full_name', NEW.email, NEW.raw_user_meta_data->>'avatar_url')
+  ON CONFLICT (id) DO NOTHING;
   RETURN NEW; -- Adicionado para garantir que a função retorne NEW
 END;
 $$
