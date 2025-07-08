@@ -206,22 +206,15 @@ CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER
 LANGUAGE plpgsql
 SECURITY DEFINER
-IMMUTABLE -- Adicionado IMMUTABLE
 SET search_path = public
 AS $$
 BEGIN
-  INSERT INTO public.profiles (id, full_name, email, plan_type, total_points, level)
-  VALUES (
-    NEW.id,
-    COALESCE(NEW.raw_user_meta_data->>'full_name', NEW.raw_user_meta_data->>'name', ''),
-    NEW.email,
-    'free',
-    0,
-    1
-  );
-  RETURN NEW; -- Adicionado RETURN NEW;
+  INSERT INTO public.profiles (id, raw_user_meta_data, email)
+  VALUES (NEW.id, NEW.raw_user_meta_data, NEW.email);
+  RETURN NEW; -- Adicionado para garantir que a função retorne NEW
 END;
-$$;
+$$
+IMMUTABLE; -- Adicionado para marcar a função como IMMUTABLE
 
 -- Ensure the trigger exists
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
