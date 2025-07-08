@@ -14,7 +14,10 @@ export default defineConfig(({ mode }) => ({
   ].filter(Boolean),
   server: {
     host: "::",
-    port: 8080
+    port: 8080,
+    headers: {
+      'X-Content-Type-Options': 'nosniff',
+    }
   },
   resolve: {
     alias: {

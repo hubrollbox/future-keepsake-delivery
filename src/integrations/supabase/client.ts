@@ -14,6 +14,9 @@ export const supabase = createBrowserClient<Database>(
       autoRefreshToken: true,
       persistSession: true,
     },
+    global: {
+      headers: { 'Accept': 'application/json' },
+    },
     cookies: {
       get(name: string) {
         if (typeof document === 'undefined') return undefined;
