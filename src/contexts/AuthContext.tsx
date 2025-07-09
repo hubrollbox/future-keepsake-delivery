@@ -246,8 +246,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       if (!error && data.user) {
-        // Insert profile row after successful sign up
-        await supabase.from('profiles').insert([
+
           {
             id: data.user.id,
             email: data.user.email,
