@@ -54,6 +54,7 @@ INSERT INTO public.products (name, type, price, description, icon) VALUES
 ON CONFLICT DO NOTHING;
 
 -- Enable RLS para novas tabelas
+ALTER TABLE public.keepsakes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.recipients ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.keepsake_products ENABLE ROW LEVEL SECURITY;
@@ -80,6 +81,19 @@ FOR INSERT WITH CHECK (
 -- RLS policies para products (todos podem ver)
 CREATE POLICY "Anyone can view active products" ON public.products
 FOR SELECT USING (active = true);
+
+-- RLS policies para keepsakes
+CREATE POLICY "Users can insert their own keepsakes" ON public.keepsakes
+FOR INSERT WITH CHECK (user_id = auth.uid());
+
+CREATE POLICY "Users can view their own keepsakes" ON public.keepsakes
+FOR SELECT USING (user_id = auth.uid());
+
+CREATE POLICY "Users can update their own keepsakes" ON public.keepsakes
+FOR UPDATE USING (user_id = auth.uid());
+
+CREATE POLICY "Users can delete their own keepsakes" ON public.keepsakes
+FOR DELETE USING (user_id = auth.uid());
 
 -- RLS policies para keepsake_products
 CREATE POLICY "Users can view products of their keepsakes" ON public.keepsake_products
