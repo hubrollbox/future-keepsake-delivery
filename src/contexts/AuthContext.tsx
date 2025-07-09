@@ -193,6 +193,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         password
       });
 
+
       if (error) {
         let errorMessage = 'Erro ao fazer login';
         if (error.message.includes('Invalid login credentials')) {
@@ -245,22 +246,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       });
 
-      if (!error && data.user) {
-
-          {
-            id: data.user.id,
-            email: data.user.email,
-            full_name: fullName?.trim() || '',
-            phone: phone || '',
-            avatar_url: null,
-            plan_type: 'free',
-            total_points: 0,
-            level: 1,
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString()
-          }
-        ]);
-      }
       if (error) {
         let errorMessage = 'Erro ao criar conta';
         if (error.message.includes('User already registered')) {
@@ -290,6 +275,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setLoading(true);
       const { error } = await supabase.auth.signOut();
       
+
       if (error) {
         toast({
           title: 'Erro',
