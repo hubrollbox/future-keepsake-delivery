@@ -4,10 +4,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Mail, User, Award, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { supabase } from '@/integrations/supabase/client';
 
 const Profile = () => {
   const { user, profile, signOut } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const refreshSession = async () => {
+      await supabase.auth.refreshSession();
+    };
+    
+    refreshSession(); 
+  }, []);
 
   if (!user || !profile) {
     return (

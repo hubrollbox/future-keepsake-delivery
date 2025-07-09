@@ -61,14 +61,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.log('DEBUG: profileError', JSON.stringify(profileError, null, 2));
 
       if (profileError) {
-        if (profileError.code === 'PGRST116') { // PGRST116 means no rows found
-          console.warn('⚠️ [AuthContext] Profile not found for user:', userId, profileError.message);
+        console.error('❌ [AuthContext] Error fetching profile:', profileError.message, JSON.stringify(profileError, null, 2));
+        // Tentar fallback para dados básicos do auth.user
+        const { data: { user: authUser } } = await supabase.auth.getUser();
+        if (authUser) {
+          const fallbackProfile: UserProfile = {
+            id: authUser.id,
+            full_name: authUser.user_metadata?.full_name || authUser.email?.split('@')[0] || 'Utilizador',
+            email: authUser.email || null,
+            avatar_url: authUser.user_metadata?.avatar_url || null,
+            plan_type: 'free', // Default ou inferir se possível
+            total_points: 0,
+            level: 1,
+            created_at: authUser.created_at,
+            updated_at: authUser.last_sign_in_at || authUser.created_at,
+            role: null
+          };
+          setProfile(fallbackProfile);
+          setIsAdmin(false);
+          return;
+        } else {
           setProfile(null);
           setIsAdmin(false);
           return; // Exit early as no profile to process
-        } else {
-          console.error('❌ [AuthContext] Error fetching profile:', profileError.message, JSON.stringify(profileError, null, 2));
-          throw profileError;
         }
       }
 
