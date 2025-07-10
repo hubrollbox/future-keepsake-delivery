@@ -101,6 +101,7 @@ const Login = () => {
                   placeholder="teu@email.com"
                   className={`border-dusty-rose/30 focus:border-dusty-rose ${errors.email ? "border-red-500" : ""}`}
                   required
+                  autoComplete="email"
                 />
                 {errors.email && (
                   <p className="text-red-600 text-sm mt-1">{errors.email}</p>
