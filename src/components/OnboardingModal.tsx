@@ -20,7 +20,11 @@ export default function OnboardingModal() {
   const [seen, setSeen] = useLocalStorage(ONBOARDING_KEY, "0");
 
   useEffect(() => {
-    if (seen !== "1") setOpen(true);
+    console.log('OnboardingModal useEffect - seen:', seen, 'open:', open);
+    if (seen !== "1") {
+      setOpen(true);
+      console.log('OnboardingModal - Setting open to true');
+    }
   }, [seen]);
 
   const handleClose = () => {
@@ -53,6 +57,7 @@ export default function OnboardingModal() {
             <li>Em caso de dúvida, consulte a <Link to="/contact" className="text-blue-600 underline">página de suporte</Link>.</li>
           </ul>
           <Button onClick={handleClose} className="w-full mt-4">Começar</Button>
+          <Button onClick={() => setSeen("0")} className="w-full mt-2" variant="outline">Resetar Onboarding</Button>
         </CardContent>
       </Card>
     </div>
