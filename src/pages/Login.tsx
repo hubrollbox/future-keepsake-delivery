@@ -115,6 +115,7 @@ const Login = () => {
                   value={formData.password}
                   onChange={handleInputChange}
                   placeholder="A tua palavra-passe"
+                  autoComplete="current-password"
                   className={`border-dusty-rose/30 focus:border-dusty-rose ${errors.password ? "border-red-500" : ""}`}
                   required
                 />
