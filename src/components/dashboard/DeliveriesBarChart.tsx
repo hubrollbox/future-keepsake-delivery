@@ -19,10 +19,9 @@ const DeliveriesBarChart: React.FC<BarChartProps> = ({ data }) => {
           <div key={item.month} className="flex flex-col items-center justify-end flex-1 min-w-0">
             <div
               className="bg-gradient-to-t from-earthy-burgundy to-dusty-rose rounded-t-lg transition-all duration-300 hover:opacity-80 relative group"
+              className="bar-chart-bar"
               style={{ 
-                height: `${Math.max((item.count / maxCount) * 180, 8)}px`, 
-                width: '100%',
-                maxWidth: '40px'
+                height: `${Math.max((item.count / maxCount) * 180, 8)}px`
               }}
               title={`${item.count} entregas`}
             >

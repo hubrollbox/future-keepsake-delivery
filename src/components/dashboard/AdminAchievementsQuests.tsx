@@ -113,12 +113,14 @@ const AdminAchievementsQuests: React.FC = () => {
               <input
                 className="border rounded px-2 py-1 flex-1"
                 placeholder="Título"
+                aria-label="Título da nova conquista"
                 value={newAchievement.title}
                 onChange={e => setNewAchievement(a => ({ ...a, title: e.target.value }))}
               />
               <input
                 className="border rounded px-2 py-1 flex-1"
                 placeholder="Descrição"
+                aria-label="Descrição da nova conquista"
                 value={newAchievement.description}
                 onChange={e => setNewAchievement(a => ({ ...a, description: e.target.value }))}
               />
@@ -131,11 +133,13 @@ const AdminAchievementsQuests: React.FC = () => {
                     <>
                       <input
                         className="border rounded px-2 py-1 flex-1"
+                        aria-label="Editar título da conquista"
                         value={editValues.title}
                         onChange={e => setEditValues(v => ({ ...v, title: e.target.value }))}
                       />
                       <input
                         className="border rounded px-2 py-1 flex-1"
+                        aria-label="Editar descrição da conquista"
                         value={editValues.description}
                         onChange={e => setEditValues(v => ({ ...v, description: e.target.value }))}
                       />
@@ -162,12 +166,14 @@ const AdminAchievementsQuests: React.FC = () => {
               <input
                 className="border rounded px-2 py-1 flex-1"
                 placeholder="Título"
+                aria-label="Título da nova missão"
                 value={newQuest.title}
                 onChange={e => setNewQuest(q => ({ ...q, title: e.target.value }))}
               />
               <input
                 className="border rounded px-2 py-1 flex-1"
                 placeholder="Descrição"
+                aria-label="Descrição da nova missão"
                 value={newQuest.description}
                 onChange={e => setNewQuest(q => ({ ...q, description: e.target.value }))}
               />
@@ -180,11 +186,13 @@ const AdminAchievementsQuests: React.FC = () => {
                     <>
                       <input
                         className="border rounded px-2 py-1 flex-1"
+                        aria-label="Editar título da missão"
                         value={editValues.title}
                         onChange={e => setEditValues(v => ({ ...v, title: e.target.value }))}
                       />
                       <input
                         className="border rounded px-2 py-1 flex-1"
+                        aria-label="Editar descrição da missão"
                         value={editValues.description}
                         onChange={e => setEditValues(v => ({ ...v, description: e.target.value }))}
                       />
