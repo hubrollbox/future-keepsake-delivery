@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
 import ProgressStepper from '@/components/ProgressStepper';
 import { useCreateDeliveryForm } from '@/features/create-delivery/useCreateDeliveryForm';
 import DeliveryFormStepper from '@/components/delivery/DeliveryFormStepper';
@@ -37,21 +38,21 @@ const DeliveryForm: React.FC = () => {
       </div>
       <div className="mt-8 flex justify-between">
         {currentStep > 0 && currentStep < steps.length - 1 && (
-          <button
+          <Button
             onClick={prevStep}
-            className="py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            variant="brand-outline"
           >
             Voltar
-          </button>
+          </Button>
         )}
         {currentStep < steps.length - 1 && (
-          <button
+          <Button
             onClick={currentStep === steps.length - 2 ? handleSubmit : nextStep}
-            className="ml-auto inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            variant="brand"
             disabled={loading}
           >
             {loading ? 'Processando...' : (currentStep === steps.length - 2 ? 'Finalizar' : 'Próximo')}
-          </button>
+          </Button>
         )}
       </div>
       {error && <p className="text-red-500 mt-4">{error}</p>}
@@ -225,29 +226,29 @@ const KeepsakeForm: React.FC<KeepsakeFormProps> = ({ user }) => {
       {renderStepContent()}
       <div className="mt-8 flex justify-between">
         {currentStep > 0 && currentStep < 4 && (
-          <button
+          <Button
             onClick={handleBack}
-            className="py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            variant="brand-outline"
           >
             Voltar
-          </button>
+          </Button>
         )}
         {currentStep < 3 && (
-          <button
+          <Button
             onClick={handleNext}
-            className="ml-auto inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            variant="brand"
           >
             Próximo
-          </button>
+          </Button>
         )}
         {currentStep === 3 && (
-          <button
+          <Button
             onClick={handleSubmit}
-            className="ml-auto inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            variant="brand"
             disabled={loading}
           >
             {loading ? 'Finalizando...' : 'Finalizar Criação'}
-          </button>
+          </Button>
         )}
       </div>
     </div>
@@ -260,18 +261,27 @@ interface MessageFormProps {
 
 const MessageForm: React.FC<MessageFormProps> = ({ user }) => {
   const { toast } = useToast();
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [deliveryDate, setDeliveryDate] = useState('');
-  const [recipientName, setRecipientName] = useState('');
-  const [recipientEmail, setRecipientEmail] = useState('');
+  const [formData, setFormData] = useState({
+    title: '',
+    message: '',
+    delivery_date: '',
+    recipient_name: '',
+    recipient_email: '',
+  });
   const [loading, setLoading] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    if (!title || !content || !deliveryDate || !recipientName || !recipientEmail) {
+    if (!formData.title || !formData.message || !formData.delivery_date || !formData.recipient_name || !formData.recipient_email) {
       toast({ title: 'Erro', description: 'Por favor, preencha todos os campos.' });
       setLoading(false);
       return;
@@ -280,12 +290,12 @@ const MessageForm: React.FC<MessageFormProps> = ({ user }) => {
     try {
       const { data, error } = await supabase.from('messages').insert(
         {
-          title,
-          content,
-          delivery_date: deliveryDate,
-          recipient_name: recipientName,
-          recipient_email: recipientEmail,
-          user_id: user.id, // Add user_id to messages table insert
+          title: formData.title,
+          message: formData.message,
+          delivery_date: formData.delivery_date,
+          recipient_name: formData.recipient_name,
+          recipient_email: formData.recipient_email,
+          user_id: user.id,
         }
       );
 
@@ -307,63 +317,68 @@ const MessageForm: React.FC<MessageFormProps> = ({ user }) => {
         <input
           type="text"
           id="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          name="title"
+          value={formData.title}
+          onChange={handleChange}
           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
           required
         />
       </div>
       <div>
-        <label htmlFor="content" className="block text-sm font-medium text-gray-700">Conteúdo</label>
+        <label htmlFor="message" className="block text-sm font-medium text-gray-700">Conteúdo</label>
         <textarea
-          id="content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
+          id="message"
+          name="message"
+          value={formData.message}
+          onChange={handleChange}
           rows={5}
           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
           required
         ></textarea>
       </div>
       <div>
-        <label htmlFor="deliveryDate" className="block text-sm font-medium text-gray-700">Data de Entrega</label>
+        <label htmlFor="delivery_date" className="block text-sm font-medium text-gray-700">Data de Entrega</label>
         <input
           type="date"
-          id="deliveryDate"
-          value={deliveryDate}
-          onChange={(e) => setDeliveryDate(e.target.value)}
+          id="delivery_date"
+          name="delivery_date"
+          value={formData.delivery_date}
+          onChange={handleChange}
           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
           required
         />
       </div>
       <div>
-        <label htmlFor="recipientName" className="block text-sm font-medium text-gray-700">Nome do Destinatário</label>
+        <label htmlFor="recipient_name" className="block text-sm font-medium text-gray-700">Nome do Destinatário</label>
         <input
           type="text"
-          id="recipientName"
-          value={recipientName}
-          onChange={(e) => setRecipientName(e.target.value)}
+          id="recipient_name"
+          name="recipient_name"
+          value={formData.recipient_name}
+          onChange={handleChange}
           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
           required
         />
       </div>
       <div>
-        <label htmlFor="recipientEmail" className="block text-sm font-medium text-gray-700">Email do Destinatário</label>
+        <label htmlFor="recipient_email" className="block text-sm font-medium text-gray-700">Email do Destinatário</label>
         <input
           type="email"
-          id="recipientEmail"
-          value={recipientEmail}
-          onChange={(e) => setRecipientEmail(e.target.value)}
+          id="recipient_email"
+          name="recipient_email"
+          value={formData.recipient_email}
+          onChange={handleChange}
           className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
           required
         />
       </div>
-      <button
+      <Button
         type="submit"
-        className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        variant="brand"
         disabled={loading}
       >
         {loading ? 'Criando...' : 'Criar Mensagem'}
-      </button>
+      </Button>
     </form>
   );
 };
