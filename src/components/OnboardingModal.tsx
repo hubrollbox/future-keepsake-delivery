@@ -57,7 +57,6 @@ export default function OnboardingModal() {
             <li>Em caso de dúvida, consulte a <Link to="/contact" className="text-blue-600 underline">página de suporte</Link>.</li>
           </ul>
           <Button onClick={handleClose} className="w-full mt-4">Começar</Button>
-          <Button onClick={() => setSeen("0")} className="w-full mt-2" variant="outline">Resetar Onboarding</Button>
         </CardContent>
       </Card>
     </div>

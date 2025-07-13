@@ -40,49 +40,51 @@ const CreateKeepsake: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Criar Nova Cápsula do Tempo</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">Título</label>
-          <input
-            type="text"
-            id="title"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-dusty-rose focus:ring-dusty-rose sm:text-sm"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="messageContent" className="block text-sm font-medium text-gray-700">Conteúdo da Mensagem</label>
-          <textarea
-            id="messageContent"
-            rows={5}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-dusty-rose focus:ring-dusty-rose sm:text-sm"
-            value={messageContent}
-            onChange={(e) => setMessageContent(e.target.value)}
-            required
-          ></textarea>
-        </div>
-        <div>
-          <label htmlFor="deliveryDate" className="block text-sm font-medium text-gray-700">Data de Entrega</label>
-          <input
-            type="date"
-            id="deliveryDate"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-dusty-rose focus:ring-dusty-rose sm:text-sm"
-            value={deliveryDate}
-            onChange={(e) => setDeliveryDate(e.target.value)}
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-dusty-rose hover:bg-earthy-burgundy focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-dusty-rose"
-        >
-          Criar Cápsula
-        </button>
-      </form>
+    <div className="min-h-screen bg-warm-gradient flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-lg z-10">
+        <h1 className="text-center text-3xl font-extrabold text-gray-900 font-serif">Criar Nova Cápsula do Tempo</h1>
+        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+          <div>
+            <label htmlFor="title" className="block text-sm font-medium text-gray-700">Título</label>
+            <input
+              type="text"
+              id="title"
+              className="input-field"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="messageContent" className="block text-sm font-medium text-gray-700">Conteúdo da Mensagem</label>
+            <textarea
+              id="messageContent"
+              rows={5}
+              className="input-field"
+              value={messageContent}
+              onChange={(e) => setMessageContent(e.target.value)}
+              required
+            ></textarea>
+          </div>
+          <div>
+            <label htmlFor="deliveryDate" className="block text-sm font-medium text-gray-700">Data de Entrega</label>
+            <input
+              type="date"
+              id="deliveryDate"
+              className="input-field"
+              value={deliveryDate}
+              onChange={(e) => setDeliveryDate(e.target.value)}
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            className="btn-primary w-full"
+          >
+            Criar Cápsula
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
