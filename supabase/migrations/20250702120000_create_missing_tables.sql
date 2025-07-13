@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS public.keepsakes (
     user_id uuid NOT NULL,
     title text NOT NULL,
     description text,
+    message_content text, -- Adicionada a coluna message_content
     created_at timestamp with time zone DEFAULT now(),
     updated_at timestamp with time zone DEFAULT now()
 );
@@ -51,7 +52,9 @@ CREATE TABLE IF NOT EXISTS public.products (
     name text NOT NULL,
     description text,
     price numeric(10,2) NOT NULL,
-    created_at timestamp with time zone DEFAULT now()
+    stock integer DEFAULT 0 NOT NULL, -- Adicionada coluna de estoque
+    created_at timestamp with time zone DEFAULT now(),
+    CONSTRAINT products_stock_check CHECK (stock >= 0) -- Restrição para estoque não negativo
 );
 
 -- Confirm notifications table exists

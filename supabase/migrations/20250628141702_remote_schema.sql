@@ -158,10 +158,25 @@ CREATE TABLE IF NOT EXISTS "public"."admin_roles" (
 ALTER TABLE "public"."admin_roles" OWNER TO "postgres";
 
 
+CREATE TABLE IF NOT EXISTS "public"."products" (
+    "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
+    "name" "text" NOT NULL,
+    "description" "text",
+    "price" numeric(10,2) NOT NULL,
+    "image_url" "text",
+    "stock" integer DEFAULT 0 NOT NULL CHECK (stock >= 0),
+    "created_at" timestamp with time zone DEFAULT "now"(),
+    "updated_at" timestamp with time zone DEFAULT "now"()
+);
+
+
+ALTER TABLE "public"."products" OWNER TO "postgres";
+
+
 CREATE TABLE IF NOT EXISTS "public"."cart_items" (
     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
     "user_id" "uuid" NOT NULL,
-    "product_id" "text" NOT NULL,
+    "product_id" "uuid" NOT NULL REFERENCES "public"."products"("id"),
     "product_title" "text" NOT NULL,
     "product_price" numeric(10,2) NOT NULL,
     "quantity" integer DEFAULT 1 NOT NULL,
@@ -178,10 +193,10 @@ CREATE TABLE IF NOT EXISTS "public"."deliveries" (
     "user_id" "uuid" NOT NULL,
     "title" "text" NOT NULL,
     "description" "text",
-    "delivery_date" timestamp with time zone NOT NULL,
+    "delivery_date" date NOT NULL,
     "status" "text" DEFAULT 'scheduled'::"text" NOT NULL,
     "type" "text" DEFAULT 'digital'::"text" NOT NULL,
-    "recipient_email" "text",
+    "recipient_email" "text" NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"(),
     "updated_at" timestamp with time zone DEFAULT "now"(),
     "delivery_method" "text" DEFAULT 'email'::"text",
@@ -189,32 +204,22 @@ CREATE TABLE IF NOT EXISTS "public"."deliveries" (
     "digital_file_url" "text",
     "location" "text",
     "message" "text",
-    "recipient_name" "text",
-    "payment_status" "text" DEFAULT 'pending'::"text"
+    "recipient_name" "text" NOT NULL,
+    "payment_status" "text" DEFAULT 'pending'::"text",
+    "warehouse_item_id" "uuid" REFERENCES "public"."warehouse_items"("id")
 );
 
 
 ALTER TABLE "public"."deliveries" OWNER TO "postgres";
 
 
-CREATE TABLE IF NOT EXISTS "public"."messages" (
-    "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
-    "user_id" "uuid" NOT NULL,
-    "title" "text" NOT NULL,
-    "content" "text" NOT NULL,
-    "delivery_date" timestamp with time zone NOT NULL,
-    "status" "text" DEFAULT 'scheduled'::"text" NOT NULL,
-    "created_at" timestamp with time zone DEFAULT "now"(),
-    "updated_at" timestamp with time zone DEFAULT "now"()
-);
 
-
-ALTER TABLE "public"."messages" OWNER TO "postgres";
 
 
 CREATE TABLE IF NOT EXISTS "public"."notifications" (
     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
     "user_id" "uuid",
+    "delivery_id" "uuid" REFERENCES "public"."deliveries"("id"),
     "type" "text" NOT NULL,
     "title" "text" NOT NULL,
     "message" "text" NOT NULL,
@@ -358,15 +363,7 @@ ALTER SEQUENCE "public"."user_quests_id_seq" OWNED BY "public"."user_quests"."id
 
 
 
-CREATE TABLE IF NOT EXISTS "public"."user_stats" (
-    "user_id" "uuid" NOT NULL,
-    "total_points" integer DEFAULT 0,
-    "level" integer DEFAULT 1,
-    "updated_at" timestamp without time zone DEFAULT "now"()
-);
 
-
-ALTER TABLE "public"."user_stats" OWNER TO "postgres";
 
 
 CREATE TABLE IF NOT EXISTS "public"."warehouse_items" (
@@ -1101,9 +1098,7 @@ GRANT USAGE ON SCHEMA "public" TO "service_role";
 
 
 
-GRANT ALL ON FUNCTION "public"."calculate_level"() TO "anon";
-GRANT ALL ON FUNCTION "public"."calculate_level"() TO "authenticated";
-GRANT ALL ON FUNCTION "public"."calculate_level"() TO "service_role";
+
 
 
 

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import ProgressStepper from '@/components/ProgressStepper';
 import { useCreateDeliveryForm } from '@/features/create-delivery/useCreateDeliveryForm';
 import DeliveryFormStepper from '@/components/delivery/DeliveryFormStepper';
@@ -133,25 +135,23 @@ const KeepsakeForm: React.FC<KeepsakeFormProps> = ({ user }) => {
           <div>
             <h2 className="text-xl font-semibold mb-4">Detalhes da Cápsula</h2>
             <label htmlFor="title" className="block text-sm font-medium text-gray-700">Título</label>
-            <input
+            <Input
               type="text"
               id="title"
               name="title"
               value={formData.title}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
               required
             />
             <label htmlFor="messageContent" className="block text-sm font-medium text-gray-700 mt-4">Conteúdo da Mensagem</label>
-            <textarea
+            <Textarea
               id="messageContent"
               name="messageContent"
               value={formData.messageContent}
               onChange={handleChange}
               rows={5}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
               required
-            ></textarea>
+            />
           </div>
         );
       case 1:
@@ -159,23 +159,21 @@ const KeepsakeForm: React.FC<KeepsakeFormProps> = ({ user }) => {
           <div>
             <h2 className="text-xl font-semibold mb-4">Destinatário</h2>
             <label htmlFor="recipientName" className="block text-sm font-medium text-gray-700">Nome do Destinatário</label>
-            <input
+            <Input
               type="text"
               id="recipientName"
               name="recipientName"
               value={formData.recipientName}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
               required
             />
             <label htmlFor="recipientEmail" className="block text-sm font-medium text-gray-700 mt-4">Email do Destinatário</label>
-            <input
+            <Input
               type="email"
               id="recipientEmail"
               name="recipientEmail"
               value={formData.recipientEmail}
               onChange={handleChange}
-              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
               required
             />
           </div>
@@ -314,61 +312,56 @@ const MessageForm: React.FC<MessageFormProps> = ({ user }) => {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label htmlFor="title" className="block text-sm font-medium text-gray-700">Título</label>
-        <input
+        <Input
           type="text"
           id="title"
           name="title"
           value={formData.title}
           onChange={handleChange}
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
           required
         />
       </div>
       <div>
         <label htmlFor="message" className="block text-sm font-medium text-gray-700">Conteúdo</label>
-        <textarea
+        <Textarea
           id="message"
           name="message"
           value={formData.message}
           onChange={handleChange}
           rows={5}
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
           required
-        ></textarea>
+        />
       </div>
       <div>
         <label htmlFor="delivery_date" className="block text-sm font-medium text-gray-700">Data de Entrega</label>
-        <input
+        <Input
           type="date"
           id="delivery_date"
           name="delivery_date"
           value={formData.delivery_date}
           onChange={handleChange}
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
           required
         />
       </div>
       <div>
         <label htmlFor="recipient_name" className="block text-sm font-medium text-gray-700">Nome do Destinatário</label>
-        <input
+        <Input
           type="text"
           id="recipient_name"
           name="recipient_name"
           value={formData.recipient_name}
           onChange={handleChange}
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
           required
         />
       </div>
       <div>
         <label htmlFor="recipient_email" className="block text-sm font-medium text-gray-700">Email do Destinatário</label>
-        <input
+        <Input
           type="email"
           id="recipient_email"
           name="recipient_email"
           value={formData.recipient_email}
           onChange={handleChange}
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
           required
         />
       </div>
@@ -422,9 +415,15 @@ const CreateUnified: React.FC<CreateUnifiedProps> = ({ type }) => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Criar Novo Item</h1>
-      {renderForm()}
+    <div className="min-h-screen bg-lavender-mist">
+      <Navigation />
+      <main className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-full sm:max-w-2xl lg:max-w-3xl mx-auto">
+          <h1 className="text-2xl font-bold mb-4">Criar Novo Item</h1>
+          {renderForm()}
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 };
