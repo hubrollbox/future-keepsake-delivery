@@ -9,7 +9,7 @@ const HeroSection = () => {
 
   const handleStartJourney = () => {
     if (user) {
-      navigate("/dashboard");
+      navigate("/createkeepsake");
     } else {
       navigate("/login");
     }
