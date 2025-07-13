@@ -11,7 +11,9 @@ const CreateKeepsake: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    console.log('User data:', user);
+    console.log('Auth error:', authError);
 
     if (!user) {
       alert('Você precisa estar logado para criar uma cápsula.');
