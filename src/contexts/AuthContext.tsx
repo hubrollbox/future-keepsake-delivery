@@ -49,7 +49,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const fetchProfile = async (userId: string) => {
     try {
-      console.log('🔍 [AuthContext] Fetching profile for user:', userId);
+      console.log('🔍 [AuthContext] fetchProfile: Starting for user:', userId);
       
       const { data: profileData, error: profileError } = await supabase
         .from('profiles')
@@ -87,7 +87,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       }
 
-      console.log('📊 [AuthContext] Profile data received:', profileData);
+      console.log('📊 [AuthContext] fetchProfile: Profile data received:', profileData);
 
       // If profileData is null, it means no profile was found or an error occurred that was handled above.
       // In this case, we should not proceed with fetching admin roles.
@@ -108,14 +108,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         console.warn('⚠️ [AuthContext] Warning fetching admin role:', adminError.message, adminError);
       }
 
-      console.log('👑 [AuthContext] Admin data received:', adminData);
+      console.log('👑 [AuthContext] fetchProfile: Admin data received:', adminData);
 
       const userProfile = {
         ...profileData,
         role: adminData?.role || null
       };
 
-      console.log('✅ [AuthContext] Final profile set:', userProfile);
+      console.log('✅ [AuthContext] fetchProfile: Final profile set:', userProfile);
       setProfile(userProfile);
       setIsAdmin(adminData?.role === 'admin');
     } catch (error) {
@@ -128,23 +128,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const refreshProfile = async () => {
     if (user?.id) {
-      console.log('🔄 [AuthContext] Refreshing profile for user:', user.id);
+      console.log('🔄 [AuthContext] refreshProfile: Starting for user:', user.id);
       await fetchProfile(user.id);
     }
   };
 
   useEffect(() => {
-    console.log('🚀 [AuthContext] AuthProvider initializing...');
+    console.log('🚀 [AuthContext] AuthProvider: Initializing...');
     
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, currentSession) => {
-        console.log('🔐 [AuthContext] Auth state changed:', event, currentSession?.user?.id);
+        console.log('🔐 [AuthContext] onAuthStateChange: Event:', event, 'User ID:', currentSession?.user?.id);
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
         
         if (currentSession?.user) {
-          console.log('👤 [AuthContext] User found, fetching profile...');
+          console.log('👤 [AuthContext] onAuthStateChange: User found, fetching profile...');
           // Use setTimeout to avoid blocking the auth callback
           // Adiciona um pequeno atraso para dar tempo ao trigger de criar o perfil
           setTimeout(() => {
@@ -152,11 +152,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               console.log('⏳ [AuthContext] Attempting to fetch profile after delay for user:', currentSession.user.id);
               fetchProfile(currentSession.user.id);
             } else {
-              console.warn('⚠️ [AuthContext] User ID not available after delay, cannot fetch profile.');
+              console.warn('⚠️ [AuthContext] onAuthStateChange: User ID not available after delay, cannot fetch profile.');
             }
           }, 1000); // Atraso de 1 segundo
         } else {
-          console.log('👤 [AuthContext] No user, clearing profile...');
+          console.log('👤 [AuthContext] onAuthStateChange: No user, clearing profile...');
           setProfile(null);
           setIsAdmin(false);
         }
@@ -167,17 +167,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     // THEN check for existing session
     supabase.auth.getSession().then(({ data: { session: existingSession } }) => {
-      console.log('🔍 [AuthContext] Checking existing session:', existingSession?.user?.id);
+      console.log('🔍 [AuthContext] getSession: Checking existing session, User ID:', existingSession?.user?.id);
       setSession(existingSession);
       setUser(existingSession?.user ?? null);
       
       if (existingSession?.user) {
-        console.log('👤 [AuthContext] Existing user found, fetching profile...');
+        console.log('👤 [AuthContext] getSession: Existing user found, fetching profile...');
         if (existingSession.user?.id) {
           console.log('⏳ [AuthContext] Attempting to fetch profile for existing session user:', existingSession.user.id);
           fetchProfile(existingSession.user.id);
         } else {
-          console.warn('⚠️ [AuthContext] Existing session user ID not available, cannot fetch profile.');
+          console.warn('⚠️ [AuthContext] getSession: Existing session user ID not available, cannot fetch profile.');
         }
       }
       
@@ -185,7 +185,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
 
     return () => {
-      console.log('🧹 [AuthContext] Cleaning up auth subscription');
+      console.log('🧹 [AuthContext] Cleanup: Cleaning up auth subscription');
       subscription.unsubscribe();
     };
   }, []);
@@ -193,6 +193,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signIn = async (email: string, password: string) => {
     try {
       setLoading(true);
+      console.log('🔑 [AuthContext] signIn: Attempting sign-in for email:', email);
       
       // Validate input
       if (!email || !password) {
