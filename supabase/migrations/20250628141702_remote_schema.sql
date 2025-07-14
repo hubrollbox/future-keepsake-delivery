@@ -200,7 +200,7 @@ CREATE TABLE IF NOT EXISTS "public"."deliveries" (
     "created_at" timestamp with time zone DEFAULT "now"(),
     "updated_at" timestamp with time zone DEFAULT "now"(),
     "delivery_method" "text" DEFAULT 'email'::"text",
-    "delivery_time" "text",
+    "delivery_time" time with time zone,
     "digital_file_url" "text",
     "location" "text",
     "message" "text",
@@ -235,6 +235,7 @@ ALTER TABLE "public"."notifications" OWNER TO "postgres";
 CREATE TABLE IF NOT EXISTS "public"."payments" (
     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
     "user_id" "uuid" NOT NULL,
+    "cart_id" "uuid" REFERENCES "public"."cart_items"("id") ON DELETE SET NULL,
     "amount" numeric(10,2) NOT NULL,
     "currency" "text" DEFAULT 'EUR'::"text" NOT NULL,
     "status" "text" DEFAULT 'pending'::"text" NOT NULL,
@@ -301,7 +302,8 @@ CREATE TABLE IF NOT EXISTS "public"."scheduled_notifications" (
     "delivery_date" timestamp with time zone NOT NULL,
     "message" "text" NOT NULL,
     "status" "text" DEFAULT 'pending'::"text",
-    "sent_at" timestamp with time zone
+    "sent_at" timestamp with time zone,
+    "delivery_id" "uuid" REFERENCES "public"."deliveries"("id") ON DELETE CASCADE
 );
 
 
@@ -422,6 +424,7 @@ ALTER TABLE ONLY "public"."deliveries"
 
 
 
+-- The 'messages' table is intended for standalone messages, such as direct communications or notifications, distinct from the content stored within 'keepsakes'.
 ALTER TABLE ONLY "public"."messages"
     ADD CONSTRAINT "messages_pkey" PRIMARY KEY ("id");
 

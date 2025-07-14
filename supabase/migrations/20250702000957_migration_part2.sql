@@ -16,7 +16,13 @@ CREATE TABLE IF NOT EXISTS public.recipients (
   phone TEXT,
   address TEXT,
   channel_cost DECIMAL(5,2) DEFAULT 0.00,
-  created_at TIMESTAMPTZ DEFAULT now()
+  created_at TIMESTAMPTZ DEFAULT now(),
+  CONSTRAINT check_delivery_channel_fields CHECK (
+    (delivery_channel = 'email' AND email IS NOT NULL) OR
+    (delivery_channel = 'sms' AND phone IS NOT NULL) OR
+    (delivery_channel = 'address' AND address IS NOT NULL) OR
+    (delivery_channel NOT IN ('email', 'sms', 'address'))
+  )
 );
 
 -- Criar tabela extras/products
@@ -28,6 +34,7 @@ CREATE TABLE IF NOT EXISTS public.products (
   description TEXT,
   icon TEXT,
   active BOOLEAN DEFAULT true,
+  stock INTEGER DEFAULT 0 NOT NULL CHECK (stock >= 0),
   created_at TIMESTAMPTZ DEFAULT now()
 );
 
@@ -37,7 +44,7 @@ CREATE TABLE IF NOT EXISTS public.keepsake_products (
   keepsake_id UUID REFERENCES public.keepsakes(id) ON DELETE CASCADE,
   product_id UUID REFERENCES public.products(id) ON DELETE CASCADE,
   quantity INTEGER DEFAULT 1,
-  unit_price DECIMAL(10,2) NOT NULL,
+  unit_price DECIMAL(10,2) NOT NULL, -- Ensure this is consistent with products.price at application level
   created_at TIMESTAMPTZ DEFAULT now()
 );
 
@@ -60,6 +67,7 @@ ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.keepsake_products ENABLE ROW LEVEL SECURITY;
 
 -- RLS policies para recipients
+DROP POLICY IF EXISTS "Users can view recipients of their keepsakes" ON public.recipients;
 CREATE POLICY "Users can view recipients of their keepsakes" ON public.recipients
 FOR SELECT USING (
   EXISTS (
@@ -69,6 +77,7 @@ FOR SELECT USING (
   )
 );
 
+DROP POLICY IF EXISTS "Users can insert recipients for their keepsakes" ON public.recipients;
 CREATE POLICY "Users can insert recipients for their keepsakes" ON public.recipients
 FOR INSERT WITH CHECK (
   EXISTS (
@@ -79,6 +88,7 @@ FOR INSERT WITH CHECK (
 );
 
 -- RLS policies para products (todos podem ver)
+DROP POLICY IF EXISTS "Anyone can view active products" ON public.products;
 CREATE POLICY "Anyone can view active products" ON public.products
 FOR SELECT USING (active = true);
 
@@ -96,6 +106,7 @@ CREATE POLICY "Users can delete their own keepsakes" ON public.keepsakes
 FOR DELETE USING (user_id = auth.uid());
 
 -- RLS policies para keepsake_products
+DROP POLICY IF EXISTS "Users can view products of their keepsakes" ON public.keepsake_products;
 CREATE POLICY "Users can view products of their keepsakes" ON public.keepsake_products
 FOR SELECT USING (
   EXISTS (
@@ -105,6 +116,7 @@ FOR SELECT USING (
   )
 );
 
+DROP POLICY IF EXISTS "Users can insert products for their keepsakes" ON public.keepsake_products;
 CREATE POLICY "Users can insert products for their keepsakes" ON public.keepsake_products
 FOR INSERT WITH CHECK (
   EXISTS (
@@ -115,6 +127,7 @@ FOR INSERT WITH CHECK (
 );
 
 -- Admin policies
+DROP POLICY IF EXISTS "Admins can manage all recipients" ON public.recipients;
 CREATE POLICY "Admins can manage all recipients" ON public.recipients
 FOR ALL USING (
   EXISTS (
@@ -123,6 +136,7 @@ FOR ALL USING (
   )
 );
 
+DROP POLICY IF EXISTS "Admins can manage all products" ON public.products;
 CREATE POLICY "Admins can manage all products" ON public.products
 FOR ALL USING (
   EXISTS (
@@ -131,6 +145,7 @@ FOR ALL USING (
   )
 );
 
+DROP POLICY IF EXISTS "Admins can manage all keepsake_products" ON public.keepsake_products;
 CREATE POLICY "Admins can manage all keepsake_products" ON public.keepsake_products
 FOR ALL USING (
   EXISTS (

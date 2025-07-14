@@ -18,6 +18,7 @@ ADD COLUMN IF NOT EXISTS delivery_id UUID REFERENCES public.deliveries(id) ON DE
 -- Adicionar validação para campos obrigatórios na tabela recipients
 -- Esta parte pode exigir uma função ou trigger mais complexa no Supabase/PostgreSQL
 -- Exemplo de CHECK constraint (simplificado, pode precisar de mais lógica para múltiplos canais):
+ALTER TABLE public.recipients DROP CONSTRAINT IF EXISTS chk_delivery_channel_fields;
 ALTER TABLE public.recipients
 ADD CONSTRAINT chk_delivery_channel_fields
 CHECK (

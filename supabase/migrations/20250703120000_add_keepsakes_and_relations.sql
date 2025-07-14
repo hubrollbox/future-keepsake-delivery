@@ -35,25 +35,29 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Optional: Add a trigger to ensure stock is not negative on product updates
-CREATE OR REPLACE FUNCTION check_product_stock() RETURNS TRIGGER AS $$
-BEGIN
-    IF NEW.stock < 0 THEN
-        RAISE EXCEPTION 'Product stock cannot be negative.';
-    END IF;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
 
-CREATE TRIGGER on_product_stock_update
-BEFORE UPDATE OF stock ON public.products
-FOR EACH ROW EXECUTE FUNCTION check_product_stock();
 
 -- Add NOT NULL constraint to recipient_email and recipient_name in recipients table
-ALTER TABLE "public"."recipients" ALTER COLUMN "recipient_email" SET NOT NULL;
-ALTER TABLE "public"."recipients" ALTER COLUMN "recipient_name" SET NOT NULL;
+ALTER TABLE "public"."recipients" ALTER COLUMN "email" SET NOT NULL;
+ALTER TABLE "public"."recipients" ALTER COLUMN "name" SET NOT NULL;
 
 -- Add foreign key from recipients to deliveries
-ALTER TABLE "public"."recipients" ADD COLUMN "delivery_id" "uuid" REFERENCES "public"."deliveries"("id");
+ALTER TABLE "public"."recipients" ADD COLUMN IF NOT EXISTS "delivery_id" "uuid" REFERENCES "public"."deliveries"("id");
 
 -- Add foreign key from recipients to keepsakes
-ALTER TABLE "public"."recipients" ADD COLUMN "keepsake_id" "uuid" REFERENCES "public"."keepsakes"("id");
+ALTER TABLE "public"."recipients" ADD COLUMN IF NOT EXISTS "keepsake_id" "uuid" REFERENCES "public"."keepsakes"("id");
+
+-- Update keepsakes table to address inconsistencies/lacunas
+
+-- Change delivery_date to timestamp with time zone for better precision
+ALTER TABLE public.keepsakes
+ALTER COLUMN delivery_date TYPE timestamp with time zone
+USING delivery_date::timestamp with time zone;
+
+-- Add 'type' column to keepsakes table (digital or physical)
+ALTER TABLE public.keepsakes
+ADD COLUMN IF NOT EXISTS type text NOT NULL DEFAULT 'digital';
+
+-- Add CHECK constraint for the 'type' column
+ALTER TABLE public.keepsakes
+ADD CONSTRAINT chk_keepsake_type CHECK (type IN ('digital', 'physical'));
