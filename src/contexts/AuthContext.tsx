@@ -181,23 +181,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
 
     // THEN check for existing session
-    supabase.auth.getSession().then(({ data: { session: existingSession } }) => {
-      console.log('🔍 [AuthContext] getSession: Checking existing session, User ID:', existingSession?.user?.id);
+    const checkSessionAndFetchProfile = async () => {
+      console.log('🔍 [AuthContext] getSession: Checking existing session...');
+      const { data: { session: existingSession } } = await supabase.auth.getSession();
       setSession(existingSession);
       setUser(existingSession?.user ?? null);
       
       if (existingSession?.user) {
         console.log('👤 [AuthContext] getSession: Existing user found, fetching profile...');
         if (existingSession.user?.id) {
-          console.log('⏳ [AuthContext] Attempting to fetch profile for existing session user:', existingSession.user.id);
-          fetchProfile(existingSession.user.id);
+          await fetchProfile(existingSession.user.id); // Wait for profile fetch
         } else {
           console.warn('⚠️ [AuthContext] getSession: Existing session user ID not available, cannot fetch profile.');
         }
+      } else {
+        setProfile(null);
+        setIsAdmin(false);
       }
-      
       setLoading(false);
-    });
+    };
+
+    checkSessionAndFetchProfile();
 
     return () => {
       console.log('🧹 [AuthContext] Cleanup: Cleaning up auth subscription');
