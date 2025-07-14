@@ -2,22 +2,31 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth'; // Importar o hook useAuth
 import { supabase } from '../integrations/supabase/client';
+import { useEffect } from 'react'; // Importar useEffect
 
 const CreateKeepsake: React.FC = () => {
   const [title, setTitle] = useState('');
   const [messageContent, setMessageContent] = useState('');
   const [deliveryDate, setDeliveryDate] = useState('');
   const navigate = useNavigate();
-  const { user, loading } = useAuth(); // Usar o hook useAuth
+  const { user, loading, profile } = useAuth(); // Usar o hook useAuth e adicionar profile
+
+  useEffect(() => {
+    if (!loading && !user) {
+      alert('Você precisa estar logado para criar uma cápsula.');
+      navigate('/login');
+    }
+  }, [loading, user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!user) {
-      alert('Você precisa estar logado para criar uma cápsula.');
-      navigate('/login');
+    if (loading || !user || !profile) { // Adicionar verificação de profile
+      alert('Carregando informações do usuário. Por favor, aguarde.');
       return;
     }
+
+    console.log('Attempting to create keepsake with user_id:', user.id); // Adicionar este log para depuração
 
     const { data, error } = await supabase
       .from('keepsakes')
@@ -25,8 +34,8 @@ const CreateKeepsake: React.FC = () => {
         {
           user_id: user.id,
           title,
-          message: messageContent,
-          delivery_date: deliveryDate,
+          message_content: messageContent, // Alterado de 'message' para 'message_content'
+          delivery_date: new Date(deliveryDate).toISOString(), // Convertido para ISO string para timestamp with time zone
         }
       );
 
