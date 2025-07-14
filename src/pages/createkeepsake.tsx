@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth'; // Importar o hook useAuth
 import { supabase } from '../integrations/supabase/client';
-import { useEffect } from 'react'; // Importar useEffect
+import { useEffect, useState } from 'react'; // Importar useState e useEffect
 
 const CreateKeepsake: React.FC = () => {
   const [title, setTitle] = useState('');
   const [messageContent, setMessageContent] = useState('');
   const [deliveryDate, setDeliveryDate] = useState('');
+  const [keepsakeType, setKeepsakeType] = useState<'digital' | 'physical'>('digital'); // Novo estado para o tipo de cápsula
   const navigate = useNavigate();
   const { user, loading, profile } = useAuth(); // Usar o hook useAuth e adicionar profile
 
@@ -26,7 +27,7 @@ const CreateKeepsake: React.FC = () => {
       return;
     }
 
-    console.log('Attempting to create keepsake with user_id:', user.id); // Adicionar este log para depuração
+    console.log('Attempting to create keepsake with user_id:', user.id);
 
     const { data, error } = await supabase
       .from('keepsakes')
@@ -34,8 +35,9 @@ const CreateKeepsake: React.FC = () => {
         {
           user_id: user.id,
           title,
-          message_content: messageContent, // Alterado de 'message' para 'message_content'
-          delivery_date: new Date(deliveryDate).toISOString(), // Convertido para ISO string para timestamp with time zone
+          message_content: messageContent,
+          delivery_date: new Date(deliveryDate).toISOString(),
+          type: keepsakeType, // Adicionar o tipo de cápsula
         }
       );
 
@@ -49,10 +51,38 @@ const CreateKeepsake: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-warm-gradient flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-100 to-red-100 flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-lg z-10">
         <h1 className="text-center text-3xl font-extrabold text-gray-900 font-serif">Criar Nova Cápsula do Tempo</h1>
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+          {/* Campo para seleção do tipo de cápsula */}
+          <div className="flex items-center space-x-4">
+            <label className="block text-sm font-medium text-gray-700">Tipo de Cápsula:</label>
+            <div className="flex items-center">
+              <input
+                type="radio"
+                id="digital"
+                name="keepsakeType"
+                value="digital"
+                checked={keepsakeType === 'digital'}
+                onChange={() => setKeepsakeType('digital')}
+                className="focus:ring-purple-500 h-4 w-4 text-purple-600 border-gray-300"
+              />
+              <label htmlFor="digital" className="ml-2 block text-sm font-medium text-gray-700">Digital</label>
+            </div>
+            <div className="flex items-center">
+              <input
+                type="radio"
+                id="physical"
+                name="keepsakeType"
+                value="physical"
+                checked={keepsakeType === 'physical'}
+                onChange={() => setKeepsakeType('physical')}
+                className="focus:ring-purple-500 h-4 w-4 text-purple-600 border-gray-300"
+              />
+              <label htmlFor="physical" className="ml-2 block text-sm font-medium text-gray-700">Física</label>
+            </div>
+          </div>
           <div>
             <label htmlFor="title" className="block text-sm font-medium text-gray-700">Título</label>
             <input
@@ -88,7 +118,7 @@ const CreateKeepsake: React.FC = () => {
           </div>
           <button
             type="submit"
-            className="btn-primary w-full"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
           >
             Criar Cápsula
           </button>
