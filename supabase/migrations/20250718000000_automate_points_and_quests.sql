@@ -1,6 +1,10 @@
 -- Function to update user_quests.progress
 CREATE OR REPLACE FUNCTION public.update_user_quest_progress()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = '', pg_temp;
+AS $$
 BEGIN
   SET search_path = public, pg_temp;
   -- Assuming NEW.progress is the new value for progress, or it's incremented by some action.
@@ -19,7 +23,11 @@ $$ LANGUAGE plpgsql;
 
 -- Function to update profiles.total_points from user_achievements
 CREATE OR REPLACE FUNCTION public.update_profile_points_from_achievement()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = '', pg_temp;
+AS $$
 DECLARE
   achievement_points INTEGER;
 BEGIN
@@ -43,7 +51,11 @@ FOR EACH ROW EXECUTE FUNCTION public.update_profile_points_from_achievement();
 
 -- Function to update profiles.total_points from completed user_quests
 CREATE OR REPLACE FUNCTION public.update_profile_points_from_quest_completion()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = '', pg_temp;
+AS $$
 DECLARE
   quest_reward INTEGER;
 BEGIN
@@ -72,7 +84,11 @@ FOR EACH ROW EXECUTE FUNCTION public.update_profile_points_from_quest_completion
 -- For example, if a quest is "send 5 messages", this trigger would be on the messages table.
 -- For now, this is a conceptual placeholder.
 CREATE OR REPLACE FUNCTION public.increment_user_quest_progress_on_action()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = '', pg_temp;
+AS $$
 BEGIN
   -- Example: Increment progress for a specific quest related to the action
   -- This logic needs to be highly specific to your application's quest system.

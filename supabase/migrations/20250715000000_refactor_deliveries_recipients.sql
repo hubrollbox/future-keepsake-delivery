@@ -45,7 +45,11 @@ ADD COLUMN IF NOT EXISTS content TEXT;
 
 -- Automatizar triggers para user_stats com base em user_achievements e user_quests
 CREATE OR REPLACE FUNCTION public.update_user_stats_from_achievement()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = '', pg_temp;
+AS $$
 BEGIN
   INSERT INTO public.user_stats (user_id, total_achievements, last_updated)
   VALUES (NEW.user_id, 1, NOW())
@@ -61,7 +65,11 @@ AFTER INSERT ON public.user_achievements
 FOR EACH ROW EXECUTE FUNCTION public.update_user_stats_from_achievement();
 
 CREATE OR REPLACE FUNCTION public.update_user_stats_from_quest()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = '', pg_temp;
+AS $$
 BEGIN
   INSERT INTO public.user_stats (user_id, total_quests_completed, last_updated)
   VALUES (NEW.user_id, 1, NOW())

@@ -166,7 +166,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           console.log('👤 [AuthContext] onAuthStateChange: User found, fetching profile...');
           if (currentSession.user?.id) {
             console.log('⏳ [AuthContext] Attempting to fetch profile immediately for user:', currentSession.user.id);
-            fetchProfile(currentSession.user.id);
+            await fetchProfile(currentSession.user.id); // Await fetchProfile
           } else {
             console.warn('⚠️ [AuthContext] onAuthStateChange: User ID not available, cannot fetch profile.');
           }
@@ -198,6 +198,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setProfile(null);
         setIsAdmin(false);
       }
+      setLoading(false); // Set loading to false after initial session check and profile fetch
       setLoading(false);
     };
 
