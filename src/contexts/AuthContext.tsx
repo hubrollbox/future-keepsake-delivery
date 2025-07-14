@@ -90,11 +90,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.log('📊 [AuthContext] fetchProfile: Profile data received:', profileData);
 
       // If profileData is null, it means no profile was found or an error occurred that was handled above.
-      // In this case, we should not proceed with fetching admin roles.
+      // In this case, we should create a fallback profile.
       if (!profileData) {
-        setProfile(null);
-        setIsAdmin(false);
-        return;
+        const { data: { user: authUser } } = await supabase.auth.getUser();
+        if (authUser) {
+          const fallbackProfile: UserProfile = {
+            id: authUser.id,
+            full_name: authUser.user_metadata?.full_name || authUser.email?.split('@')[0] || 'Utilizador',
+            email: authUser.email || null,
+            avatar_url: authUser.user_metadata?.avatar_url || null,
+            plan_type: 'free', // Default ou inferir se possível
+            total_points: 0,
+            level: 1,
+            created_at: authUser.created_at,
+            updated_at: authUser.last_sign_in_at || authUser.created_at,
+            role: null
+          };
+          setProfile(fallbackProfile);
+          setIsAdmin(false);
+          return;
+        } else {
+          setProfile(null);
+          setIsAdmin(false);
+          return;
+        }
       }
 
       // Check admin status
@@ -259,21 +278,42 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       if (error) {
+        console.error('❌ [AuthContext] signUp: Error during sign-up:', error);
         let errorMessage = 'Erro ao criar conta';
         if (error.message.includes('User already registered')) {
           errorMessage = 'Já existe uma conta com este email.';
         }
-        
         toast({
           title: 'Erro de Registo',
           description: errorMessage,
           variant: 'destructive'
         });
-      } else {
-        toast({
-          title: 'Conta Criada',
-          description: 'Verifique o seu email para confirmar a sua conta.',
+        return { error };
+      }
+
+      // Create a profile entry for the new user
+      if (data.user) {
+        const { error: profileError } = await supabase.from('profiles').insert({
+          id: data.user.id,
+          email: data.user.email,
+          full_name: fullName || data.user.email?.split('@')[0] || 'Novo Utilizador',
         });
+
+        if (profileError) {
+          console.error('❌ [AuthContext] signUp: Error creating profile:', profileError);
+          toast({
+            title: 'Erro no Perfil',
+            description: 'Não foi possível criar o perfil do utilizador. Por favor, contacte o suporte.',
+            variant: 'destructive',
+          });
+          // Consider rolling back user creation or handling this more gracefully
+          return { error: profileError };
+        } else {
+          toast({
+            title: 'Conta Criada',
+            description: 'Verifique o seu email para confirmar a sua conta.',
+          });
+        }
       }
 
       return { error };

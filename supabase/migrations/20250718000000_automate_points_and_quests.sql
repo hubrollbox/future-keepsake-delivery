@@ -2,6 +2,7 @@
 CREATE OR REPLACE FUNCTION public.update_user_quest_progress()
 RETURNS TRIGGER AS $$
 BEGIN
+  SET search_path = public, pg_temp;
   -- Assuming NEW.progress is the new value for progress, or it's incremented by some action.
   -- This trigger needs to be adapted based on how quest progress is actually tracked.
   -- For now, let's assume an INSERT or UPDATE on user_quests means progress is being made.
@@ -21,6 +22,8 @@ CREATE OR REPLACE FUNCTION public.update_profile_points_from_achievement()
 RETURNS TRIGGER AS $$
 DECLARE
   achievement_points INTEGER;
+BEGIN
+  SET search_path = public, pg_temp;
 BEGIN
   SELECT points INTO achievement_points FROM public.achievements WHERE id = NEW.achievement_id;
 
@@ -44,6 +47,7 @@ RETURNS TRIGGER AS $$
 DECLARE
   quest_reward INTEGER;
 BEGIN
+  SET search_path = public, pg_temp;
   -- Only update points if the quest is marked as completed and it wasn't already completed
   IF NEW.completed_at IS NOT NULL AND OLD.completed_at IS NULL THEN
     SELECT reward INTO quest_reward FROM public.quests WHERE id = NEW.quest_id;

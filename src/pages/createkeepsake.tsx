@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth'; // Importar o hook useAuth
 import { supabase } from '../integrations/supabase/client';
-import { useEffect, useState } from 'react'; // Importar useState e useEffect
+import { useEffect } from 'react'; // Importar useEffect
 
 const CreateKeepsake: React.FC = () => {
   const [title, setTitle] = useState('');
   const [messageContent, setMessageContent] = useState('');
   const [deliveryDate, setDeliveryDate] = useState('');
-  const [keepsakeType, setKeepsakeType] = useState<'digital' | 'physical'>('digital'); // Novo estado para o tipo de cápsula
+  const [keepsakeType, setKeepsakeType] = useState<'digital' | 'physical'>('digital');
   const navigate = useNavigate();
   const { user, loading, profile } = useAuth(); // Usar o hook useAuth e adicionar profile
 
@@ -37,7 +37,7 @@ const CreateKeepsake: React.FC = () => {
         {
           user_id: user.id,
           title,
-          message_content: messageContent,
+          message: messageContent,
           delivery_date: new Date(deliveryDate).toISOString(),
           type: keepsakeType, // Adicionar o tipo de cápsula
         }
