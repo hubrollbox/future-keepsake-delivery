@@ -22,8 +22,10 @@ const CreateKeepsake: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (loading || !user || !profile) { // Adicionar verificação de profile
-      alert('Carregando informações do usuário. Por favor, aguarde.');
+    if (!user || !profile) { // Adicionar verificação de profile
+      // This case should ideally be prevented by disabling the button
+      // but as a fallback, we can still alert if somehow reached.
+      alert('Informações do usuário não disponíveis. Tente novamente.');
       return;
     }
 
@@ -118,9 +120,10 @@ const CreateKeepsake: React.FC = () => {
           </div>
           <button
             type="submit"
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={loading || !user || !profile} // Desabilitar o botão enquanto carrega ou se user/profile não estiverem disponíveis
           >
-            Criar Cápsula
+            {loading ? 'Carregando informações do usuário...' : 'Criar Cápsula'}
           </button>
         </form>
       </div>
