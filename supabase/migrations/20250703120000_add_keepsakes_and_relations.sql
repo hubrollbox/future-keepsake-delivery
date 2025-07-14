@@ -23,11 +23,11 @@ ALTER TABLE "public"."notifications" ADD COLUMN "keepsake_id" "uuid" REFERENCES 
 
 ALTER TABLE "public"."deliveries" ADD COLUMN "keepsake_id" "uuid" REFERENCES "public"."keepsakes"("id");
 
-CREATE OR REPLACE FUNCTION update_profile_stats()
+CREATE OR REPLACE FUNCTION public.update_profile_stats()
 RETURNS TRIGGER
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = public, pg_temp;
+SET search_path = '', pg_temp;
 AS $$
 BEGIN
     UPDATE public.profiles

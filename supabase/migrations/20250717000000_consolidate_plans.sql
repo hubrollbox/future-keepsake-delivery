@@ -6,6 +6,8 @@ CREATE TABLE public.plans (
 
 ALTER TABLE public.plans OWNER TO postgres;
 
+ALTER TABLE public.plans ENABLE ROW LEVEL SECURITY;
+
 -- Insert default plan types
 INSERT INTO public.plans (name) VALUES ('Free'), ('Premium') ON CONFLICT (name) DO NOTHING;
 
@@ -32,3 +34,5 @@ SET plan_id = (SELECT id FROM public.plans WHERE name = public.subscriptions.pla
 -- Drop the redundant plan column from subscriptions
 ALTER TABLE public.subscriptions
 DROP COLUMN plan;
+
+ALTER TABLE public.subscriptions ENABLE ROW LEVEL SECURITY;

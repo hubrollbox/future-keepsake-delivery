@@ -164,7 +164,7 @@ RETURNS TEXT
 LANGUAGE SQL
 SECURITY DEFINER
 STABLE
-SET search_path = public, pg_temp;
+SET search_path = '', pg_temp;
 AS $$
   SELECT COALESCE(role, 'user') 
   FROM public.admin_roles 
