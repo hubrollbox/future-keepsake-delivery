@@ -158,7 +158,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, currentSession) => {
-        console.log('🔐 [AuthContext] onAuthStateChange: Event:', event, 'User ID:', currentSession?.user?.id);
+        console.log('🔐 [AuthContext] onAuthStateChange: Event:', event, 'User ID:', currentSession?.user?.id, 'Current Loading:', loading, 'Current User:', !!user, 'Current Profile:', !!profile);
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
         
@@ -177,6 +177,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
 
         setLoading(false);
+        console.log('✅ [AuthContext] onAuthStateChange: Loading set to false. User:', !!(currentSession?.user), 'Profile:', !!profile);
       }
     );
 
@@ -198,6 +199,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setProfile(null);
         setIsAdmin(false);
       }
+      console.log('✅ [AuthContext] getSession: Initial check complete. User:', !!(existingSession?.user), 'Profile:', !!profile);
       setLoading(false); // Set loading to false after initial session check and profile fetch
       setLoading(false);
     };

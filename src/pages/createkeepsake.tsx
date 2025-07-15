@@ -13,6 +13,8 @@ const CreateKeepsake: React.FC = () => {
   const { user, loading, profile } = useAuth(); // Usar o hook useAuth e adicionar profile
 
   useEffect(() => {
+    console.log('CreateKeepsake Component - loading:', loading, 'user:', user, 'profile:', profile);
+
     if (!loading && !user) {
       alert('Você precisa estar logado para criar uma cápsula.');
       navigate('/login');
@@ -52,8 +54,10 @@ const CreateKeepsake: React.FC = () => {
     }
   };
 
+  console.log('Render CreateKeepsake - loading:', loading, 'user:', user, 'profile:', profile);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-100 to-red-100 flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-lavender-mist flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-lg z-10">
         <h1 className="text-center text-3xl font-extrabold text-gray-900 font-serif">Criar Nova Cápsula do Tempo</h1>
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
@@ -120,7 +124,7 @@ const CreateKeepsake: React.FC = () => {
           </div>
           <button
             type="submit"
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-earthy-burgundy hover:bg-steel-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-earthy-burgundy disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={loading || !user || !profile} // Desabilitar o botão enquanto carrega ou se user/profile não estiverem disponíveis
           >
             {loading ? 'Carregando informações do usuário...' : 'Criar Cápsula'}
