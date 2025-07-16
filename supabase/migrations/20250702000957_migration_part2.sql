@@ -15,12 +15,15 @@ CREATE TABLE IF NOT EXISTS public.recipients (
   email TEXT,
   phone TEXT,
   address TEXT,
+  street TEXT,
+  city TEXT,
+  postal_code TEXT,
   channel_cost DECIMAL(5,2) DEFAULT 0.00,
   created_at TIMESTAMPTZ DEFAULT now(),
   CONSTRAINT check_delivery_channel_fields CHECK (
     (delivery_channel = 'email' AND email IS NOT NULL) OR
     (delivery_channel = 'sms' AND phone IS NOT NULL) OR
-    (delivery_channel = 'address' AND address IS NOT NULL) OR
+    (delivery_channel = 'address' AND address IS NOT NULL AND street IS NOT NULL AND city IS NOT NULL AND postal_code IS NOT NULL) OR
     (delivery_channel NOT IN ('email', 'sms', 'address'))
   )
 );
