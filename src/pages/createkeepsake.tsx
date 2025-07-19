@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth'; // Importar o hook useAuth
+import { useAuth } from '../hooks/useAuth';
 import { supabase } from '../integrations/supabase/client';
-import { useEffect } from 'react'; // Importar useEffect
+import { useEffect, useState } from 'react';
 
 const CreateKeepsake: React.FC = () => {
   const [title, setTitle] = useState('');
+  const [recipientName, setRecipientName] = useState('');
   const [messageContent, setMessageContent] = useState('');
   const [deliveryDate, setDeliveryDate] = useState('');
   const [keepsakeType, setKeepsakeType] = useState<'digital' | 'physical'>('digital');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
+  
   const navigate = useNavigate();
-  const { user, loading, profile } = useAuth(); // Usar o hook useAuth e adicionar profile
+  const { user, loading, profile } = useAuth();
 
   useEffect(() => {
     console.log('CreateKeepsake Component - loading:', loading, 'user:', user, 'profile:', profile);
@@ -23,44 +27,65 @@ const CreateKeepsake: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setError('');
 
-    if (!user || !profile) { // Adicionar verificação de profile
-      // This case should ideally be prevented by disabling the button
-      // but as a fallback, we can still alert if somehow reached.
-      alert('Informações do usuário não disponíveis. Tente novamente.');
+    if (!user || !profile) {
+      setError('Informações do usuário não disponíveis');
+      setIsSubmitting(false);
       return;
     }
 
-    console.log('Attempting to create keepsake with user_id:', user.id);
-
-    const { data, error } = await supabase
-      .from('keepsakes')
-      .insert(
-        {
+    try {
+      const { error } = await supabase
+        .from('keepsakes')
+        .insert({
           user_id: user.id,
           title,
+          recipient_name: recipientName,
           message: messageContent,
           delivery_date: new Date(deliveryDate).toISOString(),
-          type: keepsakeType, // Adicionar o tipo de cápsula
-        }
-      );
+          type: keepsakeType,
+        });
 
-    if (error) {
-      console.error('Erro ao criar cápsula:', error);
-      alert('Erro ao criar cápsula: ' + error.message);
-    } else {
+      if (error) throw error;
+      
       alert('Cápsula criada com sucesso!');
-      navigate('/dashboard'); // Ou para onde você quiser redirecionar após a criação
+      navigate('/dashboard');
+    } catch (err) {
+      setError('Erro ao criar cápsula: ' + err.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
-
-  console.log('Render CreateKeepsake - loading:', loading, 'user:', user, 'profile:', profile);
 
   return (
     <div className="min-h-screen bg-lavender-mist flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-lg z-10">
         <h1 className="text-center text-3xl font-extrabold text-gray-900 font-serif">Criar Nova Cápsula do Tempo</h1>
+        
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+            {error}
+          </div>
+        )}
+        
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+          {/* Novo campo para nome do destinatário */}
+          <div>
+            <label htmlFor="recipientName" className="block text-sm font-medium text-gray-700">
+              Nome do Destinatário
+            </label>
+            <input
+              type="text"
+              id="recipientName"
+              className="input-field"
+              value={recipientName}
+              onChange={(e) => setRecipientName(e.target.value)}
+              required
+            />
+          </div>
+
           {/* Campo para seleção do tipo de cápsula */}
           <div className="flex items-center space-x-4">
             <label className="block text-sm font-medium text-gray-700">Tipo de Cápsula:</label>
@@ -125,9 +150,9 @@ const CreateKeepsake: React.FC = () => {
           <button
             type="submit"
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-earthy-burgundy hover:bg-steel-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-earthy-burgundy disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={loading || !user || !profile} // Desabilitar o botão enquanto carrega ou se user/profile não estiverem disponíveis
+            disabled={loading || !user || !profile || isSubmitting}
           >
-            {loading ? 'Carregando informações do usuário...' : 'Criar Cápsula'}
+            {isSubmitting ? 'Criando...' : 'Criar Cápsula'}
           </button>
         </form>
       </div>
