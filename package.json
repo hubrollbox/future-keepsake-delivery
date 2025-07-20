@@ -1,6 +1,9 @@
 {
   "type": "module",
   "dependencies": {
+    "@chakra-ui/react": "^3.22.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-alert-dialog": "^1.1.14",
     "@radix-ui/react-aspect-ratio": "^1.1.7",
@@ -29,6 +32,7 @@
     "cmdk": "^1.1.1",
     "date-fns": "^2.30.0",
     "embla-carousel-react": "^8.6.0",
+    "framer-motion": "^12.23.6",
     "input-otp": "^1.4.2",
     "lodash": "^4.17.21",
     "lovable-tagger": "^1.1.8",
