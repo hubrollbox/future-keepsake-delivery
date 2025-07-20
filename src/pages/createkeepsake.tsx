@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { supabase } from '../integrations/supabase/client';
-import { useEffect, useState } from 'react';
 
 const CreateKeepsake: React.FC = () => {
   const [title, setTitle] = useState('');
