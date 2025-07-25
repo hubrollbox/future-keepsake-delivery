@@ -17,7 +17,7 @@ const CreateKeepsake: React.FC = () => {
 
   const navigate = useNavigate();
   const { user, loading, profile } = useAuth();
-  const toast = useToast();
+  const { toast } = useToast();
 
   useEffect(() => {
     console.log('CreateKeepsake Component - loading:', loading, 'user:', user, 'profile:', profile);
@@ -33,9 +33,8 @@ const CreateKeepsake: React.FC = () => {
       toast({
         title: 'Tipo de presente não selecionado.',
         description: 'Por favor, selecione um tipo de presente para continuar.',
-        status: 'warning',
+        variant: 'warning',
         duration: 3000,
-        isClosable: true,
       });
       return;
     }
@@ -61,9 +60,8 @@ const CreateKeepsake: React.FC = () => {
       toast({
         title: 'Erro de validação',
         description: 'Por favor, selecione o tipo de cápsula.',
-        status: 'error',
+        variant: 'destructive',
         duration: 3000,
-        isClosable: true,
       });
       setIsSubmitting(false);
       return;
@@ -85,9 +83,8 @@ const CreateKeepsake: React.FC = () => {
       
       toast({
         title: 'Cápsula criada com sucesso!',
-        status: 'success',
+        variant: 'default',
         duration: 3000,
-        isClosable: true,
       });
       navigate('/dashboard');
     } catch (err: any) {
@@ -95,9 +92,8 @@ const CreateKeepsake: React.FC = () => {
       toast({
         title: 'Erro ao criar cápsula',
         description: err.message,
-        status: 'error',
+        variant: 'destructive',
         duration: 5000,
-        isClosable: true,
       });
     } finally {
       setIsSubmitting(false);

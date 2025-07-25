@@ -61,3 +61,5 @@ const DeliveryTypeStep = ({ deliveryType, setDeliveryType, onNext }: Props) => {
 };
 
 export default DeliveryTypeStep;
+
+
