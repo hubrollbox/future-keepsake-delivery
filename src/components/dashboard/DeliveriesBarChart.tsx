@@ -1,5 +1,5 @@
-
 import React from "react";
+import './DeliveriesBarChart.css';
 
 interface BarChartProps {
   data: { month: string; count: number }[];
@@ -9,7 +9,7 @@ const DeliveriesBarChart: React.FC<BarChartProps> = ({ data }) => {
   const maxCount = Math.max(...data.map(item => item.count), 1);
   
   return (
-    <div className="w-full h-64 flex items-end gap-3 bg-white rounded-xl p-4 border border-dusty-rose/20 shadow-soft">
+    <div className="bar-chart-container">
       {data.length === 0 ? (
         <div className="w-full h-full flex items-center justify-center text-misty-gray">
           Nenhum dado disponível
@@ -39,3 +39,9 @@ const DeliveriesBarChart: React.FC<BarChartProps> = ({ data }) => {
 };
 
 export default DeliveriesBarChart;
+/* DeliveriesBarChart.css */
+.bar-chart-container {
+  /* Add your styles here */
+}
+}
+```
