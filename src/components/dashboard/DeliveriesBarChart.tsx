@@ -39,9 +39,4 @@ const DeliveriesBarChart: React.FC<BarChartProps> = ({ data }) => {
 };
 
 export default DeliveriesBarChart;
-/* DeliveriesBarChart.css */
-.bar-chart-container {
-  /* Add your styles here */
-}
-}
 ```
