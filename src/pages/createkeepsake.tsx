@@ -5,6 +5,23 @@ import { supabase } from '../integrations/supabase/client';
 import DeliveryTypeStep from '../components/delivery/DeliveryTypeStep';
 import { useToast } from '../hooks/use-toast';
 
+export interface KeepsakeFormData {
+  title: string;
+  recipientName: string;
+  recipient_name: string;
+  recipient_contact: string;
+  messageContent: string;
+  message: string;
+  deliveryDate: string;
+  delivery_date: string;
+  keepsakeType: 'digital' | 'physical' | null;
+  delivery_channel: string;
+  relationship: string;
+  selected_products: any[];
+  channel_cost: number;
+  total_cost: number;
+}
+
 const CreateKeepsake: React.FC = () => {
   const [title, setTitle] = useState('');
   const [recipientName, setRecipientName] = useState('');
@@ -33,7 +50,7 @@ const CreateKeepsake: React.FC = () => {
       toast({
         title: 'Tipo de presente não selecionado.',
         description: 'Por favor, selecione um tipo de presente para continuar.',
-        variant: 'warning',
+        variant: 'destructive',
         duration: 3000,
       });
       return;

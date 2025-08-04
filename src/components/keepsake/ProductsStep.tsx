@@ -6,7 +6,7 @@ import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { Star, Package, Gift, Lock, Users, Video, ShoppingCart, Truck } from "lucide-react";
-import { KeepsakeFormData } from "@/pages/CreateKeepsake";
+import { KeepsakeFormData } from "@/pages/createkeepsake";
 
 interface Product {
   id: string;

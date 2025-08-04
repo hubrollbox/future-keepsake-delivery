@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Calendar, MessageSquare } from "lucide-react";
-import { KeepsakeFormData } from "@/pages/CreateKeepsake";
+import { KeepsakeFormData } from "@/pages/createkeepsake";
 
 interface MessageStepProps {
   formData: KeepsakeFormData;

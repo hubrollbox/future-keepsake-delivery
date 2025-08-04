@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, User, Mail, MessageCircle, MapPin, Gift } from "lucide-react";
-import { KeepsakeFormData } from "@/pages/CreateKeepsake";
+import { KeepsakeFormData } from "@/pages/createkeepsake";
 
 interface ReviewStepProps {
   formData: KeepsakeFormData;

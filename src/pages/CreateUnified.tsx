@@ -9,6 +9,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
 
 interface CreateUnifiedProps {
   type: 'keepsake' | 'message' | 'delivery';
@@ -36,6 +38,11 @@ const DeliveryForm: React.FC = () => {
           handleFileChange={handleFileChange}
           deliveryType={deliveryType}
           setDeliveryType={setDeliveryType}
+          nextStep={nextStep}
+          prevStep={prevStep}
+          onSubmit={handleSubmit}
+          loading={loading}
+          error={error}
         />
       </div>
       <div className="mt-8 flex justify-between">
@@ -76,6 +83,7 @@ const KeepsakeForm: React.FC<KeepsakeFormProps> = ({ user }) => {
     recipientName: '',
     recipientEmail: '',
     productSelection: '',
+    delivery_date: '',
   });
   const [loading, setLoading] = useState(false);
 
@@ -113,7 +121,8 @@ const KeepsakeForm: React.FC<KeepsakeFormProps> = ({ user }) => {
         {
           user_id: user.id,
           title: formData.title,
-          description: formData.messageContent,
+          message: formData.messageContent,
+          delivery_date: formData.delivery_date,
         }
       );
 
@@ -286,13 +295,11 @@ const MessageForm: React.FC<MessageFormProps> = ({ user }) => {
     }
 
     try {
-      const { data, error } = await supabase.from('messages').insert(
+      const { data, error } = await supabase.from('deliveries').insert(
         {
           title: formData.title,
-          message: formData.message,
+          description: formData.message,
           delivery_date: formData.delivery_date,
-          recipient_name: formData.recipient_name,
-          recipient_email: formData.recipient_email,
           user_id: user.id,
         }
       );
