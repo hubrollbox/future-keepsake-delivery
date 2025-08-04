@@ -39,4 +39,3 @@ const DeliveriesBarChart: React.FC<BarChartProps> = ({ data }) => {
 };
 
 export default DeliveriesBarChart;
-```
