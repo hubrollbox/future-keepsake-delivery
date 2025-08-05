@@ -1,9 +1,13 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap');
 
+/* purgecss start ignore */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* purgecss end ignore */
+
+@import './styles/variables.css';
 
 @layer base {
   :root {
@@ -70,11 +74,15 @@
 
 @layer base {
   * {
+    /* purgecss start ignore */
     @apply border-border;
+    /* purgecss end ignore */
   }
 
   body {
+    /* purgecss start ignore */
     @apply bg-lavender-mist text-steel-blue;
+    /* purgecss end ignore */
     font-family: 'Inter', system-ui, sans-serif;
     line-height: 1.7;
     font-size: 16px;
@@ -104,21 +112,29 @@
 
   /* Emotional spacing and rhythm seguindo o manual */
   .emotional-spacing {
+    /* purgecss start ignore */
     @apply py-20 md:py-28;
+    /* purgecss end ignore */
   }
 
   .gentle-spacing {
+    /* purgecss start ignore */
     @apply py-12 md:py-16;
+    /* purgecss end ignore */
   }
 
   /* Soft, warm cards com cores da marca */
   .emotion-card {
+    /* purgecss start ignore */
     @apply bg-white/80 backdrop-blur-sm border border-dusty-rose/20 rounded-2xl shadow-soft hover:shadow-md transition-all duration-300;
+    /* purgecss end ignore */
   }
 
   /* Gentle interactions */
   .gentle-hover {
+    /* purgecss start ignore */
     @apply hover:scale-[1.02] transition-transform duration-200;
+    /* purgecss end ignore */
   }
 
   /* Typography utilities com cores da marca */
@@ -168,15 +184,21 @@
 
   /* Gentle button styles seguindo o manual */
   .btn-gentle {
+    /* purgecss start ignore */
     @apply px-8 py-4 rounded-xl font-medium transition-all duration-200 shadow-sm hover:shadow-md;
+    /* purgecss end ignore */
   }
 
   .btn-primary {
+    /* purgecss start ignore */
     @apply bg-earthy-burgundy text-white btn-gentle hover:bg-earthy-burgundy/90;
+    /* purgecss end ignore */
   }
 
   .btn-secondary {
+    /* purgecss start ignore */
     @apply border-2 border-earthy-burgundy text-earthy-burgundy btn-gentle hover-brand;
+    /* purgecss end ignore */
   }
 
   /* Smooth performance optimizations */

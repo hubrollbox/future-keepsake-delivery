@@ -355,6 +355,7 @@ const AdminWarehouse = () => {
                       <img 
                         src={item.photo_url} 
                         alt="Foto do item" 
+                        loading="lazy"
                         className="w-32 h-32 object-cover rounded-md border"
                       />
                     </div>

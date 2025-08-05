@@ -72,6 +72,14 @@ const Footer = () => {
                     Contacto
                   </button>
                 </li>
+                <li>
+                  <button 
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                    className="text-misty-gray hover:text-dusty-rose transition-colors duration-200"
+                  >
+                    Voltar ao Topo
+                  </button>
+                </li>
               </ul>
             </div>
 

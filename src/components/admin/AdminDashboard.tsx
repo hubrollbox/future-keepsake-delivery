@@ -1,63 +1,50 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Users, Package, TrendingUp, Clock, Mail, Calendar, Database } from "lucide-react";
+import { Users, Package, TrendingUp, Clock, Mail, Calendar, Database, Loader2 } from "lucide-react";
+import { useAdminData } from "@/hooks/useAdminData";
 
 const AdminDashboard = () => {
-  const stats = [
+  const { stats, loading } = useAdminData();
+
+  const dashboardStats = [
     {
-      title: "Utilizadores Ativos",
-      value: "1,234",
-      change: "+12%",
-      trend: "up",
-      icon: <Users className="h-5 w-5" />
-    },
-    {
-      title: "Entregas Agendadas",
-      value: "567",
-      change: "+8%",
-      trend: "up",
+      title: "Total de Entregas",
+      value: stats.totalDeliveries.toString(),
       icon: <Package className="h-5 w-5" />
     },
     {
-      title: "Taxa de Entrega",
-      value: "98.2%",
-      change: "+0.5%",
-      trend: "up",
-      icon: <TrendingUp className="h-5 w-5" />
+      title: "Entregas Pendentes (7 dias)",
+      value: stats.pendingDeliveries.toString(),
+      icon: <Clock className="h-5 w-5" />
     },
     {
-      title: "Tempo Médio",
-      value: "3.2 min",
-      change: "-0.3 min",
-      trend: "down",
-      icon: <Clock className="h-5 w-5" />
+      title: "Mensagens Digitais",
+      value: stats.digitalMessages.toString(),
+      icon: <Mail className="h-5 w-5" />
+    },
+    {
+      title: "Itens em Armazém",
+      value: stats.warehouseItems.toString(),
+      icon: <Database className="h-5 w-5" />
+    },
+    {
+      title: "Pagamentos Recentes (7 dias)",
+      value: stats.recentPayments.toString(),
+      icon: <TrendingUp className="h-5 w-5" />
     }
   ];
 
-  const recentActivity = [
-    {
-      id: 1,
-      type: "delivery",
-      message: "Nova entrega criada por João Silva",
-      time: "há 5 minutos",
-      icon: <Mail className="h-4 w-4 text-earthy-burgundy" />
-    },
-    {
-      id: 2,
-      type: "user",
-      message: "Maria Santos registou-se na plataforma",
-      time: "há 12 minutos",
-      icon: <Users className="h-4 w-4 text-earthy-burgundy" />
-    },
-    {
-      id: 3,
-      type: "system",
-      message: "Backup da base de dados concluído",
-      time: "há 1 hora",
-      icon: <Database className="h-4 w-4 text-earthy-burgundy" />
-    }
-  ];
+  // TODO: Fetch recent activity from the database
+  const recentActivity: any[] = [];
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <Loader2 className="h-8 w-8 animate-spin text-dusty-rose" />
+        <span className="text-steel-blue font-medium ml-2">A carregar dados...</span>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -70,24 +57,14 @@ const AdminDashboard = () => {
 
       {/* Statistics Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat, index) => (
+        {dashboardStats.map((stat, index) => (
           <Card key={index} className="emotion-card border-dusty-rose/20">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="space-y-2">
                   <p className="text-sm text-misty-gray">{stat.title}</p>
                   <p className="text-2xl font-bold text-steel-blue">{stat.value}</p>
-                  <div className="flex items-center space-x-1">
-                    <Badge 
-                      className={`text-xs ${
-                        stat.trend === 'up' 
-                          ? 'bg-earthy-burgundy/10 text-earthy-burgundy' 
-                          : 'bg-sand-beige text-steel-blue'
-                      }`}
-                    >
-                      {stat.change}
-                    </Badge>
-                  </div>
+
                 </div>
                 <div className="p-3 bg-earthy-burgundy/10 rounded-xl text-earthy-burgundy">
                   {stat.icon}
@@ -108,23 +85,13 @@ const AdminDashboard = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {recentActivity.map((activity) => (
-                <div key={activity.id} className="flex items-start space-x-3 p-3 rounded-lg bg-sand-beige/30">
-                  <div className="p-1.5 bg-white rounded-lg">
-                    {activity.icon}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-steel-blue text-sm font-medium">{activity.message}</p>
-                    <p className="text-misty-gray text-xs">{activity.time}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            {/* TODO: Display recent activity here */}
+            <p className="text-misty-gray text-sm">Nenhuma atividade recente para mostrar.</p>
           </CardContent>
         </Card>
 
         {/* Quick Actions */}
+        {/* TODO: Implement dynamic quick actions based on user roles/permissions or configuration */}
         <Card className="emotion-card border-dusty-rose/20">
           <CardHeader>
             <CardTitle className="text-steel-blue font-fraunces flex items-center space-x-2">
@@ -134,22 +101,12 @@ const AdminDashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 gap-4">
+              {/* Example of a quick action button */}
               <button className="p-4 text-left bg-earthy-burgundy/5 hover:bg-earthy-burgundy/10 rounded-xl transition-colors duration-200 group">
                 <Users className="h-6 w-6 text-earthy-burgundy mb-2 group-hover:scale-105 transition-transform" />
                 <p className="text-steel-blue font-medium text-sm">Gerir Utilizadores</p>
               </button>
-              <button className="p-4 text-left bg-earthy-burgundy/5 hover:bg-earthy-burgundy/10 rounded-xl transition-colors duration-200 group">
-                <Package className="h-6 w-6 text-earthy-burgundy mb-2 group-hover:scale-105 transition-transform" />
-                <p className="text-steel-blue font-medium text-sm">Ver Entregas</p>
-              </button>
-              <button className="p-4 text-left bg-earthy-burgundy/5 hover:bg-earthy-burgundy/10 rounded-xl transition-colors duration-200 group">
-                <Mail className="h-6 w-6 text-earthy-burgundy mb-2 group-hover:scale-105 transition-transform" />
-                <p className="text-steel-blue font-medium text-sm">Mensagens</p>
-              </button>
-              <button className="p-4 text-left bg-earthy-burgundy/5 hover:bg-earthy-burgundy/10 rounded-xl transition-colors duration-200 group">
-                <TrendingUp className="h-6 w-6 text-earthy-burgundy mb-2 group-hover:scale-105 transition-transform" />
-                <p className="text-steel-blue font-medium text-sm">Relatórios</p>
-              </button>
+              {/* Add more dynamic quick action buttons here */}
             </div>
           </CardContent>
         </Card>
