@@ -9,7 +9,6 @@ import TopUsersRanking from "@/components/dashboard/TopUsersRanking";
 
 interface RecentDelivery {
   id: string;
-  recipient_name: string;
   delivery_date: string;
   status: string;
   title: string;
@@ -40,7 +39,7 @@ const AdminDashboard = () => {
         
         const { data: deliveriesData } = await supabase
           .from("deliveries")
-          .select("id, recipient_name, delivery_date, status, title")
+          .select("id, delivery_date, status, title")
           .gte("delivery_date", now.toISOString())
           .lte("delivery_date", thirtyDays.toISOString())
           .order("delivery_date", { ascending: true })
@@ -185,7 +184,7 @@ const AdminDashboard = () => {
                   <div key={delivery.id} className="flex justify-between items-center py-2 border-b border-lavender-mist last:border-0">
                     <div className="flex-1">
                       <p className="font-medium text-steel-blue">{delivery.title || "Mensagem"}</p>
-                      <p className="text-sm text-misty-gray">Para: {delivery.recipient_name}</p>
+                      <p className="text-sm text-misty-gray">Entrega: {delivery.status}</p>
                     </div>
                     <div className="text-right">
                       <p className="text-xs text-misty-gray">

@@ -13,7 +13,8 @@ interface Client {
   level: number | null;
   created_at: string | null;
   updated_at: string | null;
-  is_admin: boolean; // Changed from isAdmin to is_admin to match expected interface
+  plan_id: string | null;
+  is_admin: boolean;
 }
 
 const AdminClients: React.FC = () => {
@@ -48,7 +49,8 @@ const AdminClients: React.FC = () => {
         
         const clientsWithAdminStatus = profilesData?.map(profile => ({
           ...profile,
-          is_admin: adminUserIds.has(profile.id) // Map to is_admin property
+          plan_type: 'free', // Default plan type from profiles table
+          is_admin: adminUserIds.has(profile.id)
         })) || [];
 
         setClients(clientsWithAdminStatus);

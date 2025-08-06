@@ -7,11 +7,13 @@ import { useToast } from "@/hooks/use-toast";
 interface Notification {
   id: string;
   title: string;
-  message: string;
+  content: string;
   type: string;
   read_at: string | null;
   created_at: string;
   user_id: string;
+  status: string;
+  keepsake_id: string | null;
 }
 
 export const useNotifications = () => {
@@ -40,7 +42,7 @@ export const useNotifications = () => {
     }
   };
 
-  const createNotification = async (title: string, message: string, type: string) => {
+  const createNotification = async (title: string, content: string, type: string) => {
     if (!user) return;
 
     try {
@@ -48,7 +50,7 @@ export const useNotifications = () => {
         .from("notifications")
         .insert({
           title,
-          message,
+          content,
           type,
           user_id: user.id,
         });

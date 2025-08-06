@@ -14,6 +14,7 @@ export interface UserProfile {
   level: number;
   created_at: string;
   updated_at: string;
+  plan_id: string | null;
   role?: string | null;
 }
 
@@ -70,11 +71,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             full_name: authUser.user_metadata?.full_name || authUser.email?.split('@')[0] || 'Utilizador',
             email: authUser.email || null,
             avatar_url: authUser.user_metadata?.avatar_url || null,
-            plan_type: 'free', // Default ou inferir se possível
+            plan_type: 'free',
             total_points: 0,
             level: 1,
             created_at: authUser.created_at,
             updated_at: authUser.last_sign_in_at || authUser.created_at,
+            plan_id: null,
             role: null
           };
           setProfile(fallbackProfile);
@@ -99,11 +101,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             full_name: authUser.user_metadata?.full_name || authUser.email?.split('@')[0] || 'Utilizador',
             email: authUser.email || null,
             avatar_url: authUser.user_metadata?.avatar_url || null,
-            plan_type: 'free', // Default ou inferir se possível
+            plan_type: 'free',
             total_points: 0,
             level: 1,
             created_at: authUser.created_at,
             updated_at: authUser.last_sign_in_at || authUser.created_at,
+            plan_id: null,
             role: null
           };
           setProfile(fallbackProfile);
@@ -131,6 +134,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       const userProfile = {
         ...profileData,
+        plan_type: 'free', // Default if not in schema
         role: adminData?.role || null
       };
 

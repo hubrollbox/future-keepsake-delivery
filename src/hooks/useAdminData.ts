@@ -75,10 +75,11 @@ export const useAdminData = () => {
         .eq("status", "scheduled")
         .lte("delivery_date", sevenDaysFromNow.toISOString());
 
-      // Fetch digital messages
+      // Fetch digital messages (deliveries with type digital)
       const { count: digitalMessages } = await supabase
-        .from("messages")
-        .select("*", { count: "exact", head: true });
+        .from("deliveries")
+        .select("*", { count: "exact", head: true })
+        .eq("type", "digital");
 
       // Fetch warehouse items
       const { count: warehouseItems } = await supabase
