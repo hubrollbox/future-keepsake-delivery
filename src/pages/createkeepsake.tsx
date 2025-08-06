@@ -101,13 +101,14 @@ const CreateKeepsake: React.FC = () => {
       if (keepsakeError) throw keepsakeError;
 
       // Then, create the recipient record
+      const deliveryChannel = keepsakeType === 'digital' ? 'email' : 'physical';
       const { error: recipientError } = await supabase
         .from('recipients')
         .insert({
           keepsake_id: keepsakeData.id,
           name: recipientName,
           email: recipientName + '@example.com', // You might want to add an email field
-          delivery_channel: keepsakeType,
+          delivery_channel: deliveryChannel,
         });
 
       if (recipientError) throw recipientError;
