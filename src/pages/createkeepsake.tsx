@@ -85,18 +85,32 @@ const CreateKeepsake: React.FC = () => {
     }
 
     try {
-      const { error } = await supabase
+      // First, create the keepsake
+      const { data: keepsakeData, error: keepsakeError } = await supabase
         .from('keepsakes')
         .insert({
           user_id: user.id,
           title,
-          recipient_name: recipientName,
           message: messageContent,
           delivery_date: new Date(deliveryDate).toISOString(),
           type: keepsakeType,
+        })
+        .select()
+        .single();
+
+      if (keepsakeError) throw keepsakeError;
+
+      // Then, create the recipient record
+      const { error: recipientError } = await supabase
+        .from('recipients')
+        .insert({
+          keepsake_id: keepsakeData.id,
+          name: recipientName,
+          email: recipientName + '@example.com', // You might want to add an email field
+          delivery_channel: keepsakeType,
         });
 
-      if (error) throw error;
+      if (recipientError) throw recipientError;
       
       toast({
         title: 'Cápsula criada com sucesso!',
