@@ -7,6 +7,11 @@ export type Json =
   | Json[]
 
 export type Database = {
+  // Allows to automatically instanciate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "13.0.4"
+  }
   public: {
     Tables: {
       achievements: {
@@ -40,18 +45,21 @@ export type Database = {
         Row: {
           created_at: string | null
           id: string
+          permissions: Json | null
           role: string
           user_id: string
         }
         Insert: {
           created_at?: string | null
           id?: string
+          permissions?: Json | null
           role?: string
           user_id: string
         }
         Update: {
           created_at?: string | null
           id?: string
+          permissions?: Json | null
           role?: string
           user_id?: string
         }
@@ -61,117 +69,220 @@ export type Database = {
         Row: {
           created_at: string | null
           id: string
+          payment_id: string | null
           product_id: string
           product_price: number
           product_title: string
           quantity: number
+          total_amount: number
           updated_at: string | null
           user_id: string
         }
         Insert: {
           created_at?: string | null
           id?: string
+          payment_id?: string | null
           product_id: string
           product_price: number
           product_title: string
           quantity?: number
+          total_amount?: number
           updated_at?: string | null
           user_id: string
         }
         Update: {
           created_at?: string | null
           id?: string
+          payment_id?: string | null
           product_id?: string
           product_price?: number
           product_title?: string
           quantity?: number
+          total_amount?: number
           updated_at?: string | null
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "cart_items_payment_id_fkey"
+            columns: ["payment_id"]
+            isOneToOne: false
+            referencedRelation: "payments"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       deliveries: {
         Row: {
           created_at: string | null
           delivery_date: string
-          delivery_method: string | null
-          delivery_time: string | null
           description: string | null
           digital_file_url: string | null
           id: string
+          keepsake_id: string | null
+          keepsake_product_id: string | null
           location: string | null
-          message: string | null
           payment_status: string | null
-          recipient_email: string | null
-          recipient_name: string | null
+          recipient_id: string | null
           status: string
           title: string
           type: string
           updated_at: string | null
           user_id: string
+          warehouse_item_id: string | null
         }
         Insert: {
           created_at?: string | null
           delivery_date: string
-          delivery_method?: string | null
-          delivery_time?: string | null
           description?: string | null
           digital_file_url?: string | null
           id?: string
+          keepsake_id?: string | null
+          keepsake_product_id?: string | null
           location?: string | null
-          message?: string | null
           payment_status?: string | null
-          recipient_email?: string | null
-          recipient_name?: string | null
+          recipient_id?: string | null
           status?: string
           title: string
           type?: string
           updated_at?: string | null
           user_id: string
+          warehouse_item_id?: string | null
         }
         Update: {
           created_at?: string | null
           delivery_date?: string
-          delivery_method?: string | null
-          delivery_time?: string | null
           description?: string | null
           digital_file_url?: string | null
           id?: string
+          keepsake_id?: string | null
+          keepsake_product_id?: string | null
           location?: string | null
-          message?: string | null
           payment_status?: string | null
-          recipient_email?: string | null
-          recipient_name?: string | null
+          recipient_id?: string | null
           status?: string
           title?: string
           type?: string
           updated_at?: string | null
           user_id?: string
+          warehouse_item_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "deliveries_keepsake_id_fkey"
+            columns: ["keepsake_id"]
+            isOneToOne: false
+            referencedRelation: "keepsakes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deliveries_keepsake_product_id_fkey"
+            columns: ["keepsake_product_id"]
+            isOneToOne: false
+            referencedRelation: "keepsake_products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deliveries_recipient_id_fkey"
+            columns: ["recipient_id"]
+            isOneToOne: false
+            referencedRelation: "recipients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "deliveries_warehouse_item_id_fkey"
+            columns: ["warehouse_item_id"]
+            isOneToOne: false
+            referencedRelation: "warehouse_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      extras: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          name: string
+          price: number
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name: string
+          price: number
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          name?: string
+          price?: number
         }
         Relationships: []
+      }
+      keepsake_extras: {
+        Row: {
+          created_at: string | null
+          extra_id: string | null
+          id: string
+          keepsake_id: string | null
+          quantity: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          extra_id?: string | null
+          id?: string
+          keepsake_id?: string | null
+          quantity?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          extra_id?: string | null
+          id?: string
+          keepsake_id?: string | null
+          quantity?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "keepsake_extras_extra_id_fkey"
+            columns: ["extra_id"]
+            isOneToOne: false
+            referencedRelation: "extras"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "keepsake_extras_keepsake_id_fkey"
+            columns: ["keepsake_id"]
+            isOneToOne: false
+            referencedRelation: "keepsakes"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       keepsake_products: {
         Row: {
           created_at: string | null
           id: string
-          keepsake_id: string | null
-          product_id: string | null
+          keepsake_id: string
+          product_id: string
           quantity: number | null
           unit_price: number
         }
         Insert: {
           created_at?: string | null
           id?: string
-          keepsake_id?: string | null
-          product_id?: string | null
+          keepsake_id: string
+          product_id: string
           quantity?: number | null
           unit_price: number
         }
         Update: {
           created_at?: string | null
           id?: string
-          keepsake_id?: string | null
-          product_id?: string | null
+          keepsake_id?: string
+          product_id?: string
           quantity?: number | null
           unit_price?: number
         }
@@ -198,64 +309,43 @@ export type Database = {
           delivery_date: string
           id: string
           message: string
+          message_content: string | null
+          message_type: string
           payment_status: string | null
           status: string | null
           title: string
           total_cost: number | null
-          user_id: string | null
+          type: string
+          updated_at: string | null
+          user_id: string
         }
         Insert: {
           created_at?: string | null
           delivery_date: string
           id?: string
           message: string
+          message_content?: string | null
+          message_type?: string
           payment_status?: string | null
           status?: string | null
           title: string
           total_cost?: number | null
-          user_id?: string | null
+          type?: string
+          updated_at?: string | null
+          user_id: string
         }
         Update: {
           created_at?: string | null
           delivery_date?: string
           id?: string
           message?: string
+          message_content?: string | null
+          message_type?: string
           payment_status?: string | null
           status?: string | null
           title?: string
           total_cost?: number | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
-      messages: {
-        Row: {
-          content: string
-          created_at: string | null
-          delivery_date: string
-          id: string
-          status: string
-          title: string
-          updated_at: string | null
-          user_id: string
-        }
-        Insert: {
-          content: string
-          created_at?: string | null
-          delivery_date: string
-          id?: string
-          status?: string
-          title: string
-          updated_at?: string | null
-          user_id: string
-        }
-        Update: {
-          content?: string
-          created_at?: string | null
-          delivery_date?: string
-          id?: string
-          status?: string
-          title?: string
+          type?: string
           updated_at?: string | null
           user_id?: string
         }
@@ -263,41 +353,44 @@ export type Database = {
       }
       notifications: {
         Row: {
+          content: string | null
           created_at: string | null
           id: string
-          message: string
+          keepsake_id: string | null
           read_at: string | null
           status: string | null
           title: string
           type: string
-          user_id: string | null
+          user_id: string
         }
         Insert: {
+          content?: string | null
           created_at?: string | null
           id?: string
-          message: string
+          keepsake_id?: string | null
           read_at?: string | null
           status?: string | null
           title: string
           type: string
-          user_id?: string | null
+          user_id: string
         }
         Update: {
+          content?: string | null
           created_at?: string | null
           id?: string
-          message?: string
+          keepsake_id?: string | null
           read_at?: string | null
           status?: string | null
           title?: string
           type?: string
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "notifications_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: "notifications_keepsake_id_fkey"
+            columns: ["keepsake_id"]
             isOneToOne: false
-            referencedRelation: "profiles"
+            referencedRelation: "keepsakes"
             referencedColumns: ["id"]
           },
         ]
@@ -352,6 +445,21 @@ export type Database = {
           },
         ]
       }
+      plans: {
+        Row: {
+          id: string
+          name: string
+        }
+        Insert: {
+          id?: string
+          name: string
+        }
+        Update: {
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
       products: {
         Row: {
           active: boolean | null
@@ -361,6 +469,7 @@ export type Database = {
           id: string
           name: string
           price: number
+          stock: number
           type: string
         }
         Insert: {
@@ -371,6 +480,7 @@ export type Database = {
           id?: string
           name: string
           price: number
+          stock?: number
           type: string
         }
         Update: {
@@ -381,6 +491,7 @@ export type Database = {
           id?: string
           name?: string
           price?: number
+          stock?: number
           type?: string
         }
         Relationships: []
@@ -393,7 +504,7 @@ export type Database = {
           full_name: string | null
           id: string
           level: number | null
-          plan_type: string | null
+          plan_id: string | null
           total_points: number | null
           updated_at: string | null
         }
@@ -404,7 +515,7 @@ export type Database = {
           full_name?: string | null
           id: string
           level?: number | null
-          plan_type?: string | null
+          plan_id?: string | null
           total_points?: number | null
           updated_at?: string | null
         }
@@ -415,11 +526,19 @@ export type Database = {
           full_name?: string | null
           id?: string
           level?: number | null
-          plan_type?: string | null
+          plan_id?: string | null
           total_points?: number | null
           updated_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "plans"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       quests: {
         Row: {
@@ -453,37 +572,49 @@ export type Database = {
       }
       recipients: {
         Row: {
-          address: string | null
           channel_cost: number | null
+          city: string | null
+          country: string | null
           delivery_channel: string
-          email: string | null
+          email: string
           id: string
-          keepsake_id: string | null
+          keepsake_id: string
           name: string
           phone: string | null
+          postal_code: string | null
           relationship: string | null
+          state: string | null
+          street: string | null
         }
         Insert: {
-          address?: string | null
           channel_cost?: number | null
+          city?: string | null
+          country?: string | null
           delivery_channel: string
-          email?: string | null
+          email: string
           id?: string
-          keepsake_id?: string | null
+          keepsake_id: string
           name: string
           phone?: string | null
+          postal_code?: string | null
           relationship?: string | null
+          state?: string | null
+          street?: string | null
         }
         Update: {
-          address?: string | null
           channel_cost?: number | null
+          city?: string | null
+          country?: string | null
           delivery_channel?: string
-          email?: string | null
+          email?: string
           id?: string
-          keepsake_id?: string | null
+          keepsake_id?: string
           name?: string
           phone?: string | null
+          postal_code?: string | null
           relationship?: string | null
+          state?: string | null
+          street?: string | null
         }
         Relationships: [
           {
@@ -498,32 +629,92 @@ export type Database = {
       scheduled_notifications: {
         Row: {
           delivery_date: string
+          delivery_id: string | null
           id: string
-          message: string
-          recipient_email: string
+          keepsake_id: string | null
+          recipient_id: string | null
           sent_at: string | null
           status: string | null
           user_email: string
         }
         Insert: {
           delivery_date: string
+          delivery_id?: string | null
           id?: string
-          message: string
-          recipient_email: string
+          keepsake_id?: string | null
+          recipient_id?: string | null
           sent_at?: string | null
           status?: string | null
           user_email: string
         }
         Update: {
           delivery_date?: string
+          delivery_id?: string | null
           id?: string
-          message?: string
-          recipient_email?: string
+          keepsake_id?: string | null
+          recipient_id?: string | null
           sent_at?: string | null
           status?: string | null
           user_email?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "scheduled_notifications_delivery_id_fkey"
+            columns: ["delivery_id"]
+            isOneToOne: false
+            referencedRelation: "deliveries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scheduled_notifications_keepsake_id_fkey"
+            columns: ["keepsake_id"]
+            isOneToOne: false
+            referencedRelation: "keepsakes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "scheduled_notifications_recipient_id_fkey"
+            columns: ["recipient_id"]
+            isOneToOne: false
+            referencedRelation: "recipients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      subscriptions: {
+        Row: {
+          ends_at: string | null
+          id: string
+          plan_id: string | null
+          started_at: string | null
+          status: string | null
+          user_id: string
+        }
+        Insert: {
+          ends_at?: string | null
+          id?: string
+          plan_id?: string | null
+          started_at?: string | null
+          status?: string | null
+          user_id: string
+        }
+        Update: {
+          ends_at?: string | null
+          id?: string
+          plan_id?: string | null
+          started_at?: string | null
+          status?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscriptions_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "plans"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_achievements: {
         Row: {
@@ -586,34 +777,15 @@ export type Database = {
           },
         ]
       }
-      user_stats: {
-        Row: {
-          level: number | null
-          total_points: number | null
-          updated_at: string | null
-          user_id: string
-        }
-        Insert: {
-          level?: number | null
-          total_points?: number | null
-          updated_at?: string | null
-          user_id: string
-        }
-        Update: {
-          level?: number | null
-          total_points?: number | null
-          updated_at?: string | null
-          user_id?: string
-        }
-        Relationships: []
-      }
       warehouse_items: {
         Row: {
           client_name: string
           created_at: string | null
           id: string
+          keepsake_id: string | null
           photo_url: string | null
           product_description: string
+          product_id: string | null
           received_date: string
           status: string
           updated_at: string | null
@@ -622,8 +794,10 @@ export type Database = {
           client_name: string
           created_at?: string | null
           id?: string
+          keepsake_id?: string | null
           photo_url?: string | null
           product_description: string
+          product_id?: string | null
           received_date: string
           status?: string
           updated_at?: string | null
@@ -632,19 +806,40 @@ export type Database = {
           client_name?: string
           created_at?: string | null
           id?: string
+          keepsake_id?: string | null
           photo_url?: string | null
           product_description?: string
+          product_id?: string | null
           received_date?: string
           status?: string
           updated_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "warehouse_items_keepsake_id_fkey"
+            columns: ["keepsake_id"]
+            isOneToOne: false
+            referencedRelation: "keepsakes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "warehouse_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      bytea_to_text: {
+        Args: { data: string }
+        Returns: string
+      }
       calculate_level: {
         Args: Record<PropertyKey, never> | { points: number }
         Returns: number
@@ -653,39 +848,122 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: string
       }
+      http: {
+        Args: { request: Database["public"]["CompositeTypes"]["http_request"] }
+        Returns: Database["public"]["CompositeTypes"]["http_response"]
+      }
+      http_delete: {
+        Args:
+          | { uri: string }
+          | { uri: string; content: string; content_type: string }
+        Returns: Database["public"]["CompositeTypes"]["http_response"]
+      }
+      http_get: {
+        Args: { uri: string } | { uri: string; data: Json }
+        Returns: Database["public"]["CompositeTypes"]["http_response"]
+      }
+      http_head: {
+        Args: { uri: string }
+        Returns: Database["public"]["CompositeTypes"]["http_response"]
+      }
+      http_header: {
+        Args: { field: string; value: string }
+        Returns: Database["public"]["CompositeTypes"]["http_header"]
+      }
+      http_list_curlopt: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          curlopt: string
+          value: string
+        }[]
+      }
+      http_patch: {
+        Args: { uri: string; content: string; content_type: string }
+        Returns: Database["public"]["CompositeTypes"]["http_response"]
+      }
+      http_post: {
+        Args:
+          | { uri: string; content: string; content_type: string }
+          | { uri: string; data: Json }
+        Returns: Database["public"]["CompositeTypes"]["http_response"]
+      }
+      http_put: {
+        Args: { uri: string; content: string; content_type: string }
+        Returns: Database["public"]["CompositeTypes"]["http_response"]
+      }
+      http_reset_curlopt: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
+      http_set_curlopt: {
+        Args: { curlopt: string; value: string }
+        Returns: boolean
+      }
       is_admin: {
-        Args: { uid: string }
+        Args: { uid: string } | { uid: string; required_permission?: string }
         Returns: boolean
       }
       is_admin_user: {
         Args: Record<PropertyKey, never>
         Returns: boolean
       }
+      send_due_deliveries: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      text_to_bytea: {
+        Args: { data: string }
+        Returns: string
+      }
+      urlencode: {
+        Args: { data: Json } | { string: string } | { string: string }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never
     }
     CompositeTypes: {
-      [_ in never]: never
+      http_header: {
+        field: string | null
+        value: string | null
+      }
+      http_request: {
+        method: unknown | null
+        uri: string | null
+        headers: Database["public"]["CompositeTypes"]["http_header"][] | null
+        content_type: string | null
+        content: string | null
+      }
+      http_response: {
+        status: number | null
+        content_type: string | null
+        headers: Database["public"]["CompositeTypes"]["http_header"][] | null
+        content: string | null
+      }
     }
   }
 }
 
-type DefaultSchema = Database[Extract<keyof Database, "public">]
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
 
 export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof (Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-        Database[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-      Database[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
       Row: infer R
     }
     ? R
@@ -703,14 +981,16 @@ export type Tables<
 export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Insert: infer I
     }
     ? I
@@ -726,14 +1006,16 @@ export type TablesInsert<
 export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Update: infer U
     }
     ? U
@@ -749,14 +1031,16 @@ export type TablesUpdate<
 export type Enums<
   DefaultSchemaEnumNameOrOptions extends
     | keyof DefaultSchema["Enums"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   EnumName extends DefaultSchemaEnumNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
     : never = never,
-> = DefaultSchemaEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
     ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
     : never
@@ -764,14 +1048,16 @@ export type Enums<
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof DefaultSchema["CompositeTypes"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
     : never = never,
-> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
   : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
     ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
