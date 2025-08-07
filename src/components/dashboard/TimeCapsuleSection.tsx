@@ -57,7 +57,7 @@ const TimeCapsuleSection = ({ deliveries, loading, onDelete }: TimeCapsuleSectio
             <Mail className="h-5 w-5" />
             Cápsula do Tempo
           </CardTitle>
-          <Button variant="brand" onClick={() => navigate("/create-keepsake")}> 
+          <Button variant="brand" onClick={() => navigate("/create-keepsake")}>
             <Plus className="h-4 w-4 mr-2" />
             Criar Cápsula do Tempo
           </Button>
