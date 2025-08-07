@@ -9,13 +9,13 @@ interface Delivery {
   title: string;
   description: string | null;
   delivery_date: string;
+  created_at: string;
   status: string;
   type: string;
   recipient_email: string | null;
   recipient_name: string | null;
   delivery_address: string | null;
   message: string | null;
-  created_at: string;
   user_id: string;
 }
 
@@ -29,34 +29,58 @@ export const useDeliveries = () => {
     if (!user) return;
     
     try {
+      // Buscar keepsakes com dados dos recipients
       const { data, error } = await supabase
-        .from("deliveries")
-        .select("*")
+        .from("keepsakes")
+        .select(`
+          id,
+          title,
+          message,
+          delivery_date,
+          created_at,
+          status,
+          type,
+          recipients (
+            name,
+            email,
+            delivery_channel
+          )
+        `)
         .eq("user_id", user.id)
         .order("delivery_date", { ascending: true });
 
       if (error) {
         toast({
           title: "Erro",
-          description: error.message || "Não foi possível carregar as entregas.",
+          description: error.message || "Não foi possível carregar as cápsulas.",
           variant: "destructive",
         });
         setLoading(false);
         return;
       }
-      // Map the data to include missing fields as null if they don't exist
-      const mappedData = (data || []).map((delivery: any) => ({
-        ...delivery,
-        recipient_name: delivery.recipient_name || null,
-        delivery_address: delivery.delivery_address || null,
-        message: delivery.message || null,
+
+      // Mapear os dados para o formato esperado
+      const mappedData = (data || []).map((keepsake: any) => ({
+        id: keepsake.id,
+        title: keepsake.title,
+        description: keepsake.message,
+        delivery_date: keepsake.delivery_date,
+        created_at: keepsake.created_at,
+        status: keepsake.status,
+        type: keepsake.type,
+        message: keepsake.message,
+        recipient_name: keepsake.recipients?.[0]?.name || "Sem destinatário",
+        recipient_email: keepsake.recipients?.[0]?.email || null,
+        delivery_address: null, // Keepsakes não têm endereço de entrega físico
+        user_id: user.id
       }));
+      
       setDeliveries(mappedData);
     } catch (error: any) {
       console.error("Error fetching deliveries:", typeof error === "object" ? JSON.stringify(error, null, 2) : error);
       toast({
         title: "Erro",
-        description: error.message || "Não foi possível carregar as entregas.",
+        description: error.message || "Não foi possível carregar as cápsulas.",
         variant: "destructive",
       });
     } finally {
@@ -67,7 +91,7 @@ export const useDeliveries = () => {
   const deleteDelivery = async (id: string) => {
     try {
       const { error } = await supabase
-        .from("deliveries")
+        .from("keepsakes")
         .delete()
         .eq("id", id);
 
@@ -75,7 +99,7 @@ export const useDeliveries = () => {
 
       toast({
         title: "Sucesso",
-        description: "Entrega eliminada com sucesso.",
+        description: "Cápsula eliminada com sucesso.",
       });
 
       fetchDeliveries();
@@ -83,7 +107,7 @@ export const useDeliveries = () => {
       console.error("Error deleting delivery:", typeof error === "object" ? JSON.stringify(error, null, 2) : error);
       toast({
         title: "Erro",
-        description: "Não foi possível eliminar a entrega.",
+        description: "Não foi possível eliminar a cápsula.",
         variant: "destructive",
       });
     }
