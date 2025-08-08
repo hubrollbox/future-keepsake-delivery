@@ -203,9 +203,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setProfile(null);
         setIsAdmin(false);
       }
-      console.log('✅ [AuthContext] getSession: Initial check complete. User:', !!(existingSession?.user), 'Profile:', !!profile);
+      console.log('✅ [AuthContext] getSession: Initial check complete. User:', !!(existingSession?.user), 'Profile will be set by fetchProfile');
       setLoading(false); // Set loading to false after initial session check and profile fetch
-      setLoading(false);
     };
 
     checkSessionAndFetchProfile();
