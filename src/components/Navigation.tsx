@@ -99,18 +99,24 @@ const Navigation = () => {
                     </div>
                   </div>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => navigate("/dashboard")}>
-                    <User className="mr-2 h-4 w-4" />
-                    <span>Dashboard</span>
+                  <DropdownMenuItem asChild>
+                    <Link to="/dashboard" className="flex items-center w-full">
+                      <User className="mr-2 h-4 w-4" />
+                      <span>Dashboard</span>
+                    </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => navigate("/profile")}>
-                    <Settings className="mr-2 h-4 w-4" />
-                    <span>Perfil</span>
+                  <DropdownMenuItem asChild>
+                    <Link to="/profile" className="flex items-center w-full">
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>Perfil</span>
+                    </Link>
                   </DropdownMenuItem>
                   {profile?.role === "admin" && (
-                    <DropdownMenuItem onClick={() => navigate("/admin")}>
-                      <Settings className="mr-2 h-4 w-4" />
-                      <span>Admin</span>
+                    <DropdownMenuItem asChild>
+                      <Link to="/admin" className="flex items-center w-full">
+                        <Settings className="mr-2 h-4 w-4" />
+                        <span>Admin</span>
+                      </Link>
                     </DropdownMenuItem>
                   )}
                   <DropdownMenuSeparator />
