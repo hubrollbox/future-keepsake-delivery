@@ -4,12 +4,11 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
 node_modules
 dist
-dist-ssr
+build
+coverage
 *.local
 
 # Editor directories and files
@@ -25,3 +24,37 @@ dist-ssr
 
 # Environment variables
 .env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Parcel/Next/Turbo
+.parcel-cache/
+.next/
+.turbo/
+
+# Temp/cache
+*.tmp
+*.cache
+
+# Backups/binaries
+*.bak
+*.old
+*.orig
+*.bin
+*.exe
+*.dll
+*.class
+*.pyc
+*.pyo
+*.so
+*.out
+
+# Test files
+*.test.js
+*.test.ts
+*.test.tsx
+*.spec.js
+*.spec.ts
+*.spec.tsx
