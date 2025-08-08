@@ -4,16 +4,16 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, User, Mail, MessageCircle, MapPin, Gift } from "lucide-react";
-import { KeepsakeFormData } from "@/pages/createkeepsake";
+import { KeepsakeFormData } from "@/hooks/useKeepsakeForm";
 
 interface ReviewStepProps {
   formData: KeepsakeFormData;
-  prevStep: () => void;
+  onBack: () => void;
   onSubmit: () => void;
   loading: boolean;
 }
 
-const ReviewStep = ({ formData, prevStep, onSubmit, loading }: ReviewStepProps) => {
+const ReviewStep = ({ formData, onBack, onSubmit, loading }: ReviewStepProps) => {
   const getChannelIcon = () => {
     switch (formData.delivery_channel) {
       case 'email': return Mail;
@@ -158,7 +158,7 @@ const ReviewStep = ({ formData, prevStep, onSubmit, loading }: ReviewStepProps) 
       </div>
 
       <div className="flex flex-col-reverse gap-4 sm:flex-row sm:justify-between pt-6">
-        <Button variant="outline" onClick={prevStep} disabled={loading}>
+        <Button variant="outline" onClick={onBack} disabled={loading}>
           Voltar
         </Button>
         <Button 

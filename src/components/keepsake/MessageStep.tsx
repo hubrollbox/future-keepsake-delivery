@@ -5,15 +5,16 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Calendar, MessageSquare } from "lucide-react";
-import { KeepsakeFormData } from "@/pages/createkeepsake";
+import { KeepsakeFormData } from "@/hooks/useKeepsakeForm";
 
 interface MessageStepProps {
   formData: KeepsakeFormData;
   updateFormData: (data: Partial<KeepsakeFormData>) => void;
   nextStep: () => void;
+  prevStep: () => void;
 }
 
-const MessageStep = ({ formData, updateFormData, nextStep }: MessageStepProps) => {
+const MessageStep = ({ formData, updateFormData, nextStep, prevStep }: MessageStepProps) => {
   const handleNext = () => {
     if (formData.title && formData.message && formData.delivery_date) {
       nextStep();
@@ -90,7 +91,10 @@ const MessageStep = ({ formData, updateFormData, nextStep }: MessageStepProps) =
         </div>
       </div>
 
-      <div className="flex justify-end pt-6">
+      <div className="flex justify-between pt-6">
+        <Button variant="outline" onClick={prevStep}>
+          Voltar
+        </Button>
         <Button 
           onClick={handleNext}
           disabled={!formData.title || !formData.message || !formData.delivery_date}

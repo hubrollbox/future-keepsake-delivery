@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card, CardContent } from "@/components/ui/card";
 import { User, Mail, MessageCircle, MapPin } from "lucide-react";
-import { KeepsakeFormData } from "@/pages/createkeepsake";
+import { KeepsakeFormData } from "@/hooks/useKeepsakeForm";
 
 interface RecipientStepProps {
   formData: KeepsakeFormData;

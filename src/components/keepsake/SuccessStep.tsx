@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
-import { KeepsakeFormData } from "@/pages/createkeepsake";
+import { KeepsakeFormData } from "@/hooks/useKeepsakeForm";
 
 interface SuccessStepProps {
   formData: KeepsakeFormData;
