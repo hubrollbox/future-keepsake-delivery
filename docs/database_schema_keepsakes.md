@@ -85,6 +85,22 @@ Função que invoca a Edge Function `send-keepsakes` para processar cápsulas ag
 
 **Descrição:** Esta função é chamada pelo cron job diariamente para processar cápsulas digitais agendadas para entrega. Ela invoca a Edge Function `send-keepsakes` usando uma requisição HTTP e registra o resultado na tabela `cron_job_logs`.
 
+### `check_cron_job_exists()`
+
+Função para verificar se o cron job está configurado corretamente.
+
+**Retorno:** `TABLE(jobname text, schedule text, command text, active boolean)`
+
+**Descrição:** Esta função é usada pelo script de verificação de status para confirmar que o cron job `process-keepsakes-daily` está configurado corretamente no banco de dados. Retorna informações sobre o agendamento e status do job.
+
+### `create_check_cron_job_function()`
+
+Função para criar a função `check_cron_job_exists` caso ela não exista.
+
+**Retorno:** `void`
+
+**Descrição:** Esta função auxiliar é usada pelo script de verificação de status para criar dinamicamente a função `check_cron_job_exists` quando necessário. Isso permite que o script de verificação funcione mesmo quando a função de verificação não foi previamente instalada no banco de dados.
+
 ## Cron Jobs
 
 ### `process-keepsakes-daily`

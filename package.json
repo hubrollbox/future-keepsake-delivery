@@ -54,7 +54,13 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "keepsake:serve": "node scripts/serveKeepsakeFunction.js",
+    "keepsake:test": "node scripts/testLocalKeepsakeFunction.js",
+    "keepsake:deploy": "node scripts/deployKeepsakeFunction.js",
+    "keepsake:update": "node scripts/updateKeepsakeStatus.js",
+    "keepsake:status": "node scripts/checkDeploymentStatus.js",
+    "keepsake:email": "node scripts/testResendEmail.js"
   },
   "devDependencies": {
     "@radix-ui/react-label": "^2.0.2",
@@ -62,6 +68,7 @@
     "@sentry/react": "^8.12.0",
     "@supabase/ssr": "^0.1.0",
     "@tanstack/react-query": "^5.0.0",
+    "node-fetch": "^3.3.2",
     "@types/node": "^20.0.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
