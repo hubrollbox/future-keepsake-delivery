@@ -48,7 +48,7 @@ export const registerSchema = z.object({
 // Message creation schema
 export const createMessageSchema = z.object({
   title: titleSchema,
-  content: messageSchema,
+  message_content: messageSchema,
   delivery_date: z.string().min(1, 'Data de entrega é obrigatória'),
   recipient_name: nameSchema.optional(),
   recipient_email: emailSchema.optional()

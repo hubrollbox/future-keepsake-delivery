@@ -68,10 +68,11 @@ export const useAdminData = () => {
       
       if (deliveriesError) throw deliveriesError;
 
-      // Fetch messages
+      // Fetch keepsakes with message_type = 'message'
       const { data: messages, error: messagesError } = await supabase
-        .from("messages")
-        .select("id");
+        .from("keepsakes")
+        .select("id")
+        .eq("message_type", "message");
       
       if (messagesError) throw messagesError;
 

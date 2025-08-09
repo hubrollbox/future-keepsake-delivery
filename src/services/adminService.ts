@@ -8,14 +8,14 @@ export async function fetchAdminStats() {
     throw new Error("Auth session missing!");
   }
 
-  const [deliveriesRes, messagesRes, warehouseRes, paymentsRes] = await Promise.all([
+  const [deliveriesRes, digitalDeliveriesRes, warehouseRes, paymentsRes] = await Promise.all([
     supabase.from("deliveries").select("id, delivery_date, status, created_at, user_id"),
     supabase.from("deliveries").select("id").eq("type", "digital"),
     supabase.from("warehouse_items").select("id"),
     supabase.from("payments").select("id, created_at").gte("created_at", new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()),
   ]);
 
-  return { deliveriesRes, messagesRes, warehouseRes, paymentsRes };
+  return { deliveriesRes, digitalDeliveriesRes, warehouseRes, paymentsRes };
 }
 
 export async function fetchDeliveriesByMonth() {
