@@ -10,8 +10,8 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
-import CreateUnified from "./pages/CreateUnified";
-import CreateKeepsake from "./pages/createkeepsake";
+
+import CreateKeepsake from "./pages/CreateKeepsake";
 import Profile from "./pages/Profile";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -25,8 +25,8 @@ import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import TermsConditions from "./pages/TermsConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
-import Onboarding from "./pages/Onboarding";
-import Preview from "./pages/Preview";
+
+
 
 const queryClient = new QueryClient();
 
@@ -44,12 +44,8 @@ function App() {
                   <Route path="/" element={<Index />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
-                  <Route path="/onboarding" element={<Onboarding />} />
                   <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/create-message" element={<CreateUnified type="message" />} />
                   <Route path="/create-keepsake" element={<CreateKeepsake />} />
-                  <Route path="/create-delivery" element={<CreateUnified type="delivery" />} />
-                  <Route path="/preview/:id" element={<Preview />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/contact" element={<Contact />} />
