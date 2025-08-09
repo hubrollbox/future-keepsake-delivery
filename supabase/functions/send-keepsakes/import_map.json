@@ -1,0 +1,6 @@
+{
+  "imports": {
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.38.4",
+    "resend": "npm:resend@2.0.0"
+  }
+}

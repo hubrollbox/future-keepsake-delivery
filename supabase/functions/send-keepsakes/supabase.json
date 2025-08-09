@@ -1,0 +1,7 @@
+{
+  "name": "send-keepsakes",
+  "version": "1.0",
+  "description": "Função para processar e enviar keepsakes agendadas",
+  "verify_jwt": false,
+  "import_map": "./import_map.json"
+}
