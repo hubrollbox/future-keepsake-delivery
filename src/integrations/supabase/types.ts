@@ -9,21 +9,48 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      achievements: {
+        Row: {
+          created_at: string | null
+          description: string
+          icon: string
+          id: number
+          points: number
+          title: string
+        }
+        Insert: {
+          created_at?: string | null
+          description: string
+          icon: string
+          id?: number
+          points: number
+          title: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string
+          icon?: string
+          id?: number
+          points?: number
+          title?: string
+        }
+        Relationships: []
+      }
       admin_roles: {
         Row: {
-          created_at: string
+          created_at: string | null
           id: string
           role: string
           user_id: string
         }
         Insert: {
-          created_at?: string
+          created_at?: string | null
           id?: string
           role?: string
           user_id: string
         }
         Update: {
-          created_at?: string
+          created_at?: string | null
           id?: string
           role?: string
           user_id?: string
@@ -32,387 +59,606 @@ export type Database = {
       }
       cart_items: {
         Row: {
-          created_at: string
+          created_at: string | null
           id: string
           product_id: string
           product_price: number
           product_title: string
           quantity: number
-          updated_at: string
-          user_id: string | null
+          updated_at: string | null
+          user_id: string
         }
         Insert: {
-          created_at?: string
+          created_at?: string | null
           id?: string
           product_id: string
           product_price: number
           product_title: string
           quantity?: number
-          updated_at?: string
-          user_id?: string | null
+          updated_at?: string | null
+          user_id: string
         }
         Update: {
-          created_at?: string
+          created_at?: string | null
           id?: string
           product_id?: string
           product_price?: number
           product_title?: string
           quantity?: number
-          updated_at?: string
-          user_id?: string | null
+          updated_at?: string | null
+          user_id?: string
         }
         Relationships: []
       }
       deliveries: {
         Row: {
           created_at: string | null
-          delivery_address: string | null
           delivery_date: string
           delivery_method: string | null
-          delivery_type: string
+          delivery_time: string | null
+          description: string | null
           digital_file_url: string | null
           id: string
+          location: string | null
           message: string | null
-          points_earned: number | null
+          payment_status: string | null
           recipient_email: string | null
           recipient_name: string | null
-          scheduled_time: string | null
-          status: string | null
-          timezone: string | null
-          title: string | null
-          user_id: string | null
+          status: string
+          title: string
+          type: string
+          updated_at: string | null
+          user_id: string
         }
         Insert: {
           created_at?: string | null
-          delivery_address?: string | null
           delivery_date: string
           delivery_method?: string | null
-          delivery_type: string
+          delivery_time?: string | null
+          description?: string | null
           digital_file_url?: string | null
           id?: string
+          location?: string | null
           message?: string | null
-          points_earned?: number | null
+          payment_status?: string | null
           recipient_email?: string | null
           recipient_name?: string | null
-          scheduled_time?: string | null
-          status?: string | null
-          timezone?: string | null
-          title?: string | null
-          user_id?: string | null
+          status?: string
+          title: string
+          type?: string
+          updated_at?: string | null
+          user_id: string
         }
         Update: {
           created_at?: string | null
-          delivery_address?: string | null
           delivery_date?: string
           delivery_method?: string | null
-          delivery_type?: string
+          delivery_time?: string | null
+          description?: string | null
           digital_file_url?: string | null
           id?: string
+          location?: string | null
           message?: string | null
-          points_earned?: number | null
+          payment_status?: string | null
           recipient_email?: string | null
           recipient_name?: string | null
-          scheduled_time?: string | null
-          status?: string | null
-          timezone?: string | null
-          title?: string | null
-          user_id?: string | null
+          status?: string
+          title?: string
+          type?: string
+          updated_at?: string | null
+          user_id?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "deliveries_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
-      digital_files: {
+      keepsake_products: {
         Row: {
-          delivery_id: string | null
-          file_type: string | null
-          file_url: string
-          id: string
-          uploaded_at: string | null
-        }
-        Insert: {
-          delivery_id?: string | null
-          file_type?: string | null
-          file_url: string
-          id?: string
-          uploaded_at?: string | null
-        }
-        Update: {
-          delivery_id?: string | null
-          file_type?: string | null
-          file_url?: string
-          id?: string
-          uploaded_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "digital_files_delivery_id_fkey"
-            columns: ["delivery_id"]
-            isOneToOne: false
-            referencedRelation: "deliveries"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      digital_messages: {
-        Row: {
-          body: string | null
           created_at: string | null
-          delivery_id: string | null
           id: string
-          subject: string | null
+          keepsake_id: string | null
+          product_id: string | null
+          quantity: number | null
+          unit_price: number
         }
         Insert: {
-          body?: string | null
           created_at?: string | null
-          delivery_id?: string | null
           id?: string
-          subject?: string | null
+          keepsake_id?: string | null
+          product_id?: string | null
+          quantity?: number | null
+          unit_price: number
         }
         Update: {
-          body?: string | null
           created_at?: string | null
-          delivery_id?: string | null
           id?: string
-          subject?: string | null
+          keepsake_id?: string | null
+          product_id?: string | null
+          quantity?: number | null
+          unit_price?: number
         }
         Relationships: [
           {
-            foreignKeyName: "digital_messages_delivery_id_fkey"
-            columns: ["delivery_id"]
+            foreignKeyName: "keepsake_products_keepsake_id_fkey"
+            columns: ["keepsake_id"]
             isOneToOne: false
-            referencedRelation: "deliveries"
+            referencedRelation: "keepsakes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "keepsake_products_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
             referencedColumns: ["id"]
           },
         ]
       }
-      orders: {
+      keepsakes: {
         Row: {
-          contact_info: Json | null
-          created_at: string
+          created_at: string | null
+          delivery_date: string
           id: string
-          items: Json
-          shipping_address: Json | null
-          status: string
-          stripe_payment_intent_id: string | null
-          total_amount: number
-          updated_at: string
+          message: string
+          payment_status: string | null
+          status: string | null
+          title: string
+          total_cost: number | null
           user_id: string | null
         }
         Insert: {
-          contact_info?: Json | null
-          created_at?: string
+          created_at?: string | null
+          delivery_date: string
           id?: string
-          items: Json
-          shipping_address?: Json | null
-          status?: string
-          stripe_payment_intent_id?: string | null
-          total_amount: number
-          updated_at?: string
+          message: string
+          payment_status?: string | null
+          status?: string | null
+          title: string
+          total_cost?: number | null
           user_id?: string | null
         }
         Update: {
-          contact_info?: Json | null
-          created_at?: string
+          created_at?: string | null
+          delivery_date?: string
           id?: string
-          items?: Json
-          shipping_address?: Json | null
-          status?: string
-          stripe_payment_intent_id?: string | null
-          total_amount?: number
-          updated_at?: string
+          message?: string
+          payment_status?: string | null
+          status?: string | null
+          title?: string
+          total_cost?: number | null
           user_id?: string | null
         }
         Relationships: []
       }
-      payments: {
+      messages: {
         Row: {
-          amount: number
-          client_email: string
-          client_name: string | null
-          created_at: string
-          currency: string
-          delivery_id: string | null
+          content: string
+          created_at: string | null
+          delivery_date: string
           id: string
-          payment_date: string | null
-          service_type: string | null
           status: string
-          stripe_payment_id: string | null
+          title: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          delivery_date: string
+          id?: string
+          status?: string
+          title: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          delivery_date?: string
+          id?: string
+          status?: string
+          title?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          created_at: string | null
+          id: string
+          message: string
+          read_at: string | null
+          status: string | null
+          title: string
+          type: string
           user_id: string | null
         }
         Insert: {
-          amount: number
-          client_email: string
-          client_name?: string | null
-          created_at?: string
-          currency?: string
-          delivery_id?: string | null
+          created_at?: string | null
           id?: string
-          payment_date?: string | null
-          service_type?: string | null
-          status: string
-          stripe_payment_id?: string | null
+          message: string
+          read_at?: string | null
+          status?: string | null
+          title: string
+          type: string
           user_id?: string | null
         }
         Update: {
-          amount?: number
-          client_email?: string
-          client_name?: string | null
-          created_at?: string
-          currency?: string
-          delivery_id?: string | null
+          created_at?: string | null
           id?: string
-          payment_date?: string | null
-          service_type?: string | null
-          status?: string
-          stripe_payment_id?: string | null
+          message?: string
+          read_at?: string | null
+          status?: string | null
+          title?: string
+          type?: string
           user_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "payments_delivery_id_fkey"
-            columns: ["delivery_id"]
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
             isOneToOne: false
-            referencedRelation: "deliveries"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
       }
+      payments: {
+        Row: {
+          amount: number
+          created_at: string | null
+          currency: string
+          external_reference: string | null
+          id: string
+          keepsake_id: string | null
+          payment_method: string | null
+          status: string
+          transaction_id: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string | null
+          currency?: string
+          external_reference?: string | null
+          id?: string
+          keepsake_id?: string | null
+          payment_method?: string | null
+          status?: string
+          transaction_id?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string | null
+          currency?: string
+          external_reference?: string | null
+          id?: string
+          keepsake_id?: string | null
+          payment_method?: string | null
+          status?: string
+          transaction_id?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_keepsake_id_fkey"
+            columns: ["keepsake_id"]
+            isOneToOne: false
+            referencedRelation: "keepsakes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          active: boolean | null
+          created_at: string | null
+          description: string | null
+          icon: string | null
+          id: string
+          name: string
+          price: number
+          type: string
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string | null
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name: string
+          price: number
+          type: string
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string | null
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name?: string
+          price?: number
+          type?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
-          created_at: string
+          created_at: string | null
           email: string | null
           full_name: string | null
           id: string
           level: number | null
           plan_type: string | null
           total_points: number | null
-          updated_at: string
+          updated_at: string | null
         }
         Insert: {
           avatar_url?: string | null
-          created_at?: string
+          created_at?: string | null
           email?: string | null
           full_name?: string | null
           id: string
           level?: number | null
           plan_type?: string | null
           total_points?: number | null
-          updated_at?: string
+          updated_at?: string | null
         }
         Update: {
           avatar_url?: string | null
-          created_at?: string
+          created_at?: string | null
           email?: string | null
           full_name?: string | null
           id?: string
           level?: number | null
           plan_type?: string | null
           total_points?: number | null
-          updated_at?: string
+          updated_at?: string | null
         }
         Relationships: []
       }
-      user_roles: {
-        Row: {
-          role: string | null
-          user_id: string
-        }
-        Insert: {
-          role?: string | null
-          user_id: string
-        }
-        Update: {
-          role?: string | null
-          user_id?: string
-        }
-        Relationships: []
-      }
-      users: {
+      quests: {
         Row: {
           created_at: string | null
-          email: string
-          full_name: string | null
-          id: string
-          role: string | null
+          description: string
+          id: number
+          reward: number
+          target: number
+          time_limit: unknown | null
+          title: string
         }
         Insert: {
           created_at?: string | null
-          email: string
-          full_name?: string | null
-          id?: string
-          role?: string | null
+          description: string
+          id?: number
+          reward: number
+          target: number
+          time_limit?: unknown | null
+          title: string
         }
         Update: {
           created_at?: string | null
-          email?: string
-          full_name?: string | null
+          description?: string
+          id?: number
+          reward?: number
+          target?: number
+          time_limit?: unknown | null
+          title?: string
+        }
+        Relationships: []
+      }
+      recipients: {
+        Row: {
+          address: string | null
+          channel_cost: number | null
+          delivery_channel: string
+          email: string | null
+          id: string
+          keepsake_id: string | null
+          name: string
+          phone: string | null
+          relationship: string | null
+        }
+        Insert: {
+          address?: string | null
+          channel_cost?: number | null
+          delivery_channel: string
+          email?: string | null
           id?: string
-          role?: string | null
+          keepsake_id?: string | null
+          name: string
+          phone?: string | null
+          relationship?: string | null
+        }
+        Update: {
+          address?: string | null
+          channel_cost?: number | null
+          delivery_channel?: string
+          email?: string | null
+          id?: string
+          keepsake_id?: string | null
+          name?: string
+          phone?: string | null
+          relationship?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "recipients_keepsake_id_fkey"
+            columns: ["keepsake_id"]
+            isOneToOne: false
+            referencedRelation: "keepsakes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      scheduled_notifications: {
+        Row: {
+          delivery_date: string
+          id: string
+          message: string
+          recipient_email: string
+          sent_at: string | null
+          status: string | null
+          user_email: string
+        }
+        Insert: {
+          delivery_date: string
+          id?: string
+          message: string
+          recipient_email: string
+          sent_at?: string | null
+          status?: string | null
+          user_email: string
+        }
+        Update: {
+          delivery_date?: string
+          id?: string
+          message?: string
+          recipient_email?: string
+          sent_at?: string | null
+          status?: string | null
+          user_email?: string
+        }
+        Relationships: []
+      }
+      user_achievements: {
+        Row: {
+          achievement_id: number | null
+          id: number
+          unlocked_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          achievement_id?: number | null
+          id?: number
+          unlocked_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          achievement_id?: number | null
+          id?: number
+          unlocked_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_achievements_achievement_id_fkey"
+            columns: ["achievement_id"]
+            isOneToOne: false
+            referencedRelation: "achievements"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_quests: {
+        Row: {
+          completed_at: string | null
+          id: number
+          progress: number | null
+          quest_id: number | null
+          user_id: string | null
+        }
+        Insert: {
+          completed_at?: string | null
+          id?: number
+          progress?: number | null
+          quest_id?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          completed_at?: string | null
+          id?: number
+          progress?: number | null
+          quest_id?: number | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_quests_quest_id_fkey"
+            columns: ["quest_id"]
+            isOneToOne: false
+            referencedRelation: "quests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_stats: {
+        Row: {
+          level: number | null
+          total_points: number | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          level?: number | null
+          total_points?: number | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          level?: number | null
+          total_points?: number | null
+          updated_at?: string | null
+          user_id?: string
         }
         Relationships: []
       }
       warehouse_items: {
         Row: {
           client_name: string
-          created_at: string
-          delivery_id: string | null
+          created_at: string | null
           id: string
           photo_url: string | null
           product_description: string
           received_date: string
           status: string
-          updated_at: string
-          user_id: string | null
+          updated_at: string | null
         }
         Insert: {
           client_name: string
-          created_at?: string
-          delivery_id?: string | null
+          created_at?: string | null
           id?: string
           photo_url?: string | null
           product_description: string
-          received_date?: string
+          received_date: string
           status?: string
-          updated_at?: string
-          user_id?: string | null
+          updated_at?: string | null
         }
         Update: {
           client_name?: string
-          created_at?: string
-          delivery_id?: string | null
+          created_at?: string | null
           id?: string
           photo_url?: string | null
           product_description?: string
           received_date?: string
           status?: string
-          updated_at?: string
-          user_id?: string | null
+          updated_at?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "warehouse_items_delivery_id_fkey"
-            columns: ["delivery_id"]
-            isOneToOne: false
-            referencedRelation: "deliveries"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      calculate_level: {
+        Args: Record<PropertyKey, never> | { points: number }
+        Returns: number
+      }
+      get_current_user_role: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
       is_admin: {
-        Args: { user_id: string }
+        Args: { uid: string }
+        Returns: boolean
+      }
+      is_admin_user: {
+        Args: Record<PropertyKey, never>
         Returns: boolean
       }
     }

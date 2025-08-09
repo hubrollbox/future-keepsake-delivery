@@ -1,0 +1,27 @@
+
+{
+  "name": "keepla - Presentes para o Futuro",
+  "short_name": "keepla",
+  "description": "Plataforma para agendar entregas de presentes físicos e digitais para datas futuras.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5F2F8",
+  "theme_color": "#3D4A5A",
+  "orientation": "portrait-primary",
+  "categories": ["lifestyle", "utilities"],
+  "lang": "pt",
+  "icons": [
+    {
+      "src": "/lovable-uploads/a58d6383-77f7-451e-b692-d10c4298397e.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/lovable-uploads/a58d6383-77f7-451e-b692-d10c4298397e.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

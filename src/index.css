@@ -1,54 +1,44 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap');
-
-/* purgecss start ignore */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-/* purgecss end ignore */
-
+@import './styles/colors.css';
+@import './styles/typography.css';
+@import './styles/buttons.css';
+@import './styles/inputs.css';
+@import './styles/utilities.css';
 @import './styles/variables.css';
+
+/* Import Tailwind base styles */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-
     --primary: 222.2 47.4% 11.2%;
     --primary-foreground: 210 40% 98%;
-
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
-
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
-
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 222.2 84% 4.9%;
-
     --radius: 0.75rem;
-
-    /* Cores oficiais da marca FuturoPresente */
-    --brand-primary: 218 184 195; /* Rosa antigo #DAB8C3 */
-    --brand-secondary: 61 20 35; /* Azul petróleo #3D4A5A */
-    --brand-background: 245 242 248; /* Lavanda pálida #F5F2F8 */
-    --brand-neutral: 236 229 218; /* Bege areia #ECE5DA */
-    --brand-accent: 139 58 98; /* Bordô Terroso #8B3A62 */
+    --brand-primary: 218 184 195;
+    --brand-secondary: 61 20 35;
+    --brand-background: 245 242 248;
+    --brand-neutral: 236 229 218;
+    --brand-accent: 139 58 98;
   }
-
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
@@ -70,96 +60,157 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }
+  .emotional-spacing { 
+    padding-top: 5rem; /* py-20 */
+    padding-bottom: 5rem;
+    
+    @media (min-width: 768px) { /* md: breakpoint */
+      padding-top: 8rem; /* py-32 */
+      padding-bottom: 8rem;
+    }
+    
+    @media (min-width: 1024px) { /* lg: breakpoint */
+      padding-top: 10rem; /* py-40 */
+      padding-bottom: 10rem;
+    }
+  }
+  .gentle-spacing { 
+    padding-top: 2rem; /* py-8 */
+    padding-bottom: 2rem;
+  }
+  @media (min-width: 768px) { /* md: breakpoint */
+    .gentle-spacing {
+      padding-top: 3.5rem; /* py-14 */
+      padding-bottom: 3.5rem;
+    }
+  }
+  .btn-gentle { 
+    padding: 1rem 2rem; /* px-8 py-4 */
+    border-radius: 0.75rem; /* rounded-xl */ 
+    font-weight: 500; /* font-medium */
+    transition: all 200ms; /* transition-all duration-200 */
+    box-shadow: 0 2px 18px 0 rgba(218, 184, 195, 0.11), 0 1.5px 5px 0 rgba(139, 58, 98, 0.13); /* shadow-soft */
+    border: 2px solid var(--dusty-rose); /* border-2 border-dusty-rose */
+  }
+  .btn-gentle:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* hover:shadow-md */
+  }
+  .btn-primary { 
+    background-color: var(--earthy-burgundy);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 0.75rem;
+    font-weight: 500;
+    transition: all 200ms;
+    box-shadow: 0 2px 18px 0 rgba(218, 184, 195, 0.11), 0 1.5px 5px 0 rgba(139, 58, 98, 0.13);
+    border: 2px solid var(--dusty-rose);
+  }
+  .btn-primary:hover {
+    background-color: rgba(var(--earthy-burgundy), 0.9);
+  }
+  .btn-primary:focus-visible {
+    outline: none;
+    outline-width: 2px;
+    --ring-color: var(--dusty-rose);
+  }
+  .btn-secondary {
+    border: 2px solid var(--earthy-burgundy);
+    color: var(--earthy-burgundy);
+    padding: 2rem 1rem;
+    border-radius: 0.75rem;
+    font-weight: 500;
+    transition: all 200ms;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  }
+  .btn-secondary:hover {
+    background-color: rgba(var(--dusty-rose), 0.2);
+    color: var(--earthy-burgundy);
+  }
+  .btn-outline-brand {
+    border: 2px solid var(--dusty-rose);
+    color: var(--earthy-burgundy);
+    background-color: transparent;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  .btn-outline-brand:hover {
+    background-color: rgba(var(--dusty-rose), 0.1);
+  }
+
+  [data-sonner-toast][data-swiped=true] {
+    user-select: none;
+    -webkit-user-select: none;
 }
 
-@layer base {
-  * {
-    /* purgecss start ignore */
-    @apply border-border;
-    /* purgecss end ignore */
+/* --------------------------------
+   CAMPOS DE INPUT E FOCO
+   -------------------------------- */
+  input, textarea, select {
+    border-radius: 0.75rem;
+    background-color: white;
+    border: 1px solid rgba(218, 184, 195, 0.25);
+    padding: 0.75rem 1rem;
+    color: #3D4A5A;
+    transition: all 200ms;
+    min-height: 44px; /* Acessibilidade touch */
+  }
+  input:focus-visible, textarea:focus-visible, select:focus-visible {
+    box-shadow: 0 0 0 3px #dab8c33c;
+    outline: 2px solid #DAB8C3;
+    border-color: #DAB8C3;
   }
 
-  body {
-    /* purgecss start ignore */
-    @apply bg-lavender-mist text-steel-blue;
-    /* purgecss end ignore */
-    font-family: 'Inter', system-ui, sans-serif;
-    line-height: 1.7;
-    font-size: 16px;
-    letter-spacing: -0.01em;
+  /* -------------------------------
+    PLACEHOLDER, TÍTULOS E DESTAQUE
+    ------------------------------- */
+  ::placeholder {
+    color: #A0AEC0;
+    opacity: 0.9;
+    font-style: italic;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1, h2, h3, h4, h5, h5 {
     font-family: 'Fraunces', serif;
     font-weight: 600;
     line-height: 1.3;
     letter-spacing: -0.02em;
     color: theme('colors.steel-blue');
+    text-shadow: 0 1px 0 #ECE5DA;
+    letter-spacing: -0.02em;
   }
 
-  h1 {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 700;
+  .brand-highlight, .text-brand-primary {
+    color: #DAB8C3;
+    font-weight: bold;
+    background: linear-gradient(90deg, #DAB8C3 60%, #ECE5DA 100%);
+    border-radius: 0.5em;
+    padding: 0 0.2em;
   }
 
-  h2 {
-    font-size: clamp(1.75rem, 4vw, 2.5rem);
+  /* -------------------------------
+     ERROS, SUCESSO E ALERTAS
+     ------------------------------- */
+  .form-error, .form-erro {
+    color: #c00a42;
+    background: #dab8c322;
+    border-radius: 6px;
+    padding: 0.25em 1em;
+    font-weight: 500;
+    margin-top: 0.3em;
+    margin-bottom: 0.6em;
+    font-size: 0.97em;
   }
-
-  h3 {
-    font-size: clamp(1.25rem, 3vw, 1.75rem);
-  }
-
-  /* Emotional spacing and rhythm seguindo o manual */
-  .emotional-spacing {
-    /* purgecss start ignore */
-    @apply py-20 md:py-28;
-    /* purgecss end ignore */
-  }
-
-  .gentle-spacing {
-    /* purgecss start ignore */
-    @apply py-12 md:py-16;
-    /* purgecss end ignore */
-  }
-
-  /* Soft, warm cards com cores da marca */
-  .emotion-card {
-    /* purgecss start ignore */
-    @apply bg-white/80 backdrop-blur-sm border border-dusty-rose/20 rounded-2xl shadow-soft hover:shadow-md transition-all duration-300;
-    /* purgecss end ignore */
-  }
-
-  /* Gentle interactions */
-  .gentle-hover {
-    /* purgecss start ignore */
-    @apply hover:scale-[1.02] transition-transform duration-200;
-    /* purgecss end ignore */
-  }
-
-  /* Typography utilities com cores da marca */
-  .text-emotional {
-    line-height: 1.8;
-    color: theme('colors.misty-gray');
-  }
-
-  .text-hero {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    line-height: 1.1;
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    font-family: 'Fraunces', serif;
-  }
-
-  .text-subtitle {
-    font-size: clamp(1.125rem, 2.5vw, 1.375rem);
-    line-height: 1.6;
-    font-weight: 400;
-    color: theme('colors.steel-blue');
+  .form-success {
+    color: #3D4A5A;
+    background: #dab8c345;
+    border-radius: 6px;
+    padding: 0.3em 1em;
+    font-weight: 500;
+    margin-top: 0.3em;
+    margin-bottom: 0.6em;
+    font-size: 0.97em;
   }
 }
 
-/* Enhanced brand gradients seguindo o manual da marca */
 @layer utilities {
   .bg-brand-gradient {
     background: linear-gradient(135deg, theme('colors.earthy-burgundy') 0%, rgba(139, 58, 98, 0.8) 100%);
@@ -185,19 +236,35 @@
   /* Gentle button styles seguindo o manual */
   .btn-gentle {
     /* purgecss start ignore */
-    @apply px-8 py-4 rounded-xl font-medium transition-all duration-200 shadow-sm hover:shadow-md;
+    padding: 2rem 1rem;
+    border-radius: 0.75rem;
+    font-weight: 500;
+    transition: all 200ms;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     /* purgecss end ignore */
   }
 
   .btn-primary {
     /* purgecss start ignore */
-    @apply bg-earthy-burgundy text-white btn-gentle hover:bg-earthy-burgundy/90;
+    background-color: var(--earthy-burgundy);
+    color: white;
+    padding: 2rem 1rem;
+    border-radius: 0.75rem;
+    font-weight: 500;
+    transition: all 200ms;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     /* purgecss end ignore */
   }
 
   .btn-secondary {
     /* purgecss start ignore */
-    @apply border-2 border-earthy-burgundy text-earthy-burgundy btn-gentle hover-brand;
+    border: 2px solid theme('colors.earthy-burgundy');
+    color: theme('colors.earthy-burgundy');
+    padding: 2rem 1rem;
+    border-radius: 0.75rem;
+    font-weight: 500;
+    transition: all 200ms;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     /* purgecss end ignore */
   }
 
@@ -209,4 +276,82 @@
   .gpu-accelerated {
     transform: translateZ(0);
   }
+  .shadow-soft {
+    box-shadow: 0 2px 18px 0 #dab8c31c, 0 1.5px 5px 0 #8b3a6222;
+  }
+
+  .focus-ring-brand {
+    outline: 2px solid #DAB8C3;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px #dab8c355;
+    transition: outline 0.2s;
+  }
+
+  /* Uniformizar mínimo para atmosferas clicáveis (botões e inputs) */
+  .min-touch {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .underline-brand {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    color: #8B3A62;
+  }
+  .underline-brand:hover, .underline-brand:focus {
+    color: #3D4A5A;
+    background: #dab8c340;
+  }
 }
+
+a, .underline-link, .brand-link {
+  color: #8B3A62;
+  text-decoration: none;
+  text-underline-offset: 3px;
+  font-weight: 600;
+  background-color: transparent;
+  border-radius: 3px;
+  transition: color 0.2s, background 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+a:focus-visible, .underline-link:focus-visible, .brand-link:focus-visible {
+  color: #3D4A5A;
+  background: #DAB8C322;
+  box-shadow: 0 0 0 3px #DAB8C3aa;
+  outline: 2px solid #DAB8C3;
+  outline-offset: 2px;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+a:hover, .underline-link:hover, .brand-link:hover {
+  color: #DAB8C3;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  background-color: #8B3A6212;
+}
+.focus-ring-brand {
+  outline: 2px solid #DAB8C3;
+  outline-offset: 2px;
+  transition: outline 0.2s;
+}
+.skip-link:focus-visible, .skip-link:focus {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  z-index: 50;
+  display: block;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 0.75rem;
+  background: #dab8c3;
+  color: #3D4A5A;
+  outline: 2px solid #8B3A62;
+  box-shadow: 0 2px 12px 0 #dab8c370;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+}
+.nav-link, .nav-link.active { text-decoration: none; }
+html, body { max-width: 100vw; overflow-x: hidden; box-sizing: border-box; }
+

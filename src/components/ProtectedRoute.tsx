@@ -1,44 +1,18 @@
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { Session } from "@supabase/supabase-js";
 import { Loader2 } from "lucide-react";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
+  requireAdmin?: boolean;
 }
 
-const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
+const ProtectedRoute = ({ children, requireAdmin = false }: ProtectedRouteProps) => {
+  const { session, loading, isAdmin, user } = useAuthContext();
 
-  useEffect(() => {
-    // Get initial session
-    const getSession = async () => {
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        setSession(session);
-      } catch (error) {
-        console.error("Error getting session:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getSession();
-
-    // Listen for auth changes
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      setSession(session);
-      setLoading(false);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
+  // Show loading while checking authentication
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 flex items-center justify-center">
@@ -50,11 +24,26 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     );
   }
 
-  if (!session) {
+  // Redirect to login if no session
+  if (!session || !user) {
     return <Navigate to="/login" replace />;
+  }
+
+  // Check admin requirement
+  if (requireAdmin && !isAdmin) {
+    return <Navigate to="/dashboard" replace />;
   }
 
   return <>{children}</>;
 };
 
+const ProtectedAdminRoute = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <ProtectedRoute requireAdmin={true}>
+      {children}
+    </ProtectedRoute>
+  );
+};
+
 export default ProtectedRoute;
+export { ProtectedAdminRoute };

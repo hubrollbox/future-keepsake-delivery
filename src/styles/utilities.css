@@ -1,0 +1,21 @@
+
+.emotional-spacing { padding-top: 5rem; padding-bottom: 5rem; }
+.gentle-spacing { padding-top: 2rem; padding-bottom: 2rem; }
+.shadow-soft { box-shadow: 0 2px 18px 0 #dab8c31c, 0 1.5px 5px 0 #8b3a6222; }
+.focus-ring-brand {
+  outline: 2px solid #DAB8C3;
+  outline-offset: 2px;
+  transition: outline 0.2s;
+  box-shadow: 0 0 0 2px #dab8c355;
+}
+.min-touch { min-height: 44px; min-width: 44px; }
+.underline-brand {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  color: #8B3A62;
+}
+.underline-brand:hover, .underline-brand:focus {
+  color: #3D4A5A;
+  background: #dab8c340;
+}

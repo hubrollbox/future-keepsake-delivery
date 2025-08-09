@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,7 +8,6 @@ import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { z } from "zod";
-import SeloDoTempoIcon from "@/components/SeloDoTempoIcon";
 
 const loginSchema = z.object({
   email: z.string().email("Email inválido"),
@@ -17,7 +16,7 @@ const loginSchema = z.object({
 
 const Login = () => {
   const navigate = useNavigate();
-  const { signIn } = useAuth();
+  const { signIn, user } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -25,6 +24,12 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
+  
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -66,6 +71,7 @@ const Login = () => {
     setLoading(false);
     
     if (!error) {
+      // Navigate directly to dashboard after successful login
       navigate('/dashboard');
     }
   };
@@ -74,15 +80,8 @@ const Login = () => {
     <div className="min-h-screen bg-lavender-mist flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center space-x-3 mb-4">
-            <SeloDoTempoIcon size={40} />
-            <h1 className="text-2xl font-bold text-steel-blue font-fraunces">
-              FuturoPresente
-            </h1>
-          </div>
-          <p className="text-misty-gray">Presente no futuro</p>
+          <img src="/lovable-uploads/63935007-5aa4-4a0f-8ff5-f6bb5674cc7d.png" alt="keepla Logo" className="h-20 mx-auto mb-4" />
         </div>
-
         <Card className="emotion-card shadow-soft border-0">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-semibold text-steel-blue font-fraunces">
@@ -102,12 +101,12 @@ const Login = () => {
                   placeholder="teu@email.com"
                   className={`border-dusty-rose/30 focus:border-dusty-rose ${errors.email ? "border-red-500" : ""}`}
                   required
+                  autoComplete="email"
                 />
                 {errors.email && (
                   <p className="text-red-600 text-sm mt-1">{errors.email}</p>
                 )}
               </div>
-              
               <div>
                 <Label htmlFor="password" className="text-steel-blue">Palavra-passe</Label>
                 <Input
@@ -117,6 +116,7 @@ const Login = () => {
                   value={formData.password}
                   onChange={handleInputChange}
                   placeholder="A tua palavra-passe"
+                  autoComplete="current-password"
                   className={`border-dusty-rose/30 focus:border-dusty-rose ${errors.password ? "border-red-500" : ""}`}
                   required
                 />
@@ -124,7 +124,6 @@ const Login = () => {
                   <p className="text-red-600 text-sm mt-1">{errors.password}</p>
                 )}
               </div>
-
               <Button 
                 type="submit" 
                 variant="brand"
@@ -135,7 +134,6 @@ const Login = () => {
                 {loading ? "Entrando..." : "Entrar"}
               </Button>
             </form>
-
             <div className="mt-6 text-center">
               <p className="text-sm text-misty-gray">
                 Ainda não és um Guardião do Tempo?{" "}
@@ -150,7 +148,6 @@ const Login = () => {
             </div>
           </CardContent>
         </Card>
-
         <div className="mt-8 text-center">
           <Button 
             variant="ghost" 

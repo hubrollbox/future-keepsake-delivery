@@ -1,16 +1,17 @@
 
-import React from "react";
+import React, { lazy, Suspense } from 'react';
 import { Navigate, Routes, Route } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useAdmin } from "@/hooks/useAdmin";
 import AdminLayout from "@/components/admin/AdminLayout";
-import AdminDashboard from "@/components/admin/AdminDashboard";
-import AdminDeliveries from "@/components/admin/AdminDeliveries";
-import AdminWarehouse from "@/components/admin/AdminWarehouse";
-import AdminMessages from "@/components/admin/AdminMessages";
-import AdminPayments from "@/components/admin/AdminPayments";
-import AdminClients from "@/components/admin/AdminClients";
 import { Loader2 } from "lucide-react";
+
+const AdminDashboard = lazy(() => import("@/components/admin/AdminDashboard"));
+const AdminDeliveries = lazy(() => import("@/components/admin/AdminDeliveries"));
+const AdminWarehouse = lazy(() => import("@/components/admin/AdminWarehouse"));
+const AdminMessages = lazy(() => import("@/components/admin/AdminMessages"));
+const AdminPayments = lazy(() => import("@/components/admin/AdminPayments"));
+const AdminClients = lazy(() => import("@/components/admin/AdminClients"));
 
 const AdminDashboardPage = () => {
   const { user, loading: authLoading } = useAuth();
@@ -45,14 +46,16 @@ const AdminDashboardPage = () => {
 
   return (
     <AdminLayout activeSection="dashboard">
-      <Routes>
-        <Route path="/" element={<AdminDashboard />} />
-        <Route path="/deliveries" element={<AdminDeliveries />} />
-        <Route path="/warehouse" element={<AdminWarehouse />} />
-        <Route path="/messages" element={<AdminMessages />} />
-        <Route path="/payments" element={<AdminPayments />} />
-        <Route path="/clients" element={<AdminClients />} />
-      </Routes>
+      <Suspense fallback={<div>Carregando...</div>}>
+        <Routes>
+          <Route path="/" element={<AdminDashboard />} />
+          <Route path="/deliveries" element={<AdminDeliveries />} />
+          <Route path="/warehouse" element={<AdminWarehouse />} />
+          <Route path="/messages" element={<AdminMessages />} />
+          <Route path="/payments" element={<AdminPayments />} />
+          <Route path="/clients" element={<AdminClients />} />
+        </Routes>
+      </Suspense>
     </AdminLayout>
   );
 };

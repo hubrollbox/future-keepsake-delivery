@@ -17,5 +17,3 @@ const Products = () => {
 };
 
 export default Products;
-
-{/* Filtros removidos conforme solicitado */}

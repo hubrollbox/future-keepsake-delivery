@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from "../components/ui/use-toast";
 
 export interface AdminStats {
   totalDeliveries: number;
@@ -11,6 +11,17 @@ export interface AdminStats {
   recentPayments: number;
 }
 
+export interface DeliveriesByMonth {
+  month: string;
+  count: number;
+}
+
+export interface TopUser {
+  user_id: string;
+  name: string;
+  count: number;
+}
+
 export interface WarehouseItem {
   id: string;
   client_name: string;
@@ -18,21 +29,17 @@ export interface WarehouseItem {
   status: string;
   received_date: string;
   photo_url: string | null;
-  delivery_id: string | null;
   created_at: string;
   updated_at: string;
 }
 
 export interface Payment {
   id: string;
-  stripe_payment_id: string | null;
   amount: number;
   currency: string;
   status: string;
-  client_email: string;
-  client_name: string | null;
+  user_id: string;
   service_type: string | null;
-  payment_date: string | null;
   created_at: string;
 }
 
@@ -44,34 +51,104 @@ export const useAdminData = () => {
     warehouseItems: 0,
     recentPayments: 0,
   });
+  
+  const [deliveriesByMonth, setDeliveriesByMonth] = useState<DeliveriesByMonth[]>([]);
+  const [topUsers, setTopUsers] = useState<TopUser[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
   const fetchStats = async () => {
     try {
-      const [deliveriesRes, digitalMsgRes, warehouseRes, paymentsRes] = await Promise.all([
-        supabase.from("deliveries").select("id, delivery_date, status"),
-        supabase.from("digital_messages").select("id"),
-        supabase.from("warehouse_items").select("id"),
-        supabase.from("payments").select("id, created_at").gte("created_at", new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()),
-      ]);
+      setLoading(true);
+      
+      // Fetch total deliveries
+      const { data: deliveries, error: deliveriesError } = await supabase
+        .from("deliveries")
+        .select("id, delivery_date, status, created_at, user_id");
+      
+      if (deliveriesError) throw deliveriesError;
 
-      const totalDeliveries = deliveriesRes.data?.length || 0;
+      // Fetch messages
+      const { data: messages, error: messagesError } = await supabase
+        .from("messages")
+        .select("id");
+      
+      if (messagesError) throw messagesError;
+
+      // Fetch warehouse items
+      const { data: warehouseItems, error: warehouseError } = await supabase
+        .from("warehouse_items")
+        .select("id");
+      
+      if (warehouseError) throw warehouseError;
+
+      // Fetch recent payments (last 7 days)
+      const sevenDaysAgo = new Date();
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+      
+      const { data: payments, error: paymentsError } = await supabase
+        .from("payments")
+        .select("id")
+        .gte("created_at", sevenDaysAgo.toISOString());
+      
+      if (paymentsError) throw paymentsError;
+
+      // Calculate pending deliveries (next 7 days)
       const now = new Date();
       const nextWeek = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
       
-      const pendingDeliveries = deliveriesRes.data?.filter(delivery => {
+      const pendingDeliveries = deliveries?.filter(delivery => {
         const deliveryDate = new Date(delivery.delivery_date);
-        return delivery.status === 'pendente' && deliveryDate >= now && deliveryDate <= nextWeek;
+        return delivery.status === 'scheduled' && deliveryDate >= now && deliveryDate <= nextWeek;
       }).length || 0;
 
-      setStats({
-        totalDeliveries,
-        pendingDeliveries,
-        digitalMessages: digitalMsgRes.data?.length || 0,
-        warehouseItems: warehouseRes.data?.length || 0,
-        recentPayments: paymentsRes.data?.length || 0,
+      // Process deliveries by month
+      const monthlyData: { [key: string]: number } = {};
+      deliveries?.forEach(delivery => {
+        const date = new Date(delivery.created_at);
+        const monthKey = date.toLocaleDateString('pt-PT', { month: 'short', year: '2-digit' });
+        monthlyData[monthKey] = (monthlyData[monthKey] || 0) + 1;
       });
+
+      const deliveriesByMonthData = Object.entries(monthlyData)
+        .map(([month, count]) => ({ month, count }))
+        .sort((a, b) => new Date(`01 ${a.month}`).getTime() - new Date(`01 ${b.month}`).getTime())
+        .slice(-6); // Last 6 months
+
+      // Get top users by delivery count
+      const userDeliveryCount: { [key: string]: number } = {};
+      deliveries?.forEach(delivery => {
+        userDeliveryCount[delivery.user_id] = (userDeliveryCount[delivery.user_id] || 0) + 1;
+      });
+
+      // Get user profiles for top users
+      const topUserIds = Object.entries(userDeliveryCount)
+        .sort(([,a], [,b]) => b - a)
+        .slice(0, 5)
+        .map(([userId]) => userId);
+
+      const { data: profiles } = await supabase
+        .from("profiles")
+        .select("id, full_name")
+        .in("id", topUserIds);
+
+      const topUsersData = topUserIds.map(userId => ({
+        user_id: userId,
+        name: profiles?.find(p => p.id === userId)?.full_name || "Utilizador Anónimo",
+        count: userDeliveryCount[userId]
+      }));
+
+      setStats({
+        totalDeliveries: deliveries?.length || 0,
+        pendingDeliveries,
+        digitalMessages: messages?.length || 0,
+        warehouseItems: warehouseItems?.length || 0,
+        recentPayments: payments?.length || 0,
+      });
+
+      setDeliveriesByMonth(deliveriesByMonthData);
+      setTopUsers(topUsersData);
+
     } catch (error) {
       console.error("Error fetching admin stats:", error);
       toast({
@@ -140,6 +217,8 @@ export const useAdminData = () => {
 
   return {
     stats,
+    deliveriesByMonth,
+    topUsers,
     loading,
     fetchStats,
     updateDeliveryStatus,

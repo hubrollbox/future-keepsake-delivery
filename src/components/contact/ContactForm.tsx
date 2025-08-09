@@ -5,25 +5,109 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+
+interface ContactFormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
     subject: "",
     message: ""
   });
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const validateForm = (): boolean => {
+    if (!formData.name.trim()) {
+      toast({
+        title: "Erro",
+        description: "Nome é obrigatório",
+        variant: "destructive"
+      });
+      return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim() || !emailRegex.test(formData.email)) {
+      toast({
+        title: "Erro",
+        description: "Email válido é obrigatório",
+        variant: "destructive"
+      });
+      return false;
+    }
+
+    if (!formData.subject.trim()) {
+      toast({
+        title: "Erro",
+        description: "Assunto é obrigatório",
+        variant: "destructive"
+      });
+      return false;
+    }
+
+    if (!formData.message.trim() || formData.message.length < 10) {
+      toast({
+        title: "Erro",
+        description: "Mensagem deve ter pelo menos 10 caracteres",
+        variant: "destructive"
+      });
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    alert("Mensagem enviada com sucesso! Entraremos em contacto brevemente.");
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    
+    if (!validateForm()) return;
+
+    setLoading(true);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+        body: {
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          subject: formData.subject.trim(),
+          message: formData.message.trim()
+        }
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Mensagem enviada!",
+        description: "Obrigado pelo seu contacto. Entraremos em contacto em breve.",
+      });
+
+      // Reset form
+      setFormData({ name: "", email: "", subject: "", message: "" });
+
+    } catch (error: any) {
+      console.error('Error sending contact form:', error);
+      toast({
+        title: "Erro",
+        description: "Não foi possível enviar a mensagem. Tente novamente.",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -45,8 +129,7 @@ const ContactForm = () => {
               onChange={handleInputChange}
               placeholder="O teu nome"
               required
-              aria-required="true"
-              aria-label="Nome completo"
+              maxLength={100}
               className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90"
             />
           </div>
@@ -61,8 +144,7 @@ const ContactForm = () => {
               onChange={handleInputChange}
               placeholder="teu@email.com"
               required
-              aria-required="true"
-              aria-label="Email"
+              maxLength={254}
               className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90"
             />
           </div>
@@ -77,8 +159,7 @@ const ContactForm = () => {
               onChange={handleInputChange}
               placeholder="Como podemos ajudar?"
               required
-              aria-required="true"
-              aria-label="Assunto"
+              maxLength={200}
               className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90"
             />
           </div>
@@ -93,17 +174,20 @@ const ContactForm = () => {
               placeholder="Conta-nos mais detalhes..."
               rows={5}
               required
-              aria-required="true"
-              aria-label="Mensagem"
-              className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90"
+              maxLength={2000}
+              className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90 resize-none"
             />
+            <p className="text-xs text-misty-gray mt-1">
+              {formData.message.length}/2000 caracteres
+            </p>
           </div>
 
           <Button 
             type="submit" 
             className="w-full bg-earthy-burgundy text-white hover:bg-earthy-burgundy/90 font-semibold py-3 rounded-xl transition-all duration-200"
+            disabled={loading}
           >
-            Enviar Mensagem
+            {loading ? "A enviar..." : "Enviar Mensagem"}
           </Button>
         </form>
       </CardContent>

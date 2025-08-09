@@ -32,27 +32,15 @@ const About = () => {
       <Navigation />
 
       <main className="container mx-auto px-4 py-16">
-        {/* Back Button */}
-        <div className="mb-8">
-          <Button 
-            variant="ghost" 
-            onClick={() => navigate('/')} 
-            className="flex items-center space-x-2 text-steel-blue hover:text-dusty-rose transition-colors duration-200"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span>Voltar ao Início</span>
-          </Button>
-        </div>
-
         {/* Hero Section */}
         <div className="text-center max-w-4xl mx-auto mb-16">
           <div className="flex justify-center mb-8">
-            <SeloDoTempoIcon size={80} className="drop-shadow-sm" />
+            <img src="/keepla logo.png" alt="Logo" width={80} height={80} className="drop-shadow-sm" />
           </div>
           
           <h1 className="text-5xl md:text-6xl font-fraunces font-bold text-steel-blue mb-6 leading-tight">
             Manifesto
-            <span className="text-earthy-burgundy block">FuturoPresente</span>
+            <span className="text-earthy-burgundy block">keepla</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-misty-gray mb-8 leading-relaxed">
@@ -96,7 +84,7 @@ const About = () => {
         {/* Conceito Selo do Tempo */}
         <div className="mb-16">
           <div className="emotion-card p-12 max-w-5xl mx-auto text-center">
-            <SeloDoTempoIcon size={80} className="mx-auto mb-8" />
+            <img src="/keepla%20logo.png" alt="Logo" style={{width: 80, height: 80, margin: '0 auto 2rem auto'}} />
             <h2 className="text-3xl md:text-4xl font-fraunces font-bold text-steel-blue mb-6">
               Conceito: Selo do Tempo
             </h2>

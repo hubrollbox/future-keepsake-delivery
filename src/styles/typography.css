@@ -1,0 +1,40 @@
+
+body, html {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  color: var(--brand-secondary);
+  background: var(--brand-background);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  color: var(--brand-secondary);
+  text-shadow: 0 1px 0 #ECE5DA;
+  letter-spacing: -0.02em;
+}
+
+.text-brand-primary {
+  color: var(--brand-primary);
+  font-weight: bold;
+  background: linear-gradient(90deg, #DAB8C3 60%, #ECE5DA 100%);
+  border-radius: 0.5em;
+  padding: 0 0.2em;
+}
+
+.brand-highlight {
+  @apply text-brand-primary;
+}
+
+.text-section-title {
+  font-size: 2.25rem;
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  color: var(--brand-secondary);
+}
+.text-section-title-sm {
+  font-size: 1.5rem;
+  font-family: 'Fraunces', serif;
+  font-weight: 700;
+  color: var(--brand-secondary);
+}

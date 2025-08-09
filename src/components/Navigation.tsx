@@ -1,191 +1,162 @@
 
-import { useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
-import { Menu, X } from "lucide-react";
-import CartButton from "@/components/cart/CartButton";
-import CartModal from "@/components/cart/CartModal";
-import SeloDoTempoIcon from "@/components/SeloDoTempoIcon";
+import { Menu, X, User, LogOut, Settings } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const Navigation = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const { user, signOut } = useAuth();
+  const { user, profile } = useAuth();
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleSignOut = async () => {
-    await signOut();
-    navigate("/");
+    try {
+      await supabase.auth.signOut();
+      navigate("/");
+      toast({
+        title: "Sessão terminada",
+        description: "Até breve!",
+      });
+    } catch (error) {
+      console.error("Error signing out:", error);
+      toast({
+        title: "Erro",
+        description: "Não foi possível terminar a sessão.",
+        variant: "destructive",
+      });
+    }
   };
 
+  const menuItems = [
+    { name: "Presentes com Alma", href: "/products" },
+    { name: "Manifesto", href: "/about" },
+    { name: "Como Funciona", href: "/how-it-works" },
+    { name: "Preços", href: "/pricing" },
+    { name: "Contacto", href: "/contact" },
+  ];
+
   return (
-    <>
-      <nav className="bg-white/95 backdrop-blur-md shadow-gentle border-b border-dusty-rose/20 sticky top-0 z-40">
-        <div className="container mx-auto px-4 md:px-8">
-          <div className="flex justify-between items-center h-20">
-            <Link to="/" className="flex items-center space-x-3 font-bold text-xl text-steel-blue">
-              <SeloDoTempoIcon size={40} />
-              <span className="font-fraunces">FuturoPresente</span>
-            </Link>
+    <nav className="bg-white shadow-sm border-b border-lavender-mist sticky top-0 z-50">
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2">
+            <img 
+              src="/lovable-uploads/63935007-5aa4-4a0f-8ff5-f6bb5674cc7d.png" 
+              alt="keepla Logo" 
+              className="w-16 h-16"
+            />
+          </Link>
 
-            {/* Desktop Menu */}
-            <div className="hidden md:flex items-center space-x-8 lg:space-x-10">
-              <NavLink to="/products" className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors font-medium ${isActive ? 'active' : ''}`} aria-label="Navegar para Presentes com Alma">
-                Presentes com Alma
-              </NavLink>
-              <NavLink to="/how-it-works" className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors font-medium ${isActive ? 'active' : ''}`} aria-label="Navegar para Como Funciona">
-                Como Funciona
-              </NavLink>
-              <NavLink to="/pricing" className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors font-medium ${isActive ? 'active' : ''}`} aria-label="Navegar para Preços">
-                Preços
-              </NavLink>
-              <NavLink to="/about" className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors font-medium ${isActive ? 'active' : ''}`} aria-label="Navegar para Manifesto">
-                Manifesto
-              </NavLink>
-              <NavLink to="/contact" className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors font-medium ${isActive ? 'active' : ''}`} aria-label="Navegar para Contacto">
-                Contacto
-              </NavLink>
-
-              {user && <CartButton onClick={() => setIsCartOpen(true)} />}
-
-              {user ? (
-                <div className="flex items-center space-x-4">
-                  <Link to="/dashboard" aria-label="Acessar Dashboard">
-                    <Button variant="outline" size="sm" className="border-dusty-rose text-dusty-rose hover:bg-dusty-rose/10 rounded-xl">
-                      Dashboard
-                    </Button>
-                  </Link>
-                  <Button 
-                    onClick={handleSignOut}
-                    variant="ghost" 
-                    size="sm"
-                    className="text-misty-gray hover:text-steel-blue rounded-xl"
-                    aria-label="Sair da conta"
-                  >
-                    Sair
-                  </Button>
-                </div>
-              ) : (
-                <div className="flex items-center space-x-4">
-                  <Link to="/login" aria-label="Entrar na conta">
-                    <Button variant="outline" size="sm" className="border-dusty-rose text-dusty-rose hover:bg-dusty-rose/10 rounded-xl">
-                      Entrar
-                    </Button>
-                  </Link>
-                  <Link to="/register" aria-label="Registrar nova conta">
-                    <Button
-                      variant="brand"
-                      className="px-6 py-2 rounded-lg font-semibold text-white shadow-soft bg-brand-gradient hover:opacity-90 focus-visible:ring-2 focus-visible:ring-dusty-rose/40 transition-all duration-200"
-                      onClick={() => navigate('/register')}
-                    >
-                      Registar
-                    </Button>
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 rounded-xl text-misty-gray hover:text-steel-blue hover:bg-sand-beige/50"
-              aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
-            >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center space-x-8">
+            {menuItems.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className="text-steel-blue hover:text-dusty-rose transition-colors font-medium"
+              >
+                {item.name}
+              </Link>
+            ))}
           </div>
 
-          {/* Mobile Menu */}
-          {isOpen && (
-            <div className="md:hidden py-6 px-2 border-t border-dusty-rose/20">
-              <div className="flex flex-col space-y-6">
-                <NavLink
-                  to="/products"
-                  className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium ${isActive ? 'active' : ''}`}
-                  onClick={() => setIsOpen(false)}
-                  aria-label="Navegar para Presentes com Alma"
-                >
-                  Presentes com Alma
-                </NavLink>
-                <NavLink
-                  to="/how-it-works"
-                  className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium ${isActive ? 'active' : ''}`}
-                  onClick={() => setIsOpen(false)}
-                  aria-label="Navegar para Como Funciona"
-                >
-                  Como Funciona
-                </NavLink>
-                <NavLink
-                  to="/pricing"
-                  className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium ${isActive ? 'active' : ''}`}
-                  onClick={() => setIsOpen(false)}
-                  aria-label="Navegar para Preços"
-                >
-                  Preços
-                </NavLink>
-                <NavLink
-                  to="/about"
-                  className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium ${isActive ? 'active' : ''}`}
-                  onClick={() => setIsOpen(false)}
-                  aria-label="Navegar para Manifesto"
-                >
-                  Manifesto
-                </NavLink>
-                <NavLink
-                  to="/contact"
-                  className={({ isActive }) => `nav-link text-misty-gray hover:text-dusty-rose transition-colors py-2 font-medium ${isActive ? 'active' : ''}`}
-                  onClick={() => setIsOpen(false)}
-                  aria-label="Navegar para Contacto"
-                >
-                  Contacto
-                </NavLink>
+          {/* Right side - Auth */}
+          <div className="flex items-center space-x-4">
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={profile?.avatar_url || ""} alt={profile?.full_name || ""} />
+                      <AvatarFallback className="bg-dusty-rose text-white">
+                        {profile?.full_name
+                          ? profile.full_name.charAt(0).toUpperCase()
+                          : user.email?.charAt(0).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end" forceMount>
+                  <div className="flex items-center justify-start gap-2 p-2">
+                    <div className="flex flex-col space-y-1 leading-none">
+                      <p className="font-medium">{profile?.full_name || "Utilizador"}</p>
+                      <p className="w-[200px] truncate text-sm text-muted-foreground">
+                        {user.email}
+                      </p>
+                    </div>
+                  </div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => navigate("/dashboard")}>
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Dashboard</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate("/profile")}>
+                    <Settings className="mr-2 h-4 w-4" />
+                    <span>Perfil</span>
+                  </DropdownMenuItem>
+                  {profile?.role === "admin" && (
+                    <DropdownMenuItem onClick={() => navigate("/admin")}>
+                      <Settings className="mr-2 h-4 w-4" />
+                      <span>Admin</span>
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleSignOut}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Sair</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button variant="brand" onClick={() => navigate(user ? "/createkeepsake" : "/login")}>
+                Criar Cápsula
+              </Button>
+            )}
 
-                {user && (
-                  <div className="py-2">
-                    <CartButton onClick={() => {setIsCartOpen(true); setIsOpen(false);}} />
-                  </div>
-                )}
-
-                {user ? (
-                  <div className="flex flex-col space-y-3 pt-4 border-t border-dusty-rose/20">
-                    <Link to="/dashboard" onClick={() => setIsOpen(false)} aria-label="Acessar Dashboard">
-                      <Button variant="outline" size="sm" className="w-full border-dusty-rose text-dusty-rose hover:bg-dusty-rose/10 rounded-xl">
-                        Dashboard
-                      </Button>
-                    </Link>
-                    <Button 
-                      onClick={() => {handleSignOut(); setIsOpen(false);}}
-                      variant="ghost" 
-                      size="sm"
-                      className="w-full text-misty-gray hover:text-steel-blue rounded-xl"
-                      aria-label="Sair da conta"
-                    >
-                      Sair
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="flex flex-col space-y-3 pt-4 border-t border-dusty-rose/20">
-                    <Link to="/login" onClick={() => setIsOpen(false)} aria-label="Entrar na conta">
-                      <Button variant="outline" size="sm" className="w-full border-dusty-rose text-dusty-rose hover:bg-dusty-rose/10 rounded-xl">
-                        Entrar
-                      </Button>
-                    </Link>
-                    <Link to="/register" onClick={() => setIsOpen(false)} aria-label="Registrar nova conta">
-                      <Button size="sm" className="w-full bg-brand-gradient text-steel-blue hover:opacity-90 rounded-xl font-medium">
-                        Registar
-                      </Button>
-                    </Link>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
+            {/* Mobile menu button */}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="md:hidden"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </Button>
+          </div>
         </div>
-      </nav>
 
-      <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-    </>
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden border-t border-lavender-mist py-4">
+            <div className="flex flex-col space-y-4">
+              {menuItems.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="text-steel-blue hover:text-dusty-rose transition-colors font-medium px-2"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
   );
 };
 

@@ -16,18 +16,6 @@ const Contact = () => {
       <Navigation />
 
       <main className="container mx-auto px-4 py-16">
-        {/* Back Button */}
-        <div className="mb-8">
-          <Button 
-            variant="ghost" 
-            onClick={() => navigate('/')} 
-            className="flex items-center space-x-2 text-steel-blue hover:text-earthy-burgundy transition-colors duration-200"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            <span>Voltar ao Início</span>
-          </Button>
-        </div>
-
         <ContactHero />
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">

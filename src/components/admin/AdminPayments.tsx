@@ -1,12 +1,23 @@
-
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Search, CreditCard, Check, X, Clock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Payment } from "@/hooks/useAdminData";
+import { exportToCSV } from "@/lib/exportToCSV";
+
+interface Payment {
+  id: string;
+  user_id: string;
+  amount: number;
+  currency: string;
+  status: string;
+  payment_method: string | null;
+  transaction_id: string | null;
+  created_at: string;
+  updated_at: string;
+}
 
 const AdminPayments = () => {
   const [payments, setPayments] = useState<Payment[]>([]);
@@ -15,11 +26,7 @@ const AdminPayments = () => {
   const [statusFilter, setStatusFilter] = useState("all");
   const { toast } = useToast();
 
-  useEffect(() => {
-    fetchPayments();
-  }, []);
-
-  const fetchPayments = async () => {
+  const fetchPayments = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from("payments")
@@ -27,7 +34,9 @@ const AdminPayments = () => {
         .order("created_at", { ascending: false });
 
       if (error) throw error;
+
       setPayments(data || []);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching payments:", error);
       toast({
@@ -35,16 +44,17 @@ const AdminPayments = () => {
         description: "Não foi possível carregar os pagamentos.",
         variant: "destructive",
       });
-    } finally {
-      setLoading(false);
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    fetchPayments();
+  }, [fetchPayments]);
 
   const filteredPayments = payments.filter((payment) => {
     const matchesSearch = 
-      payment.client_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      payment.client_email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      payment.service_type?.toLowerCase().includes(searchTerm.toLowerCase());
+      payment.transaction_id?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      payment.payment_method?.toLowerCase().includes(searchTerm.toLowerCase());
     
     const matchesStatus = statusFilter === "all" || payment.status === statusFilter;
     
@@ -53,7 +63,7 @@ const AdminPayments = () => {
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case "paid":
+      case "completed":
         return <Check className="h-4 w-4 text-green-600" />;
       case "failed":
         return <X className="h-4 w-4 text-red-600" />;
@@ -65,7 +75,7 @@ const AdminPayments = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "paid":
+      case "completed":
         return "bg-green-100 text-green-800";
       case "failed":
         return "bg-red-100 text-red-800";
@@ -77,8 +87,8 @@ const AdminPayments = () => {
 
   const getStatusLabel = (status: string) => {
     switch (status) {
-      case "paid":
-        return "Pago";
+      case "completed":
+        return "Completo";
       case "failed":
         return "Falhado";
       case "pending":
@@ -91,7 +101,7 @@ const AdminPayments = () => {
     return new Intl.NumberFormat('pt-PT', {
       style: 'currency',
       currency: currency.toUpperCase(),
-    }).format(amount / 100);
+    }).format(amount);
   };
 
   if (loading) {
@@ -133,11 +143,20 @@ const AdminPayments = () => {
           >
             <option value="all">Todos os estados</option>
             <option value="pending">Pendente</option>
-            <option value="paid">Pago</option>
+            <option value="completed">Completo</option>
             <option value="failed">Falhado</option>
           </select>
         </div>
       </div>
+
+      <Button
+        variant="outline"
+        className="mb-4"
+        onClick={() => exportToCSV(payments, "pagamentos.csv")}
+        disabled={!payments.length}
+      >
+        Exportar CSV
+      </Button>
 
       <div className="grid gap-4">
         {filteredPayments.map((payment) => (
@@ -157,30 +176,22 @@ const AdminPayments = () => {
                   </div>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-600">
-                    <div>
-                      <strong>Cliente:</strong> {payment.client_name || "Nome não fornecido"}
-                    </div>
-                    <div>
-                      <strong>Email:</strong> {payment.client_email}
-                    </div>
-                    {payment.service_type && (
+                    {payment.payment_method && (
                       <div>
-                        <strong>Serviço:</strong> {payment.service_type}
+                        <strong>Método:</strong> {payment.payment_method}
                       </div>
                     )}
-                    {payment.stripe_payment_id && (
+                    {payment.transaction_id && (
                       <div>
-                        <strong>ID Stripe:</strong> {payment.stripe_payment_id}
+                        <strong>ID Transação:</strong> {payment.transaction_id}
                       </div>
                     )}
                     <div>
                       <strong>Data de Criação:</strong> {new Date(payment.created_at).toLocaleDateString('pt-PT')}
                     </div>
-                    {payment.payment_date && (
-                      <div>
-                        <strong>Data de Pagamento:</strong> {new Date(payment.payment_date).toLocaleDateString('pt-PT')}
-                      </div>
-                    )}
+                    <div>
+                      <strong>Última Atualização:</strong> {new Date(payment.updated_at).toLocaleDateString('pt-PT')}
+                    </div>
                   </div>
                 </div>
 

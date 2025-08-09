@@ -1,70 +1,70 @@
 
 import React, { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { useToast } from "@/hooks/use-toast";
-import { Users, Search, Shield, User } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 interface Client {
   id: string;
-  email: string;
   full_name: string | null;
-  plan_type: string;
-  total_points: number;
-  level: number;
-  created_at: string;
-  is_admin: boolean;
+  email: string | null;
+  avatar_url: string | null;
+  plan_type: string | null;
+  total_points: number | null;
+  level: number | null;
+  created_at: string | null;
+  updated_at: string | null;
+  is_admin: boolean; // Changed from isAdmin to is_admin to match expected interface
 }
 
-const AdminClients = () => {
+const AdminClients: React.FC = () => {
+  const { profile } = useAuth();
+  const isAdmin = profile?.role === "admin";
   const [clients, setClients] = useState<Client[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
-  const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
 
-  const fetchClients = async () => {
+  useEffect(() => {
+    if (!isAdmin) return;
+
+    const fetchClients = async () => {
+      setLoading(true);
+      try {
+        // Fetch profiles with admin status
+        const { data: profilesData, error: profilesError } = await supabase
+          .from("profiles")
+          .select("*")
+          .order("created_at", { ascending: false });
+
+        if (profilesError) throw profilesError;
+
+        // Fetch admin roles
+        const { data: adminData, error: adminError } = await supabase
+          .from("admin_roles")
+          .select("user_id, role");
+
+        if (adminError) throw adminError;
+
+        // Combine data and map isAdmin to is_admin
+        const adminUserIds = new Set(adminData?.map(admin => admin.user_id) || []);
+        
+        const clientsWithAdminStatus = profilesData?.map(profile => ({
+          ...profile,
+          is_admin: adminUserIds.has(profile.id) // Map to is_admin property
+        })) || [];
+
+        setClients(clientsWithAdminStatus);
+      } catch (error) {
+        console.error("Error fetching clients:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchClients();
+  }, [isAdmin]);
+
+  const toggleAdminStatus = async (userId: string, currentIsAdmin: boolean) => {
     try {
-      // Fetch profiles with admin status
-      const { data: profiles, error: profilesError } = await supabase
-        .from("profiles")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (profilesError) throw profilesError;
-
-      // Fetch admin roles
-      const { data: adminRoles, error: adminError } = await supabase
-        .from("admin_roles")
-        .select("user_id");
-
-      if (adminError) throw adminError;
-
-      const adminUserIds = adminRoles?.map(role => role.user_id) || [];
-
-      const clientsWithAdminStatus = profiles?.map(profile => ({
-        ...profile,
-        is_admin: adminUserIds.includes(profile.id)
-      })) || [];
-
-      setClients(clientsWithAdminStatus);
-    } catch (error) {
-      console.error("Error fetching clients:", error);
-      toast({
-        title: "Erro",
-        description: "Não foi possível carregar os clientes.",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const toggleAdminStatus = async (userId: string, isCurrentlyAdmin: boolean) => {
-    try {
-      if (isCurrentlyAdmin) {
+      if (currentIsAdmin) {
         // Remove admin role
         const { error } = await supabase
           .from("admin_roles")
@@ -76,131 +76,101 @@ const AdminClients = () => {
         // Add admin role
         const { error } = await supabase
           .from("admin_roles")
-          .insert({ user_id: userId, role: "admin" });
+          .insert([{ user_id: userId, role: "admin" }]);
 
         if (error) throw error;
       }
 
-      toast({
-        title: "Sucesso",
-        description: `Permissões ${isCurrentlyAdmin ? 'removidas' : 'concedidas'} com sucesso.`,
-      });
-
-      fetchClients();
+      // Update local state
+      setClients(prev => prev.map(client => 
+        client.id === userId 
+          ? { ...client, is_admin: !currentIsAdmin }
+          : client
+      ));
     } catch (error) {
-      console.error("Error updating admin status:", error);
-      toast({
-        title: "Erro",
-        description: "Não foi possível atualizar as permissões.",
-        variant: "destructive",
-      });
+      console.error("Error toggling admin status:", error);
     }
   };
 
-  useEffect(() => {
-    fetchClients();
-  }, []);
-
-  const filteredClients = clients.filter(client =>
-    client.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (client.full_name || "").toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  if (loading) {
+  if (!isAdmin) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gold mx-auto mb-4"></div>
-          <p className="text-gray-600">A carregar clientes...</p>
-        </div>
+      <div className="bg-white border border-dusty-rose/20 rounded-2xl shadow-soft p-6">
+        <p className="text-soft-gray">Acesso negado. Apenas administradores podem ver esta página.</p>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Gestão de Clientes</h1>
-          <p className="text-gray-600">Gerir utilizadores e permissões</p>
-        </div>
-        <div className="flex items-center space-x-2 w-full sm:w-auto">
-          <div className="relative flex-1 sm:flex-none">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-            <Input
-              placeholder="Pesquisar clientes..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 w-full sm:w-64"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="grid gap-4">
-        {filteredClients.map((client) => (
-          <Card key={client.id} className="hover:shadow-md transition-shadow">
-            <CardContent className="p-6">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="flex-1">
-                  <div className="flex items-center space-x-3 mb-2">
-                    <div className="p-2 bg-gold/10 rounded-full">
-                      {client.is_admin ? (
-                        <Shield className="h-4 w-4 text-gold" />
-                      ) : (
-                        <User className="h-4 w-4 text-gray-600" />
-                      )}
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900">
-                        {client.full_name || "Nome não fornecido"}
-                      </h3>
-                      <p className="text-sm text-gray-600">{client.email}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    <Badge variant={client.is_admin ? "default" : "secondary"}>
-                      {client.is_admin ? "Administrador" : "Utilizador"}
-                    </Badge>
-                    <Badge variant="outline">
-                      Plano: {client.plan_type || "Free"}
-                    </Badge>
-                    <Badge variant="outline">
-                      Nível: {client.level || 1}
-                    </Badge>
-                    <Badge variant="outline">
-                      {client.total_points || 0} pontos
-                    </Badge>
-                  </div>
-
-                  <p className="text-xs text-gray-500">
-                    Registado em: {new Date(client.created_at).toLocaleDateString('pt-PT')}
-                  </p>
-                </div>
-
-                <div className="flex space-x-2">
-                  <Button
-                    variant={client.is_admin ? "destructive" : "default"}
-                    size="sm"
-                    onClick={() => toggleAdminStatus(client.id, client.is_admin)}
-                    className={client.is_admin ? "" : "bg-gold hover:bg-gold/90 text-black"}
-                  >
-                    {client.is_admin ? "Remover Admin" : "Tornar Admin"}
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {filteredClients.length === 0 && (
-        <div className="text-center py-12">
-          <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <p className="text-gray-600">
-            {searchTerm ? "Nenhum cliente encontrado com esse termo." : "Nenhum cliente encontrado."}
-          </p>
+    <div className="bg-white border border-dusty-rose/20 rounded-2xl shadow-soft p-6">
+      <h3 className="text-lg font-serif font-semibold text-gentle-black mb-4">
+        Gestão de Clientes
+      </h3>
+      
+      {loading ? (
+        <div className="text-soft-gray">A carregar clientes...</div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="border-b border-dusty-rose/20">
+                <th className="text-left py-2 px-4 font-medium text-gentle-black">Nome</th>
+                <th className="text-left py-2 px-4 font-medium text-gentle-black">Email</th>
+                <th className="text-left py-2 px-4 font-medium text-gentle-black">Plano</th>
+                <th className="text-left py-2 px-4 font-medium text-gentle-black">Pontos</th>
+                <th className="text-left py-2 px-4 font-medium text-gentle-black">Nível</th>
+                <th className="text-left py-2 px-4 font-medium text-gentle-black">Admin</th>
+                <th className="text-left py-2 px-4 font-medium text-gentle-black">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {clients.map(client => (
+                <tr key={client.id} className="border-b border-dusty-rose/10">
+                  <td className="py-2 px-4 text-gentle-black">
+                    {client.full_name || "Nome não definido"}
+                  </td>
+                  <td className="py-2 px-4 text-gentle-black">
+                    {client.email || "Email não definido"}
+                  </td>
+                  <td className="py-2 px-4 text-gentle-black capitalize">
+                    {client.plan_type || "free"}
+                  </td>
+                  <td className="py-2 px-4 text-gentle-black">
+                    {client.total_points || 0}
+                  </td>
+                  <td className="py-2 px-4 text-gentle-black">
+                    {client.level || 1}
+                  </td>
+                  <td className="py-2 px-4">
+                    <span className={`px-2 py-1 rounded-full text-xs ${
+                      client.is_admin 
+                        ? "bg-earthy-burgundy/20 text-earthy-burgundy" 
+                        : "bg-misty-gray/20 text-misty-gray"
+                    }`}>
+                      {client.is_admin ? "Admin" : "User"}
+                    </span>
+                  </td>
+                  <td className="py-2 px-4">
+                    <button
+                      onClick={() => toggleAdminStatus(client.id, client.is_admin)}
+                      className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
+                        client.is_admin
+                          ? "bg-red-100 text-red-700 hover:bg-red-200"
+                          : "bg-green-100 text-green-700 hover:bg-green-200"
+                      }`}
+                    >
+                      {client.is_admin ? "Remover Admin" : "Tornar Admin"}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          
+          {clients.length === 0 && (
+            <div className="text-center py-8 text-soft-gray">
+              Nenhum cliente encontrado.
+            </div>
+          )}
         </div>
       )}
     </div>

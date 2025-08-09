@@ -1,0 +1,42 @@
+
+input, textarea, select {
+  border-radius: 12px;
+  background: #fff;
+  border: 1.5px solid #dab8c340;
+  padding: 0.75rem 1rem;
+  color: var(--brand-secondary);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border .2s, box-shadow .2s;
+  min-height: 44px; /* Touch target */
+}
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+  box-shadow: 0 0 0 3px #dab8c33c;
+  outline: 2px solid #DAB8C3;
+  border-color: #DAB8C3;
+}
+::placeholder {
+  color: #A0AEC0;
+  opacity: 0.9;
+  font-style: italic;
+}
+.form-error, .form-erro {
+  color: #c00a42;
+  background: #dab8c322;
+  border-radius: 6px;
+  padding: 0.25em 1em;
+  font-weight: 500;
+  margin-top: 0.3em;
+  margin-bottom: 0.6em;
+  font-size: 0.97em;
+}
+.form-success {
+  color: #3D4A5A;
+  background: #dab8c345;
+  border-radius: 6px;
+  padding: 0.3em 1em;
+  font-weight: 500;
+  margin-top: 0.3em;
+  margin-bottom: 0.6em;
+  font-size: 0.97em;
+}
