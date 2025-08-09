@@ -32,8 +32,8 @@ const AdminMessages = () => {
   const fetchMessages = async () => {
     try {
       const { data, error } = await supabase
-        .from("messages")
-        .select("*")
+        .from("deliveries")
+        .select("id, title, description, delivery_date, status, created_at, user_id")
         .order("created_at", { ascending: false });
 
       if (error) {
@@ -45,7 +45,11 @@ const AdminMessages = () => {
         setLoading(false);
         return;
       }
-      setMessages(data || []);
+      const mappedData = (data || []).map(delivery => ({
+        ...delivery,
+        content: delivery.description || ""
+      }));
+      setMessages(mappedData);
     } catch (error: any) {
       console.error("Error fetching messages:", error);
       toast({

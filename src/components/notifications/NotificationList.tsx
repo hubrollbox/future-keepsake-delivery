@@ -90,7 +90,7 @@ const NotificationList: React.FC<NotificationListProps> = ({ onClose }) => {
                         )}
                       </div>
                       <p className="text-misty-gray text-xs mt-1 line-clamp-2">
-                        {notification.message}
+                        {notification.content}
                       </p>
                       <p className="text-misty-gray text-xs mt-1">
                         {notification.created_at && formatDistanceToNow(

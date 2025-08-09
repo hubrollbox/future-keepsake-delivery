@@ -121,7 +121,7 @@ const Navigation = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button variant="brand" onClick={() => navigate(user ? "/createkeepsake" : "/login")}>
+              <Button variant="brand" onClick={() => navigate(user ? "/create-keepsake" : "/login")}>
                 Criar Cápsula
               </Button>
             )}

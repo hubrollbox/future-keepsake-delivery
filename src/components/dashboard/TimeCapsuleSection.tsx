@@ -12,6 +12,7 @@ interface Delivery {
   title: string;
   recipient_name: string;
   delivery_date: string;
+  created_at: string;
   status: string | null;
   message?: string;
 }
@@ -57,7 +58,7 @@ const TimeCapsuleSection = ({ deliveries, loading, onDelete }: TimeCapsuleSectio
             <Mail className="h-5 w-5" />
             Cápsula do Tempo
           </CardTitle>
-          <Button variant="brand" onClick={() => navigate("/create-keepsake")}> 
+          <Button variant="brand" onClick={() => navigate("/create-keepsake")}>
             <Plus className="h-4 w-4 mr-2" />
             Criar Cápsula do Tempo
           </Button>
@@ -80,14 +81,20 @@ const TimeCapsuleSection = ({ deliveries, loading, onDelete }: TimeCapsuleSectio
               {deliveries.map((delivery) => (
                 <Card key={delivery.id} className="border border-blue-100 bg-blue-50/50">
                   <CardContent className="p-4">
-                    <div className="flex justify-between items-start mb-2">
+                     <div className="flex justify-between items-start mb-2">
                       <div className="flex-1">
                         <h4 className="font-semibold text-blue-900">{delivery.title || "Mensagem"}</h4>
                         <p className="text-sm text-gray-600">Para: {delivery.recipient_name}</p>
-                        <p className="text-xs text-gray-500 flex items-center gap-1 mt-1">
-                          <Calendar className="h-3 w-3" />
-                          {new Date(delivery.delivery_date).toLocaleDateString('pt-PT')}
-                        </p>
+                        <div className="flex flex-col gap-1 mt-1 text-xs text-gray-500">
+                          <p className="flex items-center gap-1">
+                            <Calendar className="h-3 w-3" />
+                            Criado: {new Date(delivery.created_at).toLocaleDateString('pt-PT')}
+                          </p>
+                          <p className="flex items-center gap-1">
+                            <Calendar className="h-3 w-3" />
+                            Entrega: {new Date(delivery.delivery_date).toLocaleDateString('pt-PT')}
+                          </p>
+                        </div>
                       </div>
                       <Badge className={getStatusColor(delivery.status)}>
                         {getStatusText(delivery.status)}

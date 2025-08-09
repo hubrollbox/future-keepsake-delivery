@@ -14,6 +14,7 @@ export interface UserProfile {
   level: number;
   created_at: string;
   updated_at: string;
+  plan_id: string | null;
   role?: string | null;
 }
 
@@ -70,11 +71,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             full_name: authUser.user_metadata?.full_name || authUser.email?.split('@')[0] || 'Utilizador',
             email: authUser.email || null,
             avatar_url: authUser.user_metadata?.avatar_url || null,
-            plan_type: 'free', // Default ou inferir se possível
+            plan_type: 'free',
             total_points: 0,
             level: 1,
             created_at: authUser.created_at,
             updated_at: authUser.last_sign_in_at || authUser.created_at,
+            plan_id: null,
             role: null
           };
           setProfile(fallbackProfile);
@@ -99,11 +101,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             full_name: authUser.user_metadata?.full_name || authUser.email?.split('@')[0] || 'Utilizador',
             email: authUser.email || null,
             avatar_url: authUser.user_metadata?.avatar_url || null,
-            plan_type: 'free', // Default ou inferir se possível
+            plan_type: 'free',
             total_points: 0,
             level: 1,
             created_at: authUser.created_at,
             updated_at: authUser.last_sign_in_at || authUser.created_at,
+            plan_id: null,
             role: null
           };
           setProfile(fallbackProfile);
@@ -131,6 +134,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       const userProfile = {
         ...profileData,
+        plan_type: 'free', // Default if not in schema
         role: adminData?.role || null
       };
 
@@ -139,10 +143,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setIsAdmin(adminData?.role === 'admin');
     } catch (error) {
       console.error('❌ [AuthContext] Error in fetchProfile:', JSON.stringify(error, null, 2));
-      setProfile(null);
+      
+      // Create fallback profile even on error to avoid infinite loading
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+      if (authUser) {
+        const fallbackProfile: UserProfile = {
+          id: authUser.id,
+          full_name: authUser.user_metadata?.full_name || authUser.email?.split('@')[0] || 'Utilizador',
+          email: authUser.email || null,
+          avatar_url: authUser.user_metadata?.avatar_url || null,
+          plan_type: 'free',
+          total_points: 0,
+          level: 1,
+          created_at: authUser.created_at,
+          updated_at: authUser.last_sign_in_at || authUser.created_at,
+          plan_id: null,
+          role: null
+        };
+        setProfile(fallbackProfile);
+      } else {
+        setProfile(null);
+      }
       setIsAdmin(false);
     }
-    return; // Explicit return to avoid 'control reached end of function without RETURN' warning
   };
 
   const refreshProfile = async () => {
@@ -157,19 +180,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, currentSession) => {
+      (event, currentSession) => {
         console.log('🔐 [AuthContext] onAuthStateChange: Event:', event, 'User ID:', currentSession?.user?.id, 'Current Loading:', loading, 'Current User:', !!user, 'Current Profile:', !!profile);
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
         
-        if (currentSession?.user) {
-          console.log('👤 [AuthContext] onAuthStateChange: User found, fetching profile...');
-          if (currentSession.user?.id) {
-            console.log('⏳ [AuthContext] Attempting to fetch profile immediately for user:', currentSession.user.id);
-            await fetchProfile(currentSession.user.id); // Await fetchProfile
-          } else {
-            console.warn('⚠️ [AuthContext] onAuthStateChange: User ID not available, cannot fetch profile.');
-          }
+        if (currentSession?.user && currentSession.user.id) {
+          console.log('⏳ [AuthContext] Scheduling profile fetch for user:', currentSession.user.id);
+          setTimeout(() => {
+            fetchProfile(currentSession.user!.id);
+          }, 0);
         } else {
           console.log('👤 [AuthContext] onAuthStateChange: No user, clearing profile...');
           setProfile(null);
@@ -188,20 +208,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setSession(existingSession);
       setUser(existingSession?.user ?? null);
       
-      if (existingSession?.user) {
-        console.log('👤 [AuthContext] getSession: Existing user found, fetching profile...');
-        if (existingSession.user?.id) {
-          await fetchProfile(existingSession.user.id); // Wait for profile fetch
-        } else {
-          console.warn('⚠️ [AuthContext] getSession: Existing session user ID not available, cannot fetch profile.');
-        }
+      if (existingSession?.user && existingSession.user.id) {
+        console.log('👤 [AuthContext] getSession: Existing user found, scheduling profile fetch...');
+        setTimeout(() => {
+          fetchProfile(existingSession.user!.id);
+        }, 0);
       } else {
         setProfile(null);
         setIsAdmin(false);
       }
-      console.log('✅ [AuthContext] getSession: Initial check complete. User:', !!(existingSession?.user), 'Profile:', !!profile);
-      setLoading(false); // Set loading to false after initial session check and profile fetch
-      setLoading(false);
+      console.log('✅ [AuthContext] getSession: Initial check complete. User:', !!(existingSession?.user), 'Profile will be set by fetchProfile');
+      setLoading(false); // Set loading to false after scheduling profile fetch
     };
 
     checkSessionAndFetchProfile();

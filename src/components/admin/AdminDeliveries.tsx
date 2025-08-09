@@ -16,10 +16,16 @@ interface Delivery {
   type: string;
   delivery_date: string;
   status: string;
-  recipient_email: string | null;
-  recipient_name: string | null;
   created_at: string;
   user_id: string;
+  keepsake_id: string | null;
+  keepsake_product_id: string | null;
+  warehouse_item_id: string | null;
+  recipient_id: string | null;
+  digital_file_url: string | null;
+  location: string | null;
+  payment_status: string | null;
+  updated_at: string | null;
 }
 
 const AdminDeliveries = () => {
@@ -32,7 +38,7 @@ const AdminDeliveries = () => {
     setFilters,
     filteredData: filteredDeliveries,
     clearFilters,
-  } = useSearchFilters(deliveries, ["title", "recipient_email", "recipient_name", "description"]);
+  } = useSearchFilters(deliveries, ["title", "description"]);
 
   const fetchDeliveries = useCallback(async () => {
     try {
@@ -187,16 +193,9 @@ const AdminDeliveries = () => {
                     <div>
                       <strong>Data:</strong> {new Date(delivery.delivery_date).toLocaleDateString('pt-PT')}
                     </div>
-                    {delivery.recipient_email && (
-                      <div>
-                        <strong>Email:</strong> {delivery.recipient_email}
-                      </div>
-                    )}
-                    {delivery.recipient_name && (
-                      <div>
-                        <strong>Nome:</strong> {delivery.recipient_name}
-                      </div>
-                    )}
+                    <div>
+                      <strong>ID:</strong> {delivery.id.substring(0, 8)}...
+                    </div>
                   </div>
                   
                   {delivery.description && (
