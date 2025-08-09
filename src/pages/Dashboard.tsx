@@ -63,16 +63,29 @@ const Dashboard = () => {
         
         {isAdmin && <AdminStatsSection />}
         
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-          <div className="xl:col-span-2 space-y-8">
+        {isAdmin ? (
+          // Layout para Admin
+          <div className="space-y-8">
             <TimeCapsuleSection 
               deliveries={deliveries}
               loading={deliveriesLoading}
               onDelete={deleteDelivery}
             />
             
-            {/* Botões de Ação Rápida */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <button
+                onClick={() => navigate("/admin")}
+                className="emotion-card p-6 text-left hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-warm-cream to-sandy-beige border-2 border-dusty-rose/20"
+              >
+                <div className="flex items-center mb-3">
+                  <div className="w-12 h-12 bg-dusty-rose/20 rounded-full flex items-center justify-center mr-4">
+                    <span className="text-2xl">⚡</span>
+                  </div>
+                  <h3 className="text-lg font-serif font-semibold text-steel-blue">Painel Admin</h3>
+                </div>
+                <p className="text-sm text-misty-gray">Acesso completo ao sistema</p>
+              </button>
+              
               <button
                 onClick={() => navigate("/create-keepsake")}
                 className="emotion-card p-6 text-left hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-warm-cream to-sandy-beige border-2 border-dusty-rose/20"
@@ -83,7 +96,7 @@ const Dashboard = () => {
                   </div>
                   <h3 className="text-lg font-serif font-semibold text-steel-blue">Nova Cápsula</h3>
                 </div>
-                <p className="text-sm text-misty-gray">Criar uma nova mensagem para o futuro</p>
+                <p className="text-sm text-misty-gray">Criar uma nova mensagem</p>
               </button>
               
               <button
@@ -96,18 +109,58 @@ const Dashboard = () => {
                   </div>
                   <h3 className="text-lg font-serif font-semibold text-steel-blue">Perfil</h3>
                 </div>
-                <p className="text-sm text-misty-gray">Gerir as tuas informações pessoais</p>
+                <p className="text-sm text-misty-gray">Gerir informações</p>
               </button>
             </div>
           </div>
-          
-          <div className="xl:col-span-1">
-            <UserStatsSection 
-              profile={profile}
-              totalDeliveries={deliveries.length}
-            />
+        ) : (
+          // Layout para Utilizador Normal
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+            <div className="xl:col-span-2 space-y-8">
+              <TimeCapsuleSection 
+                deliveries={deliveries}
+                loading={deliveriesLoading}
+                onDelete={deleteDelivery}
+              />
+              
+              {/* Botões de Ação Rápida */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button
+                  onClick={() => navigate("/create-keepsake")}
+                  className="emotion-card p-6 text-left hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-warm-cream to-sandy-beige border-2 border-dusty-rose/20"
+                >
+                  <div className="flex items-center mb-3">
+                    <div className="w-12 h-12 bg-dusty-rose/20 rounded-full flex items-center justify-center mr-4">
+                      <span className="text-2xl">💌</span>
+                    </div>
+                    <h3 className="text-lg font-serif font-semibold text-steel-blue">Nova Cápsula</h3>
+                  </div>
+                  <p className="text-sm text-misty-gray">Criar uma nova mensagem para o futuro</p>
+                </button>
+                
+                <button
+                  onClick={() => navigate("/profile")}
+                  className="emotion-card p-6 text-left hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-warm-cream to-sandy-beige border-2 border-dusty-rose/20"
+                >
+                  <div className="flex items-center mb-3">
+                    <div className="w-12 h-12 bg-dusty-rose/20 rounded-full flex items-center justify-center mr-4">
+                      <span className="text-2xl">⚙️</span>
+                    </div>
+                    <h3 className="text-lg font-serif font-semibold text-steel-blue">Perfil</h3>
+                  </div>
+                  <p className="text-sm text-misty-gray">Gerir as tuas informações pessoais</p>
+                </button>
+              </div>
+            </div>
+            
+            <div className="xl:col-span-1">
+              <UserStatsSection 
+                profile={profile}
+                totalDeliveries={deliveries.length}
+              />
+            </div>
           </div>
-        </div>
+        )}
       </main>
     </div>
   );

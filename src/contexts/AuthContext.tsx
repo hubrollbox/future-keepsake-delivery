@@ -143,10 +143,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setIsAdmin(adminData?.role === 'admin');
     } catch (error) {
       console.error('❌ [AuthContext] Error in fetchProfile:', JSON.stringify(error, null, 2));
-      setProfile(null);
+      
+      // Create fallback profile even on error to avoid infinite loading
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+      if (authUser) {
+        const fallbackProfile: UserProfile = {
+          id: authUser.id,
+          full_name: authUser.user_metadata?.full_name || authUser.email?.split('@')[0] || 'Utilizador',
+          email: authUser.email || null,
+          avatar_url: authUser.user_metadata?.avatar_url || null,
+          plan_type: 'free',
+          total_points: 0,
+          level: 1,
+          created_at: authUser.created_at,
+          updated_at: authUser.last_sign_in_at || authUser.created_at,
+          plan_id: null,
+          role: null
+        };
+        setProfile(fallbackProfile);
+      } else {
+        setProfile(null);
+      }
       setIsAdmin(false);
     }
-    return; // Explicit return to avoid 'control reached end of function without RETURN' warning
   };
 
   const refreshProfile = async () => {
