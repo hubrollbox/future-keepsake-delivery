@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '../integrations/supabase/client';
 import { useToast } from "../components/ui/use-toast";
 
 export interface AdminStats {
@@ -99,6 +99,8 @@ export const useAdminData = () => {
       const nextWeek = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
       
       const pendingDeliveries = deliveries?.filter(delivery => {
+        // Skip deliveries with null delivery_date
+        if (!delivery.delivery_date) return false;
         const deliveryDate = new Date(delivery.delivery_date);
         return delivery.status === 'scheduled' && deliveryDate >= now && deliveryDate <= nextWeek;
       }).length || 0;
@@ -106,6 +108,8 @@ export const useAdminData = () => {
       // Process deliveries by month
       const monthlyData: { [key: string]: number } = {};
       deliveries?.forEach(delivery => {
+        // Skip deliveries with null created_at
+        if (!delivery.created_at) return;
         const date = new Date(delivery.created_at);
         const monthKey = date.toLocaleDateString('pt-PT', { month: 'short', year: '2-digit' });
         monthlyData[monthKey] = (monthlyData[monthKey] || 0) + 1;
@@ -113,7 +117,12 @@ export const useAdminData = () => {
 
       const deliveriesByMonthData = Object.entries(monthlyData)
         .map(([month, count]) => ({ month, count }))
-        .sort((a, b) => new Date(`01 ${a.month}`).getTime() - new Date(`01 ${b.month}`).getTime())
+        .sort((a, b) => {
+          // Ensure month values are not null before creating Date objects
+          const monthA = a.month || '';
+          const monthB = b.month || '';
+          return new Date(`01 ${monthA}`).getTime() - new Date(`01 ${monthB}`).getTime();
+        })
         .slice(-6); // Last 6 months
 
       // Get top users by delivery count
