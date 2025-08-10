@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
@@ -289,20 +292,18 @@ export const useKeepsakeForm = () => {
   };
 };
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+// Schema de validação com zod
 
-const keepsakeSchema = z.object({
+const keepsakeValidationSchema = z.object({
   title: z.string().min(1, 'Título é obrigatório'),
   content: z.string().min(10, 'Conteúdo deve ter pelo menos 10 caracteres'),
   delivery_date: z.date().min(new Date(), 'Data deve ser futura'),
   recipient_email: z.string().email('Email inválido')
 });
 
-export const useKeepsakeForm = () => {
+export const useKeepsakeValidation = () => {
   const form = useForm({
-    resolver: zodResolver(keepsakeSchema),
+    resolver: zodResolver(keepsakeValidationSchema),
     defaultValues: {
       title: '',
       content: '',
