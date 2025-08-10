@@ -178,6 +178,7 @@ const RecipientStep = ({ formData, updateFormData, nextStep, prevStep }: Recipie
               placeholder={selectedChannel.placeholder}
               className="mt-1"
               required
+              pattern={selectedChannel.value === 'sms' ? "[+0-9\s()-]{9,}" : undefined}
             />
           </div>
         )}
@@ -206,6 +207,7 @@ const RecipientStep = ({ formData, updateFormData, nextStep, prevStep }: Recipie
                 placeholder="0000-000"
                 className="mt-1"
                 required
+                pattern="^\\d{4}-\\d{3}$"
               />
             </div>
             <div>

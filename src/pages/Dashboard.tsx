@@ -10,13 +10,29 @@ import AdminStatsSection from "@/components/dashboard/AdminStatsSection";
 import UserStatsSection from "@/components/dashboard/UserStatsSection";
 import TimeCapsuleSection from "@/components/dashboard/TimeCapsuleSection";
 import { useKeepsakes } from "@/hooks/useKeepsakes";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user, profile, loading } = useAuth();
   const { deliveries, loading: deliveriesLoading, deleteDelivery } = useDeliveries();
-  const { keepsakes, loading: keepsakesLoading } = useKeepsakes();
+  const { keepsakes, loading: keepsakesLoading, refetch: refetchKeepsakes } = useKeepsakes();
   const isAdmin = profile?.role === "admin";
+  const { toast } = useToast();
+
+  const deleteKeepsake = async (id: string) => {
+    try {
+      if (!confirm("Eliminar esta cápsula?")) return;
+      const { error } = await supabase.from('keepsakes').delete().eq('id', id);
+      if (error) throw error;
+      toast({ title: "Cápsula eliminada" });
+      refetchKeepsakes();
+    } catch (e: any) {
+      toast({ title: "Erro ao eliminar", description: e?.message || "Tenta novamente.", variant: "destructive" });
+    }
+  };
 
   // Initialize real-time notifications
   useRealtimeDeliveries();
@@ -82,12 +98,15 @@ const Dashboard = () => {
               ) : (
                 <ul className="space-y-2">
                   {keepsakes.map(k => (
-                    <li key={k.id} className="p-3 bg-warm-cream border border-dusty-rose/20 rounded-md flex items-center justify-between">
+                    <li key={k.id} className="p-3 bg-warm-cream border border-dusty-rose/20 rounded-md flex items-center justify-between gap-3">
                       <div>
                         <p className="text-steel-blue font-medium">{k.title}</p>
                         <p className="text-sm text-misty-gray">Entrega: {new Date(k.delivery_date).toLocaleDateString('pt-PT')}</p>
                       </div>
-                      <span className="text-xs px-2 py-1 rounded bg-dusty-rose/10 text-dusty-rose">{k.status || 'scheduled'}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs px-2 py-1 rounded bg-dusty-rose/10 text-dusty-rose">{k.status || 'scheduled'}</span>
+                        <Button variant="outline" size="sm" onClick={() => deleteKeepsake(k.id)}>Apagar</Button>
+                      </div>
                     </li>
                   ))}
                   {keepsakes.length === 0 && (
@@ -154,20 +173,23 @@ const Dashboard = () => {
                 {keepsakesLoading ? (
                   <p className="text-misty-gray">A carregar cápsulas...</p>
                 ) : (
-                  <ul className="space-y-2">
-                    {keepsakes.map(k => (
-                      <li key={k.id} className="p-3 bg-warm-cream border border-dusty-rose/20 rounded-md flex items-center justify-between">
-                        <div>
-                          <p className="text-steel-blue font-medium">{k.title}</p>
-                          <p className="text-sm text-misty-gray">Entrega: {new Date(k.delivery_date).toLocaleDateString('pt-PT')}</p>
-                        </div>
+                <ul className="space-y-2">
+                  {keepsakes.map(k => (
+                    <li key={k.id} className="p-3 bg-warm-cream border border-dusty-rose/20 rounded-md flex items-center justify-between gap-3">
+                      <div>
+                        <p className="text-steel-blue font-medium">{k.title}</p>
+                        <p className="text-sm text-misty-gray">Entrega: {new Date(k.delivery_date).toLocaleDateString('pt-PT')}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
                         <span className="text-xs px-2 py-1 rounded bg-dusty-rose/10 text-dusty-rose">{k.status || 'scheduled'}</span>
-                      </li>
-                    ))}
-                    {keepsakes.length === 0 && (
-                      <p className="text-misty-gray">Sem cápsulas ainda.</p>
-                    )}
-                  </ul>
+                        <Button variant="outline" size="sm" onClick={() => deleteKeepsake(k.id)}>Apagar</Button>
+                      </div>
+                    </li>
+                  ))}
+                  {keepsakes.length === 0 && (
+                    <p className="text-misty-gray">Sem cápsulas ainda.</p>
+                  )}
+                </ul>
                 )}
               </div>
               
