@@ -48,12 +48,26 @@ const RecipientStep = ({ formData, updateFormData, nextStep, prevStep }: Recipie
     updateFormData({
       delivery_channel: channel,
       channel_cost: selectedChannel?.cost || 0,
-      recipient_contact: ''
+      recipient_contact: '',
+      street: '',
+      city: '',
+      state: '',
+      postal_code: '',
+      country: 'Portugal'
     });
   };
 
   const handleNext = () => {
-    if (formData.recipient_name && formData.recipient_contact) {
+    if (!formData.recipient_name) return;
+
+    if (formData.delivery_channel === 'physical') {
+      if (formData.street && formData.city && formData.postal_code) {
+        nextStep();
+      }
+      return;
+    }
+
+    if (formData.recipient_contact) {
       nextStep();
     }
   };
@@ -151,7 +165,7 @@ const RecipientStep = ({ formData, updateFormData, nextStep, prevStep }: Recipie
           </RadioGroup>
         </div>
 
-        {selectedChannel && (
+        {selectedChannel && selectedChannel.value !== 'physical' && (
           <div>
             <Label htmlFor="recipient_contact" className="text-steel-blue font-medium">
               {selectedChannel.label} do Destinatário *
@@ -163,7 +177,71 @@ const RecipientStep = ({ formData, updateFormData, nextStep, prevStep }: Recipie
               onChange={(e) => updateFormData({ recipient_contact: e.target.value })}
               placeholder={selectedChannel.placeholder}
               className="mt-1"
+              required
             />
+          </div>
+        )}
+
+        {selectedChannel && selectedChannel.value === 'physical' && (
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="md:col-span-2">
+              <Label htmlFor="street" className="text-steel-blue font-medium">Morada *</Label>
+              <Input
+                id="street"
+                type="text"
+                value={formData.street || ''}
+                onChange={(e) => updateFormData({ street: e.target.value })}
+                placeholder="Rua e número"
+                className="mt-1"
+                required
+              />
+            </div>
+            <div>
+              <Label htmlFor="postal_code" className="text-steel-blue font-medium">Código Postal *</Label>
+              <Input
+                id="postal_code"
+                type="text"
+                value={formData.postal_code || ''}
+                onChange={(e) => updateFormData({ postal_code: e.target.value })}
+                placeholder="0000-000"
+                className="mt-1"
+                required
+              />
+            </div>
+            <div>
+              <Label htmlFor="city" className="text-steel-blue font-medium">Cidade *</Label>
+              <Input
+                id="city"
+                type="text"
+                value={formData.city || ''}
+                onChange={(e) => updateFormData({ city: e.target.value })}
+                placeholder="Cidade"
+                className="mt-1"
+                required
+              />
+            </div>
+            <div>
+              <Label htmlFor="state" className="text-steel-blue font-medium">Distrito</Label>
+              <Input
+                id="state"
+                type="text"
+                value={formData.state || ''}
+                onChange={(e) => updateFormData({ state: e.target.value })}
+                placeholder="Distrito"
+                className="mt-1"
+              />
+            </div>
+            <div>
+              <Label htmlFor="country" className="text-steel-blue font-medium">País</Label>
+              <Input
+                id="country"
+                type="text"
+                value={formData.country || 'Portugal'}
+                onChange={(e) => updateFormData({ country: e.target.value })}
+                placeholder="Portugal"
+                className="mt-1"
+              />
+            </div>
           </div>
         )}
       </div>
@@ -174,7 +252,13 @@ const RecipientStep = ({ formData, updateFormData, nextStep, prevStep }: Recipie
         </Button>
         <Button 
           onClick={handleNext}
-          disabled={!formData.recipient_name || !formData.recipient_contact}
+          disabled={
+            !formData.recipient_name || (
+              formData.delivery_channel === 'physical'
+                ? !(formData.street && formData.city && formData.postal_code)
+                : !formData.recipient_contact
+            )
+          }
           className="bg-dusty-rose hover:bg-dusty-rose/90 text-white px-8"
         >
           Próximo Passo

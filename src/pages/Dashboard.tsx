@@ -9,11 +9,13 @@ import ProfileHeader from "@/components/dashboard/ProfileHeader";
 import AdminStatsSection from "@/components/dashboard/AdminStatsSection";
 import UserStatsSection from "@/components/dashboard/UserStatsSection";
 import TimeCapsuleSection from "@/components/dashboard/TimeCapsuleSection";
+import { useKeepsakes } from "@/hooks/useKeepsakes";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user, profile, loading } = useAuth();
   const { deliveries, loading: deliveriesLoading, deleteDelivery } = useDeliveries();
+  const { keepsakes, loading: keepsakesLoading } = useKeepsakes();
   const isAdmin = profile?.role === "admin";
 
   // Initialize real-time notifications
@@ -71,6 +73,29 @@ const Dashboard = () => {
               loading={deliveriesLoading}
               onDelete={deleteDelivery}
             />
+
+            {/* Keepsakes Section */}
+            <div className="space-y-3">
+              <h3 className="text-lg font-serif font-semibold text-steel-blue">Minhas Cápsulas</h3>
+              {keepsakesLoading ? (
+                <p className="text-misty-gray">A carregar cápsulas...</p>
+              ) : (
+                <ul className="space-y-2">
+                  {keepsakes.map(k => (
+                    <li key={k.id} className="p-3 bg-warm-cream border border-dusty-rose/20 rounded-md flex items-center justify-between">
+                      <div>
+                        <p className="text-steel-blue font-medium">{k.title}</p>
+                        <p className="text-sm text-misty-gray">Entrega: {new Date(k.delivery_date).toLocaleDateString('pt-PT')}</p>
+                      </div>
+                      <span className="text-xs px-2 py-1 rounded bg-dusty-rose/10 text-dusty-rose">{k.status || 'scheduled'}</span>
+                    </li>
+                  ))}
+                  {keepsakes.length === 0 && (
+                    <p className="text-misty-gray">Sem cápsulas ainda.</p>
+                  )}
+                </ul>
+              )}
+            </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <button
@@ -122,6 +147,29 @@ const Dashboard = () => {
                 loading={deliveriesLoading}
                 onDelete={deleteDelivery}
               />
+
+              {/* Keepsakes Section */}
+              <div className="space-y-3">
+                <h3 className="text-lg font-serif font-semibold text-steel-blue">Minhas Cápsulas</h3>
+                {keepsakesLoading ? (
+                  <p className="text-misty-gray">A carregar cápsulas...</p>
+                ) : (
+                  <ul className="space-y-2">
+                    {keepsakes.map(k => (
+                      <li key={k.id} className="p-3 bg-warm-cream border border-dusty-rose/20 rounded-md flex items-center justify-between">
+                        <div>
+                          <p className="text-steel-blue font-medium">{k.title}</p>
+                          <p className="text-sm text-misty-gray">Entrega: {new Date(k.delivery_date).toLocaleDateString('pt-PT')}</p>
+                        </div>
+                        <span className="text-xs px-2 py-1 rounded bg-dusty-rose/10 text-dusty-rose">{k.status || 'scheduled'}</span>
+                      </li>
+                    ))}
+                    {keepsakes.length === 0 && (
+                      <p className="text-misty-gray">Sem cápsulas ainda.</p>
+                    )}
+                  </ul>
+                )}
+              </div>
               
               {/* Botões de Ação Rápida */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

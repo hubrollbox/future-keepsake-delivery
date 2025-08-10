@@ -16,7 +16,12 @@ interface MessageStepProps {
 
 const MessageStep = ({ formData, updateFormData, nextStep, prevStep }: MessageStepProps) => {
   const handleNext = () => {
-    if (formData.title && formData.message && formData.delivery_date) {
+    const isComplete = formData.title && formData.message && formData.delivery_date;
+    if (!isComplete) return;
+    const tomorrowStr = getTomorrowDate();
+    const selected = new Date(formData.delivery_date);
+    const tomorrow = new Date(tomorrowStr);
+    if (selected >= tomorrow) {
       nextStep();
     }
   };
@@ -52,6 +57,8 @@ const MessageStep = ({ formData, updateFormData, nextStep, prevStep }: MessageSt
             placeholder="Ex: Para a minha filha aos 18 anos"
             className="mt-1"
             maxLength={100}
+            minLength={5}
+            required
           />
           <p className="text-xs text-misty-gray mt-1">
             {formData.title.length}/100 caracteres
@@ -69,6 +76,8 @@ const MessageStep = ({ formData, updateFormData, nextStep, prevStep }: MessageSt
             placeholder="Escreve aqui a tua mensagem..."
             className="mt-1 min-h-32"
             maxLength={2000}
+            minLength={5}
+            required
           />
           <p className="text-xs text-misty-gray mt-1">
             {formData.message.length}/2000 caracteres
@@ -87,6 +96,7 @@ const MessageStep = ({ formData, updateFormData, nextStep, prevStep }: MessageSt
             onChange={(e) => updateFormData({ delivery_date: e.target.value })}
             min={getTomorrowDate()}
             className="mt-1"
+            required
           />
         </div>
       </div>
