@@ -5,11 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, User, Mail, MessageCircle, MapPin, Gift } from "lucide-react";
 import { KeepsakeFormData } from "@/hooks/useKeepsakeForm";
+import { useToast } from "@/hooks/use-toast";
 
 interface ReviewStepProps {
   formData: KeepsakeFormData;
   onBack: () => void;
-  onSubmit: () => void;
+  onSubmit: () => Promise<void> | void;
   loading: boolean;
 }
 
@@ -33,6 +34,7 @@ const ReviewStep = ({ formData, onBack, onSubmit, loading }: ReviewStepProps) =>
   };
 
   const ChannelIcon = getChannelIcon();
+  const { toast } = useToast();
 
   return (
     <div className="space-y-6">
@@ -162,7 +164,16 @@ const ReviewStep = ({ formData, onBack, onSubmit, loading }: ReviewStepProps) =>
           Voltar
         </Button>
         <Button 
-          onClick={onSubmit}
+          onClick={async () => {
+            try {
+              const maybePromise = onSubmit();
+              if (maybePromise && typeof (maybePromise as any).then === 'function') {
+                await (maybePromise as Promise<void>);
+              }
+            } catch (error: any) {
+              toast({ title: "Erro ao selar", description: error?.message || "Tenta novamente.", variant: "destructive" });
+            }
+          }}
           disabled={loading}
           className="bg-dusty-rose hover:bg-dusty-rose/90 text-white px-8"
         >

@@ -1,49 +1,10 @@
 declare module 'zod' {
   export const z: any;
-  export type ZodType<T = any> = any;
-  export type ZodObject<T = any> = any;
-  export type ZodString = any;
-  export type ZodNumber = any;
-  export type ZodBoolean = any;
-  export type ZodArray<T = any> = any;
-  export type ZodEnum<T = any> = any;
-  export type ZodNullable<T = any> = any;
-  export type ZodOptional<T = any> = any;
-  export type ZodUnion<T = any> = any;
-  export type ZodIntersection<T = any> = any;
-  export type ZodRecord<T = any> = any;
-  export type ZodTuple<T = any> = any;
-  export type ZodFunction<T = any> = any;
-  export type ZodLiteral<T = any> = any;
-  export type ZodPromise<T = any> = any;
-  export type ZodDate = any;
-  export type ZodVoid = any;
-  export type ZodUndefined = any;
-  export type ZodNull = any;
-  export type ZodAny = any;
-  export type ZodUnknown = any;
-  export type ZodNever = any;
-  
-  export function string(): ZodString;
-  export function number(): ZodNumber;
-  export function boolean(): ZodBoolean;
-  export function array(schema: ZodType): ZodArray;
-  export function object(shape: Record<string, ZodType>): ZodObject;
-  export function enum(values: readonly [string, ...string[]]): ZodEnum;
-  export function literal(value: any): ZodLiteral;
-  export function union(schemas: readonly [ZodType, ZodType, ...ZodType[]]): ZodUnion;
-  export function intersection(left: ZodType, right: ZodType): ZodIntersection;
-  export function record(valueType: ZodType): ZodRecord;
-  export function tuple(schemas: readonly ZodType[]): ZodTuple;
-  export function nullable(schema: ZodType): ZodNullable;
-  export function optional(schema: ZodType): ZodOptional;
-  export function function(): ZodFunction;
-  export function promise(schema: ZodType): ZodPromise;
-  export function date(): ZodDate;
-  export function void(): ZodVoid;
-  export function undefined(): ZodUndefined;
-  export function null(): ZodNull;
-  export function any(): ZodAny;
-  export function unknown(): ZodUnknown;
-  export function never(): ZodNever;
+  export namespace z {
+    export type infer<T> = any;
+    export type ZodSchema<T = any> = { parse: (data: unknown) => T };
+    export class ZodError extends Error {
+      errors: Array<{ path: (string | number)[]; message: string }>
+    }
+  }
 }

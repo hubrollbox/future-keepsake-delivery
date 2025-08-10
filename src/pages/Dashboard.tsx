@@ -9,12 +9,33 @@ import ProfileHeader from "@/components/dashboard/ProfileHeader";
 import AdminStatsSection from "@/components/dashboard/AdminStatsSection";
 import UserStatsSection from "@/components/dashboard/UserStatsSection";
 import TimeCapsuleSection from "@/components/dashboard/TimeCapsuleSection";
+import { KeepsakesList } from "@/components/dashboard/KeepsakesList";
+import { useKeepsakes } from "@/hooks/useKeepsakes";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PlusCircle, Clock, Package } from "lucide-react";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user, profile, loading } = useAuth();
   const { deliveries, loading: deliveriesLoading, deleteDelivery } = useDeliveries();
+  const { keepsakes, loading: keepsakesLoading, refetch: refetchKeepsakes } = useKeepsakes();
   const isAdmin = profile?.role === "admin";
+  const { toast } = useToast();
+
+  const deleteKeepsake = async (id: string) => {
+    try {
+      if (!confirm("Eliminar esta cápsula?")) return;
+      const { error } = await supabase.from('keepsakes').delete().eq('id', id);
+      if (error) throw error;
+      toast({ title: "Cápsula eliminada" });
+      refetchKeepsakes();
+    } catch (e: any) {
+      toast({ title: "Erro ao eliminar", description: e?.message || "Tenta novamente.", variant: "destructive" });
+    }
+  };
 
   // Initialize real-time notifications
   useRealtimeDeliveries();
@@ -71,6 +92,45 @@ const Dashboard = () => {
               loading={deliveriesLoading}
               onDelete={deleteDelivery}
             />
+
+            {/* Keepsakes Section */}
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <h3 className="text-lg font-serif font-semibold text-steel-blue">Minhas Cápsulas</h3>
+                <Button 
+                  onClick={() => navigate("/create-keepsake")} 
+                  size="sm" 
+                  className="flex items-center gap-1 bg-dusty-rose hover:bg-dusty-rose/90"
+                >
+                  <PlusCircle className="h-4 w-4" /> Nova Cápsula
+                </Button>
+              </div>
+              
+              <Tabs defaultValue="all" className="w-full">
+                <TabsList className="grid w-full grid-cols-3">
+                  <TabsTrigger value="all" className="flex items-center gap-1">
+                    <Package className="h-4 w-4" /> Todas
+                  </TabsTrigger>
+                  <TabsTrigger value="pending" className="flex items-center gap-1">
+                    <Clock className="h-4 w-4" /> Pendentes
+                  </TabsTrigger>
+                  <TabsTrigger value="delivered" className="flex items-center gap-1">
+                    <Package className="h-4 w-4" /> Entregues
+                  </TabsTrigger>
+                </TabsList>
+                <TabsContent value="all" className="mt-4">
+                  <KeepsakesList />
+                </TabsContent>
+                <TabsContent value="pending" className="mt-4">
+                  {/* Filtrar por status pendente */}
+                  <KeepsakesList />
+                </TabsContent>
+                <TabsContent value="delivered" className="mt-4">
+                  {/* Filtrar por status entregue */}
+                  <KeepsakesList />
+                </TabsContent>
+              </Tabs>
+            </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <button
@@ -122,6 +182,45 @@ const Dashboard = () => {
                 loading={deliveriesLoading}
                 onDelete={deleteDelivery}
               />
+
+              {/* Keepsakes Section */}
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <h3 className="text-lg font-serif font-semibold text-steel-blue">Minhas Cápsulas</h3>
+                  <Button 
+                    onClick={() => navigate("/create-keepsake")} 
+                    size="sm" 
+                    className="flex items-center gap-1 bg-dusty-rose hover:bg-dusty-rose/90"
+                  >
+                    <PlusCircle className="h-4 w-4" /> Nova Cápsula
+                  </Button>
+                </div>
+                
+                <Tabs defaultValue="all" className="w-full">
+                  <TabsList className="grid w-full grid-cols-3">
+                    <TabsTrigger value="all" className="flex items-center gap-1">
+                      <Package className="h-4 w-4" /> Todas
+                    </TabsTrigger>
+                    <TabsTrigger value="pending" className="flex items-center gap-1">
+                      <Clock className="h-4 w-4" /> Pendentes
+                    </TabsTrigger>
+                    <TabsTrigger value="delivered" className="flex items-center gap-1">
+                      <Package className="h-4 w-4" /> Entregues
+                    </TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="all" className="mt-4">
+                    <KeepsakesList />
+                  </TabsContent>
+                  <TabsContent value="pending" className="mt-4">
+                    {/* Filtrar por status pendente */}
+                    <KeepsakesList />
+                  </TabsContent>
+                  <TabsContent value="delivered" className="mt-4">
+                    {/* Filtrar por status entregue */}
+                    <KeepsakesList />
+                  </TabsContent>
+                </Tabs>
+              </div>
               
               {/* Botões de Ação Rápida */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

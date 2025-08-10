@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
@@ -10,10 +13,16 @@ export interface KeepsakeFormData {
   delivery_date: string;
   type: 'digital' | 'physical';
   recipient_name: string;
-  recipient_contact: string;
+  recipient_contact: string; // for email/sms
   delivery_channel: 'email' | 'sms' | 'physical';
   relationship: string;
   channel_cost: number;
+  // Address fields for physical deliveries
+  street: string;
+  city: string;
+  state: string;
+  postal_code: string;
+  country: string;
   selected_products: any[];
   total_cost: number;
 }
@@ -35,6 +44,11 @@ export const useKeepsakeForm = () => {
     delivery_channel: 'email',
     relationship: "",
     channel_cost: 0,
+    street: "",
+    city: "",
+    state: "",
+    postal_code: "",
+    country: "Portugal",
     selected_products: [],
     total_cost: 0,
   });
@@ -67,10 +81,31 @@ export const useKeepsakeForm = () => {
         return true;
 
       case 1: // Recipient info
-        if (!formData.recipient_name || !formData.recipient_contact || !formData.delivery_channel) {
+        if (!formData.recipient_name || !formData.delivery_channel) {
           toast({
             title: "Erro de Validação", 
-            description: "Preencha todos os campos obrigatórios do destinatário.",
+            description: "Preencha o nome e o canal de entrega.",
+            variant: "destructive",
+          });
+          return false;
+        }
+
+        if (formData.delivery_channel === 'physical') {
+          if (!formData.street || !formData.city || !formData.postal_code) {
+            toast({
+              title: "Erro de Validação",
+              description: "Preencha morada, cidade e código postal.",
+              variant: "destructive",
+            });
+            return false;
+          }
+          return true;
+        }
+        
+        if (!formData.recipient_contact) {
+          toast({
+            title: "Erro de Validação", 
+            description: "Preencha o contacto do destinatário.",
             variant: "destructive",
           });
           return false;
@@ -78,11 +113,24 @@ export const useKeepsakeForm = () => {
         
         // Validate email format if email channel
         if (formData.delivery_channel === 'email') {
-          const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           if (!emailRegex.test(formData.recipient_contact)) {
             toast({
               title: "Erro de Validação",
               description: "Email inválido.",
+              variant: "destructive",
+            });
+            return false;
+          }
+        }
+        
+        // Basic phone validation for SMS
+        if (formData.delivery_channel === 'sms') {
+          const digits = formData.recipient_contact.replace(/\D/g, '');
+          if (digits.length < 9) {
+            toast({
+              title: "Erro de Validação",
+              description: "Número de telemóvel inválido.",
               variant: "destructive",
             });
             return false;
@@ -182,7 +230,11 @@ export const useKeepsakeForm = () => {
           recipientData.email = `${formData.recipient_name.toLowerCase().replace(/\s+/g, '')}@placeholder.com`;
           break;
         case 'physical':
-          recipientData.street = formData.recipient_contact;
+          recipientData.street = formData.street;
+          recipientData.city = formData.city;
+          recipientData.state = formData.state;
+          recipientData.postal_code = formData.postal_code;
+          recipientData.country = formData.country || 'Portugal';
           recipientData.email = `${formData.recipient_name.toLowerCase().replace(/\s+/g, '')}@placeholder.com`;
           break;
       }
@@ -238,4 +290,27 @@ export const useKeepsakeForm = () => {
     submitKeepsake,
     validateCurrentStep
   };
+};
+
+// Schema de validação com zod
+
+const keepsakeValidationSchema = z.object({
+  title: z.string().min(1, 'Título é obrigatório'),
+  content: z.string().min(10, 'Conteúdo deve ter pelo menos 10 caracteres'),
+  delivery_date: z.date().min(new Date(), 'Data deve ser futura'),
+  recipient_email: z.string().email('Email inválido')
+});
+
+export const useKeepsakeValidation = () => {
+  const form = useForm({
+    resolver: zodResolver(keepsakeValidationSchema),
+    defaultValues: {
+      title: '',
+      content: '',
+      delivery_date: new Date(),
+      recipient_email: ''
+    }
+  });
+  
+  return form;
 };
