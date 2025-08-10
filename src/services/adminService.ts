@@ -71,3 +71,27 @@ export async function fetchTopUsers() {
     count: userDeliveryCount[userId]
   }));
 }
+
+// 2. Otimizar Performance: Adicionar paginação no dashboard
+
+// Para implementar paginação no dashboard administrativo, precisamos modificar tanto o backend quanto o frontend:
+
+// Backend (Supabase queries):
+
+// 1. **Atualizar o serviço de admin para suportar paginação:**
+```typescript
+// Adicionar parâmetros de paginação
+export const fetchDeliveries = async (page = 1, pageSize = 10) => {
+  const start = (page - 1) * pageSize;
+  const end = start + pageSize - 1;
+  
+  const { data, error, count } = await supabase
+    .from('deliveries')
+    .select('*, recipients(*)', { count: 'exact' })
+    .order('created_at', { ascending: false })
+    .range(start, end);
+    
+  return { data, error, count, totalPages: Math.ceil(count / pageSize) };
+};
+
+// Funções similares para outros recursos (keepsakes, warehouse_items, etc.)

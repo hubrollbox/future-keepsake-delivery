@@ -235,3 +235,22 @@ export const useAdminData = () => {
     updateWarehouseItemStatus,
   };
 };
+
+// Adicionar estado para paginação
+const [currentPage, setCurrentPage] = useState(1);
+const [pageSize, setPageSize] = useState(10);
+const [totalPages, setTotalPages] = useState(1);
+
+// Atualizar a função de busca
+const fetchDeliveries = async () => {
+  const { data, error, totalPages } = await adminService.fetchDeliveries(currentPage, pageSize);
+  if (data) {
+    setDeliveries(data);
+    setTotalPages(totalPages);
+  }
+};
+
+// Adicionar useEffect para reagir às mudanças de página
+useEffect(() => {
+  fetchDeliveries();
+}, [currentPage, pageSize]);

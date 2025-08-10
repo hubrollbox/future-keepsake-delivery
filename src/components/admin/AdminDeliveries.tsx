@@ -8,6 +8,8 @@ import { useToast } from "@/hooks/use-toast";
 import { exportToCSV } from "@/lib/exportToCSV";
 import SearchFilters from "@/components/search/SearchFilters";
 import { useSearchFilters } from "@/hooks/useSearchFilters";
+// Importar o componente de paginação
+import { Pagination } from '../ui/Pagination';
 
 interface Delivery {
   id: string;

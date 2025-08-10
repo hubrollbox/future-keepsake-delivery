@@ -52,15 +52,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:dev": "vite build --mode development",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "build:prod": "vite build --mode production",
     "preview": "vite preview",
-    "keepsake:serve": "node scripts/serveKeepsakeFunction.js",
-    "keepsake:test": "node scripts/testLocalKeepsakeFunction.js",
-    "keepsake:deploy": "node scripts/deployKeepsakeFunction.js",
-    "keepsake:update": "node scripts/updateKeepsakeStatus.js",
-    "keepsake:status": "node scripts/checkDeploymentStatus.js",
-    "keepsake:email": "node scripts/testResendEmail.js"
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "postbuild": "node scripts/optimize-assets.js"
   },
   "devDependencies": {
     "@radix-ui/react-label": "^2.0.2",
@@ -85,6 +80,7 @@
     "typescript": "^5.0.0",
     "vite": "^5.0.0",
     "vite-plugin-pwa": "^1.0.1",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "@hookform/resolvers": "^3.3.1"
   }
 }
