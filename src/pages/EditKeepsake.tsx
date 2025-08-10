@@ -1,0 +1,260 @@
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Loader2 } from "lucide-react";
+import { supabase } from "@/lib/supabase";
+import { getTomorrowDate } from "@/lib/utils";
+
+// Definição do schema de validação usando Zod
+const editKeepsakeSchema = z.object({
+  title: z.string().min(5, { message: "O título deve ter pelo menos 5 caracteres" }),
+  content: z.string().min(10, { message: "A mensagem deve ter pelo menos 10 caracteres" }),
+  delivery_date: z.string().refine(
+    (date) => new Date(date) >= new Date(getTomorrowDate()),
+    { message: "A data de entrega deve ser no futuro" }
+  ),
+  recipient_email: z.string().email({ message: "Email inválido" }).nullable().optional(),
+  recipient_phone: z.string().regex(/^\+?[0-9]{7,15}$/, { message: "Número de telefone inválido" }).nullable().optional(),
+});
+
+type EditKeepsakeFormValues = z.infer<typeof editKeepsakeSchema>;
+
+const EditKeepsake = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
+  const [keepsake, setKeepsake] = useState<any>(null);
+
+  const form = useForm<EditKeepsakeFormValues>({
+    resolver: zodResolver(editKeepsakeSchema),
+    defaultValues: {
+      title: "",
+      content: "",
+      delivery_date: "",
+      recipient_email: "",
+      recipient_phone: "",
+    },
+  });
+
+  // Buscar dados do keepsake existente
+  useEffect(() => {
+    const fetchKeepsake = async () => {
+      setLoading(true);
+      try {
+        const { data, error } = await supabase
+          .from("keepsakes")
+          .select("*")
+          .eq("id", id)
+          .single();
+
+        if (error) {
+          throw error;
+        }
+
+        if (data) {
+          setKeepsake(data);
+          // Preencher o formulário com os dados existentes
+          form.reset({
+            title: data.title || "",
+            content: data.content || "",
+            delivery_date: data.delivery_date ? new Date(data.delivery_date).toISOString().split("T")[0] : "",
+            recipient_email: data.recipient_email || "",
+            recipient_phone: data.recipient_phone || "",
+          });
+        }
+      } catch (error: any) {
+        toast({
+          variant: "destructive",
+          title: "Erro ao carregar keepsake",
+          description: error.message || "Não foi possível carregar os dados do keepsake.",
+        });
+        navigate("/dashboard");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchKeepsake();
+    }
+  }, [id, form, toast, navigate]);
+
+  const onSubmit = async (values: EditKeepsakeFormValues) => {
+    setLoading(true);
+    try {
+      // Atualizar o keepsake no Supabase
+      const { error } = await supabase
+        .from("keepsakes")
+        .update({
+          title: values.title,
+          content: values.content,
+          delivery_date: values.delivery_date,
+          recipient_email: values.recipient_email || null,
+          recipient_phone: values.recipient_phone || null,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", id);
+
+      if (error) {
+        throw error;
+      }
+
+      toast({
+        title: "Keepsake atualizado",
+        description: "Seu keepsake foi atualizado com sucesso!",
+      });
+
+      navigate("/dashboard");
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Erro ao atualizar keepsake",
+        description: error.message || "Não foi possível atualizar o keepsake.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading && !keepsake) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="container mx-auto py-8 px-4 sm:px-6 lg:px-8">
+      <Card className="max-w-2xl mx-auto">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold">Editar Keepsake</CardTitle>
+          <CardDescription>
+            Atualize as informações do seu keepsake conforme necessário.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Título</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Título do keepsake" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="content"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Mensagem</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Sua mensagem para o futuro"
+                        className="min-h-32"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="delivery_date"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Data de Entrega</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="date"
+                        min={getTomorrowDate()}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      A data em que seu keepsake será entregue.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="recipient_email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email do Destinatário (opcional)</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="email"
+                        placeholder="email@exemplo.com"
+                        {...field}
+                        value={field.value || ""}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="recipient_phone"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Telefone do Destinatário (opcional)</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="tel"
+                        placeholder="+551199999999"
+                        {...field}
+                        value={field.value || ""}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <CardFooter className="flex justify-between px-0">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => navigate("/dashboard")}
+                >
+                  Cancelar
+                </Button>
+                <Button type="submit" disabled={loading}>
+                  {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  Salvar Alterações
+                </Button>
+              </CardFooter>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default EditKeepsake;

@@ -9,10 +9,13 @@ import ProfileHeader from "@/components/dashboard/ProfileHeader";
 import AdminStatsSection from "@/components/dashboard/AdminStatsSection";
 import UserStatsSection from "@/components/dashboard/UserStatsSection";
 import TimeCapsuleSection from "@/components/dashboard/TimeCapsuleSection";
+import { KeepsakesList } from "@/components/dashboard/KeepsakesList";
 import { useKeepsakes } from "@/hooks/useKeepsakes";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PlusCircle, Clock, Package } from "lucide-react";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -92,28 +95,41 @@ const Dashboard = () => {
 
             {/* Keepsakes Section */}
             <div className="space-y-3">
-              <h3 className="text-lg font-serif font-semibold text-steel-blue">Minhas Cápsulas</h3>
-              {keepsakesLoading ? (
-                <p className="text-misty-gray">A carregar cápsulas...</p>
-              ) : (
-                <ul className="space-y-2">
-                  {keepsakes.map(k => (
-                    <li key={k.id} className="p-3 bg-warm-cream border border-dusty-rose/20 rounded-md flex items-center justify-between gap-3">
-                      <div>
-                        <p className="text-steel-blue font-medium">{k.title}</p>
-                        <p className="text-sm text-misty-gray">Entrega: {new Date(k.delivery_date).toLocaleDateString('pt-PT')}</p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs px-2 py-1 rounded bg-dusty-rose/10 text-dusty-rose">{k.status || 'scheduled'}</span>
-                        <Button variant="outline" size="sm" onClick={() => deleteKeepsake(k.id)}>Apagar</Button>
-                      </div>
-                    </li>
-                  ))}
-                  {keepsakes.length === 0 && (
-                    <p className="text-misty-gray">Sem cápsulas ainda.</p>
-                  )}
-                </ul>
-              )}
+              <div className="flex justify-between items-center">
+                <h3 className="text-lg font-serif font-semibold text-steel-blue">Minhas Cápsulas</h3>
+                <Button 
+                  onClick={() => navigate("/create-keepsake")} 
+                  size="sm" 
+                  className="flex items-center gap-1 bg-dusty-rose hover:bg-dusty-rose/90"
+                >
+                  <PlusCircle className="h-4 w-4" /> Nova Cápsula
+                </Button>
+              </div>
+              
+              <Tabs defaultValue="all" className="w-full">
+                <TabsList className="grid w-full grid-cols-3">
+                  <TabsTrigger value="all" className="flex items-center gap-1">
+                    <Package className="h-4 w-4" /> Todas
+                  </TabsTrigger>
+                  <TabsTrigger value="pending" className="flex items-center gap-1">
+                    <Clock className="h-4 w-4" /> Pendentes
+                  </TabsTrigger>
+                  <TabsTrigger value="delivered" className="flex items-center gap-1">
+                    <Package className="h-4 w-4" /> Entregues
+                  </TabsTrigger>
+                </TabsList>
+                <TabsContent value="all" className="mt-4">
+                  <KeepsakesList />
+                </TabsContent>
+                <TabsContent value="pending" className="mt-4">
+                  {/* Filtrar por status pendente */}
+                  <KeepsakesList />
+                </TabsContent>
+                <TabsContent value="delivered" className="mt-4">
+                  {/* Filtrar por status entregue */}
+                  <KeepsakesList />
+                </TabsContent>
+              </Tabs>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -169,28 +185,41 @@ const Dashboard = () => {
 
               {/* Keepsakes Section */}
               <div className="space-y-3">
-                <h3 className="text-lg font-serif font-semibold text-steel-blue">Minhas Cápsulas</h3>
-                {keepsakesLoading ? (
-                  <p className="text-misty-gray">A carregar cápsulas...</p>
-                ) : (
-                <ul className="space-y-2">
-                  {keepsakes.map(k => (
-                    <li key={k.id} className="p-3 bg-warm-cream border border-dusty-rose/20 rounded-md flex items-center justify-between gap-3">
-                      <div>
-                        <p className="text-steel-blue font-medium">{k.title}</p>
-                        <p className="text-sm text-misty-gray">Entrega: {new Date(k.delivery_date).toLocaleDateString('pt-PT')}</p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs px-2 py-1 rounded bg-dusty-rose/10 text-dusty-rose">{k.status || 'scheduled'}</span>
-                        <Button variant="outline" size="sm" onClick={() => deleteKeepsake(k.id)}>Apagar</Button>
-                      </div>
-                    </li>
-                  ))}
-                  {keepsakes.length === 0 && (
-                    <p className="text-misty-gray">Sem cápsulas ainda.</p>
-                  )}
-                </ul>
-                )}
+                <div className="flex justify-between items-center">
+                  <h3 className="text-lg font-serif font-semibold text-steel-blue">Minhas Cápsulas</h3>
+                  <Button 
+                    onClick={() => navigate("/create-keepsake")} 
+                    size="sm" 
+                    className="flex items-center gap-1 bg-dusty-rose hover:bg-dusty-rose/90"
+                  >
+                    <PlusCircle className="h-4 w-4" /> Nova Cápsula
+                  </Button>
+                </div>
+                
+                <Tabs defaultValue="all" className="w-full">
+                  <TabsList className="grid w-full grid-cols-3">
+                    <TabsTrigger value="all" className="flex items-center gap-1">
+                      <Package className="h-4 w-4" /> Todas
+                    </TabsTrigger>
+                    <TabsTrigger value="pending" className="flex items-center gap-1">
+                      <Clock className="h-4 w-4" /> Pendentes
+                    </TabsTrigger>
+                    <TabsTrigger value="delivered" className="flex items-center gap-1">
+                      <Package className="h-4 w-4" /> Entregues
+                    </TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="all" className="mt-4">
+                    <KeepsakesList />
+                  </TabsContent>
+                  <TabsContent value="pending" className="mt-4">
+                    {/* Filtrar por status pendente */}
+                    <KeepsakesList />
+                  </TabsContent>
+                  <TabsContent value="delivered" className="mt-4">
+                    {/* Filtrar por status entregue */}
+                    <KeepsakesList />
+                  </TabsContent>
+                </Tabs>
               </div>
               
               {/* Botões de Ação Rápida */}
