@@ -7,6 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { Star, Package, Gift, Lock, Users, Video, ShoppingCart, Truck } from "lucide-react";
 import { KeepsakeFormData } from "@/hooks/useKeepsakeForm";
+import { UseFormReturn } from "react-hook-form";
+import { KeepsakeFormValues } from "@/validations/keepsakeValidationSchema";
 
 interface Product {
   id: string;
@@ -22,9 +24,10 @@ interface ProductsStepProps {
   updateFormData: (data: Partial<KeepsakeFormData>) => void;
   nextStep: () => void;
   prevStep: () => void;
+  form: UseFormReturn<KeepsakeFormValues>;
 }
 
-const ProductsStep = ({ formData, updateFormData, nextStep, prevStep }: ProductsStepProps) => {
+const ProductsStep = ({ formData, updateFormData, nextStep, prevStep, form }: ProductsStepProps) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -190,6 +193,7 @@ const ProductsStep = ({ formData, updateFormData, nextStep, prevStep }: Products
         </Button>
         <Button 
           onClick={handleNext}
+          disabled={form.formState.isSubmitting}
           className="bg-dusty-rose hover:bg-dusty-rose/90 text-white px-8"
         >
           Próximo Passo

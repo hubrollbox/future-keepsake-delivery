@@ -15,11 +15,13 @@ const CreateKeepsake: React.FC = () => {
   const {
     currentStep,
     formData,
-    loading: submitting,
+    isSubmitting,
     updateFormData,
     nextStep,
     prevStep,
-    submitKeepsake
+    submitKeepsake,
+    validateCurrentStep,
+    form
   } = useKeepsakeForm();
 
   // Redirect if not authenticated
@@ -57,6 +59,7 @@ const CreateKeepsake: React.FC = () => {
             selectedType={formData.type}
             onTypeSelect={(type) => updateFormData({ type })}
             onNext={nextStep}
+            form={form}
           />
         );
       case 1:
@@ -66,6 +69,7 @@ const CreateKeepsake: React.FC = () => {
             updateFormData={updateFormData}
             nextStep={nextStep}
             prevStep={prevStep}
+            form={form}
           />
         );
       case 2:
@@ -75,6 +79,7 @@ const CreateKeepsake: React.FC = () => {
             updateFormData={updateFormData}
             nextStep={nextStep}
             prevStep={prevStep}
+            form={form}
           />
         );
       case 3:
@@ -84,6 +89,7 @@ const CreateKeepsake: React.FC = () => {
             updateFormData={updateFormData}
             nextStep={nextStep}
             prevStep={prevStep}
+            form={form}
           />
         );
       case 4:
@@ -92,7 +98,7 @@ const CreateKeepsake: React.FC = () => {
             formData={formData}
             onSubmit={submitKeepsake}
             onBack={prevStep}
-            loading={submitting}
+            loading={isSubmitting}
           />
         );
       case 5:

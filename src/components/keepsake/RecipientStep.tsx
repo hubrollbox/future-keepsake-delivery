@@ -7,15 +7,25 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card, CardContent } from "@/components/ui/card";
 import { User, Mail, MessageCircle, MapPin } from "lucide-react";
 import { KeepsakeFormData } from "@/hooks/useKeepsakeForm";
+import { UseFormReturn } from "react-hook-form";
+import { KeepsakeFormValues } from "@/validations/keepsakeValidationSchema";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
 interface RecipientStepProps {
   formData: KeepsakeFormData;
   updateFormData: (data: Partial<KeepsakeFormData>) => void;
   nextStep: () => void;
   prevStep: () => void;
+  form: UseFormReturn<KeepsakeFormValues>;
 }
 
-const RecipientStep = ({ formData, updateFormData, nextStep, prevStep }: RecipientStepProps) => {
+const RecipientStep = ({ formData, updateFormData, nextStep, prevStep, form }: RecipientStepProps) => {
   const deliveryChannels = [
     {
       value: 'email' as const,
@@ -57,17 +67,9 @@ const RecipientStep = ({ formData, updateFormData, nextStep, prevStep }: Recipie
     });
   };
 
-  const handleNext = () => {
-    if (!formData.recipient_name) return;
-
-    if (formData.delivery_channel === 'physical') {
-      if (formData.street && formData.city && formData.postal_code) {
-        nextStep();
-      }
-      return;
-    }
-
-    if (formData.recipient_contact) {
+  const handleNext = async () => {
+    const isValid = await form.trigger(['recipient_name', 'delivery_channel']);
+    if (isValid) {
       nextStep();
     }
   };
@@ -88,82 +90,112 @@ const RecipientStep = ({ formData, updateFormData, nextStep, prevStep }: Recipie
 
       <div className="space-y-6">
         <div className="grid md:grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="recipient_name" className="text-steel-blue font-medium">
-              Nome do Destinatário *
-            </Label>
-            <Input
-              id="recipient_name"
-              type="text"
-              value={formData.recipient_name}
-              onChange={(e) => updateFormData({ recipient_name: e.target.value })}
-              placeholder="Nome completo"
-              className="mt-1"
-            />
-          </div>
+          <FormField
+            control={form.control}
+            name="recipient_name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-steel-blue font-medium">
+                  Nome do Destinatário *
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Nome completo"
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      updateFormData({ recipient_name: e.target.value });
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-          <div>
-            <Label htmlFor="relationship" className="text-steel-blue font-medium">
-              Relação
-            </Label>
-            <Input
-              id="relationship"
-              type="text"
-              value={formData.relationship}
-              onChange={(e) => updateFormData({ relationship: e.target.value })}
-              placeholder="Ex: filha, amigo, irmão"
-              className="mt-1"
-            />
-          </div>
+          <FormField
+            control={form.control}
+            name="relationship"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-steel-blue font-medium">
+                  Relação
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Ex: filha, amigo, irmão"
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      updateFormData({ relationship: e.target.value });
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
 
-        <div>
-          <Label className="text-steel-blue font-medium mb-4 block">
-            Canal de Entrega *
-          </Label>
-          <RadioGroup
-            value={formData.delivery_channel}
-            onValueChange={handleChannelChange}
-            className="space-y-3"
-          >
-            {deliveryChannels.map((channel) => {
-              const IconComponent = channel.icon;
-              return (
-                <Card
-                  key={channel.value}
-                  className={`cursor-pointer transition-all hover:shadow-soft ${
-                    formData.delivery_channel === channel.value
-                      ? 'border-dusty-rose bg-dusty-rose/5'
-                      : 'border-sand-beige hover:border-dusty-rose/50'
-                  }`}
+        <FormField
+          control={form.control}
+          name="delivery_channel"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-steel-blue font-medium mb-4 block">
+                Canal de Entrega *
+              </FormLabel>
+              <FormControl>
+                <RadioGroup
+                  value={field.value}
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                    handleChannelChange(value as 'email' | 'sms' | 'physical');
+                  }}
+                  className="space-y-3"
                 >
-                  <CardContent className="p-4">
-                    <div className="flex items-center space-x-3">
-                      <RadioGroupItem value={channel.value} id={channel.value} />
-                      <IconComponent className="h-5 w-5 text-dusty-rose" />
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between">
-                          <Label
-                            htmlFor={channel.value}
-                            className="font-medium text-steel-blue cursor-pointer"
-                          >
-                            {channel.label}
-                          </Label>
-                          <span className="font-semibold text-steel-blue">
-                            {channel.cost === 0 ? 'Grátis' : `${channel.cost.toFixed(2)} €`}
-                          </span>
-                        </div>
-                        <p className="text-sm text-misty-gray mt-1">
-                          {channel.description}
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </RadioGroup>
-        </div>
+                  {deliveryChannels.map((channel) => {
+                    const IconComponent = channel.icon;
+                    return (
+                      <Card
+                        key={channel.value}
+                        className={`cursor-pointer transition-all hover:shadow-soft ${
+                          field.value === channel.value
+                            ? 'border-dusty-rose bg-dusty-rose/5'
+                            : 'border-sand-beige hover:border-dusty-rose/50'
+                        }`}
+                      >
+                        <CardContent className="p-4">
+                          <div className="flex items-center space-x-3">
+                            <RadioGroupItem value={channel.value} id={channel.value} />
+                            <IconComponent className="h-5 w-5 text-dusty-rose" />
+                            <div className="flex-1">
+                              <div className="flex items-center justify-between">
+                                <Label
+                                  htmlFor={channel.value}
+                                  className="font-medium text-steel-blue cursor-pointer"
+                                >
+                                  {channel.label}
+                                </Label>
+                                <span className="font-semibold text-steel-blue">
+                                  {channel.cost === 0 ? 'Grátis' : `${channel.cost.toFixed(2)} €`}
+                                </span>
+                              </div>
+                              <p className="text-sm text-misty-gray mt-1">
+                                {channel.description}
+                              </p>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                </RadioGroup>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         {selectedChannel && selectedChannel.value !== 'physical' && (
           <div>
@@ -254,13 +286,7 @@ const RecipientStep = ({ formData, updateFormData, nextStep, prevStep }: Recipie
         </Button>
         <Button 
           onClick={handleNext}
-          disabled={
-            !formData.recipient_name || (
-              formData.delivery_channel === 'physical'
-                ? !(formData.street && formData.city && formData.postal_code)
-                : !formData.recipient_contact
-            )
-          }
+          disabled={form.formState.isSubmitting}
           className="bg-dusty-rose hover:bg-dusty-rose/90 text-white px-8"
         >
           Próximo Passo

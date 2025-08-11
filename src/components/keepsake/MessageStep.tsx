@@ -6,30 +6,26 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Calendar, MessageSquare } from "lucide-react";
 import { KeepsakeFormData } from "@/hooks/useKeepsakeForm";
+import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from "@/components/ui/form";
+import { UseFormReturn } from "react-hook-form";
+import { KeepsakeFormValues } from "@/validations/keepsakeValidationSchema";
+import { getTomorrowDate } from "@/utils/validation";
 
 interface MessageStepProps {
   formData: KeepsakeFormData;
   updateFormData: (data: Partial<KeepsakeFormData>) => void;
   nextStep: () => void;
   prevStep: () => void;
+  form: UseFormReturn<KeepsakeFormValues>;
 }
 
-const MessageStep = ({ formData, updateFormData, nextStep, prevStep }: MessageStepProps) => {
-  const handleNext = () => {
-    const isComplete = formData.title && formData.message && formData.delivery_date;
-    if (!isComplete) return;
-    const tomorrowStr = getTomorrowDate();
-    const selected = new Date(formData.delivery_date);
-    const tomorrow = new Date(tomorrowStr);
-    if (selected >= tomorrow) {
+const MessageStep = ({ formData, updateFormData, nextStep, prevStep, form }: MessageStepProps) => {
+  const handleNext = async () => {
+    // Validar os campos deste passo usando react-hook-form
+    const isValid = await form.trigger(['title', 'message', 'delivery_date']);
+    if (isValid) {
       nextStep();
     }
-  };
-
-  const getTomorrowDate = () => {
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    return tomorrow.toISOString().split('T')[0];
   };
 
   return (
@@ -44,62 +40,91 @@ const MessageStep = ({ formData, updateFormData, nextStep, prevStep }: MessageSt
         </p>
       </div>
 
-      <div className="space-y-4">
-        <div>
-          <Label htmlFor="title" className="text-steel-blue font-medium">
-            Título da Cápsula *
-          </Label>
-          <Input
-            id="title"
-            type="text"
-            value={formData.title}
-            onChange={(e) => updateFormData({ title: e.target.value })}
-            placeholder="Ex: Para a minha filha aos 18 anos"
-            className="mt-1"
-            maxLength={100}
-            minLength={5}
-            required
+      <Form {...form}>
+        <div className="space-y-4">
+          <FormField
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-steel-blue font-medium">
+                  Título da Cápsula *
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="Ex: Para a minha filha aos 18 anos"
+                    className="mt-1"
+                    maxLength={100}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      updateFormData({ title: e.target.value });
+                    }}
+                  />
+                </FormControl>
+                <p className="text-xs text-misty-gray mt-1">
+                  {field.value?.length || 0}/100 caracteres
+                </p>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-          <p className="text-xs text-misty-gray mt-1">
-            {formData.title.length}/100 caracteres
-          </p>
-        </div>
 
-        <div>
-          <Label htmlFor="message" className="text-steel-blue font-medium">
-            Mensagem *
-          </Label>
-          <Textarea
-            id="message"
-            value={formData.message}
-            onChange={(e) => updateFormData({ message: e.target.value })}
-            placeholder="Escreve aqui a tua mensagem..."
-            className="mt-1 min-h-32"
-            maxLength={2000}
-            minLength={5}
-            required
+          <FormField
+            control={form.control}
+            name="message"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-steel-blue font-medium">
+                  Mensagem *
+                </FormLabel>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    placeholder="Escreve aqui a tua mensagem..."
+                    className="mt-1 min-h-32"
+                    maxLength={2000}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      updateFormData({ message: e.target.value });
+                    }}
+                  />
+                </FormControl>
+                <p className="text-xs text-misty-gray mt-1">
+                  {field.value?.length || 0}/2000 caracteres
+                </p>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-          <p className="text-xs text-misty-gray mt-1">
-            {formData.message.length}/2000 caracteres
-          </p>
-        </div>
 
-        <div>
-          <Label htmlFor="delivery_date" className="text-steel-blue font-medium flex items-center gap-2">
-            <Calendar className="h-4 w-4" />
-            Data de Entrega *
-          </Label>
-          <Input
-            id="delivery_date"
-            type="date"
-            value={formData.delivery_date}
-            onChange={(e) => updateFormData({ delivery_date: e.target.value })}
-            min={getTomorrowDate()}
-            className="mt-1"
-            required
+          <FormField
+            control={form.control}
+            name="delivery_date"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-steel-blue font-medium flex items-center gap-2">
+                  <Calendar className="h-4 w-4" />
+                  Data de Entrega *
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    type="date"
+                    min={getTomorrowDate()}
+                    className="mt-1"
+                    onChange={(e) => {
+                      field.onChange(e);
+                      updateFormData({ delivery_date: e.target.value });
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
         </div>
-      </div>
+      </Form>
 
       <div className="flex justify-between pt-6">
         <Button variant="outline" onClick={prevStep}>
@@ -107,7 +132,7 @@ const MessageStep = ({ formData, updateFormData, nextStep, prevStep }: MessageSt
         </Button>
         <Button 
           onClick={handleNext}
-          disabled={!formData.title || !formData.message || !formData.delivery_date}
+          disabled={form.formState.isSubmitting}
           className="bg-dusty-rose hover:bg-dusty-rose/90 text-white px-8"
         >
           Próximo Passo
