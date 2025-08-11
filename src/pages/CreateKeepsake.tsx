@@ -86,26 +86,66 @@ const CreateKeepsake: React.FC = () => {
   ];
 
   const renderStepContent = () => {
-    const stepProps = { form, nextStep, prevStep };
+    const common = { form, nextStep, prevStep };
+    const formData = form.getValues();
+    const updateFormData = (data: Record<string, any>) => {
+      Object.entries(data).forEach(([k, v]) => form.setValue(k as any, v as any));
+    };
 
     switch (currentStep) {
       case 1:
-        return <TypeStep {...stepProps} />;
+        return (
+          <TypeStep
+            form={form}
+            selectedType={form.watch('type') as 'digital' | 'physical'}
+            onTypeSelect={(v) => form.setValue('type', v)}
+            onNext={nextStep}
+          />
+        );
       case 2:
-        return <RecipientStep {...stepProps} />;
+        return (
+          <RecipientStep
+            {...common}
+            formData={formData as any}
+            updateFormData={updateFormData}
+          />
+        );
       case 3:
-        return <MessageStep {...stepProps} />;
+        return (
+          <MessageStep
+            {...common}
+            formData={formData as any}
+            updateFormData={updateFormData}
+          />
+        );
       case 4:
-        return <ProductsStep {...stepProps} />;
+        return (
+          <ProductsStep
+            {...common}
+            formData={formData as any}
+            updateFormData={updateFormData}
+          />
+        );
       case 5:
-        return <ReviewStep {...stepProps} onSubmit={submitKeepsake} />;
+        return (
+          <ReviewStep
+            formData={formData as any}
+            onBack={prevStep}
+            onSubmit={async () => { await submitKeepsake(); }}
+            loading={formState.isSubmitting}
+          />
+        );
       case 6:
-        return <SuccessStep onCreateAnother={() => {
-          resetForm();
-          goToStep(1);
-        }} />;
+        return <SuccessStep formData={formData as any} />;
       default:
-        return <TypeStep {...stepProps} />;
+        return (
+          <TypeStep
+            form={form}
+            selectedType={form.watch('type') as 'digital' | 'physical'}
+            onTypeSelect={(v) => form.setValue('type', v)}
+            onNext={nextStep}
+          />
+        );
     }
   };
 

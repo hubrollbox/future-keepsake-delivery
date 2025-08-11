@@ -182,9 +182,7 @@ export const useKeepsakeForm = () => {
       toast({
         title: 'Erro de autenticação',
         description: 'Precisa de estar autenticado para criar uma cápsula',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
+        variant: 'destructive',
       });
       return false;
     }
@@ -198,9 +196,7 @@ export const useKeepsakeForm = () => {
         toast({
           title: 'Dados inválidos',
           description: 'Por favor, corrija os erros antes de submeter',
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
+          variant: 'destructive',
         });
         return false;
       }
@@ -270,9 +266,6 @@ export const useKeepsakeForm = () => {
       toast({
         title: 'Cápsula criada com sucesso!',
         description: 'A sua cápsula do tempo foi criada e será entregue na data especificada.',
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
       });
 
       // Resetar formulário e avançar para etapa de sucesso
@@ -289,9 +282,7 @@ export const useKeepsakeForm = () => {
       toast({
         title: 'Erro ao criar cápsula',
         description: 'Ocorreu um erro inesperado. Tente novamente.',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
+        variant: 'destructive',
       });
       return false;
     } finally {
