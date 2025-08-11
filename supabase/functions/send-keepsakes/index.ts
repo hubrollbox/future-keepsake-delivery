@@ -1,4 +1,5 @@
 // Edge Function para processar e enviar keepsakes agendadas
+// Versão melhorada com melhor tratamento de erros e timezone de Portugal
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.38.4'
 import { Resend } from 'npm:resend@2.0.0'
 
@@ -15,6 +16,9 @@ const resend = new Resend(Deno.env.get('RESEND_API_KEY'))
 const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? ''
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
 const supabase = createClient(supabaseUrl, supabaseServiceKey)
+
+// Configuração de timezone para Portugal
+const PORTUGAL_TIMEZONE = 'Europe/Lisbon'
 
 // Interface para os dados da keepsake
 interface Keepsake {
@@ -64,13 +68,35 @@ async function sendEmail(to: string, subject: string, htmlContent: string, fromN
 // Função para processar keepsakes pendentes
 async function processKeepsakes() {
   try {
+    // Obter data/hora atual em timezone de Portugal
+    const nowInPortugal = new Date().toLocaleString('en-US', { timeZone: PORTUGAL_TIMEZONE })
+    const currentDateTime = new Date(nowInPortugal).toISOString()
+    
+    console.log(`Processando keepsakes às ${currentDateTime} (Portugal timezone)`)
+    
     // Buscar keepsakes digitais agendadas para hoje ou datas passadas
+    // Usando status 'pending' conforme especificado na função SQL
     const { data: keepsakes, error: keepsakeError } = await supabase
       .from('keepsakes')
-      .select('*')
-      .eq('status', 'scheduled')
+      .select(`
+        *,
+        recipients (
+          id,
+          name,
+          email,
+          delivery_channel,
+          contact_info,
+          relationship
+        ),
+        profiles (
+          id,
+          email,
+          full_name
+        )
+      `)
+      .eq('status', 'pending')
       .eq('type', 'digital')
-      .lte('delivery_date', new Date().toISOString())
+      .lte('delivery_date', currentDateTime)
     
     if (keepsakeError) {
       throw new Error(`Erro ao buscar keepsakes: ${keepsakeError.message}`)
@@ -88,30 +114,17 @@ async function processKeepsakes() {
     // Processar cada keepsake
     for (const keepsake of keepsakes) {
       try {
-        // Buscar informações do remetente
-        const { data: senderData, error: senderError } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', keepsake.user_id)
-          .single()
-        
-        if (senderError) {
-          throw new Error(`Erro ao buscar dados do remetente: ${senderError.message}`)
+        // Verificar se os dados necessários estão presentes
+        if (!keepsake.profiles) {
+          throw new Error(`Dados do remetente não encontrados para a keepsake ${keepsake.id}`)
         }
         
-        // Buscar informações do destinatário
-        const { data: recipients, error: recipientError } = await supabase
-          .from('recipients')
-          .select('*')
-          .eq('keepsake_id', keepsake.id)
-        
-        if (recipientError) {
-          throw new Error(`Erro ao buscar destinatários: ${recipientError.message}`)
-        }
-        
-        if (!recipients || recipients.length === 0) {
+        if (!keepsake.recipients || keepsake.recipients.length === 0) {
           throw new Error(`Nenhum destinatário encontrado para a keepsake ${keepsake.id}`)
         }
+        
+        const senderData = keepsake.profiles
+        const recipients = keepsake.recipients
         
         // Enviar email para cada destinatário
         for (const recipient of recipients) {
@@ -131,7 +144,7 @@ async function processKeepsakes() {
                 
                 <div style="background-color: #ECE5DA; padding: 20px; border-radius: 8px; margin: 20px 0;">
                   <p style="color: #3D4A5A; margin: 0; font-style: italic;">
-                    ${keepsake.message_content}
+                    ${keepsake.message || keepsake.message_content || 'Mensagem não disponível'}
                   </p>
                 </div>
                 
@@ -169,7 +182,7 @@ async function processKeepsakes() {
                 
                 <div style="background-color: #ECE5DA; padding: 20px; border-radius: 8px; margin: 20px 0;">
                   <p style="color: #3D4A5A; margin: 0; font-style: italic;">
-                    ${keepsake.message_content}
+                    ${keepsake.message || keepsake.message_content || 'Mensagem não disponível'}
                   </p>
                 </div>
                 
@@ -217,11 +230,12 @@ async function processKeepsakes() {
           }
         }
         
-        // Atualizar status da keepsake para 'sent'
+        // Atualizar status da keepsake para 'sent' e definir sent_at
         const { error: updateError } = await supabase
           .from('keepsakes')
           .update({ 
             status: 'sent',
+            sent_at: new Date().toISOString(),
             updated_at: new Date().toISOString()
           })
           .eq('id', keepsake.id)
