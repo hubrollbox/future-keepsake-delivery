@@ -225,7 +225,7 @@ const CreateKeepsake: React.FC = () => {
         </Card>
 
         {/* Botões de navegação (apenas se não for a última etapa) */}
-        {currentStep < 6 && (
+        {currentStep < 5 && (
           <div className="flex justify-between items-center mt-8">
             <Button
               variant="outline"

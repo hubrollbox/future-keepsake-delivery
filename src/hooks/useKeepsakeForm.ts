@@ -216,6 +216,7 @@ export const useKeepsakeForm = () => {
           user_id: user.id,
           title: formData.title,
           message: formData.message,
+          message_content: formData.message,
           delivery_date: formData.delivery_date,
           type: formData.type,
           status: 'pending',
@@ -228,22 +229,29 @@ export const useKeepsakeForm = () => {
       if (keepsakeError) throw keepsakeError;
 
       // Inserir dados do destinatário
+      const recipientPayload: any = {
+        keepsake_id: keepsakeData.id,
+        name: formData.recipient_name,
+        relationship: formData.relationship || null,
+        delivery_channel: formData.delivery_channel,
+        channel_cost: formData.channel_cost ?? 0,
+      };
+
+      if (formData.delivery_channel === 'email') {
+        recipientPayload.email = formData.recipient_contact || '';
+      } else if (formData.delivery_channel === 'sms') {
+        recipientPayload.phone = formData.recipient_contact || '';
+      } else if (formData.delivery_channel === 'physical') {
+        recipientPayload.street = formData.street;
+        recipientPayload.city = formData.city;
+        recipientPayload.state = formData.state;
+        recipientPayload.postal_code = formData.postal_code;
+        recipientPayload.country = formData.country;
+      }
+
       const { error: recipientError } = await supabase
         .from('recipients')
-        .insert({
-          keepsake_id: keepsakeData.id,
-          name: formData.recipient_name,
-          delivery_channel: formData.delivery_channel,
-          contact_info: formData.recipient_contact || '',
-          address: formData.delivery_channel === 'physical' ? {
-            street: formData.street,
-            city: formData.city,
-            postal_code: formData.postal_code,
-            state: formData.state,
-            country: formData.country,
-          } : null,
-          relationship: formData.relationship,
-        });
+        .insert(recipientPayload);
 
       if (recipientError) throw recipientError;
 
@@ -256,7 +264,7 @@ export const useKeepsakeForm = () => {
               keepsake_id: keepsakeData.id,
               product_id: product.id,
               quantity: product.quantity,
-              price_at_time: product.price,
+              unit_price: product.price,
             }))
           );
 
