@@ -23,7 +23,7 @@ export const useKeepsakes = () => {
     try {
       const { data, error } = await supabase
         .from('keepsakes')
-        .select('id, title, delivery_date, status, type, content, recipient_email, recipient_phone')
+        .select('id, title, delivery_date, status, type, content:message_content, recipient_email, recipient_phone')
         .order('delivery_date', { ascending: false });
 
       if (error) throw error;
@@ -45,7 +45,7 @@ export const useKeepsakes = () => {
     try {
       const { data, error } = await supabase
         .from('keepsakes')
-        .select('id, title, delivery_date, status, type, content, recipient_email, recipient_phone')
+        .select('id, title, delivery_date, status, type, content:message_content, recipient_email, recipient_phone')
         .order('delivery_date', { ascending: false })
         .range(start, start + limit - 1);
 
@@ -65,9 +65,14 @@ export const useKeepsakes = () => {
   // Função para atualizar um keepsake
   const updateKeepsake = async (id: string, updates: Partial<Keepsake>) => {
     try {
+      const dbUpdates: any = { ...updates };
+      if (typeof updates.content !== 'undefined') {
+        dbUpdates.message_content = updates.content;
+        delete dbUpdates.content;
+      }
       const { error } = await supabase
         .from('keepsakes')
-        .update(updates)
+        .update(dbUpdates)
         .eq('id', id);
 
       if (error) throw error;

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useForm, UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -79,6 +79,7 @@ export const useKeepsakeForm = () => {
     validationErrors: {},
     stepValidation: {},
   });
+  const submittingRef = useRef(false);
 
   // Configuração do React Hook Form com validação melhorada
   const form = useForm<KeepsakeFormData>({
@@ -186,6 +187,11 @@ export const useKeepsakeForm = () => {
       });
       return false;
     }
+
+    if (submittingRef.current) {
+      return false;
+    }
+    submittingRef.current = true;
 
     setFormState(prev => ({ ...prev, isSubmitting: true }));
 
@@ -295,6 +301,7 @@ export const useKeepsakeForm = () => {
       return false;
     } finally {
       setFormState(prev => ({ ...prev, isSubmitting: false }));
+      submittingRef.current = false;
     }
   }, [user, form, toast]);
 
