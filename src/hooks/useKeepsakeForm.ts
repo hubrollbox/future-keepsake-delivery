@@ -68,7 +68,7 @@ const STEP_VALIDATION_CONFIG: StepValidationConfig[] = [
 
 export const useKeepsakeForm = () => {
   const { user } = useAuth();
-  const toast = useToast();
+  const { toast } = useToast();
 
   // Estados do formulário
   const [formState, setFormState] = useState<KeepsakeFormState>({
@@ -112,19 +112,19 @@ export const useKeepsakeForm = () => {
         const fieldValue = currentData[field];
         
         // Validação condicional baseada no canal de entrega
-        if (step === 2) {
-          if (currentData.delivery_channel === 'email' && field === 'recipient_contact') {
-            if (!fieldValue) stepErrors.push('Email é obrigatório');
-          } else if (currentData.delivery_channel === 'sms' && field === 'recipient_contact') {
-            if (!fieldValue) stepErrors.push('Telefone é obrigatório');
-          } else if (currentData.delivery_channel === 'physical') {
-            if (['street', 'city', 'postal_code'].includes(field) && !fieldValue) {
-              stepErrors.push(`${field} é obrigatório para entrega física`);
+          if (step === 2) {
+            if (currentData.delivery_channel === 'email' && String(field) === 'recipient_contact') {
+              if (!fieldValue) stepErrors.push('Email é obrigatório');
+            } else if (currentData.delivery_channel === 'sms' && String(field) === 'recipient_contact') {
+              if (!fieldValue) stepErrors.push('Telefone é obrigatório');
+            } else if (currentData.delivery_channel === 'physical') {
+              if (['street', 'city', 'postal_code'].includes(String(field)) && !fieldValue) {
+                stepErrors.push(`${String(field)} é obrigatório para entrega física`);
+              }
             }
+          } else if (!fieldValue && String(field) !== 'selected_products') {
+            stepErrors.push(`${String(field)} é obrigatório`);
           }
-        } else if (!fieldValue && field !== 'selected_products') {
-          stepErrors.push(`${field} é obrigatório`);
-        }
       }
 
       // Executar validação customizada se existir

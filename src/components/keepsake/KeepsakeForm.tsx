@@ -30,7 +30,7 @@ const KeepsakeForm = () => {
           className="w-full p-2 border rounded"
         />
         {errors.title && (
-          <p className="text-red-500 mt-1">{errors.title.message}</p>
+          <p className="text-red-500 mt-1">{String(errors.title.message)}</p>
         )}
       </div>
 
@@ -42,7 +42,7 @@ const KeepsakeForm = () => {
           className="w-full p-2 border rounded h-32"
         />
         {errors.message_content && (
-          <p className="text-red-500 mt-1">{errors.message_content.message}</p>
+          <p className="text-red-500 mt-1">{String(errors.message_content.message)}</p>
         )}
       </div>
 

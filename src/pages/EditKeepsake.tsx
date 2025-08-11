@@ -11,7 +11,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { getTomorrowDate } from "@/lib/utils";
+import { getTomorrowDate } from "@/utils/validation";
 
 // Definição do schema de validação usando Zod
 const editKeepsakeSchema = z.object({

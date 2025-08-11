@@ -139,12 +139,13 @@ export const KeepsakesList = () => {
     hasNextPage,
     isFetchingNextPage,
     isLoading
-  } = useInfiniteQuery({
+  } = useInfiniteQuery<Keepsake[], Error>({
     queryKey: ['keepsakes-paginated'],
-    queryFn: ({ pageParam = 0 }) => 
-      fetchKeepsakesPaginated(pageParam * ITEMS_PER_PAGE, ITEMS_PER_PAGE),
-    getNextPageParam: (lastPage, pages) => 
-      lastPage.length === ITEMS_PER_PAGE ? pages.length : undefined
+    initialPageParam: 0,
+    queryFn: ({ pageParam }) =>
+      fetchKeepsakesPaginated((pageParam as number) * ITEMS_PER_PAGE, ITEMS_PER_PAGE),
+    getNextPageParam: (lastPage) =>
+      lastPage.length === ITEMS_PER_PAGE ? (pageParam => (pageParam as number) + 1) : undefined
   });
 
   const handleEdit = (id: string) => {

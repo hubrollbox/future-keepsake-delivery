@@ -81,8 +81,9 @@ export const recipientNameSchema = z.string()
 // Esquema de validação para email com verificações avançadas
 export const emailSchema = z.string()
   .min(1, 'Email é obrigatório')
-  .transform(val => val.trim().toLowerCase())
+  .trim()
   .email('Por favor, introduza um email válido')
+  .transform(val => val.toLowerCase())
   .refine(email => email.length <= 255, 'Email demasiado longo')
   .refine(email => {
     // Verificar domínios suspeitos ou temporários

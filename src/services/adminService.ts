@@ -88,9 +88,3 @@ export const fetchDeliveries = async (page = 1, pageSize = 10) => {
   const totalPages = count ? Math.ceil(count / pageSize) : 0;
   return { data, error, count, totalPages };
 };
-    .range(start, end);
-    
-  return { data, error, count, totalPages: Math.ceil(count / pageSize) };
-};
-
-// Funções similares para outros recursos (keepsakes, warehouse_items, etc.)
