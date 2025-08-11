@@ -2,8 +2,8 @@ import { useState, useCallback, useEffect } from 'react';
 import { useForm, UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useToast } from '@chakra-ui/react';
-import { supabase } from '@/lib/supabase';
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import { keepsakeFormSchema } from '@/validations/keepsakeValidationSchema';
 import { useAuth } from '@/hooks/useAuth';
 

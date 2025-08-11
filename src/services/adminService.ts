@@ -73,22 +73,21 @@ export async function fetchTopUsers() {
 }
 
 // 2. Otimizar Performance: Adicionar paginação no dashboard
+// Atualização: implementado fetchDeliveries com paginação. Removidas marcas Markdown inválidas.
 
-// Para implementar paginação no dashboard administrativo, precisamos modificar tanto o backend quanto o frontend:
-
-// Backend (Supabase queries):
-
-// 1. **Atualizar o serviço de admin para suportar paginação:**
-```typescript
-// Adicionar parâmetros de paginação
 export const fetchDeliveries = async (page = 1, pageSize = 10) => {
   const start = (page - 1) * pageSize;
   const end = start + pageSize - 1;
-  
+
   const { data, error, count } = await supabase
     .from('deliveries')
-    .select('*, recipients(*)', { count: 'exact' })
+    .select('id, user_id, title, status, created_at, delivery_date, type, recipient_id', { count: 'exact' })
     .order('created_at', { ascending: false })
+    .range(start, end);
+
+  const totalPages = count ? Math.ceil(count / pageSize) : 0;
+  return { data, error, count, totalPages };
+};
     .range(start, end);
     
   return { data, error, count, totalPages: Math.ceil(count / pageSize) };
