@@ -1,5 +1,11 @@
 import { useZodForm } from '../../hooks/useZodForm';
-import { createMessageSchema } from '../../lib/validation';
+import { titleSchema, messageSchema } from '../../lib/validation';
+import { z } from 'zod';
+
+const createMessageSchema = z.object({
+  title: titleSchema,
+  message_content: messageSchema,
+});
 
 const KeepsakeForm = () => {
   const {

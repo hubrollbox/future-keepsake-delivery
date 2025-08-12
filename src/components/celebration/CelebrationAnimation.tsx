@@ -7,8 +7,7 @@ import {
   Star, 
   Gift, 
   CheckCircle,
-  PartyPopper,
-  Confetti
+  PartyPopper
 } from 'lucide-react';
 
 interface CelebrationAnimationProps {
