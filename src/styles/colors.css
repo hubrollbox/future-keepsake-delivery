@@ -1,5 +1,6 @@
 
 :root {
+  /* Cores principais existentes */
   --brand-primary: #DAB8C3;
   --brand-secondary: #3D4A5A;
   --brand-background: #F5F2F8;
@@ -10,8 +11,95 @@
   --error: #c00a42;
   --success: #3D4A5A;
   --muted: #ECE5DA;
+
+  /* Paleta emocional melhorada */
+  --color-nostalgia: #ff9a9e;
+  --color-love: #ff6b9d;
+  --color-hope: #a8e6cf;
+  --color-joy: #ffd93d;
+  --color-serenity: #a8dadc;
+  --color-warmth: #f4a261;
+  --color-mystery: #6a4c93;
+  --color-comfort: #f1c0e8;
+
+  /* Gradientes emocionais */
+  --gradient-nostalgia: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+  --gradient-love: linear-gradient(135deg, #ff6b9d 0%, #ff8a80 100%);
+  --gradient-hope: linear-gradient(135deg, #a8e6cf 0%, #dcedc1 100%);
+  --gradient-joy: linear-gradient(135deg, #ffd93d 0%, #ffb74d 100%);
+  --gradient-serenity: linear-gradient(135deg, #a8dadc 0%, #b8e6e8 100%);
+  --gradient-warmth: linear-gradient(135deg, #f4a261 0%, #e76f51 100%);
+  --gradient-mystery: linear-gradient(135deg, #6a4c93 0%, #9c89b8 100%);
+  --gradient-comfort: linear-gradient(135deg, #f1c0e8 0%, #d4a5c7 100%);
+
+  /* Gradiente principal do site */
+  --gradient-bg: linear-gradient(to right, #ff9a9e, #fad0c4);
+  --gradient-primary: linear-gradient(135deg, #DAB8C3 0%, #8B3A62 100%);
+  --gradient-secondary: linear-gradient(135deg, #F5F2F8 0%, #ECE5DA 100%);
+
+  /* Cores para estados emocionais */
+  --emotion-excited: #ff6b9d;
+  --emotion-peaceful: #a8dadc;
+  --emotion-grateful: #a8e6cf;
+  --emotion-nostalgic: #ff9a9e;
+  --emotion-hopeful: #ffd93d;
+  --emotion-loving: #f1c0e8;
+
+  /* Sombras emocionais */
+  --shadow-soft: 0 4px 20px rgba(218, 184, 195, 0.15);
+  --shadow-warm: 0 4px 20px rgba(255, 154, 158, 0.2);
+  --shadow-love: 0 4px 20px rgba(255, 107, 157, 0.2);
+  --shadow-hope: 0 4px 20px rgba(168, 230, 207, 0.2);
 }
 
+/* Classes utilitárias para cores emocionais */
+.text-nostalgia { color: var(--color-nostalgia); }
+.text-love { color: var(--color-love); }
+.text-hope { color: var(--color-hope); }
+.text-joy { color: var(--color-joy); }
+.text-serenity { color: var(--color-serenity); }
+.text-warmth { color: var(--color-warmth); }
+.text-mystery { color: var(--color-mystery); }
+.text-comfort { color: var(--color-comfort); }
+
+.bg-nostalgia { background-color: var(--color-nostalgia); }
+.bg-love { background-color: var(--color-love); }
+.bg-hope { background-color: var(--color-hope); }
+.bg-joy { background-color: var(--color-joy); }
+.bg-serenity { background-color: var(--color-serenity); }
+.bg-warmth { background-color: var(--color-warmth); }
+.bg-mystery { background-color: var(--color-mystery); }
+.bg-comfort { background-color: var(--color-comfort); }
+
+/* Classes para gradientes */
+.bg-gradient-nostalgia { background: var(--gradient-nostalgia); }
+.bg-gradient-love { background: var(--gradient-love); }
+.bg-gradient-hope { background: var(--gradient-hope); }
+.bg-gradient-joy { background: var(--gradient-joy); }
+.bg-gradient-serenity { background: var(--gradient-serenity); }
+.bg-gradient-warmth { background: var(--gradient-warmth); }
+.bg-gradient-mystery { background: var(--gradient-mystery); }
+.bg-gradient-comfort { background: var(--gradient-comfort); }
+
+/* Efeitos hover emocionais */
+.hover-emotion:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-warm);
+  transition: all 0.3s ease;
+}
+
+.emotion-card {
+  background: var(--gradient-secondary);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.emotion-card:hover {
+  border-color: var(--color-nostalgia);
+  box-shadow: var(--shadow-warm);
+  transform: translateY(-4px);
+}
 .bg-lavender-mist { background-color: var(--brand-background); }
 .bg-sand-beige { background-color: var(--brand-neutral); }
 .bg-dusty-rose { background-color: var(--brand-primary); }

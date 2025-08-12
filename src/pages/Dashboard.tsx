@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { PlusCircle, Clock, Package } from "lucide-react";
+import { PlusCircle, Clock, Package, CheckCircle } from "lucide-react";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -107,12 +107,15 @@ const Dashboard = () => {
               </div>
               
               <Tabs defaultValue="all" className="w-full">
-                <TabsList className="grid w-full grid-cols-3">
+                <TabsList className="grid w-full grid-cols-4">
                   <TabsTrigger value="all" className="flex items-center gap-1">
                     <Package className="h-4 w-4" /> Todas
                   </TabsTrigger>
                   <TabsTrigger value="pending" className="flex items-center gap-1">
                     <Clock className="h-4 w-4" /> Pendentes
+                  </TabsTrigger>
+                  <TabsTrigger value="sent" className="flex items-center gap-1">
+                    <CheckCircle className="h-4 w-4" /> Enviadas
                   </TabsTrigger>
                   <TabsTrigger value="delivered" className="flex items-center gap-1">
                     <Package className="h-4 w-4" /> Entregues
@@ -122,12 +125,13 @@ const Dashboard = () => {
                   <KeepsakesList />
                 </TabsContent>
                 <TabsContent value="pending" className="mt-4">
-                  {/* Filtrar por status pendente */}
-                  <KeepsakesList />
+                  <KeepsakesList statusFilter="pending" />
+                </TabsContent>
+                <TabsContent value="sent" className="mt-4">
+                  <KeepsakesList statusFilter="sent" />
                 </TabsContent>
                 <TabsContent value="delivered" className="mt-4">
-                  {/* Filtrar por status entregue */}
-                  <KeepsakesList />
+                  <KeepsakesList statusFilter="delivered" />
                 </TabsContent>
               </Tabs>
             </div>
@@ -172,94 +176,97 @@ const Dashboard = () => {
                 <p className="text-sm text-misty-gray">Gerir informações</p>
               </button>
             </div>
-          </div>
-        ) : (
-          // Layout para Utilizador Normal
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-            <div className="xl:col-span-2 space-y-8">
-              <TimeCapsuleSection 
-                deliveries={deliveries}
-                loading={deliveriesLoading}
-                onDelete={deleteDelivery}
-              />
+          ) : (
+            // Layout para Utilizador Normal
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+              <div className="xl:col-span-2 space-y-8">
+                <TimeCapsuleSection 
+                  deliveries={deliveries}
+                  loading={deliveriesLoading}
+                  onDelete={deleteDelivery}
+                />
 
-              {/* Keepsakes Section */}
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <h3 className="text-lg font-serif font-semibold text-steel-blue">Minhas Cápsulas</h3>
-                  <Button 
-                    onClick={() => navigate("/create-keepsake")} 
-                    size="sm" 
-                    className="flex items-center gap-1 bg-dusty-rose hover:bg-dusty-rose/90"
-                  >
-                    <PlusCircle className="h-4 w-4" /> Nova Cápsula
-                  </Button>
+                {/* Keepsakes Section */}
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-lg font-serif font-semibold text-steel-blue">Minhas Cápsulas</h3>
+                    <Button 
+                      onClick={() => navigate("/create-keepsake")} 
+                      size="sm" 
+                      className="flex items-center gap-1 bg-dusty-rose hover:bg-dusty-rose/90"
+                    >
+                      <PlusCircle className="h-4 w-4" /> Nova Cápsula
+                    </Button>
+                  </div>
+                  
+                  <Tabs defaultValue="all" className="w-full">
+                    <TabsList className="grid w-full grid-cols-4">
+                      <TabsTrigger value="all" className="flex items-center gap-1">
+                        <Package className="h-4 w-4" /> Todas
+                      </TabsTrigger>
+                      <TabsTrigger value="pending" className="flex items-center gap-1">
+                        <Clock className="h-4 w-4" /> Pendentes
+                      </TabsTrigger>
+                      <TabsTrigger value="sent" className="flex items-center gap-1">
+                        <CheckCircle className="h-4 w-4" /> Enviadas
+                      </TabsTrigger>
+                      <TabsTrigger value="delivered" className="flex items-center gap-1">
+                        <Package className="h-4 w-4" /> Entregues
+                      </TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="all" className="mt-4">
+                      <KeepsakesList />
+                    </TabsContent>
+                    <TabsContent value="pending" className="mt-4">
+                      <KeepsakesList statusFilter="pending" />
+                    </TabsContent>
+                    <TabsContent value="sent" className="mt-4">
+                      <KeepsakesList statusFilter="sent" />
+                    </TabsContent>
+                    <TabsContent value="delivered" className="mt-4">
+                      <KeepsakesList statusFilter="delivered" />
+                    </TabsContent>
+                  </Tabs>
                 </div>
                 
-                <Tabs defaultValue="all" className="w-full">
-                  <TabsList className="grid w-full grid-cols-3">
-                    <TabsTrigger value="all" className="flex items-center gap-1">
-                      <Package className="h-4 w-4" /> Todas
-                    </TabsTrigger>
-                    <TabsTrigger value="pending" className="flex items-center gap-1">
-                      <Clock className="h-4 w-4" /> Pendentes
-                    </TabsTrigger>
-                    <TabsTrigger value="delivered" className="flex items-center gap-1">
-                      <Package className="h-4 w-4" /> Entregues
-                    </TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="all" className="mt-4">
-                    <KeepsakesList />
-                  </TabsContent>
-                  <TabsContent value="pending" className="mt-4">
-                    {/* Filtrar por status pendente */}
-                    <KeepsakesList />
-                  </TabsContent>
-                  <TabsContent value="delivered" className="mt-4">
-                    {/* Filtrar por status entregue */}
-                    <KeepsakesList />
-                  </TabsContent>
-                </Tabs>
+                {/* Botões de Ação Rápida */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <button
+                    onClick={() => navigate("/create-keepsake")}
+                    className="emotion-card p-6 text-left hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-warm-cream to-sandy-beige border-2 border-dusty-rose/20"
+                  >
+                    <div className="flex items-center mb-3">
+                      <div className="w-12 h-12 bg-dusty-rose/20 rounded-full flex items-center justify-center mr-4">
+                        <span className="text-2xl">💌</span>
+                      </div>
+                      <h3 className="text-lg font-serif font-semibold text-steel-blue">Nova Cápsula</h3>
+                    </div>
+                    <p className="text-sm text-misty-gray">Criar uma nova mensagem para o futuro</p>
+                  </button>
+                  
+                  <button
+                    onClick={() => navigate("/profile")}
+                    className="emotion-card p-6 text-left hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-warm-cream to-sandy-beige border-2 border-dusty-rose/20"
+                  >
+                    <div className="flex items-center mb-3">
+                      <div className="w-12 h-12 bg-dusty-rose/20 rounded-full flex items-center justify-center mr-4">
+                        <span className="text-2xl">⚙️</span>
+                      </div>
+                      <h3 className="text-lg font-serif font-semibold text-steel-blue">Perfil</h3>
+                    </div>
+                    <p className="text-sm text-misty-gray">Gerir as tuas informações pessoais</p>
+                  </button>
+                </div>
               </div>
               
-              {/* Botões de Ação Rápida */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <button
-                  onClick={() => navigate("/create-keepsake")}
-                  className="emotion-card p-6 text-left hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-warm-cream to-sandy-beige border-2 border-dusty-rose/20"
-                >
-                  <div className="flex items-center mb-3">
-                    <div className="w-12 h-12 bg-dusty-rose/20 rounded-full flex items-center justify-center mr-4">
-                      <span className="text-2xl">💌</span>
-                    </div>
-                    <h3 className="text-lg font-serif font-semibold text-steel-blue">Nova Cápsula</h3>
-                  </div>
-                  <p className="text-sm text-misty-gray">Criar uma nova mensagem para o futuro</p>
-                </button>
-                
-                <button
-                  onClick={() => navigate("/profile")}
-                  className="emotion-card p-6 text-left hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-warm-cream to-sandy-beige border-2 border-dusty-rose/20"
-                >
-                  <div className="flex items-center mb-3">
-                    <div className="w-12 h-12 bg-dusty-rose/20 rounded-full flex items-center justify-center mr-4">
-                      <span className="text-2xl">⚙️</span>
-                    </div>
-                    <h3 className="text-lg font-serif font-semibold text-steel-blue">Perfil</h3>
-                  </div>
-                  <p className="text-sm text-misty-gray">Gerir as tuas informações pessoais</p>
-                </button>
+              <div className="xl:col-span-1">
+                <UserStatsSection 
+                  profile={profile}
+                  totalDeliveries={deliveries.length}
+                />
               </div>
             </div>
-            
-            <div className="xl:col-span-1">
-              <UserStatsSection 
-                profile={profile}
-                totalDeliveries={deliveries.length}
-              />
-            </div>
-          </div>
-        )}
+          )}
       </main>
     </div>
   );

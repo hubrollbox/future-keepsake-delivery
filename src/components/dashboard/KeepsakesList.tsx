@@ -1,23 +1,28 @@
 // Melhoria 4: Paginação
 import { useState } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { Keepsake, useKeepsakes } from '@/hooks/useKeepsakes';
+import { Keepsake, useKeepsakes, KeepsakeStatus } from '@/hooks/useKeepsakes';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Pencil, Trash2, Mail, Phone, Calendar } from 'lucide-react';
+import { Pencil, Trash2, Mail, Phone, Calendar, CheckCircle } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const ITEMS_PER_PAGE = 10;
+
+interface KeepsakesListProps {
+  statusFilter?: KeepsakeStatus;
+}
 
 // Componente para exibir um card de keepsake
 const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEdit: (id: string) => void, onDelete: (id: string) => void }) => {
   const statusColors = {
     'pending': 'bg-yellow-100 text-yellow-800',
     'scheduled': 'bg-blue-100 text-blue-800',
+    'sent': 'bg-green-100 text-green-800',
     'delivered': 'bg-green-100 text-green-800',
     'failed': 'bg-red-100 text-red-800'
   };
@@ -25,6 +30,7 @@ const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEd
   const statusText = {
     'pending': 'Pendente',
     'scheduled': 'Agendada',
+    'sent': 'Enviada',
     'delivered': 'Entregue',
     'failed': 'Falhou'
   };
@@ -38,11 +44,20 @@ const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEd
     format(new Date(keepsake.delivery_date), "dd 'de' MMMM 'de' yyyy", { locale: ptBR }) : 
     'Data não definida';
 
+  const formattedSentDate = keepsake.sent_at ? 
+    format(new Date(keepsake.sent_at), "dd 'de' MMMM 'de' yyyy 'às' HH:mm", { locale: ptBR }) : 
+    null;
+
+  const isSent = keepsake.status === 'sent' || keepsake.status === 'delivered';
+
   return (
     <Card className="mb-4 overflow-hidden transition-all hover:shadow-md">
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start">
-          <CardTitle className="text-lg font-semibold">{keepsake.title}</CardTitle>
+          <CardTitle className="text-lg font-semibold flex items-center gap-2">
+            {keepsake.title}
+            {isSent && <CheckCircle className="h-5 w-5 text-green-600" />}
+          </CardTitle>
           <div className="flex space-x-2">
             <Badge variant="outline" className="capitalize">
               {typeText[keepsake.type]}
@@ -53,7 +68,8 @@ const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEd
           </div>
         </div>
         <CardDescription className="flex items-center mt-1">
-          <Calendar className="h-4 w-4 mr-1" /> {formattedDate}
+          <Calendar className="h-4 w-4 mr-1" /> 
+          {isSent ? `Enviada em: ${formattedSentDate}` : `Agendada para: ${formattedDate}`}
         </CardDescription>
       </CardHeader>
       <CardContent className="pb-2">
@@ -74,9 +90,11 @@ const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEd
         </div>
       </CardContent>
       <CardFooter className="pt-2 flex justify-end space-x-2">
-        <Button variant="outline" size="sm" onClick={() => onEdit(keepsake.id)}>
-          <Pencil className="h-4 w-4 mr-1" /> Editar
-        </Button>
+        {!isSent && (
+          <Button variant="outline" size="sm" onClick={() => onEdit(keepsake.id)}>
+            <Pencil className="h-4 w-4 mr-1" /> Editar
+          </Button>
+        )}
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="destructive" size="sm">
@@ -129,7 +147,7 @@ const KeepsakeCardSkeleton = () => (
 );
 
 // Componente principal da lista de keepsakes com paginação
-export const KeepsakesList = () => {
+export const KeepsakesList = ({ statusFilter }: KeepsakesListProps) => {
   const { fetchKeepsakesPaginated, updateKeepsake, deleteKeepsake } = useKeepsakes();
   const [editingKeepsakeId, setEditingKeepsakeId] = useState<string | null>(null);
 
@@ -140,10 +158,10 @@ export const KeepsakesList = () => {
     isFetchingNextPage,
     isLoading
   } = useInfiniteQuery<any, Error, any, any, number>({
-    queryKey: ['keepsakes-paginated'],
+    queryKey: ['keepsakes-paginated', statusFilter],
     initialPageParam: 0,
     queryFn: ({ pageParam }) =>
-      fetchKeepsakesPaginated((pageParam as number) * ITEMS_PER_PAGE, ITEMS_PER_PAGE),
+      fetchKeepsakesPaginated((pageParam as number) * ITEMS_PER_PAGE, ITEMS_PER_PAGE, statusFilter),
     getNextPageParam: (lastPage, _pages, lastPageParam) =>
       (lastPage?.length === ITEMS_PER_PAGE ? ((lastPageParam ?? 0) as number) + 1 : undefined),
   });
@@ -167,6 +185,19 @@ export const KeepsakesList = () => {
       </div>
     );
   }
+
+  const getEmptyMessage = () => {
+    switch (statusFilter) {
+      case 'pending':
+        return 'Você não tem cápsulas pendentes.';
+      case 'sent':
+        return 'Você ainda não tem cápsulas enviadas.';
+      case 'delivered':
+        return 'Você ainda não tem cápsulas entregues.';
+      default:
+        return 'Você ainda não criou nenhuma cápsula do tempo.';
+    }
+  };
 
   return (
     <div className="space-y-4">
@@ -198,10 +229,12 @@ export const KeepsakesList = () => {
       
       {data?.pages[0]?.length === 0 && (
         <div className="text-center py-8">
-          <p className="text-gray-500">Você ainda não criou nenhuma cápsula do tempo.</p>
-          <Button className="mt-4" variant="default">
-            Criar minha primeira cápsula
-          </Button>
+          <p className="text-gray-500">{getEmptyMessage()}</p>
+          {!statusFilter && (
+            <Button className="mt-4" variant="default">
+              Criar minha primeira cápsula
+            </Button>
+          )}
         </div>
       )}
     </div>

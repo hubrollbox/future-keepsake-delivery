@@ -11,7 +11,10 @@ export interface Keepsake {
   content?: string;
   recipient_email?: string;
   recipient_phone?: string;
+  sent_at?: string;
 }
+
+export type KeepsakeStatus = 'pending' | 'sent' | 'delivered' | 'failed' | 'scheduled';
 
 export const useKeepsakes = () => {
   const [keepsakes, setKeepsakes] = useState<Keepsake[]>([]);
@@ -23,7 +26,7 @@ export const useKeepsakes = () => {
     try {
       const { data, error } = await supabase
         .from('keepsakes')
-        .select('id, title, delivery_date, status, type, content:message_content, recipient_email, recipient_phone')
+        .select('id, title, delivery_date, status, type, content:message_content, recipient_email, recipient_phone, sent_at')
         .order('delivery_date', { ascending: false });
 
       if (error) throw error;
@@ -40,19 +43,47 @@ export const useKeepsakes = () => {
     }
   };
 
-  // Função para buscar keepsakes com paginação
-  const fetchKeepsakesPaginated = async (start = 0, limit = 10) => {
+  // Função para buscar keepsakes com paginação e filtro por status
+  const fetchKeepsakesPaginated = async (start = 0, limit = 10, statusFilter?: KeepsakeStatus) => {
     try {
-      const { data, error } = await supabase
+      let query = supabase
         .from('keepsakes')
-        .select('id, title, delivery_date, status, type, content:message_content, recipient_email, recipient_phone')
-        .order('delivery_date', { ascending: false })
-        .range(start, start + limit - 1);
+        .select('id, title, delivery_date, status, type, content:message_content, recipient_email, recipient_phone, sent_at')
+        .order('delivery_date', { ascending: false });
+
+      // Aplicar filtro de status se fornecido
+      if (statusFilter) {
+        query = query.eq('status', statusFilter);
+      }
+
+      const { data, error } = await query.range(start, start + limit - 1);
 
       if (error) throw error;
       return data || [];
     } catch (e) {
       console.error('Erro ao carregar keepsakes paginados:', e);
+      toast({
+        title: "Erro",
+        description: "Não foi possível carregar suas cápsulas do tempo.",
+        variant: "destructive"
+      });
+      return [];
+    }
+  };
+
+  // Função para buscar keepsakes por status específico
+  const fetchKeepsakesByStatus = async (status: KeepsakeStatus) => {
+    try {
+      const { data, error } = await supabase
+        .from('keepsakes')
+        .select('id, title, delivery_date, status, type, content:message_content, recipient_email, recipient_phone, sent_at')
+        .eq('status', status)
+        .order('delivery_date', { ascending: false });
+
+      if (error) throw error;
+      return data || [];
+    } catch (e) {
+      console.error('Erro ao carregar keepsakes por status:', e);
       toast({
         title: "Erro",
         description: "Não foi possível carregar suas cápsulas do tempo.",
@@ -134,6 +165,7 @@ export const useKeepsakes = () => {
     loading, 
     refetch: fetchKeepsakes,
     fetchKeepsakesPaginated,
+    fetchKeepsakesByStatus,
     updateKeepsake,
     deleteKeepsake
   };
