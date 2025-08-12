@@ -55,7 +55,7 @@ function App() {
                   <Route path="/faq" element={<FAQ />} />
                   <Route path="/partnerships" element={<Partnerships />} />
                   <Route path="/checkout" element={<Checkout />} />
-                  <Route path="/admin" element={<AdminDashboard />} />
+                  <Route path="/admin/*" element={<AdminDashboard />} />
                   <Route path="/terms" element={<TermsConditions />} />
                   <Route path="/privacy" element={<PrivacyPolicy />} />
                   <Route path="*" element={<NotFound />} />

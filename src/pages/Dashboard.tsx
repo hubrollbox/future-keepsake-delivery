@@ -54,6 +54,13 @@ const Dashboard = () => {
     }
   }, [user, loading, navigate]);
 
+  // Redirect admins to the Admin area to avoid duplicate dashboards
+  React.useEffect(() => {
+    if (!loading && user && isAdmin) {
+      navigate("/admin");
+    }
+  }, [loading, user, isAdmin, navigate]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-lavender-mist flex items-center justify-center">
@@ -71,6 +78,17 @@ const Dashboard = () => {
         <div className="text-center">
           <h2 className="text-xl font-serif text-steel-blue mb-4">Sessão não encontrada</h2>
           <p className="text-soft-gray">A redireccionar para o login...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // If admin, redirect to Admin area to avoid duplicate dashboards
+  if (isAdmin) {
+    return (
+      <div className="min-h-screen bg-lavender-mist flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-xl font-serif text-steel-blue mb-4">A redirecionar para o painel de admin...</h2>
         </div>
       </div>
     );

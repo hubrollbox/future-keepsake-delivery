@@ -48,12 +48,13 @@ const AdminDashboardPage = () => {
     <AdminLayout activeSection="dashboard">
       <Suspense fallback={<div>Carregando...</div>}>
         <Routes>
-          <Route path="/" element={<AdminDashboard />} />
-          <Route path="/deliveries" element={<AdminDeliveries />} />
-          <Route path="/warehouse" element={<AdminWarehouse />} />
-          <Route path="/messages" element={<AdminMessages />} />
-          <Route path="/payments" element={<AdminPayments />} />
-          <Route path="/clients" element={<AdminClients />} />
+          <Route index element={<AdminDashboard />} />
+          <Route path="deliveries" element={<AdminDeliveries />} />
+          <Route path="warehouse" element={<AdminWarehouse />} />
+          <Route path="messages" element={<AdminMessages />} />
+          <Route path="payments" element={<AdminPayments />} />
+          <Route path="clients" element={<AdminClients />} />
+          <Route path="*" element={<Navigate to="." replace />} />
         </Routes>
       </Suspense>
     </AdminLayout>
