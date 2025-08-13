@@ -12,6 +12,7 @@ import SuccessStep from '../components/keepsake/SuccessStep';
 import { Card, CardContent } from '../components/ui/card';
 import { Alert, AlertDescription } from '../components/ui/alert';
 import { Button } from '../components/ui/button';
+import { Form } from '../components/ui/form'; // Add this import
 import { AlertCircle, Save, Home } from 'lucide-react';
 
 const CreateKeepsake: React.FC = () => {
@@ -220,7 +221,9 @@ const CreateKeepsake: React.FC = () => {
 
         <Card className="bg-white shadow-elegant">
           <CardContent className="p-8">
-            {renderStepContent()}
+            <Form {...form}>
+              {renderStepContent()}
+            </Form>
           </CardContent>
         </Card>
 
