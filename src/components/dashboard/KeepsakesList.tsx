@@ -1,6 +1,7 @@
 // Melhoria 4: Paginação
 import { useState } from 'react';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import { Keepsake, useKeepsakes, KeepsakeStatus } from '@/hooks/useKeepsakes';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
@@ -150,6 +151,8 @@ const KeepsakeCardSkeleton = () => (
 export const KeepsakesList = ({ statusFilter }: KeepsakesListProps) => {
   const { fetchKeepsakesPaginated, updateKeepsake, deleteKeepsake } = useKeepsakes();
   const [editingKeepsakeId, setEditingKeepsakeId] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const {
     data,
@@ -168,12 +171,16 @@ export const KeepsakesList = ({ statusFilter }: KeepsakesListProps) => {
 
   const handleEdit = (id: string) => {
     setEditingKeepsakeId(id);
-    // Aqui você pode navegar para a página de edição ou abrir um modal
-    console.log(`Editar keepsake ${id}`);
+    // Navegar para a página de edição
+    navigate(`/edit-keepsake/${id}`);
   };
 
   const handleDelete = async (id: string) => {
-    await deleteKeepsake(id);
+    const success = await deleteKeepsake(id);
+    if (success) {
+      // Invalidar e refetch das queries para atualizar a lista
+      queryClient.invalidateQueries({ queryKey: ['keepsakes-paginated'] });
+    }
   };
 
   if (isLoading) {
@@ -231,7 +238,11 @@ export const KeepsakesList = ({ statusFilter }: KeepsakesListProps) => {
         <div className="text-center py-8">
           <p className="text-gray-500">{getEmptyMessage()}</p>
           {!statusFilter && (
-            <Button className="mt-4" variant="default">
+            <Button 
+              className="mt-4" 
+              variant="default"
+              onClick={() => navigate('/create-keepsake')}
+            >
               Criar minha primeira cápsula
             </Button>
           )}
