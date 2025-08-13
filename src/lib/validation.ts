@@ -1,5 +1,7 @@
 
-import { z } from 'zod';
+import type { z } from 'zod';
+import * as zod from 'zod';
+export const z = zod;
 
 // Validação de email melhorada com mais verificações de segurança
 export const emailSchema = z.string()
