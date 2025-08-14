@@ -5,7 +5,7 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
-    "types": ["vitest/globals"],
+    "types": ["vitest/globals", "react", "react-dom"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
