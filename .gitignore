@@ -58,3 +58,4 @@ coverage
 *.spec.js
 *.spec.ts
 *.spec.tsx
+.vercel
