@@ -52,18 +52,18 @@ const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEd
   const isSent = keepsake.status === 'sent' || keepsake.status === 'delivered';
 
   return (
-    <Card className="mb-4 overflow-hidden transition-all hover:shadow-md">
-      <CardHeader className="pb-2">
-        <div className="flex justify-between items-start">
-          <CardTitle className="text-lg font-semibold flex items-center gap-2">
+    <Card className="keepsake-card responsive-card mb-4 overflow-hidden transition-all hover:shadow-md">
+      <CardHeader className="keepsake-card-header pb-2">
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
+          <CardTitle className="responsive-subtitle flex items-center gap-2 flex-1">
             {keepsake.title}
-            {isSent && <CheckCircle className="h-5 w-5 text-green-600" />}
+            {isSent && <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />}
           </CardTitle>
-          <div className="flex space-x-2">
-            <Badge variant="outline" className="capitalize">
+          <div className="flex flex-wrap gap-2">
+            <Badge variant="outline" className="capitalize text-xs">
               {typeText[keepsake.type]}
             </Badge>
-            <Badge className={`${statusColors[keepsake.status as keyof typeof statusColors] || 'bg-gray-100 text-gray-800'}`}>
+            <Badge className={`text-xs ${statusColors[keepsake.status as keyof typeof statusColors] || 'bg-gray-100 text-gray-800'}`}>
               {statusText[keepsake.status as keyof typeof statusText] || 'Desconhecido'}
             </Badge>
           </div>
@@ -73,32 +73,33 @@ const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEd
           {isSent ? `Enviada em: ${formattedSentDate}` : `Agendada para: ${formattedDate}`}
         </CardDescription>
       </CardHeader>
-      <CardContent className="pb-2">
-        <p className="text-sm text-gray-700 line-clamp-2">
+      <CardContent className="keepsake-card-content pb-2">
+        <p className="text-sm text-gray-700 line-clamp-2 mb-3">
           {keepsake.content || 'Sem conteúdo'}
         </p>
-        <div className="mt-2 flex flex-wrap gap-2">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2">
           {keepsake.recipient_email && (
-            <div className="flex items-center text-xs text-gray-500">
-              <Mail className="h-3 w-3 mr-1" /> {keepsake.recipient_email}
+            <div className="flex items-center text-xs text-gray-500 break-all">
+              <Mail className="h-3 w-3 mr-1 flex-shrink-0" /> 
+              <span className="truncate">{keepsake.recipient_email}</span>
             </div>
           )}
           {keepsake.recipient_phone && (
             <div className="flex items-center text-xs text-gray-500">
-              <Phone className="h-3 w-3 mr-1" /> {keepsake.recipient_phone}
+              <Phone className="h-3 w-3 mr-1 flex-shrink-0" /> {keepsake.recipient_phone}
             </div>
           )}
         </div>
       </CardContent>
-      <CardFooter className="pt-2 flex justify-end space-x-2">
+      <CardFooter className="keepsake-card-footer pt-2 flex flex-col sm:flex-row sm:justify-end gap-2">
         {!isSent && (
-          <Button variant="outline" size="sm" onClick={() => onEdit(keepsake.id)}>
+          <Button variant="outline" size="sm" className="responsive-button touch-target" onClick={() => onEdit(keepsake.id)}>
             <Pencil className="h-4 w-4 mr-1" /> Editar
           </Button>
         )}
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button variant="destructive" size="sm">
+            <Button variant="destructive" size="sm" className="responsive-button touch-target">
               <Trash2 className="h-4 w-4 mr-1" /> Excluir
             </Button>
           </AlertDialogTrigger>
@@ -207,9 +208,9 @@ export const KeepsakesList = ({ statusFilter }: KeepsakesListProps) => {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 mobile-spacing">
       {data?.pages.map((page, pageIndex) => (
-        <div key={pageIndex}>
+        <div key={pageIndex} className="space-y-4">
           {page.map(keepsake => (
             <KeepsakeCard 
               key={keepsake.id} 
@@ -222,12 +223,12 @@ export const KeepsakesList = ({ statusFilter }: KeepsakesListProps) => {
       ))}
       
       {hasNextPage && (
-        <div className="flex justify-center mt-4">
+        <div className="flex justify-center mt-6">
           <Button 
             onClick={() => fetchNextPage()} 
             disabled={isFetchingNextPage}
             variant="outline"
-            className="w-full sm:w-auto"
+            className="responsive-button touch-target w-full sm:w-auto"
           >
             {isFetchingNextPage ? 'Carregando...' : 'Carregar mais cápsulas'}
           </Button>

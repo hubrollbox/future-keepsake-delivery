@@ -130,7 +130,7 @@ const Navigation = () => {
             <Button
               variant="ghost"
               size="sm"
-              className="md:hidden"
+              className="md:hidden touch-target"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -140,13 +140,13 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-lavender-mist py-4">
-            <div className="flex flex-col space-y-4">
+          <div className="md:hidden border-t border-lavender-mist mobile-spacing">
+            <div className="flex flex-col space-y-2">
               {menuItems.map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
-                  className="text-steel-blue hover:text-dusty-rose transition-colors font-medium px-2"
+                  className="text-steel-blue hover:text-dusty-rose transition-colors font-medium px-4 py-3 touch-target rounded-md hover:bg-lavender-mist/50"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}

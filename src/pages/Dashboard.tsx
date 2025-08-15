@@ -80,11 +80,11 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-lavender-mist">
       <Navigation />
-      <main className="container mx-auto px-4 py-8 max-w-7xl">
+      <main className="dashboard-layout container mx-auto max-w-7xl">
         <ProfileHeader />
 
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-          <div className="xl:col-span-2 space-y-8">
+        <div className="dashboard-grid grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-8">
+          <div className="xl:col-span-2 space-y-6 md:space-y-8">
             <TimeCapsuleSection
               deliveries={deliveries}
               loading={deliveriesLoading}
@@ -110,18 +110,26 @@ const Dashboard = () => {
                 <p className="text-soft-gray">A carregar cápsulas...</p>
               ) : (
                 <Tabs defaultValue="all" className="w-full">
-                  <TabsList className="grid w-full grid-cols-4">
-                    <TabsTrigger value="all" className="flex items-center gap-1">
-                      <Package className="h-4 w-4" /> Todas
+                  <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-1">
+                    <TabsTrigger value="all" className="flex items-center gap-1 text-xs sm:text-sm px-2 sm:px-3">
+                      <Package className="h-3 w-3 sm:h-4 sm:w-4" /> 
+                      <span className="hidden xs:inline sm:inline">Todas</span>
+                      <span className="xs:hidden sm:hidden">All</span>
                     </TabsTrigger>
-                    <TabsTrigger value="pending" className="flex items-center gap-1">
-                      <Clock className="h-4 w-4" /> Pendentes
+                    <TabsTrigger value="pending" className="flex items-center gap-1 text-xs sm:text-sm px-2 sm:px-3">
+                      <Clock className="h-3 w-3 sm:h-4 sm:w-4" /> 
+                      <span className="hidden xs:inline sm:inline">Pendentes</span>
+                      <span className="xs:hidden sm:hidden">Pend</span>
                     </TabsTrigger>
-                    <TabsTrigger value="sent" className="flex items-center gap-1">
-                      <CheckCircle className="h-4 w-4" /> Enviadas
+                    <TabsTrigger value="sent" className="flex items-center gap-1 text-xs sm:text-sm px-2 sm:px-3">
+                      <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4" /> 
+                      <span className="hidden xs:inline sm:inline">Enviadas</span>
+                      <span className="xs:hidden sm:hidden">Env</span>
                     </TabsTrigger>
-                    <TabsTrigger value="delivered" className="flex items-center gap-1">
-                      <Package className="h-4 w-4" /> Entregues
+                    <TabsTrigger value="delivered" className="flex items-center gap-1 text-xs sm:text-sm px-2 sm:px-3">
+                      <Package className="h-3 w-3 sm:h-4 sm:w-4" /> 
+                      <span className="hidden xs:inline sm:inline">Entregues</span>
+                      <span className="xs:hidden sm:hidden">Entr</span>
                     </TabsTrigger>
                   </TabsList>
 

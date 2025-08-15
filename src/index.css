@@ -5,6 +5,7 @@
 @import './styles/inputs.css';
 @import './styles/utilities.css';
 @import './styles/variables.css';
+@import './styles/mobile-responsive.css';
 
 /* Import Tailwind base styles */
 @import 'tailwindcss/base';

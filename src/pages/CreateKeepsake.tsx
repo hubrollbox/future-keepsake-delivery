@@ -151,25 +151,25 @@ const CreateKeepsake: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-lavender-mist py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-lavender-mist dashboard-layout">
       <div className="max-w-4xl mx-auto">
         {/* Breadcrumb */}
-        <div className="mb-6">
+        <div className="mb-4 md:mb-6">
           <Button
             variant="ghost"
             onClick={() => navigate('/dashboard')}
-            className="text-steel-blue hover:text-dusty-rose"
+            className="text-steel-blue hover:text-dusty-rose responsive-button touch-target"
           >
             <Home className="w-4 h-4 mr-2" />
             Voltar ao Dashboard
           </Button>
         </div>
 
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-serif text-steel-blue mb-4">
+        <div className="text-center mb-6 md:mb-8">
+          <h1 className="responsive-title font-serif text-steel-blue mb-3 md:mb-4">
             Criar Cápsula do Tempo
           </h1>
-          <p className="text-misty-gray text-lg">
+          <p className="text-misty-gray text-base md:text-lg">
             Guarde momentos especiais para o futuro
           </p>
         </div>
