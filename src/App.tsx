@@ -12,6 +12,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 
 import CreateKeepsake from "./pages/CreateKeepsake";
+import EditKeepsake from "./pages/EditKeepsake";
 import Profile from "./pages/Profile";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -46,6 +47,7 @@ function App() {
                   <Route path="/register" element={<Register />} />
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/create-keepsake" element={<CreateKeepsake />} />
+                  <Route path="/edit-keepsake/:id" element={<EditKeepsake />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/about" element={<About />} />
                   <Route path="/contact" element={<Contact />} />

@@ -4,9 +4,18 @@ import App from './App.tsx'
 import './index.css'
 import './styles/charts.css'
 import { initGA } from './lib/analytics';
+import { checkRequiredEnv } from './lib/env-validator';
 import { SpeedInsights } from "@vercel/speed-insights/react"
 
-initGA();
+// Verificar variáveis de ambiente obrigatórias
+checkRequiredEnv();
+
+// Inicializar Google Analytics
+try {
+  initGA();
+} catch (error) {
+  console.error('Falha ao inicializar Google Analytics:', error);
+}
 
 // Register Service Worker for PWA
 if ('serviceWorker' in navigator) {

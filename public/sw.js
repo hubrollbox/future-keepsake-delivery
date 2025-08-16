@@ -2,9 +2,9 @@
 const CACHE_NAME = 'keepla-v1';
 const urlsToCache = [
   '/',
-  '/static/js/bundle.js',
-  '/static/css/main.css',
-  '/manifest.json'
+  '/manifest.json',
+  '/favicon.ico',
+  // Assets will be added dynamically during runtime
 ];
 
 self.addEventListener('install', (event) => {

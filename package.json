@@ -59,7 +59,9 @@
     "build:prod": "vite build --mode production",
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "postbuild": "node scripts/optimize-assets.js"
+    "postbuild": "node scripts/optimize-assets.js",
+    "security-check": "node scripts/check-dependencies.js",
+    "prebuild": "npm run security-check"
   },
   "devDependencies": {
     "@radix-ui/react-label": "^2.0.2",
