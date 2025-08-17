@@ -205,7 +205,66 @@ npm run cypress:open    # Interface gráfica do Cypress
 npm run db:reset        # Reset da base de dados
 npm run db:seed         # Seed de dados de teste
 npm run db:migrate      # Executar migrações
-``` 
+```
+
+## 🚀 Deploy para Vercel
+
+### Configuração Automática via GitHub Actions
+
+O projeto está configurado para deploy automático no Vercel através do GitHub Actions. Para configurar:
+
+#### 1. Secrets do GitHub
+
+Adicione os seguintes secrets no seu repositório GitHub (Settings → Secrets and variables → Actions):
+
+```bash
+# Vercel Configuration
+VERCEL_TOKEN=your_vercel_token
+VERCEL_ORG_ID=your_vercel_org_id
+VERCEL_PROJECT_ID=your_vercel_project_id
+
+# Environment Variables
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_STRIPE_PUBLIC_KEY=your_stripe_public_key
+VITE_SENTRY_DSN=your_sentry_dsn
+VITE_GA_MEASUREMENT_ID=your_ga_measurement_id
+```
+
+#### 2. Como obter os valores do Vercel:
+
+1. **VERCEL_TOKEN**: 
+   - Acesse [Vercel Dashboard](https://vercel.com/account/tokens)
+   - Crie um novo token de acesso
+
+2. **VERCEL_ORG_ID** e **VERCEL_PROJECT_ID**:
+   - Execute `npx vercel link` no projeto
+   - Os IDs serão salvos em `.vercel/project.json`
+
+#### 3. Deploy Manual
+
+Para deploy manual via CLI:
+
+```bash
+# Instalar Vercel CLI
+npm i -g vercel
+
+# Login
+vercel login
+
+# Deploy
+vercel --prod
+```
+
+### Configuração de Environment Variables no Vercel
+
+No dashboard do Vercel, configure as seguintes variáveis:
+
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_ANON_KEY`
+- `VITE_STRIPE_PUBLIC_KEY`
+- `VITE_SENTRY_DSN`
+- `VITE_GA_MEASUREMENT_ID` 
 📁 Estrutura do Projeto 
 Code 
 future-keepsake-delivery/ 
