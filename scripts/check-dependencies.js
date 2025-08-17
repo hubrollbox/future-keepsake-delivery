@@ -3,9 +3,15 @@
  * Este script utiliza npm audit para verificar vulnerabilidades nas dependências
  */
 
-const { execSync } = require('child_process');
-const fs = require('fs');
-const path = require('path');
+import { execSync } from 'child_process';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// Configuração para compatibilidade com __dirname em ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Cores para output no console
 const colors = {
