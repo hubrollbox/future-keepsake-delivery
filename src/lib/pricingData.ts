@@ -1,13 +1,39 @@
-// Dados de pricing extraídos de Pricing.tsx
+// ===== TIPOS PÚBLICOS =====
 
-export const plans = [
+export interface PublicPlan {
+  id: string;
+  name: string;
+  price: string;
+  period: string;
+  description: string;
+  features: string[];
+  buttonText: string;
+  popular: boolean;
+  color: string;
+  badge?: string;
+}
+
+export interface PublicService {
+  id: string;
+  name: string;
+  price: string;
+  yearlyPrice?: string;
+  description: string;
+  category?: 'storage' | 'digital' | 'physical' | 'capsule';
+  popular?: boolean;
+}
+
+// ===== PLANOS PÚBLICOS (SEM DADOS SENSÍVEIS) =====
+
+export const plans: PublicPlan[] = [
   {
+    id: "free",
     name: "Gratuito",
     price: "0€",
     period: "/mês",
-    description: "Perfeito para começar",
+    description: "Perfeito para começar a sua jornada no tempo",
     features: [
-      "1 entrega digital por mês",
+      "1 cápsula digital por mês",
       "Mensagens de texto simples",
       "Suporte por email",
       "Calendário básico"
@@ -17,152 +43,249 @@ export const plans = [
     color: "border-gray-200"
   },
   {
+    id: "personal",
     name: "Pessoal",
-    price: "3€",
+    price: "5,99€",
     period: "/mês",
-    description: "Para utilizadores regulares",
+    description: "Para quem quer preservar memórias especiais com qualidade premium",
     features: [
-      "5 entregas digitais por mês",
-      "10% desconto em entregas físicas",
-      "Upload de imagens e vídeos",
+      "5 cápsulas digitais por mês",
+      "Upload de imagens e vídeos (até 100MB)",
       "Notificações prioritárias",
-      "Histórico completo"
+      "Histórico completo",
+      "10% desconto em serviços físicos"
     ],
     buttonText: "Escolher Pessoal",
     popular: false,
-    color: "border-amber-200"
+    color: "border-amber-200",
+    badge: "Valor"
   },
   {
+    id: "timekeeper",
     name: "Guardião do Tempo",
-    price: "5€",
+    price: "10,99€",
     period: "/mês",
-    description: "O mais popular",
+    description: "O plano premium para verdadeiros guardiões das memórias",
     features: [
-      "Entregas digitais ilimitadas",
-      "Acesso antecipado a funcionalidades",
+      "Cápsulas digitais ilimitadas (~10 por mês)",
       "Sistema de selos e conquistas",
-      "Prioridade nas entregas",
       "Árvore de memórias interativa",
-      "Acesso ao mural de cápsulas públicas"
+      "Acesso ao mural de cápsulas públicas",
+      "Acesso antecipado a funcionalidades",
+      "Prioridade nas entregas",
+      "15% desconto em serviços físicos"
     ],
     buttonText: "Tornar-me Guardião",
     popular: true,
-    color: "border-amber-500"
+    color: "border-amber-500",
+    badge: "Mais Popular"
   },
   {
+    id: "family",
     name: "Família",
-    price: "12€",
+    price: "19,99€",
     period: "/mês",
-    description: "Para toda a família",
+    description: "Conecte toda a família através do tempo com funcionalidades exclusivas",
     features: [
       "Até 4 membros da família",
-      "Tudo do plano Guardião do Tempo",
+      "Todas as funcionalidades do Guardião do Tempo",
+      "Timeline familiar colaborativa",
       "Cápsulas partilhadas",
       "Gestão familiar centralizada",
-      "Descontos em eventos especiais",
-      "Timeline familiar colaborativa"
+      "20% desconto em eventos especiais",
+      "20% desconto em serviços físicos"
     ],
     buttonText: "Escolher Família",
     popular: false,
-    color: "border-amber-300"
+    color: "border-amber-300",
+    badge: "Premium"
   }
 ];
 
-export const storageServices = [
+// ===== SERVIÇOS PÚBLICOS =====
+
+export const storageServices: PublicService[] = [
   {
-    name: "Armazenamento Pequeno",
-    price: "1,90€/mês",
-    yearlyPrice: "19€/ano",
-    description: "Até 1kg - perfeito para cartas, pequenos objectos"
+    id: "storage-1gb",
+    name: "Armazenamento 1GB",
+    price: "2,99€",
+    yearlyPrice: "29,99€",
+    description: "Para documentos e fotos básicas",
+    category: "storage"
   },
   {
-    name: "Armazenamento Médio",
-    price: "3,90€/mês",
-    yearlyPrice: "39€/ano", 
-    description: "Até 5kg - livros, roupas, presentes médios"
+    id: "storage-5gb",
+    name: "Armazenamento 5GB",
+    price: "7,99€",
+    yearlyPrice: "79,99€",
+    description: "Para vídeos curtos e mais conteúdo",
+    category: "storage",
+    popular: true
   },
   {
-    name: "Primeiros 30 dias",
-    price: "Grátis",
-    yearlyPrice: "",
-    description: "Armazenamento gratuito no primeiro mês"
+    id: "storage-20gb",
+    name: "Armazenamento 20GB",
+    price: "19,99€",
+    yearlyPrice: "199,99€",
+    description: "Para utilizadores intensivos",
+    category: "storage"
   }
 ];
 
-export const digitalServices = [
+export const digitalServices: PublicService[] = [
   {
+    id: "digital-letter-simple",
     name: "Carta Digital Simples",
-    price: "Grátis",
-    description: "Mensagem de texto básica com data programada"
+    price: "3,99€",
+    description: "Carta digital básica com formatação elegante",
+    category: "digital"
   },
   {
+    id: "digital-letter-premium",
     name: "Carta Digital Premium",
-    price: "2,50€",
-    description: "Com verificação blockchain e formatação especial"
+    price: "7,99€",
+    description: "Com verificação blockchain e formatação especial",
+    category: "digital",
+    popular: true
   },
   {
+    id: "video-editing",
     name: "Edição de Vídeo",
-    price: "9,90€",
-    description: "Vídeo editado profissionalmente (até 1 minuto)"
+    price: "14,99€",
+    description: "Vídeo editado profissionalmente (até 2 minutos)",
+    category: "digital"
+  },
+  {
+    id: "photo-enhancement",
+    name: "Melhoria de Fotos",
+    price: "4,99€",
+    description: "Restauração e melhoria automática de fotos antigas",
+    category: "digital"
   }
 ];
 
-export const physicalServices = [
+export const physicalServices: PublicService[] = [
   {
+    id: "scheduled-delivery",
     name: "Entrega Programada",
-    price: "Desde 6,50€",
-    description: "Entrega em Portugal Continental na data exacta"
+    price: "Desde 8,99€",
+    description: "Entrega em Portugal Continental na data exacta",
+    category: "physical",
+    popular: true
   },
   {
+    id: "package-reception",
     name: "Receção de Encomenda",
-    price: "3€ - 5€",
-    description: "Recebemos o teu presente no nosso armazém"
+    price: "4,99€ - 7,99€",
+    description: "Recebemos o teu presente no nosso armazém seguro",
+    category: "physical"
   },
   {
+    id: "purchase-service",
     name: "Serviço de Compra",
-    price: "10% + 5€ mín.",
-    description: "Compramos o produto por ti para entrega futura"
+    price: "12% + 7,99€ mín.",
+    description: "Compramos o produto por ti para entrega futura",
+    category: "physical"
   }
 ];
 
-export const timeCapsules = [
+export const timeCapsules: PublicService[] = [
   {
+    id: "capsule-individual",
     name: "Cápsula Individual",
-    price: "Desde 15€",
-    description: "Caixa metálica personalizada para pequenos objectos"
+    price: "Desde 19,99€",
+    description: "Caixa metálica personalizada para pequenos objectos",
+    category: "capsule"
   },
   {
+    id: "capsule-premium",
     name: "Cápsula Premium",
-    price: "Desde 25€",
-    description: "Com fechadura e maior capacidade"
+    price: "Desde 34,99€",
+    description: "Com fechadura e maior capacidade",
+    category: "capsule",
+    popular: true
   },
   {
+    id: "capsule-collective",
     name: "Cápsula Coletiva",
-    price: "Desde 49€",
-    description: "Pack básico para eventos, escolas, empresas"
+    price: "Desde 69,99€",
+    description: "Pack básico para eventos, escolas, empresas",
+    category: "capsule"
   },
   {
+    id: "capsule-luxury",
     name: "Cápsula Luxo",
-    price: "Desde 40€",
-    description: "Com gravação personalizada e cerimónia de abertura"
+    price: "Desde 54,99€",
+    description: "Com gravação personalizada e cerimónia de abertura",
+    category: "capsule"
   }
 ];
+
+// ===== FUNCIONALIDADES DE GAMIFICAÇÃO =====
 
 export const gamificationFeatures = [
   {
+    id: "time-stamps",
     name: "Selos Temporais",
-    description: "Conquista selos únicos baseados na distância temporal das tuas entregas"
+    description: "Conquista selos únicos baseados na distância temporal das tuas entregas",
+    icon: "🏆"
   },
   {
+    id: "guardian-levels",
     name: "Níveis de Guardião",
-    description: "Quanto mais distante a entrega, maior o prestígio desbloqueado"
+    description: "Quanto mais distante a entrega, maior o prestígio desbloqueado",
+    icon: "⭐"
   },
   {
+    id: "memory-tree",
     name: "Árvore de Memórias",
-    description: "Timeline visual com todas as tuas cápsulas e entregas programadas"
+    description: "Timeline visual com todas as tuas cápsulas e entregas programadas",
+    icon: "🌳"
   },
   {
+    id: "time-missions",
     name: "Missões Temporais",
-    description: "Desafios especiais como 'Envia algo a ti próprio daqui a 5 anos'"
+    description: "Desafios especiais como 'Envia algo a ti próprio daqui a 5 anos'",
+    icon: "🎯"
   }
 ];
+
+// ===== FUNÇÕES UTILITÁRIAS PÚBLICAS =====
+
+export function getPlanById(planId: string): PublicPlan | undefined {
+  return plans.find(plan => plan.id === planId);
+}
+
+export function getServiceById(serviceId: string): PublicService | undefined {
+  const allServices = [
+    ...storageServices,
+    ...digitalServices,
+    ...physicalServices,
+    ...timeCapsules
+  ];
+  return allServices.find(service => service.id === serviceId);
+}
+
+export function getServicesByCategory(category: string): PublicService[] {
+  const allServices = [
+    ...storageServices,
+    ...digitalServices,
+    ...physicalServices,
+    ...timeCapsules
+  ];
+  return allServices.filter(service => service.category === category);
+}
+
+export function getPopularPlans(): PublicPlan[] {
+  return plans.filter(plan => plan.popular);
+}
+
+export function getPopularServices(): PublicService[] {
+  const allServices = [
+    ...storageServices,
+    ...digitalServices,
+    ...physicalServices,
+    ...timeCapsules
+  ];
+  return allServices.filter(service => service.popular);
+}
