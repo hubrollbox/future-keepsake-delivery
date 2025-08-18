@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useKeepsakeForm } from '../hooks/useKeepsakeForm';
@@ -13,11 +13,17 @@ import { Card, CardContent } from '../components/ui/card';
 import { Alert, AlertDescription } from '../components/ui/alert';
 import { Button } from '../components/ui/button';
 import { Form } from '../components/ui/form'; // Add this import
-import { AlertCircle, Save, Home } from 'lucide-react';
+import { AlertCircle, Save, Home, Crown, Zap } from 'lucide-react';
+import { plans } from '../lib/pricingData';
+import { calculatePricing, validatePricingConfiguration } from '../lib/adminPricingData';
 
 const CreateKeepsake: React.FC = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
+  const [userPlan, setUserPlan] = useState<string>('free');
+  const [planLimits, setPlanLimits] = useState<any>(null);
+  const [planValidationErrors, setPlanValidationErrors] = useState<string[]>([]);
+  
   const {
     form,
     formState,
@@ -46,6 +52,75 @@ const CreateKeepsake: React.FC = () => {
       });
     }
   }, [user, authLoading, navigate]);
+
+  // Carregar plano do usuário e configurar limites
+  useEffect(() => {
+    if (user) {
+      // Por agora, assumir plano free. Em produção, buscar do perfil do usuário
+      const currentPlan = user.user_metadata?.plan || 'free';
+      setUserPlan(currentPlan);
+      
+      const plan = plans.find(p => p.id === currentPlan);
+      if (plan) {
+        setPlanLimits(plan.features);
+      }
+    }
+  }, [user]);
+
+  // Validar limites do plano quando dados do formulário mudam
+  useEffect(() => {
+    if (planLimits && currentStep >= 3) {
+      validatePlanLimits();
+    }
+  }, [form.watch(), planLimits, currentStep]);
+
+  // Função para validar limites do plano
+  const validatePlanLimits = () => {
+    if (!planLimits) return;
+    
+    const formData = form.getValues();
+    const errors: string[] = [];
+    
+    // Validar limite de caracteres na mensagem
+    if (formData.message && planLimits.maxMessageLength) {
+      if (formData.message.length > planLimits.maxMessageLength) {
+        errors.push(`Mensagem excede o limite de ${planLimits.maxMessageLength} caracteres do plano ${userPlan.toUpperCase()}`);
+      }
+    }
+    
+    // Validar número de produtos selecionados
+    if (formData.selected_products && planLimits.maxProducts !== undefined) {
+      if (formData.selected_products.length > planLimits.maxProducts) {
+        errors.push(`Número de produtos excede o limite de ${planLimits.maxProducts} do plano ${userPlan.toUpperCase()}`);
+      }
+    }
+    
+    // Validar valor total
+    if (formData.total_cost && planLimits.maxValue !== undefined) {
+      if (formData.total_cost > planLimits.maxValue) {
+        errors.push(`Valor total excede o limite de €${planLimits.maxValue} do plano ${userPlan.toUpperCase()}`);
+      }
+    }
+    
+    // Validar funcionalidades premium
+    if (userPlan === 'free') {
+      if (formData.type === 'physical') {
+        errors.push('Cápsulas físicas requerem plano Premium ou Superior');
+      }
+      
+      // Verificar se há produtos premium selecionados
+      const premiumProducts = formData.selected_products?.filter(p => 
+        p.name.toLowerCase().includes('premium') || 
+        p.name.toLowerCase().includes('deluxe')
+      ) || [];
+      
+      if (premiumProducts.length > 0) {
+        errors.push('Produtos premium requerem plano Premium ou Superior');
+      }
+    }
+    
+    setPlanValidationErrors(errors);
+  };
 
   // Aviso sobre mudanças não guardadas
   useEffect(() => {
@@ -166,9 +241,30 @@ const CreateKeepsake: React.FC = () => {
         </div>
 
         <div className="text-center mb-6 md:mb-8">
-          <h1 className="responsive-title font-serif text-steel-blue mb-3 md:mb-4">
-            Criar Cápsula do Tempo
-          </h1>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <h1 className="responsive-title font-serif text-steel-blue">
+              Criar Cápsula do Tempo
+            </h1>
+            {planLimits && (
+              <div className="flex items-center gap-2">
+                {userPlan === 'free' ? (
+                  <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
+                    Plano Gratuito
+                  </span>
+                ) : userPlan === 'premium' ? (
+                  <span className="px-3 py-1 bg-gradient-to-r from-amber-400 to-amber-600 text-white rounded-full text-sm font-medium flex items-center gap-1">
+                    <Crown className="w-3 h-3" />
+                    Premium
+                  </span>
+                ) : (
+                  <span className="px-3 py-1 bg-gradient-to-r from-purple-500 to-purple-700 text-white rounded-full text-sm font-medium flex items-center gap-1">
+                    <Zap className="w-3 h-3" />
+                    {userPlan.charAt(0).toUpperCase() + userPlan.slice(1)}
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
           <p className="text-misty-gray text-base md:text-lg">
             Guarde momentos especiais para o futuro
           </p>
@@ -185,6 +281,30 @@ const CreateKeepsake: React.FC = () => {
                   <li key={index} className="text-sm">{error}</li>
                 ))}
               </ul>
+            </AlertDescription>
+          </Alert>
+        )}
+
+        {/* Alertas de limites do plano */}
+        {planValidationErrors.length > 0 && (
+          <Alert className="mb-6 border-amber-200 bg-amber-50">
+            <Crown className="h-4 w-4 text-amber-600" />
+            <AlertDescription className="text-amber-800">
+              <div className="font-semibold mb-2">Limites do plano {userPlan.toUpperCase()}:</div>
+              <ul className="list-disc list-inside space-y-1 mb-3">
+                {planValidationErrors.map((error, index) => (
+                  <li key={index} className="text-sm">{error}</li>
+                ))}
+              </ul>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => navigate('/pricing')}
+                className="border-amber-600 text-amber-800 hover:bg-amber-100"
+              >
+                <Zap className="w-4 h-4 mr-2" />
+                Fazer Upgrade
+              </Button>
             </AlertDescription>
           </Alert>
         )}
@@ -257,7 +377,12 @@ const CreateKeepsake: React.FC = () => {
 
               <Button
                 onClick={currentStep === 5 ? submitKeepsake : nextStep}
-                disabled={isSubmitting || isValidating || stepValidation[currentStep] === false}
+                disabled={
+                  isSubmitting || 
+                  isValidating || 
+                  stepValidation[currentStep] === false ||
+                  planValidationErrors.length > 0
+                }
                 className="bg-dusty-rose hover:bg-dusty-rose/90 text-white px-8"
               >
                 {isSubmitting ? (

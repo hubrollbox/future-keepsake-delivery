@@ -13,6 +13,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { generatePaymentLink } from "@/lib/paymentLink";
 import { useCheckoutForm } from "@/hooks/useCheckoutForm";
+import { calculatePricing, validatePricingConfiguration } from "@/lib/adminPricingData";
 
 const Checkout = () => {
   const { items, getTotalPrice, clearCart } = useCart();
@@ -53,24 +54,71 @@ const Checkout = () => {
 
     setLoading(true);
     try {
+      // Calcular preços com margens automáticas
+      const pricingCalculations = items.map(item => {
+        const calculation = calculatePricing({
+          planId: item.planId || 'gratuito',
+          serviceIds: item.serviceIds || [],
+          quantity: item.quantity || 1,
+          discountCode: item.discountCode
+        });
+        
+        return {
+          ...item,
+          calculatedPrice: calculation.finalPrice,
+          margin: calculation.margin,
+          cost: calculation.cost,
+          discount: calculation.discount
+        };
+      });
+
+      // Validar configuração de preços
+      const isValidPricing = validatePricingConfiguration();
+      if (!isValidPricing) {
+        throw new Error('Configuração de preços inválida');
+      }
+
+      const totalCalculatedPrice = pricingCalculations.reduce(
+        (sum, item) => sum + item.calculatedPrice, 
+        0
+      );
+      const totalMargin = pricingCalculations.reduce(
+        (sum, item) => sum + item.margin, 
+        0
+      );
+      const totalCost = pricingCalculations.reduce(
+        (sum, item) => sum + item.cost, 
+        0
+      );
+
       // Temporarily store order data in console until orders table is created
       const orderData = {
         user_id: user.id,
-        total_amount: getTotalPrice(),
+        total_amount: totalCalculatedPrice,
+        total_cost: totalCost,
+        total_margin: totalMargin,
         status: 'pending' as const,
         shipping_address: shippingInfo,
         contact_info: contactInfo,
-        items: items.map(item => ({
+        items: pricingCalculations.map(item => ({
           product_id: item.product_id,
           product_title: item.product_title,
-          product_price: item.product_price,
-          quantity: item.quantity
+          product_price: item.calculatedPrice,
+          original_price: item.product_price,
+          quantity: item.quantity,
+          margin: item.margin,
+          cost: item.cost,
+          discount: item.discount,
+          planId: item.planId,
+          serviceIds: item.serviceIds
         })),
       };
 
-      // Gerar link de pagamento (mock)
+      console.log('Order Data with Pricing Calculations:', orderData);
+
+      // Gerar link de pagamento com preço calculado
       const paymentLink = await generatePaymentLink({
-        amount: getTotalPrice(),
+        amount: totalCalculatedPrice,
         description: `Pagamento de encomenda para ${user.email}`,
         deliveryId: `${user.id}-${Date.now()}`
       });
@@ -297,21 +345,85 @@ const Checkout = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-6">
-                    {items.map((item) => (
-                      <div key={item.id} className="flex justify-between items-center py-3 border-b border-gray-100 last:border-0">
-                        <div>
-                          <h4 className="font-medium text-gentle-black">{item.product_title}</h4>
-                          <p className="text-sm text-emotional">Quantidade: {item.quantity}</p>
+                    {items.map((item) => {
+                      // Calcular preço automático para cada item
+                      const calculation = calculatePricing({
+                        planId: item.planId || 'gratuito',
+                        serviceIds: item.serviceIds || [],
+                        quantity: item.quantity || 1,
+                        discountCode: item.discountCode
+                      });
+                      
+                      const hasDiscount = calculation.discount > 0;
+                      const originalPrice = item.product_price * item.quantity;
+                      const calculatedPrice = calculation.finalPrice;
+                      
+                      return (
+                        <div key={item.id} className="py-3 border-b border-gray-100 last:border-0">
+                          <div className="flex justify-between items-start">
+                            <div className="flex-1">
+                              <h4 className="font-medium text-gentle-black">{item.product_title}</h4>
+                              <p className="text-sm text-emotional">Quantidade: {item.quantity}</p>
+                              {item.planId && (
+                                <p className="text-xs text-gray-500 mt-1">Plano: {item.planId}</p>
+                              )}
+                              {hasDiscount && (
+                                <p className="text-xs text-green-600 mt-1">
+                                  Desconto aplicado: €{calculation.discount.toFixed(2)}
+                                </p>
+                              )}
+                            </div>
+                            <div className="text-right">
+                              {hasDiscount && (
+                                <p className="text-sm text-gray-400 line-through">
+                                  €{originalPrice.toFixed(2)}
+                                </p>
+                              )}
+                              <p className="font-semibold text-gentle-black">
+                                €{calculatedPrice.toFixed(2)}
+                              </p>
+                            </div>
+                          </div>
                         </div>
-                        <p className="font-semibold text-gentle-black">€{(item.product_price * item.quantity).toFixed(2)}</p>
-                      </div>
-                    ))}
+                      );
+                    })}
                     
                     <div className="pt-4 border-t border-gray-200">
-                      <div className="flex justify-between items-center text-xl font-bold">
-                        <span className="text-gentle-black">Total:</span>
-                        <span className="text-gold">€{getTotalPrice().toFixed(2)}</span>
-                      </div>
+                      {(() => {
+                        const totalCalculated = items.reduce((sum, item) => {
+                          const calculation = calculatePricing({
+                            planId: item.planId || 'gratuito',
+                            serviceIds: item.serviceIds || [],
+                            quantity: item.quantity || 1,
+                            discountCode: item.discountCode
+                          });
+                          return sum + calculation.finalPrice;
+                        }, 0);
+                        
+                        const totalOriginal = getTotalPrice();
+                        const totalSavings = totalOriginal - totalCalculated;
+                        
+                        return (
+                          <div className="space-y-2">
+                            {totalSavings > 0 && (
+                              <div className="flex justify-between items-center text-sm">
+                                <span className="text-gray-600">Subtotal:</span>
+                                <span className="text-gray-400 line-through">€{totalOriginal.toFixed(2)}</span>
+                              </div>
+                            )}
+                            {totalSavings > 0 && (
+                              <div className="flex justify-between items-center text-sm">
+                                <span className="text-green-600">Poupança:</span>
+                                <span className="text-green-600">-€{totalSavings.toFixed(2)}</span>
+                              </div>
+                            )}
+                            <div className="flex justify-between items-center text-xl font-bold">
+                              <span className="text-gentle-black">Total:</span>
+                              <span className="text-gold">€{totalCalculated.toFixed(2)}</span>
+                            </div>
+                          </div>
+                        );
+                      })()}
                     </div>
 
                     <form onSubmit={handleSubmit} className="pt-6 space-y-4">
