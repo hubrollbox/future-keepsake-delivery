@@ -1,4 +1,4 @@
-// Melhoria 4: Paginação
+// Melhoria 4: Paginação e Status Atualizado
 import { useState } from 'react';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
@@ -8,7 +8,7 @@ import { ptBR } from 'date-fns/locale';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Pencil, Trash2, Mail, Phone, Calendar, CheckCircle } from 'lucide-react';
+import { Pencil, Trash2, Mail, Phone, Calendar, CheckCircle, Clock, AlertCircle, Send } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -21,11 +21,11 @@ interface KeepsakesListProps {
 // Componente para exibir um card de keepsake
 const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEdit: (id: string) => void, onDelete: (id: string) => void }) => {
   const statusColors = {
-    'pending': 'bg-yellow-100 text-yellow-800',
-    'scheduled': 'bg-blue-100 text-blue-800',
-    'sent': 'bg-green-100 text-green-800',
-    'delivered': 'bg-green-100 text-green-800',
-    'failed': 'bg-red-100 text-red-800'
+    'pending': 'bg-orange-100 text-orange-800 border-orange-200',
+    'scheduled': 'bg-blue-100 text-blue-800 border-blue-200',
+    'sent': 'bg-green-100 text-green-800 border-green-200',
+    'delivered': 'bg-emerald-100 text-emerald-800 border-emerald-200',
+    'failed': 'bg-red-100 text-red-800 border-red-200'
   };
 
   const statusText = {
@@ -34,6 +34,14 @@ const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEd
     'sent': 'Enviada',
     'delivered': 'Entregue',
     'failed': 'Falhou'
+  };
+
+  const statusIcons = {
+    'pending': Clock,
+    'scheduled': Calendar,
+    'sent': Send,
+    'delivered': CheckCircle,
+    'failed': AlertCircle
   };
 
   const typeText = {
@@ -50,6 +58,9 @@ const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEd
     null;
 
   const isSent = keepsake.status === 'sent' || keepsake.status === 'delivered';
+  const isPending = keepsake.status === 'pending';
+  const isFailed = keepsake.status === 'failed';
+  const StatusIcon = statusIcons[keepsake.status as keyof typeof statusIcons] || Calendar;
 
   return (
     <Card className="keepsake-card responsive-card mb-4 overflow-hidden transition-all hover:shadow-md">
@@ -63,14 +74,35 @@ const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEd
             <Badge variant="outline" className="capitalize text-xs">
               {typeText[keepsake.type]}
             </Badge>
-            <Badge className={`text-xs ${statusColors[keepsake.status as keyof typeof statusColors] || 'bg-gray-100 text-gray-800'}`}>
+            <Badge className={`text-xs border ${statusColors[keepsake.status as keyof typeof statusColors] || 'bg-gray-100 text-gray-800 border-gray-200'}`}>
+              <StatusIcon className="h-3 w-3 mr-1" />
               {statusText[keepsake.status as keyof typeof statusText] || 'Desconhecido'}
             </Badge>
           </div>
         </div>
-        <CardDescription className="flex items-center mt-1">
-          <Calendar className="h-4 w-4 mr-1" /> 
-          {isSent ? `Enviada em: ${formattedSentDate}` : `Agendada para: ${formattedDate}`}
+        <CardDescription className="space-y-1 mt-1">
+          <div className="flex items-center text-sm text-gray-600">
+            <Calendar className="h-4 w-4 mr-1" />
+            <span>Entrega programada: {formattedDate}</span>
+          </div>
+          {formattedSentDate && isSent && (
+            <div className="flex items-center text-sm text-green-600">
+              <Send className="h-4 w-4 mr-1" />
+              <span>Enviada em: {formattedSentDate}</span>
+            </div>
+          )}
+          {isPending && (
+            <div className="flex items-center text-sm text-orange-600">
+              <Clock className="h-4 w-4 mr-1" />
+              <span>Aguardando processamento</span>
+            </div>
+          )}
+          {isFailed && (
+            <div className="flex items-center text-sm text-red-600">
+              <AlertCircle className="h-4 w-4 mr-1" />
+              <span>Falha no envio - Será tentado novamente</span>
+            </div>
+          )}
         </CardDescription>
       </CardHeader>
       <CardContent className="keepsake-card-content pb-2">
