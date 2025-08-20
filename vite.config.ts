@@ -25,6 +25,9 @@ export default defineConfig(({ mode }) => ({
     }
   },
   build: {
+    target: 'es2020',
+    minify: 'terser',
+    sourcemap: false,
     rollupOptions: {
       external: [
         // '@supabase/supabase-js'
@@ -33,10 +36,21 @@ export default defineConfig(({ mode }) => ({
         manualChunks: {
           react: ['react', 'react-dom'],
           supabase: ['@supabase/ssr'],
+          ui: ['@chakra-ui/react', '@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu'],
+          utils: ['axios', 'date-fns', 'react-router-dom'],
           vendor: [
             // other vendor packages can go here
           ]
-        }
+        },
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]'
+      }
+    },
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
       }
     }
   }
