@@ -1,5 +1,4 @@
 
-import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { isValidFile } from "./utils";
@@ -25,7 +24,6 @@ interface DeliveryInsertData {
 }
 
 export const useCreateDeliveryForm = () => {
-  const navigate = useNavigate();
   const { toast } = useToast();
   const { user } = useAuth();
   const {
@@ -71,12 +69,12 @@ export const useCreateDeliveryForm = () => {
   };
 
   const prevStep = () => {
-    setCurrentStep((prevStep) => Math.max(prevStep - 1, 0));
+    setCurrentStep((prevStep: number) => Math.max(prevStep - 1, 0));
   };
 
   const nextStep = () => {
     if (validateStep(currentStep, deliveryType, formData, toast)) {
-      setCurrentStep((prevStep) => Math.min(prevStep + 1, 4));
+      setCurrentStep((prevStep: number) => Math.min(prevStep + 1, 4));
     } else {
       toast({
         title: "Erro de Validação",
@@ -142,7 +140,7 @@ export const useCreateDeliveryForm = () => {
           delivery_method: formData.delivery_method === "email" || formData.delivery_method === "physical" ? formData.delivery_method : "email",
           type: deliveryType === "digital" || deliveryType === "physical" ? deliveryType : "digital",
           location: formData.location,
-          digital_file_url: digitalFileUrl,
+          digital_file_url: digitalFileUrl || "",
           payment_status: "pending",
         };
 
