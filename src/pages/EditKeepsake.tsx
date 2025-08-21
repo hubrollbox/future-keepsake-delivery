@@ -50,25 +50,41 @@ const EditKeepsake = () => {
     const fetchKeepsake = async () => {
       setLoading(true);
       try {
-        const { data, error } = await supabase
+        // Buscar keepsake com dados do destinatário
+        const { data: keepsakeData, error: keepsakeError } = await supabase
           .from("keepsakes")
-          .select("*")
+          .select(`
+            *,
+            recipients (
+              name,
+              email,
+              phone,
+              delivery_channel,
+              street,
+              city,
+              state,
+              postal_code,
+              country
+            )
+          `)
           .eq("id", id)
           .single();
 
-        if (error) {
-          throw error;
+        if (keepsakeError) {
+          throw keepsakeError;
         }
 
-        if (data) {
-          setKeepsake(data);
+        if (keepsakeData) {
+          setKeepsake(keepsakeData);
+          const recipient = keepsakeData.recipients?.[0];
+          
           // Preencher o formulário com os dados existentes
           form.reset({
-            title: data.title || "",
-            content: data.content || "",
-            delivery_date: data.delivery_date ? new Date(data.delivery_date).toISOString().split("T")[0] : "",
-            recipient_email: data.recipient_email || "",
-            recipient_phone: data.recipient_phone || "",
+            title: keepsakeData.title || "",
+            content: keepsakeData.message_content || "",
+            delivery_date: keepsakeData.delivery_date ? new Date(keepsakeData.delivery_date).toISOString().split("T")[0] : "",
+            recipient_email: recipient?.email || "",
+            recipient_phone: recipient?.phone || "",
           });
         }
       } catch (error: any) {
@@ -92,20 +108,34 @@ const EditKeepsake = () => {
     setLoading(true);
     try {
       // Atualizar o keepsake no Supabase
-      const { error } = await supabase
+      const { error: keepsakeError } = await supabase
         .from("keepsakes")
         .update({
           title: values.title,
-          content: values.content,
+          message_content: values.content,
           delivery_date: values.delivery_date,
-          recipient_email: values.recipient_email || null,
-          recipient_phone: values.recipient_phone || null,
           updated_at: new Date().toISOString(),
         })
         .eq("id", id);
 
-      if (error) {
-        throw error;
+      if (keepsakeError) {
+        throw keepsakeError;
+      }
+
+      // Atualizar dados do destinatário se existirem
+      if (keepsake?.recipients?.[0]) {
+        const { error: recipientError } = await supabase
+          .from("recipients")
+          .update({
+            email: values.recipient_email || null,
+            phone: values.recipient_phone || null,
+            updated_at: new Date().toISOString(),
+          })
+          .eq("keepsake_id", id);
+
+        if (recipientError) {
+          throw recipientError;
+        }
       }
 
       toast({

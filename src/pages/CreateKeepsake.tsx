@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
-import { useKeepsakeForm } from '../hooks/useKeepsakeForm';
-import ProgressStepper from '../components/ProgressStepper';
-import TypeStep from '../components/keepsake/TypeStep';
-import RecipientStep from '../components/keepsake/RecipientStep';
-import MessageStep from '../components/keepsake/MessageStep';
-import ProductsStep from '../components/keepsake/ProductsStep';
-import ReviewStep from '../components/keepsake/ReviewStep';
-import SuccessStep from '../components/keepsake/SuccessStep';
-import { Card, CardContent } from '../components/ui/card';
-import { Alert, AlertDescription } from '../components/ui/alert';
-import { Button } from '../components/ui/button';
-import { Form } from '../components/ui/form'; // Add this import
+import { useAuth } from '@/hooks/useAuth';
+import { useKeepsakeForm } from '@/hooks/useKeepsakeForm';
+import ProgressStepper from '@/components/ProgressStepper';
+import TypeStep from '@/components/keepsake/TypeStep';
+import RecipientStep from '@/components/keepsake/RecipientStep';
+import MessageStep from '@/components/keepsake/MessageStep';
+import ProductsStep from '@/components/keepsake/ProductsStep';
+import ReviewStep from '@/components/keepsake/ReviewStep';
+import SuccessStep from '@/components/keepsake/SuccessStep';
+import { Card, CardContent } from '@/components/ui/card';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { Form } from '@/components/ui/form'; // Add this import
 import { AlertCircle, Save, Home, Crown, Zap } from 'lucide-react';
-import { plans } from '../lib/pricingData';
-import { calculatePricing, validatePricingConfiguration } from '../lib/adminPricingData';
+import { plans } from '@/lib/pricingData';
+import { calculatePricing, validatePricingConfiguration } from '@/lib/adminPricingData';
 
 const CreateKeepsake: React.FC = () => {
   const navigate = useNavigate();

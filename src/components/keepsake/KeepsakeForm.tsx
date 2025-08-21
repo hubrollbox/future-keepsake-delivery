@@ -1,5 +1,5 @@
-import { useZodForm } from '../../hooks/useZodForm';
-import { titleSchema, messageSchema } from '../../lib/validation';
+import { useZodForm } from '@/hooks/useZodForm';
+import { titleSchema, messageSchema } from '@/lib/validation';
 import type { z } from 'zod';
 
 import { z } from 'zod';

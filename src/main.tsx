@@ -1,10 +1,10 @@
 
 import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
-import './styles/charts.css'
-import { initGA } from './lib/analytics';
-import { checkRequiredEnv } from './lib/env-validator';
+import App from '@/App.tsx'
+import '@/index.css'
+import '@/styles/charts.css'
+import { initGA } from '@/lib/analytics';
+import { checkRequiredEnv } from '@/lib/env-validator';
 import { SpeedInsights } from "@vercel/speed-insights/react"
 
 // Verificar variáveis de ambiente obrigatórias

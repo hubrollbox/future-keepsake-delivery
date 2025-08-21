@@ -21,7 +21,7 @@ const Dashboard = () => {
   const { user, profile, loading } = useAuth();
   const isAdmin = profile?.role === "admin";
   const { deliveries, loading: deliveriesLoading, deleteDelivery } = useDeliveries();
-  const { keepsakes, loading: keepsakesLoading, refetch: refetchKeepsakes } = useKeepsakes();
+  const { keepsakes, loading: keepsakesLoading, refetch: refetchKeepsakes, deleteKeepsake: deleteKeepsakeHook } = useKeepsakes();
   const { toast } = useToast();
 
   // Estado para confirmação de eliminação
@@ -47,17 +47,9 @@ const Dashboard = () => {
   }, [loading, user, isAdmin, navigate]);
 
   const deleteKeepsake = async (id: string) => {
-    try {
-      const { error } = await supabase.from("keepsakes").delete().eq("id", id);
-      if (error) throw error;
-      toast({ title: "Cápsula eliminada" });
+    const success = await deleteKeepsakeHook(id);
+    if (success) {
       refetchKeepsakes();
-    } catch (e: any) {
-      toast({
-        title: "Erro ao eliminar",
-        description: e?.message || "Tenta novamente.",
-        variant: "destructive",
-      });
     }
   };
 

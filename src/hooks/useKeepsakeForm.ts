@@ -221,13 +221,12 @@ export const useKeepsakeForm = () => {
         .insert({
           user_id: user.id,
           title: formData.title,
-          message: formData.message,
           message_content: formData.message,
           delivery_date: formData.delivery_date,
           type: formData.type,
-          status: 'pending',
-          total_cost: totalCost,
+          status: 'scheduled',
           created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
         })
         .select()
         .single();
@@ -240,19 +239,28 @@ export const useKeepsakeForm = () => {
         name: formData.recipient_name,
         relationship: formData.relationship || null,
         delivery_channel: formData.delivery_channel,
-        channel_cost: formData.channel_cost ?? 0,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       };
 
+      // Campos obrigatórios baseados no canal de entrega
       if (formData.delivery_channel === 'email') {
         recipientPayload.email = formData.recipient_contact || '';
+        // Phone pode ser null para email
+        recipientPayload.phone = null;
       } else if (formData.delivery_channel === 'sms') {
         recipientPayload.phone = formData.recipient_contact || '';
+        // Email pode ser null para SMS
+        recipientPayload.email = null;
       } else if (formData.delivery_channel === 'physical') {
+        // Para entrega física, ambos email e phone podem ser opcionais
+        recipientPayload.email = formData.recipient_contact || null;
+        recipientPayload.phone = null;
         recipientPayload.street = formData.street;
         recipientPayload.city = formData.city;
-        recipientPayload.state = formData.state;
+        recipientPayload.state = formData.state || null;
         recipientPayload.postal_code = formData.postal_code;
-        recipientPayload.country = formData.country;
+        recipientPayload.country = formData.country || 'Portugal';
       }
 
       const { error: recipientError } = await supabase
@@ -269,8 +277,9 @@ export const useKeepsakeForm = () => {
             formData.selected_products.map(product => ({
               keepsake_id: keepsakeData.id,
               product_id: product.id,
-              quantity: product.quantity,
+              quantity: product.quantity || 1,
               unit_price: product.price,
+              created_at: new Date().toISOString(),
             }))
           );
 

@@ -6,26 +6,26 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContextProvider";
 import { GamificationProvider } from "@/contexts/GamificationContext";
-import Index from "./pages/Index";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
+import Index from "@/pages/Index";
+import Login from "@/pages/Login";
+import Register from "@/pages/Register";
+import Dashboard from "@/pages/Dashboard";
 
-import CreateKeepsake from "./pages/CreateKeepsake";
-import EditKeepsake from "./pages/EditKeepsake";
-import Profile from "./pages/Profile";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import HowItWorks from "./pages/HowItWorks";
-import Pricing from "./pages/Pricing";
-import Products from "./pages/Products";
-import FAQ from "./pages/FAQ";
-import Partnerships from "./pages/Partnerships";
-import Checkout from "./pages/Checkout";
-import AdminDashboard from "./pages/AdminDashboard";
-import NotFound from "./pages/NotFound";
-import TermsConditions from "./pages/TermsConditions";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
+import CreateKeepsake from "@/pages/CreateKeepsake";
+import EditKeepsake from "@/pages/EditKeepsake";
+import Profile from "@/pages/Profile";
+import About from "@/pages/About";
+import Contact from "@/pages/Contact";
+import HowItWorks from "@/pages/HowItWorks";
+import Pricing from "@/pages/Pricing";
+import Products from "@/pages/Products";
+import FAQ from "@/pages/FAQ";
+import Partnerships from "@/pages/Partnerships";
+import Checkout from "@/pages/Checkout";
+import AdminDashboard from "@/pages/AdminDashboard";
+import NotFound from "@/pages/NotFound";
+import TermsConditions from "@/pages/TermsConditions";
+import PrivacyPolicy from "@/pages/PrivacyPolicy";
 
 
 

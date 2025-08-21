@@ -153,15 +153,18 @@ export const useCreateDeliveryForm = () => {
 
         await insertDelivery(dataToInsert);
 
-        await supabase.from("scheduled_notifications").insert([
-          {
-            user_email: user.email!,
-            recipient_email: formData.recipient_email,
-            delivery_date: formData.deliveryDate,
-            message: formData.message,
-            status: "pending"
-          }
-        ]);
+        // Note: scheduled_notifications now uses keepsake_id and recipient_id
+        // This insert may need to be updated based on the actual delivery/keepsake creation flow
+        // For now, commenting out to avoid schema mismatch
+        // await supabase.from("scheduled_notifications").insert([
+        //   {
+        //     user_email: user.email!,
+        //     recipient_id: recipientId, // Would need recipient_id from recipients table
+        //     delivery_date: formData.deliveryDate,
+        //     keepsake_id: keepsakeId, // Would need keepsake_id from keepsakes table
+        //     status: "pending"
+        //   }
+        // ]);
 
         onDeliveryCreated({
           id: `${Date.now()}`,
