@@ -8,7 +8,9 @@
     "VITE_SUPABASE_ANON_KEY": "@supabase_anon_key",
     "VITE_STRIPE_PUBLIC_KEY": "@stripe_public_key",
     "VITE_SENTRY_DSN": "@sentry_dsn",
-    "VITE_GA_MEASUREMENT_ID": "@ga_measurement_id"
+    "VITE_GA_MEASUREMENT_ID": "@ga_measurement_id",
+    "RESEND_API_KEY": "@resend_api_key",
+    "RESEND_FROM": "@resend_from"
   },
   "functions": {
     "api/**/*.js": {
@@ -24,7 +26,8 @@
       "headers": [
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "X-XSS-Protection", "value": "1; mode=block" }
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
       ]
     }
   ]

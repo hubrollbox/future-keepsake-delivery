@@ -1,3 +1,5 @@
+/// <reference path="./deno.d.ts" />
+
 // Edge Function para processar e enviar keepsakes agendadas
 // Versão otimizada com processamento paralelo, gerenciamento de timezone e tratamento robusto de erros
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.38.4'
@@ -62,7 +64,7 @@ function isValidEmail(email: string): boolean {
 }
 
 // Função para verificar rate limiting por usuário
-function checkRateLimit(userId: string): boolean {
+function checkRateLimit(userId: string, type: 'sender' | 'recipient'): { allowed: boolean; resetTime: number } {
   const now = Date.now()
   const userLimit = RATE_LIMIT_CACHE.get(userId)
   
@@ -72,15 +74,15 @@ function checkRateLimit(userId: string): boolean {
       count: 1,
       resetTime: now + (60 * 60 * 1000) // 1 hora
     })
-    return true
+    return { allowed: true, resetTime: now + (60 * 60 * 1000) }
   }
   
   if (userLimit.count >= RATE_LIMIT_PER_USER_PER_HOUR) {
-    return false
+    return { allowed: false, resetTime: userLimit.resetTime }
   }
   
   userLimit.count++
-  return true
+  return { allowed: true, resetTime: userLimit.resetTime }
 }
 
 // Função para sanitizar dados de entrada
@@ -246,7 +248,7 @@ async function processKeepsakes() {
     console.log(`Encontradas ${keepsakes.length} keepsakes para processar`)
     
     let processedCount = 0
-    const errors = []
+    const errors: Array<{ keepsakeId: string; error: string }> = []
     
     // Processar keepsakes em paralelo com controle de concorrência
     const processPromises = keepsakes.map(async (keepsake) => {
@@ -264,7 +266,7 @@ async function processKeepsakes() {
         const recipients = keepsake.recipients
         
         // Preparar todos os emails para envio paralelo
-        const emailPromises = []
+        const emailPromises: Array<Promise<{ success: boolean; result?: any; error?: any }>> = []
         
         for (const recipient of recipients) {
           // Validate and sanitize recipient email
@@ -274,7 +276,7 @@ async function processKeepsakes() {
           }
 
           // Check rate limit for recipient
-          const rateLimitCheck = await checkRateLimit(recipient.email, 'recipient');
+          const rateLimitCheck = checkRateLimit(recipient.email, 'recipient');
           if (!rateLimitCheck.allowed) {
             logWithContext('warn', `Rate limit exceeded for recipient: ${recipient.email}`, { keepsakeId: keepsake.id, recipientEmail: recipient.email, resetTime: rateLimitCheck.resetTime });
             continue;
@@ -333,7 +335,7 @@ async function processKeepsakes() {
             shouldSendToSender = false;
           } else {
             // Check rate limit for sender
-            const senderRateLimitCheck = await checkRateLimit(senderData.email, 'sender');
+            const senderRateLimitCheck = checkRateLimit(senderData.email, 'sender');
             if (!senderRateLimitCheck.allowed) {
               logWithContext('warn', `Rate limit exceeded for sender: ${senderData.email}`, { keepsakeId: keepsake.id, senderEmail: senderData.email, resetTime: senderRateLimitCheck.resetTime });
               shouldSendToSender = false;
@@ -404,8 +406,18 @@ async function processKeepsakes() {
           }
         }
         
-        // Enviar todos os emails em paralelo com controle de concorrência
-        const emailResults = await Promise.allSettled(emailPromises)
+        // Enviar emails em lotes para controlar concorrência
+        const emailResults: Array<PromiseSettledResult<{ success: boolean; result?: any; error?: any }>> = []
+        for (let i = 0; i < emailPromises.length; i += MAX_CONCURRENT_EMAILS) {
+          const batch = emailPromises.slice(i, i + MAX_CONCURRENT_EMAILS)
+          const batchResults = await Promise.allSettled(batch)
+          emailResults.push(...batchResults)
+          
+          // Pequena pausa entre lotes para não sobrecarregar
+          if (i + MAX_CONCURRENT_EMAILS < emailPromises.length) {
+            await delay(100)
+          }
+        }
         
         // Verificar resultados dos emails
         const failedEmails = emailResults.filter(result => 

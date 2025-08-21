@@ -1,125 +1,89 @@
-# Funcionalidade de Envio Automático de Cápsulas Digitais
+# Edge Function: send-keepsakes
 
-Esta documentação descreve a implementação da funcionalidade de envio automático de cápsulas digitais (keepsakes) no projeto Future Keepsake Delivery.
+Esta Edge Function processa e envia keepsakes agendadas automaticamente.
 
-## Visão Geral
+## Funcionalidades
 
-A funcionalidade consiste em:
-
-1. Uma Edge Function do Supabase (`send-keepsakes`) que processa as cápsulas digitais agendadas
-2. Um cron job que executa a função diariamente
-3. Integração com o serviço de email Resend para enviar as mensagens
-
-## Componentes Implementados
-
-### 1. Edge Function `send-keepsakes`
-
-A Edge Function é responsável por:
-
-- Buscar cápsulas digitais agendadas para hoje ou datas passadas
-- Enviar emails para os destinatários e remetentes
-- Atualizar o status das cápsulas para 'sent'
-- Criar notificações para os usuários
-
-### 2. Cron Job
-
-Um cron job do PostgreSQL que executa a Edge Function diariamente às 00:05.
-
-### 3. Migração SQL
-
-A migração SQL cria:
-
-- A função `invoke_send_keepsakes_function()` que chama a Edge Function
-- Uma tabela `cron_job_logs` para registrar as execuções
-- O agendamento do cron job
-
-## Requisitos
-
-- Supabase com PostgreSQL 14+
-- Extensão `pg_cron` habilitada
-- Conta no serviço Resend para envio de emails
+- ✅ Processamento em lote com controle de concorrência
+- ✅ Rate limiting por usuário (50 emails/hora)
+- ✅ Retry automático com exponential backoff
+- ✅ Sanitização de dados (prevenção XSS)
+- ✅ Logging estruturado com contexto
+- ✅ Timezone correto para Portugal
+- ✅ Tratamento robusto de erros
 
 ## Configuração
 
-### 1. Variáveis de Ambiente
-
-Adicione as seguintes variáveis de ambiente no projeto Supabase:
-
+### Variáveis de Ambiente
 ```bash
-RESEND_API_KEY=sua_chave_api_resend
+RESEND_API_KEY=sua_chave_resend
 SUPABASE_URL=sua_url_supabase
 SUPABASE_SERVICE_ROLE_KEY=sua_chave_service_role
 ```
 
-### 2. Implantação da Edge Function
+### Dependências
+- `@supabase/supabase-js@2.38.4` - Cliente Supabase
+- `resend@2.0.0` - Serviço de email
+- `luxon@3.4.4` - Manipulação de timezone
+
+## Deploy
 
 ```bash
-# Navegue até o diretório da função
-cd supabase/functions/send-keepsakes
-
-# Implante a função
-supabase functions deploy send-keepsakes --project-ref seu-ref-projeto
+supabase functions deploy send-keepsakes
 ```
 
-### 3. Execução da Migração SQL
+## Uso
 
 ```bash
-# Navegue até o diretório raiz do projeto
-cd future-keepsake-delivery
-
-# Execute a migração
-supabase migration up --project-ref seu-ref-projeto
+curl -X POST https://seu-projeto.supabase.co/functions/v1/send-keepsakes \
+  -H "Authorization: Bearer sua_service_role_key"
 ```
 
-### 4. Teste Manual
+## Notas sobre TypeScript
 
-Você pode testar manualmente a função usando o script fornecido:
+⚠️ **Os erros de TypeScript são esperados** para Edge Functions Deno:
 
-```bash
-node scripts/testSendKeepsakes.js
+- Os imports com URLs (`https://esm.sh/...`) e `npm:` são específicos do Deno
+- O TypeScript não reconhece esses formatos, mas funcionam em runtime
+- Use `npm run type-check` apenas para o código principal da aplicação
+- Para Edge Functions, use `supabase functions deploy` diretamente
+
+### Estrutura de Arquivos
 ```
-
-## Fluxo de Funcionamento
-
-1. O cron job é executado diariamente às 00:05
-2. A função `invoke_send_keepsakes_function()` é chamada
-3. A Edge Function `send-keepsakes` é invocada
-4. A função busca todas as cápsulas digitais agendadas para hoje ou datas passadas
-5. Para cada cápsula:
-   - Busca informações do remetente e destinatários
-   - Envia emails para os destinatários e remetente
-   - Atualiza o status da cápsula para 'sent'
-   - Cria uma notificação para o usuário
-6. O resultado da execução é registrado na tabela `cron_job_logs`
-
-## Tratamento de Erros
-
-- Se ocorrer um erro ao processar uma cápsula, seu status é atualizado para 'error'
-- Erros são registrados no console e na tabela `cron_job_logs`
-- A função continua processando as demais cápsulas mesmo se ocorrer um erro em uma delas
+send-keepsakes/
+├── index.ts          # Função principal
+├── deno.json         # Configuração Deno
+├── deno.d.ts         # Tipos Deno
+├── tsconfig.json     # Config TypeScript (Edge Function)
+└── README.md         # Esta documentação
+```
 
 ## Monitoramento
 
-Você pode monitorar a execução da função através:
+A função gera logs estruturados em JSON para facilitar o debugging:
 
-1. Logs da Edge Function no painel do Supabase
-2. Registros na tabela `cron_job_logs`
-3. Status das cápsulas na tabela `keepsakes`
+```json
+{
+  "timestamp": "2024-01-15T10:30:00Z",
+  "level": "info",
+  "message": "Keepsake processada com sucesso",
+  "keepsakeId": "uuid-da-keepsake"
+}
+```
 
-## Segurança
+## Troubleshooting
 
-- A Edge Function usa a chave de serviço do Supabase para acessar o banco de dados
-- A função não requer autenticação JWT para ser executada (é chamada pelo cron job)
-- Emails são enviados usando o serviço Resend com TLS
+### Erro: "Cannot find module 'https://esm.sh/...'"
+- ✅ **Normal** para Edge Functions Deno
+- ✅ Funciona em runtime
+- ❌ Não afeta deploy
 
-## Manutenção
+### Erro: "Cannot find name 'Deno'"
+- ✅ **Normal** para Edge Functions Deno
+- ✅ Resolvido pelo `deno.d.ts`
+- ❌ Não afeta deploy
 
-Para atualizar a função:
-
-1. Modifique os arquivos na pasta `supabase/functions/send-keepsakes`
-2. Reimplante a função usando o comando `supabase functions deploy send-keepsakes`
-
-Para modificar o agendamento do cron job:
-
-1. Atualize a expressão cron na migração SQL
-2. Execute a migração novamente
+### Rate Limiting
+- Limite: 50 emails por usuário por hora
+- Cache em memória (reset a cada deploy)
+- Logs detalhados quando limite é excedido
