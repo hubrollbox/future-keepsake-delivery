@@ -23,7 +23,7 @@ const requiredEnvVars: EnvVariable[] = [
   },
   {
     name: 'VITE_STRIPE_PUBLIC_KEY',
-    required: true,
+    required: false,
     description: 'Chave pública do Stripe para processamento de pagamentos'
   },
   {

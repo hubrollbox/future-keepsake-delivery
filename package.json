@@ -65,7 +65,6 @@
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
     "type-check": "tsc --noEmit",
-    "postbuild": "node scripts/post-build.js",
     "security-check": "npm audit --audit-level moderate",
     "security-fix": "npm audit fix",
     "analyze": "npm run build:prod && npx vite-bundle-analyzer dist"
