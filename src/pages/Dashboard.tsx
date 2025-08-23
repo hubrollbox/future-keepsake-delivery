@@ -29,11 +29,8 @@ const Dashboard = () => {
   const [pendingDeleteId, setPendingDeleteId] = React.useState<string | null>(null);
 
   // Apenas usar notificações em tempo real para utilizadores normais
-  React.useEffect(() => {
-    if (!loading && user && !isAdmin) {
-      useRealtimeDeliveries();
-    }
-  }, [loading, user, isAdmin]);
+  const shouldUseRealtime = !loading && user && !isAdmin;
+  useRealtimeDeliveries(shouldUseRealtime);
 
   // Redirecionamento único
   React.useEffect(() => {

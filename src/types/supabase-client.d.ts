@@ -16,7 +16,7 @@ declare module '@/integrations/supabase/client' {
     email: string;
     created_at: string;
     updated_at: string;
-    [key: string]: any;
+    [key: string]: unknown;
   }
   
   export interface Profile {
@@ -26,7 +26,7 @@ declare module '@/integrations/supabase/client' {
     avatar_url: string;
     created_at: string;
     updated_at: string;
-    [key: string]: any;
+    [key: string]: unknown;
   }
   
   export interface Keepsake {
@@ -39,7 +39,7 @@ declare module '@/integrations/supabase/client' {
     status: string;
     created_at: string;
     updated_at: string;
-    [key: string]: any;
+    [key: string]: unknown;
   }
   
   export interface Delivery {
@@ -51,7 +51,7 @@ declare module '@/integrations/supabase/client' {
     status: string;
     created_at: string;
     updated_at: string;
-    [key: string]: any;
+    [key: string]: unknown;
   }
   
   export interface Recipient {

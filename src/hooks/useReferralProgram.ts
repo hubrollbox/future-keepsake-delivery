@@ -52,7 +52,7 @@ export const useReferralProgram = () => {
       if (referralError) throw referralError;
 
       // Buscar ou criar código de referência do usuário
-      let { data: profileData, error: profileError } = await supabase
+      const { data: profileData, error: profileError } = await supabase
         .from('profiles')
         .select('referral_code')
         .eq('id', user.id)
@@ -250,7 +250,7 @@ export const useReferralProgram = () => {
     if (user) {
       fetchReferralStats();
     }
-  }, [user]);
+  }, [user, fetchReferralStats]);
 
   return {
     referrals,

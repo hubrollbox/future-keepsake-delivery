@@ -13,6 +13,19 @@ import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { getTomorrowDate } from "@/utils/validation";
 
+// Interface para o tipo Keepsake
+interface Keepsake {
+  id: string;
+  title: string;
+  content: string;
+  delivery_date: string;
+  recipient_email: string;
+  recipient_phone?: string;
+  user_id: string;
+  created_at: string;
+  updated_at: string;
+}
+
 // Definição do schema de validação usando Zod
 const editKeepsakeSchema = z.object({
   title: z.string().min(5, { message: "O título deve ter pelo menos 5 caracteres" }),
@@ -32,7 +45,7 @@ const EditKeepsake = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
-  const [keepsake, setKeepsake] = useState<any>(null);
+  const [keepsake, setKeepsake] = useState<Keepsake | null>(null);
 
   const form = useForm<EditKeepsakeFormValues>({
     resolver: zodResolver(editKeepsakeSchema),
@@ -87,11 +100,11 @@ const EditKeepsake = () => {
             recipient_phone: recipient?.phone || "",
           });
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         toast({
           variant: "destructive",
           title: "Erro ao carregar keepsake",
-          description: error.message || "Não foi possível carregar os dados do keepsake.",
+          description: error instanceof Error ? error.message : "Não foi possível carregar os dados do keepsake.",
         });
         navigate("/dashboard");
       } finally {
@@ -144,11 +157,11 @@ const EditKeepsake = () => {
       });
 
       navigate("/dashboard");
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         variant: "destructive",
         title: "Erro ao atualizar keepsake",
-        description: error.message || "Não foi possível atualizar o keepsake.",
+        description: error instanceof Error ? error.message : "Não foi possível atualizar o keepsake.",
       });
     } finally {
       setLoading(false);

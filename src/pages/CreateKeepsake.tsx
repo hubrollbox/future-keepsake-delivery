@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { useKeepsakeForm } from '@/hooks/useKeepsakeForm';
@@ -72,10 +72,10 @@ const CreateKeepsake: React.FC = () => {
     if (planLimits && currentStep >= 3) {
       validatePlanLimits();
     }
-  }, [form.watch(), planLimits, currentStep]);
+  }, [form.watch(), planLimits, currentStep, validatePlanLimits]);
 
   // Função para validar limites do plano
-  const validatePlanLimits = () => {
+  const validatePlanLimits = useCallback(() => {
     if (!planLimits) return;
     
     const formData = form.getValues();
@@ -120,7 +120,7 @@ const CreateKeepsake: React.FC = () => {
     }
     
     setPlanValidationErrors(errors);
-  };
+  }, [planLimits, userPlan, form]);
 
   // Aviso sobre mudanças não guardadas
   useEffect(() => {

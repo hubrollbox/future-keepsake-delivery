@@ -96,7 +96,7 @@ export const useKeepsakes = () => {
   // Função para atualizar um keepsake
   const updateKeepsake = async (id: string, updates: Partial<Keepsake>) => {
     try {
-      const dbUpdates: any = { ...updates };
+      const dbUpdates: Record<string, unknown> = { ...updates };
       if (typeof updates.content !== 'undefined') {
         dbUpdates.message_content = updates.content;
         delete dbUpdates.content;
@@ -158,7 +158,7 @@ export const useKeepsakes = () => {
 
   useEffect(() => {
     fetchKeepsakes();
-  }, []);
+  }, [fetchKeepsakes]);
 
   return { 
     keepsakes, 

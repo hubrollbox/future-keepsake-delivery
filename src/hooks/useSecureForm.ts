@@ -18,7 +18,7 @@ export function useSecureForm<T extends Record<string, any>>({
   const [errors, setErrors] = useState<Partial<Record<keyof T, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const updateField = useCallback((field: keyof T, value: any) => {
+  const updateField = useCallback((field: keyof T, value: T[keyof T]) => {
     // Sanitize input if field is in sanitizeFields array
     const sanitizedValue = sanitizeFields.includes(field) && typeof value === 'string'
       ? sanitizeInput(value)
@@ -41,7 +41,7 @@ export function useSecureForm<T extends Record<string, any>>({
     return error ? [error] : [];
   }, [errors]);
 
-  const validateField = useCallback((field: keyof T, value: any) => {
+  const validateField = useCallback((field: keyof T, value: T[keyof T]) => {
     try {
       // For single field validation, we'll try to validate the entire object
       // but only show errors for the specific field

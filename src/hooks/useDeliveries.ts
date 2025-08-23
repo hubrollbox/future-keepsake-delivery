@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
+import { Keepsake } from "@/types/supabase-client";
 
 interface Delivery {
   id: string;
@@ -60,7 +61,7 @@ export const useDeliveries = () => {
       }
 
       // Mapear os dados para o formato esperado
-      const mappedData = (data || []).map((keepsake: any) => ({
+      const mappedData = (data || []).map((keepsake: Keepsake & { recipients?: Array<{ name: string; email: string }> }) => ({
         id: keepsake.id,
         title: keepsake.title,
         description: keepsake.message,
@@ -76,11 +77,11 @@ export const useDeliveries = () => {
       }));
       
       setDeliveries(mappedData);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error fetching deliveries:", typeof error === "object" ? JSON.stringify(error, null, 2) : error);
       toast({
         title: "Erro",
-        description: error.message || "Não foi possível carregar as cápsulas.",
+        description: error instanceof Error ? error.message : "Não foi possível carregar as cápsulas.",
         variant: "destructive",
       });
     } finally {
@@ -115,7 +116,7 @@ export const useDeliveries = () => {
 
   useEffect(() => {
     fetchDeliveries();
-  }, [user]);
+  }, [user, fetchDeliveries]);
 
   return {
     deliveries,

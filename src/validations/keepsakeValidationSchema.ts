@@ -344,12 +344,12 @@ export type EditKeepsakeFormValues = z.infer<typeof editKeepsakeSchema>;
 // ============================================================================
 
 // Função para validar um passo específico
-export const validateStep = (step: keyof typeof stepValidationSchemas, data: any) => {
+export const validateStep = (step: keyof typeof stepValidationSchemas, data: unknown) => {
   return stepValidationSchemas[step].safeParse(data);
 };
 
 // Função para obter mensagens de erro amigáveis
-export const getFieldError = (errors: any, fieldPath: string): string | undefined => {
+export const getFieldError = (errors: Record<string, unknown>, fieldPath: string): string | undefined => {
   const pathArray = fieldPath.split('.');
   let current = errors;
   

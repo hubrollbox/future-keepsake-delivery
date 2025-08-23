@@ -1,7 +1,6 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { plans, getPopularPlans, storageServices, digitalServices, physicalServices, timeCapsules } from "@/lib/pricingData";
-import PlanCard from "@/components/PlanCard";
+import { plans, storageServices, digitalServices, physicalServices, timeCapsules } from "@/lib/pricingData";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -167,7 +166,7 @@ function Pricing() {
                     key={category.id}
                     variant={selectedCategory === category.id ? 'default' : 'outline'}
                     size="sm"
-                    onClick={() => setSelectedCategory(category.id as any)}
+                    onClick={() => setSelectedCategory(category.id)}
                     className="rounded-full"
                   >
                     {category.label}

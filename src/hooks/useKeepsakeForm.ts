@@ -234,7 +234,16 @@ export const useKeepsakeForm = () => {
       if (keepsakeError) throw keepsakeError;
 
       // Inserir dados do destinatário
-      const recipientPayload: any = {
+      const recipientPayload: {
+        keepsake_id: string;
+        name: string;
+        relationship: string | null;
+        delivery_channel: string;
+        created_at: string;
+        updated_at: string;
+        email?: string;
+        phone?: string | null;
+      } = {
         keepsake_id: keepsakeData.id,
         name: formData.recipient_name,
         relationship: formData.relationship || null,

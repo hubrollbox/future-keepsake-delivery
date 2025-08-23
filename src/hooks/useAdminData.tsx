@@ -223,7 +223,7 @@ export const useAdminData = () => {
 
   useEffect(() => {
     fetchStats();
-  }, []);
+  }, [fetchStats]);
 
   return {
     stats,

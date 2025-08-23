@@ -3,10 +3,11 @@ import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useNotifications } from "./useNotifications";
 
-export const useRealtimeDeliveries = () => {
+export const useRealtimeDeliveries = (enabled: boolean = true) => {
   const { createNotification } = useNotifications();
 
   useEffect(() => {
+    if (!enabled) return;
     // Subscribe to delivery status changes
     const channel = supabase
       .channel('delivery-updates')
@@ -95,5 +96,5 @@ export const useRealtimeDeliveries = () => {
       supabase.removeChannel(channel);
       supabase.removeChannel(paymentsChannel);
     };
-  }, [createNotification]);
+  }, [enabled, createNotification]);
 };

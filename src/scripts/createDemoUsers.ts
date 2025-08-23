@@ -7,7 +7,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 const createDemoUsers = async () => {
   try {
     // Admin Demo User
-    const { data: adminData, error: adminError } = await supabase.auth.signUp({
+    const { error: adminError } = await supabase.auth.signUp({
       email: 'admin@keepla.pt',
       password: 'senha123',
     });

@@ -73,18 +73,17 @@ export const sanitizeInput = (input: string): string => {
 
 export const sanitizeHTML = (html: string): string => {
   // Basic HTML sanitization - only allow safe tags
-  const allowedTags = /<\/?[biu]>/gi;
   return html.replace(/<(?!\/?(b|i|u)\b)[^>]+>/gi, '');
 };
 
 // Common validation patterns
 export const VALIDATION_PATTERNS = {
   email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-  phone: /^[\+]?[1-9][\d]{0,15}$/,
-  name: /^[a-zA-ZÀ-ÿ\s\-'\.]+$/,
+  phone: /^[+]?[1-9][\d]{0,15}$/,
+  name: /^[a-zA-ZÀ-ÿ\s\-'.]+$/,
   alphanumeric: /^[a-zA-Z0-9]+$/,
   strongPassword: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-  url: /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/
+  url: /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)$/
 };
 
 // Rate limiting helper

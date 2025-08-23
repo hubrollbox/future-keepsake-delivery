@@ -258,8 +258,8 @@ export function calculatePricing(
     throw new Error(`Plano não encontrado: ${planId}`);
   }
 
-  let basePrice = plan.publicPrice;
-  let baseCost = plan.internalCost;
+  const basePrice = plan.publicPrice;
+  const baseCost = plan.internalCost;
   let serviceCosts = 0;
   let serviceInternalCosts = 0;
 
