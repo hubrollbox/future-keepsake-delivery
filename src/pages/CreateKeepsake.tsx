@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
-import { useKeepsakeForm } from '@/hooks/useKeepsakeForm';
+import { useKeepsakeForm, KeepsakeFormData } from '@/hooks/useKeepsakeForm';
 import ProgressStepper from '@/components/ProgressStepper';
 import TypeStep from '@/components/keepsake/TypeStep';
 import RecipientStep from '@/components/keepsake/RecipientStep';
@@ -15,13 +15,13 @@ import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form'; // Add this import
 import { AlertCircle, Save, Home, Crown, Zap } from 'lucide-react';
 import { plans } from '@/lib/pricingData';
-import { calculatePricing, validatePricingConfiguration } from '@/lib/adminPricingData';
+
 
 const CreateKeepsake: React.FC = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
   const [userPlan, setUserPlan] = useState<string>('free');
-  const [planLimits, setPlanLimits] = useState<any>(null);
+  const [planLimits, setPlanLimits] = useState<Record<string, unknown> | null>(null);
   const [planValidationErrors, setPlanValidationErrors] = useState<string[]>([]);
   
   const {
@@ -35,10 +35,7 @@ const CreateKeepsake: React.FC = () => {
     stepValidation,
     nextStep,
     prevStep,
-    goToStep,
-    validateStep,
     submitKeepsake,
-    resetForm,
   } = useKeepsakeForm();
 
   // Redirecionamento se não autenticado
@@ -164,8 +161,8 @@ const CreateKeepsake: React.FC = () => {
   const renderStepContent = () => {
     const common = { form, nextStep, prevStep };
     const formData = form.getValues();
-    const updateFormData = (data: Record<string, any>) => {
-      Object.entries(data).forEach(([k, v]) => form.setValue(k as any, v as any));
+    const updateFormData = (data: Partial<KeepsakeFormData>) => {
+      Object.entries(data).forEach(([k, v]) => form.setValue(k as keyof KeepsakeFormData, v));
     };
 
     switch (currentStep) {
@@ -182,7 +179,7 @@ const CreateKeepsake: React.FC = () => {
         return (
           <RecipientStep
             {...common}
-            formData={formData as any}
+            formData={formData}
             updateFormData={updateFormData}
           />
         );
@@ -190,7 +187,7 @@ const CreateKeepsake: React.FC = () => {
         return (
           <MessageStep
             {...common}
-            formData={formData as any}
+            formData={formData}
             updateFormData={updateFormData}
           />
         );
@@ -198,21 +195,21 @@ const CreateKeepsake: React.FC = () => {
         return (
           <ProductsStep
             {...common}
-            formData={formData as any}
+            formData={formData}
             updateFormData={updateFormData}
           />
         );
       case 5:
         return (
           <ReviewStep
-            formData={formData as any}
+            formData={formData}
             onBack={prevStep}
             onSubmit={async () => { await submitKeepsake(); }}
             loading={formState.isSubmitting}
           />
         );
       case 6:
-        return <SuccessStep formData={formData as any} />;
+        return <SuccessStep formData={formData} />;
       default:
         return (
           <TypeStep

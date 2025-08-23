@@ -10,8 +10,7 @@ import TimeCapsuleSection from "@/components/dashboard/TimeCapsuleSection";
 import { KeepsakesList } from "@/components/dashboard/KeepsakesList";
 import { useKeepsakes } from "@/hooks/useKeepsakes";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PlusCircle, Clock, Package, CheckCircle } from "lucide-react";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -22,7 +21,6 @@ const Dashboard = () => {
   const isAdmin = profile?.role === "admin";
   const { deliveries, loading: deliveriesLoading, deleteDelivery } = useDeliveries();
   const { keepsakes, loading: keepsakesLoading, refetch: refetchKeepsakes, deleteKeepsake: deleteKeepsakeHook } = useKeepsakes();
-  const { toast } = useToast();
 
   // Estado para confirmação de eliminação
   const [confirmOpen, setConfirmOpen] = React.useState(false);

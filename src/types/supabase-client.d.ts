@@ -66,7 +66,7 @@ declare module '@/integrations/supabase/client' {
     country: string;
     created_at: string;
     updated_at: string;
-    [key: string]: any;
+    [key: string]: unknown;
   }
   
   export interface WarehouseItem {
@@ -75,7 +75,7 @@ declare module '@/integrations/supabase/client' {
     status: string;
     created_at: string;
     updated_at: string;
-    [key: string]: any;
+    [key: string]: unknown;
   }
   
   export interface Payment {
@@ -85,6 +85,6 @@ declare module '@/integrations/supabase/client' {
     status: string;
     created_at: string;
     updated_at: string;
-    [key: string]: any;
+    [key: string]: unknown;
   }
 }
