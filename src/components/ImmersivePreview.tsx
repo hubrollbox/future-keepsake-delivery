@@ -4,11 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
   Play, 
-  Pause, 
-  Volume2, 
-  VolumeX, 
-  Maximize, 
-  Heart, 
   Calendar,
   Clock,
   User,
@@ -41,10 +36,6 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
   onEdit, 
   onConfirm 
 }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
   const [showPreview, setShowPreview] = useState(false);
   const [ambientMode, setAmbientMode] = useState(true);
 

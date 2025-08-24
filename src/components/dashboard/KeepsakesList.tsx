@@ -1,5 +1,4 @@
 // Melhoria 4: Paginação e Status Atualizado
-import { useState } from 'react';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { Keepsake, useKeepsakes, KeepsakeStatus } from '@/hooks/useKeepsakes';
@@ -182,8 +181,7 @@ const KeepsakeCardSkeleton = () => (
 
 // Componente principal da lista de keepsakes com paginação
 export const KeepsakesList = ({ statusFilter }: KeepsakesListProps) => {
-  const { fetchKeepsakesPaginated, updateKeepsake, deleteKeepsake } = useKeepsakes();
-  const [editingKeepsakeId, setEditingKeepsakeId] = useState<string | null>(null);
+  const { fetchKeepsakesPaginated, deleteKeepsake } = useKeepsakes();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 

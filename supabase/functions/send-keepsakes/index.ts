@@ -113,32 +113,7 @@ function sanitizeRecipientData(recipient: any): any {
   }
 }
 
-// Interface para os dados da keepsake
-interface Keepsake {
-  id: string
-  title: string
-  message_content: string
-  delivery_date: string
-  status: string
-  user_id: string
-  type: string
-  message_type: string
-}
 
-// Interface para os dados do destinatário
-interface Recipient {
-  id: string
-  name: string
-  email: string
-  keepsake_id: string
-}
-
-// Interface para os dados do usuário
-interface Profile {
-  id: string
-  email: string
-  full_name: string
-}
 
 // Função para delay com exponential backoff
 function delay(ms: number): Promise<void> {

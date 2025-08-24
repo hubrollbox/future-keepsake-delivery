@@ -31,7 +31,7 @@ export const securePhoneSchema = z
   .optional()
   .refine((phone) => {
     if (!phone) return true;
-    return /^[\+]?[1-9][\d]{0,15}$/.test(phone.replace(/[\s\-\(\)]/g, ''));
+    return /^[+]?[1-9][\d]{0,15}$/.test(phone.replace(/[\s\-()]/g, ''));
   }, "Número de telefone inválido");
 
 export const secureMessageSchema = z

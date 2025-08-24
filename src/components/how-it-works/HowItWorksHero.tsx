@@ -1,6 +1,4 @@
 
-import { Clock, Sparkles } from "lucide-react";
-
 const HowItWorksHero = () => {
   return (
     <div className="text-center max-w-6xl mx-auto mb-12 md:mb-20">

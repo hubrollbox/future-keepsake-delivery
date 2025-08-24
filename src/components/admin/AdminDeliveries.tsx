@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { CheckCircle, Clock, Package, Download } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";

@@ -79,7 +79,7 @@ const ContactForm = () => {
     setLoading(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+      const { error } = await supabase.functions.invoke('send-contact-email', {
         body: {
           name: formData.name.trim(),
           email: formData.email.trim(),

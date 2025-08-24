@@ -8,12 +8,7 @@ import {
   Clock, 
   Heart, 
   Star, 
-  Calendar,
-  Package,
-  Mail,
-  Sparkles,
-  Users,
-  Gift
+  Sparkles
 } from 'lucide-react';
 
 interface StoryStep {

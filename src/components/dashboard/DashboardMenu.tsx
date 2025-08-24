@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import CartButton from "@/components/cart/CartButton";
@@ -8,7 +8,6 @@ import CartButton from "@/components/cart/CartButton";
 const DashboardMenu = () => {
   const { signOut } = useAuth();
   const navigate = useNavigate();
-  const [isCartOpen, setIsCartOpen] = React.useState(false);
 
   const handleSignOut = async () => {
     await signOut();

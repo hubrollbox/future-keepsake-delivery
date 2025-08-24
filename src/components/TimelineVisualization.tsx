@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -9,8 +9,6 @@ import {
   Package, 
   Mail, 
   Star, 
-  ChevronLeft, 
-  ChevronRight,
   Play,
   Pause
 } from 'lucide-react';
@@ -37,8 +35,7 @@ const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({
   onEventClick 
 }) => {
   const [currentView, setCurrentView] = useState<'timeline' | 'calendar'>('timeline');
-  const [selectedPeriod, setSelectedPeriod] = useState<'week' | 'month' | 'year' | 'all'>('month');
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [isAnimating] = useState(false);
   const [autoPlay, setAutoPlay] = useState(false);
 
   // Mock data para demonstração
@@ -123,7 +120,7 @@ const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({
       <div className="space-y-8">
         {displayEvents
           .sort((a, b) => a.daysUntil - b.daysUntil)
-          .map((event, index) => (
+          .map((event) => (
             <div
               key={event.id}
               className={`relative flex items-start space-x-6 transition-all duration-500 hover:scale-105 cursor-pointer ${

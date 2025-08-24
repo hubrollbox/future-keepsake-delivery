@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Heart, Clock, Star, Sparkles, Calendar, Users } from 'lucide-react';
@@ -14,7 +14,7 @@ interface JourneyStep {
   id: string;
   title: string;
   description: string;
-  icon: React.ComponentType<any>;
+  icon: React.ComponentType<{ className?: string; size?: number; }>;
   suggestions: string[];
 }
 
@@ -128,7 +128,7 @@ const EmotionalJourneyGuide: React.FC = () => {
     return suggestions;
   };
 
-  const renderSelectionGrid = (items: any[], field: keyof EmotionalContext) => (
+  const renderSelectionGrid = (items: { id: string; emoji: string; label: string; }[], field: keyof EmotionalContext) => (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
       {items.map((item) => (
         <Button

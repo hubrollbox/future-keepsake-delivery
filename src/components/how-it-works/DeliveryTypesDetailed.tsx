@@ -1,7 +1,7 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Gift, Mail, Heart, Clock, Shield, Sparkles, Upload, Download, Package, Smartphone, Cloud, Lock } from "lucide-react";
+import { Gift, Heart, Clock, Shield, Sparkles, Upload, Download, Package, Smartphone, Cloud, Lock } from "lucide-react";
 
 const DeliveryTypesDetailed = () => {
   return (

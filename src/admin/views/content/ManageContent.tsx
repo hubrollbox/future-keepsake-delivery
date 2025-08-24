@@ -43,7 +43,7 @@ const ManageContent = () => {
     setIsModalOpen(false);
   };
 
-  const handleDeleteFaq = (id) => {
+  const handleDeleteFaq = () => {
     // Lógica para excluir FAQ
   };
 

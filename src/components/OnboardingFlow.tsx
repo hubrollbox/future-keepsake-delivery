@@ -9,8 +9,6 @@ import {
   Heart, 
   Star, 
   Calendar,
-  Package,
-  Mail,
   Sparkles,
   Users,
   Gift,

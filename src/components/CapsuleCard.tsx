@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { Clock, Calendar, Package, ArrowRight } from "lucide-react";
 
 interface CapsuleCardProps {
-  id: string;
   title: string;
   description: string;
   deliveryDate: string;
@@ -15,7 +14,6 @@ interface CapsuleCardProps {
 }
 
 const CapsuleCard = ({ 
-  id, 
   title, 
   description, 
   deliveryDate, 
