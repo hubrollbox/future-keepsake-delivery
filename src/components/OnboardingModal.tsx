@@ -25,7 +25,7 @@ export default function OnboardingModal() {
       setOpen(true);
       console.log('OnboardingModal - Setting open to true');
     }
-  }, [seen]);
+  }, [seen, open]);
 
   const handleClose = () => {
     setSeen("1");

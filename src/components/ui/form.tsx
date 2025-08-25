@@ -11,20 +11,10 @@ import {
 
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
-import { useFormField } from "@/hooks/useFormField"
+import { useFormField } from "@/hooks/use-form-field"
+import { FormFieldContext, FormItemContext } from "@/lib/form-context"
 
 const Form = FormProvider
-
-type FormFieldContextValue<
-  TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
-> = {
-  name: TName
-}
-
-export const FormFieldContext = React.createContext<FormFieldContextValue>(
-  {} as FormFieldContextValue
-)
 
 const FormField = <
   TFieldValues extends FieldValues = FieldValues,
@@ -38,14 +28,6 @@ const FormField = <
     </FormFieldContext.Provider>
   )
 }
-
-type FormItemContextValue = {
-  id: string
-}
-
-export const FormItemContext = React.createContext<FormItemContextValue>(
-  {} as FormItemContextValue
-)
 
 const FormItem = React.forwardRef<
   HTMLDivElement,
@@ -142,9 +124,6 @@ const FormMessage = React.forwardRef<
 FormMessage.displayName = "FormMessage"
 
 export {
-  FormFieldContext,
-  FormItemContext,
-  useFormField,
   Form,
   FormItem,
   FormLabel,

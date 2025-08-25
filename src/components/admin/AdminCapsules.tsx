@@ -27,7 +27,7 @@ const AdminCapsules = () => {
       .then(setCapsules)
       .catch(() => setCapsules([]))
       .finally(() => setLoading(false));
-  }, [fetchCapsules]);
+  }, []);
 
   // Remove fetchCapsules definition from here
   // ... renderização da tabela, filtros, ações, etc.

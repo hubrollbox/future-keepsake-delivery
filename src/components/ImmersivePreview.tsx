@@ -55,7 +55,7 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
       }, 2000);
       return () => clearTimeout(timer);
     }
-  }, [showPreview, simulationStep]);
+  }, [showPreview, simulationStep, simulationSteps.length]);
 
   const getEmotionTheme = (emotion: string) => {
     const themes = {

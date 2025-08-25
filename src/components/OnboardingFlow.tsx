@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
+import { useRef } from 'react';
 import { 
   ArrowRight, 
   ArrowLeft, 
@@ -107,7 +108,7 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
   const currentStepData = steps[currentStep];
   const progress = ((currentStep + 1) / steps.length) * 100;
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (currentStep < steps.length - 1) {
       setIsAnimating(true);
       setCompletedSteps(prev => new Set([...prev, currentStep]));
@@ -119,7 +120,12 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
     } else {
       onComplete();
     }
-  };
+  }, [currentStep, steps.length, onComplete]);
+
+  const handleNextRef = useRef(handleNext);
+  useEffect(() => {
+    handleNextRef.current = handleNext;
+  }, [handleNext]);
 
   const handlePrevious = () => {
     if (currentStep > 0) {
@@ -147,7 +153,7 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
   useEffect(() => {
     const timer = setTimeout(() => {
       if (currentStep === 0) {
-        handleNext();
+        handleNextRef.current();
       }
     }, 5000); // Auto-advance após 5 segundos na primeira tela
 
