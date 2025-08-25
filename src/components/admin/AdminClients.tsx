@@ -23,11 +23,8 @@ const AdminClients: React.FC = () => {
   const [clients, setClients] = useState<Client[]>([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (!isAdmin) return;
-
-    const fetchClients = async () => {
-      setLoading(true);
+  const fetchClients = useCallback(async () => {
+    setLoading(true);
       try {
         // Fetch profiles with admin status
         const { data: profilesData, error: profilesError } = await supabase
@@ -59,10 +56,12 @@ const AdminClients: React.FC = () => {
       } finally {
         setLoading(false);
       }
-    };
+    }, [isAdmin]);
 
+  useEffect(() => {
+    if (!isAdmin) return;
     fetchClients();
-  }, [isAdmin]);
+  }, [isAdmin, fetchClients]);
 
   const toggleAdminStatus = async (userId: string, currentIsAdmin: boolean) => {
     try {

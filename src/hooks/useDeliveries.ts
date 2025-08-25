@@ -1,127 +1,63 @@
-
-import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/hooks/useAuth";
-import { useToast } from "@/hooks/use-toast";
-import { Keepsake } from "@/types/supabase-client";
+import { useState, useEffect, useCallback } from 'react';
+import { supabase } from '../integrations/supabase';
 
 interface Delivery {
   id: string;
-  title: string;
-  description: string | null;
-  delivery_date: string;
-  created_at: string;
   status: string;
-  type: string;
-  recipient_email: string | null;
-  recipient_name: string | null;
-  delivery_address: string | null;
-  message: string | null;
-  user_id: string;
+  // Adicione outras propriedades de entrega aqui
 }
 
-export const useDeliveries = () => {
+const useDeliveries = () => {
   const [deliveries, setDeliveries] = useState<Delivery[]>([]);
-  const [loading, setLoading] = useState(true);
-  const { user } = useAuth();
-  const { toast } = useToast();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const fetchDeliveries = async () => {
-    if (!user) return;
-    
+  const fetchDeliveries = useCallback(async () => {
+    setLoading(true);
+    setError(null);
     try {
-      // Buscar keepsakes com dados dos recipients
       const { data, error } = await supabase
-        .from("keepsakes")
-        .select(`
-          id,
-          title,
-          message,
-          delivery_date,
-          created_at,
-          status,
-          type,
-          recipients (
-            name,
-            email,
-            delivery_channel
-          )
-        `)
-        .eq("user_id", user.id)
-        .order("delivery_date", { ascending: true });
+        .from('deliveries')
+        .select('*');
 
       if (error) {
-        toast({
-          title: "Erro",
-          description: error.message || "Não foi possível carregar as cápsulas.",
-          variant: "destructive",
-        });
-        setLoading(false);
-        return;
+        throw error;
       }
-
-      // Mapear os dados para o formato esperado
-      const mappedData = (data || []).map((keepsake: Keepsake & { recipients?: Array<{ name: string; email: string }> }) => ({
-        id: keepsake.id,
-        title: keepsake.title,
-        description: keepsake.message,
-        delivery_date: keepsake.delivery_date,
-        created_at: keepsake.created_at,
-        status: keepsake.status,
-        type: keepsake.type,
-        message: keepsake.message,
-        recipient_name: keepsake.recipients?.[0]?.name || "Sem destinatário",
-        recipient_email: keepsake.recipients?.[0]?.email || null,
-        delivery_address: null, // Keepsakes não têm endereço de entrega físico
-        user_id: user.id
-      }));
-      
-      setDeliveries(mappedData);
-    } catch (error: unknown) {
-      console.error("Error fetching deliveries:", typeof error === "object" ? JSON.stringify(error, null, 2) : error);
-      toast({
-        title: "Erro",
-        description: error instanceof Error ? error.message : "Não foi possível carregar as cápsulas.",
-        variant: "destructive",
-      });
+      setDeliveries(data || []);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+      setError(err.message);
+      }
+      console.error('Error fetching deliveries:', err.message);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const deleteDelivery = async (id: string) => {
+  const deleteDelivery = useCallback(async (id: string) => {
     try {
       const { error } = await supabase
-        .from("keepsakes")
+        .from('deliveries')
         .delete()
-        .eq("id", id);
+        .eq('id', id);
 
-      if (error) throw error;
-
-      toast({
-        title: "Sucesso",
-        description: "Cápsula eliminada com sucesso.",
-      });
-
-      fetchDeliveries();
-    } catch (error) {
-      console.error("Error deleting delivery:", typeof error === "object" ? JSON.stringify(error, null, 2) : error);
-      toast({
-        title: "Erro",
-        description: "Não foi possível eliminar a cápsula.",
-        variant: "destructive",
-      });
+      if (error) {
+        throw error;
+      }
+      setDeliveries(prevDeliveries => prevDeliveries.filter(delivery => delivery.id !== id));
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+      setError(err.message);
+      console.error('Error deleting delivery:', err.message);
+      }
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchDeliveries();
-  }, [user, fetchDeliveries]);
+  }, [fetchDeliveries]);
 
-  return {
-    deliveries,
-    loading,
-    deleteDelivery,
-    refetch: fetchDeliveries,
-  };
+  return { deliveries, loading, error, deleteDelivery, fetchDeliveries };
 };
+
+export default useDeliveries;

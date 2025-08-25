@@ -1,8 +1,6 @@
 // Mock de geração de link de pagamento (ex: Stripe Checkout)
 export async function generatePaymentLink({
-  amount,
-  currency = "EUR",
-  description,
+
   deliveryId
 }: {
   amount: number;

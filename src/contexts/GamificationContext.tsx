@@ -1,7 +1,7 @@
 
 import React, { createContext, useState, useEffect, ReactNode, useCallback } from "react";
 import { useAchievements, Achievement } from "@/hooks/useAchievements";
-import { getCurrentUser } from "@/services/userService";
+
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -23,7 +23,7 @@ export const GamificationProvider = ({ children }: { children: ReactNode }) => {
   const [userError, setUserError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchUser = async () => {
+    (async () => {
       try {
         setUserError(null);
         // User is already fetched by useAuth, so we can rely on it
@@ -33,8 +33,7 @@ export const GamificationProvider = ({ children }: { children: ReactNode }) => {
         console.error("Error fetching user:", error);
         setUserError("Falha ao carregar dados do utilizador");
       }
-    };
-    fetchUser();
+    })();
   }, [user]);
 
   const addPoints = useCallback(async (points: number, reason: string) => {
@@ -43,7 +42,7 @@ export const GamificationProvider = ({ children }: { children: ReactNode }) => {
     try {
       const newTotalPoints = (profile.total_points || 0) + points;
 
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from('profiles')
         .update({ total_points: newTotalPoints })
         .eq('id', user.id)
@@ -54,13 +53,13 @@ export const GamificationProvider = ({ children }: { children: ReactNode }) => {
 
       console.log(`Pontos adicionados: ${points} por ${reason}. Total: ${newTotalPoints}`);
       await refreshProfile(); // Refresh profile to get updated points
-      await checkAchievements(); // Check for new achievements after adding points
+      await checkAchievements(newTotalPoints); // Check for new achievements after adding points
     } catch (error) {
       console.error("Erro ao adicionar pontos:", error);
     }
-  }, [user, profile, refreshProfile]);
+  }, [user, profile, refreshProfile, checkAchievements]);
 
-  const checkAchievements = useCallback(async () => {
+  const checkAchievements = useCallback(async (currentPoints?: number) => {
     if (!user || !profile) return;
 
     try {
@@ -80,8 +79,9 @@ export const GamificationProvider = ({ children }: { children: ReactNode }) => {
 
       const unlockedIds = new Set(userUnlockedAchievements.map(ua => ua.achievement_id));
 
+      const pointsToCheck = currentPoints !== undefined ? currentPoints : (profile.total_points || 0);
       const achievementsToUnlock = allAchievements.filter(achievement =>
-        !unlockedIds.has(achievement.id) && (profile.total_points || 0) >= achievement.points
+        !unlockedIds.has(achievement.id) && pointsToCheck >= achievement.points
       );
 
       if (achievementsToUnlock.length > 0) {

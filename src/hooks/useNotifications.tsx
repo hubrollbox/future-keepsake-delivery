@@ -22,7 +22,7 @@ export const useNotifications = () => {
   const { user } = useAuth();
   const { toast } = useToast();
 
-  const fetchNotifications = async () => {
+  const fetchNotifications = useCallback(async () => {
     if (!user) return;
 
     try {
@@ -40,7 +40,7 @@ export const useNotifications = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
   const createNotification = async (title: string, content: string, type: string) => {
     if (!user) return;

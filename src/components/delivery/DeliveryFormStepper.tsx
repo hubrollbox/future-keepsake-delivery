@@ -5,11 +5,20 @@ import DeliveryMessageStep from "./DeliveryMessageStep";
 import DeliveryReviewStep from "./DeliveryReviewStep";
 import DeliveryConfirmationStep from "./DeliveryConfirmationStep";
 
+interface DeliveryFormData {
+  recipient: string;
+  deliveryDate: string;
+  description: string;
+  message: string;
+  digitalFile?: File;
+  title: string;
+}
+
 type Props = {
   step: number;
   deliveryType: string;
   setDeliveryType: (type: string) => void;
-  formData: any;
+  formData: DeliveryFormData;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   nextStep: () => void;

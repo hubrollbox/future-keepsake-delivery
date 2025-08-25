@@ -55,7 +55,7 @@ const SecureRegisterForm = () => {
   const onSubmit = async (e: React.FormEvent) => {
     try {
       await handleSubmit(e);
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: 'Erro no registo',
         description: error.message,

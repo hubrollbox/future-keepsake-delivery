@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { useNotifications } from "@/hooks/useNotifications";
-import { Check, CheckCheck } from "lucide-react";
+import { CheckCheck } from "lucide-react";
 
 interface NotificationListProps {
   onClose: () => void;

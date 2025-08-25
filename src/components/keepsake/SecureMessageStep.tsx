@@ -24,8 +24,8 @@ const messageStepSchema = z.object({
 type MessageStepData = z.infer<typeof messageStepSchema>;
 
 interface SecureMessageStepProps {
-  formData: any;
-  updateFormData: (data: any) => void;
+  formData: MessageStepData;
+  updateFormData: (data: Partial<MessageStepData>) => void;
   nextStep: () => void;
 }
 

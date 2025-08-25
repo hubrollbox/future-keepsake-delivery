@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { useForm, UseFormReturn } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useToast } from "@/hooks/use-toast";
@@ -210,10 +210,8 @@ export const useKeepsakeForm = () => {
       const formData = form.getValues();
       
       // Calcular custo total
-      const productsCost = formData.selected_products.reduce(
-        (sum, product) => sum + (product.price * product.quantity), 0
-      );
-      const totalCost = productsCost + formData.channel_cost;
+
+
 
       // Inserir dados na base de dados com transação
       const { data: keepsakeData, error: keepsakeError } = await supabase

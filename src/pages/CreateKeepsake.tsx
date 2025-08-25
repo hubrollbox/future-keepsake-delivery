@@ -69,7 +69,7 @@ const CreateKeepsake: React.FC = () => {
     if (planLimits && currentStep >= 3) {
       validatePlanLimits();
     }
-  }, [form.watch(), planLimits, currentStep, validatePlanLimits]);
+  }, [form, planLimits, currentStep, validatePlanLimits]);
 
   // Função para validar limites do plano
   const validatePlanLimits = useCallback(() => {
@@ -117,7 +117,7 @@ const CreateKeepsake: React.FC = () => {
     }
     
     setPlanValidationErrors(errors);
-  }, [planLimits, userPlan, form]);
+  }, [form, planLimits, userPlan]);
 
   // Aviso sobre mudanças não guardadas
   useEffect(() => {

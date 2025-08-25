@@ -12,11 +12,9 @@ const Profile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const refreshSession = async () => {
+    (async () => {
       await supabase.auth.refreshSession();
-    };
-    
-    refreshSession(); 
+    })();
   }, []);
 
   if (!user || !profile) {

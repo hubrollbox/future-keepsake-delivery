@@ -4,20 +4,13 @@ import { Search, Filter, X, Calendar, User, Package } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import {
-  Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
@@ -63,7 +56,7 @@ const SearchFilters = ({
 }: SearchFiltersProps) => {
   const [showFilters, setShowFilters] = useState(false);
 
-  const updateFilter = (key: keyof FilterOptions, value: any) => {
+  const updateFilter = (key: keyof FilterOptions, value: string | Date | undefined) => {
     onFiltersChange({
       ...filters,
       [key]: value,

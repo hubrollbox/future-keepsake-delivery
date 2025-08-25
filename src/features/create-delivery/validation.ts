@@ -1,17 +1,30 @@
 import { isValidFile, isValidFutureDate, validateEmail } from "./utils";
 import { useToast } from "@/hooks/use-toast";
 
+interface FormData {
+  title?: string;
+  recipient?: string;
+  recipient_email?: string;
+  deliveryDate?: string;
+  deliveryTime?: string;
+  delivery_method?: string;
+  location?: string;
+  message?: string;
+  description?: string;
+  digitalFile?: File | null;
+}
+
 export type DeliveryStepValidator = (
   currentStep: number,
   deliveryType: string,
-  formData: any,
+  formData,
   toast: ReturnType<typeof useToast>["toast"]
 ) => boolean;
 
 export const validateStep: DeliveryStepValidator = (
   currentStep,
   deliveryType,
-  formData,
+  formData: FormData,
   toast
 ) => {
   // Debug log!

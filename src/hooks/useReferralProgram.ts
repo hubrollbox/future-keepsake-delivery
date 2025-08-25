@@ -38,7 +38,7 @@ export const useReferralProgram = () => {
   };
 
   // Buscar estatísticas de referência do usuário
-  const fetchReferralStats = async () => {
+  const fetchReferralStats = useCallback(async () => {
     if (!user) return;
 
     setLoading(true);
@@ -90,8 +90,8 @@ export const useReferralProgram = () => {
 
       setReferrals(referralData || []);
 
-    } catch (error) {
-      console.error('Erro ao buscar estatísticas de referência:', error);
+    } catch (_error) {
+      console.error('Erro ao buscar estatísticas de referência:', _error);
       toast({
         title: "Erro",
         description: "Não foi possível carregar as estatísticas de referência.",
@@ -100,7 +100,7 @@ export const useReferralProgram = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user, toast]);
 
   // Enviar convite de referência
   const sendReferralInvite = async (email: string) => {
@@ -161,8 +161,8 @@ export const useReferralProgram = () => {
       await fetchReferralStats();
       return true;
 
-    } catch (error) {
-      console.error('Erro ao enviar convite:', error);
+    } catch (_error) {
+      console.error('Erro ao enviar convite:', _error);
       toast({
         title: "Erro",
         description: "Não foi possível enviar o convite. Tente novamente.",
@@ -184,7 +184,8 @@ export const useReferralProgram = () => {
         title: "Link Copiado!",
         description: "Link de referência copiado para a área de transferência.",
       });
-    } catch (error) {
+    } catch (_error) {
+      console.error('Erro ao copiar link:', _error);
       // Fallback para navegadores mais antigos
       const textArea = document.createElement('textarea');
       textArea.value = referralLink;

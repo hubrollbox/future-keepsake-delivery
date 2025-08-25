@@ -42,11 +42,7 @@ const ProductsStep = ({ formData, updateFormData, nextStep, prevStep, form }: Pr
     truck: Truck
   };
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from('products')
@@ -60,7 +56,13 @@ const ProductsStep = ({ formData, updateFormData, nextStep, prevStep, form }: Pr
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
+
+
 
   const isProductSelected = (productId: string) => {
     return formData.selected_products.some(p => p.id === productId);

@@ -27,9 +27,9 @@ const AdminMessages = () => {
 
   useEffect(() => {
     fetchMessages();
-  }, []);
+  }, [fetchMessages]);
 
-  const fetchMessages = async () => {
+  const fetchMessages = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .from("deliveries")
@@ -50,7 +50,7 @@ const AdminMessages = () => {
         content: delivery.description || ""
       }));
       setMessages(mappedData);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error fetching messages:", error);
       toast({
         title: "Erro",
@@ -60,7 +60,7 @@ const AdminMessages = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
 
   const filteredMessages = messages.filter((message) => {
     const matchesSearch = 

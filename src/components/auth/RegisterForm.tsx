@@ -103,11 +103,13 @@ const RegisterForm = () => {
     setLoading(false);
     
     if (!error) {
-      toast && toast({
+      if (toast) {
+        toast({
         title: "Conta criada!",
         description: "Verifica o teu email para confirmar o registo.",
         duration: 2500
       });
+      }
       setTimeout(() => {
         navigate('/login');
       }, 2000);

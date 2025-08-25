@@ -42,7 +42,7 @@ export const useAchievements = () => {
       setError(null);
       
       // Get user's unlocked achievements and all achievements in parallel
-      const [userAchievementsResult, allAchievementsResult] = await Promise.all([
+      const [userAchievementsResult, _allAchievementsResult] = await Promise.all([
         supabase
           .from('user_achievements')
           .select(`
@@ -62,18 +62,18 @@ export const useAchievements = () => {
           .select('*')
       ]);
 
-      if (allAchievementsResult.error) {
-        throw allAchievementsResult.error;
+      if (_allAchievementsResult.error) {
+        throw _allAchievementsResult.error;
       }
 
-      if (allAchievementsResult.data) {
+      if (_allAchievementsResult.data) {
         const unlockedIds = new Set(
           (userAchievementsResult.data || [])
             .filter(ua => ua.achievements)
             .map(ua => ua.achievement_id)
         );
 
-        const achievementsWithStatus = allAchievementsResult.data.map(achievement => ({
+        const achievementsWithStatus = _allAchievementsResult.data.map(achievement => ({
           ...achievement,
           unlocked: unlockedIds.has(achievement.id)
         }));
@@ -92,7 +92,7 @@ export const useAchievements = () => {
     } finally {
       setLoading(false);
     }
-  }, [user]);
+  }, [user, setError]);
 
   useEffect(() => {
     fetchAchievements();

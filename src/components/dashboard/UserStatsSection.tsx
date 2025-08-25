@@ -7,7 +7,7 @@ import AchievementCard from "@/components/gamification/AchievementCard";
 import QuestCard from "@/components/gamification/QuestCard";
 
 interface UserStatsSectionProps {
-  profile: any;
+  profile: unknown;
   totalDeliveries: number;
 }
 

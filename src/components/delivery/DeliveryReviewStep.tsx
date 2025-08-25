@@ -2,8 +2,10 @@
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 
+import { DeliveryFormData } from "./DeliveryFormStepper";
+
 type Props = {
-  formData: any;
+  formData: DeliveryFormData;
   deliveryType: string;
   prevStep: () => void;
   onSubmit: (e: React.FormEvent) => void;

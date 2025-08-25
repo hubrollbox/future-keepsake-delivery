@@ -3,8 +3,13 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Trophy, Star, Target } from "lucide-react";
 
+interface UserProfile {
+  level: number;
+  total_points: number;
+}
+
 interface UserStatsProps {
-  profile: any;
+  profile: UserProfile;
   totalDeliveries: number;
 }
 

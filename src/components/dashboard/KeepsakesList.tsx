@@ -191,7 +191,7 @@ export const KeepsakesList = ({ statusFilter }: KeepsakesListProps) => {
     hasNextPage,
     isFetchingNextPage,
     isLoading
-  } = useInfiniteQuery<any, Error, any, any, number>({
+  } = useInfiniteQuery<Keepsake[], Error, Keepsake[], string[], number>({
     queryKey: ['keepsakes-paginated', statusFilter],
     initialPageParam: 0,
     queryFn: ({ pageParam }) =>

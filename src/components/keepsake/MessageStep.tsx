@@ -3,7 +3,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
+
 import { Calendar, MessageSquare } from "lucide-react";
 import { KeepsakeFormData } from "@/hooks/useKeepsakeForm";
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, Form } from "@/components/ui/form";
@@ -19,7 +19,7 @@ interface MessageStepProps {
   form: UseFormReturn<KeepsakeFormValues>;
 }
 
-const MessageStep = ({ formData, updateFormData, nextStep, prevStep, form }: MessageStepProps) => {
+const MessageStep = ({ formData, updateFormData, nextStep, prevStep, form /* eslint-disable-line @typescript-eslint/no-unused-vars */ }: MessageStepProps) => {
   const handleNext = async () => {
     // Validar os campos deste passo usando react-hook-form
     const isValid = await form.trigger(['title', 'message', 'delivery_date']);

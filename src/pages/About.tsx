@@ -1,10 +1,10 @@
 
 import { Button } from "@/components/ui/button";
-import { Heart, ArrowLeft, Star, BookOpen } from "lucide-react";
+import { Heart, Star, BookOpen } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import SeloDoTempoIcon from "@/components/SeloDoTempoIcon";
+
 
 const About = () => {
   const navigate = useNavigate();

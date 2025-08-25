@@ -57,7 +57,7 @@ export const useAdminData = () => {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     try {
       setLoading(true);
       
@@ -159,8 +159,12 @@ export const useAdminData = () => {
       setDeliveriesByMonth(deliveriesByMonthData);
       setTopUsers(topUsersData);
 
-    } catch (error) {
-      console.error("Error fetching admin stats:", error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error fetching admin stats:", error.message);
+      } else {
+        console.error("Error fetching admin stats:", error);
+      }
       toast({
         title: "Erro",
         description: "Não foi possível carregar as estatísticas.",
@@ -169,7 +173,7 @@ export const useAdminData = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
 
   const updateDeliveryStatus = async (deliveryId: string, status: string) => {
     try {
@@ -186,8 +190,12 @@ export const useAdminData = () => {
       });
 
       fetchStats();
-    } catch (error) {
-      console.error("Error updating delivery status:", error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error updating delivery status:", error.message);
+      } else {
+        console.error("Error updating delivery status:", error);
+      }
       toast({
         title: "Erro",
         description: "Não foi possível atualizar o estado da entrega.",
@@ -211,8 +219,12 @@ export const useAdminData = () => {
       });
 
       fetchStats();
-    } catch (error) {
-      console.error("Error updating warehouse item status:", error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error updating warehouse item status:", error.message);
+      } else {
+        console.error("Error updating warehouse item status:", error);
+      }
       toast({
         title: "Erro",
         description: "Não foi possível atualizar o estado do item.",

@@ -1,5 +1,6 @@
 import { GripVertical } from "lucide-react"
 import * as ResizablePrimitive from "react-resizable-panels"
+import { GripVertical } from "lucide-react";
 
 import { cn } from "@/lib/utils"
 
@@ -22,8 +23,8 @@ const ResizableHandle = ({
   withHandle,
   className,
   ...props
-}: { withHandle?: boolean; className?: string } & any) => {
-  const PanelResizeHandleAny = (ResizablePrimitive as any).PanelResizeHandle as any;
+}: React.ComponentProps<typeof ResizablePrimitive.PanelResizeHandle> & { withHandle?: boolean; className?: string }) => {
+  const PanelResizeHandleAny: React.ComponentType<React.ComponentProps<typeof ResizablePrimitive.PanelResizeHandle>> = ResizablePrimitive.PanelResizeHandle;
   return (
     <PanelResizeHandleAny
       className={cn(

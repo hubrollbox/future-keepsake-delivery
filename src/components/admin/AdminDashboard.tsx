@@ -28,42 +28,42 @@ const AdminDashboard = () => {
   const [warehouseRecords, setWarehouseRecords] = useState<RecentWarehouseItem[]>([]);
   const [loadingLists, setLoadingLists] = useState(true);
 
-  useEffect(() => {
-    const fetchRecentData = async () => {
-      setLoadingLists(true);
-      try {
-        // Fetch upcoming deliveries (next 30 days)
-        const now = new Date();
-        const thirtyDays = new Date();
-        thirtyDays.setDate(now.getDate() + 30);
-        
-        const { data: deliveriesData } = await supabase
-          .from("deliveries")
-          .select("id, delivery_date, status, title")
-          .gte("delivery_date", now.toISOString())
-          .lte("delivery_date", thirtyDays.toISOString())
-          .order("delivery_date", { ascending: true })
-          .limit(10);
-        
-        setRecentDeliveries(deliveriesData || []);
-        
-        // Fetch latest warehouse records
-        const { data: warehouseData } = await supabase
-          .from("warehouse_items")
-          .select("id, client_name, product_description, received_date, status")
-          .order("received_date", { ascending: false })
-          .limit(10);
-        
-        setWarehouseRecords(warehouseData || []);
-      } catch (error) {
-        console.error("Error fetching recent data:", error);
-      } finally {
-        setLoadingLists(false);
-      }
-    };
-
-    fetchRecentData();
+  const fetchRecentData = useCallback(async () => {
+    setLoadingLists(true);
+    try {
+      // Fetch upcoming deliveries (next 30 days)
+      const now = new Date();
+      const thirtyDays = new Date();
+      thirtyDays.setDate(now.getDate() + 30);
+      
+      const { data: deliveriesData } = await supabase
+        .from("deliveries")
+        .select("id, delivery_date, status, title")
+        .gte("delivery_date", now.toISOString())
+        .lte("delivery_date", thirtyDays.toISOString())
+        .order("delivery_date", { ascending: true })
+        .limit(10);
+      
+      setRecentDeliveries(deliveriesData || []);
+      
+      // Fetch latest warehouse records
+      const { data: warehouseData } = await supabase
+        .from("warehouse_items")
+        .select("id, client_name, product_description, received_date, status")
+        .order("received_date", { ascending: false })
+        .limit(10);
+      
+      setWarehouseRecords(warehouseData || []);
+    } catch (error) {
+      console.error("Error fetching recent data:", error);
+    } finally {
+      setLoadingLists(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchRecentData();
+  }, [fetchRecentData]);
 
   const dashboardStats = [
     {

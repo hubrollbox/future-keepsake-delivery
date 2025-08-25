@@ -210,7 +210,7 @@ const RecipientStep = ({ formData, updateFormData, nextStep, prevStep, form }: R
               placeholder={selectedChannel.placeholder}
               className="mt-1"
               required
-              pattern={selectedChannel.value === 'sms' ? "[+0-9\s()-]{9,}" : undefined}
+              pattern={selectedChannel.value === 'sms' ? "[+0-9s()-]{9,}" : undefined}
             />
           </div>
         )}

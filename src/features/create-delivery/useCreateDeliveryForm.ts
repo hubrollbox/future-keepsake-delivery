@@ -166,7 +166,7 @@ export const useCreateDeliveryForm = () => {
 
         onDeliveryCreated({
           id: `${Date.now()}`,
-          userEmail: user.email!,
+          userEmail: user.email,
           recipientEmail: formData.recipient_email,
           deliveryDate: formData.deliveryDate,
           message: formData.message,

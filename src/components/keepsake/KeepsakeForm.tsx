@@ -17,7 +17,7 @@ const KeepsakeForm = () => {
     reset
   } = useZodForm(createMessageSchema);
 
-  const onSubmit = async (data) => {
+  const onSubmit = async () => {
     // O data já está validado pelo Zod
     try {
       // Enviar dados para o backend

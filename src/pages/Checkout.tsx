@@ -23,11 +23,11 @@ const Checkout = () => {
   const [loading, setLoading] = useState(false);
   const {
     shippingInfo,
-    setShippingInfo,
+    setShippingInfo, /* eslint-disable-line @typescript-eslint/no-unused-vars */
     contactInfo,
-    setContactInfo,
+    setContactInfo, /* eslint-disable-line @typescript-eslint/no-unused-vars */
     errors,
-    setErrors,
+    setErrors, /* eslint-disable-line @typescript-eslint/no-unused-vars */
     validateForm,
     handleInputChange,
   } = useCheckoutForm(user?.email || "");

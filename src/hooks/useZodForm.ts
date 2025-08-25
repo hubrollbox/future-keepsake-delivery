@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-export function useZodForm<T extends z.ZodType<any, any>>(
+export function useZodForm<T extends z.ZodType<unknown, unknown>>( 
   schema: T,
   defaultValues?: z.infer<T>
 ) {

@@ -9,7 +9,7 @@ interface UseSecureFormOptions<T> {
   sanitizeFields?: (keyof T)[];
 }
 
-export function useSecureForm<T extends Record<string, any>>({
+export function useSecureForm<T extends Record<string, unknown>>({
   schema,
   onSubmit,
   sanitizeFields = []

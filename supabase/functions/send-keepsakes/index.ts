@@ -1,5 +1,3 @@
-/// <reference path="./deno.d.ts" />
-
 // Edge Function para processar e enviar keepsakes agendadas
 // Versão otimizada com processamento paralelo, gerenciamento de timezone e tratamento robusto de erros
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.38.4'
@@ -64,7 +62,7 @@ function isValidEmail(email: string): boolean {
 }
 
 // Função para verificar rate limiting por usuário
-function checkRateLimit(userId: string, type: 'sender' | 'recipient'): { allowed: boolean; resetTime: number } {
+function checkRateLimit(userId: string): { allowed: boolean; resetTime: number } {
   const now = Date.now()
   const userLimit = RATE_LIMIT_CACHE.get(userId)
   
@@ -86,7 +84,21 @@ function checkRateLimit(userId: string, type: 'sender' | 'recipient'): { allowed
 }
 
 // Função para sanitizar dados de entrada
-function sanitizeKeepsakeData(keepsake: any): any {
+interface Keepsake {
+  title?: string;
+  message?: string;
+  message_content?: string;
+  id: string;
+  user_id: string;
+  delivery_date: string;
+  status: string;
+  type: string;
+  recipients: Recipient[];
+  users: User[];
+
+}
+
+function sanitizeKeepsakeData(keepsake: Keepsake): Keepsake {
   return {
     ...keepsake,
     title: escapeHtml(keepsake.title || ''),
@@ -96,7 +108,13 @@ function sanitizeKeepsakeData(keepsake: any): any {
 }
 
 // Função para sanitizar dados do usuário
-function sanitizeUserData(user: any): any {
+interface User {
+  full_name?: string;
+  email?: string;
+
+}
+
+function sanitizeUserData(user: User): User {
   return {
     ...user,
     full_name: escapeHtml(user.full_name || ''),
@@ -105,7 +123,13 @@ function sanitizeUserData(user: any): any {
 }
 
 // Função para sanitizar dados do destinatário
-function sanitizeRecipientData(recipient: any): any {
+interface Recipient {
+  name?: string;
+  email?: string;
+
+}
+
+function sanitizeRecipientData(recipient: Recipient): Recipient {
   return {
     ...recipient,
     name: escapeHtml(recipient.name || ''),
@@ -121,7 +145,7 @@ function delay(ms: number): Promise<void> {
 }
 
 // Função para logging estruturado com contexto
-function logWithContext(level: 'info' | 'error' | 'warn', message: string, context: Record<string, any> = {}) {
+function logWithContext(level: 'info' | 'error' | 'warn', message: string, context: Record<string, unknown> = {}) {
   const timestamp = DateTime.now().setZone(PORTUGAL_TIMEZONE).toISO()
   const logEntry = {
     timestamp,
@@ -147,7 +171,7 @@ async function sendEmailWithRetry(
   fromName: string,
   keepsakeId?: string,
   attempt: number = 1
-): Promise<{ success: boolean; result?: any; error?: any }> {
+): Promise<{ success: boolean; result?: unknown; error?: Error }> {
   const context = { keepsakeId, to, subject, attempt }
   
   try {
@@ -226,7 +250,7 @@ async function processKeepsakes() {
     const errors: Array<{ keepsakeId: string; error: string }> = []
     
     // Processar keepsakes em paralelo com controle de concorrência
-    const processPromises = keepsakes.map(async (keepsake) => {
+    const processPromises = keepsakes.map(async (keepsake: Keepsake) => {
       try {
         // Verificar se os dados necessários estão presentes
         if (!keepsake.profiles) {
@@ -241,7 +265,7 @@ async function processKeepsakes() {
         const recipients = keepsake.recipients
         
         // Preparar todos os emails para envio paralelo
-        const emailPromises: Array<Promise<{ success: boolean; result?: any; error?: any }>> = []
+        const emailPromises: Array<Promise<{ success: boolean; result?: unknown; error?: unknown }>> = []
         
         for (const recipient of recipients) {
           // Validate and sanitize recipient email
@@ -251,7 +275,7 @@ async function processKeepsakes() {
           }
 
           // Check rate limit for recipient
-          const rateLimitCheck = checkRateLimit(recipient.email, 'recipient');
+          const rateLimitCheck = checkRateLimit(recipient.email);
           if (!rateLimitCheck.allowed) {
             logWithContext('warn', `Rate limit exceeded for recipient: ${recipient.email}`, { keepsakeId: keepsake.id, recipientEmail: recipient.email, resetTime: rateLimitCheck.resetTime });
             continue;
@@ -382,7 +406,7 @@ async function processKeepsakes() {
         }
         
         // Enviar emails em lotes para controlar concorrência
-        const emailResults: Array<PromiseSettledResult<{ success: boolean; result?: any; error?: any }>> = []
+        const emailResults: Array<PromiseSettledResult<{ success: boolean; result?: unknown; error?: Error }>> = []
         for (let i = 0; i < emailPromises.length; i += MAX_CONCURRENT_EMAILS) {
           const batch = emailPromises.slice(i, i + MAX_CONCURRENT_EMAILS)
           const batchResults = await Promise.allSettled(batch)

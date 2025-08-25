@@ -101,7 +101,15 @@ const ProductsSection = () => {
     }
   ];
 
-  const ProductCard = ({ product, category }: { product: any, category: string }) => {
+  interface Product {
+  name: string;
+  price: string;
+  icon: string;
+  description: string;
+  poetry: string;
+}
+
+const ProductCard = ({ product, category }: { product: Product, category: string }) => {
     const IconComponent = iconMap[product.icon as keyof typeof iconMap] || Gift;
     
     return (

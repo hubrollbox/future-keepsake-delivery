@@ -21,7 +21,7 @@ export const useKeepsakes = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { toast } = useToast();
 
-  const fetchKeepsakes = async () => {
+  const fetchKeepsakes = useCallback(async () => {
     setLoading(true);
     try {
       const { data, error } = await supabase
@@ -41,7 +41,7 @@ export const useKeepsakes = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
 
   // Função para buscar keepsakes com paginação e filtro por status
   const fetchKeepsakesPaginated = async (start = 0, limit = 10, statusFilter?: KeepsakeStatus) => {

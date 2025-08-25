@@ -98,7 +98,7 @@ const ContactForm = () => {
       // Reset form
       setFormData({ name: "", email: "", subject: "", message: "" });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error sending contact form:', error);
       toast({
         title: "Erro",

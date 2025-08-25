@@ -167,10 +167,10 @@ const ReviewStep = ({ formData, onBack, onSubmit, loading }: ReviewStepProps) =>
           onClick={async () => {
             try {
               const maybePromise = onSubmit();
-              if (maybePromise && typeof (maybePromise as any).then === 'function') {
+              if (maybePromise instanceof Promise) {
                 await (maybePromise as Promise<void>);
               }
-            } catch (error: any) {
+            } catch (error: unknown) {
               toast({ title: "Erro ao selar", description: error?.message || "Tenta novamente.", variant: "destructive" });
             }
           }}

@@ -5,8 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowLeft } from "lucide-react";
 
+interface DeliveryMessageFormData {
+  description: string;
+  message: string;
+  digitalFile?: File;
+}
+
 type Props = {
-  formData: any;
+  formData: DeliveryMessageFormData;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   deliveryType: string;

@@ -2,7 +2,7 @@
 import { useState, useMemo } from "react";
 import { FilterOptions } from "@/components/search/SearchFilters";
 
-export const useSearchFilters = <T extends Record<string, any>>(
+export const useSearchFilters = <T extends Record<string, unknown>>(
   data: T[],
   searchFields: (keyof T)[],
   initialFilters?: Partial<FilterOptions>
