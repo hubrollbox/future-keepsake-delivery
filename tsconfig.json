@@ -6,6 +6,8 @@
   ],
   "compilerOptions": {
     "types": ["vitest/globals"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],

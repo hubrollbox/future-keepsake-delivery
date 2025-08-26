@@ -351,17 +351,17 @@ export const validateStep = (step: keyof typeof stepValidationSchemas, data: unk
 // Função para obter mensagens de erro amigáveis
 export const getFieldError = (errors: Record<string, unknown>, fieldPath: string): string | undefined => {
   const pathArray = fieldPath.split('.');
-  let current = errors;
+  let current: any = errors;
   
   for (const path of pathArray) {
-    if (current?.[path]) {
+    if (current && typeof current === 'object' && path in current) {
       current = current[path];
     } else {
       return undefined;
     }
   }
   
-  return current?.message;
+  return typeof current === 'object' && current !== null && 'message' in current ? (current as { message?: string }).message : undefined;
 };
 
 // Função para validar dados condicionais

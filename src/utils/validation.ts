@@ -47,7 +47,7 @@ export function isFutureDate(dateStr: string): boolean {
 export function getTomorrowDate(): string {
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
-  return tomorrow.toISOString().split('T')[0];
+  return tomorrow.toISOString().split('T')[0] as string;
 }
 
 /**
