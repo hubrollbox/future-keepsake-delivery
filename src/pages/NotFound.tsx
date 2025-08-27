@@ -1,6 +1,6 @@
 
 import { useLocation, Link } from "react-router-dom";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 // Ensure React is used to avoid TS6133 error
 

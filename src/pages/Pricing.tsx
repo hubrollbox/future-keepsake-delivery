@@ -1,7 +1,7 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { plans, storageServices, digitalServices, physicalServices, timeCapsules } from "@/lib/pricingData";
-import React, { useState } from "react";
+import { useState } from "react";
 
 // Ensure React is used to avoid TS6133 error
 

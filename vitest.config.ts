@@ -8,10 +8,12 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
+    mainFields: ['module', 'jsnext:main', 'jsnext'],
   },
   test: {
     environment: 'jsdom',
     setupFiles: ['./src/__tests__/setup.ts'],
+
     globals: true,
     coverage: {
       provider: 'v8',
@@ -25,5 +27,6 @@ export default defineConfig({
       ]
     },
     testTimeout: 10000,
+    include: ['src/**/*.{test,spec}.{ts,tsx}', 'src/__tests__/setup.ts'],
   },
 });

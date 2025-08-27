@@ -1,6 +1,6 @@
-import '@testing-library/jest-dom';
 import { vi } from 'vitest';
-import React from 'react';
+import '@testing-library/jest-dom';
+ import React from 'react';
 
 // Mock do Supabase
 vi.mock('@supabase/supabase-js', () => ({
