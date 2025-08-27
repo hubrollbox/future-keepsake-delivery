@@ -1,3 +1,5 @@
+const tsParser = require('@typescript-eslint/parser');
+
 module.exports = {
 
   languageOptions: {
@@ -5,20 +7,17 @@ module.exports = {
       browser: true,
       es2020: true,
     },
+    parser: tsParser,
+    parserOptions: {
+      ecmaVersion: 2020,
+      sourceType: 'module',
+    },
   },
-
-  languageOptions: {
-    parser: '@typescript-eslint/parser',
+  plugins: {
+    '@typescript-eslint': require('@typescript-eslint/eslint-plugin'),
+    'react-hooks': require('eslint-plugin-react-hooks'),
+    'react-refresh': require('eslint-plugin-react-refresh'),
   },
-  parserOptions: {
-    ecmaVersion: 2020,
-    sourceType: 'module',
-  },
-  plugins: [
-    '@typescript-eslint',
-    'react-hooks',
-    'react-refresh'
-  ],
   rules: {
     // Rules from eslint:recommended
     'no-unused-vars': 'warn',
@@ -42,7 +41,7 @@ module.exports = {
     '@typescript-eslint/prefer-as-const': 'error',
     '@typescript-eslint/no-non-null-assertion': 'warn',
   },
-  ignorePatterns: ['dist'],
+  ignores: ['dist'],
   overrides: [
     {
       files: ['src/components/OnboardingFlow.tsx'],

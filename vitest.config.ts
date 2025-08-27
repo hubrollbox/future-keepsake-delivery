@@ -32,5 +32,11 @@ export default defineConfig({
       web: [/\.[jt]sx$/,
         /@testing-library\/jest-dom/],
     },
+    deps: {
+      inline: [/@testing-library\/jest-dom/],
+    },
+  },
+  optimizeDeps: {
+    include: ['@testing-library/jest-dom'],
   },
 });
