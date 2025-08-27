@@ -28,5 +28,9 @@ export default defineConfig({
     },
     testTimeout: 10000,
     include: ['src/**/*.{test,spec}.{ts,tsx}', 'src/__tests__/setup.ts'],
+    transformMode: {
+      web: [/\.[jt]sx$/,
+        /@testing-library\/jest-dom/],
+    },
   },
 });
