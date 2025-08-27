@@ -1,11 +1,10 @@
 // Script para servir a Edge Function localmente para testes
-import { exec } from 'child_process';
-import { promisify } from 'util';
+
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import 'dotenv/config';
 
-const execAsync = promisify(exec);
+
 
 // Obter o diretório atual do script
 const __filename = fileURLToPath(import.meta.url);
@@ -48,9 +47,7 @@ async function serveFunction() {
     };
     
     // Criar string de variáveis de ambiente para o comando
-    const envString = Object.entries(envVars)
-      .map(([key, value]) => `${key}=${value}`)
-      .join(' ');
+
     
     // Executar o comando para servir a função localmente
     console.log('Executando supabase functions serve...');

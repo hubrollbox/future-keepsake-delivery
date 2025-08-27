@@ -184,13 +184,7 @@ async function testEdgeFunctionSecurity() {
   
   try {
     // Criar uma keepsake de teste com conteúdo potencialmente malicioso
-    const testKeepsake = {
-      title: '<script>alert("XSS")</script>Título Teste',
-      message: '<img src="x" onerror="alert(1)">Mensagem de teste',
-      delivery_date: new Date(Date.now() + 1000).toISOString(), // 1 segundo no futuro
-      user_id: 'test-user-id',
-      status: 'pending'
-    };
+
     
     console.log('✅ Teste de integração preparado');
     console.log('⚠️  Para teste completo, execute a Edge Function manualmente com dados sanitizados');

@@ -25,7 +25,7 @@ async function testErrorHandling() {
     // Teste 1: Verificar se a função RPC foi criada corretamente
     console.log('\n📋 Teste 1: Verificando função RPC execute_keepsake_completion')
     
-    const { data: functions, error: functionsError } = await supabase
+    const { error: functionsError } = await supabase
       .rpc('execute_keepsake_completion', {
         p_keepsake_id: '00000000-0000-0000-0000-000000000000',
         p_status: 'test',

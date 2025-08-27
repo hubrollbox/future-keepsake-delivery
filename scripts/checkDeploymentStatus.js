@@ -10,7 +10,7 @@ async function checkDeploymentStatus() {
     // Verificar variáveis de ambiente necessárias
     const supabaseUrl = process.env.VITE_SUPABASE_URL;
     const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-    const projectRef = process.env.SUPABASE_PROJECT_REF;
+
     
     if (!supabaseUrl || !supabaseServiceKey) {
       console.error('Erro: Variáveis de ambiente necessárias não estão definidas');
@@ -46,8 +46,8 @@ async function checkDeploymentStatus() {
       } else {
         console.log(`⚠️ Edge Function retornou status ${response.status}. Verifique os logs para mais detalhes.`);
       }
-    } catch (error) {
-      console.error('❌ Erro ao verificar Edge Function:', error.message);
+    } catch (_err) {
+                                            console.error('❌ Erro ao verificar Edge Function:', err.message);
     }
     
     console.log('\n=== Verificando Cron Job ===');
@@ -107,8 +107,8 @@ async function checkDeploymentStatus() {
       } else {
         console.log('❌ Cron job não encontrado. Verifique se a migração SQL foi executada.');
       }
-    } catch (error) {
-      console.error('❌ Erro ao verificar cron job:', error.message);
+    } catch (err) {
+                                   console.error('❌ Erro ao verificar cron job:', err.message);
     }
     
     console.log('\n=== Verificando Tabelas do Banco de Dados ===');
@@ -116,7 +116,7 @@ async function checkDeploymentStatus() {
     // Verificar tabelas necessárias
     try {
       // Verificar tabela keepsakes
-      const { data: keepsakes, error: keepsakesError } = await supabase
+      const { error: keepsakesError } = await supabase
         .from('keepsakes')
         .select('id, status')
         .limit(1);
@@ -128,7 +128,7 @@ async function checkDeploymentStatus() {
       }
       
       // Verificar tabela recipients
-      const { data: recipients, error: recipientsError } = await supabase
+      const { error: recipientsError } = await supabase
         .from('recipients')
         .select('id, email')
         .limit(1);
@@ -140,7 +140,7 @@ async function checkDeploymentStatus() {
       }
       
       // Verificar tabela cron_job_logs
-      const { data: cronLogs, error: cronLogsError } = await supabase
+      const { error: cronLogsError } = await supabase
         .from('cron_job_logs')
         .select('id')
         .limit(1);
@@ -150,16 +150,16 @@ async function checkDeploymentStatus() {
       } else {
         console.log('✅ Tabela cron_job_logs está acessível');
       }
-    } catch (error) {
-      console.error('❌ Erro ao verificar tabelas:', error.message);
+    } catch (err) {
+      console.error('❌ Erro ao verificar tabelas:', err.message);
     }
     
     console.log('\n=== Resumo da Verificação ===');
     console.log('Verifique os resultados acima para garantir que todos os componentes estão funcionando corretamente.');
     console.log('Se encontrar problemas, consulte o arquivo docs/deployment_instructions.md para instruções de solução de problemas.');
     
-  } catch (error) {
-    console.error('Erro durante a verificação:', error);
+  } catch (err) {
+    console.error('Erro durante a verificação:', err);
     process.exit(1);
   }
 }
@@ -214,7 +214,7 @@ async function createSQLFunctions() {
       // Se a função não existe, crie-a usando SQL bruto
       await supabase.sql(createCheckCronJobFunction);
     }
-  } catch (error) {
+  } catch (err) {
     // Ignorar erros aqui, eles serão tratados na função principal
   }
 }

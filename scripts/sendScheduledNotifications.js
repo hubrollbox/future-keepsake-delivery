@@ -29,13 +29,13 @@ async function sendNotificationEmail({ to, subject, text }) {
 }
 
 async function processScheduledNotifications() {
-  const { data: notifications, error } = await supabase
+  const { data: notifications, error: err } = await supabase
     .from('scheduled_notifications')
     .select('*')
     .eq('status', 'pending')
     .lte('delivery_date', new Date().toISOString());
 
-  if (error) throw error;
+  if (err) throw err;
   if (!notifications.length) return;
 
   for (const notif of notifications) {

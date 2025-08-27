@@ -61,6 +61,41 @@ module.exports = [
     }
   },
   {
+    files: ['cypress/**/*.cy.js'],
+    languageOptions: {
+      globals: {
+        'cypress/globals': true,
+        cy: 'readonly',
+        Cypress: 'readonly',
+        describe: 'readonly',
+        beforeEach: 'readonly',
+        it: 'readonly'
+      }
+    },
+    plugins: {
+      cypress: require('eslint-plugin-cypress')
+    },
+    rules: {
+      'no-undef': 'off',
+      'cypress/no-assigning-return-values': 'error',
+      'cypress/no-unnecessary-waiting': 'error',
+      'cypress/assertion-before-screenshot': 'warn',
+      'cypress/no-force': 'warn',
+      'cypress/no-async-tests': 'error',
+      'cypress/no-pause': 'error'
+    }
+  },
+  {
+    files: ['public/sw.js'],
+    languageOptions: {
+      globals: {
+        self: true,
+        caches: true,
+        fetch: true
+      }
+    }
+  },
+  {
     files: ['scripts/**/*.js'],
     languageOptions: {
       globals: {

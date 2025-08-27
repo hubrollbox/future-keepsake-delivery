@@ -31,7 +31,7 @@ async function updateKeepsakeStatus(keepsakeId, status) {
     
     console.log(`Atualizando status da cápsula ${keepsakeId} para ${status}...`);
     
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('keepsakes')
       .update({ 
         status: status,
