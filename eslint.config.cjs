@@ -1,53 +1,82 @@
 const tsParser = require('@typescript-eslint/parser');
+const tsEslintPlugin = require('@typescript-eslint/eslint-plugin');
+const reactHooksPlugin = require('eslint-plugin-react-hooks');
+const reactRefreshPlugin = require('eslint-plugin-react-refresh');
 
-module.exports = {
-
-  languageOptions: {
-    globals: {
-      browser: true,
-      es2020: true,
-    },
-    parser: tsParser,
-    parserOptions: {
-      ecmaVersion: 2020,
-      sourceType: 'module',
-    },
+module.exports = [
+  {
+    ignores: ['dist'],
   },
-  plugins: {
-    '@typescript-eslint': require('@typescript-eslint/eslint-plugin'),
-    'react-hooks': require('eslint-plugin-react-hooks'),
-    'react-refresh': require('eslint-plugin-react-refresh'),
-  },
-  rules: {
-    // Rules from eslint:recommended
-    'no-unused-vars': 'warn',
-    'no-undef': 'warn',
-
-    // Rules from plugin:@typescript-eslint/recommended
-    '@typescript-eslint/no-unused-vars': 'error',
-    '@typescript-eslint/no-explicit-any': 'warn',
-    '@typescript-eslint/prefer-as-const': 'error',
-    '@typescript-eslint/no-non-null-assertion': 'warn',
-
-    // Rules from plugin:react-hooks/recommended
-    'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'warn',
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
-    '@typescript-eslint/no-unused-vars': 'error',
-    '@typescript-eslint/no-explicit-any': 'warn',
-    '@typescript-eslint/prefer-as-const': 'error',
-    '@typescript-eslint/no-non-null-assertion': 'warn',
-  },
-  ignores: ['dist'],
-  overrides: [
-    {
-      files: ['src/components/OnboardingFlow.tsx'],
-      rules: {
-        'react-hooks/exhaustive-deps': 'off',
+  {
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+      },
+      globals: {
+        process: 'readonly',
+        window: 'readonly',
+        console: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        URL: 'readonly',
+        useCallback: 'readonly',
+        jsdom: 'readonly'
       }
+    },
+    plugins: {
+      '@typescript-eslint': tsEslintPlugin,
+      'react-hooks': reactHooksPlugin,
+      'react-refresh': reactRefreshPlugin,
+    },
+    rules: {
+      // Rules from eslint:recommended
+      'no-unused-vars': 'warn',
+      'no-undef': 'warn',
+
+      // Rules from plugin:@typescript-eslint/recommended
+
+
+      // Rules from plugin:react-hooks/recommended
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
+      '@typescript-eslint/no-unused-vars': 'error',
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/prefer-as-const': 'error',
+      '@typescript-eslint/no-non-null-assertion': 'warn',
+    },
+  },
+  {
+    files: ['src/components/OnboardingFlow.tsx'],
+    rules: {
+      'react-hooks/exhaustive-deps': 'off',
     }
-  ]
-};
+  },
+  {
+    files: ['scripts/**/*.js'],
+    languageOptions: {
+      globals: {
+        require: 'readonly',
+        module: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
+        process: 'readonly'
+      },
+      ecmaVersion: 2020,
+      sourceType: 'commonjs'
+    },
+    rules: {
+      'no-undef': 'off',
+      'no-unused-vars': 'warn',
+      '@typescript-eslint/no-unused-vars': 'off'
+    }
+  }
+];
