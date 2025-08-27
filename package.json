@@ -57,7 +57,7 @@
     "dev": "vite",
     "build:dev": "tsc -b && vite build --mode development",
     "build:prod": "tsc -b && vite build --mode production",
-    "build": "npm run lint && npm run build:prod",
+    "build": "npm run lint && npm run test && npm run build:prod"
     "preview": "vite preview",
     "lint": "eslint . --report-unused-disable-directives --no-error-on-unmatched-pattern",
     "lint:fix": "eslint . --fix",

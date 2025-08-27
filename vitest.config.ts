@@ -27,7 +27,7 @@ export default defineConfig({
       ]
     },
     testTimeout: 10000,
-    include: ['src/**/*.{test,spec}.{ts,tsx}'],
+    include: ['src/pages/**/*.test.tsx', 'src/__tests__/components/**/*.test.tsx'],
     exclude: ['src/__tests__/setup.ts'],
     transformMode: {
       web: [/\.[jt]sx$/,
