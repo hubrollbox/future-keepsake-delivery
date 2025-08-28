@@ -46,8 +46,10 @@ async function checkDeploymentStatus() {
       } else {
         console.log(`⚠️ Edge Function retornou status ${response.status}. Verifique os logs para mais detalhes.`);
       }
-    } catch (_err) {
-                                            console.error('❌ Erro ao verificar Edge Function:', err.message);
+
+  } catch (_) {
+ 
+                                            console.error('❌ Erro ao verificar Edge Function:', _.message);
     }
     
     console.log('\n=== Verificando Cron Job ===');
@@ -107,8 +109,9 @@ async function checkDeploymentStatus() {
       } else {
         console.log('❌ Cron job não encontrado. Verifique se a migração SQL foi executada.');
       }
-    } catch (err) {
-                                   console.error('❌ Erro ao verificar cron job:', err.message);
+    } catch (_) {
+ 
+                                   console.error('❌ Erro ao verificar cron job:', _.message);
     }
     
     console.log('\n=== Verificando Tabelas do Banco de Dados ===');
@@ -150,16 +153,16 @@ async function checkDeploymentStatus() {
       } else {
         console.log('✅ Tabela cron_job_logs está acessível');
       }
-    } catch (err) {
-      console.error('❌ Erro ao verificar tabelas:', err.message);
+    } catch (_) {
+      console.error('❌ Erro ao verificar tabelas:', _.message);
     }
     
     console.log('\n=== Resumo da Verificação ===');
     console.log('Verifique os resultados acima para garantir que todos os componentes estão funcionando corretamente.');
     console.log('Se encontrar problemas, consulte o arquivo docs/deployment_instructions.md para instruções de solução de problemas.');
     
-  } catch (err) {
-    console.error('Erro durante a verificação:', err);
+  } catch (_) {
+    console.error('Erro durante a verificação:', _);
     process.exit(1);
   }
 }
@@ -214,8 +217,9 @@ async function createSQLFunctions() {
       // Se a função não existe, crie-a usando SQL bruto
       await supabase.sql(createCheckCronJobFunction);
     }
-  } catch (err) {
-    // Ignorar erros aqui, eles serão tratados na função principal
+  // eslint-disable-next-line no-unused-vars
+    } catch (_) {
+      // Ignorar erros aqui, eles serão tratados na função principal
   }
 }
 

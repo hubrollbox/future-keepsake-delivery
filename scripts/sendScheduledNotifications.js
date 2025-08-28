@@ -29,13 +29,14 @@ async function sendNotificationEmail({ to, subject, text }) {
 }
 
 async function processScheduledNotifications() {
-  const { data: notifications, error: err } = await supabase
+
+  const { data: notifications, error: _err } = await supabase
     .from('scheduled_notifications')
     .select('*')
     .eq('status', 'pending')
     .lte('delivery_date', new Date().toISOString());
 
-  if (err) throw err;
+  if (_err) throw _err;
   if (!notifications.length) return;
 
   for (const notif of notifications) {
@@ -54,7 +55,8 @@ async function processScheduledNotifications() {
         .from('scheduled_notifications')
         .update({ status: 'sent', sent_at: new Date().toISOString() })
         .eq('id', notif.id);
-    } catch (err) {
+    // eslint-disable-next-line no-unused-vars
+    } catch (_) {
       await supabase
         .from('scheduled_notifications')
         .update({ status: 'error' })

@@ -8,7 +8,6 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "types": ["jsdom", "@testing-library/jest-dom", "vitest/globals", "react"],
 
     /* Bundler mode */
     "allowImportingTsExtensions": true,

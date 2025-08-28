@@ -3,8 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Mail, User, Award, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-
+import React, { useState, useEffect } from "react";
 // Ensure React is used to avoid TS6133 error
 
 import { supabase } from '@/integrations/supabase/client';

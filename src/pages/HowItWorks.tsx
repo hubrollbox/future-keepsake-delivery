@@ -2,7 +2,7 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import React, { useState } from "react";
 import HowItWorksHero from "@/components/how-it-works/HowItWorksHero";
 import GamificationSystem from "@/components/how-it-works/GamificationSystem";
 import DeliveryTypesDetailed from "@/components/how-it-works/DeliveryTypesDetailed";
