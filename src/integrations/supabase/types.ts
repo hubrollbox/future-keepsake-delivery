@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "13.0.4"
@@ -62,6 +62,33 @@ export type Database = {
           permissions?: Json | null
           role?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      api_rate_limits: {
+        Row: {
+          client_ip: unknown
+          created_at: string | null
+          endpoint: string
+          id: string
+          request_count: number | null
+          window_start: string | null
+        }
+        Insert: {
+          client_ip: unknown
+          created_at?: string | null
+          endpoint: string
+          id?: string
+          request_count?: number | null
+          window_start?: string | null
+        }
+        Update: {
+          client_ip?: unknown
+          created_at?: string | null
+          endpoint?: string
+          id?: string
+          request_count?: number | null
+          window_start?: string | null
         }
         Relationships: []
       }
@@ -312,6 +339,7 @@ export type Database = {
           message_content: string | null
           message_type: string
           payment_status: string | null
+          sent_at: string | null
           status: string | null
           title: string
           total_cost: number | null
@@ -327,6 +355,7 @@ export type Database = {
           message_content?: string | null
           message_type?: string
           payment_status?: string | null
+          sent_at?: string | null
           status?: string | null
           title: string
           total_cost?: number | null
@@ -342,6 +371,7 @@ export type Database = {
           message_content?: string | null
           message_type?: string
           payment_status?: string | null
+          sent_at?: string | null
           status?: string | null
           title?: string
           total_cost?: number | null
@@ -681,6 +711,48 @@ export type Database = {
           },
         ]
       }
+      security_audit_log: {
+        Row: {
+          action: string
+          created_at: string | null
+          error_message: string | null
+          id: string
+          ip_address: unknown | null
+          metadata: Json | null
+          resource_id: string | null
+          resource_type: string | null
+          success: boolean | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string | null
+          error_message?: string | null
+          id?: string
+          ip_address?: unknown | null
+          metadata?: Json | null
+          resource_id?: string | null
+          resource_type?: string | null
+          success?: boolean | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string | null
+          error_message?: string | null
+          id?: string
+          ip_address?: unknown | null
+          metadata?: Json | null
+          resource_id?: string | null
+          resource_type?: string | null
+          success?: boolean | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       subscriptions: {
         Row: {
           ends_at: string | null
@@ -777,6 +849,39 @@ export type Database = {
           },
         ]
       }
+      user_sessions: {
+        Row: {
+          created_at: string | null
+          expires_at: string
+          id: string
+          ip_address: unknown | null
+          last_accessed: string | null
+          session_token: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          expires_at: string
+          id?: string
+          ip_address?: unknown | null
+          last_accessed?: string | null
+          session_token: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          expires_at?: string
+          id?: string
+          ip_address?: unknown | null
+          last_accessed?: string | null
+          session_token?: string
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       warehouse_items: {
         Row: {
           client_name: string
@@ -854,12 +959,12 @@ export type Database = {
       }
       http_delete: {
         Args:
+          | { content: string; content_type: string; uri: string }
           | { uri: string }
-          | { uri: string; content: string; content_type: string }
         Returns: Database["public"]["CompositeTypes"]["http_response"]
       }
       http_get: {
-        Args: { uri: string } | { uri: string; data: Json }
+        Args: { data: Json; uri: string } | { uri: string }
         Returns: Database["public"]["CompositeTypes"]["http_response"]
       }
       http_head: {
@@ -878,17 +983,17 @@ export type Database = {
         }[]
       }
       http_patch: {
-        Args: { uri: string; content: string; content_type: string }
+        Args: { content: string; content_type: string; uri: string }
         Returns: Database["public"]["CompositeTypes"]["http_response"]
       }
       http_post: {
         Args:
-          | { uri: string; content: string; content_type: string }
-          | { uri: string; data: Json }
+          | { content: string; content_type: string; uri: string }
+          | { data: Json; uri: string }
         Returns: Database["public"]["CompositeTypes"]["http_response"]
       }
       http_put: {
-        Args: { uri: string; content: string; content_type: string }
+        Args: { content: string; content_type: string; uri: string }
         Returns: Database["public"]["CompositeTypes"]["http_response"]
       }
       http_reset_curlopt: {
@@ -900,14 +1005,36 @@ export type Database = {
         Returns: boolean
       }
       is_admin: {
-        Args: { uid: string } | { uid: string; required_permission?: string }
+        Args: { required_permission?: string; uid: string } | { uid: string }
         Returns: boolean
       }
       is_admin_user: {
         Args: Record<PropertyKey, never>
         Returns: boolean
       }
+      is_profile_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
+      log_security_event: {
+        Args: {
+          p_action: string
+          p_error_message?: string
+          p_ip_address?: unknown
+          p_metadata?: Json
+          p_resource_id?: string
+          p_resource_type?: string
+          p_success?: boolean
+          p_user_agent?: string
+          p_user_id: string
+        }
+        Returns: undefined
+      }
       send_due_deliveries: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      send_due_keepsakes: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
