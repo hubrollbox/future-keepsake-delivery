@@ -95,7 +95,7 @@ export const EditKeepsake = () => {
         delivery_date: deliveryDate.toISOString(),
         recipient_email: data.recipient_email || null,
         recipient_phone: data.recipient_phone || null,
-      });
+      } as any);
       
       if (success) {
         navigate('/dashboard');

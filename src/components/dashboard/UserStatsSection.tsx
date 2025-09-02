@@ -5,9 +5,10 @@ import { Trophy, Award, Target } from "lucide-react";
 import UserStats from "@/components/gamification/UserStats";
 import AchievementCard from "@/components/gamification/AchievementCard";
 import QuestCard from "@/components/gamification/QuestCard";
+import type { UserProfile } from "@/contexts/useAuthContext";
 
 interface UserStatsSectionProps {
-  profile: unknown;
+  profile: UserProfile | null;
   totalDeliveries: number;
 }
 
@@ -22,7 +23,7 @@ const UserStatsSection = ({ profile, totalDeliveries }: UserStatsSectionProps) =
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <UserStats profile={profile} totalDeliveries={totalDeliveries} />
+          <UserStats profile={profile!} totalDeliveries={totalDeliveries} />
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <h4 className="font-semibold mb-3 text-green-800 flex items-center gap-2">

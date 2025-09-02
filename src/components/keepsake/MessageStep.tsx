@@ -19,7 +19,7 @@ interface MessageStepProps {
   form: UseFormReturn<KeepsakeFormValues>;
 }
 
-const MessageStep = ({ formData, updateFormData, nextStep, prevStep, form /* eslint-disable-line @typescript-eslint/no-unused-vars */ }: MessageStepProps) => {
+const MessageStep = ({ updateFormData, nextStep, prevStep, form }: MessageStepProps) => {
   const handleNext = async () => {
     // Validar os campos deste passo usando react-hook-form
     const isValid = await form.trigger(['title', 'message', 'delivery_date']);

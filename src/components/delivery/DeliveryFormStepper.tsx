@@ -49,7 +49,7 @@ const DeliveryFormStepper = ({
     case 0:
       return <DeliveryTypeStep deliveryType={deliveryType} setDeliveryType={setDeliveryType} onNext={nextStep} />;
     case 1:
-      return <DeliveryDetailsStep formData={formData} handleInputChange={handleInputChange} deliveryType={deliveryType} prevStep={prevStep} nextStep={nextStep} />;
+      return <DeliveryDetailsStep formData={formData as any} handleInputChange={handleInputChange} deliveryType={deliveryType} prevStep={prevStep} nextStep={nextStep} />;
     case 2:
       return <DeliveryMessageStep formData={formData} handleInputChange={handleInputChange} handleFileChange={handleFileChange} deliveryType={deliveryType} prevStep={prevStep} nextStep={nextStep} />;
     case 3:

@@ -1,3 +1,4 @@
+import React from "react"
 import { useTheme } from "next-themes"
 import { Toaster as Sonner } from "sonner"
 
@@ -8,7 +9,7 @@ const Toaster = React.memo(({ ...props }: ToasterProps) => {
 
   return (
     <Sonner
-      theme={theme as ToasterProps["theme"]}
+      theme={theme as "system" | "light" | "dark"}
       className="toaster group"
       toastOptions={{
         classNames: {

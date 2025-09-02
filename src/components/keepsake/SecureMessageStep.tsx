@@ -62,10 +62,8 @@ const SecureMessageStep: React.FC<SecureMessageStepProps> = ({
 
   const handleDateSelect = (date: Date | undefined) => {
     setSelectedDate(date);
-    if (date) {
-      const dateString = date.toISOString().split('T')[0];
-      updateField('delivery_date', dateString);
-    }
+    const dateString = date ? date.toISOString().split('T')[0] : '';
+    updateField('delivery_date', dateString || '');
   };
 
   const today = new Date();

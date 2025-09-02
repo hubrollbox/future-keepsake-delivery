@@ -17,5 +17,11 @@ export const SidebarProvider = () => {
 };
 
 export const useSidebar = () => {
-  return null;
+  return {
+    isMobile: false,
+    state: 'expanded' as 'expanded' | 'collapsed',
+    openMobile: false,
+    setOpenMobile: () => {},
+    toggleSidebar: () => {}
+  };
 };
