@@ -213,7 +213,7 @@ const SidebarSkeleton = React.forwardRef<
   React.ComponentProps<typeof Skeleton>
 >(({ className, ...props }, ref) => {
   return (
-    <Skeleton
+    <div
       ref={ref}
       className={cn("h-7 w-full", className)}
       {...props}

@@ -1,63 +1,16 @@
+import { createContext, useContext, useCallback } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
 
-import React, { createContext, useState, useEffect, ReactNode, useCallback } from "react";
-import { useAchievements, Achievement } from "@/hooks/useAchievements";
-
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/hooks/useAuth";
-
-interface GamificationContextProps {
-  achievements: Achievement[];
-  loading: boolean;
-  error: string | null;
-  refreshAchievements: () => void;
-  clearError: () => void;
+interface GamificationContextType {
   addPoints: (points: number, reason: string) => Promise<void>;
-  checkAchievements: () => Promise<void>;
+  checkAchievements: (currentPoints?: number) => Promise<void>;
 }
 
-const GamificationContext = createContext<GamificationContextProps | undefined>(undefined);
+const GamificationContext = createContext<GamificationContextType | undefined>(undefined);
 
-export const GamificationProvider = ({ children }: { children: ReactNode }) => {
+export const GamificationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, profile, refreshProfile } = useAuth();
-  const { achievements, loading, error: achievementsError, refreshAchievements } = useAchievements();
-  const [userError, setUserError] = useState<string | null>(null);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        setUserError(null);
-        // User is already fetched by useAuth, so we can rely on it
-        if (!user) return;
-        // No need to set userId state here, useAuth provides it
-      } catch (error) {
-        console.error("Error fetching user:", error);
-        setUserError("Falha ao carregar dados do utilizador");
-      }
-    })();
-  }, [user]);
-
-  const addPoints = useCallback(async (points: number, reason: string) => {
-    if (!user || !profile) return;
-
-    try {
-      const newTotalPoints = (profile.total_points || 0) + points;
-
-      const { error } = await supabase
-        .from('profiles')
-        .update({ total_points: newTotalPoints })
-        .eq('id', user.id)
-        .select()
-        .single();
-
-      if (error) throw error;
-
-      console.log(`Pontos adicionados: ${points} por ${reason}. Total: ${newTotalPoints}`);
-      await refreshProfile(); // Refresh profile to get updated points
-      await checkAchievements(newTotalPoints); // Check for new achievements after adding points
-    } catch (error) {
-      console.error("Erro ao adicionar pontos:", error);
-    }
-  }, [user, profile, refreshProfile, checkAchievements]);
 
   const checkAchievements = useCallback(async (currentPoints?: number) => {
     if (!user || !profile) return;
@@ -70,69 +23,77 @@ export const GamificationProvider = ({ children }: { children: ReactNode }) => {
 
       if (achievementsError) throw achievementsError;
 
-      const { data: userUnlockedAchievements, error: userAchievementsError } = await supabase
-        .from('user_achievements')
-        .select('achievement_id')
-        .eq('user_id', user.id);
+      // Check for new achievements based on points
+      const pointsToCheck = currentPoints || profile.total_points || 0;
+      
+      for (const achievement of allAchievements || []) {
+        if (pointsToCheck >= achievement.points) {
+          // Check if user already has this achievement
+          const { data: existingAchievement } = await supabase
+            .from('user_achievements')
+            .select('*')
+            .eq('user_id', user.id)
+            .eq('achievement_id', achievement.id)
+            .single();
 
-      if (userAchievementsError) throw userAchievementsError;
-
-      const unlockedIds = new Set(userUnlockedAchievements.map(ua => ua.achievement_id));
-
-      const pointsToCheck = currentPoints !== undefined ? currentPoints : (profile.total_points || 0);
-      const achievementsToUnlock = allAchievements.filter(achievement =>
-        !unlockedIds.has(achievement.id) && pointsToCheck >= achievement.points
-      );
-
-      if (achievementsToUnlock.length > 0) {
-        const newUnlockedEntries = achievementsToUnlock.map(achievement => ({
-          user_id: user.id,
-          achievement_id: achievement.id,
-          unlocked_at: new Date().toISOString(),
-        }));
-
-        const { error: insertError } = await supabase
-          .from('user_achievements')
-          .insert(newUnlockedEntries);
-
-        if (insertError) throw insertError;
-
-        console.log(`Conquistas desbloqueadas: ${achievementsToUnlock.map(a => a.title).join(', ')}`);
-        refreshAchievements(); // Refresh achievements context
+          if (!existingAchievement) {
+            // Award the achievement
+            await supabase
+              .from('user_achievements')
+              .insert({
+                user_id: user.id,
+                achievement_id: achievement.id
+              });
+          }
+        }
       }
     } catch (error) {
       console.error("Erro ao verificar conquistas:", error);
     }
-  }, [user, profile, refreshAchievements]);
+  }, [user, profile]);
 
-  useEffect(() => {
-    // Initial check when user and profile are loaded
-    if (user && profile) {
-      checkAchievements();
+  const addPoints = useCallback(async (points: number, reason: string) => {
+    if (!user || !profile) return;
+
+    try {
+      const newTotalPoints = (profile.total_points || 0) + points;
+
+      // Update user's total points
+      const { error } = await supabase
+        .from('profiles')
+        .update({ 
+          total_points: newTotalPoints,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', user.id)
+        .single();
+
+      if (error) throw error;
+
+      console.log(`Pontos adicionados: ${points} por ${reason}. Total: ${newTotalPoints}`);
+      await refreshProfile(); // Refresh profile to get updated points
+      await checkAchievements(newTotalPoints); // Check for new achievements after adding points
+    } catch (error) {
+      console.error("Erro ao adicionar pontos:", error);
     }
-  }, [user, profile, checkAchievements]);
+  }, [user, profile, refreshProfile, checkAchievements]);
 
-  const clearError = () => {
-    setUserError(null);
+  const value = {
+    addPoints,
+    checkAchievements,
   };
 
-  const combinedError = achievementsError || userError;
-
   return (
-    <GamificationContext.Provider 
-      value={{
-        achievements,
-        loading,
-        error: combinedError,
-        refreshAchievements,
-        clearError,
-        addPoints,
-        checkAchievements
-      }}
-    >
+    <GamificationContext.Provider value={value}>
       {children}
     </GamificationContext.Provider>
   );
 };
 
-export { GamificationContext };
+export const useGamification = () => {
+  const context = useContext(GamificationContext);
+  if (context === undefined) {
+    throw new Error('useGamification must be used within a GamificationProvider');
+  }
+  return context;
+};
