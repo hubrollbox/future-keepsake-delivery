@@ -191,20 +191,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
   }, [loading, profile, user]);
 
-  const signIn = async (email: string, password: string) => {
+  const signIn = async (email: string, password: string): Promise<{ error: unknown }> => {
     try {
       setLoading(true);
       console.log('🔑 [AuthContext] signIn: Attempting sign-in for email:', email);
       
       // Validate input
       if (!email || !password) {
+        const error = 'Por favor, insira seu e-mail e senha.';
         toast({
           title: 'Erro de Autenticação',
-          description: 'Por favor, insira seu e-mail e senha.',
+          description: error,
           variant: 'destructive',
         });
         setLoading(false);
-        return;
+        return { error };
       }
 
       const { error } = await supabase.auth.signInWithPassword({ email, password });
@@ -217,7 +218,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           variant: 'destructive',
         });
         setLoading(false);
-        return;
+        return { error };
       }
 
       console.log('✅ [AuthContext] signIn: Sign-in successful.');
@@ -225,6 +226,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         title: 'Login bem-sucedido',
         description: 'Você foi logado com sucesso!',
       });
+      return { error: null };
     } catch (error) {
       console.error('❌ [AuthContext] signIn: Unexpected error during sign-in:', error);
       toast({
@@ -232,6 +234,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         description: 'Ocorreu um erro inesperado ao tentar fazer login.',
         variant: 'destructive',
       });
+      return { error };
     } finally {
       setLoading(false);
     }
@@ -274,20 +277,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const signUp = async (email: string, password: string) => {
+  const signUp = async (email: string, password: string): Promise<{ error: unknown }> => {
     try {
       setLoading(true);
       console.log('📝 [AuthContext] signUp: Attempting sign-up for email:', email);
       
       // Validate input
       if (!email || !password) {
+        const error = 'Por favor, insira um e-mail e senha válidos.';
         toast({
           title: 'Erro de Registro',
-          description: 'Por favor, insira um e-mail e senha válidos.',
+          description: error,
           variant: 'destructive',
         });
         setLoading(false);
-        return;
+        return { error };
       }
 
       const { data, error } = await supabase.auth.signUp({ email, password });
@@ -300,7 +304,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           variant: 'destructive',
         });
         setLoading(false);
-        return;
+        return { error };
       }
 
       console.log('✅ [AuthContext] signUp: Sign-up successful. User:', data.user?.id);
@@ -308,6 +312,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         title: 'Registro bem-sucedido',
         description: 'Verifique seu e-mail para confirmar sua conta.',
       });
+      return { error: null };
     } catch (error) {
       console.error('❌ [AuthContext] signUp: Unexpected error during sign-up:', error);
       toast({
@@ -315,6 +320,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         description: 'Ocorreu um erro inesperado ao tentar registrar.',
         variant: 'destructive',
       });
+      return { error };
     } finally {
       setLoading(false);
     }

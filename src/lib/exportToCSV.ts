@@ -2,7 +2,9 @@
 export function exportToCSV<T extends object>(data: T[], filename: string) {
   if (!data || data.length === 0) return;
   
-  const keys = Object.keys(data[0]) as (keyof T)[];
+  const firstItem = data[0];
+  if (!firstItem) return;
+  const keys = Object.keys(firstItem) as (keyof T)[];
   const csvRows = [
     keys.join(","),
     ...data.map(row => keys.map(k => JSON.stringify(row[k] ?? "")).join(","))

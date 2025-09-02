@@ -1,5 +1,5 @@
 
-import React, { lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { Navigate, Routes, Route } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useAdmin } from "@/hooks/useAdmin";

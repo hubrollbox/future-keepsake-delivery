@@ -17,7 +17,7 @@ interface FormData {
 export type DeliveryStepValidator = (
   currentStep: number,
   deliveryType: string,
-  formData,
+  formData: any,
   toast: ReturnType<typeof useToast>["toast"]
 ) => boolean;
 

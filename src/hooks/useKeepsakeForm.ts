@@ -257,17 +257,17 @@ export const useKeepsakeForm = () => {
         recipientPayload.phone = null;
       } else if (formData.delivery_channel === 'sms') {
         recipientPayload.phone = formData.recipient_contact || '';
-        // Email pode ser null para SMS
-        recipientPayload.email = null;
+        // Email pode ser null para SMS  
+        recipientPayload.email = '';
       } else if (formData.delivery_channel === 'physical') {
         // Para entrega física, ambos email e phone podem ser opcionais
-        recipientPayload.email = formData.recipient_contact || null;
+        recipientPayload.email = formData.recipient_contact || '';
         recipientPayload.phone = null;
-        recipientPayload.street = formData.street;
-        recipientPayload.city = formData.city;
-        recipientPayload.state = formData.state || null;
-        recipientPayload.postal_code = formData.postal_code;
-        recipientPayload.country = formData.country || 'Portugal';
+        (recipientPayload as any).street = formData.street;
+        (recipientPayload as any).city = formData.city;
+        (recipientPayload as any).state = formData.state || null;
+        (recipientPayload as any).postal_code = formData.postal_code;
+        (recipientPayload as any).country = formData.country || 'Portugal';
       }
 
       const { error: recipientError } = await supabase
@@ -277,7 +277,7 @@ export const useKeepsakeForm = () => {
       if (recipientError) throw recipientError;
 
       // Inserir produtos selecionados
-      if (formData.selected_products.length > 0) {
+      if (formData.selected_products && formData.selected_products.length > 0) {
         const { error: productsError } = await supabase
           .from('keepsake_products')
           .insert(
@@ -339,6 +339,7 @@ export const useKeepsakeForm = () => {
 
       return () => clearTimeout(timer);
     }
+    return;
   }, [formState.hasUnsavedChanges]);
 
   return {

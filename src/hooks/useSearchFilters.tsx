@@ -36,7 +36,9 @@ export const useSearchFilters = <T extends Record<string, unknown>>(
 
       // Date range filter
       if (filters.dateFrom || filters.dateTo) {
-        const itemDate = new Date(item.created_at || item.delivery_date || item.received_date);
+        const dateField = (item.created_at || item.delivery_date || item.received_date) as string | undefined;
+        if (!dateField) return true; // Skip if no date available
+        const itemDate = new Date(dateField);
         
         if (filters.dateFrom && itemDate < filters.dateFrom) {
           return false;

@@ -30,7 +30,7 @@ const useAdminData = () => {
     setError(null);
     try {
       // Exemplo de busca de dados, adapte conforme seu schema do Supabase
-      const { data: usersData, error: usersError } = await supabase.from('users').select('id');
+      const { data: usersData, error: usersError } = await supabase.from('profiles').select('id');
       const { data: keepsakesData, error: keepsakesError } = await supabase.from('keepsakes').select('id');
 
       if (usersError || keepsakesError) {

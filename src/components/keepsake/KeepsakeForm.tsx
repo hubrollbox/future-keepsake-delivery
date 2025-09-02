@@ -1,4 +1,5 @@
-import { useZodForm } from '@/hooks/useZodForm';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { titleSchema, messageSchema, z } from '@/lib/validation';
 
 const createMessageSchema = z.object({
@@ -12,7 +13,9 @@ const KeepsakeForm = () => {
     handleSubmit,
     formState: { errors },
     reset
-  } = useZodForm(createMessageSchema);
+  } = useForm({
+    resolver: zodResolver(createMessageSchema),
+  });
 
   const onSubmit = async () => {
     // O data já está validado pelo Zod
