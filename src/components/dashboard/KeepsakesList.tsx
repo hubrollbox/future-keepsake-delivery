@@ -191,8 +191,8 @@ export const KeepsakesList = ({ statusFilter }: KeepsakesListProps) => {
     hasNextPage,
     isFetchingNextPage,
     isLoading
-  } = useInfiniteQuery<Keepsake[], Error, Keepsake[], string[], number>({
-    queryKey: ['keepsakes-paginated', statusFilter],
+  } = useInfiniteQuery({
+    queryKey: ['keepsakes-paginated', statusFilter ?? 'all'],
     initialPageParam: 0,
     queryFn: ({ pageParam }) =>
       fetchKeepsakesPaginated((pageParam as number) * ITEMS_PER_PAGE, ITEMS_PER_PAGE, statusFilter),
@@ -200,8 +200,7 @@ export const KeepsakesList = ({ statusFilter }: KeepsakesListProps) => {
       (lastPage?.length === ITEMS_PER_PAGE ? ((lastPageParam ?? 0) as number) + 1 : undefined),
   });
 
-  const handleEdit = (id: string) => {
-    setEditingKeepsakeId(id);
+const handleEdit = (id: string) => {
     // Navegar para a página de edição
     navigate(`/edit-keepsake/${id}`);
   };

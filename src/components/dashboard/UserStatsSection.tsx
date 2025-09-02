@@ -1,5 +1,5 @@
 
-import React from "react";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Trophy, Award, Target } from "lucide-react";
 import UserStats from "@/components/gamification/UserStats";

@@ -1,5 +1,5 @@
 
-import React from "react";
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Trophy, Star, Target } from "lucide-react";
 

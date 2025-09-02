@@ -1,5 +1,5 @@
 
-import React from "react";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -171,7 +171,7 @@ const ReviewStep = ({ formData, onBack, onSubmit, loading }: ReviewStepProps) =>
                 await (maybePromise as Promise<void>);
               }
             } catch (error: unknown) {
-              toast({ title: "Erro ao selar", description: error?.message || "Tenta novamente.", variant: "destructive" });
+              toast({ title: "Erro ao selar", description: error instanceof Error ? error.message : "Tenta novamente.", variant: "destructive" });
             }
           }}
           disabled={loading}

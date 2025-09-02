@@ -5,9 +5,13 @@ import DeliveryMessageStep from "./DeliveryMessageStep";
 import DeliveryReviewStep from "./DeliveryReviewStep";
 import DeliveryConfirmationStep from "./DeliveryConfirmationStep";
 
-interface DeliveryFormData {
+export interface DeliveryFormData {
   recipient: string;
+  recipient_email?: string;
   deliveryDate: string;
+  deliveryTime?: string;
+  delivery_method?: string;
+  location?: string;
   description: string;
   message: string;
   digitalFile?: File;

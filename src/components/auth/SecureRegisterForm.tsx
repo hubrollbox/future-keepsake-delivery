@@ -1,5 +1,5 @@
 
-import React from 'react';
+import type React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -41,7 +41,8 @@ const SecureRegisterForm = () => {
       );
 
       if (error) {
-        throw new Error(error.message);
+        const msg = typeof error === 'object' && error && 'message' in error ? String((error as any).message) : 'Erro no registo';
+        throw new Error(msg);
       }
 
       toast({
@@ -58,7 +59,7 @@ const SecureRegisterForm = () => {
     } catch (error: unknown) {
       toast({
         title: 'Erro no registo',
-        description: error.message,
+        description: error instanceof Error ? error.message : 'Ocorreu um erro. Tenta novamente.',
         variant: 'destructive'
       });
     }
