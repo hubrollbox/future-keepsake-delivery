@@ -14,7 +14,7 @@ interface JourneyStep {
   id: string;
   title: string;
   description: string;
-  icon: React.ComponentType<{ className?: string; size?: number; }>;
+  icon: React.ComponentType<any>;
   suggestions: string[];
 }
 
@@ -147,6 +147,8 @@ const EmotionalJourneyGuide: React.FC = () => {
   );
 
   const currentStepData = journeySteps[currentStep];
+
+  if (!currentStepData) return null;
 
   return (
     <div className="max-w-4xl mx-auto p-6">

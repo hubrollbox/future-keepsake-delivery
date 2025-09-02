@@ -2,6 +2,12 @@ import { useState } from "react";
 import ContentEditor from "./ContentEditor";
 import Modal from "../../components/Modal";
 
+interface FAQ {
+  id: number | null;
+  question: string;
+  answer: string;
+}
+
 const ManageContent = () => {
   const pages = [
     { title: "Como Funciona", initialContent: "<p>Conteúdo inicial para Como Funciona</p>" },
@@ -9,20 +15,20 @@ const ManageContent = () => {
     { title: "Políticas de Privacidade", initialContent: "<p>Conteúdo inicial para Políticas de Privacidade</p>" },
   ];
 
-  const [faqs, setFaqs] = useState([
+  const [faqs, setFaqs] = useState<FAQ[]>([
     { id: 1, question: "O que é o serviço?", answer: "É um serviço de entrega de lembranças futuras." },
     { id: 2, question: "Como funciona?", answer: "Você cria uma cápsula do tempo e nós entregamos no futuro." },
   ]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentFaq, setCurrentFaq] = useState({ id: null, question: "", answer: "" });
+  const [currentFaq, setCurrentFaq] = useState<FAQ>({ id: null, question: "", answer: "" });
 
   const handleAddFaq = () => {
     setCurrentFaq({ id: null, question: "", answer: "" });
     setIsModalOpen(true);
   };
 
-  const handleEditFaq = (id) => {
-    const faqToEdit = faqs.find((faq) => faq.id === id);
+  const handleEditFaq = (id: number) => {
+    const faqToEdit = faqs.find((faq: FAQ) => faq.id === id);
     if (faqToEdit) {
       setCurrentFaq(faqToEdit);
       setIsModalOpen(true);
@@ -31,11 +37,11 @@ const ManageContent = () => {
 
   const handleSaveFaq = () => {
     if (currentFaq.id) {
-      setFaqs((prevFaqs) =>
-        prevFaqs.map((faq) => (faq.id === currentFaq.id ? currentFaq : faq))
+      setFaqs((prevFaqs: FAQ[]) =>
+        prevFaqs.map((faq: FAQ) => (faq.id === currentFaq.id ? currentFaq : faq))
       );
     } else {
-      setFaqs((prevFaqs) => [
+      setFaqs((prevFaqs: FAQ[]) => [
         ...prevFaqs,
         { ...currentFaq, id: Date.now() },
       ]);
@@ -43,8 +49,8 @@ const ManageContent = () => {
     setIsModalOpen(false);
   };
 
-  const handleDeleteFaq = () => {
-    // Lógica para excluir FAQ
+  const handleDeleteFaq = (id: number) => {
+    setFaqs((prevFaqs: FAQ[]) => prevFaqs.filter((faq: FAQ) => faq.id !== id));
   };
 
   return (
@@ -70,20 +76,22 @@ const ManageContent = () => {
             </tr>
           </thead>
           <tbody>
-            {faqs.map((faq) => (
+            {faqs.map((faq: FAQ) => (
               <tr key={faq.id}>
                 <td className="px-4 py-2 border-b">{faq.question}</td>
                 <td className="px-4 py-2 border-b">{faq.answer}</td>
                 <td className="px-4 py-2 border-b">
                   <button
-                    onClick={() => handleEditFaq(faq.id)}
+                    onClick={() => faq.id && handleEditFaq(faq.id)}
                     className="text-blue-500 hover:underline mr-2"
+                    disabled={!faq.id}
                   >
                     Editar
                   </button>
                   <button
-                    onClick={() => handleDeleteFaq(faq.id)}
+                    onClick={() => faq.id && handleDeleteFaq(faq.id)}
                     className="text-red-500 hover:underline"
+                    disabled={!faq.id}
                   >
                     Excluir
                   </button>

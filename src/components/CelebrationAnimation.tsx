@@ -33,6 +33,8 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
   const [showConfetti, setShowConfetti] = useState(false);
 
   useEffect(() => {
+    if (!isVisible) return;
+    
     if (isVisible) {
       // Sequência de animação
       const phases = [

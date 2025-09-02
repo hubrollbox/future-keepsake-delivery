@@ -107,6 +107,8 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
   const currentStepData = steps[currentStep];
   const progress = ((currentStep + 1) / steps.length) * 100;
 
+  if (!currentStepData) return null;
+
   const handleNext = useCallback(() => {
     if (currentStep < steps.length - 1) {
       setIsAnimating(true);
