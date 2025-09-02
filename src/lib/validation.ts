@@ -1,7 +1,6 @@
+import { z } from 'zod';
 
-import type { z } from 'zod';
-import * as zod from 'zod';
-export const z = zod;
+export { z };
 
 // Validação de email melhorada com mais verificações de segurança
 export const emailSchema = z.string()
@@ -12,7 +11,7 @@ export const emailSchema = z.string()
     // Validação adicional para domínios suspeitos
     const suspiciousDomains = ['tempmail.com', '10minutemail.com', 'guerrillamail.com', 'mailinator.com'];
     const domain = email.split('@')[1];
-    return !suspiciousDomains.includes(domain);
+    return domain ? !suspiciousDomains.includes(domain) : false;
   }, 'Por favor, use um email válido')
   .refine((email) => {
     // Verificar se não contém caracteres perigosos

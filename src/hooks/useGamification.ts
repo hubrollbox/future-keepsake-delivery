@@ -1,14 +1,3 @@
+import { useGamification as useGamificationHook } from '@/contexts/GamificationContext';
 
-import { useContext } from "react";
-import { GamificationContext } from "@/contexts/GamificationContext";
-
-export const useGamification = () => {
-  const context = useContext(GamificationContext);
-  if (!context) {
-    throw new Error("useGamification must be used within a GamificationProvider");
-  }
-  return context;
-};
-
-// Export types for better TypeScript support
-export type { Achievement } from "./useAchievements";
+export const useGamification = useGamificationHook;

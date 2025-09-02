@@ -28,7 +28,7 @@ const useDeliveries = () => {
       if (err instanceof Error) {
       setError(err.message);
       }
-      console.error('Error fetching deliveries:', err.message);
+      console.error('Error fetching deliveries:', (err as Error).message);
     } finally {
       setLoading(false);
     }
