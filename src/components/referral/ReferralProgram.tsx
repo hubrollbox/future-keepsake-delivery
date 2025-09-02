@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,7 +17,7 @@ import {
 import { useReferralProgram } from '@/hooks/useReferralProgram';
 import { emailSchema } from '@/lib/validation';
 
-const ReferralProgram: React.FC = () => {
+const ReferralProgram = () => {
   const [inviteEmail, setInviteEmail] = useState('');
   const [isInviting, setIsInviting] = useState(false);
   const { stats, referrals, loading, sendReferralInvite, copyReferralLink } = useReferralProgram();

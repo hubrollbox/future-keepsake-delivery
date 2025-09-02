@@ -41,7 +41,7 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
   const [currentStep, setCurrentStep] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
-
+  
   const steps: OnboardingStep[] = [
     {
       id: 'welcome',
@@ -106,9 +106,8 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
 
   const currentStepData = steps[currentStep];
   const progress = ((currentStep + 1) / steps.length) * 100;
-
-  if (!currentStepData) return null;
-
+  
+  // Movido para antes de qualquer retorno condicional
   const handleNext = useCallback(() => {
     if (currentStep < steps.length - 1) {
       setIsAnimating(true);
@@ -124,9 +123,26 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
   }, [currentStep, steps.length, onComplete]);
 
   const handleNextRef = useRef(handleNext);
+  
+  // Atualiza a referência quando handleNext muda
   useEffect(() => {
     handleNextRef.current = handleNext;
   }, [handleNext]);
+  
+  // Auto-advance para demonstração (opcional)
+  // Movido para antes de qualquer retorno condicional
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (currentStep === 0) {
+        handleNextRef.current();
+      }
+    }, 5000); // Auto-advance após 5 segundos na primeira tela
+
+    return () => clearTimeout(timer);
+  }, [currentStep]);
+  
+  // Verificação de dados após todos os hooks
+  if (!currentStepData) return null;
 
   const handlePrevious = () => {
     if (currentStep > 0) {
@@ -149,17 +165,6 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
       }, 300);
     }
   };
-
-  // Auto-advance para demonstração (opcional)
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (currentStep === 0) {
-        handleNextRef.current();
-      }
-    }, 5000); // Auto-advance após 5 segundos na primeira tela
-
-    return () => clearTimeout(timer);
-  }, [currentStep]);
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">

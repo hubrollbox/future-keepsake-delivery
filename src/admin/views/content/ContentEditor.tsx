@@ -1,12 +1,12 @@
-import React from "react";
+import { useState } from "react";
 
 interface ContentEditorProps {
   title: string;
   initialContent: string;
 }
 
-const ContentEditor: React.FC<ContentEditorProps> = ({ title, initialContent }) => {
-  const [content, setContent] = React.useState(initialContent);
+const ContentEditor = ({ title, initialContent }: ContentEditorProps) => {
+  const [content, setContent] = useState(initialContent);
 
   const handleSave = () => {
     alert(`Conteúdo salvo: ${content}`);

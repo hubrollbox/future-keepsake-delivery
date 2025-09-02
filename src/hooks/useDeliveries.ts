@@ -11,7 +11,7 @@ interface Delivery {
   message?: string | null;
 }
 
-const useDeliveries = () => {
+export const useDeliveries = () => {
   const [deliveries, setDeliveries] = useState<Delivery[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -63,5 +63,3 @@ const useDeliveries = () => {
 
   return { deliveries, loading, error, deleteDelivery, fetchDeliveries };
 };
-
-export { useDeliveries };

@@ -3,8 +3,6 @@ import Footer from "@/components/Footer";
 import { plans, storageServices, digitalServices, physicalServices, timeCapsules } from "@/lib/pricingData";
 import { useState } from "react";
 
-// Ensure React is used to avoid TS6133 error
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
