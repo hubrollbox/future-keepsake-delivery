@@ -60,4 +60,4 @@ const useDeliveries = () => {
   return { deliveries, loading, error, deleteDelivery, fetchDeliveries };
 };
 
-export default useDeliveries;
+export { useDeliveries };
