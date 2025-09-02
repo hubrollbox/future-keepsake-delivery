@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthProvider";
 import { CartProvider } from "@/contexts/CartContextProvider";
 import { GamificationProvider } from "@/contexts/GamificationContext";
+import { useEffect } from "react";
+import { initializeSecurity } from "@/middleware/security";
 import Index from "@/pages/Index";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
@@ -32,6 +34,10 @@ import PrivacyPolicy from "@/pages/PrivacyPolicy";
 const queryClient = new QueryClient();
 
 function App() {
+  useEffect(() => {
+    initializeSecurity();
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
