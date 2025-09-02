@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -43,7 +43,7 @@ export interface Payment {
   created_at: string;
 }
 
-export const useAdminData = () => {
+const useAdminData = () => {
   const [stats, setStats] = useState<AdminStats>({
     totalDeliveries: 0,
     pendingDeliveries: 0,
@@ -247,3 +247,5 @@ export const useAdminData = () => {
     updateWarehouseItemStatus,
   };
 };
+
+export default useAdminData;

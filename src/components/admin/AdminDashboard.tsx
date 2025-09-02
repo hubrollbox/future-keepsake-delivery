@@ -1,8 +1,8 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, Package, TrendingUp, Clock, Mail, Calendar, Database, Loader2 } from "lucide-react";
-import { useAdminData } from "@/hooks/useAdminData";
-import { useEffect, useState } from "react";
+import useAdminData from "@/hooks/useAdminData";
+import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import DeliveriesBarChart from "@/components/dashboard/DeliveriesBarChart";
 import TopUsersRanking from "@/components/dashboard/TopUsersRanking";
@@ -68,31 +68,31 @@ const AdminDashboard = () => {
   const dashboardStats = [
     {
       title: "Total de Entregas",
-      value: stats.totalDeliveries.toString(),
+      value: (stats?.totalDeliveries || 0).toString(),
       icon: <Package className="h-5 w-5" />,
       color: "text-earthy-burgundy"
     },
     {
       title: "Entregas Pendentes (7 dias)",
-      value: stats.pendingDeliveries.toString(),
+      value: (stats?.pendingDeliveries || 0).toString(),
       icon: <Clock className="h-5 w-5" />,
       color: "text-golden-honey"
     },
     {
       title: "Mensagens Digitais",
-      value: stats.digitalMessages.toString(),
+      value: (stats?.digitalMessages || 0).toString(),
       icon: <Mail className="h-5 w-5" />,
       color: "text-dusty-rose"
     },
     {
       title: "Itens em Armazém",
-      value: stats.warehouseItems.toString(),
+      value: (stats?.warehouseItems || 0).toString(),
       icon: <Database className="h-5 w-5" />,
       color: "text-sage-green"
     },
     {
       title: "Pagamentos Recentes (7 dias)",
-      value: stats.recentPayments.toString(),
+      value: (stats?.recentPayments || 0).toString(),
       icon: <TrendingUp className="h-5 w-5" />,
       color: "text-steel-blue"
     }

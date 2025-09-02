@@ -10,7 +10,7 @@ interface RegisterInputFieldProps {
   placeholder: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  error?: string;
+  error?: string | undefined;
   required?: boolean;
   inputRef?: React.Ref<HTMLInputElement>;
   className?: string;

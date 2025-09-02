@@ -8,7 +8,7 @@ interface RegisterCheckboxFieldProps {
   label: React.ReactNode;
   checked: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  error?: string;
+  error?: string | undefined;
   required?: boolean;
   inputRef?: React.Ref<HTMLInputElement>;
   className?: string;

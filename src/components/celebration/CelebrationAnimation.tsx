@@ -50,6 +50,8 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
       }, duration);
       return () => clearTimeout(timer);
     }
+    
+    return undefined;
   }, [autoClose, duration, onClose]);
 
   const getCelebrationConfig = () => {

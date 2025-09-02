@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Search, MessageSquare, Calendar, Eye } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -24,10 +24,6 @@ const AdminMessages = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const { toast } = useToast();
-
-  useEffect(() => {
-    fetchMessages();
-  }, [fetchMessages]);
 
   const fetchMessages = useCallback(async () => {
     try {
@@ -54,13 +50,17 @@ const AdminMessages = () => {
       console.error("Error fetching messages:", error);
       toast({
         title: "Erro",
-        description: error.message || "Não foi possível carregar as mensagens.",
+        description: (error as Error).message || "Não foi possível carregar as mensagens.",
         variant: "destructive",
       });
     } finally {
       setLoading(false);
     }
   }, [toast]);
+
+  useEffect(() => {
+    fetchMessages();
+  }, [fetchMessages]);
 
   const filteredMessages = messages.filter((message) => {
     const matchesSearch = 
