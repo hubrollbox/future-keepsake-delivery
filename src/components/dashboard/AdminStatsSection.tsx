@@ -1,8 +1,7 @@
 
-import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Package, Clock, MessageSquare, TrendingUp, Database } from "lucide-react";
-import { useAdminData } from "@/hooks/useAdminData";
+import useAdminData from "@/hooks/useAdminData";
 import DeliveriesBarChart from "./DeliveriesBarChart";
 import TopUsersRanking from "./TopUsersRanking";
 
@@ -18,7 +17,7 @@ const AdminStatsSection = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-misty-gray">Total Entregas</p>
-                <p className="text-3xl font-bold text-steel-blue">{loading ? "..." : stats.totalDeliveries}</p>
+                <p className="text-3xl font-bold text-steel-blue">{loading ? "..." : (stats as any)?.totalDeliveries || 0}</p>
               </div>
               <Package className="h-8 w-8 text-earthy-burgundy" />
             </div>
@@ -30,7 +29,7 @@ const AdminStatsSection = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-misty-gray">Entregas Pendentes</p>
-                <p className="text-3xl font-bold text-steel-blue">{loading ? "..." : stats.pendingDeliveries}</p>
+                <p className="text-3xl font-bold text-steel-blue">{loading ? "..." : (stats as any)?.pendingDeliveries || 0}</p>
               </div>
               <Clock className="h-8 w-8 text-golden-honey" />
             </div>
@@ -42,7 +41,7 @@ const AdminStatsSection = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-misty-gray">Mensagens Digitais</p>
-                <p className="text-3xl font-bold text-steel-blue">{loading ? "..." : stats.digitalMessages}</p>
+                <p className="text-3xl font-bold text-steel-blue">{loading ? "..." : (stats as any)?.digitalMessages || 0}</p>
               </div>
               <MessageSquare className="h-8 w-8 text-dusty-rose" />
             </div>
@@ -54,7 +53,7 @@ const AdminStatsSection = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-misty-gray">Itens em Armazém</p>
-                <p className="text-3xl font-bold text-steel-blue">{loading ? "..." : stats.warehouseItems}</p>
+                <p className="text-3xl font-bold text-steel-blue">{loading ? "..." : (stats as any)?.warehouseItems || 0}</p>
               </div>
               <Database className="h-8 w-8 text-sage-green" />
             </div>
@@ -66,7 +65,7 @@ const AdminStatsSection = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-misty-gray">Pagamentos (7 dias)</p>
-                <p className="text-3xl font-bold text-steel-blue">{loading ? "..." : stats.recentPayments}</p>
+                <p className="text-3xl font-bold text-steel-blue">{loading ? "..." : (stats as any)?.recentPayments || 0}</p>
               </div>
               <TrendingUp className="h-8 w-8 text-sage-green" />
             </div>
@@ -89,7 +88,7 @@ const AdminStatsSection = () => {
             <CardTitle className="text-xl font-serif text-steel-blue">Top Utilizadores</CardTitle>
           </CardHeader>
           <CardContent>
-            <TopUsersRanking users={topUsers} />
+            <TopUsersRanking users={topUsers as any} />
           </CardContent>
         </Card>
       </div>

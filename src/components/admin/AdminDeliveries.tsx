@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { CheckCircle, Clock, Package, Download } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,7 @@ import { useSearchFilters } from "@/hooks/useSearchFilters";
 // Importar o componente de paginação
 
 
-interface Delivery {
+interface Delivery extends Record<string, unknown> {
   id: string;
   title: string;
   description: string | null;

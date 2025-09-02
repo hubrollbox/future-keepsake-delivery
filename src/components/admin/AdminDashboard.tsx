@@ -68,31 +68,31 @@ const AdminDashboard = () => {
   const dashboardStats = [
     {
       title: "Total de Entregas",
-      value: (stats?.totalDeliveries || 0).toString(),
+      value: ((stats as any)?.totalDeliveries || 0).toString(),
       icon: <Package className="h-5 w-5" />,
       color: "text-earthy-burgundy"
     },
     {
       title: "Entregas Pendentes (7 dias)",
-      value: (stats?.pendingDeliveries || 0).toString(),
+      value: ((stats as any)?.pendingDeliveries || 0).toString(),
       icon: <Clock className="h-5 w-5" />,
       color: "text-golden-honey"
     },
     {
       title: "Mensagens Digitais",
-      value: (stats?.digitalMessages || 0).toString(),
+      value: ((stats as any)?.digitalMessages || 0).toString(),
       icon: <Mail className="h-5 w-5" />,
       color: "text-dusty-rose"
     },
     {
       title: "Itens em Armazém",
-      value: (stats?.warehouseItems || 0).toString(),
+      value: ((stats as any)?.warehouseItems || 0).toString(),
       icon: <Database className="h-5 w-5" />,
       color: "text-sage-green"
     },
     {
       title: "Pagamentos Recentes (7 dias)",
-      value: (stats?.recentPayments || 0).toString(),
+      value: ((stats as any)?.recentPayments || 0).toString(),
       icon: <TrendingUp className="h-5 w-5" />,
       color: "text-steel-blue"
     }
@@ -158,7 +158,7 @@ const AdminDashboard = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <TopUsersRanking users={topUsers} />
+            <TopUsersRanking users={topUsers as any} />
           </CardContent>
         </Card>
 

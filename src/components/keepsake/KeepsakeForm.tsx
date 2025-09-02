@@ -1,8 +1,5 @@
 import { useZodForm } from '@/hooks/useZodForm';
-import { titleSchema, messageSchema } from '@/lib/validation';
-import type { z } from 'zod';
-
-import { z } from 'zod';
+import { titleSchema, messageSchema, z } from '@/lib/validation';
 
 const createMessageSchema = z.object({
   title: titleSchema,

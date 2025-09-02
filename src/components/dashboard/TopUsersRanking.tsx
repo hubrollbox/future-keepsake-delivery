@@ -1,18 +1,17 @@
 
-import React from "react";
 import { Trophy, Medal, Award } from "lucide-react";
 
-interface UserRanking {
+interface TopUser {
   user_id: string;
   name: string;
   count: number;
 }
 
 interface TopUsersRankingProps {
-  users: UserRanking[];
+  users: TopUser[];
 }
 
-const TopUsersRanking: React.FC<TopUsersRankingProps> = ({ users }) => {
+const TopUsersRanking = ({ users }: TopUsersRankingProps) => {
   const getRankIcon = (index: number) => {
     switch (index) {
       case 0:
