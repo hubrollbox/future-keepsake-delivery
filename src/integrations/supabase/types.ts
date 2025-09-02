@@ -1008,6 +1008,10 @@ export type Database = {
         Args: { required_permission?: string; uid: string } | { uid: string }
         Returns: boolean
       }
+      is_admin_secure: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
       is_admin_user: {
         Args: Record<PropertyKey, never>
         Returns: boolean
