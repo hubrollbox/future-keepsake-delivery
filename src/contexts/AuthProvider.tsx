@@ -3,6 +3,8 @@ import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { AuthContext, UserProfile } from './useAuthContext';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { isProtectedRoute, isAdminRoute } from '@/middleware/security';
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -11,6 +13,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const { toast } = useToast();
+  const location = useLocation();
+  const navigate = useNavigate();
+  
+  // Route protection effect
+  useEffect(() => {
+    const pathname = location.pathname;
+    
+    // Check if the current route is protected and user is not authenticated
+    if (isProtectedRoute(pathname) && !session) {
+      // Redirect to login page if not loading (to prevent redirect during initial auth check)
+      if (!loading) {
+        console.info('Security: Redirecting unauthenticated user from protected route', pathname);
+        navigate('/login', { state: { from: pathname } });
+      }
+    }
+    
+    // Check if the current route is an admin route and user is not an admin
+    if (isAdminRoute(pathname) && !isAdmin) {
+      // Redirect to unauthorized page if not loading
+      if (!loading) {
+        console.info('Security: Redirecting non-admin user from admin route', pathname);
+        navigate('/unauthorized');
+      }
+    }
+  }, [location.pathname, session, isAdmin, loading, navigate]);
 
   const fetchProfile = async (userId: string) => {
     try {

@@ -14,12 +14,66 @@ if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
 
+// Create a more secure storage mechanism for auth tokens
+const secureStorage = typeof window !== 'undefined' ? {
+  getItem: (key: string) => {
+    try {
+      const item = localStorage.getItem(key);
+      if (!item) return null;
+      
+      // Check if token is expired before returning
+      const data = JSON.parse(item);
+      if (data.expiresAt && new Date(data.expiresAt) < new Date()) {
+        localStorage.removeItem(key);
+        return null;
+      }
+      
+      return item;
+    } catch (error) {
+      console.error('Error accessing secure storage:', error);
+      return null;
+    }
+  },
+  setItem: (key: string, value: string) => {
+    try {
+      // Don't store in localStorage if in a non-HTTPS environment (except localhost)
+      if (typeof window !== 'undefined' && 
+          window.location.protocol !== 'https:' && 
+          window.location.hostname !== 'localhost') {
+        console.warn('Refusing to store auth token in non-HTTPS environment');
+        return;
+      }
+      
+      localStorage.setItem(key, value);
+    } catch (error) {
+      console.error('Error setting secure storage:', error);
+    }
+  },
+  removeItem: (key: string) => {
+    try {
+      localStorage.removeItem(key);
+    } catch (error) {
+      console.error('Error removing from secure storage:', error);
+    }
+  }
+} : undefined;
+
 export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
   auth: {
-    storage: typeof window !== 'undefined' ? localStorage : undefined,
+    storage: secureStorage,
     persistSession: true,
     autoRefreshToken: true,
     detectSessionInUrl: true,
-    flowType: 'pkce'
+    flowType: 'pkce',
+    // Set shorter session duration for better security
+    storageKey: 'keepla_auth_token',
+    // Cookie options for better security
+    cookieOptions: {
+      secure: true,
+      sameSite: 'strict',
+      httpOnly: true,
+      path: '/',
+      maxAge: 3600 // 1 hour in seconds
+    }
   }
 });

@@ -6,6 +6,8 @@ export interface FileValidationOptions {
   allowedTypes?: string[];
   allowedExtensions?: string[];
   checkMagicNumbers?: boolean;
+  destinationPath?: string; // Added to track where files will be stored
+  isPublicUpload?: boolean; // Flag to indicate if file is uploaded to public directory
 }
 
 export interface FileValidationResult {
@@ -37,7 +39,9 @@ export const validateFile = async (
     maxSize = 10 * 1024 * 1024, // 10MB default
     allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'],
     allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.pdf'],
-    checkMagicNumbers = true
+    checkMagicNumbers = true,
+    destinationPath = '',
+    isPublicUpload = false
   } = options;
 
   // Check file size
@@ -54,6 +58,21 @@ export const validateFile = async (
   const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
   if (!allowedExtensions.includes(fileExtension)) {
     errors.push(`Extensão de ficheiro não permitida. Extensões aceites: ${allowedExtensions.join(', ')}`);
+  }
+  
+  // Apply stricter validation for public directory uploads
+  if (isPublicUpload || destinationPath.includes('/public/') || destinationPath.includes('\\public\\')) {
+    // For public directory, only allow image files with specific extensions
+    const publicSafeExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.svg'];
+    const publicSafeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'];
+    
+    if (!publicSafeExtensions.includes(fileExtension)) {
+      errors.push(`Ficheiros na pasta pública apenas podem ter as extensões: ${publicSafeExtensions.join(', ')}`);
+    }
+    
+    if (!publicSafeTypes.includes(file.type)) {
+      errors.push(`Ficheiros na pasta pública apenas podem ser imagens dos tipos: ${publicSafeTypes.join(', ')}`);
+    }
   }
 
   // Check magic numbers if requested
@@ -95,9 +114,11 @@ const validateMagicNumber = async (file: File): Promise<boolean> => {
 const isDangerousFileName = (fileName: string): boolean => {
   const dangerous = [
     // Executable extensions
-    '.exe', '.bat', '.cmd', '.com', '.pif', '.scr', '.vbs', '.js',
+    '.exe', '.bat', '.cmd', '.com', '.pif', '.scr', '.vbs', '.js', '.mjs', '.cjs',
     // Script files
-    '.sh', '.ps1', '.php', '.asp', '.jsp',
+    '.sh', '.ps1', '.php', '.asp', '.jsp', '.aspx', '.cshtml', '.py', '.rb',
+    // Potentially dangerous web files
+    '.html', '.htm', '.xhtml', '.shtml', '.phtml',
     // Archive with potential executables
     '.rar', '.7z',
     // System files
@@ -121,7 +142,7 @@ export const formatFileSize = (bytes: number): string => {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 };
 
-export const createSecureFileName = (originalName: string): string => {
+export const createSecureFileName = (originalName: string, isPublicUpload: boolean = false): string => {
   // Remove potentially dangerous characters and replace with safe alternatives
   const safeName = originalName
     .replace(/[^\w\s.-]/g, '') // Remove special characters except word chars, spaces, dots, hyphens
@@ -133,6 +154,34 @@ export const createSecureFileName = (originalName: string): string => {
   const timestamp = Date.now();
   const extension = safeName.split('.').pop();
   const nameWithoutExtension = safeName.split('.').slice(0, -1).join('.');
+  
+  // Generate a random string for additional security
+  const randomString = Math.random().toString(36).substring(2, 10);
+  
+  // For public uploads, use a more secure naming convention with UUID-like format
+  if (isPublicUpload) {
+    // Ensure extension is safe for public directory
+    const safeExtensions = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+    const safeExtension = safeExtensions.includes(extension || '') ? extension : 'txt';
+    
+    return `${randomString}-${timestamp}.${safeExtension}`;
+  }
+  
+  return `${nameWithoutExtension}_${timestamp}_${randomString}.${extension}`;
+};
 
-  return `${nameWithoutExtension}_${timestamp}.${extension}`;
+/**
+ * Validates if a file is safe to be stored in the public directory
+ * @param file The file to validate
+ * @returns Validation result
+ */
+export const validatePublicDirectoryFile = async (file: File): Promise<FileValidationResult> => {
+  // Stricter validation for public directory
+  return validateFile(file, {
+    maxSize: 5 * 1024 * 1024, // 5MB max for public files
+    allowedTypes: ['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'],
+    allowedExtensions: ['.jpg', '.jpeg', '.png', '.gif', '.svg'],
+    checkMagicNumbers: true,
+    isPublicUpload: true
+  });
 };

@@ -4,7 +4,7 @@
  * Security configuration object that centralizes all security-related settings
  * These settings are loaded from environment variables with secure defaults
  */
-export const securityConfig = {
+export const security = {
   // Password protection settings
   passwordProtection: {
     enabled: import.meta.env.VITE_ENABLE_PASSWORD_PROTECTION !== 'false',
@@ -64,18 +64,36 @@ export const securityConfig = {
  * @returns The sanitized path or null if invalid
  */
 export function validateFilePath(path: string): string | null {
-  if (!securityConfig.functionPathSecurity.enabled) {
+  if (!security.functionPathSecurity.enabled) {
     return path;
   }
   
-  // Prevent path traversal attacks
-  const normalizedPath = path.replace(/\\/g, '/');
-  if (normalizedPath.includes('../') || normalizedPath.includes('..\\')) {
-    console.error('Security warning: Path traversal attempt detected', path);
+  // Create an immutable copy of the path
+  const pathToValidate = String(path);
+  
+  // Prevent path traversal attacks with more comprehensive checks
+  const normalizedPath = pathToValidate.replace(/\\/g, '/');
+  
+  // Check for path traversal patterns
+  if (
+    normalizedPath.includes('../') || 
+    normalizedPath.includes('..\\') ||
+    normalizedPath.includes('/..') ||
+    normalizedPath.includes('\\..') ||
+    normalizedPath.match(/\.\.\//) ||
+    normalizedPath.match(/\.\.\\/)
+  ) {
+    console.error('Security warning: Path traversal attempt detected', pathToValidate);
     return null;
   }
   
-  return path;
+  // Validate the path doesn't contain other potentially dangerous patterns
+  if (/[<>:"|?*]/.test(normalizedPath)) {
+    console.error('Security warning: Invalid characters in path', pathToValidate);
+    return null;
+  }
+  
+  return pathToValidate; // Return the immutable copy, not the original reference
 }
 
 /**
@@ -84,12 +102,12 @@ export function validateFilePath(path: string): string | null {
  * @returns Boolean indicating if the extension is allowed
  */
 export function validateFileExtension(filename: string): boolean {
-  if (!securityConfig.extensionSecurity.enabled) {
+  if (!security.extensionSecurity.enabled) {
     return true;
   }
   
   const extension = filename.toLowerCase().substring(filename.lastIndexOf('.'));
-  return securityConfig.extensionSecurity.allowedExtensions.includes(extension);
+  return security.extensionSecurity.allowedExtensions.includes(extension);
 }
 
 /**

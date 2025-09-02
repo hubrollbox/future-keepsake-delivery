@@ -59,17 +59,60 @@ export async function fetchTopUsers() {
     .slice(0, 5)
     .map(([userId]) => userId);
 
-  // Get user profiles
+  // Get user profiles with minimal personal information
   const { data: profiles } = await supabase
     .from("profiles")
     .select("id, full_name")
     .in("id", topUserIds);
+    
+  // Mask personal information for data protection
+  const maskedProfiles = profiles?.map(profile => ({
+    id: profile.id,
+    full_name: maskPersonalName(profile.full_name)
+  }));
 
   return topUserIds.map(userId => ({
-    user_id: userId,
-    name: profiles?.find(p => p.id === userId)?.full_name || "Utilizador Anónimo",
+    user_id: anonymizeUserId(userId),
+    name: maskedProfiles?.find(p => p.id === userId)?.full_name || "Utilizador Anónimo",
     count: userDeliveryCount[userId]
   }));
+}
+
+/**
+ * Masks a personal name for privacy protection
+ * @param name The full name to mask
+ * @returns The masked name
+ */
+function maskPersonalName(name: string | null | undefined): string {
+  if (!name) return "Utilizador Anónimo";
+  
+  const nameParts = name.split(' ');
+  if (nameParts.length === 1) {
+    // Single name - show first character and mask the rest
+    return `${nameParts[0].charAt(0)}${'*'.repeat(Math.max(2, nameParts[0].length - 1))}`;
+  }
+  
+  // Multiple names - show first character of first name and first character of last name
+  const firstName = nameParts[0];
+  const lastName = nameParts[nameParts.length - 1];
+  
+  return `${firstName.charAt(0)}${'*'.repeat(Math.max(2, firstName.length - 1))} ${lastName.charAt(0)}${'*'.repeat(Math.max(2, lastName.length - 1))}`;
+}
+
+/**
+ * Anonymizes a user ID for privacy protection
+ * @param userId The user ID to anonymize
+ * @returns The anonymized user ID
+ */
+function anonymizeUserId(userId: string): string {
+  if (!userId) return "anonymous";
+  
+  // Keep first 3 and last 3 characters, replace the rest with asterisks
+  const firstPart = userId.substring(0, 3);
+  const lastPart = userId.substring(userId.length - 3);
+  const middleLength = Math.max(0, userId.length - 6);
+  
+  return `${firstPart}${'*'.repeat(middleLength)}${lastPart}`;
 }
 
 // 2. Otimizar Performance: Adicionar paginação no dashboard
