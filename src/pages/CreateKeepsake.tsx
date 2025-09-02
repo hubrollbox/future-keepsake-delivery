@@ -16,12 +16,25 @@ import { Form } from '@/components/ui/form'; // Add this import
 import { AlertCircle, Save, Home, Crown, Zap } from 'lucide-react';
 import { plans } from '@/lib/pricingData';
 
+interface PlanLimits {
+  maxMessageLength: number;
+  maxProducts: number;
+  maxValue: number;
+}
+
+const LIMITS_BY_PLAN: Record<string, PlanLimits> = {
+  free: { maxMessageLength: 500, maxProducts: 1, maxValue: 30 },
+  premium: { maxMessageLength: 2000, maxProducts: 5, maxValue: 200 },
+  personal: { maxMessageLength: 1000, maxProducts: 3, maxValue: 100 },
+  timekeeper: { maxMessageLength: 3000, maxProducts: 10, maxValue: 500 },
+  family: { maxMessageLength: 5000, maxProducts: 15, maxValue: 1000 },
+};
 
 const CreateKeepsake: React.FC = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
   const [userPlan, setUserPlan] = useState<string>('free');
-  const [planLimits, setPlanLimits] = useState<Record<string, unknown> | null>(null);
+  const [planLimits, setPlanLimits] = useState<PlanLimits | null>(null);
   const [planValidationErrors, setPlanValidationErrors] = useState<string[]>([]);
   
   const {
@@ -59,10 +72,57 @@ const CreateKeepsake: React.FC = () => {
       
       const plan = plans.find(p => p.id === currentPlan);
       if (plan) {
-        setPlanLimits(plan.features || {});
+        setPlanLimits(LIMITS_BY_PLAN[currentPlan] || LIMITS_BY_PLAN['free']);
       }
     }
   }, [user]);
+
+  // Função para validar limites do plano
+  const validatePlanLimits = useCallback(() => {
+    if (!planLimits) return;
+    const formData = form.getValues();
+    const errors: string[] = [];
+
+    // Validar limite de caracteres na mensagem
+    if (formData.message && planLimits.maxMessageLength) {
+      if (formData.message.length > planLimits.maxMessageLength) {
+        errors.push(`Mensagem excede o limite de ${planLimits.maxMessageLength} caracteres do plano ${userPlan.toUpperCase()}`);
+      }
+    }
+
+    // Validar número de produtos selecionados
+    if (formData.selected_products && planLimits.maxProducts !== undefined) {
+      if (formData.selected_products.length > planLimits.maxProducts) {
+        errors.push(`Número de produtos excede o limite de ${planLimits.maxProducts} do plano ${userPlan.toUpperCase()}`);
+      }
+    }
+
+    // Validar valor total
+    if (formData.total_cost && planLimits.maxValue !== undefined) {
+      if (formData.total_cost > planLimits.maxValue) {
+        errors.push(`Valor total excede o limite de €${planLimits.maxValue} do plano ${userPlan.toUpperCase()}`);
+      }
+    }
+
+    // Validar funcionalidades premium
+    if (userPlan === 'free') {
+      if (formData.type === 'physical') {
+        errors.push('Cápsulas físicas requerem plano Premium ou Superior');
+      }
+
+      // Verificar se há produtos premium selecionados
+      const premiumProducts = formData.selected_products?.filter((p: { name: string }) =>
+        p.name.toLowerCase().includes('premium') ||
+        p.name.toLowerCase().includes('deluxe')
+      ) || [];
+
+      if (premiumProducts.length > 0) {
+        errors.push('Produtos premium requerem plano Premium ou Superior');
+      }
+    }
+
+    setPlanValidationErrors(errors);
+  }, [form, planLimits, userPlan]);
 
   // Validar limites do plano quando dados do formulário mudam
   useEffect(() => {
@@ -70,54 +130,6 @@ const CreateKeepsake: React.FC = () => {
       validatePlanLimits();
     }
   }, [form, planLimits, currentStep, validatePlanLimits]);
-
-  // Função para validar limites do plano
-  const validatePlanLimits = useCallback(() => {
-    if (!planLimits) return;
-    
-    const formData = form.getValues();
-    const errors: string[] = [];
-    
-    // Validar limite de caracteres na mensagem
-    if (formData.message && planLimits.maxMessageLength) {
-      if (formData.message.length > planLimits.maxMessageLength) {
-        errors.push(`Mensagem excede o limite de ${planLimits.maxMessageLength} caracteres do plano ${userPlan.toUpperCase()}`);
-      }
-    }
-    
-    // Validar número de produtos selecionados
-    if (formData.selected_products && planLimits.maxProducts !== undefined) {
-      if (formData.selected_products.length > planLimits.maxProducts) {
-        errors.push(`Número de produtos excede o limite de ${planLimits.maxProducts} do plano ${userPlan.toUpperCase()}`);
-      }
-    }
-    
-    // Validar valor total
-    if (formData.total_cost && planLimits.maxValue !== undefined) {
-      if (formData.total_cost > planLimits.maxValue) {
-        errors.push(`Valor total excede o limite de €${planLimits.maxValue} do plano ${userPlan.toUpperCase()}`);
-      }
-    }
-    
-    // Validar funcionalidades premium
-    if (userPlan === 'free') {
-      if (formData.type === 'physical') {
-        errors.push('Cápsulas físicas requerem plano Premium ou Superior');
-      }
-      
-      // Verificar se há produtos premium selecionados
-      const premiumProducts = formData.selected_products?.filter(p => 
-        p.name.toLowerCase().includes('premium') || 
-        p.name.toLowerCase().includes('deluxe')
-      ) || [];
-      
-      if (premiumProducts.length > 0) {
-        errors.push('Produtos premium requerem plano Premium ou Superior');
-      }
-    }
-    
-    setPlanValidationErrors(errors);
-  }, [form, planLimits, userPlan]);
 
   // Aviso sobre mudanças não guardadas
   useEffect(() => {

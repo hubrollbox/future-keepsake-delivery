@@ -22,36 +22,8 @@ const Dashboard = () => {
   const { deliveries, loading: deliveriesLoading, deleteDelivery } = useDeliveries();
   const { keepsakes, loading: keepsakesLoading, refetch: refetchKeepsakes, deleteKeepsake: deleteKeepsakeHook } = useKeepsakes();
 
-  // Estado para confirmação de eliminação
-  const [confirmOpen, setConfirmOpen] = React.useState(false);
-  const [pendingDeleteId, setPendingDeleteId] = React.useState<string | null>(null);
+// Estado para confirmação de eliminação removido (gerido dentro de KeepsakesList)
 
-  // Apenas usar notificações em tempo real para utilizadores normais
-  const shouldUseRealtime = !loading && user && !isAdmin;
-  useRealtimeDeliveries(shouldUseRealtime);
-
-  // Redirecionamento único
-  React.useEffect(() => {
-    if (!loading) {
-      if (!user) {
-        navigate("/login");
-      } else if (isAdmin) {
-        navigate("/admin");
-      }
-    }
-  }, [loading, user, isAdmin, navigate]);
-
-  const deleteKeepsake = async (id: string) => {
-    const success = await deleteKeepsakeHook(id);
-    if (success) {
-      refetchKeepsakes();
-    }
-  };
-
-  const handleDeleteClick = (id: string) => {
-    setPendingDeleteId(id);
-    setConfirmOpen(true);
-  };
 
   if (loading) {
     return (
@@ -121,25 +93,16 @@ const Dashboard = () => {
                   </TabsList>
 
                   <TabsContent value="all" className="mt-4">
-                    <KeepsakesList keepsakes={keepsakes} onDelete={handleDeleteClick} />
+                    <KeepsakesList />
                   </TabsContent>
                   <TabsContent value="pending" className="mt-4">
-                    <KeepsakesList
-                      keepsakes={keepsakes.filter((k) => k.status === "pending")}
-                      onDelete={handleDeleteClick}
-                    />
+                    <KeepsakesList statusFilter="pending" />
                   </TabsContent>
                   <TabsContent value="sent" className="mt-4">
-                    <KeepsakesList
-                      keepsakes={keepsakes.filter((k) => k.status === "sent")}
-                      onDelete={handleDeleteClick}
-                    />
+                    <KeepsakesList statusFilter="sent" />
                   </TabsContent>
                   <TabsContent value="delivered" className="mt-4">
-                    <KeepsakesList
-                      keepsakes={keepsakes.filter((k) => k.status === "delivered")}
-                      onDelete={handleDeleteClick}
-                    />
+                    <KeepsakesList statusFilter="delivered" />
                   </TabsContent>
                 </Tabs>
               )}
@@ -193,32 +156,6 @@ const Dashboard = () => {
         </div>
       </main>
 
-      {/* Dialog de confirmação de eliminação */}
-      <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Eliminar Cápsula</DialogTitle>
-            <p className="text-sm text-soft-gray">
-              Tens a certeza que queres eliminar esta cápsula? Esta ação não pode ser
-              desfeita.
-            </p>
-          </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setConfirmOpen(false)}>
-              Cancelar
-            </Button>
-            <Button
-              variant="destructive"
-              onClick={() => {
-                if (pendingDeleteId) deleteKeepsake(pendingDeleteId);
-                setConfirmOpen(false);
-              }}
-            >
-              Eliminar
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };

@@ -169,7 +169,7 @@ function Pricing() {
                     key={category.id}
                     variant={selectedCategory === category.id ? 'default' : 'outline'}
                     size="sm"
-                    onClick={() => setSelectedCategory(category.id)}
+                    onClick={() => setSelectedCategory(category.id as 'all' | 'storage' | 'digital' | 'physical' | 'capsule')}
                     className="rounded-full"
                   >
                     {category.label}

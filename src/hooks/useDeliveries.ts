@@ -3,8 +3,12 @@ import { supabase } from '../integrations/supabase/client';
 
 interface Delivery {
   id: string;
-  status: string;
-  // Adicione outras propriedades de entrega aqui
+  status: string | null;
+  title?: string;
+  recipient_name?: string;
+  delivery_date?: string;
+  created_at?: string;
+  message?: string | null;
 }
 
 const useDeliveries = () => {

@@ -82,7 +82,7 @@ export const useKeepsakeForm = () => {
   const submittingRef = useRef(false);
 
   // Configuração do React Hook Form com validação melhorada
-  const form = useForm<any>({
+  const form = useForm<KeepsakeFormData>({
     resolver: zodResolver(keepsakeFormSchema),
     mode: 'onChange',
     reValidateMode: 'onChange',

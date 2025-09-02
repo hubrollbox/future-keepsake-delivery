@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,6 +24,17 @@ interface Keepsake {
   user_id: string;
   created_at: string;
   updated_at: string;
+  recipients?: Array<{
+    name?: string;
+    email?: string | null;
+    phone?: string | null;
+    delivery_channel?: string;
+    street?: string | null;
+    city?: string | null;
+    state?: string | null;
+    postal_code?: string | null;
+    country?: string | null;
+  }>;
 }
 
 // Definição do schema de validação usando Zod
