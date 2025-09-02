@@ -36,7 +36,7 @@ const RecipientInput: React.FC<RecipientInputProps> = ({
 
   const addRecipient = () => {
     const trimmedEmail = email.trim();
-    const trimmedName = (name || trimmedEmail.split("@")[0]).trim();
+    const trimmedName = (name || trimmedEmail.split("@")?.[0] || "").trim();
 
     const newErrors: string[] = [];
     if (!trimmedEmail) newErrors.push("Email é obrigatório");

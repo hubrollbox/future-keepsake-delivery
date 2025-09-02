@@ -14,6 +14,10 @@ export const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        brand: "bg-dusty-rose text-white hover:bg-dusty-rose/90",
+        "brand-outline": "border border-dusty-rose text-dusty-rose hover:bg-dusty-rose hover:text-white",
+        gentle: "bg-lavender-mist text-steel-blue hover:bg-lavender-mist/80",
+        "gold-outline": "border border-golden-honey text-golden-honey hover:bg-golden-honey hover:text-white",
       },
       size: {
         default: "h-10 px-4 py-2",

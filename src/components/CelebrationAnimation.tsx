@@ -35,25 +35,23 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
   useEffect(() => {
     if (!isVisible) return;
     
-    if (isVisible) {
-      // Sequência de animação
-      const phases = [
-        () => setAnimationPhase(1), // Fade in
-        () => setShowConfetti(true), // Confetti
-        () => setAnimationPhase(2), // Conteúdo principal
-      ];
+    // Sequência de animação
+    const phases = [
+      () => setAnimationPhase(1), // Fade in
+      () => setShowConfetti(true), // Confetti
+      () => setAnimationPhase(2), // Conteúdo principal
+    ];
 
-      phases.forEach((phase, index) => {
-        setTimeout(phase, index * 500);
-      });
+    phases.forEach((phase, index) => {
+      setTimeout(phase, index * 500);
+    });
 
-      // Auto-close após 8 segundos
-      const autoClose = setTimeout(() => {
-        onClose();
-      }, 8000);
+    // Auto-close após 8 segundos
+    const autoClose = setTimeout(() => {
+      onClose();
+    }, 8000);
 
-      return () => clearTimeout(autoClose);
-    }
+    return () => clearTimeout(autoClose);
   }, [isVisible, onClose]);
 
   const formatDate = (dateString: string) => {

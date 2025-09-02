@@ -144,7 +144,7 @@ const StorytellingOnboarding: React.FC<StorytellingOnboardingProps> = ({
   const handleChoice = (choice: string) => {
     setUserChoices(prev => ({
       ...prev,
-      [storySteps[currentStep].id]: choice
+      [storySteps[currentStep]?.id || '']: choice
     }));
     setShowInteractive(false);
     setTimeout(handleNext, 1000);
@@ -152,6 +152,8 @@ const StorytellingOnboarding: React.FC<StorytellingOnboardingProps> = ({
 
   const currentStoryStep = storySteps[currentStep];
   const progress = ((currentStep + 1) / storySteps.length) * 100;
+
+  if (!currentStoryStep) return null;
 
   const getEmotionTheme = (emotion: string) => {
     const themes = {
@@ -165,13 +167,13 @@ const StorytellingOnboarding: React.FC<StorytellingOnboardingProps> = ({
   };
 
   useEffect(() => {
-    if (currentStoryStep.interactive && !showInteractive) {
-      const timer = setTimeout(() => {
-        setShowInteractive(true);
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [currentStep, currentStoryStep.interactive, showInteractive]);
+    if (!currentStoryStep?.interactive || showInteractive) return;
+    
+    const timer = setTimeout(() => {
+      setShowInteractive(true);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [currentStep, currentStoryStep?.interactive, showInteractive]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-lavender-mist via-sand-beige/30 to-dusty-rose/20 flex items-center justify-center p-4">
