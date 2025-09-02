@@ -34,7 +34,11 @@ export default defineConfig({
         /@testing-library\/jest-dom/],
     },
     deps: {
-      inline: [/@testing-library\/jest-dom/],
+      optimizer: {
+        web: {
+          include: [/@testing-library\/jest-dom/]
+        }
+      }
     },
   },
   optimizeDeps: {
