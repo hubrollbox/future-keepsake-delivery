@@ -1,26 +1,22 @@
 import Navigation from "@/components/Navigation";
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useDeliveries } from "@/hooks/useDeliveries";
-import { useRealtimeDeliveries } from "@/hooks/useRealtimeDeliveries";
 import ProfileHeader from "@/components/dashboard/ProfileHeader";
 import UserStatsSection from "@/components/dashboard/UserStatsSection";
 import TimeCapsuleSection from "@/components/dashboard/TimeCapsuleSection";
 import { KeepsakesList } from "@/components/dashboard/KeepsakesList";
-import { useKeepsakes } from "@/hooks/useKeepsakes";
 import { Button } from "@/components/ui/button";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PlusCircle, Clock, Package, CheckCircle } from "lucide-react";
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+
+import React from "react";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { user, profile, loading } = useAuth();
-  const isAdmin = profile?.role === "admin";
+  const { profile, loading } = useAuth();
   const { deliveries, loading: deliveriesLoading, deleteDelivery } = useDeliveries();
-  const { keepsakes, loading: keepsakesLoading, refetch: refetchKeepsakes, deleteKeepsake: deleteKeepsakeHook } = useKeepsakes();
 
 // Estado para confirmação de eliminação removido (gerido dentro de KeepsakesList)
 
@@ -45,7 +41,7 @@ const Dashboard = () => {
         <div className="dashboard-grid grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-8">
           <div className="xl:col-span-2 space-y-6 md:space-y-8">
             <TimeCapsuleSection
-              deliveries={deliveries}
+              deliveries={deliveries as any[]}
               loading={deliveriesLoading}
               onDelete={deleteDelivery}
             />
@@ -65,9 +61,7 @@ const Dashboard = () => {
                 </Button>
               </div>
 
-              {keepsakesLoading ? (
-                <p className="text-soft-gray">A carregar cápsulas...</p>
-              ) : (
+              {!loading ? (
                 <Tabs defaultValue="all" className="w-full">
                   <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-1">
                     <TabsTrigger value="all" className="flex items-center gap-1 text-xs sm:text-sm px-2 sm:px-3">
@@ -105,6 +99,8 @@ const Dashboard = () => {
                     <KeepsakesList statusFilter="delivered" />
                   </TabsContent>
                 </Tabs>
+              ) : (
+                <p className="text-soft-gray">A carregar cápsulas...</p>
               )}
             </div>
 

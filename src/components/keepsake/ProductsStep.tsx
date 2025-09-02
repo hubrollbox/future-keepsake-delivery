@@ -65,7 +65,7 @@ const ProductsStep = ({ formData, updateFormData, nextStep, prevStep, form }: Pr
 
 
   const isProductSelected = (productId: string) => {
-    return formData.selected_products.some(p => p.id === productId);
+    return formData.selected_products.some((p: { id: string }) => p.id === productId);
   };
 
   const toggleProduct = (product: Product) => {
@@ -73,7 +73,7 @@ const ProductsStep = ({ formData, updateFormData, nextStep, prevStep, form }: Pr
     let newSelectedProducts;
     
     if (isSelected) {
-      newSelectedProducts = formData.selected_products.filter(p => p.id !== product.id);
+      newSelectedProducts = formData.selected_products.filter((p: { id: string }) => p.id !== product.id);
     } else {
       newSelectedProducts = [
         ...formData.selected_products,
@@ -86,7 +86,7 @@ const ProductsStep = ({ formData, updateFormData, nextStep, prevStep, form }: Pr
       ];
     }
 
-    const total = newSelectedProducts.reduce((sum, p) => sum + p.price, formData.channel_cost);
+    const total = newSelectedProducts.reduce((sum: number, p: { price: number }) => sum + p.price, formData.channel_cost);
 
     updateFormData({
       selected_products: newSelectedProducts,
@@ -96,7 +96,7 @@ const ProductsStep = ({ formData, updateFormData, nextStep, prevStep, form }: Pr
 
   const handleNext = () => {
     // Calcular custo total
-    const productsCost = formData.selected_products.reduce((sum, p) => sum + p.price, 0);
+    const productsCost = formData.selected_products.reduce((sum: number, p: { price: number }) => sum + p.price, 0);
     const total = productsCost + formData.channel_cost;
     
     updateFormData({ total_cost: total });
@@ -174,7 +174,7 @@ const ProductsStep = ({ formData, updateFormData, nextStep, prevStep, form }: Pr
           <CardContent className="p-4">
             <h3 className="font-semibold text-steel-blue mb-2">Resumo dos Extras</h3>
             <div className="space-y-1 text-sm">
-              {formData.selected_products.map((product) => (
+              {formData.selected_products.map((product: { id: string; name: string; price: number }) => (
                 <div key={product.id} className="flex justify-between">
                   <span>{product.name}</span>
                   <span>{product.price.toFixed(2)} €</span>
@@ -182,7 +182,7 @@ const ProductsStep = ({ formData, updateFormData, nextStep, prevStep, form }: Pr
               ))}
               <div className="border-t border-dusty-rose/20 pt-1 mt-2 flex justify-between font-semibold">
                 <span>Total Extras:</span>
-                <span>{formData.selected_products.reduce((sum, p) => sum + p.price, 0).toFixed(2)} €</span>
+                <span>{formData.selected_products.reduce((sum: number, p: { price: number }) => sum + p.price, 0).toFixed(2)} €</span>
               </div>
             </div>
           </CardContent>

@@ -102,7 +102,6 @@ const EditKeepsake = () => {
           setKeepsake(keepsakeData);
           const recipient = keepsakeData.recipients?.[0];
           
-          // Preencher o formulário com os dados existentes
           form.reset({
             title: keepsakeData.title || "",
             content: keepsakeData.message_content || "",

@@ -7,7 +7,7 @@ interface Delivery {
   title?: string;
   recipient_name?: string;
   delivery_date?: string;
-  created_at?: string;
+  created_at?: string | null;
   message?: string | null;
 }
 

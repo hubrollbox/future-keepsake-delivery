@@ -1,17 +1,16 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { keepsakeFormSchema } from '@/validations/keepsakeValidationSchema';
+import { keepsakeFormSchema, KeepsakeFormValues } from '@/validations/keepsakeValidationSchema';
 import { useAuth } from '@/hooks/useAuth';
 
 // ============================================================================
 // TIPOS E INTERFACES MELHORADOS
 // ============================================================================
 
-export type KeepsakeFormData = z.infer<typeof keepsakeFormSchema>;
+export type KeepsakeFormData = KeepsakeFormValues;
 
 export interface KeepsakeFormState {
   currentStep: number;
@@ -82,10 +81,10 @@ export const useKeepsakeForm = () => {
   const submittingRef = useRef(false);
 
   // Configuração do React Hook Form com validação melhorada
-  const form = useForm<KeepsakeFormData>({
+  const form = useForm({
     resolver: zodResolver(keepsakeFormSchema),
-    mode: 'onChange',
-    reValidateMode: 'onChange',
+    mode: 'onChange' as const,
+    reValidateMode: 'onChange' as const,
     defaultValues: {
       type: 'digital',
       delivery_channel: 'email',
@@ -130,7 +129,7 @@ export const useKeepsakeForm = () => {
 
       // Executar validação customizada se existir
       if (config.customValidation) {
-        const isCustomValid = await config.customValidation(currentData);
+        const isCustomValid = await config.customValidation({ ...currentData, total_cost: currentData.total_cost || 0, channel_cost: currentData.channel_cost || 0 });
         if (!isCustomValid) {
           stepErrors.push('Validação customizada falhou');
         }
@@ -326,7 +325,9 @@ export const useKeepsakeForm = () => {
     const subscription = form.watch(() => {
       setFormState(prev => ({ ...prev, hasUnsavedChanges: true }));
     });
-    return () => subscription.unsubscribe();
+    return () => {
+      if (subscription) subscription.unsubscribe();
+    };
   }, [form]);
 
   // Auto-save (opcional)

@@ -14,7 +14,6 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form'; // Add this import
 import { AlertCircle, Save, Home, Crown, Zap } from 'lucide-react';
-import { plans } from '@/lib/pricingData';
 
 interface PlanLimits {
   maxMessageLength: number;
@@ -70,10 +69,7 @@ const CreateKeepsake: React.FC = () => {
       const currentPlan = user.user_metadata?.plan || 'free';
       setUserPlan(currentPlan);
       
-      const plan = plans.find(p => p.id === currentPlan);
-      if (plan) {
-        setPlanLimits(LIMITS_BY_PLAN[currentPlan] || LIMITS_BY_PLAN['free']);
-      }
+      setPlanLimits(LIMITS_BY_PLAN[currentPlan] || LIMITS_BY_PLAN['free']);
     }
   }, [user]);
 
@@ -172,7 +168,7 @@ const CreateKeepsake: React.FC = () => {
 
   const renderStepContent = () => {
     const common = { form, nextStep, prevStep };
-    const formData = form.getValues();
+    const formData = { ...form.getValues(), total_cost: form.getValues().total_cost || 0, channel_cost: form.getValues().channel_cost || 0 };
     const updateFormData = (data: Partial<KeepsakeFormData>) => {
       Object.entries(data).forEach(([k, v]) => form.setValue(k as keyof KeepsakeFormData, v));
     };
@@ -181,7 +177,7 @@ const CreateKeepsake: React.FC = () => {
       case 1:
         return (
           <TypeStep
-            form={form}
+            form={form as any}
             selectedType={form.watch('type') as 'digital' | 'physical'}
             onTypeSelect={(v) => form.setValue('type', v)}
             onNext={nextStep}
@@ -193,6 +189,7 @@ const CreateKeepsake: React.FC = () => {
             {...common}
             formData={formData}
             updateFormData={updateFormData}
+            form={form as any}
           />
         );
       case 3:
@@ -201,6 +198,7 @@ const CreateKeepsake: React.FC = () => {
             {...common}
             formData={formData}
             updateFormData={updateFormData}
+            form={form as any}
           />
         );
       case 4:
@@ -209,6 +207,7 @@ const CreateKeepsake: React.FC = () => {
             {...common}
             formData={formData}
             updateFormData={updateFormData}
+            form={form as any}
           />
         );
       case 5:
@@ -225,7 +224,7 @@ const CreateKeepsake: React.FC = () => {
       default:
         return (
           <TypeStep
-            form={form}
+            form={form as any}
             selectedType={form.watch('type') as 'digital' | 'physical'}
             onTypeSelect={(v) => form.setValue('type', v)}
             onNext={nextStep}
