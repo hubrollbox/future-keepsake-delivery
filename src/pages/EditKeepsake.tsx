@@ -102,13 +102,17 @@ const EditKeepsake = () => {
           setKeepsake(keepsakeData);
           const recipient = keepsakeData.recipients?.[0];
           
-          form.reset({
+          const formValues: EditKeepsakeFormValues = {
             title: keepsakeData.title || "",
             content: keepsakeData.message_content || "",
-            delivery_date: keepsakeData.delivery_date ? new Date(keepsakeData.delivery_date).toISOString().split("T")[0] : "",
+            delivery_date: (keepsakeData.delivery_date 
+              ? new Date(keepsakeData.delivery_date).toISOString().split("T")[0] 
+              : new Date().toISOString().split("T")[0]) as string,
             recipient_email: recipient?.email || "",
             recipient_phone: recipient?.phone || "",
-          });
+          };
+          
+          form.reset(formValues);
         }
       } catch (error: unknown) {
         toast({

@@ -69,7 +69,7 @@ const CreateKeepsake: React.FC = () => {
       const currentPlan = user.user_metadata?.plan || 'free';
       setUserPlan(currentPlan);
       
-      setPlanLimits(LIMITS_BY_PLAN[currentPlan] || LIMITS_BY_PLAN['free']);
+      setPlanLimits(LIMITS_BY_PLAN[currentPlan] || LIMITS_BY_PLAN['free'] || null);
     }
   }, [user]);
 
@@ -168,7 +168,12 @@ const CreateKeepsake: React.FC = () => {
 
   const renderStepContent = () => {
     const common = { form, nextStep, prevStep };
-    const formData = { ...form.getValues(), total_cost: form.getValues().total_cost || 0, channel_cost: form.getValues().channel_cost || 0 };
+    const formData = { 
+      ...form.getValues(), 
+      total_cost: form.getValues().total_cost || 0, 
+      channel_cost: form.getValues().channel_cost || 0,
+      selected_products: form.getValues().selected_products || []
+    };
     const updateFormData = (data: Partial<KeepsakeFormData>) => {
       Object.entries(data).forEach(([k, v]) => form.setValue(k as keyof KeepsakeFormData, v));
     };

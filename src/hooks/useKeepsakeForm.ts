@@ -129,7 +129,12 @@ export const useKeepsakeForm = () => {
 
       // Executar validação customizada se existir
       if (config.customValidation) {
-        const isCustomValid = await config.customValidation({ ...currentData, total_cost: currentData.total_cost || 0, channel_cost: currentData.channel_cost || 0 });
+        const isCustomValid = await config.customValidation({ 
+          ...currentData, 
+          total_cost: currentData.total_cost || 0, 
+          channel_cost: currentData.channel_cost || 0,
+          selected_products: currentData.selected_products || []
+        });
         if (!isCustomValid) {
           stepErrors.push('Validação customizada falhou');
         }

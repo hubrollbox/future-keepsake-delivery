@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PlusCircle, Clock, Package, CheckCircle } from "lucide-react";
 
-import React from "react";
+
 
 const Dashboard = () => {
   const navigate = useNavigate();
