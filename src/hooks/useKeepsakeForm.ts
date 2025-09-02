@@ -82,7 +82,7 @@ export const useKeepsakeForm = () => {
   const submittingRef = useRef(false);
 
   // Configuração do React Hook Form com validação melhorada
-  const form = useForm<KeepsakeFormData>({
+  const form = useForm<any>({
     resolver: zodResolver(keepsakeFormSchema),
     mode: 'onChange',
     reValidateMode: 'onChange',
@@ -281,7 +281,7 @@ export const useKeepsakeForm = () => {
         const { error: productsError } = await supabase
           .from('keepsake_products')
           .insert(
-            formData.selected_products.map(product => ({
+            formData.selected_products.map((product: any) => ({
               keepsake_id: keepsakeData.id,
               product_id: product.id,
               quantity: product.quantity || 1,

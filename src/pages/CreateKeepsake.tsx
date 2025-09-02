@@ -59,7 +59,7 @@ const CreateKeepsake: React.FC = () => {
       
       const plan = plans.find(p => p.id === currentPlan);
       if (plan) {
-        setPlanLimits(plan.features);
+        setPlanLimits(plan.features || {});
       }
     }
   }, [user]);
