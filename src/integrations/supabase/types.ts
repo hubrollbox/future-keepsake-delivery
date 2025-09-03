@@ -92,6 +92,36 @@ export type Database = {
         }
         Relationships: []
       }
+      api_request_log: {
+        Row: {
+          created_at: string | null
+          endpoint: string
+          id: string
+          ip_address: unknown | null
+          request_count: number | null
+          user_id: string | null
+          window_start: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          endpoint: string
+          id?: string
+          ip_address?: unknown | null
+          request_count?: number | null
+          user_id?: string | null
+          window_start?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          endpoint?: string
+          id?: string
+          ip_address?: unknown | null
+          request_count?: number | null
+          user_id?: string | null
+          window_start?: string | null
+        }
+        Relationships: []
+      }
       cart_items: {
         Row: {
           created_at: string | null
@@ -941,10 +971,6 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      bytea_to_text: {
-        Args: { data: string }
-        Returns: string
-      }
       calculate_level: {
         Args: Record<PropertyKey, never> | { points: number }
         Returns: number
@@ -959,57 +985,6 @@ export type Database = {
           recent_recipients: number
           total_recipients: number
         }[]
-      }
-      http: {
-        Args: { request: Database["public"]["CompositeTypes"]["http_request"] }
-        Returns: Database["public"]["CompositeTypes"]["http_response"]
-      }
-      http_delete: {
-        Args:
-          | { content: string; content_type: string; uri: string }
-          | { uri: string }
-        Returns: Database["public"]["CompositeTypes"]["http_response"]
-      }
-      http_get: {
-        Args: { data: Json; uri: string } | { uri: string }
-        Returns: Database["public"]["CompositeTypes"]["http_response"]
-      }
-      http_head: {
-        Args: { uri: string }
-        Returns: Database["public"]["CompositeTypes"]["http_response"]
-      }
-      http_header: {
-        Args: { field: string; value: string }
-        Returns: Database["public"]["CompositeTypes"]["http_header"]
-      }
-      http_list_curlopt: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          curlopt: string
-          value: string
-        }[]
-      }
-      http_patch: {
-        Args: { content: string; content_type: string; uri: string }
-        Returns: Database["public"]["CompositeTypes"]["http_response"]
-      }
-      http_post: {
-        Args:
-          | { content: string; content_type: string; uri: string }
-          | { data: Json; uri: string }
-        Returns: Database["public"]["CompositeTypes"]["http_response"]
-      }
-      http_put: {
-        Args: { content: string; content_type: string; uri: string }
-        Returns: Database["public"]["CompositeTypes"]["http_response"]
-      }
-      http_reset_curlopt: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
-      http_set_curlopt: {
-        Args: { curlopt: string; value: string }
-        Returns: boolean
       }
       is_admin: {
         Args: { required_permission?: string; uid: string } | { uid: string }
@@ -1049,36 +1024,12 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
-      text_to_bytea: {
-        Args: { data: string }
-        Returns: string
-      }
-      urlencode: {
-        Args: { data: Json } | { string: string } | { string: string }
-        Returns: string
-      }
     }
     Enums: {
       [_ in never]: never
     }
     CompositeTypes: {
-      http_header: {
-        field: string | null
-        value: string | null
-      }
-      http_request: {
-        method: unknown | null
-        uri: string | null
-        headers: Database["public"]["CompositeTypes"]["http_header"][] | null
-        content_type: string | null
-        content: string | null
-      }
-      http_response: {
-        status: number | null
-        content_type: string | null
-        headers: Database["public"]["CompositeTypes"]["http_header"][] | null
-        content: string | null
-      }
+      [_ in never]: never
     }
   }
 }
