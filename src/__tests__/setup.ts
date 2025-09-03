@@ -1,9 +1,8 @@
-import { vi, expect } from 'vitest';
+import { vi } from 'vitest';
 import React from 'react';
-import * as matchers from '@testing-library/jest-dom';
+import '@testing-library/jest-dom';
 
-// Extend Vitest's expect with jest-dom matchers
-expect.extend(matchers);
+// Note: Jest-dom matchers are automatically available in vitest
 
 // Mock do Supabase
 vi.mock('@supabase/supabase-js', () => ({

@@ -953,6 +953,13 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: string
       }
+      get_recipient_stats_secure: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          recent_recipients: number
+          total_recipients: number
+        }[]
+      }
       http: {
         Args: { request: Database["public"]["CompositeTypes"]["http_request"] }
         Returns: Database["public"]["CompositeTypes"]["http_response"]
