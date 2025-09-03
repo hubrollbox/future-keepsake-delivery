@@ -58,10 +58,15 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // Security: Do not cache HTML documents for security reasons
+  if (event.request.destination === 'document') {
+    return fetch(event.request);
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
-        // Retornar versão em cache se disponível
+        // Retornar versão em cache se disponível (apenas para assets estáticos)
         if (response) {
           return response;
         }
@@ -73,21 +78,26 @@ self.addEventListener('fetch', (event) => {
             return response;
           }
 
-          // Clonar a resposta para poder armazená-la no cache
-          const responseToCache = response.clone();
+          // Only cache static assets, not user content or HTML
+          const isStaticAsset = event.request.url.match(/\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2)$/);
+          
+          if (isStaticAsset) {
+            // Clonar a resposta para poder armazená-la no cache
+            const responseToCache = response.clone();
 
-          caches.open(CACHE_NAME)
-            .then((cache) => {
-              cache.put(event.request, responseToCache);
-            });
+            caches.open(CACHE_NAME)
+              .then((cache) => {
+                cache.put(event.request, responseToCache);
+              });
+          }
 
           return response;
         });
       })
       .catch(() => {
-        // Fallback para página offline se disponível
-        if (event.request.destination === 'document') {
-          return caches.match('/');
+        // Limited fallback - only for static assets
+        if (event.request.url.match(/\.(js|css|png|jpg|jpeg|gif|svg|ico)$/)) {
+          return caches.match(event.request);
         }
       })
   );

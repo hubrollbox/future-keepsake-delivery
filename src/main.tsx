@@ -5,6 +5,20 @@ import '@/index.css'
 import '@/styles/charts.css'
 import { initGA } from '@/lib/analytics'
 import { SpeedInsights } from "@vercel/speed-insights/react"
+import { SecurityProvider } from '@/components/security/SecurityProvider';
+
+// Validate environment variables before starting the app
+const requiredEnvVars = [
+  'VITE_SUPABASE_URL',
+  'VITE_SUPABASE_ANON_KEY'
+];
+
+for (const envVar of requiredEnvVars) {
+  if (!import.meta.env[envVar]) {
+    console.error(`Missing required environment variable: ${envVar}`);
+    throw new Error(`Missing required environment variable: ${envVar}`);
+  }
+}
 
 // Inicializar Google Analytics
 try {
@@ -29,10 +43,10 @@ if ('serviceWorker' in navigator) {
 const rootElement = document.getElementById("root");
 if (rootElement) {
   createRoot(rootElement).render(
-  <>
+  <SecurityProvider>
     <App />
     <SpeedInsights />
-  </>
+  </SecurityProvider>
 );
 } else {
   console.error('Root element not found');

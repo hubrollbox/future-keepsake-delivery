@@ -59,10 +59,16 @@ export const secureTitleSchema = z
 
 // Sanitization helper functions
 export const sanitizeInput = (input: string): string => {
+  // Enhanced XSS protection - remove dangerous patterns
   return input
-    .replace(/[<>]/g, '')
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
     .replace(/javascript:/gi, '')
+    .replace(/data:/gi, '')
+    .replace(/vbscript:/gi, '')
     .replace(/on\w+\s*=/gi, '')
+    .replace(/[<>\"'&]/g, '')
+    .replace(/&#x?\w+;/g, '') // Remove HTML entities
     .trim();
 };
 
