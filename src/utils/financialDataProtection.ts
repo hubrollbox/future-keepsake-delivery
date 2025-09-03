@@ -75,14 +75,14 @@ export function decryptFinancialData(encryptedData: string, key?: string): strin
     const [ivHex, encryptedHex] = encryptedData.split(':');
     
     // Create buffers
-    const iv = Buffer.from(ivHex, 'hex');
-    const keyBuffer = crypto.createHash('sha256').update(decryptionKey).digest();
+    const iv = Buffer.from(ivHex || '', 'hex');
+    const keyBuffer = crypto.createHash('sha256').update(decryptionKey || '').digest();
     
     // Create decipher
     const decipher = crypto.createDecipheriv('aes-256-cbc', keyBuffer, iv);
     
     // Decrypt the data
-    let decrypted = decipher.update(encryptedHex, 'hex', 'utf8');
+    let decrypted = decipher.update(encryptedHex || '', 'hex', 'utf8');
     decrypted += decipher.final('utf8');
     
     return decrypted;

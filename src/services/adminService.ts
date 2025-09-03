@@ -89,14 +89,17 @@ function maskPersonalName(name: string | null | undefined): string {
   const nameParts = name.split(' ');
   if (nameParts.length === 1) {
     // Single name - show first character and mask the rest
-    return `${nameParts[0].charAt(0)}${'*'.repeat(Math.max(2, nameParts[0].length - 1))}`;
+    return nameParts[0] ? `${nameParts[0].charAt(0)}${'*'.repeat(Math.max(2, nameParts[0].length - 1))}` : '';
   }
   
   // Multiple names - show first character of first name and first character of last name
   const firstName = nameParts[0];
   const lastName = nameParts[nameParts.length - 1];
   
-  return `${firstName.charAt(0)}${'*'.repeat(Math.max(2, firstName.length - 1))} ${lastName.charAt(0)}${'*'.repeat(Math.max(2, lastName.length - 1))}`;
+  if (firstName && lastName) {
+    return `${firstName.charAt(0)}${'*'.repeat(Math.max(2, firstName.length - 1))} ${lastName.charAt(0)}${'*'.repeat(Math.max(2, lastName.length - 1))}`;
+  }
+  return '';
 }
 
 /**

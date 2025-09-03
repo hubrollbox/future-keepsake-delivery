@@ -5,8 +5,7 @@
 
 // Import necessary dependencies for a Vite/React application
 import { security, validateFilePath } from '@/config/security';
-import { maskEmail, maskPhone, createSafeRecipientLog } from '@/utils/contactMasking';
-import { createSafePaymentLog } from '@/utils/financialDataProtection';
+import { maskEmail, maskPhone } from '@/utils/contactMasking';
 
 /**
  * Initialize security features for the application

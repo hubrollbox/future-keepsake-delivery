@@ -1,15 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../integrations/supabase/client';
+import type { Tables } from '../integrations/supabase/types';
 
-interface Delivery {
-  id: string;
-  status: string | null;
-  title?: string;
-  recipient_name?: string;
-  delivery_date?: string;
-  created_at?: string | null;
-  message?: string | null;
-}
+type Delivery = Tables<'deliveries'>;
 
 export const useDeliveries = () => {
   const [deliveries, setDeliveries] = useState<Delivery[]>([]);
@@ -27,7 +20,7 @@ export const useDeliveries = () => {
       if (error) {
         throw error;
       }
-      setDeliveries(data || []);
+      setDeliveries((data as unknown as Delivery[]) || []);
     } catch (err: unknown) {
       if (err instanceof Error) {
       setError(err.message);

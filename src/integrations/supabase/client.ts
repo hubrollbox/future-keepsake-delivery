@@ -67,13 +67,5 @@ export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABL
     flowType: 'pkce',
     // Set shorter session duration for better security
     storageKey: 'keepla_auth_token',
-    // Cookie options for better security
-    cookieOptions: {
-      secure: true,
-      sameSite: 'strict',
-      httpOnly: true,
-      path: '/',
-      maxAge: 3600 // 1 hour in seconds
-    }
   }
 });
