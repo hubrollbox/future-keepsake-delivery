@@ -13,9 +13,14 @@ const CACHE_TTL = 60000 // 1 minute
 
 // Enhanced input validation and sanitization
 function validateKeepsakeId(id: string): boolean {
-  // UUID validation
+  // Strict UUID validation - only allow exact format
   const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
-  return uuidRegex.test(id)
+  if (!uuidRegex.test(id)) return false
+  
+  // Additional length check
+  if (id.length !== 36) return false
+  
+  return true
 }
 
 function sanitizeOutput(data: any): any {
@@ -60,6 +65,7 @@ async function getPublicKeepsake(id: string) {
       .select('id, title, message, delivery_date, type, created_at')
       .eq('id', id)
       .eq('status', 'sent') // Only show already delivered keepsakes
+      .eq('is_public', true) // Must be explicitly marked as public
       .lte('delivery_date', new Date().toISOString()) // Only past delivery dates
       .single()
 
@@ -67,10 +73,6 @@ async function getPublicKeepsake(id: string) {
       console.error('Database error:', error.message)
       return null
     }
-
-    // Additional security check - only allow if keepsake is truly public
-    // This would need to be implemented in your database schema
-    // For now, we restrict to sent keepsakes with past delivery dates
     
     const sanitizedData = sanitizeOutput(data)
     
@@ -84,26 +86,57 @@ async function getPublicKeepsake(id: string) {
   }
 }
 
-// Rate limiting (simple in-memory implementation)
-const rateLimitMap = new Map<string, { count: number; resetTime: number }>()
+// Database-backed rate limiting
 const RATE_LIMIT = 10 // requests per minute
 const RATE_LIMIT_WINDOW = 60000 // 1 minute
 
-function isRateLimited(ip: string): boolean {
-  const now = Date.now()
-  const userLimit = rateLimitMap.get(ip)
+async function isRateLimited(ip: string, endpoint: string): Promise<boolean> {
+  const windowStart = new Date(Date.now() - RATE_LIMIT_WINDOW)
   
-  if (!userLimit || now > userLimit.resetTime) {
-    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW })
+  try {
+    // Clean old entries
+    await supabase
+      .from('rate_limit_tracking')
+      .delete()
+      .lt('created_at', windowStart.toISOString())
+    
+    // Get current count for this IP and endpoint
+    const { data, error } = await supabase
+      .from('rate_limit_tracking')
+      .select('request_count')
+      .eq('endpoint', endpoint)
+      .eq('client_ip', ip)
+      .gte('created_at', windowStart.toISOString())
+      .single()
+    
+    if (error && error.code !== 'PGRST116') { // Not found is ok
+      console.error('Rate limit check error:', error)
+      return false // Fail open
+    }
+    
+    const currentCount = data?.request_count || 0
+    
+    if (currentCount >= RATE_LIMIT) {
+      return true
+    }
+    
+    // Increment counter
+    await supabase
+      .from('rate_limit_tracking')
+      .upsert({
+        endpoint,
+        client_ip: ip,
+        request_count: currentCount + 1,
+        window_start: windowStart.toISOString()
+      }, {
+        onConflict: 'endpoint,client_ip,window_start'
+      })
+    
     return false
+  } catch (error) {
+    console.error('Rate limiting error:', error)
+    return false // Fail open
   }
-  
-  if (userLimit.count >= RATE_LIMIT) {
-    return true
-  }
-  
-  userLimit.count++
-  return false
 }
 
 Deno.serve(async (req) => {
@@ -125,8 +158,21 @@ Deno.serve(async (req) => {
     }
 
     // Rate limiting
-    const clientIP = req.headers.get('x-forwarded-for') || 'unknown'
-    if (isRateLimited(clientIP)) {
+    const clientIP = req.headers.get('x-forwarded-for') || req.headers.get('cf-connecting-ip') || 'unknown'
+    if (await isRateLimited(clientIP, 'secure-public-keepsake')) {
+      // Log rate limit hit
+      await supabase.rpc('log_security_event', {
+        p_user_id: null,
+        p_action: 'rate_limit_exceeded',
+        p_resource_type: 'public_keepsake',
+        p_resource_id: null,
+        p_ip_address: clientIP,
+        p_user_agent: req.headers.get('user-agent'),
+        p_success: false,
+        p_error_message: 'Rate limit exceeded',
+        p_metadata: { endpoint: 'secure-public-keepsake' }
+      })
+      
       return new Response(
         JSON.stringify({ error: 'Too many requests' }),
         { 
@@ -153,6 +199,19 @@ Deno.serve(async (req) => {
     console.log(`Fetching public keepsake: ${id} for IP: ${clientIP}`)
 
     const keepsake = await getPublicKeepsake(id)
+
+    // Log access attempt
+    await supabase.rpc('log_security_event', {
+      p_user_id: null,
+      p_action: 'public_keepsake_access',
+      p_resource_type: 'keepsakes',
+      p_resource_id: id,
+      p_ip_address: clientIP,
+      p_user_agent: req.headers.get('user-agent'),
+      p_success: !!keepsake,
+      p_error_message: keepsake ? null : 'Keepsake not found or not public',
+      p_metadata: { endpoint: 'secure-public-keepsake' }
+    })
 
     if (!keepsake) {
       return new Response(

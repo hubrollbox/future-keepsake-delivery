@@ -96,7 +96,22 @@ npm install
 yarn install
 ```
 
-### 3. Configuração da Base de Dados
+### 3. Configuração de Variáveis de Ambiente
+
+**IMPORTANTE**: As chaves secretas (service role keys, stripe secret keys) devem ser configuradas apenas como secrets do Supabase, nunca como variáveis de ambiente do frontend.
+
+Copie o arquivo `.env.example` para `.env` e configure as variáveis públicas:
+
+```bash
+cp .env.example .env
+```
+
+Configure apenas as variáveis públicas no `.env`:
+- `VITE_SUPABASE_URL` - URL pública do seu projeto Supabase
+- `VITE_SUPABASE_ANON_KEY` - Chave anônima pública do Supabase
+- `VITE_STRIPE_PUBLIC_KEY` - Chave pública do Stripe (opcional)
+
+### 4. Configuração da Base de Dados
 
 #### 3.1 Configurar Supabase
 1. Crie um novo projeto no [Supabase](https://supabase.com/)

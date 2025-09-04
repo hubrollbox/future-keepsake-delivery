@@ -365,6 +365,7 @@ export type Database = {
           created_at: string | null
           delivery_date: string
           id: string
+          is_public: boolean | null
           message: string
           message_content: string | null
           message_type: string
@@ -381,6 +382,7 @@ export type Database = {
           created_at?: string | null
           delivery_date: string
           id?: string
+          is_public?: boolean | null
           message: string
           message_content?: string | null
           message_type?: string
@@ -397,6 +399,7 @@ export type Database = {
           created_at?: string | null
           delivery_date?: string
           id?: string
+          is_public?: boolean | null
           message?: string
           message_content?: string | null
           message_type?: string
@@ -627,6 +630,33 @@ export type Database = {
           target?: number
           time_limit?: unknown | null
           title?: string
+        }
+        Relationships: []
+      }
+      rate_limit_tracking: {
+        Row: {
+          client_ip: unknown
+          created_at: string | null
+          endpoint: string
+          id: string
+          request_count: number | null
+          window_start: string | null
+        }
+        Insert: {
+          client_ip: unknown
+          created_at?: string | null
+          endpoint: string
+          id?: string
+          request_count?: number | null
+          window_start?: string | null
+        }
+        Update: {
+          client_ip?: unknown
+          created_at?: string | null
+          endpoint?: string
+          id?: string
+          request_count?: number | null
+          window_start?: string | null
         }
         Relationships: []
       }
@@ -968,7 +998,36 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      user_sessions_public: {
+        Row: {
+          created_at: string | null
+          expires_at: string | null
+          id: string | null
+          ip_address: unknown | null
+          last_accessed: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string | null
+          ip_address?: unknown | null
+          last_accessed?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          expires_at?: string | null
+          id?: string | null
+          ip_address?: unknown | null
+          last_accessed?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       calculate_level: {
