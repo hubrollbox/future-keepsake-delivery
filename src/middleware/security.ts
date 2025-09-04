@@ -59,7 +59,11 @@ function applySecurityHeaders() {
   noSniffMeta.content = 'nosniff';
   document.head.appendChild(noSniffMeta);
   
-  // Skip X-Frame-Options meta tag - handled by server headers in vercel.json
+  // X-Frame-Options
+  const frameOptionsMeta = document.createElement('meta');
+  frameOptionsMeta.httpEquiv = 'X-Frame-Options';
+  frameOptionsMeta.content = 'DENY';
+  document.head.appendChild(frameOptionsMeta);
   
   // X-XSS-Protection
   const xssMeta = document.createElement('meta');
