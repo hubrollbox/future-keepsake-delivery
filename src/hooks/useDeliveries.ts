@@ -4,7 +4,7 @@ import type { Tables } from '../integrations/supabase/types';
 
 type Delivery = Tables<'deliveries'>;
 
-export const useDeliveries = () => {
+const useDeliveries = () => {
   const [deliveries, setDeliveries] = useState<Delivery[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -56,3 +56,5 @@ export const useDeliveries = () => {
 
   return { deliveries, loading, error, deleteDelivery, fetchDeliveries };
 };
+
+export default useDeliveries;

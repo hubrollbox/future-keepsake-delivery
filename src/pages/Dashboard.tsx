@@ -1,7 +1,7 @@
 import Navigation from "@/components/Navigation";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { useDeliveries } from "@/hooks/useDeliveries";
+import useDeliveries from "@/hooks/useDeliveries";
 import ProfileHeader from "@/components/dashboard/ProfileHeader";
 import UserStatsSection from "@/components/dashboard/UserStatsSection";
 import TimeCapsuleSection from "@/components/dashboard/TimeCapsuleSection";
