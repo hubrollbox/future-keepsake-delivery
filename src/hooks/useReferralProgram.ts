@@ -75,9 +75,9 @@ export const useReferralProgram = () => {
 
       // Calcular estatísticas
       const totalReferrals = referralData?.length || 0;
-      const completedReferrals = referralData?.filter(r => r.status === 'completed').length || 0;
-      const pendingReferrals = referralData?.filter(r => r.status === 'pending').length || 0;
-      const totalBonusKeepsakes = referralData?.reduce((sum, r) => 
+      const completedReferrals = referralData?.filter((r: ReferralData) => r.status === 'completed').length || 0;
+      const pendingReferrals = referralData?.filter((r: ReferralData) => r.status === 'pending').length || 0;
+      const totalBonusKeepsakes = referralData?.reduce((sum: number, r: ReferralData) => 
         r.status === 'completed' ? sum + r.bonus_keepsakes : sum, 0) || 0;
 
       setStats({
@@ -90,7 +90,7 @@ export const useReferralProgram = () => {
 
       setReferrals(referralData || []);
 
-    } catch (_error) {
+    } catch (_error: unknown) {
       console.error('Erro ao buscar estatísticas de referência:', _error);
       toast({
         title: "Erro",
@@ -161,7 +161,7 @@ export const useReferralProgram = () => {
       await fetchReferralStats();
       return true;
 
-    } catch (_error) {
+    } catch (_error: unknown) {
       console.error('Erro ao enviar convite:', _error);
       toast({
         title: "Erro",
@@ -184,7 +184,7 @@ export const useReferralProgram = () => {
         title: "Link Copiado!",
         description: "Link de referência copiado para a área de transferência.",
       });
-    } catch (_error) {
+    } catch (_error: unknown) {
       console.error('Erro ao copiar link:', _error);
       // Fallback para navegadores mais antigos
       const textArea = document.createElement('textarea');
@@ -241,7 +241,7 @@ export const useReferralProgram = () => {
 
       return true;
 
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Erro ao processar referência:', error);
       return false;
     }
