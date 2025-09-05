@@ -7,18 +7,7 @@ import { initGA } from '@/lib/analytics'
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import { SecurityProvider } from '@/components/security/SecurityProvider';
 
-// Validate environment variables before starting the app
-const requiredEnvVars = [
-  'VITE_SUPABASE_URL',
-  'VITE_SUPABASE_ANON_KEY'
-];
-
-for (const envVar of requiredEnvVars) {
-  if (!import.meta.env[envVar]) {
-    console.error(`Missing required environment variable: ${envVar}`);
-    throw new Error(`Missing required environment variable: ${envVar}`);
-  }
-}
+// NOTE: Environment variables are configured via constants in Supabase client for this environment.
 
 // Inicializar Google Analytics
 try {
