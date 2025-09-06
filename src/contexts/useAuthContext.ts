@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import { createContext, useContext } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 
 export interface UserProfile {
