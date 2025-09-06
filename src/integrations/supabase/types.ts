@@ -998,36 +998,7 @@ export type Database = {
       }
     }
     Views: {
-      user_sessions_public: {
-        Row: {
-          created_at: string | null
-          expires_at: string | null
-          id: string | null
-          ip_address: unknown | null
-          last_accessed: string | null
-          user_agent: string | null
-          user_id: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          expires_at?: string | null
-          id?: string | null
-          ip_address?: unknown | null
-          last_accessed?: string | null
-          user_agent?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          expires_at?: string | null
-          id?: string | null
-          ip_address?: unknown | null
-          last_accessed?: string | null
-          user_agent?: string | null
-          user_id?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Functions: {
       calculate_level: {
