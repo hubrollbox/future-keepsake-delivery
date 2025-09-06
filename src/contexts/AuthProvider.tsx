@@ -172,7 +172,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, currentSession) => {
-        console.log('🔐 [AuthContext] onAuthStateChange: Event:', event, 'User ID:', currentSession?.user?.id, 'Current Loading:', loading, 'Current User:', !!user, 'Current Profile:', !!profile);
+        console.log('🔐 [AuthContext] onAuthStateChange: Event:', event, 'User ID:', currentSession?.user?.id);
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
         
@@ -186,7 +186,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
 
         setLoading(false);
-        console.log('✅ [AuthContext] onAuthStateChange: Loading set to false. User:', !!(currentSession?.user), 'Profile:', !!profile);
+        console.log('✅ [AuthContext] onAuthStateChange: Loading set to false. User:', !!(currentSession?.user));
       }
     );
 
@@ -216,7 +216,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.log('🧹 [AuthContext] Cleanup: Cleaning up auth subscription');
       subscription.unsubscribe();
     };
-  }, [loading, profile, user]);
+  }, []); // Empty dependency array to avoid infinite loops
 
   const signIn = async (email: string, password: string): Promise<{ error: unknown }> => {
     try {
