@@ -51,11 +51,5 @@ coverage
 *.so
 *.out
 
-# Test files
-*.test.js
-*.test.ts
-*.test.tsx
-*.spec.js
-*.spec.ts
-*.spec.tsx
+# Test files are now tracked for proper testing
 .vercel
