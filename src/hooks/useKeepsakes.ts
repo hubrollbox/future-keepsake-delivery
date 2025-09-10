@@ -6,9 +6,9 @@ export interface Keepsake {
   id: string;
   title: string;
   delivery_date: string;
-  status: string | null;
-  type: 'digital' | 'physical';
-  content?: string;
+  status: KeepsakeStatus;
+  type: string;
+  message_content: string;
   recipient_email?: string;
   recipient_phone?: string;
   sent_at?: string;
@@ -26,7 +26,7 @@ export const useKeepsakes = () => {
     try {
       const { data, error } = await supabase
         .from('keepsakes')
-        .select('id, title, delivery_date, status, type, content:message_content, recipient_email, recipient_phone, sent_at')
+        .select('id, title, delivery_date, status, type, message_content, recipient_email, recipient_phone, sent_at')
         .order('delivery_date', { ascending: false });
 
       if (error) throw error;
@@ -48,7 +48,7 @@ export const useKeepsakes = () => {
     try {
       let query = supabase
         .from('keepsakes')
-        .select('id, title, delivery_date, status, type, content:message_content, recipient_email, recipient_phone, sent_at')
+        .select('id, title, delivery_date, status, type, message_content, recipient_email, recipient_phone, sent_at')
         .order('delivery_date', { ascending: false });
 
       // Aplicar filtro de status se fornecido
@@ -76,7 +76,7 @@ export const useKeepsakes = () => {
     try {
       const { data, error } = await supabase
         .from('keepsakes')
-        .select('id, title, delivery_date, status, type, content:message_content, recipient_email, recipient_phone, sent_at')
+        .select('id, title, delivery_date, status, type, message_content, recipient_email, recipient_phone, sent_at')
         .eq('status', status)
         .order('delivery_date', { ascending: false });
 
@@ -97,10 +97,7 @@ export const useKeepsakes = () => {
   const updateKeepsake = async (id: string, updates: Partial<Keepsake>) => {
     try {
       const dbUpdates: Record<string, unknown> = { ...updates };
-      if (typeof updates.content !== 'undefined') {
-        dbUpdates.message_content = updates.content;
-        delete dbUpdates.content;
-      }
+      // No need for field mapping since we're using message_content directly
       const { error } = await supabase
         .from('keepsakes')
         .update(dbUpdates)

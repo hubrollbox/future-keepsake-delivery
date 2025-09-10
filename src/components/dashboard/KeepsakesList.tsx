@@ -106,7 +106,7 @@ const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEd
       </CardHeader>
       <CardContent className="keepsake-card-content pb-2">
         <p className="text-sm text-gray-700 line-clamp-2 mb-3">
-          {keepsake.content || 'Sem conteúdo'}
+          {keepsake.message_content || 'Sem conteúdo'}
         </p>
         <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2">
           {keepsake.recipient_email && (

@@ -328,7 +328,7 @@ export const stepValidationSchemas = {
 // Esquema de validação para edição de keepsake melhorado
 export const editKeepsakeSchema = z.object({
   title: titleSchema,
-  content: messageSchema,
+  message_content: messageSchema,
   delivery_date: deliveryDateSchema,
   recipient_email: emailSchema.nullable().optional(),
   recipient_phone: phoneSchema.nullable().optional(),

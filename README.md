@@ -73,7 +73,18 @@ Transformar a forma como as pessoas se conectam emocionalmente, permitindo que m
 ### Ferramentas de Desenvolvimento
 - **Cypress** - Testes end-to-end
 - **ESLint** - Linting de código
-- **Prettier** - Formatação de código 
+- **Prettier** - Formatação de código
+
+## 🔧 Correções Recentes da Base de Dados
+
+### Inconsistências Resolvidas
+- **Campo de Conteúdo**: Corrigida inconsistência entre campos `message` e `message_content` na tabela `keepsakes`
+- **Mapeamento de Dados**: Atualizado hook `useKeepsakes` para usar consistentemente `message_content`
+- **Validação de Formulários**: Corrigidos schemas de validação para usar `message_content`
+- **Componentes UI**: Atualizados componentes `KeepsakesList` e `EditKeepsake` para usar o campo correto
+
+### Migração Aplicada
+- **20250108000000_fix_keepsakes_schema_inconsistency.sql**: Remove campo duplicado `message` e mantém apenas `message_content` 
 ## 🚀 Instalação e Configuração
 
 ### Pré-requisitos

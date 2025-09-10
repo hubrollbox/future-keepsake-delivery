@@ -104,7 +104,7 @@ const EditKeepsake = () => {
           
           const formValues: EditKeepsakeFormValues = {
             title: keepsakeData.title || "",
-            content: keepsakeData.message_content || "",
+            message_content: keepsakeData.message_content || "",
             delivery_date: (keepsakeData.delivery_date 
               ? new Date(keepsakeData.delivery_date).toISOString().split("T")[0] 
               : new Date().toISOString().split("T")[0]) as string,
@@ -139,7 +139,7 @@ const EditKeepsake = () => {
         .from("keepsakes")
         .update({
           title: values.title,
-          message_content: values.content,
+          message_content: values.message_content,
           delivery_date: values.delivery_date,
           updated_at: new Date().toISOString(),
         })
