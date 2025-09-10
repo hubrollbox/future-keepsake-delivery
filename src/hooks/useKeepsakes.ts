@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 
 export interface Keepsake {
   id: string;
@@ -20,8 +21,15 @@ export const useKeepsakes = () => {
   const [keepsakes, setKeepsakes] = useState<Keepsake[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const { toast } = useToast();
+  const { user } = useAuth();
 
   const fetchKeepsakes = useCallback(async () => {
+    // Se não há usuário autenticado, não tenta buscar
+    if (!user) {
+      setKeepsakes([]);
+      return;
+    }
+
     setLoading(true);
     try {
       const { data, error } = await supabase
@@ -29,22 +37,38 @@ export const useKeepsakes = () => {
         .select('id, title, delivery_date, status, type, message_content, recipient_email, recipient_phone, sent_at')
         .order('delivery_date', { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        // Se for erro de RLS (não autorizado), não mostra toast de erro
+        if (error.code === 'PGRST301' || error.message?.includes('RLS')) {
+          console.log('Usuário não tem acesso às keepsakes (RLS)');
+          setKeepsakes([]);
+          return;
+        }
+        throw error;
+      }
       setKeepsakes(data || []);
     } catch (e) {
       console.error('Erro ao carregar keepsakes:', e);
-      toast({
-        title: "Erro",
-        description: "Não foi possível carregar suas cápsulas do tempo.",
-        variant: "destructive"
-      });
+      // Só mostra toast de erro se há usuário autenticado
+      if (user) {
+        toast({
+          title: "Erro",
+          description: "Não foi possível carregar suas cápsulas do tempo.",
+          variant: "destructive"
+        });
+      }
     } finally {
       setLoading(false);
     }
-  }, [toast]);
+  }, [toast, user]);
 
   // Função para buscar keepsakes com paginação e filtro por status
   const fetchKeepsakesPaginated = async (start = 0, limit = 10, statusFilter?: KeepsakeStatus) => {
+    // Se não há usuário autenticado, retorna array vazio sem mostrar erro
+    if (!user) {
+      return [];
+    }
+
     try {
       let query = supabase
         .from('keepsakes')
@@ -58,15 +82,25 @@ export const useKeepsakes = () => {
 
       const { data, error } = await query.range(start, start + limit - 1);
 
-      if (error) throw error;
+      if (error) {
+        // Se for erro de RLS (não autorizado), não mostra toast de erro
+        if (error.code === 'PGRST301' || error.message?.includes('RLS')) {
+          console.log('Usuário não tem acesso às keepsakes (RLS)');
+          return [];
+        }
+        throw error;
+      }
       return data || [];
     } catch (e) {
       console.error('Erro ao carregar keepsakes paginados:', e);
-      toast({
-        title: "Erro",
-        description: "Não foi possível carregar suas cápsulas do tempo.",
-        variant: "destructive"
-      });
+      // Só mostra toast de erro se não for problema de autenticação
+      if (user) {
+        toast({
+          title: "Erro",
+          description: "Não foi possível carregar suas cápsulas do tempo.",
+          variant: "destructive"
+        });
+      }
       return [];
     }
   };
