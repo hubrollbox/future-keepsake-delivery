@@ -16,7 +16,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 // Schema de validação para o formulário de edição
 const editKeepsakeSchema = z.object({
   title: z.string().min(5, 'O título deve ter pelo menos 5 caracteres'),
-  content: z.string().min(10, 'O conteúdo deve ter pelo menos 10 caracteres'),
+  message_content: z.string().min(10, 'O conteúdo deve ter pelo menos 10 caracteres'),
   delivery_date: z.string().refine(date => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -41,7 +41,7 @@ export const EditKeepsake = () => {
     resolver: zodResolver(editKeepsakeSchema),
     defaultValues: {
       title: '',
-      content: '',
+      message_content: '',
       delivery_date: '',
       recipient_email: '',
       recipient_phone: '',
@@ -63,7 +63,7 @@ export const EditKeepsake = () => {
         // Preencher o formulário com os dados do keepsake
         form.reset({
           title: foundKeepsake.title || '',
-          content: foundKeepsake.content || '',
+          message_content: foundKeepsake.message_content || '',
           delivery_date: formattedDate,
           recipient_email: foundKeepsake.recipient_email || '',
           recipient_phone: foundKeepsake.recipient_phone || '',
@@ -91,7 +91,7 @@ export const EditKeepsake = () => {
       
       const success = await updateKeepsake(id, {
         title: data.title,
-        content: data.content,
+        message_content: data.message_content,
         delivery_date: deliveryDate.toISOString(),
         recipient_email: data.recipient_email || null,
         recipient_phone: data.recipient_phone || null,
@@ -148,7 +148,7 @@ export const EditKeepsake = () => {
               
               <FormField
                 control={form.control}
-                name="content"
+                name="message_content"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Conteúdo</FormLabel>

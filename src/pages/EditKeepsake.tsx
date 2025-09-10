@@ -17,7 +17,7 @@ import { getTomorrowDate } from "@/utils/validation";
 interface Keepsake {
   id: string;
   title: string;
-  content: string;
+  message_content: string;
   delivery_date: string;
   recipient_email: string;
   recipient_phone?: string;
@@ -40,7 +40,7 @@ interface Keepsake {
 // Definição do schema de validação usando Zod
 const editKeepsakeSchema = z.object({
   title: z.string().min(5, { message: "O título deve ter pelo menos 5 caracteres" }),
-  content: z.string().min(10, { message: "A mensagem deve ter pelo menos 10 caracteres" }),
+  message_content: z.string().min(10, { message: "A mensagem deve ter pelo menos 10 caracteres" }),
   delivery_date: z.string().refine(
     (date) => new Date(date) >= new Date(getTomorrowDate()),
     { message: "A data de entrega deve ser no futuro" }
@@ -62,7 +62,7 @@ const EditKeepsake = () => {
     resolver: zodResolver(editKeepsakeSchema),
     defaultValues: {
       title: "",
-      content: "",
+      message_content: "",
       delivery_date: "",
       recipient_email: "",
       recipient_phone: "",
@@ -218,7 +218,7 @@ const EditKeepsake = () => {
 
               <FormField
                 control={form.control}
-                name="content"
+                name="message_content"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Mensagem</FormLabel>

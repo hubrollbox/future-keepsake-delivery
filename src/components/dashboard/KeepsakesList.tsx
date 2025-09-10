@@ -19,7 +19,7 @@ interface KeepsakesListProps {
 
 // Componente para exibir um card de keepsake
 const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEdit: (id: string) => void, onDelete: (id: string) => void }) => {
-  const statusColors = {
+  const statusColors: Record<KeepsakeStatus, string> = {
     'pending': 'bg-orange-100 text-orange-800 border-orange-200',
     'scheduled': 'bg-blue-100 text-blue-800 border-blue-200',
     'sent': 'bg-green-100 text-green-800 border-green-200',
@@ -27,7 +27,7 @@ const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEd
     'failed': 'bg-red-100 text-red-800 border-red-200'
   };
 
-  const statusText = {
+  const statusText: Record<KeepsakeStatus, string> = {
     'pending': 'Pendente',
     'scheduled': 'Agendada',
     'sent': 'Enviada',
@@ -35,7 +35,7 @@ const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEd
     'failed': 'Falhou'
   };
 
-  const statusIcons = {
+  const statusIcons: Record<KeepsakeStatus, any> = {
     'pending': Clock,
     'scheduled': Calendar,
     'sent': Send,
@@ -43,7 +43,7 @@ const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEd
     'failed': AlertCircle
   };
 
-  const typeText = {
+  const typeText: Record<'digital' | 'physical', string> = {
     'digital': 'Digital',
     'physical': 'Física'
   };
@@ -59,7 +59,7 @@ const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEd
   const isSent = keepsake.status === 'sent' || keepsake.status === 'delivered';
   const isPending = keepsake.status === 'pending';
   const isFailed = keepsake.status === 'failed';
-  const StatusIcon = statusIcons[keepsake.status as keyof typeof statusIcons] || Calendar;
+  const StatusIcon = statusIcons[keepsake.status] || Calendar;
 
   return (
     <Card className="keepsake-card responsive-card mb-4 overflow-hidden transition-all hover:shadow-md">
@@ -71,11 +71,11 @@ const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEd
           </CardTitle>
           <div className="flex flex-wrap gap-2">
             <Badge variant="outline" className="capitalize text-xs">
-              {typeText[keepsake.type]}
+              {typeText[keepsake.type as keyof typeof typeText]}
             </Badge>
-            <Badge className={`text-xs border ${statusColors[keepsake.status as keyof typeof statusColors] || 'bg-gray-100 text-gray-800 border-gray-200'}`}>
+            <Badge className={`text-xs border ${statusColors[keepsake.status] || 'bg-gray-100 text-gray-800 border-gray-200'}`}>
               <StatusIcon className="h-3 w-3 mr-1" />
-              {statusText[keepsake.status as keyof typeof statusText] || 'Desconhecido'}
+              {statusText[keepsake.status] || 'Desconhecido'}
             </Badge>
           </div>
         </div>
