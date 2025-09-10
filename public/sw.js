@@ -1,13 +1,11 @@
-
-const CACHE_NAME = 'keepla-v2'; // Incrementar versão para forçar atualização
+const CACHE_NAME = 'keepla-v2';
 const urlsToCache = [
   '/',
   '/manifest.json',
   '/favicon.ico',
-  // Assets will be added dynamically during runtime
 ];
 
-// Forçar ativação imediata do novo SW
+// Instalação do Service Worker
 self.addEventListener('install', (event) => {
   console.log('Service Worker installing...');
   event.waitUntil(
@@ -18,13 +16,12 @@ self.addEventListener('install', (event) => {
       })
       .then(() => {
         console.log('Service Worker installed');
-        // Forçar ativação imediata
         return self.skipWaiting();
       })
   );
 });
 
-// Tomar controle de todas as páginas abertas
+// Ativação e limpeza de caches antigos
 self.addEventListener('activate', (event) => {
   console.log('Service Worker activating...');
   event.waitUntil(
@@ -39,71 +36,68 @@ self.addEventListener('activate', (event) => {
       );
     }).then(() => {
       console.log('Service Worker activated');
-      // Tomar controle de todas as páginas abertas
       return self.clients.claim();
     })
   );
 });
 
+// Interceção de pedidos
 self.addEventListener('fetch', (event) => {
-  // Ignorar requisições não-GET
-  if (event.request.method !== 'GET') {
-    return;
-  }
+  const request = event.request;
+  const url = new URL(request.url);
 
-  // Ignorar requisições para APIs externas
-  if (event.request.url.includes('/api/') || 
-      event.request.url.includes('supabase.co') ||
-      event.request.url.includes('resend.com')) {
-    return;
-  }
+  // Ignorar métodos não-GET
+  if (request.method !== 'GET') return;
 
-  // Security: Do not cache HTML documents for security reasons
-  if (event.request.destination === 'document') {
-    return fetch(event.request);
+  // Ignorar esquemas não suportados (ex: chrome-extension)
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
+
+  // Ignorar chamadas para APIs externas
+  if (
+    url.href.includes('/api/') ||
+    url.href.includes('supabase.co') ||
+    url.href.includes('resend.com')
+  ) return;
+
+  // Não guardar documentos HTML no cache
+  if (request.destination === 'document') {
+    return event.respondWith(fetch(request));
   }
 
   event.respondWith(
-    caches.match(event.request)
-      .then((response) => {
-        // Retornar versão em cache se disponível (apenas para assets estáticos)
-        if (response) {
-          return response;
-        }
+    caches.match(request)
+      .then((cachedResponse) => {
+        if (cachedResponse) return cachedResponse;
 
-        // Se não estiver em cache, buscar da rede
-        return fetch(event.request).then((response) => {
-          // Verificar se a resposta é válida
-          if (!response || response.status !== 200 || response.type !== 'basic') {
-            return response;
+        return fetch(request).then((networkResponse) => {
+          if (
+            !networkResponse ||
+            networkResponse.status !== 200 ||
+            networkResponse.type !== 'basic'
+          ) {
+            return networkResponse;
           }
 
-          // Only cache static assets, not user content or HTML
-          const isStaticAsset = event.request.url.match(/\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2)$/);
-          
+          const isStaticAsset = url.pathname.match(/\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2)$/);
           if (isStaticAsset) {
-            // Clonar a resposta para poder armazená-la no cache
-            const responseToCache = response.clone();
-
-            caches.open(CACHE_NAME)
-              .then((cache) => {
-                cache.put(event.request, responseToCache);
-              });
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(request, responseToCache);
+            });
           }
 
-          return response;
+          return networkResponse;
         });
       })
       .catch(() => {
-        // Limited fallback - only for static assets
-        if (event.request.url.match(/\.(js|css|png|jpg|jpeg|gif|svg|ico)$/)) {
-          return caches.match(event.request);
+        if (url.pathname.match(/\.(js|css|png|jpg|jpeg|gif|svg|ico)$/)) {
+          return caches.match(request);
         }
       })
   );
 });
 
-// Mensagem para atualizar a página quando o SW for atualizado
+// Mensagem para ativar o novo SW imediatamente
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
