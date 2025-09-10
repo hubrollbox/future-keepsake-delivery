@@ -12,6 +12,10 @@ export default defineConfig(({ mode }) => ({
     react({ jsx: 'react-jsx' }),
     mode === 'development' && componentTagger(),
   ].filter(Boolean),
+  define: {
+    'process.env': {},
+    global: 'globalThis',
+  },
   server: {
     host: "::",
     port: 8080,
