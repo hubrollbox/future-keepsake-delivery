@@ -10,7 +10,10 @@ import {
   Warehouse, 
   LayoutDashboard,
   LogOut,
-  ArrowLeft
+  ArrowLeft,
+  ShoppingCart,
+  Crown,
+  FileText
 } from "lucide-react";
 import SeloDoTempoIcon from "@/components/SeloDoTempoIcon";
 
@@ -26,6 +29,9 @@ const AdminLayout = ({ children, activeSection }: AdminLayoutProps) => {
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, path: "/admin" },
     { id: "clients", label: "Clientes", icon: Users, path: "/admin/clients" },
     { id: "deliveries", label: "Entregas", icon: Package, path: "/admin/deliveries" },
+    { id: "products", label: "Produtos", icon: ShoppingCart, path: "/admin/products" },
+    { id: "plans", label: "Planos", icon: Crown, path: "/admin/plans" },
+    { id: "content", label: "Conteúdo", icon: FileText, path: "/admin/content" },
     { id: "messages", label: "Mensagens", icon: MessageSquare, path: "/admin/messages" },
     { id: "payments", label: "Pagamentos", icon: CreditCard, path: "/admin/payments" },
     { id: "warehouse", label: "Armazém", icon: Warehouse, path: "/admin/warehouse" },
