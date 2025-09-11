@@ -3,8 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -20,15 +19,15 @@ type PlanUpdate = Database['public']['Tables']['plans']['Update'];
 
 interface PlanFormData {
   name: string;
-  description?: string;
-  price?: number;
-  duration?: number;
-  features?: string[];
-  active: boolean;
 }
 
 interface PlanWithStats extends Plan {
   subscriber_count?: number;
+  description?: string;
+  price?: number;
+  duration?: number;
+  features?: string[];
+  active?: boolean;
 }
 
 const AdminPlans = () => {
@@ -38,14 +37,9 @@ const AdminPlans = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingPlan, setEditingPlan] = useState<Plan | null>(null);
   const [formData, setFormData] = useState<PlanFormData>({
-    name: "",
-    description: "",
-    price: 0,
-    duration: 30,
-    features: [],
-    active: true
+    name: ""
   });
-  const [newFeature, setNewFeature] = useState("");
+
 
   useEffect(() => {
     fetchPlans();
@@ -96,12 +90,7 @@ const AdminPlans = () => {
     
     try {
       const planData = {
-        name: formData.name,
-        description: formData.description || null,
-        price: formData.price || null,
-        duration: formData.duration || null,
-        features: formData.features && formData.features.length > 0 ? formData.features : null,
-        active: formData.active
+        name: formData.name
       };
 
       if (editingPlan) {
@@ -186,12 +175,7 @@ const AdminPlans = () => {
 
   const resetForm = () => {
     setFormData({
-      name: "",
-      description: "",
-      price: 0,
-      duration: 30,
-      features: [],
-      active: true
+      name: ""
     });
     setEditingPlan(null);
     setNewFeature("");
@@ -200,12 +184,7 @@ const AdminPlans = () => {
   const openEditDialog = (plan: Plan) => {
     setEditingPlan(plan);
     setFormData({
-      name: plan.name,
-      description: plan.description || "",
-      price: plan.price || 0,
-      duration: plan.duration || 30,
-      features: Array.isArray(plan.features) ? plan.features : [],
-      active: plan.active || true
+      name: plan.name
     });
     setIsDialogOpen(true);
   };
@@ -215,24 +194,10 @@ const AdminPlans = () => {
     setIsDialogOpen(true);
   };
 
-  const addFeature = () => {
-    if (newFeature.trim() && !formData.features?.includes(newFeature.trim())) {
-      setFormData({
-        ...formData,
-        features: [...(formData.features || []), newFeature.trim()]
-      });
-      setNewFeature("");
-    }
-  };
 
-  const removeFeature = (index: number) => {
-    const updatedFeatures = formData.features?.filter((_, i) => i !== index) || [];
-    setFormData({ ...formData, features: updatedFeatures });
-  };
 
   const filteredPlans = plans.filter(plan => 
-    plan.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (plan.description && plan.description.toLowerCase().includes(searchTerm.toLowerCase()))
+    plan.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -297,18 +262,13 @@ const AdminPlans = () => {
                       <TableCell>
                         <div>
                           <div className="font-medium">{plan.name}</div>
-                          {plan.description && (
-                            <div className="text-sm text-misty-gray truncate max-w-xs">
-                              {plan.description}
-                            </div>
-                          )}
                         </div>
                       </TableCell>
                       <TableCell>
-                        {plan.price ? `€${plan.price.toFixed(2)}` : 'Gratuito'}
+                        Gratuito
                       </TableCell>
                       <TableCell>
-                        {plan.duration ? `${plan.duration} dias` : 'Ilimitado'}
+                        Ilimitado
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-1">
@@ -317,12 +277,12 @@ const AdminPlans = () => {
                         </div>
                       </TableCell>
                       <TableCell>
-                        <Badge variant={plan.active ? "default" : "secondary"}>
-                          {plan.active ? "Ativo" : "Inativo"}
+                        <Badge variant="default">
+                          Ativo
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        {plan.created_at ? new Date(plan.created_at).toLocaleDateString('pt-PT') : '-'}
+                        -
                       </TableCell>
                       <TableCell className="text-right">
                         <div className="flex justify-end gap-2">
@@ -398,84 +358,9 @@ const AdminPlans = () => {
               />
             </div>
             
-            <div className="space-y-2">
-              <Label htmlFor="description">Descrição</Label>
-              <Textarea
-                id="description"
-                value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                rows={3}
-              />
-            </div>
+            {/* Campos removidos - tabela plans só tem id e name */}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="price">Preço (€)</Label>
-                <Input
-                  id="price"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={formData.price}
-                  onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) || 0 })}
-                  placeholder="0.00 para gratuito"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="duration">Duração (dias)</Label>
-                <Input
-                  id="duration"
-                  type="number"
-                  min="1"
-                  value={formData.duration}
-                  onChange={(e) => setFormData({ ...formData, duration: parseInt(e.target.value) || 30 })}
-                  placeholder="30 para mensal"
-                />
-              </div>
-            </div>
-
-            {/* Funcionalidades */}
-            <div className="space-y-2">
-              <Label>Funcionalidades</Label>
-              <div className="flex gap-2">
-                <Input
-                  value={newFeature}
-                  onChange={(e) => setNewFeature(e.target.value)}
-                  placeholder="Adicionar funcionalidade..."
-                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addFeature())}
-                />
-                <Button type="button" onClick={addFeature} variant="outline">
-                  <Plus className="h-4 w-4" />
-                </Button>
-              </div>
-              {formData.features && formData.features.length > 0 && (
-                <div className="space-y-2">
-                  {formData.features.map((feature, index) => (
-                    <div key={index} className="flex items-center justify-between bg-gray-50 p-2 rounded">
-                      <span>{feature}</span>
-                      <Button
-                        type="button"
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => removeFeature(index)}
-                        className="text-red-600 hover:text-red-700"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <Switch
-                id="active"
-                checked={formData.active}
-                onCheckedChange={(checked) => setFormData({ ...formData, active: checked })}
-              />
-              <Label htmlFor="active">Plano ativo</Label>
-            </div>
+            {/* Funcionalidades e status removidos - tabela plans só tem id e name */}
 
             <div className="flex justify-end gap-2 pt-4">
               <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>

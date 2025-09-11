@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
@@ -32,8 +32,8 @@ interface NotificationFormData {
   title: string;
   content: string;
   type: string;
-  keepsake_id?: string;
-  user_id?: string;
+  keepsake_id?: string | undefined;
+  user_id?: string | undefined;
 }
 
 interface AchievementFormData {
@@ -230,7 +230,7 @@ const AdminContent = () => {
     }
   };
 
-  const handleAchievementDelete = async (id: string) => {
+  const handleAchievementDelete = async (id: number) => {
     try {
       const { error } = await supabase
         .from('achievements')
@@ -299,7 +299,7 @@ const AdminContent = () => {
     }
   };
 
-  const handleQuestDelete = async (id: string) => {
+  const handleQuestDelete = async (id: number) => {
     try {
       const { error } = await supabase
         .from('quests')
