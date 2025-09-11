@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,7 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Plus, Edit, Trash2, Bell, Trophy, Target, Search, Filter } from "lucide-react";
+import { Plus, Edit, Trash2, Bell, Trophy, Target, Search } from "lucide-react";
 import { Database } from "@/integrations/supabase/types";
 
 type Notification = Database['public']['Tables']['notifications']['Row'];
@@ -37,22 +37,17 @@ interface NotificationFormData {
 }
 
 interface AchievementFormData {
-  name: string;
+  title: string;
   description: string;
   points: number;
-  image_url?: string;
-  criteria?: string;
-  active: boolean;
+  icon: string;
 }
 
 interface QuestFormData {
-  name: string;
+  title: string;
   description: string;
-  reward_points: number;
-  reward_item?: string;
-  criteria: string;
-  active: boolean;
-  difficulty: string;
+  reward: number;
+  target: number;
 }
 
 const AdminContent = () => {
@@ -69,12 +64,10 @@ const AdminContent = () => {
   // Estados para conquistas
   const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [achievementFormData, setAchievementFormData] = useState<AchievementFormData>({
-    name: "",
+    title: "",
     description: "",
     points: 0,
-    image_url: "",
-    criteria: "",
-    active: true
+    icon: ""
   });
   const [editingAchievement, setEditingAchievement] = useState<Achievement | null>(null);
   const [isAchievementDialogOpen, setIsAchievementDialogOpen] = useState(false);
@@ -82,13 +75,10 @@ const AdminContent = () => {
   // Estados para missões
   const [quests, setQuests] = useState<Quest[]>([]);
   const [questFormData, setQuestFormData] = useState<QuestFormData>({
-    name: "",
+    title: "",
     description: "",
-    reward_points: 0,
-    reward_item: "",
-    criteria: "",
-    active: true,
-    difficulty: "easy"
+    reward: 0,
+    target: 0
   });
   const [editingQuest, setEditingQuest] = useState<Quest | null>(null);
   const [isQuestDialogOpen, setIsQuestDialogOpen] = useState(false);
@@ -106,12 +96,7 @@ const AdminContent = () => {
     { value: "reminder", label: "Lembrete" }
   ];
 
-  const questDifficulties = [
-    { value: "easy", label: "Fácil" },
-    { value: "medium", label: "Médio" },
-    { value: "hard", label: "Difícil" },
-    { value: "expert", label: "Especialista" }
-  ];
+  
 
   useEffect(() => {
     fetchAllData();
@@ -342,25 +327,20 @@ const AdminContent = () => {
 
   const resetAchievementForm = () => {
     setAchievementFormData({
-      name: "",
+      title: "",
       description: "",
       points: 0,
-      image_url: "",
-      criteria: "",
-      active: true
+      icon: ""
     });
     setEditingAchievement(null);
   };
 
   const resetQuestForm = () => {
     setQuestFormData({
-      name: "",
+      title: "",
       description: "",
-      reward_points: 0,
-      reward_item: "",
-      criteria: "",
-      active: true,
-      difficulty: "easy"
+      reward: 0,
+      target: 1
     });
     setEditingQuest(null);
   };
@@ -381,12 +361,10 @@ const AdminContent = () => {
   const openAchievementEditDialog = (achievement: Achievement) => {
     setEditingAchievement(achievement);
     setAchievementFormData({
-      name: achievement.name,
-      description: achievement.description || "",
-      points: achievement.points || 0,
-      image_url: achievement.image_url || "",
-      criteria: achievement.criteria || "",
-      active: achievement.active || true
+      title: achievement.title,
+      description: achievement.description,
+      points: achievement.points,
+      icon: achievement.icon
     });
     setIsAchievementDialogOpen(true);
   };
@@ -394,14 +372,11 @@ const AdminContent = () => {
   const openQuestEditDialog = (quest: Quest) => {
     setEditingQuest(quest);
     setQuestFormData({
-      name: quest.name,
-      description: quest.description || "",
-      reward_points: quest.reward_points || 0,
-      reward_item: quest.reward_item || "",
-      criteria: quest.criteria || "",
-      active: quest.active || true,
-      difficulty: quest.difficulty || "easy"
-    });
+          title: quest.title,
+          description: quest.description,
+          reward: quest.reward,
+          target: quest.target
+        });
     setIsQuestDialogOpen(true);
   };
 
@@ -410,10 +385,7 @@ const AdminContent = () => {
     return typeObj ? typeObj.label : type;
   };
 
-  const getDifficultyLabel = (difficulty: string) => {
-    const diffObj = questDifficulties.find(d => d.value === difficulty);
-    return diffObj ? diffObj.label : difficulty;
-  };
+  
 
   // Filtros
   const filteredNotifications = notifications.filter(notification => 
@@ -422,12 +394,12 @@ const AdminContent = () => {
   );
 
   const filteredAchievements = achievements.filter(achievement => 
-    achievement.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    achievement.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     (achievement.description && achievement.description.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   const filteredQuests = quests.filter(quest => 
-    quest.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    quest.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     (quest.description && quest.description.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
@@ -575,10 +547,10 @@ const AdminContent = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Nome</TableHead>
+                      <TableHead>Título</TableHead>
                       <TableHead>Pontos</TableHead>
                       <TableHead>Descrição</TableHead>
-                      <TableHead>Estado</TableHead>
+                      <TableHead>Ícone</TableHead>
                       <TableHead>Criado</TableHead>
                       <TableHead className="text-right">Ações</TableHead>
                     </TableRow>
@@ -586,16 +558,12 @@ const AdminContent = () => {
                   <TableBody>
                     {filteredAchievements.map((achievement) => (
                       <TableRow key={achievement.id}>
-                        <TableCell className="font-medium">{achievement.name}</TableCell>
+                        <TableCell className="font-medium">{achievement.title}</TableCell>
                         <TableCell>{achievement.points || 0} pts</TableCell>
                         <TableCell className="max-w-xs truncate">
                           {achievement.description}
                         </TableCell>
-                        <TableCell>
-                          <Badge variant={achievement.active ? "default" : "secondary"}>
-                            {achievement.active ? "Ativa" : "Inativa"}
-                          </Badge>
-                        </TableCell>
+                        <TableCell>{achievement.icon}</TableCell>
                         <TableCell>
                           {achievement.created_at ? new Date(achievement.created_at).toLocaleDateString('pt-PT') : '-'}
                         </TableCell>
@@ -614,7 +582,7 @@ const AdminContent = () => {
                                 <AlertDialogHeader>
                                   <AlertDialogTitle>Confirmar remoção</AlertDialogTitle>
                                   <AlertDialogDescription>
-                                    Tem a certeza que deseja remover a conquista "{achievement.name}"?
+                                    Tem a certeza que deseja remover a conquista "{achievement.title}"?
                                   </AlertDialogDescription>
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
@@ -660,8 +628,7 @@ const AdminContent = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Nome</TableHead>
-                      <TableHead>Dificuldade</TableHead>
+                      <TableHead>Título</TableHead>
                       <TableHead>Recompensa</TableHead>
                       <TableHead>Estado</TableHead>
                       <TableHead>Criado</TableHead>
@@ -673,28 +640,22 @@ const AdminContent = () => {
                       <TableRow key={quest.id}>
                         <TableCell>
                           <div>
-                            <div className="font-medium">{quest.name}</div>
+                            <div className="font-medium">{quest.title}</div>
                             <div className="text-sm text-misty-gray truncate max-w-xs">
                               {quest.description}
                             </div>
                           </div>
                         </TableCell>
-                        <TableCell>
-                          <Badge variant="outline">
-                            {getDifficultyLabel(quest.difficulty || "easy")}
-                          </Badge>
-                        </TableCell>
+
                         <TableCell>
                           <div className="text-sm">
-                            <div>{quest.reward_points || 0} pts</div>
-                            {quest.reward_item && (
-                              <div className="text-misty-gray">{quest.reward_item}</div>
-                            )}
+                            <div>Recompensa: {quest.reward} pts</div>
+                            <div className="text-misty-gray">Meta: {quest.target}</div>
                           </div>
                         </TableCell>
                         <TableCell>
-                          <Badge variant={quest.active ? "default" : "secondary"}>
-                            {quest.active ? "Ativa" : "Inativa"}
+                          <Badge variant="default">
+                            Ativa
                           </Badge>
                         </TableCell>
                         <TableCell>
@@ -715,7 +676,7 @@ const AdminContent = () => {
                                 <AlertDialogHeader>
                                   <AlertDialogTitle>Confirmar remoção</AlertDialogTitle>
                                   <AlertDialogDescription>
-                                    Tem a certeza que deseja remover a missão "{quest.name}"?
+                                    Tem a certeza que deseja remover a missão "{quest.title}"?
                                   </AlertDialogDescription>
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
@@ -810,11 +771,11 @@ const AdminContent = () => {
           <form onSubmit={handleAchievementSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="achievement-name">Nome *</Label>
+                <Label htmlFor="achievement-title">Título *</Label>
                 <Input
-                  id="achievement-name"
-                  value={achievementFormData.name}
-                  onChange={(e) => setAchievementFormData({ ...achievementFormData, name: e.target.value })}
+                  id="achievement-title"
+                  value={achievementFormData.title}
+                  onChange={(e) => setAchievementFormData({ ...achievementFormData, title: e.target.value })}
                   required
                 />
               </div>
@@ -841,33 +802,13 @@ const AdminContent = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="image-url">URL da Imagem</Label>
+              <Label htmlFor="icon">Ícone</Label>
               <Input
-                id="image-url"
-                value={achievementFormData.image_url}
-                onChange={(e) => setAchievementFormData({ ...achievementFormData, image_url: e.target.value })}
-                placeholder="https://exemplo.com/imagem.png"
+                id="icon"
+                value={achievementFormData.icon}
+                onChange={(e) => setAchievementFormData({ ...achievementFormData, icon: e.target.value })}
+                placeholder="Nome do ícone ou emoji"
               />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="criteria">Critérios</Label>
-              <Textarea
-                id="criteria"
-                value={achievementFormData.criteria}
-                onChange={(e) => setAchievementFormData({ ...achievementFormData, criteria: e.target.value })}
-                rows={2}
-                placeholder="Condições para desbloquear esta conquista"
-              />
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <Switch
-                id="achievement-active"
-                checked={achievementFormData.active}
-                onCheckedChange={(checked) => setAchievementFormData({ ...achievementFormData, active: checked })}
-              />
-              <Label htmlFor="achievement-active">Conquista ativa</Label>
             </div>
 
             <div className="flex justify-end gap-2 pt-4">
@@ -893,28 +834,23 @@ const AdminContent = () => {
           <form onSubmit={handleQuestSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="quest-name">Nome *</Label>
+                <Label htmlFor="quest-title">Título *</Label>
                 <Input
-                  id="quest-name"
-                  value={questFormData.name}
-                  onChange={(e) => setQuestFormData({ ...questFormData, name: e.target.value })}
+                  id="quest-title"
+                  value={questFormData.title}
+                  onChange={(e) => setQuestFormData({ ...questFormData, title: e.target.value })}
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="difficulty">Dificuldade</Label>
-                <Select value={questFormData.difficulty} onValueChange={(value) => setQuestFormData({ ...questFormData, difficulty: value })}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {questDifficulties.map(diff => (
-                      <SelectItem key={diff.value} value={diff.value}>
-                        {diff.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Label htmlFor="reward">Recompensa (pontos)</Label>
+                <Input
+                  id="reward"
+                  type="number"
+                  min="0"
+                  value={questFormData.reward}
+                  onChange={(e) => setQuestFormData({ ...questFormData, reward: parseInt(e.target.value) || 0 })}
+                />
               </div>
             </div>
             
@@ -928,47 +864,17 @@ const AdminContent = () => {
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="reward-points">Pontos de Recompensa</Label>
-                <Input
-                  id="reward-points"
-                  type="number"
-                  min="0"
-                  value={questFormData.reward_points}
-                  onChange={(e) => setQuestFormData({ ...questFormData, reward_points: parseInt(e.target.value) || 0 })}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="reward-item">Item de Recompensa</Label>
-                <Input
-                  id="reward-item"
-                  value={questFormData.reward_item}
-                  onChange={(e) => setQuestFormData({ ...questFormData, reward_item: e.target.value })}
-                  placeholder="Nome do item (opcional)"
-                />
-              </div>
-            </div>
-
             <div className="space-y-2">
-              <Label htmlFor="quest-criteria">Critérios *</Label>
-              <Textarea
-                id="quest-criteria"
-                value={questFormData.criteria}
-                onChange={(e) => setQuestFormData({ ...questFormData, criteria: e.target.value })}
-                rows={2}
-                placeholder="Condições para completar esta missão"
+              <Label htmlFor="target">Meta *</Label>
+              <Input
+                id="target"
+                type="number"
+                min="1"
+                value={questFormData.target}
+                onChange={(e) => setQuestFormData({ ...questFormData, target: parseInt(e.target.value) || 1 })}
+                placeholder="Número necessário para completar"
                 required
               />
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <Switch
-                id="quest-active"
-                checked={questFormData.active}
-                onCheckedChange={(checked) => setQuestFormData({ ...questFormData, active: checked })}
-              />
-              <Label htmlFor="quest-active">Missão ativa</Label>
             </div>
 
             <div className="flex justify-end gap-2 pt-4">
