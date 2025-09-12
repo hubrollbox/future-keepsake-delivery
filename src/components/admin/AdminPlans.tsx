@@ -178,7 +178,6 @@ const AdminPlans = () => {
       name: ""
     });
     setEditingPlan(null);
-    setNewFeature("");
   };
 
   const openEditDialog = (plan: Plan) => {
