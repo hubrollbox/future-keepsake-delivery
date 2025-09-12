@@ -9,7 +9,7 @@ const __dirname = resolve(__filename, '..');
 
 export default defineConfig(({ mode }) => ({
   plugins: [
-    react({ jsx: 'react-jsx' }),
+    react(),
     mode === 'development' && componentTagger(),
   ].filter(Boolean),
   define: {
