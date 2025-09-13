@@ -5,6 +5,7 @@ import '@/index.css'
 import '@/styles/charts.css'
 import { initGA } from '@/lib/analytics'
 import { SpeedInsights } from "@vercel/speed-insights/react"
+import { Analytics } from "@vercel/analytics/react"
 import { SecurityProvider } from '@/components/security/SecurityProvider';
 
 // NOTE: Environment variables are configured via constants in Supabase client for this environment.
@@ -35,6 +36,7 @@ if (rootElement) {
   <SecurityProvider>
     <App />
     <SpeedInsights />
+    <Analytics />
   </SecurityProvider>
 );
 } else {
