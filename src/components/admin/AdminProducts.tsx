@@ -12,7 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Plus, Edit, Trash2, Package, Search, Filter, Minus } from "lucide-react";
+import { Plus, Edit, Trash2, Package, Search, Filter, Minus, Upload, Download } from "lucide-react";
 import { Database } from "@/integrations/supabase/types";
 
 type Product = Database['public']['Tables']['products']['Row'];
@@ -46,6 +46,8 @@ const AdminProducts = () => {
     active: true,
     icon: ""
   });
+  const [csvFile, setCsvFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
 
   const productTypes = [
     { value: "physical", label: "Produto Físico" },
@@ -241,6 +243,122 @@ const AdminProducts = () => {
     return typeObj ? typeObj.label : type;
   };
 
+  const handleExportCSV = () => {
+    const csvHeaders = ['Nome', 'Descrição', 'Preço', 'Stock', 'Tipo', 'Ativo', 'Ícone', 'Data de Criação'];
+    const csvData = products.map(product => [
+      product.name,
+      product.description || '',
+      product.price,
+      product.stock,
+      getTypeLabel(product.type),
+      product.active ? 'Sim' : 'Não',
+      product.icon || '',
+      product.created_at ? new Date(product.created_at).toLocaleDateString('pt-PT') : ''
+    ]);
+
+    const csvContent = [csvHeaders, ...csvData]
+      .map(row => row.map(field => `"${field}"`).join(','))
+      .join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `produtos_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    toast({
+      title: "Exportação concluída",
+      description: "Os dados dos produtos foram exportados com sucesso.",
+    });
+  };
+
+  const handleImportCSV = async (file: File) => {
+    setIsUploading(true);
+    
+    try {
+      const text = await file.text();
+      const lines = text.split('\n').filter(line => line.trim());
+      
+      if (lines.length < 2) {
+        throw new Error('Arquivo CSV deve conter pelo menos um cabeçalho e uma linha de dados');
+      }
+
+      const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim());
+      const expectedHeaders = ['Nome', 'Descrição', 'Preço', 'Stock', 'Tipo', 'Ativo', 'Ícone'];
+      
+      // Verificar se os cabeçalhos essenciais estão presentes
+      const requiredHeaders = ['Nome', 'Preço', 'Stock', 'Tipo'];
+      const missingHeaders = requiredHeaders.filter(h => !headers.includes(h));
+      
+      if (missingHeaders.length > 0) {
+        throw new Error(`Cabeçalhos obrigatórios em falta: ${missingHeaders.join(', ')}`);
+      }
+
+      const dataLines = lines.slice(1);
+      const productsToImport: ProductInsert[] = [];
+
+      for (const line of dataLines) {
+        const values = line.split(',').map(v => v.replace(/"/g, '').trim());
+        
+        if (values.length < headers.length) continue;
+
+        const productData: ProductInsert = {
+          name: values[headers.indexOf('Nome')] || '',
+          description: values[headers.indexOf('Descrição')] || null,
+          price: parseFloat(values[headers.indexOf('Preço')]) || 0,
+          stock: parseInt(values[headers.indexOf('Stock')]) || 0,
+          type: values[headers.indexOf('Tipo')] || 'physical',
+          active: values[headers.indexOf('Ativo')]?.toLowerCase() === 'sim' || true,
+          icon: values[headers.indexOf('Ícone')] || null
+        };
+
+        if (productData.name && productData.price >= 0 && productData.stock >= 0) {
+          productsToImport.push(productData);
+        }
+      }
+
+      if (productsToImport.length === 0) {
+        throw new Error('Nenhum produto válido encontrado no arquivo CSV');
+      }
+
+      // Inserir produtos no banco de dados
+      const { error } = await supabase
+        .from('products')
+        .insert(productsToImport);
+
+      if (error) throw error;
+
+      await fetchProducts();
+      setCsvFile(null);
+      
+      toast({
+        title: "Importação concluída",
+        description: `${productsToImport.length} produtos foram importados com sucesso.`,
+      });
+
+    } catch (error) {
+      console.error('Erro ao importar CSV:', error);
+      toast({
+        title: "Erro na importação",
+        description: error instanceof Error ? error.message : "Erro desconhecido ao importar o arquivo CSV.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  // Efeito para processar o arquivo CSV quando selecionado
+  useEffect(() => {
+    if (csvFile) {
+      handleImportCSV(csvFile);
+    }
+  }, [csvFile]);
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -248,10 +366,34 @@ const AdminProducts = () => {
           <h1 className="text-3xl font-bold text-steel-blue font-fraunces">Gestão de Produtos</h1>
           <p className="text-misty-gray mt-2">Gerir produtos, stock e preços</p>
         </div>
-        <Button onClick={openCreateDialog} className="bg-earthy-burgundy hover:bg-earthy-burgundy/90">
-          <Plus className="h-4 w-4 mr-2" />
-          Novo Produto
-        </Button>
+        <div className="flex gap-2">
+          <input
+            type="file"
+            accept=".csv"
+            onChange={(e) => setCsvFile(e.target.files?.[0] || null)}
+            className="hidden"
+            id="csv-upload"
+          />
+          <Button
+            variant="outline"
+            onClick={() => document.getElementById('csv-upload')?.click()}
+            disabled={isUploading}
+          >
+            <Upload className="h-4 w-4 mr-2" />
+            {isUploading ? 'Carregando...' : 'Importar CSV'}
+          </Button>
+          <Button
+            variant="outline"
+            onClick={handleExportCSV}
+          >
+            <Download className="h-4 w-4 mr-2" />
+            Exportar CSV
+          </Button>
+          <Button onClick={openCreateDialog} className="bg-earthy-burgundy hover:bg-earthy-burgundy/90">
+            <Plus className="h-4 w-4 mr-2" />
+            Novo Produto
+          </Button>
+        </div>
       </div>
 
       {/* Filtros e Pesquisa */}
@@ -298,41 +440,41 @@ const AdminProducts = () => {
       </Card>
 
       {/* Tabela de Produtos */}
-      <Card>
+      <Card className="w-full">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Package className="h-5 w-5" />
             Produtos ({filteredProducts.length})
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           {loading ? (
             <div className="text-center py-8">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-earthy-burgundy mx-auto"></div>
               <p className="text-misty-gray mt-2">Carregando produtos...</p>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <Table>
+            <div className="w-full overflow-x-auto">
+              <Table className="min-w-full">
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Nome</TableHead>
-                    <TableHead>Tipo</TableHead>
-                    <TableHead>Preço</TableHead>
-                    <TableHead>Stock</TableHead>
-                    <TableHead>Estado</TableHead>
-                    <TableHead>Criado</TableHead>
-                    <TableHead className="text-right">Ações</TableHead>
+                    <TableHead className="min-w-[200px]">Nome</TableHead>
+                    <TableHead className="min-w-[100px]">Tipo</TableHead>
+                    <TableHead className="min-w-[80px]">Preço</TableHead>
+                    <TableHead className="min-w-[120px]">Stock</TableHead>
+                    <TableHead className="min-w-[80px]">Estado</TableHead>
+                    <TableHead className="min-w-[100px]">Criado</TableHead>
+                    <TableHead className="text-right min-w-[120px]">Ações</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {filteredProducts.map((product) => (
                     <TableRow key={product.id}>
-                      <TableCell>
+                      <TableCell className="max-w-[200px]">
                         <div>
-                          <div className="font-medium">{product.name}</div>
+                          <div className="font-medium truncate">{product.name}</div>
                           {product.description && (
-                            <div className="text-sm text-misty-gray truncate max-w-xs">
+                            <div className="text-sm text-misty-gray truncate">
                               {product.description}
                             </div>
                           )}
@@ -345,20 +487,22 @@ const AdminProducts = () => {
                       </TableCell>
                       <TableCell>€{product.price.toFixed(2)}</TableCell>
                       <TableCell>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1 min-w-[120px]">
                           <Button
                             size="sm"
                             variant="outline"
                             onClick={() => handleStockUpdate(product.id, product.stock - 1)}
                             disabled={product.stock <= 0}
+                            className="h-8 w-8 p-0"
                           >
                             <Minus className="h-3 w-3" />
                           </Button>
-                          <span className="min-w-[2rem] text-center">{product.stock}</span>
+                          <span className="min-w-[2rem] text-center text-sm">{product.stock}</span>
                           <Button
                             size="sm"
                             variant="outline"
                             onClick={() => handleStockUpdate(product.id, product.stock + 1)}
+                            className="h-8 w-8 p-0"
                           >
                             <Plus className="h-3 w-3" />
                           </Button>
@@ -373,18 +517,19 @@ const AdminProducts = () => {
                         {product.created_at ? new Date(product.created_at).toLocaleDateString('pt-PT') : '-'}
                       </TableCell>
                       <TableCell className="text-right">
-                        <div className="flex justify-end gap-2">
+                        <div className="flex justify-end gap-1">
                           <Button
                             size="sm"
                             variant="outline"
                             onClick={() => openEditDialog(product)}
+                            className="h-8 w-8 p-0"
                           >
-                            <Edit className="h-4 w-4" />
+                            <Edit className="h-3 w-3" />
                           </Button>
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
-                              <Button size="sm" variant="outline" className="text-red-600 hover:text-red-700">
-                                <Trash2 className="h-4 w-4" />
+                              <Button size="sm" variant="outline" className="text-red-600 hover:text-red-700 h-8 w-8 p-0">
+                                <Trash2 className="h-3 w-3" />
                               </Button>
                             </AlertDialogTrigger>
                             <AlertDialogContent>
