@@ -287,8 +287,7 @@ const AdminProducts = () => {
         throw new Error('Arquivo CSV deve conter pelo menos um cabeçalho e uma linha de dados');
       }
 
-      const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim());
-      const expectedHeaders = ['Nome', 'Descrição', 'Preço', 'Stock', 'Tipo', 'Ativo', 'Ícone'];
+      const headers = lines[0]?.split(',').map(h => h.replace(/"/g, '').trim()) || [];
       
       // Verificar se os cabeçalhos essenciais estão presentes
       const requiredHeaders = ['Nome', 'Preço', 'Stock', 'Tipo'];
@@ -306,17 +305,25 @@ const AdminProducts = () => {
         
         if (values.length < headers.length) continue;
 
+        const nameIndex = headers.indexOf('Nome');
+        const descIndex = headers.indexOf('Descrição');
+        const priceIndex = headers.indexOf('Preço');
+        const stockIndex = headers.indexOf('Stock');
+        const typeIndex = headers.indexOf('Tipo');
+        const activeIndex = headers.indexOf('Ativo');
+        const iconIndex = headers.indexOf('Ícone');
+
         const productData: ProductInsert = {
-          name: values[headers.indexOf('Nome')] || '',
-          description: values[headers.indexOf('Descrição')] || null,
-          price: parseFloat(values[headers.indexOf('Preço')]) || 0,
-          stock: parseInt(values[headers.indexOf('Stock')]) || 0,
-          type: values[headers.indexOf('Tipo')] || 'physical',
-          active: values[headers.indexOf('Ativo')]?.toLowerCase() === 'sim' || true,
-          icon: values[headers.indexOf('Ícone')] || null
+          name: nameIndex >= 0 ? values[nameIndex] || '' : '',
+          description: descIndex >= 0 ? values[descIndex] || null : null,
+          price: priceIndex >= 0 ? parseFloat(values[priceIndex] || '0') || 0 : 0,
+          stock: stockIndex >= 0 ? parseInt(values[stockIndex] || '0') || 0 : 0,
+          type: typeIndex >= 0 ? values[typeIndex] || 'physical' : 'physical',
+          active: activeIndex >= 0 ? values[activeIndex]?.toLowerCase() === 'sim' : true,
+          icon: iconIndex >= 0 ? values[iconIndex] || null : null
         };
 
-        if (productData.name && productData.price >= 0 && productData.stock >= 0) {
+        if (productData.name && productData.price >= 0 && (productData.stock ?? 0) >= 0) {
           productsToImport.push(productData);
         }
       }
