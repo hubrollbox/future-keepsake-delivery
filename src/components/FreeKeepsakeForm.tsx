@@ -9,11 +9,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { ChevronLeft, ChevronRight, Heart, Calendar, Mail, Sparkles } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Heart, Calendar, Mail, Sparkles, Wand2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useAIQuota } from '../hooks/useAIQuota';
 import { AIQuotaStatus } from './AIQuotaStatus';
-import { supabase } from '../lib/supabase';
+import { supabase } from '../integrations/supabase/client';
 
 // Schema de validação Zod
 const freeKeepsakeSchema = z.object({
@@ -104,7 +104,8 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
     handleSubmit,
     formState: { errors, isValid },
     watch,
-    trigger
+    trigger,
+    setValue
   } = useForm<FreeKeepsakeFormData>({
     resolver: zodResolver(freeKeepsakeSchema),
     mode: 'onChange'
@@ -219,14 +220,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
     }
   };
 
-  const getCurrentStepErrors = () => {
-    const stepErrors = {
-      1: errors.title,
-      2: errors.message,
-      3: errors.deliveryDate || errors.recipientEmail
-    };
-    return stepErrors[currentStep as keyof typeof stepErrors];
-  };
+
 
   const slideVariants = {
     enter: (direction: number) => ({
@@ -353,7 +347,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
                   </Button>
                   
                   {quota && (
-                    <AIQuotaStatus compact onUpgrade={onUpgrade} />
+                    <AIQuotaStatus compact onUpgrade={onUpgradeRequest} />
                   )}
                 </div>
                 

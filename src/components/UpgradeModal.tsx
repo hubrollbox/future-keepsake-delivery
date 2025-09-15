@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -244,7 +244,9 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
     
     // Limitar a 3 opções e adicionar uma opção padrão
     const uniqueOptions = relevantOptions.slice(0, 2);
-    uniqueOptions.push(DEFAULT_OPTIONS[0]);
+    if (DEFAULT_OPTIONS.length > 0) {
+      uniqueOptions.push(DEFAULT_OPTIONS[0]);
+    }
     
     return uniqueOptions;
   };

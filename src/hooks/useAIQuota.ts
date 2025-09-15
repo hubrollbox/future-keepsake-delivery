@@ -12,15 +12,6 @@ interface AIQuotaData {
   resetDate: string;
 }
 
-interface APIUsage {
-  id: string;
-  user_id: string;
-  date: string;
-  huggingface_requests: number;
-  created_at: string;
-  updated_at: string;
-}
-
 const QUOTA_LIMITS = {
   free: 3,
   premium: 50,

@@ -108,12 +108,11 @@ export function AIQuotaStatus({
         <div className="space-y-2">
           <Progress 
             value={percentage} 
-            className="h-2"
-            indicatorClassName={
-              percentage >= 100 ? 'bg-red-500' :
-              percentage >= 80 ? 'bg-orange-500' :
-              'bg-green-500'
-            }
+            className={`h-2 ${
+              percentage >= 100 ? '[&>div]:bg-red-500' :
+              percentage >= 80 ? '[&>div]:bg-orange-500' :
+              '[&>div]:bg-green-500'
+            }`}
           />
           <div className="flex justify-between text-xs text-gray-500">
             <span>{status?.message}</span>
