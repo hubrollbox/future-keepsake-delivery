@@ -11,6 +11,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { ChevronLeft, ChevronRight, Heart, Calendar, Mail, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
+import { useAIQuota } from '../hooks/useAIQuota';
+import { AIQuotaStatus } from './AIQuotaStatus';
+import { supabase } from '../lib/supabase';
 
 // Schema de validação Zod
 const freeKeepsakeSchema = z.object({
@@ -92,6 +95,9 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
 }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [detectedKeywords, setDetectedKeywords] = useState<string[]>([]);
+  const [isGettingSuggestion, setIsGettingSuggestion] = useState(false);
+  const [aiSuggestion, setAiSuggestion] = useState<string>('');
+  const { quota, incrementUsage, canUseAI } = useAIQuota();
   
   const {
     register,
@@ -135,6 +141,71 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
   const prevStep = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const getAISuggestion = async () => {
+    if (!canUseAI) {
+      toast.error('Limite de sugestões diárias atingido!', {
+        description: 'Faça upgrade para mais sugestões de IA.'
+      });
+      return;
+    }
+
+    const currentMessage = watch('message');
+    if (!currentMessage || currentMessage.length < 10) {
+      toast.error('Escreva pelo menos 10 caracteres para obter uma sugestão!');
+      return;
+    }
+
+    setIsGettingSuggestion(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        throw new Error('Usuário não autenticado');
+      }
+
+      const response = await supabase.functions.invoke('huggingface-suggestion', {
+        body: {
+          message: currentMessage,
+          keywords: detectedKeywords,
+          userId: session.user.id
+        }
+      });
+
+      if (response.error) {
+        throw response.error;
+      }
+
+      const { suggestion, fallback, remainingQuota } = response.data;
+      
+      if (suggestion) {
+        setAiSuggestion(suggestion);
+        await incrementUsage();
+        
+        toast.success(fallback ? 
+          'Sugestão gerada localmente!' : 
+          'Sugestão de IA gerada! ✨', {
+          description: `Restam ${remainingQuota} sugestões hoje.`
+        });
+      } else {
+        throw new Error('Nenhuma sugestão recebida');
+      }
+    } catch (error) {
+      console.error('Error getting AI suggestion:', error);
+      toast.error('Erro ao obter sugestão da IA', {
+        description: 'Tente novamente em alguns instantes.'
+      });
+    } finally {
+      setIsGettingSuggestion(false);
+    }
+  };
+
+  const applySuggestion = () => {
+    if (aiSuggestion) {
+      setValue('message', aiSuggestion);
+      setAiSuggestion('');
+      toast.success('Sugestão aplicada! 🎯');
     }
   };
 
@@ -265,10 +336,74 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
                   {errors.message.message}
                 </motion.p>
               )}
-              <div className="text-right text-xs text-gray-500">
-                {(watchedFields.message || '').length}/500
+              
+              {/* Botão de Sugestão IA */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={getAISuggestion}
+                    disabled={isGettingSuggestion || !canUseAI}
+                    className="flex items-center gap-2 text-purple-600 border-purple-200 hover:bg-purple-50"
+                  >
+                    <Wand2 className={`h-4 w-4 ${isGettingSuggestion ? 'animate-spin' : ''}`} />
+                    {isGettingSuggestion ? 'Gerando...' : 'Sugestão IA'}
+                  </Button>
+                  
+                  {quota && (
+                    <AIQuotaStatus compact onUpgrade={onUpgrade} />
+                  )}
+                </div>
+                
+                <div className="text-right text-xs text-gray-500">
+                  {(watchedFields.message || '').length}/500
+                </div>
               </div>
             </div>
+            
+            {/* Sugestão da IA */}
+            <AnimatePresence>
+              {aiSuggestion && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-lg border border-purple-200"
+                >
+                  <div className="flex items-start gap-3">
+                    <Sparkles className="h-5 w-5 text-purple-600 mt-0.5 animate-pulse" />
+                    <div className="flex-1">
+                      <h4 className="font-medium text-purple-900 mb-2">Sugestão da IA ✨</h4>
+                      <p className="text-gray-700 text-sm leading-relaxed mb-3 bg-white/50 p-3 rounded border">
+                        {aiSuggestion}
+                      </p>
+                      <div className="flex gap-2">
+                        <Button
+                          type="button"
+                          size="sm"
+                          onClick={applySuggestion}
+                          className="bg-purple-600 hover:bg-purple-700 text-white"
+                        >
+                          Usar esta sugestão
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setAiSuggestion('')}
+                          className="border-purple-200 text-purple-600 hover:bg-purple-50"
+                        >
+                          Descartar
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         );
 
