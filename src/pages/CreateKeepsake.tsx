@@ -9,13 +9,16 @@ import MessageStep from '@/components/keepsake/MessageStep';
 import ProductsStep from '@/components/keepsake/ProductsStep';
 import ReviewStep from '@/components/keepsake/ReviewStep';
 import SuccessStep from '@/components/keepsake/SuccessStep';
-// ...existing code...
+import { FreeKeepsakeForm } from '@/components/FreeKeepsakeForm';
+import { UpgradeModal } from '@/components/UpgradeModal';
 import { Card, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
-import { AlertCircle, Save, Home, Crown, Zap } from 'lucide-react';
-// ...existing code...
+import { AlertCircle, Save, Home, Crown, Zap, Sparkles } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
+import { toast } from 'sonner';
+import { trackKeepsakeCreation, trackButtonClick, trackError } from '@/lib/analytics';
 
 interface PlanLimits {
   maxMessageLength: number;
@@ -38,7 +41,11 @@ const CreateKeepsake: React.FC = () => {
   const [planLimits, setPlanLimits] = useState<PlanLimits | null>(null);
   const [planValidationErrors, setPlanValidationErrors] = useState<string[]>([]);
   
-  // ...existing code...
+  // Estados para o fluxo freemium
+  const [showFreeForm, setShowFreeForm] = useState(true);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [detectedKeywords, setDetectedKeywords] = useState<string[]>([]);
+  const [isCreatingFreeKeepsake, setIsCreatingFreeKeepsake] = useState(false);
   
   const {
     form,
@@ -76,7 +83,9 @@ const CreateKeepsake: React.FC = () => {
       setPlanLimits(LIMITS_BY_PLAN[currentPlan] || LIMITS_BY_PLAN['free'] || null);
       
       // Se o usuário tem plano premium, pular o formulário gratuito
-      // (Removido setShowFreeForm, pois não existe mais)
+      if (currentPlan !== 'free') {
+        setShowFreeForm(false);
+      }
     }
   }, [user]);
 
@@ -173,13 +182,110 @@ const CreateKeepsake: React.FC = () => {
     'Sucesso'
   ];
 
-  // ...existing code...
+  // Função para detectar keywords na mensagem
+  const detectKeywords = (message: string): string[] => {
+    const keywords: string[] = [];
+    const text = message.toLowerCase();
+    
+    if (text.match(/aniversário|aniversario|birthday|festa|celebrar/)) {
+      keywords.push('aniversario');
+    }
+    if (text.match(/amor|love|romântico|romantico|namorado|namorada|casamento/)) {
+      keywords.push('amor');
+    }
+    if (text.match(/conquista|vitória|vitoria|sucesso|achievement|graduação|graduacao|promoção|promocao/)) {
+      keywords.push('conquista');
+    }
+    if (text.match(/família|familia|family|pais|filhos|irmão|irmao|irmã|irma/)) {
+      keywords.push('familia');
+    }
+    if (text.match(/amigo|amiga|amizade|friendship|colega/)) {
+      keywords.push('amizade');
+    }
+    
+    return keywords;
+  };
 
-  // ...existing code...
+  // Função para criar keepsake gratuito
+  const handleCreateFreeKeepsake = async (data: {
+    title: string;
+    message: string;
+    deliveryDate: string;
+    recipientEmail: string;
+  }) => {
+    if (!user) {
+      toast.error('Você precisa estar logado para criar uma cápsula.');
+      return;
+    }
 
-  // ...existing code...
+    setIsCreatingFreeKeepsake(true);
+    
+    try {
+      // Track keepsake creation
+      trackKeepsakeCreation('free_email');
+      
+      // Detectar keywords para upsell
+      const keywords = detectKeywords(data.message);
+      setDetectedKeywords(keywords);
+      
+      // Criar keepsake no banco
+      const { data: keepsake, error } = await supabase
+        .from('keepsakes')
+        .insert({
+          user_id: user.id,
+          title: data.title,
+          message_content: data.message,
+          delivery_date: data.deliveryDate,
+          recipient_email: data.recipientEmail,
+          type: 'free_email',
+          keywords: keywords,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        })
+        .select()
+        .single();
 
-  // ...existing code...
+      if (error) {
+        trackError(error.message, 'create_keepsake');
+        throw error;
+      }
+
+      toast.success('🎉 Cápsula criada com sucesso!');
+      
+      // Mostrar modal de upgrade se há keywords relevantes
+      if (keywords.length > 0) {
+        setShowUpgradeModal(true);
+      } else {
+        // Redirecionar para dashboard se não há upsell
+        setTimeout(() => {
+          navigate('/dashboard');
+        }, 2000);
+      }
+      
+    } catch (error) {
+      console.error('Erro ao criar keepsake:', error);
+      toast.error('Erro ao criar cápsula. Tente novamente.');
+    } finally {
+      setIsCreatingFreeKeepsake(false);
+    }
+  };
+
+  // Função para lidar com upgrade
+  const handleUpgrade = (optionId: string) => {
+    // Redirecionar para página de pagamento ou processar upgrade
+    toast.success('Redirecionando para pagamento...');
+    
+    // Por enquanto, apenas fechar o modal e redirecionar
+    setTimeout(() => {
+      setShowUpgradeModal(false);
+      navigate('/pricing', { state: { selectedOption: optionId } });
+    }, 1500);
+  };
+
+  // Função para continuar com formulário premium
+  const handleUsePremiumForm = () => {
+    setShowFreeForm(false);
+  };
 
   const renderStepContent = () => {
     const common = { form, nextStep, prevStep };

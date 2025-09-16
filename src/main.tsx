@@ -3,13 +3,19 @@ import { createRoot } from 'react-dom/client';
 import App from '@/App.tsx'
 import '@/index.css'
 import '@/styles/charts.css'
-// Analytics is initialized automatically when imported
-import '@/lib/analytics'
+import { initGA } from '@/lib/analytics'
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import { Analytics } from "@vercel/analytics/react"
 import { SecurityProvider } from '@/components/security/SecurityProvider';
 
 // NOTE: Environment variables are configured via constants in Supabase client for this environment.
+
+// Inicializar Google Analytics
+try {
+  initGA();
+} catch (error) {
+  console.error('Falha ao inicializar Google Analytics:', error);
+}
 
 // Register Service Worker for PWA
 if ('serviceWorker' in navigator) {

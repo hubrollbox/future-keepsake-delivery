@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
+import { supabase } from '../lib/supabase';
 import { useAuth } from './useAuth';
 import { toast } from 'sonner';
 
@@ -99,7 +99,7 @@ export function useUserSubscription(): UseUserSubscriptionReturn {
   const fetchSubscription = async () => {
     if (!user) {
       setSubscription(null);
-  setPlanLimits(PLAN_LIMITS.free ?? null);
+      setPlanLimits(PLAN_LIMITS.free);
       setLoading(false);
       return;
     }
@@ -134,14 +134,13 @@ export function useUserSubscription(): UseUserSubscriptionReturn {
         if (createError) throw createError;
         
         setSubscription(newSubscription);
-  setPlanLimits(PLAN_LIMITS.free ?? null);
+        setPlanLimits(PLAN_LIMITS.free);
       } else {
         setSubscription(subscriptionData);
-  const plan = PLAN_LIMITS[subscriptionData.plan_type];
-  setPlanLimits(plan ? plan : PLAN_LIMITS.free ?? null);
+        setPlanLimits(PLAN_LIMITS[subscriptionData.plan_type] || PLAN_LIMITS.free);
       }
 
-  setPlanLimits(PLAN_LIMITS[subscriptionData.plan_type] ?? PLAN_LIMITS.free ?? null);
+      // Buscar histórico de pagamentos
       const { data: paymentsData, error: paymentsError } = await supabase
         .from('payment_history')
         .select('*')
@@ -157,7 +156,7 @@ export function useUserSubscription(): UseUserSubscriptionReturn {
       console.error('Error fetching subscription:', err);
       setError(err instanceof Error ? err.message : 'Erro ao carregar assinatura');
       // Em caso de erro, definir como plano gratuito
-  setPlanLimits(PLAN_LIMITS.free ?? null);
+      setPlanLimits(PLAN_LIMITS.free);
     } finally {
       setLoading(false);
     }
