@@ -1,10 +1,11 @@
+
 # 🕰️ FuturoPresente - Plataforma de Cápsulas do Tempo Digitais
 
-<div align="center">
+[→ Brand Book Keepla 2025](docs/brandbook/README.md)
 
 ![FuturoPresente Logo](https://via.placeholder.com/200x80/DAB8C3/3D4A5A?text=FuturoPresente)
 
-**Conecte momentos especiais através do tempo**
+Conecte momentos especiais através do tempo
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -12,44 +13,51 @@
 [![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)](https://supabase.com/)
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)](https://vitejs.dev/)
 
-</div>
 
 ## 📖 Sobre o Projeto
 
 **FuturoPresente** é uma plataforma inovadora que permite criar, agendar e enviar cápsulas do tempo digitais. Conecte pessoas através do tempo, preservando momentos especiais e entregando-os no futuro perfeito.
 
 ### 🎯 Missão
+
 Transformar a forma como as pessoas se conectam emocionalmente, permitindo que momentos especiais sejam preservados e entregues no momento certo, criando experiências únicas e duradouras.
+
 
 ## ✨ Principais Funcionalidades
 
 ### 🕰️ Cápsulas do Tempo Digitais
+
 - **Criação Intuitiva**: Interface amigável para criar mensagens personalizadas
 - **Agendamento Flexível**: Defina datas futuras para entrega automática
 - **Múltiplos Formatos**: Suporte para texto, imagens e conteúdo multimídia
 - **Validação Avançada**: Sistema robusto de validação de dados
 
 ### 🚀 Entrega Automática
+
 - **Sistema Inteligente**: Processamento automático baseado em timezone de Portugal
 - **Cron Jobs**: Execução a cada minuto para máxima precisão
 - **Fallback Robusto**: Sistema de backup em caso de falhas
 - **Logs Detalhados**: Monitoramento completo de todas as operações
 
 ### 🎮 Sistema de Gamificação
+
 - **Conquistas**: Desbloqueie insígnias por atividades especiais
 - **Missões**: Complete desafios e ganhe recompensas
 - **Ranking**: Sistema de pontuação e classificação
 - **Progressão**: Acompanhe seu crescimento na plataforma
 
 ### 🔐 Segurança e Privacidade
+
 - **Autenticação Robusta**: Sistema seguro de login e registro
 - **RLS (Row Level Security)**: Proteção de dados a nível de base de dados
 - **Criptografia**: Dados sensíveis protegidos
 - **Políticas de Privacidade**: Conformidade com GDPR
 
+
 ## 🛠️ Stack Tecnológica
 
 ### Frontend
+
 - **React 18** - Biblioteca para interfaces de utilizador
 - **TypeScript** - Tipagem estática para JavaScript
 - **Vite** - Build tool moderna e rápida
@@ -58,6 +66,7 @@ Transformar a forma como as pessoas se conectam emocionalmente, permitindo que m
 - **Zod** - Validação de esquemas TypeScript-first
 
 ### Backend & Base de Dados
+
 - **Supabase** - Backend-as-a-Service completo
   - PostgreSQL - Base de dados relacional
   - Auth - Autenticação e autorização
@@ -66,28 +75,35 @@ Transformar a forma como as pessoas se conectam emocionalmente, permitindo que m
   - Real-time - Atualizações em tempo real
 
 ### Integrações
+
 - **Resend** - Serviço de envio de emails transacionais
 - **Stripe** - Processamento de pagamentos
 - **pg_cron** - Agendamento de tarefas na base de dados
 
 ### Ferramentas de Desenvolvimento
+
 - **Cypress** - Testes end-to-end
 - **ESLint** - Linting de código
 - **Prettier** - Formatação de código
 
+
 ## 🔧 Correções Recentes da Base de Dados
 
 ### Inconsistências Resolvidas
+
 - **Campo de Conteúdo**: Corrigida inconsistência entre campos `message` e `message_content` na tabela `keepsakes`
 - **Mapeamento de Dados**: Atualizado hook `useKeepsakes` para usar consistentemente `message_content`
 - **Validação de Formulários**: Corrigidos schemas de validação para usar `message_content`
 - **Componentes UI**: Atualizados componentes `KeepsakesList` e `EditKeepsake` para usar o campo correto
 
 ### Migração Aplicada
-- **20250108000000_fix_keepsakes_schema_inconsistency.sql**: Remove campo duplicado `message` e mantém apenas `message_content` 
+
+- **20250108000000_fix_keepsakes_schema_inconsistency.sql**: Remove campo duplicado `message` e mantém apenas `message_content`
+
 ## 🚀 Instalação e Configuração
 
 ### Pré-requisitos
+
 - **Node.js** (versão 18 ou superior)
 - **npm** ou **yarn**
 - **Conta Supabase** (gratuita)
@@ -95,12 +111,14 @@ Transformar a forma como as pessoas se conectam emocionalmente, permitindo que m
 - **Conta Stripe** (para pagamentos - opcional)
 
 ### 1. Clone o Repositório
+
 ```bash
 git clone https://github.com/seu-usuario/future-keepsake-delivery.git
 cd future-keepsake-delivery
 ```
 
 ### 2. Instale as Dependências
+
 ```bash
 npm install
 # ou
@@ -118,6 +136,7 @@ cp .env.example .env
 ```
 
 Configure apenas as variáveis públicas no `.env`:
+
 - `VITE_SUPABASE_URL` - URL pública do seu projeto Supabase
 - `VITE_SUPABASE_ANON_KEY` - Chave anônima pública do Supabase
 - `VITE_STRIPE_PUBLIC_KEY` - Chave pública do Stripe (opcional)
@@ -125,12 +144,14 @@ Configure apenas as variáveis públicas no `.env`:
 ### 4. Configuração da Base de Dados
 
 #### 3.1 Configurar Supabase
+
 1. Crie um novo projeto no [Supabase](https://supabase.com/)
 2. Execute as migrações SQL localizadas em `supabase/migrations/`
 3. Configure as políticas RLS (Row Level Security)
 4. Ative as extensões necessárias: `pg_cron`, `http`
 
 #### 3.2 Deploy das Edge Functions
+
 ```bash
 # Instalar Supabase CLI
 npm install -g @supabase/cli
@@ -187,17 +208,20 @@ npm run preview
 
 O projeto estará disponível em `http://localhost:5173`
 
+
 ## 📧 Sistema de Entrega Automática
 
 ### Funcionalidades Implementadas
 
 #### 🔄 Processamento Automático
+
 - **Cron Job**: Execução a cada minuto via `pg_cron`
 - **Timezone**: Configurado para Portugal (`Europe/Lisbon`)
 - **Fallback**: Sistema de backup em SQL caso Edge Function falhe
 - **Logs**: Registro detalhado de todas as operações
 
 #### 📨 Edge Function `send-keepsakes`
+
 - **Localização**: `supabase/functions/send-keepsakes/`
 - **Trigger**: Chamada automática via cron job
 - **Funcionalidades**:
@@ -208,6 +232,7 @@ O projeto estará disponível em `http://localhost:5173`
   - Tratamento robusto de erros
 
 #### 🗄️ Função SQL `send_due_capsules()`
+
 - **Backup**: Executa quando Edge Function falha
 - **Funcionalidades**: Mesma lógica da Edge Function em SQL puro
 - **Performance**: Otimizada com índices específicos
@@ -233,6 +258,7 @@ npm run db:seed         # Seed de dados de teste
 npm run db:migrate      # Executar migrações
 ```
 
+
 ## 🚀 Deploy para Vercel
 
 ### Configuração Automática via GitHub Actions
@@ -257,15 +283,19 @@ VITE_SENTRY_DSN=your_sentry_dsn
 VITE_GA_MEASUREMENT_ID=your_ga_measurement_id
 ```
 
-#### 2. Como obter os valores do Vercel:
+#### 2. Como obter os valores do Vercel
 
-1. **VERCEL_TOKEN**: 
-   - Acesse [Vercel Dashboard](https://vercel.com/account/tokens)
-   - Crie um novo token de acesso
 
-2. **VERCEL_ORG_ID** e **VERCEL_PROJECT_ID**:
-   - Execute `npx vercel link` no projeto
-   - Os IDs serão salvos em `.vercel/project.json`
+1. **VERCEL_TOKEN**
+
+- Acesse [Vercel Dashboard](https://vercel.com/account/tokens)
+- Crie um novo token de acesso
+
+
+1. **VERCEL_ORG_ID** e **VERCEL_PROJECT_ID**
+
+- Execute `npx vercel link` no projeto
+- Os IDs serão salvos em `.vercel/project.json`
 
 #### 3. Deploy Manual
 
@@ -280,7 +310,7 @@ vercel login
 
 # Deploy
 vercel --prod
-```
+```bash
 
 ### Configuração de Environment Variables no Vercel
 
@@ -290,16 +320,18 @@ No dashboard do Vercel, configure as seguintes variáveis:
 - `VITE_SUPABASE_ANON_KEY`
 - `VITE_STRIPE_PUBLIC_KEY`
 - `VITE_SENTRY_DSN`
-- `VITE_GA_MEASUREMENT_ID` 
-📁 Estrutura do Projeto 
-Code 
-future-keepsake-delivery/ 
-├── src/ 
-│   ├── components/   # Componentes reutilizáveis 
-│   ├── pages/        # Páginas da aplicação 
-│   ├── contexts/     # Contextos globais (autenticação, carrinho, gamificação) 
-│   ├── hooks/        # Hooks customizados 
-├── supabase/ 
+- `VITE_GA_MEASUREMENT_ID`
+
+## 📁 Estrutura do Projeto
+
+```
+future-keepsake-delivery/
+├── src/
+│   ├── components/   # Componentes reutilizáveis
+│   ├── pages/        # Páginas da aplicação
+│   ├── contexts/     # Contextos globais (autenticação, carrinho, gamificação)
+│   ├── hooks/        # Hooks customizados
+├── supabase/
 │   ├── migrations/   # Scripts de migração do banco de dados
 │   └── functions/    # Edge Functions do Supabase
 │       └── send-keepsakes/  # Função para entrega automática de keepsakes
@@ -308,19 +340,29 @@ future-keepsake-delivery/
 │   ├── updateKeepsakeStatus.js    # Atualização manual de status
 │   ├── serveKeepsakeFunction.js   # Servidor local da Edge Function
 │   ├── deployKeepsakeFunction.js  # Implantação da Edge Function
-│   └── checkDeploymentStatus.js   # Verificação do status da implantação 
-🧪 Testes 
-Execute testes E2E com o Cypress: 
- 
-bash 
-npx cypress open 
-🤝 Contribuindo 
-Pull requests são bem-vindos! 
-Para contribuir: 
- 
-Siga as boas práticas de código. 
-Descreva claramente suas alterações no PR. 
-Certifique-se de que os testes estejam passando. 
-📄 Licença 
-Este projeto está sob a licença MIT. 
+│   └── checkDeploymentStatus.js   # Verificação do status da implantação
+```
+
+## 🧪 Testes
+
+Execute testes E2E com o Cypress:
+
+
+```bash
+npx cypress open
+```
+
+## 🤝 Contribuindo
+
+Pull requests são bem-vindos!
+
+Para contribuir:
+
+- Siga as boas práticas de código.
+- Descreva claramente suas alterações no PR.
+- Certifique-se de que os testes estejam passando.
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT.
 Consulte o arquivo LICENSE para mais informações.
