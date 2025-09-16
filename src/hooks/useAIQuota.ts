@@ -34,10 +34,10 @@ export function useAIQuota() {
       setLoading(true);
       setError(null);
 
-      // Buscar tier do usuário
+      // Buscar tier do usuário através do plan_id
       const { data: userProfile, error: profileError } = await supabase
-        .from('users')
-        .select('subscription_tier')
+        .from('profiles')
+        .select('plan_id, plans(name)')
         .eq('id', user.id)
         .single();
 
@@ -45,14 +45,16 @@ export function useAIQuota() {
         throw profileError;
       }
 
-      const tier = (userProfile?.subscription_tier || 'free') as keyof typeof QUOTA_LIMITS;
+      // Determinar tier com base no nome do plano
+      const planName = (userProfile?.plans as { name: string } | null)?.name || 'free';
+      const tier = (planName as keyof typeof QUOTA_LIMITS) || 'free';
       const limit = QUOTA_LIMITS[tier];
 
       // Buscar uso atual do dia
       const today = new Date().toISOString().split('T')[0];
       const { data: usage, error: usageError } = await supabase
         .from('api_usage')
-        .select('*')
+        .select('huggingface_requests')
         .eq('user_id', user.id)
         .eq('date', today)
         .single();
