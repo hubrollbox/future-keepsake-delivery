@@ -170,7 +170,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
         body: {
           message: currentMessage,
           keywords: detectedKeywords,
-          userId: session.user.id
+          userId: session.user?.id || ''
         }
       });
 
@@ -347,7 +347,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
                   </Button>
                   
                   {quota && (
-                    <AIQuotaStatus compact onUpgrade={onUpgradeRequest} />
+                    <AIQuotaStatus compact onUpgrade={() => onUpgradeRequest && onUpgradeRequest(detectedKeywords)} />
                   )}
                 </div>
                 
