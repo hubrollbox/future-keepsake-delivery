@@ -1,0 +1,24 @@
+/*
+  organizacao-repositorio.css
+  Estilos externos para paleta de cores e layout
+*/
+
+.color-swatch.red { background: #C53030; }
+.color-swatch.black { background: #0A0A0A; }
+.color-swatch.white { background: #FFFFFF; border: 1px solid #ddd; }
+.color-swatch.gray { background: #718096; }
+.color-swatch.gold { background: #D4AF37; }
+
+.swatch-box {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+}
+.swatch-label { text-align: center; }
+.swatch-row {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
