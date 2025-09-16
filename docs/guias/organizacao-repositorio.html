@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guia para organização do repositório Keepla no VS Code com estrutura de pastas, documentação, branding e marketing.">
+    <title>Organização Repositório Keepla - VS Code</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7f9;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #C53030 0%, #0A0A0A 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            color: #C53030;
+            border-bottom: 2px solid #C53030;
+            padding-bottom: 10px;
+            margin: 30px 0 20px;
+        }
+        
+        h3 {
+            color: #0A0A0A;
+            margin: 25px 0 15px;
+        }
+        
+        .container {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        nav.sidebar {
+            flex: 1;
+            min-width: 250px;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        main {
+            flex: 3;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .code-block {
+            background: #2d2d2d;
+            color: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            position: relative;
+        }
+        
+        .file-tree {
+            line-height: 1.4;
+        }
+        
+        .file-tree ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        
+        .file-tree li {
+            position: relative;
+        }
+        
+        .file-tree li:before {
+            content: "📁 ";
+            color: #FFD700;
+        }
+        
+        .file-tree li.file:before {
+            content: "📄 ";
+            color: #A0AEC0;
+        }
+        
+        .step {
+            background: #f9f9f9;
+            border-left: 4px solid #C53030;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .code-block pre {
+            margin: 0;
+            padding-right: 40px;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #718096;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: #4A5568;
+        }
+        
+        .tip {
+            background: #e8f4fc;
+            border-left: 4px solid #4a90e2;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .nav-links {
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin: 10px 0;
+        }
+        
+        .nav-links a {
+            color: #C53030;
+            text-decoration: none;
+            display: block;
+            padding: 8px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: #f5f5f5;
+        }
+        
+        .color-swatch {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        .red { background: #C53030; }
+        .black { background: #0A0A0A; }
+        .white { background: #FFFFFF; border: 1px solid #ddd; }
+        .gray { background: #718096; } /* Corrigido para melhor contraste */
+        .gold { background: #D4AF37; }
+        
+        .section-title {
+            font-weight: 600;
+            margin: 15px 0 10px;
+            color: #0A0A0A;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            header {
+                padding: 20px 15px; /* Reduzido para mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Organização do Repositório Keepla</h1>
+        <p>Guia passo a passo para estruturar seu projeto no VS Code</p>
+    </header>
+
+    <div class="container">
+        <nav class="sidebar" aria-label="Navegação principal">
+            <h3>Navegação Rápida</h3>
+            <ul class="nav-links">
+                <li><a href="#estrutura">Estrutura de Pastas</a></li>
+                <li><a href="#passo1">Passo 1: Criar Estrutura</a></li>
+                <li><a href="#passo2">Passo 2: Brand Book</a></li>
+                <li><a href="#passo3">Passo 3: Documentação</a></li>
+                <li><a href="#passo4">Passo 4: Desenvolvimento</a></li>
+                <li><a href="#passo5">Passo 5: Marketing</a></li>
+                <li><a href="#passo6">Passo 6: Versionamento</a></li>
+                <li><a href="#cores">Paleta de Cores</a></li>
+            </ul>
+            
+            <h3>Paleta de Cores</h3>
+            <p><span class="color-swatch red" aria-label="Keepla Red"></span> Keepla Red: #C53030</p>
+            <p><span class="color-swatch black" aria-label="Preto Memória"></span> Preto Memória: #0A0A0A</p>
+            <p><span class="color-swatch white" aria-label="Branco Puro"></span> Branco Puro: #FFFFFF</p>
+            <p><span class="color-swatch gray" aria-label="Cinza Nostalgia"></span> Cinza Nostalgia: #718096</p>
+            <p><span class="color-swatch gold" aria-label="Dourado Futuro"></span> Dourado Futuro: #D4AF37</p>
+        </nav>
+
+        <main>
+            <h2 id="estrutura">Estrutura de Pastas do Projeto</h2>
+            <p>Abaixo está a estrutura recomendada para organizar todo o projeto Keepla:</p>
+            
+            <div class="code-block">
+                <button class="copy-btn">Copiar</button>
+                <pre><code>keepla-repositorio/
+├── 📁 brand/
+│   ├── 📁 assets/
+│   │   ├── 📁 logos/
+│   │   ├── 📁 icons/
+│   │   └── 📁 images/
+│   ├── 📁 guidelines/
+│   │   ├── 📄 brand-book.md
+│   │   ├── 📄 color-palette.md
+│   │   ├── 📄 typography.md
+│   │   └── 📄 tone-of-voice.md
+│   └── 📄 style-guide.md
+├── 📁 docs/
+│   ├── 📄 README.md
+│   ├── 📄 project-goals.md
+│   ├── 📄 roadmap.md
+│   └── 📄 api-documentation.md
+├── 📁 src/
+│   ├── 📁 frontend/
+│   ├── 📁 backend/
+│   └── 📁 mobile/
+├── 📁 marketing/
+│   ├── 📁 social-media/
+│   ├── 📁 email-templates/
+│   ├── 📁 campaigns/
+│   └── 📁 analytics/
+├── 📁 legal/
+│   ├── 📄 terms-of-service.md
+│   ├── 📄 privacy-policy.md
+│   └── 📄 gdpr-compliance.md
+├── 📁 scripts/
+│   ├── 📁 deployment/
+│   └── 📁 utilities/
+└── 📁 tests/
+    ├── 📁 unit/
+    ├── 📁 integration/
+    └── 📁 user-acceptance/</code></pre>
+            </div>
+
+            <h2 id="passo1">Passo 1: Criar a Estrutura de Pastas</h2>
+            <div class="step">
+                <p class="section-title">No Terminal do VS Code</p>
+                <p>Abra o terminal integrado do VS Code (Ctrl + `) e execute os seguintes comandos:</p>
+                <div class="code-block">
+                    <button class="copy-btn">Copiar</button>
+                    <pre><code># Criar pasta principal
+mkdir keepla-repositorio
+cd keepla-repositorio
+
+# Criar estrutura de pastas
+mkdir -p brand/assets/{logos,icons,images}
+mkdir -p brand/guidelines
+mkdir -p docs
+mkdir -p src/{frontend,backend,mobile}
+mkdir -p marketing/{social-media,email-templates,campaigns,analytics}
+mkdir -p legal
+mkdir -p scripts/{deployment,utilities}
+mkdir -p tests/{unit,integration,user-acceptance}
+
+# Inicializar repositório Git
+git init
+
+# Criar arquivo .gitignore
+echo "node_modules/" >> .gitignore
+echo ".env" >> .gitignore
+echo "dist/" >> .gitignore
+echo "*.log" >> .gitignore</code></pre>
+                </div>
+            </div>
+
+            <h2 id="passo2">Passo 2: Configurar Documentação de Branding</h2>
+            <div class="step">
+                <p class="section-title">Criar Arquivos de Diretrizes de Marca</p>
+                <p>Crie os seguintes arquivos na pasta <code>brand/guidelines/</code>:</p>
+                
+                <div class="code-block">
+                    <button class="copy-btn">Copiar</button>
+                    <pre><code># brand/guidelines/brand-book.md
+# brand/guidelines/color-palette.md
+# brand/guidelines/typography.md
+# brand/guidelines/tone-of-voice.md
+# brand/style-guide.md</code></pre>
+                </div>
+                
+                <div class="tip">
+                    <strong>Dica:</strong> Use a extensão "Code Spell Checker" no VS Code para verificar a ortografia em sua documentação.
+                </div>
+            </div>
+
+            <h2 id="passo3">Passo 3: Configurar Documentação do Projeto</h2>
+            <div class="step">
+                <p class="section-title">Arquivos Essenciais de Documentação</p>
+                <p>Crie estes arquivos na pasta <code>docs/</code>:</p>
+                
+                <div class="code-block">
+                    <button class="copy-btn">Copiar</button>
+                    <pre><code># docs/README.md - Documentação principal do projeto
+# docs/project-goals.md - Objetivos e metas
+# docs/roadmap.md - Cronograma do projeto
+# docs/api-documentation.md - Documentação da API</code></pre>
+                </div>
+            </div>
+
+            <h2 id="passo4">Passo 4: Estrutura de Desenvolvimento</h2>
+            <div class="step">
+                <p class="section-title">Organizar Código Fonte</p>
+                <p>Estrutura básica para desenvolvimento:</p>
+                
+                <div class="code-block">
+                    <button class="copy-btn">Copiar</button>
+                    <pre><code># Frontend (React/Vue/Angular)
+src/frontend/
+├── public/
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── styles/
+│   └── utils/
+├── package.json
+└── README.md
+
+# Backend (Node.js/Python)
+src/backend/
+├── controllers/
+├── models/
+├── routes/
+├── middleware/
+├── config/
+├── package.json
+└── server.js
+
+# Mobile (React Native/Flutter)
+src/mobile/
+├── lib/
+├── screens/
+├── components/
+├── assets/
+├── pubspec.yaml
+└── README.md</code></pre>
+                </div>
+            </div>
+
+            <h2 id="passo5">Passo 5: Material de Marketing</h2>
+            <div class="step">
+                <p class="section-title">Organizar Conteúdo de Marketing</p>
+                <p>Crie estas subpastas em <code>marketing/</code>:</p>
+                
+                <div class="code-block">
+                    <button class="copy-btn">Copiar</button>
+                    <pre><code>marketing/
+├── social-media/
+│   ├── instagram/
+│   ├── facebook/
+│   └── linkedin/
+├── email-templates/
+│   ├── welcome-email.html
+│   ├── newsletter.html
+│   └── retention-campaign.html
+├── campaigns/
+│   ├── launch-campaign/
+│   ├── referral-program/
+│   └── seasonal-campaigns/
+└── analytics/
+    ├── metrics-dashboard.md
+    └── kpi-tracking.md</code></pre>
+                </div>
+            </div>
+
+            <h2 id="passo6">Passo 6: Configuração de Versionamento</h2>
+            <div class="step">
+                <p class="section-title">Configurar Git para o Projeto</p>
+                <p>Execute estes comandos no terminal do VS Code:</p>
+                
+                <div class="code-block">
+                    <button class="copy-btn">Copiar</button>
+                    <pre><code># Configurar usuário
+git config user.name "Seu Nome"
+git config user.email "seu.email@exemplo.com"
+
+# Adicionar todos os arquivos ao staging
+git add .
+
+# Fazer primeiro commit
+git commit -m "Initial commit: Setup project structure"
+
+# Adicionar repositório remoto (se aplicável)
+git remote add origin https://github.com/seu-usuario/keepla-repositorio.git
+
+# Fazer push para o repositório remoto
+git push -u origin main</code></pre>
+                </div>
+                
+                <div class="tip">
+                    <strong>Dica:</strong> Use a extensão "GitLens" no VS Code para ter melhor visualização e controle do seu versionamento.
+                </div>
+            </div>
+
+            <h2 id="cores">Paleta de Cores Keepla</h2>
+            <p>Use estas cores consistentemente em toda a documentação e desenvolvimento:</p>
+            
+            <link rel="stylesheet" href="organizacao-repositorio.css">
+            <div class="swatch-row">
+                <div class="swatch-label">
+                    <div class="swatch-box red"></div>
+                    <p>#C53030<br>Keepla Red</p>
+                </div>
+                <div class="swatch-label">
+                    <div class="swatch-box black"></div>
+                    <p>#0A0A0A<br>Preto Memória</p>
+                </div>
+                <div class="swatch-label">
+                    <div class="swatch-box white"></div>
+                    <p>#FFFFFF<br>Branco Puro</p>
+                </div>
+                <div class="swatch-label">
+                    <div class="swatch-box gray"></div>
+                    <p>#718096<br>Cinza Nostalgia</p>
+                </div>
+                <div class="swatch-label">
+                    <div class="swatch-box gold"></div>
+                    <p>#D4AF37<br>Dourado Futuro</p>
+                </div>
+            </div>
+            
+            <div class="tip">
+                <strong>Nota:</strong> Lembre-se de manter toda a documentação atualizada à medida que o projeto evolui. 
+                A consistência na aplicação das diretrizes de marca é crucial para o sucesso do Keepla.
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-links a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    targetElement.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                }
+            });
+        });
+        
+        // Add copy functionality to code blocks
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const codeBlock = this.parentElement;
+                const codeContent = codeBlock.querySelector('code').textContent;
+                
+                navigator.clipboard.writeText(codeContent).then(() => {
+                    const originalText = this.textContent;
+                    this.textContent = '✓ Copiado!';
+                    
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Falha ao copiar texto: ', err);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
