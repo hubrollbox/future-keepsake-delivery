@@ -1,15 +1,15 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useState } from "react";
-import { motion } from 'framer-motion';
+import { motion, easeOut } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Check, Star, Zap, Shield, Users, Sparkles, Crown, ArrowRight } from "lucide-react";
+import { Check, Star, Zap, Sparkles, Crown, ArrowRight } from "lucide-react";
 import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import { trackSubscription, trackButtonClick, trackPageView } from '@/lib/analytics';
+import { trackSubscription, trackButtonClick } from '@/lib/analytics';
 
 const freemiumPlans = [
   {
@@ -133,7 +133,7 @@ function Pricing() {
       y: 0,
       transition: {
         duration: 0.5,
-        ease: "easeOut"
+        ease: easeOut
       }
     }
   };
@@ -177,6 +177,8 @@ function Pricing() {
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                     billingCycle === 'yearly' ? 'bg-blue-600' : 'bg-gray-200'
                   }`}
+                  aria-label="Alternar ciclo de cobrança mensal/anual"
+                  title="Alternar ciclo de cobrança mensal/anual"
                 >
                   <span
                     className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
@@ -205,7 +207,7 @@ function Pricing() {
             animate="visible"
             className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20"
           >
-            {freemiumPlans.map((plan, index) => (
+            {freemiumPlans.map((plan) => (
               <motion.div
                 key={plan.id}
                 variants={cardVariants}

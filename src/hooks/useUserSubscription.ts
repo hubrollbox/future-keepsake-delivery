@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
+import { supabase } from '@/lib/supabase';
 import { useAuth } from './useAuth';
 import { toast } from 'sonner';
 
@@ -137,10 +137,11 @@ export function useUserSubscription(): UseUserSubscriptionReturn {
         setPlanLimits(PLAN_LIMITS.free);
       } else {
         setSubscription(subscriptionData);
-        setPlanLimits(PLAN_LIMITS[subscriptionData.plan_type] || PLAN_LIMITS.free);
+  const plan = PLAN_LIMITS[subscriptionData.plan_type];
+  setPlanLimits(plan ? plan : PLAN_LIMITS.free);
       }
 
-      // Buscar histórico de pagamentos
+  setPlanLimits(PLAN_LIMITS[subscriptionData.plan_type] ?? PLAN_LIMITS.free);
       const { data: paymentsData, error: paymentsError } = await supabase
         .from('payment_history')
         .select('*')
