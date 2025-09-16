@@ -18,6 +18,7 @@ import { Form } from '@/components/ui/form';
 import { AlertCircle, Save, Home, Crown, Zap, Sparkles } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { toast } from 'sonner';
+import { trackKeepsakeCreation, trackButtonClick, trackError } from '@/lib/analytics';
 
 interface PlanLimits {
   maxMessageLength: number;
@@ -220,6 +221,9 @@ const CreateKeepsake: React.FC = () => {
     setIsCreatingFreeKeepsake(true);
     
     try {
+      // Track keepsake creation
+      trackKeepsakeCreation('free_email');
+      
       // Detectar keywords para upsell
       const keywords = detectKeywords(data.message);
       setDetectedKeywords(keywords);
@@ -241,7 +245,10 @@ const CreateKeepsake: React.FC = () => {
         .select()
         .single();
 
-      if (error) throw error;
+      if (error) {
+        trackError(error.message, 'create_keepsake');
+        throw error;
+      }
 
       toast.success('🎉 Cápsula criada com sucesso!');
       

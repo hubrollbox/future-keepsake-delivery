@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { trackLogin, trackFormSubmission, trackError } from "@/lib/analytics";
 import { z } from "zod";
 
 const loginSchema = z.object({
@@ -65,6 +66,9 @@ const Login = () => {
     
     if (!validateForm()) return;
     
+    // Track form submission
+    trackFormSubmission('login_form');
+    
     setLoading(true);
     
     const { error } = await signIn(formData.email, formData.password);
@@ -72,8 +76,13 @@ const Login = () => {
     setLoading(false);
     
     if (!error) {
+      // Track successful login
+      trackLogin('email');
       // Navigate directly to dashboard after successful login
       navigate('/dashboard');
+    } else {
+      // Track login error
+      trackError(error.message || 'Login failed', 'login_page');
     }
   };
 

@@ -9,6 +9,7 @@ import { Check, Star, Zap, Shield, Users, Sparkles, Crown, ArrowRight } from "lu
 import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import { trackSubscription, trackButtonClick, trackPageView } from '@/lib/analytics';
 
 const freemiumPlans = [
   {
@@ -88,6 +89,9 @@ function Pricing() {
   const navigate = useNavigate();
 
   const handleSelectPlan = (planId: string) => {
+    // Track button click
+    trackButtonClick(`select_plan_${planId}`, 'pricing_page');
+    
     if (!user) {
       toast.error('Faça login para continuar');
       navigate('/login');
@@ -98,6 +102,12 @@ function Pricing() {
       toast.success('Você já está no plano gratuito!');
       navigate('/dashboard');
       return;
+    }
+
+    // Track subscription intent
+    const plan = freemiumPlans.find(p => p.id === planId);
+    if (plan) {
+      trackSubscription(plan.name, 'subscribe');
     }
 
     // Aqui seria integrado com Stripe

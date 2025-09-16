@@ -7,6 +7,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/useAuth';
 import { useSecureForm } from '@/hooks/useSecureForm';
 import { secureEmailSchema, securePasswordSchema, secureNameSchema } from '@/components/auth/SecureInputValidation';
+import { trackSignUp, trackFormSubmission, trackError } from '@/lib/analytics';
 import { z } from 'zod';
 
 const registerSchema = z.object({
@@ -34,6 +35,9 @@ const SecureRegisterForm = () => {
   } = useSecureForm<RegisterFormData>({
     schema: registerSchema,
     onSubmit: async (validatedData) => {
+      // Track form submission
+      trackFormSubmission('register_form');
+      
       const { error } = await signUp(
         validatedData.email,
         validatedData.password,
@@ -42,9 +46,14 @@ const SecureRegisterForm = () => {
 
       if (error) {
         const msg = typeof error === 'object' && error && 'message' in error ? String((error as any).message) : 'Erro no registo';
+        // Track registration error
+        trackError(msg, 'register_form');
         throw new Error(msg);
       }
 
+      // Track successful registration
+      trackSignUp('email');
+      
       toast({
         title: 'Conta criada com sucesso',
         description: 'Verifique o seu email para confirmar a conta.',
