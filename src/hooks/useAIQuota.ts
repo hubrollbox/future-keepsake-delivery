@@ -25,73 +25,50 @@ export function useAIQuota() {
   const [error, setError] = useState<string | null>(null);
 
   const fetchQuota = async () => {
-    if (!user) {
-      setLoading(false);
-      return;
-    }
+    if (!user?.id) return;
 
     try {
       setLoading(true);
-      setError(null);
 
-      // Buscar tier do usuário
-      const { data: userProfile, error: profileError } = await supabase
-        .from('users')
-        .select('subscription_tier')
+      // Get user's subscription tier from profiles table
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('subscription_plan')
         .eq('id', user.id)
         .single();
 
-      if (profileError) {
-        throw profileError;
-      }
+      if (profileError) throw profileError;
 
-      const tier = (userProfile?.subscription_tier || 'free') as keyof typeof QUOTA_LIMITS;
+      const tier = (profile?.subscription_plan || 'free') as keyof typeof QUOTA_LIMITS;
+
+      // Get current usage from api_request_log table
+      const { data: usage, error: usageError } = await supabase
+        .from('api_request_log')
+        .select('*')
+        .eq('user_id', user?.id)
+        .gte('created_at', resetDate.toISOString());
+
+      if (usageError) throw usageError;
+
       const limit = QUOTA_LIMITS[tier];
 
-      // Buscar uso atual do dia
-      const today = new Date().toISOString().split('T')[0];
-      const { data: usage, error: usageError } = await supabase
-        .from('api_usage')
-        .select('*')
-        .eq('user_id', user.id)
-        .eq('date', today)
-        .single();
+      // Count current usage for today from api_request_log
+      const today = new Date();
+      today.setUTCHours(0, 0, 0, 0);
+      
+      const usageCount = usage?.length || 0;
 
-      // Se não há registro para hoje, criar um
-      let currentUsage = 0;
-      if (usageError && usageError.code === 'PGRST116') {
-        // Registro não existe, criar um novo
-        const { data: newUsage, error: createError } = await supabase
-          .from('api_usage')
-          .insert({
-            user_id: user.id,
-            date: today,
-            huggingface_requests: 0
-          })
-          .select()
-          .single();
-
-        if (createError) {
-          throw createError;
-        }
-        currentUsage = newUsage.huggingface_requests;
-      } else if (usageError) {
-        throw usageError;
-      } else {
-        currentUsage = usage.huggingface_requests;
-      }
-
-      // Calcular próxima data de reset (meia-noite UTC)
+      // Calculate next reset date (midnight UTC)
       const tomorrow = new Date();
       tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
       tomorrow.setUTCHours(0, 0, 0, 0);
 
       const quotaData: AIQuotaData = {
-        used: currentUsage,
+        used: usageCount,
         limit,
-        remaining: Math.max(0, limit - currentUsage),
+        remaining: Math.max(0, limit - usageCount),
         tier,
-        canUseAI: currentUsage < limit,
+        canUseAI: usageCount < limit,
         resetDate: tomorrow.toISOString()
       };
 
@@ -105,7 +82,7 @@ export function useAIQuota() {
   };
 
   const incrementUsage = async (): Promise<boolean> => {
-    if (!user || !quota) {
+    if (!user?.id || !quota) {
       return false;
     }
 
@@ -117,31 +94,29 @@ export function useAIQuota() {
     }
 
     try {
-      const today = new Date().toISOString().split('T')[0];
-      const newUsage = quota.used + 1;
-
+      // Log the API request in api_request_log table
       const { error } = await supabase
-        .from('api_usage')
-        .upsert({
+        .from('api_request_log')
+        .insert({
           user_id: user.id,
-          date: today,
-          huggingface_requests: newUsage,
-          updated_at: new Date().toISOString()
+          endpoint: 'ai_suggestion',
+          created_at: new Date().toISOString()
         });
 
       if (error) {
         throw error;
       }
 
-      // Atualizar estado local
+      // Update local state
       setQuota(prev => prev ? {
         ...prev,
-        used: newUsage,
-        remaining: Math.max(0, prev.limit - newUsage),
-        canUseAI: newUsage < prev.limit
+        used: prev.used + 1,
+        remaining: Math.max(0, prev.limit - (prev.used + 1)),
+        canUseAI: (prev.used + 1) < prev.limit
       } : null);
 
-      // Mostrar aviso quando próximo do limite
+      // Show warning when approaching limit
+      const newUsage = quota.used + 1;
       if (newUsage >= quota.limit * 0.8) {
         const remaining = quota.limit - newUsage;
         if (remaining > 0) {
