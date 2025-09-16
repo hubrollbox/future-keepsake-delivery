@@ -99,7 +99,7 @@ export function useUserSubscription(): UseUserSubscriptionReturn {
   const fetchSubscription = async () => {
     if (!user) {
       setSubscription(null);
-      setPlanLimits(PLAN_LIMITS.free);
+  setPlanLimits(PLAN_LIMITS.free ?? null);
       setLoading(false);
       return;
     }
@@ -134,14 +134,14 @@ export function useUserSubscription(): UseUserSubscriptionReturn {
         if (createError) throw createError;
         
         setSubscription(newSubscription);
-        setPlanLimits(PLAN_LIMITS.free);
+  setPlanLimits(PLAN_LIMITS.free ?? null);
       } else {
         setSubscription(subscriptionData);
   const plan = PLAN_LIMITS[subscriptionData.plan_type];
-  setPlanLimits(plan ? plan : PLAN_LIMITS.free);
+  setPlanLimits(plan ? plan : PLAN_LIMITS.free ?? null);
       }
 
-  setPlanLimits(PLAN_LIMITS[subscriptionData.plan_type] ?? PLAN_LIMITS.free);
+  setPlanLimits(PLAN_LIMITS[subscriptionData.plan_type] ?? PLAN_LIMITS.free ?? null);
       const { data: paymentsData, error: paymentsError } = await supabase
         .from('payment_history')
         .select('*')
@@ -157,7 +157,7 @@ export function useUserSubscription(): UseUserSubscriptionReturn {
       console.error('Error fetching subscription:', err);
       setError(err instanceof Error ? err.message : 'Erro ao carregar assinatura');
       // Em caso de erro, definir como plano gratuito
-      setPlanLimits(PLAN_LIMITS.free);
+  setPlanLimits(PLAN_LIMITS.free ?? null);
     } finally {
       setLoading(false);
     }
