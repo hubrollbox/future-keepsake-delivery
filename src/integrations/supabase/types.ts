@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      api_usage: {
+        Row: {
+          id: string;
+          user_id: string;
+          date: string;
+          huggingface_requests: number;
+          created_at: string;
+          updated_at: string;
+        }
+        Insert: {
+          id?: string;
+          user_id: string;
+          date: string;
+          huggingface_requests?: number;
+          created_at?: string;
+          updated_at?: string;
+        }
+        Update: {
+          id?: string;
+          user_id?: string;
+          date?: string;
+          huggingface_requests?: number;
+          created_at?: string;
+          updated_at?: string;
+        }
+        Relationships: []
+      }
       achievements: {
         Row: {
           created_at: string | null
