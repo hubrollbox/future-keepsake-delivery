@@ -82,7 +82,10 @@ const Login = () => {
       navigate('/dashboard');
     } else {
       // Track login error
-      trackError(error.message || 'Login failed', 'login_page');
+      const errorMessage = error && typeof error === 'object' && 'message' in error 
+        ? (error as { message: string }).message 
+        : 'Login failed';
+      trackError(errorMessage, 'login_page');
     }
   };
 
