@@ -182,6 +182,11 @@ class AnalyticsService {
 // Export singleton instance
 export const analytics = new AnalyticsService();
 
+// Export initGA function for manual initialization
+export const initGA = () => {
+  return analytics;
+};
+
 // Convenience functions for common tracking
 export const trackPageView = (title: string, location: string) => 
   analytics.trackPageView(title, location);
