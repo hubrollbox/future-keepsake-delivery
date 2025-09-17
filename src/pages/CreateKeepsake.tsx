@@ -9,7 +9,7 @@ import MessageStep from '@/components/keepsake/MessageStep';
 import ProductsStep from '@/components/keepsake/ProductsStep';
 import ReviewStep from '@/components/keepsake/ReviewStep';
 import SuccessStep from '@/components/keepsake/SuccessStep';
-import { FreeKeepsakeForm } from '@/components/FreeKeepsakeForm';
+// Removed unused import FreeKeepsakeForm
 import { UpgradeModal } from '@/components/UpgradeModal';
 import { Card, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';

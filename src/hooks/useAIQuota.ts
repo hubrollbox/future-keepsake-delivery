@@ -3,13 +3,6 @@ import { supabase } from '../integrations/supabase/client';
 import { useAuth } from './useAuth';
 import { toast } from 'sonner';
 
-function getToday(): string {
-  const d = new Date();
-  const iso = d.toISOString();
-  const parts = iso.split('T');
-  return parts[0] ?? iso;
-}
-
 interface AIQuotaData {
   used: number;
   limit: number;
@@ -32,9 +25,8 @@ export function useAIQuota() {
   const [error, setError] = useState<string | null>(null);
 
   const fetchQuota = async () => {
-    if (!user || typeof user.id !== 'string') {
+    if (!user) {
       setLoading(false);
-      setError('Usuário inválido ou sem id.');
       return;
     }
 
@@ -42,10 +34,10 @@ export function useAIQuota() {
       setLoading(true);
       setError(null);
 
-      // Buscar tier do usuário através do plan_id
+      // Buscar tier do usuário
       const { data: userProfile, error: profileError } = await supabase
-        .from('profiles')
-        .select('plan_id, plans(name)')
+        .from('users')
+        .select('subscription_tier')
         .eq('id', user.id)
         .single();
 
@@ -53,17 +45,14 @@ export function useAIQuota() {
         throw profileError;
       }
 
-      // Determinar tier com base no nome do plano
-      const planName = (userProfile?.plans as { name: string } | null)?.name || 'free';
-      const tier = (planName as keyof typeof QUOTA_LIMITS) || 'free';
+      const tier = (userProfile?.subscription_tier || 'free') as keyof typeof QUOTA_LIMITS;
       const limit = QUOTA_LIMITS[tier];
 
       // Buscar uso atual do dia
-  const today = getToday();
-  // user.id já validado como string
+      const today = new Date().toISOString().split('T')[0];
       const { data: usage, error: usageError } = await supabase
         .from('api_usage')
-        .select('huggingface_requests')
+        .select('*')
         .eq('user_id', user.id)
         .eq('date', today)
         .single();
@@ -74,24 +63,22 @@ export function useAIQuota() {
         // Registro não existe, criar um novo
         const { data: newUsage, error: createError } = await supabase
           .from('api_usage')
-          .insert([
-            {
-              user_id: user.id,
-              date: today,
-              huggingface_requests: 0
-            }
-          ])
+          .insert({
+            user_id: user.id,
+            date: today,
+            huggingface_requests: 0
+          })
           .select()
           .single();
 
         if (createError) {
           throw createError;
         }
-        currentUsage = newUsage?.huggingface_requests ?? 0;
+        currentUsage = newUsage.huggingface_requests;
       } else if (usageError) {
         throw usageError;
       } else {
-        currentUsage = usage?.huggingface_requests ?? 0;
+        currentUsage = usage.huggingface_requests;
       }
 
       // Calcular próxima data de reset (meia-noite UTC)
@@ -118,7 +105,7 @@ export function useAIQuota() {
   };
 
   const incrementUsage = async (): Promise<boolean> => {
-    if (!user || typeof user.id !== 'string' || !quota) {
+    if (!user || !quota) {
       return false;
     }
 
@@ -130,20 +117,17 @@ export function useAIQuota() {
     }
 
     try {
-  const today = getToday();
-  // user.id já validado como string
+      const today = new Date().toISOString().split('T')[0];
       const newUsage = quota.used + 1;
 
       const { error } = await supabase
         .from('api_usage')
-        .upsert([
-          {
-            user_id: user.id,
-            date: today,
-            huggingface_requests: newUsage,
-            updated_at: new Date().toISOString()
-          }
-        ]);
+        .upsert({
+          user_id: user.id,
+          date: today,
+          huggingface_requests: newUsage,
+          updated_at: new Date().toISOString()
+        });
 
       if (error) {
         throw error;

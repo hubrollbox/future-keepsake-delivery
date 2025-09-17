@@ -244,7 +244,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
     
     // Limitar a 3 opções e adicionar uma opção padrão
     const uniqueOptions = relevantOptions.slice(0, 2);
-    if (DEFAULT_OPTIONS.length > 0) {
+    if (DEFAULT_OPTIONS.length > 0 && DEFAULT_OPTIONS[0]) {
       uniqueOptions.push(DEFAULT_OPTIONS[0]);
     }
     

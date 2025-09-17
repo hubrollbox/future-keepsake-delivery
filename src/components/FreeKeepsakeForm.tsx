@@ -71,21 +71,20 @@ const detectKeywords = (text: string): string[] => {
 };
 
 const getEmotionalMessage = (step: number, hasErrors: boolean): string => {
-  if (hasErrors) {
-    const errorMessages = [
-      '💝 Quase lá! Vamos ajustar alguns detalhes...',
-      '✨ Sua mensagem está quase perfeita!',
-      '💌 Falta pouco para sua cápsula ficar pronta!'
-    ];
-    return errorMessages[step - 1] || errorMessages[0];
-  }
+  const errorMessages = [
+    '💝 Quase lá! Vamos ajustar alguns detalhes...',
+    '✨ Sua mensagem está quase perfeita!',
+    '💌 Falta pouco para sua cápsula ficar pronta!'
+  ];
   
   const successMessages = [
     '💝 Que título lindo! Vamos para o próximo passo...',
     '✨ Sua mensagem está tocante! Agora vamos programar a entrega...',
     '🎉 Perfeito! Sua cápsula do tempo está pronta para ser criada!'
   ];
-  return successMessages[step - 1] || successMessages[0];
+  
+  const messages = hasErrors ? errorMessages : successMessages;
+  return messages[step - 1] || messages[0];
 };
 
 export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({

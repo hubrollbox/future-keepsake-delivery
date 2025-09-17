@@ -85,7 +85,7 @@ const PLAN_LIMITS: Record<string, PlanLimits> = {
     family_accounts: 6,
     collaborative_keepsakes: true
   }
-};
+} as const;
 
 export function useUserSubscription(): UseUserSubscriptionReturn {
   const { user } = useAuth();
