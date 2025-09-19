@@ -1,24 +1,19 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/hooks/useAuth';
-import { useKeepsakeForm, KeepsakeFormData } from '@/hooks/useKeepsakeForm';
-import ProgressStepper from '@/components/ProgressStepper';
-import TypeStep from '@/components/keepsake/TypeStep';
-import RecipientStep from '@/components/keepsake/RecipientStep';
-import MessageStep from '@/components/keepsake/MessageStep';
-import ProductsStep from '@/components/keepsake/ProductsStep';
-import ReviewStep from '@/components/keepsake/ReviewStep';
-import SuccessStep from '@/components/keepsake/SuccessStep';
-// Removed unused import FreeKeepsakeForm
-import { UpgradeModal } from '@/components/UpgradeModal';
 import { Card, CardContent } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
+import { AlertCircle, Crown, Home, Save, Zap } from 'lucide-react';
+import { useAuth } from '../hooks/useAuth';
+import ProgressStepper from '../components/ProgressStepper';
+import MessageStep from '../components/keepsake/MessageStep';
+import RecipientStep from '../components/keepsake/RecipientStep';
+import ReviewStep from '../components/keepsake/ReviewStep';
+import { useKeepsakeForm, KeepsakeFormData } from '@/hooks/useKeepsakeForm';
+import TypeStep from '@/components/keepsake/TypeStep';
+import ProductsStep from '@/components/keepsake/ProductsStep';
+import SuccessStep from '@/components/keepsake/SuccessStep';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Form } from '@/components/ui/form';
-import { AlertCircle, Save, Home, Crown, Zap, Sparkles } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
-import { toast } from 'sonner';
-import { trackKeepsakeCreation, trackButtonClick, trackError } from '@/lib/analytics';
 
 interface PlanLimits {
   maxMessageLength: number;
@@ -29,23 +24,17 @@ interface PlanLimits {
 const LIMITS_BY_PLAN: Record<string, PlanLimits> = {
   free: { maxMessageLength: 500, maxProducts: 1, maxValue: 30 },
   premium: { maxMessageLength: 2000, maxProducts: 5, maxValue: 200 },
-  personal: { maxMessageLength: 1000, maxProducts: 3, maxValue: 100 },
-  timekeeper: { maxMessageLength: 3000, maxProducts: 10, maxValue: 500 },
-  family: { maxMessageLength: 5000, maxProducts: 15, maxValue: 1000 },
+  family: { maxMessageLength: 5000, maxProducts: 10, maxValue: 500 }
 };
 
-const CreateKeepsake: React.FC = () => {
+function CreateKeepsake() {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
-  const [userPlan, setUserPlan] = useState<string>('free');
+  
+  // Estados do componente
+  const [userPlan] = useState<string>('free');
   const [planLimits, setPlanLimits] = useState<PlanLimits | null>(null);
   const [planValidationErrors, setPlanValidationErrors] = useState<string[]>([]);
-  
-  // Estados para o fluxo freemium
-  const [showFreeForm, setShowFreeForm] = useState(true);
-  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
-  const [detectedKeywords, setDetectedKeywords] = useState<string[]>([]);
-  const [isCreatingFreeKeepsake, setIsCreatingFreeKeepsake] = useState(false);
   
   const {
     form,
@@ -73,75 +62,43 @@ const CreateKeepsake: React.FC = () => {
     }
   }, [user, authLoading, navigate]);
 
-  // Carregar plano do usuário e configurar limites
+  // Carregar dados do plano do usuário
   useEffect(() => {
-    if (user) {
-      // Por agora, assumir plano free. Em produção, buscar do perfil do usuário
-      const currentPlan = user.user_metadata?.plan || 'free';
-      setUserPlan(currentPlan);
-      
-      setPlanLimits(LIMITS_BY_PLAN[currentPlan] || LIMITS_BY_PLAN['free'] || null);
-      
-      // Se o usuário tem plano premium, pular o formulário gratuito
-      if (currentPlan !== 'free') {
-        setShowFreeForm(false);
+    if (userPlan) {
+      const limits = LIMITS_BY_PLAN[userPlan];
+      if (limits) {
+        setPlanLimits(limits);
+      }
+    } else {
+      const freeLimits = LIMITS_BY_PLAN.free;
+      if (freeLimits) {
+        setPlanLimits(freeLimits);
       }
     }
-  }, [user]);
+  }, [userPlan]);
 
-  // Função para validar limites do plano
-  const validatePlanLimits = useCallback(() => {
-    if (!planLimits) return;
-    const formData = form.getValues();
+  // Validação baseada no plano
+  const validatePlan = (data: any) => {
+    if (!planLimits) return [];
+    
     const errors: string[] = [];
-
-    // Validar limite de caracteres na mensagem
-    if (formData.message && planLimits.maxMessageLength) {
-      if (formData.message.length > planLimits.maxMessageLength) {
-        errors.push(`Mensagem excede o limite de ${planLimits.maxMessageLength} caracteres do plano ${userPlan.toUpperCase()}`);
-      }
+    
+    if (data.message && data.message.length > planLimits.maxMessageLength) {
+      errors.push(`Mensagem muito longa. Máximo: ${planLimits.maxMessageLength} caracteres`);
     }
+    
+    return errors;
+  };
 
-    // Validar número de produtos selecionados
-    if (formData.selected_products && planLimits.maxProducts !== undefined) {
-      if (formData.selected_products.length > planLimits.maxProducts) {
-        errors.push(`Número de produtos excede o limite de ${planLimits.maxProducts} do plano ${userPlan.toUpperCase()}`);
-      }
-    }
-
-    // Validar valor total
-    if (formData.total_cost && planLimits.maxValue !== undefined) {
-      if (formData.total_cost > planLimits.maxValue) {
-        errors.push(`Valor total excede o limite de €${planLimits.maxValue} do plano ${userPlan.toUpperCase()}`);
-      }
-    }
-
-    // Validar funcionalidades premium
-    if (userPlan === 'free') {
-      if (formData.type === 'physical') {
-        errors.push('Cápsulas físicas requerem plano Premium ou Superior');
-      }
-
-      // Verificar se há produtos premium selecionados
-      const premiumProducts = formData.selected_products?.filter((p: { name: string }) =>
-        p.name.toLowerCase().includes('premium') ||
-        p.name.toLowerCase().includes('deluxe')
-      ) || [];
-
-      if (premiumProducts.length > 0) {
-        errors.push('Produtos premium requerem plano Premium ou Superior');
-      }
-    }
-
-    setPlanValidationErrors(errors);
-  }, [form, planLimits, userPlan]);
-
-  // Validar limites do plano quando dados do formulário mudam
+  // Atualizar validação quando dados do formulário mudarem
   useEffect(() => {
-    if (planLimits && currentStep >= 3) {
-      validatePlanLimits();
-    }
-  }, [form, planLimits, currentStep, validatePlanLimits]);
+    const subscription = form.watch((data) => {
+      const errors = validatePlan(data as KeepsakeFormData);
+      setPlanValidationErrors(errors);
+    });
+    
+    return () => subscription.unsubscribe();
+  }, [form, validatePlan]);
 
   // Aviso sobre mudanças não guardadas
   useEffect(() => {
@@ -172,120 +129,6 @@ const CreateKeepsake: React.FC = () => {
   if (!user) {
     return null;
   }
-
-  const steps = [
-    'Tipo',
-    'Destinatário', 
-    'Mensagem',
-    'Produtos',
-    'Revisão',
-    'Sucesso'
-  ];
-
-  // Função para detectar keywords na mensagem
-  const detectKeywords = (message: string): string[] => {
-    const keywords: string[] = [];
-    const text = message.toLowerCase();
-    
-    if (text.match(/aniversário|aniversario|birthday|festa|celebrar/)) {
-      keywords.push('aniversario');
-    }
-    if (text.match(/amor|love|romântico|romantico|namorado|namorada|casamento/)) {
-      keywords.push('amor');
-    }
-    if (text.match(/conquista|vitória|vitoria|sucesso|achievement|graduação|graduacao|promoção|promocao/)) {
-      keywords.push('conquista');
-    }
-    if (text.match(/família|familia|family|pais|filhos|irmão|irmao|irmã|irma/)) {
-      keywords.push('familia');
-    }
-    if (text.match(/amigo|amiga|amizade|friendship|colega/)) {
-      keywords.push('amizade');
-    }
-    
-    return keywords;
-  };
-
-  // Função para criar keepsake gratuito
-  const handleCreateFreeKeepsake = async (data: {
-    title: string;
-    message: string;
-    deliveryDate: string;
-    recipientEmail: string;
-  }) => {
-    if (!user) {
-      toast.error('Você precisa estar logado para criar uma cápsula.');
-      return;
-    }
-
-    setIsCreatingFreeKeepsake(true);
-    
-    try {
-      // Track keepsake creation
-      trackKeepsakeCreation('free_email');
-      
-      // Detectar keywords para upsell
-      const keywords = detectKeywords(data.message);
-      setDetectedKeywords(keywords);
-      
-      // Criar keepsake no banco
-      const { data: keepsake, error } = await supabase
-        .from('keepsakes')
-        .insert({
-          user_id: user.id,
-          title: data.title,
-          message_content: data.message,
-          delivery_date: data.deliveryDate,
-          recipient_email: data.recipientEmail,
-          type: 'free_email',
-          keywords: keywords,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
-        })
-        .select()
-        .single();
-
-      if (error) {
-        trackError(error.message, 'create_keepsake');
-        throw error;
-      }
-
-      toast.success('🎉 Cápsula criada com sucesso!');
-      
-      // Mostrar modal de upgrade se há keywords relevantes
-      if (keywords.length > 0) {
-        setShowUpgradeModal(true);
-      } else {
-        // Redirecionar para dashboard se não há upsell
-        setTimeout(() => {
-          navigate('/dashboard');
-        }, 2000);
-      }
-      
-    } catch (error) {
-      console.error('Erro ao criar keepsake:', error);
-      toast.error('Erro ao criar cápsula. Tente novamente.');
-    } finally {
-      setIsCreatingFreeKeepsake(false);
-    }
-  };
-
-  // Função para lidar com upgrade
-  const handleUpgrade = (optionId: string) => {
-    // Redirecionar para página de pagamento ou processar upgrade
-    toast.success('Redirecionando para pagamento...');
-    
-    // Por enquanto, apenas fechar o modal e redirecionar
-    setTimeout(() => {
-      setShowUpgradeModal(false);
-      navigate('/pricing', { state: { selectedOption: optionId } });
-    }, 1500);
-  };
-
-  // Função para continuar com formulário premium
-  const handleUsePremiumForm = () => {
-    setShowFreeForm(false);
-  };
 
   const renderStepContent = () => {
     const common = { form, nextStep, prevStep };
@@ -359,188 +202,147 @@ const CreateKeepsake: React.FC = () => {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-lavender-mist dashboard-layout">
-      <div className="max-w-4xl mx-auto">
-        {/* Breadcrumb */}
-        <div className="mb-4 md:mb-6">
-          <Button
-            variant="ghost"
-            onClick={() => navigate('/dashboard')}
-            className="text-steel-blue hover:text-dusty-rose responsive-button touch-target"
-          >
-            <Home className="w-4 h-4 mr-2" />
-            Voltar ao Dashboard
-          </Button>
-        </div>
+  const progressSteps = [
+    'Tipo',
+    'Destinatário', 
+    'Mensagem',
+    'Produtos',
+    'Revisão',
+    'Sucesso'
+  ];
 
-        <div className="text-center mb-6 md:mb-8">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <h1 className="responsive-title font-serif text-steel-blue">
-              Criar Cápsula do Tempo
-            </h1>
-            {planLimits && (
-              <div className="flex items-center gap-2">
-                {userPlan === 'free' ? (
-                  <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm font-medium">
-                    Plano Gratuito
-                  </span>
-                ) : userPlan === 'premium' ? (
-                  <span className="px-3 py-1 bg-gradient-to-r from-amber-400 to-amber-600 text-white rounded-full text-sm font-medium flex items-center gap-1">
-                    <Crown className="w-3 h-3" />
-                    Premium
-                  </span>
-                ) : (
-                  <span className="px-3 py-1 bg-gradient-to-r from-purple-500 to-purple-700 text-white rounded-full text-sm font-medium flex items-center gap-1">
-                    <Zap className="w-3 h-3" />
-                    {userPlan.charAt(0).toUpperCase() + userPlan.slice(1)}
-                  </span>
-                )}
-              </div>
-            )}
-          </div>
-          <p className="text-misty-gray text-base md:text-lg">
-            Guarde momentos especiais para o futuro
+  const canProceed = () => {
+    if (planValidationErrors.length > 0) return false;
+    if (validationErrors && Array.isArray(validationErrors) && validationErrors.length > 0) return false;
+    return stepValidation[currentStep] || false;
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-lavender-mist via-white to-sage-green">
+      <div className="container mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-steel-blue mb-2">
+            Criar Nova Cápsula do Tempo
+          </h1>
+          <p className="text-steel-blue/70 max-w-2xl mx-auto">
+            Crie uma mensagem especial para ser entregue no futuro. 
+            Adicione produtos únicos para tornar o momento ainda mais especial.
           </p>
         </div>
 
-        {/* Alertas de validação */}
-        {validationErrors[currentStep] && validationErrors[currentStep].length > 0 && (
-          <Alert className="mb-6 border-red-200 bg-red-50">
-            <AlertCircle className="h-4 w-4 text-red-600" />
-            <AlertDescription className="text-red-800">
-              <div className="font-semibold mb-2">Erros de validação:</div>
-              <ul className="list-disc list-inside space-y-1">
-                {validationErrors[currentStep].map((error, index) => (
-                  <li key={index} className="text-sm">{error}</li>
-                ))}
-              </ul>
-            </AlertDescription>
-          </Alert>
-        )}
+        {/* Progress Stepper */}
+        <div className="mb-8">
+          <ProgressStepper 
+            steps={progressSteps} 
+            currentStep={currentStep} 
+          />
+        </div>
 
-        {/* Alertas de limites do plano */}
+        {/* Plan Validation Errors */}
         {planValidationErrors.length > 0 && (
           <Alert className="mb-6 border-amber-200 bg-amber-50">
-            <Crown className="h-4 w-4 text-amber-600" />
+            <AlertCircle className="h-4 w-4 text-amber-600" />
             <AlertDescription className="text-amber-800">
-              <div className="font-semibold mb-2">Limites do plano {userPlan.toUpperCase()}:</div>
-              <ul className="list-disc list-inside space-y-1 mb-3">
+              <div className="font-medium mb-2">Limitações do Plano {userPlan.toUpperCase()}:</div>
+              <ul className="list-disc list-inside space-y-1">
                 {planValidationErrors.map((error, index) => (
-                  <li key={index} className="text-sm">{error}</li>
+                  <li key={index}>{error}</li>
                 ))}
               </ul>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => navigate('/pricing')}
-                className="border-amber-600 text-amber-800 hover:bg-amber-100"
-              >
-                <Zap className="w-4 h-4 mr-2" />
-                Fazer Upgrade
-              </Button>
+              <div className="mt-3">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => navigate('/pricing')}
+                  className="border-amber-300 text-amber-700 hover:bg-amber-100"
+                >
+                  <Crown className="w-4 h-4 mr-2" />
+                  Fazer Upgrade
+                </Button>
+              </div>
             </AlertDescription>
           </Alert>
         )}
 
-        {/* Indicador de validação */}
-        {isValidating && (
-          <Alert className="mb-6 border-blue-200 bg-blue-50">
-            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
-            <AlertDescription className="text-blue-800 ml-2">
-              A validar dados...
-            </AlertDescription>
-          </Alert>
-        )}
-
-        {/* Aviso de mudanças não guardadas */}
-        {hasUnsavedChanges && currentStep < 6 && (
-          <Alert className="mb-6 border-yellow-200 bg-yellow-50">
-            <AlertCircle className="h-4 w-4 text-yellow-600" />
-            <AlertDescription className="text-yellow-800">
-              Tem alterações não guardadas. Complete o processo para guardar a sua cápsula.
-            </AlertDescription>
-          </Alert>
-        )}
-
-        {/* Progresso (apenas se não for a última etapa) */}
-        {currentStep < 6 && (
-          <div className="mb-8">
-            <ProgressStepper 
-              steps={steps.slice(0, 5)} 
-              currentStep={currentStep - 1} // Ajustar para base 0
-            />
-          </div>
-        )}
-
-        <Card className="bg-white shadow-elegant">
+        {/* Form Content */}
+        <Card className="max-w-4xl mx-auto shadow-xl border-0 bg-white/80 backdrop-blur-sm">
           <CardContent className="p-8">
             <Form {...form}>
-              {renderStepContent()}
+              <form onSubmit={form.handleSubmit(submitKeepsake)} className="space-y-6">
+                {renderStepContent()}
+                
+                {/* Navigation Buttons */}
+                {currentStep < 6 && (
+                  <div className="flex justify-between items-center pt-6 border-t border-gray-200">
+                    <div className="flex items-center space-x-4">
+                      {currentStep > 1 && (
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={prevStep}
+                          disabled={isSubmitting}
+                          className="border-steel-blue text-steel-blue hover:bg-steel-blue hover:text-white"
+                        >
+                          Anterior
+                        </Button>
+                      )}
+                      
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => navigate('/dashboard')}
+                        disabled={isSubmitting}
+                        className="border-gray-300 text-gray-600 hover:bg-gray-100"
+                      >
+                        <Home className="w-4 h-4 mr-2" />
+                        Dashboard
+                      </Button>
+                    </div>
+
+                    <div className="flex items-center space-x-4">
+                      {hasUnsavedChanges && (
+                        <div className="flex items-center text-amber-600 text-sm">
+                          <Save className="w-4 h-4 mr-1" />
+                          Alterações não guardadas
+                        </div>
+                      )}
+                      
+                      <Button
+                        type={currentStep === 5 ? "submit" : "button"}
+                        onClick={currentStep === 5 ? undefined : nextStep}
+                        disabled={!canProceed() || isSubmitting || isValidating}
+                        className="bg-gradient-to-r from-dusty-rose to-sage-green hover:from-dusty-rose/90 hover:to-sage-green/90 text-white px-8"
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                            A criar...
+                          </>
+                        ) : isValidating ? (
+                          <>
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                            A validar...
+                          </>
+                        ) : currentStep === 5 ? (
+                          'Criar Cápsula'
+                        ) : (
+                          'Próximo'
+                        )}
+                        {currentStep < 5 && !isSubmitting && !isValidating && (
+                          <Zap className="w-4 h-4 ml-2" />
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </form>
             </Form>
           </CardContent>
         </Card>
-
-        {/* Botões de navegação (apenas se não for a última etapa) */}
-        {currentStep < 5 && (
-          <div className="flex justify-between items-center mt-8">
-            <Button
-              variant="outline"
-              onClick={prevStep}
-              disabled={currentStep === 1 || isSubmitting || isValidating}
-              className="border-steel-blue text-steel-blue hover:bg-steel-blue hover:text-white"
-            >
-              Anterior
-            </Button>
-
-            <div className="flex items-center space-x-4">
-              {hasUnsavedChanges && (
-                <Button
-                  variant="ghost"
-                  onClick={() => {
-                    // Implementar auto-save se necessário
-                    console.log('Manual save triggered');
-                  }}
-                  disabled={isSubmitting || isValidating}
-                  className="text-misty-gray hover:text-steel-blue"
-                >
-                  <Save className="w-4 h-4 mr-2" />
-                  Guardar Rascunho
-                </Button>
-              )}
-
-              <Button
-                onClick={currentStep === 5 ? submitKeepsake : nextStep}
-                disabled={
-                  isSubmitting || 
-                  isValidating || 
-                  stepValidation[currentStep] === false ||
-                  planValidationErrors.length > 0
-                }
-                className="bg-dusty-rose hover:bg-dusty-rose/90 text-white px-8"
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    A criar...
-                  </>
-                ) : isValidating ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    A validar...
-                  </>
-                ) : currentStep === 5 ? (
-                  'Criar Cápsula'
-                ) : (
-                  'Próximo'
-                )}
-              </Button>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
-};
+}
 
 export default CreateKeepsake;

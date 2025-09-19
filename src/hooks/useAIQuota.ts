@@ -25,35 +25,58 @@ export function useAIQuota() {
   const [error, setError] = useState<string | null>(null);
 
   const fetchQuota = async () => {
-    if (!user) {
+    if (!user?.id) {
+      setLoading(false);
+      return;
+    }
+
+    const userId = user.id as string;
+    if (!userId) {
+      setError('User ID not available');
       setLoading(false);
       return;
     }
 
     try {
-      setLoading(true);
       setError(null);
-
-      // Buscar tier do usuário
-      const { data: userProfile, error: profileError } = await supabase
-        .from('users')
-        .select('subscription_tier')
-        .eq('id', user.id)
+      
+      // Buscar dados do perfil do usuário com informações do plano
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select(`
+          *,
+          subscriptions (
+            plan_type,
+            status,
+            current_period_end
+          )
+        `)
+        .eq('id', userId)
         .single();
 
       if (profileError) {
         throw profileError;
       }
 
-      const tier = (userProfile?.subscription_tier || 'free') as keyof typeof QUOTA_LIMITS;
-      const limit = QUOTA_LIMITS[tier];
+      // Determinar o tier baseado no plano
+      let tier: 'free' | 'premium' | 'family' = 'free';
+      if (profile?.subscriptions && Array.isArray(profile.subscriptions) && profile.subscriptions.length > 0) {
+        const subscription = profile.subscriptions[0];
+        if (subscription.plan_type === 'premium') {
+          tier = 'premium';
+        } else if (subscription.plan_type === 'family') {
+          tier = 'family';
+        }
+      }
 
-      // Buscar uso atual do dia
+      const limit = QUOTA_LIMITS[tier];
       const today = new Date().toISOString().split('T')[0];
+
+      // Buscar uso atual da API
       const { data: usage, error: usageError } = await supabase
         .from('api_usage')
         .select('*')
-        .eq('user_id', user.id)
+        .eq('user_id', userId)
         .eq('date', today)
         .single();
 
@@ -64,7 +87,7 @@ export function useAIQuota() {
         const { data: newUsage, error: createError } = await supabase
           .from('api_usage')
           .insert({
-            user_id: user.id,
+            user_id: userId,
             date: today,
             huggingface_requests: 0
           })
@@ -74,17 +97,13 @@ export function useAIQuota() {
         if (createError) {
           throw createError;
         }
-        currentUsage = newUsage.huggingface_requests;
+
+        currentUsage = newUsage?.huggingface_requests || 0;
       } else if (usageError) {
         throw usageError;
       } else {
-        currentUsage = usage.huggingface_requests;
+        currentUsage = usage?.huggingface_requests || 0;
       }
-
-      // Calcular próxima data de reset (meia-noite UTC)
-      const tomorrow = new Date();
-      tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
-      tomorrow.setUTCHours(0, 0, 0, 0);
 
       const quotaData: AIQuotaData = {
         used: currentUsage,
@@ -92,29 +111,25 @@ export function useAIQuota() {
         remaining: Math.max(0, limit - currentUsage),
         tier,
         canUseAI: currentUsage < limit,
-        resetDate: tomorrow.toISOString()
+        resetDate: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0] || ''
       };
 
       setQuota(quotaData);
     } catch (err) {
       console.error('Error fetching AI quota:', err);
-      setError(err instanceof Error ? err.message : 'Erro ao buscar quota de IA');
+      setError(err instanceof Error ? err.message : 'Failed to fetch quota');
+      toast.error('Erro ao carregar cota de IA');
     } finally {
       setLoading(false);
     }
   };
 
-  const incrementUsage = async (): Promise<boolean> => {
-    if (!user || !quota) {
-      return false;
+  const incrementUsage = async () => {
+    if (!user?.id || !quota) {
+      throw new Error('User not authenticated or quota not loaded');
     }
 
-    if (!quota.canUseAI) {
-      toast.error(`Limite de ${quota.limit} sugestões diárias atingido!`, {
-        description: 'Faça upgrade para mais sugestões de IA.'
-      });
-      return false;
-    }
+    const userId = user.id; // user.id is guaranteed to be string here
 
     try {
       const today = new Date().toISOString().split('T')[0];
@@ -123,10 +138,9 @@ export function useAIQuota() {
       const { error } = await supabase
         .from('api_usage')
         .upsert({
-          user_id: user.id,
+          user_id: userId,
           date: today,
-          huggingface_requests: newUsage,
-          updated_at: new Date().toISOString()
+          huggingface_requests: newUsage
         });
 
       if (error) {
@@ -141,21 +155,9 @@ export function useAIQuota() {
         canUseAI: newUsage < prev.limit
       } : null);
 
-      // Mostrar aviso quando próximo do limite
-      if (newUsage >= quota.limit * 0.8) {
-        const remaining = quota.limit - newUsage;
-        if (remaining > 0) {
-          toast.warning(`Restam apenas ${remaining} sugestões hoje!`, {
-            description: 'Considere fazer upgrade para mais sugestões.'
-          });
-        }
-      }
-
-      return true;
     } catch (err) {
-      console.error('Error incrementing AI usage:', err);
-      toast.error('Erro ao registrar uso da IA');
-      return false;
+      console.error('Error incrementing usage:', err);
+      throw err;
     }
   };
 

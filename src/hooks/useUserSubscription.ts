@@ -58,7 +58,7 @@ interface UseUserSubscriptionReturn {
   createStripeCustomer: () => Promise<string | null>;
 }
 
-const PLAN_LIMITS: Record<string, PlanLimits> = {
+const PLAN_LIMITS = {
   free: {
     ai_quota_daily: 3,
     keepsakes_monthly: 3,
@@ -85,7 +85,7 @@ const PLAN_LIMITS: Record<string, PlanLimits> = {
     family_accounts: 6,
     collaborative_keepsakes: true
   }
-} as const;
+} as const satisfies Record<string, PlanLimits>;
 
 export function useUserSubscription(): UseUserSubscriptionReturn {
   const { user } = useAuth();
@@ -108,7 +108,7 @@ export function useUserSubscription(): UseUserSubscriptionReturn {
       setLoading(true);
       setError(null);
 
-      // Buscar assinatura do usuário
+      // Buscar assinatura existente
       const { data: subscriptionData, error: subscriptionError } = await supabase
         .from('user_subscriptions')
         .select('*')
@@ -119,7 +119,7 @@ export function useUserSubscription(): UseUserSubscriptionReturn {
         throw subscriptionError;
       }
 
-      // Se não tem assinatura, criar uma gratuita
+      // Se não existe assinatura, criar uma gratuita
       if (!subscriptionData) {
         const { data: newSubscription, error: createError } = await supabase
           .from('user_subscriptions')
@@ -137,7 +137,9 @@ export function useUserSubscription(): UseUserSubscriptionReturn {
         setPlanLimits(PLAN_LIMITS.free);
       } else {
         setSubscription(subscriptionData);
-        setPlanLimits(PLAN_LIMITS[subscriptionData.plan_type] || PLAN_LIMITS.free);
+        const planType = subscriptionData.plan_type as keyof typeof PLAN_LIMITS;
+        const planLimits = PLAN_LIMITS[planType];
+        setPlanLimits(planLimits ?? PLAN_LIMITS.free);
       }
 
       // Buscar histórico de pagamentos
