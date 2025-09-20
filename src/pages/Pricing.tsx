@@ -242,7 +242,7 @@ function Pricing() {
                     <div className="mt-4">
                       <div className="flex items-baseline justify-center">
                         <span className="text-4xl font-bold text-gray-900">
-                          R$ {billingCycle === 'monthly' ? plan.price.monthly : plan.price.yearly}
+                          € {billingCycle === 'monthly' ? plan.price.monthly : plan.price.yearly}
                         </span>
                         {plan.price.monthly > 0 && (
                           <span className="text-gray-500 ml-1">
@@ -252,7 +252,7 @@ function Pricing() {
                       </div>
                       {billingCycle === 'yearly' && plan.price.monthly > 0 && (
                         <p className="text-sm text-gray-500 mt-1">
-                          R$ {(plan.price.yearly / 12).toFixed(2)}/mês
+                          € {(plan.price.yearly / 12).toFixed(2)}/mês
                         </p>
                       )}
                     </div>
