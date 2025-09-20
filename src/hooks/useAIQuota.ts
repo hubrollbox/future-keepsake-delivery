@@ -26,18 +26,12 @@ export function useAIQuota() {
 
   const fetchQuota = async () => {
     if (!profile?.id) {
-      setLoading(false);
-      return;
-    }
-
-    // Type guard: ensure profile and profile.id exist
-    if (!profile || !profile.id) {
       setError('Profile not available');
       setLoading(false);
       return;
     }
 
-    const userId = profile.id;
+    const userId: string = profile.id;
 
     try {
       setError(null);
@@ -72,7 +66,7 @@ export function useAIQuota() {
       }
 
       const limit = QUOTA_LIMITS[tier];
-      const today = new Date().toISOString().split('T')[0];
+      const today = new Date().toISOString().split('T')[0] as string;
 
       // Buscar uso atual da API
       const { data: usage, error: usageError } = await supabase
@@ -92,7 +86,7 @@ export function useAIQuota() {
             user_id: userId,
             date: today,
             huggingface_requests: 0
-          })
+          } as const)
           .select()
           .single();
 
@@ -131,15 +125,10 @@ export function useAIQuota() {
       throw new Error('User not authenticated or quota not loaded');
     }
 
-    // Type guard: ensure profile and profile.id exist
-    if (!profile || !profile.id) {
-      throw new Error('Profile not available');
-    }
-
-    const userId = profile.id;
+    const userId: string = profile.id;
 
     try {
-      const today = new Date().toISOString().split('T')[0];
+      const today = new Date().toISOString().split('T')[0] as string;
       const newUsage = quota.used + 1;
 
       const { error } = await supabase
@@ -148,7 +137,7 @@ export function useAIQuota() {
           user_id: userId,
           date: today,
           huggingface_requests: newUsage
-        });
+        } as const);
 
       if (error) {
         throw error;

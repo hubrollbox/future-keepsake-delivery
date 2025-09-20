@@ -84,7 +84,7 @@ const getEmotionalMessage = (step: number, hasErrors: boolean): string => {
   ];
   
   const messages = hasErrors ? errorMessages : successMessages;
-  return messages[step - 1] || messages[0];
+  return (messages[step - 1] || messages[0]) as string;
 };
 
 export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
