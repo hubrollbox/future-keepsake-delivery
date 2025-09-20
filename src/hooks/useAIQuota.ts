@@ -19,23 +19,25 @@ const QUOTA_LIMITS = {
 } as const;
 
 export function useAIQuota() {
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const [quota, setQuota] = useState<AIQuotaData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const fetchQuota = async () => {
-    if (!user?.id) {
+    if (!profile?.id) {
       setLoading(false);
       return;
     }
 
-    const userId = user.id as string;
-    if (!userId) {
-      setError('User ID not available');
+    // Type guard: ensure profile and profile.id exist
+    if (!profile || !profile.id) {
+      setError('Profile not available');
       setLoading(false);
       return;
     }
+
+    const userId = profile.id;
 
     try {
       setError(null);
@@ -125,11 +127,16 @@ export function useAIQuota() {
   };
 
   const incrementUsage = async () => {
-    if (!user?.id || !quota) {
+    if (!profile?.id || !quota) {
       throw new Error('User not authenticated or quota not loaded');
     }
 
-    const userId = user.id; // user.id is guaranteed to be string here
+    // Type guard: ensure profile and profile.id exist
+    if (!profile || !profile.id) {
+      throw new Error('Profile not available');
+    }
+
+    const userId = profile.id;
 
     try {
       const today = new Date().toISOString().split('T')[0];
