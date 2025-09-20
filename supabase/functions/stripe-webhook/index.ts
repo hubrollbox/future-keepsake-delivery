@@ -208,7 +208,7 @@ async function handleSubscriptionCancellation(subscription: Stripe.Subscription)
 async function handlePaymentSucceeded(invoice: Stripe.Invoice) {
   const customerId = invoice.customer as string
   const subscriptionId = invoice.subscription as string
-  const amountPaid = invoice.amount_paid / 100 // Converter de centavos para reais
+  const amountPaid = invoice.amount_paid / 100 // Converter de centavos para euros
 
   // Buscar usuário pelo customer_id do Stripe
   const { data: profile, error: profileError } = await supabase
@@ -255,7 +255,7 @@ async function handlePaymentSucceeded(invoice: Stripe.Invoice) {
     throw subscriptionError
   }
 
-  console.log(`Payment succeeded for user ${profile.id}, amount: R$ ${amountPaid}`)
+  console.log(`Payment succeeded for user ${profile.id}, amount: € ${amountPaid}`)
 }
 
 async function handlePaymentFailed(invoice: Stripe.Invoice) {
@@ -307,5 +307,5 @@ async function handlePaymentFailed(invoice: Stripe.Invoice) {
     throw subscriptionError
   }
 
-  console.log(`Payment failed for user ${profile.id}, amount: R$ ${amountDue}`)
+  console.log(`Payment failed for user ${profile.id}, amount: € ${amountDue}`)
 }
