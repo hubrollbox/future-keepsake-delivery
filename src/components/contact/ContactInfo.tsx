@@ -28,7 +28,7 @@ const ContactInfo = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-steel-blue font-medium text-lg mb-2">geral@rollbox.pt</p>
+          <p className="text-steel-blue font-medium text-lg mb-2">info@keepla.pt</p>
           <p className="text-misty-gray text-sm">
             Para questões gerais, suporte técnico ou parcerias. 
             Respondemos normalmente em menos de 2 horas durante o horário de funcionamento.

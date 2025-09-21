@@ -19,6 +19,11 @@ type PlanUpdate = Database['public']['Tables']['plans']['Update'];
 
 interface PlanFormData {
   name: string;
+  description: string;
+  price: number;
+  duration_months: number;
+  features: string[];
+  active: boolean;
 }
 
 interface PlanWithStats extends Plan {
@@ -37,7 +42,12 @@ const AdminPlans = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingPlan, setEditingPlan] = useState<Plan | null>(null);
   const [formData, setFormData] = useState<PlanFormData>({
-    name: ""
+    name: "",
+    description: "",
+    price: 0,
+    duration_months: 1,
+    features: [],
+    active: true
   });
 
 
@@ -48,37 +58,28 @@ const AdminPlans = () => {
   const fetchPlans = async () => {
     try {
       setLoading(true);
-      
-      // Buscar planos
-      const { data: plansData, error: plansError } = await supabase
+      const { data, error } = await supabase
         .from('plans')
-        .select('*')
-        .order('created_at', { ascending: false });
+        .select(`
+          *,
+          subscriptions(count)
+        `)
+        .order('name');
 
-      if (plansError) throw plansError;
+      if (error) throw error;
 
-      // Buscar contagem de subscritores para cada plano
-      const plansWithStats = await Promise.all(
-        (plansData || []).map(async (plan) => {
-          const { count } = await supabase
-            .from('profiles')
-            .select('*', { count: 'exact', head: true })
-            .eq('plan_id', plan.id);
-          
-          return {
-            ...plan,
-            subscriber_count: count || 0
-          };
-        })
-      );
+      const plansWithStats = data?.map(plan => ({
+        ...plan,
+        subscriber_count: plan.subscriptions?.[0]?.count || 0
+      })) || [];
 
       setPlans(plansWithStats);
     } catch (error) {
       console.error('Erro ao carregar planos:', error);
       toast({
         title: "Erro",
-        description: "Não foi possível carregar os planos.",
-        variant: "destructive"
+        description: "Erro ao carregar planos",
+        variant: "destructive",
       });
     } finally {
       setLoading(false);
@@ -175,7 +176,12 @@ const AdminPlans = () => {
 
   const resetForm = () => {
     setFormData({
-      name: ""
+      name: "",
+      description: "",
+      price: 0,
+      duration_months: 1,
+      features: [],
+      active: true
     });
     setEditingPlan(null);
   };
@@ -183,7 +189,12 @@ const AdminPlans = () => {
   const openEditDialog = (plan: Plan) => {
     setEditingPlan(plan);
     setFormData({
-      name: plan.name
+      name: plan.name,
+      description: plan.description || "",
+      price: plan.price || 0,
+      duration_months: plan.duration_months || 1,
+      features: plan.features || [],
+      active: plan.active !== false
     });
     setIsDialogOpen(true);
   };
@@ -251,7 +262,6 @@ const AdminPlans = () => {
                     <TableHead>Duração</TableHead>
                     <TableHead>Subscritores</TableHead>
                     <TableHead>Estado</TableHead>
-                    <TableHead>Criado</TableHead>
                     <TableHead className="text-right">Ações</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -261,13 +271,16 @@ const AdminPlans = () => {
                       <TableCell>
                         <div>
                           <div className="font-medium">{plan.name}</div>
+                          {plan.description && (
+                            <div className="text-sm text-misty-gray">{plan.description}</div>
+                          )}
                         </div>
                       </TableCell>
                       <TableCell>
-                        Gratuito
+                        {plan.price ? `€${plan.price}` : 'Gratuito'}
                       </TableCell>
                       <TableCell>
-                        Ilimitado
+                        {plan.duration_months ? `${plan.duration_months} mês${plan.duration_months > 1 ? 'es' : ''}` : 'Ilimitado'}
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-1">
@@ -276,12 +289,9 @@ const AdminPlans = () => {
                         </div>
                       </TableCell>
                       <TableCell>
-                        <Badge variant="default">
-                          Ativo
+                        <Badge variant={plan.active !== false ? "default" : "secondary"}>
+                          {plan.active !== false ? "Ativo" : "Inativo"}
                         </Badge>
-                      </TableCell>
-                      <TableCell>
-                        -
                       </TableCell>
                       <TableCell className="text-right">
                         <div className="flex justify-end gap-2">
@@ -357,9 +367,61 @@ const AdminPlans = () => {
               />
             </div>
             
-            {/* Campos removidos - tabela plans só tem id e name */}
+            <div className="space-y-2">
+              <Label htmlFor="description">Descrição</Label>
+              <Input
+                id="description"
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                placeholder="Descrição do plano"
+              />
+            </div>
 
-            {/* Funcionalidades e status removidos - tabela plans só tem id e name */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="price">Preço (€)</Label>
+                <Input
+                  id="price"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  value={formData.price}
+                  onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) || 0 })}
+                />
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="duration_months">Duração (meses)</Label>
+                <Input
+                  id="duration_months"
+                  type="number"
+                  min="1"
+                  value={formData.duration_months}
+                  onChange={(e) => setFormData({ ...formData, duration_months: parseInt(e.target.value) || 1 })}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="features">Funcionalidades</Label>
+              <Input
+                id="features"
+                value={formData.features.join(', ')}
+                onChange={(e) => setFormData({ ...formData, features: e.target.value.split(',').map(f => f.trim()).filter(f => f) })}
+                placeholder="Separar por vírgulas"
+              />
+            </div>
+
+            <div className="flex items-center space-x-2">
+              <input
+                type="checkbox"
+                id="active"
+                checked={formData.active}
+                onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
+                className="rounded border-gray-300"
+              />
+              <Label htmlFor="active">Plano ativo</Label>
+            </div>
 
             <div className="flex justify-end gap-2 pt-4">
               <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
