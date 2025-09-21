@@ -28,6 +28,7 @@ import AdminDashboard from "@/pages/AdminDashboard";
 import NotFound from "@/pages/NotFound";
 import TermsConditions from "@/pages/TermsConditions";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
+import LandingPage from "@/pages/LandingPage";
 
 
 
@@ -49,6 +50,7 @@ function App() {
                 <Sonner />
                 <Routes>
                   <Route path="/" element={<Index />} />
+                  <Route path="/landing" element={<LandingPage />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/dashboard" element={<Dashboard />} />
