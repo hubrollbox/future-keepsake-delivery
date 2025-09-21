@@ -28,11 +28,6 @@ interface PlanFormData {
 
 interface PlanWithStats extends Plan {
   subscriber_count?: number;
-  description?: string;
-  price?: number;
-  duration?: number;
-  features?: string[];
-  active?: boolean;
 }
 
 const AdminPlans = () => {

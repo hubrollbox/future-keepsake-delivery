@@ -35,8 +35,13 @@ if (rootElement) {
   createRoot(rootElement).render(
   <SecurityProvider>
     <App />
-    <SpeedInsights />
-    <Analytics />
+    {/* Only load analytics in production */}
+    {window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1' && (
+      <>
+        <SpeedInsights />
+        <Analytics />
+      </>
+    )}
   </SecurityProvider>
 );
 } else {

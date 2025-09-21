@@ -33,7 +33,11 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-E18CGKVX8K');
+      
+      // Only initialize Google Analytics in production
+      if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        gtag('config', 'G-E18CGKVX8K');
+      }
     </script>
   </head>
 

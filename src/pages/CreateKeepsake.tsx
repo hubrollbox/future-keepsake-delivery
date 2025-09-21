@@ -247,7 +247,7 @@ function CreateKeepsake() {
               <div className="font-medium mb-2">Limitações do Plano {userPlan.toUpperCase()}:</div>
               <ul className="list-disc list-inside space-y-1">
                 {planValidationErrors.map((error, index) => (
-                  <li key={index}>{error}</li>
+                  <li key={`plan-error-${error.slice(0, 20).replace(/\s+/g, '-')}-${index}`}>{error}</li>
                 ))}
               </ul>
               <div className="mt-3">

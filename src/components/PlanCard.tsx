@@ -56,7 +56,7 @@ const PlanCard = ({
       <CardContent className="space-y-6">
         <ul className="space-y-3">
           {features.map((feature, index) => (
-            <li key={index} className="flex items-start space-x-3">
+            <li key={`feature-${feature.slice(0, 15).replace(/\s+/g, '-')}-${index}`} className="flex items-start space-x-3">
               <Check className="h-5 w-5 text-earthy-burgundy mt-0.5 flex-shrink-0" />
               <span className="text-steel-blue text-sm leading-relaxed">{feature}</span>
             </li>

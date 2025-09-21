@@ -75,7 +75,7 @@ const FAQ = () => {
           <div className="mb-12">
             <Accordion type="single" collapsible className="space-y-4">
               {faqs.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`}>
+                <AccordionItem key={`faq-${faq.question.slice(0, 20).replace(/\s+/g, '-')}-${index}`} value={`item-${index}`}>
                   <Card className="border-dusty-rose/20">
                     <AccordionTrigger className="px-6 py-4 hover:no-underline">
                       <h3 className="text-left font-semibold text-steel-blue">
