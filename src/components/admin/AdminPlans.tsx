@@ -26,7 +26,16 @@ interface PlanFormData {
   active: boolean;
 }
 
-interface PlanWithStats extends Plan {
+interface PlanWithStats {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  duration_months: number;
+  features: string[];
+  active: boolean;
+  created_at: string;
+  updated_at: string;
   subscriber_count?: number;
 }
 
