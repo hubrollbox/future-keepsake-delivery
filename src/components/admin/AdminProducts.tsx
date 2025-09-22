@@ -25,6 +25,7 @@ interface ProductFormData {
   price: number;
   stock: number;
   type: string;
+  category: string;
   active: boolean;
   icon?: string;
 }
@@ -43,6 +44,7 @@ const AdminProducts = () => {
     price: 0,
     stock: 0,
     type: "physical",
+    category: "general",
     active: true,
     icon: ""
   });
@@ -94,6 +96,7 @@ const AdminProducts = () => {
           price: formData.price,
           stock: formData.stock,
           type: formData.type,
+          category: formData.category,
           active: formData.active,
           icon: formData.icon || null
         };
@@ -117,6 +120,7 @@ const AdminProducts = () => {
           price: formData.price,
           stock: formData.stock,
           type: formData.type,
+          category: formData.category,
           active: formData.active,
           icon: formData.icon || null
         };
@@ -202,6 +206,7 @@ const AdminProducts = () => {
       price: 0,
       stock: 0,
       type: "physical",
+      category: "general",
       active: true,
       icon: ""
     });
@@ -216,6 +221,7 @@ const AdminProducts = () => {
       price: product.price,
       stock: product.stock,
       type: product.type,
+      category: product.category,
       active: product.active || true,
       icon: product.icon || ""
     });
@@ -315,10 +321,11 @@ const AdminProducts = () => {
 
         const productData: ProductInsert = {
           name: nameIndex >= 0 ? values[nameIndex] || '' : '',
-          description: descIndex >= 0 ? values[descIndex] || null : null,
+          description: descIndex >= 0 ? values[descIndex] || '' : '',
           price: priceIndex >= 0 ? parseFloat(values[priceIndex] || '0') || 0 : 0,
           stock: stockIndex >= 0 ? parseInt(values[stockIndex] || '0') || 0 : 0,
           type: typeIndex >= 0 ? values[typeIndex] || 'physical' : 'physical',
+          category: 'general',
           active: activeIndex >= 0 ? values[activeIndex]?.toLowerCase() === 'sim' : true,
           icon: iconIndex >= 0 ? values[iconIndex] || null : null
         };

@@ -31,23 +31,30 @@ type QuestUpdate = Database['public']['Tables']['quests']['Update'];
 interface NotificationFormData {
   title: string;
   content: string;
+  message: string;
   type: string;
-  keepsake_id?: string | undefined;
-  user_id?: string | undefined;
+  keepsake_id?: string | null;
+  user_id?: string | null;
 }
 
 interface AchievementFormData {
   title: string;
+  name: string;
   description: string;
   points: number;
+  reward: number;
   icon: string;
+  category: string;
 }
 
 interface QuestFormData {
   title: string;
   description: string;
+  type: string;
   reward: number;
   target: number;
+  reward_points: number;
+  target_value: number;
 }
 
 const AdminContent = () => {
@@ -56,6 +63,7 @@ const AdminContent = () => {
   const [notificationFormData, setNotificationFormData] = useState<NotificationFormData>({
     title: "",
     content: "",
+    message: "",
     type: "info"
   });
   const [editingNotification, setEditingNotification] = useState<Notification | null>(null);
@@ -65,9 +73,12 @@ const AdminContent = () => {
   const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [achievementFormData, setAchievementFormData] = useState<AchievementFormData>({
     title: "",
+    name: "",
     description: "",
     points: 0,
-    icon: ""
+    reward: 0,
+    icon: "",
+    category: ""
   });
   const [editingAchievement, setEditingAchievement] = useState<Achievement | null>(null);
   const [isAchievementDialogOpen, setIsAchievementDialogOpen] = useState(false);
@@ -77,8 +88,11 @@ const AdminContent = () => {
   const [questFormData, setQuestFormData] = useState<QuestFormData>({
     title: "",
     description: "",
+    type: "",
     reward: 0,
-    target: 0
+    target: 0,
+    reward_points: 0,
+    target_value: 0
   });
   const [editingQuest, setEditingQuest] = useState<Quest | null>(null);
   const [isQuestDialogOpen, setIsQuestDialogOpen] = useState(false);
@@ -328,9 +342,12 @@ const AdminContent = () => {
   const resetAchievementForm = () => {
     setAchievementFormData({
       title: "",
+      name: "",
       description: "",
       points: 0,
-      icon: ""
+      reward: 0,
+      icon: "",
+      category: ""
     });
     setEditingAchievement(null);
   };

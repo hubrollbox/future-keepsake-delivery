@@ -9,34 +9,124 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      notifications: {
+      profiles: {
+        Row: {
+          id: string
+          email: string | null
+          full_name: string | null
+          avatar_url: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id: string
+          email?: string | null
+          full_name?: string | null
+          avatar_url?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          email?: string | null
+          full_name?: string | null
+          avatar_url?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      subscriptions: {
         Row: {
           id: string
           user_id: string
-          title: string
-          message: string
-          type: string
-          read: boolean
+          plan_type: string
+          status: string
+          current_period_end: string | null
           created_at: string
           updated_at: string
         }
         Insert: {
           id?: string
           user_id: string
-          title: string
-          message: string
-          type: string
-          read?: boolean
+          plan_type: string
+          status: string
+          current_period_end?: string | null
           created_at?: string
           updated_at?: string
         }
         Update: {
           id?: string
           user_id?: string
+          plan_type?: string
+          status?: string
+          current_period_end?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      api_usage: {
+        Row: {
+          id: string
+          user_id: string
+          date: string
+          usage_count: number
+          huggingface_requests: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          date: string
+          usage_count?: number
+          huggingface_requests?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          date?: string
+          usage_count?: number
+          huggingface_requests?: number
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      notifications: {
+        Row: {
+          id: string
+          user_id: string | null
+          title: string
+          content: string
+          message: string
+          type: string
+          read: boolean
+          keepsake_id: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id?: string | null
+          title: string
+          content: string
+          message: string
+          type: string
+          read?: boolean
+          keepsake_id?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string | null
           title?: string
+          content?: string
           message?: string
           type?: string
           read?: boolean
+          keepsake_id?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -44,10 +134,12 @@ export interface Database {
       achievements: {
         Row: {
           id: string
+          title: string
           name: string
           description: string
           icon: string
           points: number
+          reward: number
           category: string
           active: boolean
           created_at: string
@@ -55,10 +147,12 @@ export interface Database {
         }
         Insert: {
           id?: string
+          title: string
           name: string
           description: string
           icon: string
           points: number
+          reward: number
           category: string
           active?: boolean
           created_at?: string
@@ -66,10 +160,12 @@ export interface Database {
         }
         Update: {
           id?: string
+          title?: string
           name?: string
           description?: string
           icon?: string
           points?: number
+          reward?: number
           category?: string
           active?: boolean
           created_at?: string
@@ -82,7 +178,9 @@ export interface Database {
           title: string
           description: string
           type: string
+          target: number
           target_value: number
+          reward: number
           reward_points: number
           active: boolean
           created_at: string
@@ -93,7 +191,9 @@ export interface Database {
           title: string
           description: string
           type: string
+          target: number
           target_value: number
+          reward: number
           reward_points: number
           active?: boolean
           created_at?: string
@@ -104,7 +204,9 @@ export interface Database {
           title?: string
           description?: string
           type?: string
+          target?: number
           target_value?: number
+          reward?: number
           reward_points?: number
           active?: boolean
           created_at?: string
@@ -117,6 +219,9 @@ export interface Database {
           name: string
           description: string
           price: number
+          stock: number
+          type: string
+          icon: string | null
           category: string
           active: boolean
           created_at: string
@@ -127,6 +232,9 @@ export interface Database {
           name: string
           description: string
           price: number
+          stock: number
+          type: string
+          icon?: string | null
           category: string
           active?: boolean
           created_at?: string
@@ -137,6 +245,9 @@ export interface Database {
           name?: string
           description?: string
           price?: number
+          stock?: number
+          type?: string
+          icon?: string | null
           category?: string
           active?: boolean
           created_at?: string
