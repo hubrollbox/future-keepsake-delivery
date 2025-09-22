@@ -335,7 +335,7 @@ const AdminContent = () => {
 
   // Funções de reset
   const resetNotificationForm = () => {
-    setNotificationFormData({ title: "", content: "", type: "info" });
+    setNotificationFormData({ title: "", message: "", type: "info" });
     setEditingNotification(null);
   };
 
@@ -357,7 +357,10 @@ const AdminContent = () => {
       title: "",
       description: "",
       reward: 0,
-      target: 1
+      target: 1,
+      type: "daily",
+      reward_points: 0,
+      target_value: 1
     });
     setEditingQuest(null);
   };
@@ -367,7 +370,7 @@ const AdminContent = () => {
     setEditingNotification(notification);
     setNotificationFormData({
       title: notification.title,
-      content: notification.content || "",
+      message: notification.message || "",
       type: notification.type || "info",
       keepsake_id: notification.keepsake_id || undefined,
       user_id: notification.user_id || undefined
@@ -378,10 +381,11 @@ const AdminContent = () => {
   const openAchievementEditDialog = (achievement: Achievement) => {
     setEditingAchievement(achievement);
     setAchievementFormData({
-      title: achievement.title,
+      name: achievement.name,
       description: achievement.description,
-      points: achievement.points,
-      icon: achievement.icon
+      reward: achievement.reward,
+      icon: achievement.icon,
+      category: achievement.category || "general"
     });
     setIsAchievementDialogOpen(true);
   };
@@ -392,7 +396,10 @@ const AdminContent = () => {
           title: quest.title,
           description: quest.description,
           reward: quest.reward,
-          target: quest.target
+          target: quest.target,
+          type: quest.type || "daily",
+          reward_points: quest.reward_points || 0,
+          target_value: quest.target_value || quest.target
         });
     setIsQuestDialogOpen(true);
   };
@@ -605,7 +612,7 @@ const AdminContent = () => {
                                 <AlertDialogFooter>
                                   <AlertDialogCancel>Cancelar</AlertDialogCancel>
                                   <AlertDialogAction
-                                    onClick={() => handleAchievementDelete(achievement.id)}
+                                    onClick={() => handleAchievementDelete(Number(achievement.id))}
                                     className="bg-red-600 hover:bg-red-700"
                                   >
                                     Remover
@@ -699,7 +706,7 @@ const AdminContent = () => {
                                 <AlertDialogFooter>
                                   <AlertDialogCancel>Cancelar</AlertDialogCancel>
                                   <AlertDialogAction
-                                    onClick={() => handleQuestDelete(quest.id)}
+                                    onClick={() => handleQuestDelete(Number(quest.id))}
                                     className="bg-red-600 hover:bg-red-700"
                                   >
                                     Remover
