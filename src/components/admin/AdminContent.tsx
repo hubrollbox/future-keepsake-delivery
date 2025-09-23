@@ -30,11 +30,11 @@ type QuestUpdate = Database['public']['Tables']['quests']['Update'];
 
 interface NotificationFormData {
   title: string;
-  content: string;
   message: string;
   type: string;
-  keepsake_id?: string | null;
-  user_id?: string | null;
+  keepsake_id?: string;
+  user_id?: string;
+  content?: string;
 }
 
 interface AchievementFormData {
@@ -62,7 +62,6 @@ const AdminContent = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [notificationFormData, setNotificationFormData] = useState<NotificationFormData>({
     title: "",
-    content: "",
     message: "",
     type: "info"
   });
@@ -72,10 +71,8 @@ const AdminContent = () => {
   // Estados para conquistas
   const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [achievementFormData, setAchievementFormData] = useState<AchievementFormData>({
-    title: "",
     name: "",
     description: "",
-    points: 0,
     reward: 0,
     icon: "",
     category: ""
@@ -335,7 +332,7 @@ const AdminContent = () => {
 
   // Funções de reset
   const resetNotificationForm = () => {
-    setNotificationFormData({ title: "", message: "", type: "info" });
+    setNotificationFormData({ title: "", message: "", type: "info", content: "" });
     setEditingNotification(null);
   };
 
@@ -372,6 +369,7 @@ const AdminContent = () => {
       title: notification.title,
       message: notification.message || "",
       type: notification.type || "info",
+      content: notification.content || "",
       keepsake_id: notification.keepsake_id || undefined,
       user_id: notification.user_id || undefined
     });
@@ -381,8 +379,10 @@ const AdminContent = () => {
   const openAchievementEditDialog = (achievement: Achievement) => {
     setEditingAchievement(achievement);
     setAchievementFormData({
+      title: achievement.title,
       name: achievement.name,
       description: achievement.description,
+      points: achievement.points,
       reward: achievement.reward,
       icon: achievement.icon,
       category: achievement.category || "general"
@@ -795,22 +795,22 @@ const AdminContent = () => {
           <form onSubmit={handleAchievementSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="achievement-title">Título *</Label>
+                <Label htmlFor="achievement-name">Nome *</Label>
                 <Input
-                  id="achievement-title"
-                  value={achievementFormData.title}
-                  onChange={(e) => setAchievementFormData({ ...achievementFormData, title: e.target.value })}
+                  id="achievement-name"
+                  value={achievementFormData.name}
+                  onChange={(e) => setAchievementFormData({ ...achievementFormData, name: e.target.value })}
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="points">Pontos</Label>
+                <Label htmlFor="reward">Recompensa (pontos)</Label>
                 <Input
-                  id="points"
+                  id="reward"
                   type="number"
                   min="0"
-                  value={achievementFormData.points}
-                  onChange={(e) => setAchievementFormData({ ...achievementFormData, points: parseInt(e.target.value) || 0 })}
+                  value={achievementFormData.reward}
+                  onChange={(e) => setAchievementFormData({ ...achievementFormData, reward: parseInt(e.target.value) || 0 })}
                 />
               </div>
             </div>

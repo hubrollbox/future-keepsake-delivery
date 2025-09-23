@@ -2,6 +2,11 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../integrations/supabase/client';
 import { useAuth } from './useAuth';
 import { toast } from 'sonner';
+import { Database } from '@/integrations/supabase/types';
+
+type ApiUsage = Database['public']['Tables']['api_usage']['Row'];
+type ApiUsageInsert = Database['public']['Tables']['api_usage']['Insert'];
+type Subscription = Database['public']['Tables']['subscriptions']['Row'];
 
 interface AIQuotaData {
   used: number;
@@ -37,7 +42,7 @@ export function useAIQuota() {
       setError(null);
       
       // Buscar dados do perfil do usuário com informações do plano
-      const { data: profile, error: profileError } = await supabase
+      const { data: profileData, error: profileError } = await supabase
         .from('profiles')
         .select(`
           *,
@@ -56,8 +61,8 @@ export function useAIQuota() {
 
       // Determinar o tier baseado no plano
       let tier: 'free' | 'premium' | 'family' = 'free';
-      if (profile?.subscriptions && Array.isArray(profile.subscriptions) && profile.subscriptions.length > 0) {
-        const subscription = profile.subscriptions[0];
+      if (profileData?.subscriptions && Array.isArray(profileData.subscriptions) && profileData.subscriptions.length > 0) {
+        const subscription = profileData.subscriptions[0] as Subscription;
         if (subscription.plan_type === 'premium') {
           tier = 'premium';
         } else if (subscription.plan_type === 'family') {
@@ -85,8 +90,9 @@ export function useAIQuota() {
           .insert({
             user_id: userId,
             date: today,
+            usage_count: 0,
             huggingface_requests: 0
-          } as const)
+          } as ApiUsageInsert)
           .select()
           .single();
 
@@ -94,10 +100,12 @@ export function useAIQuota() {
           throw createError;
         }
 
-        currentUsage = newUsage?.huggingface_requests || 0;
+        currentUsage = (newUsage as ApiUsage)?.huggingface_requests || 0;
       } else if (usageError) {
         throw usageError;
       } else {
+        currentUsage = (usage as ApiUsage)?.huggingface_requests || 0;
+      }
         currentUsage = usage?.huggingface_requests || 0;
       }
 
