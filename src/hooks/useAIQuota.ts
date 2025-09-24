@@ -6,6 +6,7 @@ import { Database } from '@/integrations/supabase/types';
 
 type ApiUsage = Database['public']['Tables']['api_usage']['Row'];
 type ApiUsageInsert = Database['public']['Tables']['api_usage']['Insert'];
+type ApiUsageUpdate = Database['public']['Tables']['api_usage']['Update'];
 type Subscription = Database['public']['Tables']['subscriptions']['Row'];
 
 interface AIQuotaData {
@@ -87,12 +88,11 @@ export function useAIQuota() {
         // Registro não existe, criar um novo
         const { data: newUsage, error: createError } = await supabase
           .from('api_usage')
-          .insert({
-            user_id: userId,
+          .insert([{            user_id: userId,
             date: today,
             usage_count: 0,
             huggingface_requests: 0
-          } as ApiUsageInsert)
+          }] as ApiUsageInsert[])
           .select()
           .single();
 
@@ -105,8 +105,6 @@ export function useAIQuota() {
         throw usageError;
       } else {
         currentUsage = (usage as ApiUsage)?.huggingface_requests || 0;
-      }
-        currentUsage = usage?.huggingface_requests || 0;
       }
 
       const quotaData: AIQuotaData = {
@@ -141,11 +139,10 @@ export function useAIQuota() {
 
       const { error } = await supabase
         .from('api_usage')
-        .upsert({
-          user_id: userId,
+        .upsert([{          user_id: userId,
           date: today,
           huggingface_requests: newUsage
-        } as const);
+        }] as ApiUsageInsert[]);
 
       if (error) {
         throw error;
