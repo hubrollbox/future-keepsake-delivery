@@ -88,11 +88,12 @@ export function useAIQuota() {
         // Registro não existe, criar um novo
         const { data: newUsage, error: createError } = await supabase
           .from('api_usage')
-          .insert([{            user_id: userId,
+          .insert([{
+            user_id: userId,
             date: today,
             usage_count: 0,
             huggingface_requests: 0
-          }] as ApiUsageInsert[])
+          }])
           .select()
           .single();
 
@@ -139,10 +140,11 @@ export function useAIQuota() {
 
       const { error } = await supabase
         .from('api_usage')
-        .upsert([{          user_id: userId,
+        .upsert([{
+          user_id: userId,
           date: today,
           huggingface_requests: newUsage
-        }] as ApiUsageInsert[]);
+        }]);
 
       if (error) {
         throw error;
