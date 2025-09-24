@@ -2,12 +2,27 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../integrations/supabase/client';
 import { useAuth } from './useAuth';
 import { toast } from 'sonner';
-import { Database } from '@/integrations/supabase/types';
 
-type ApiUsage = Database['public']['Tables']['api_usage']['Row'];
-type ApiUsageInsert = Database['public']['Tables']['api_usage']['Insert'];
-type ApiUsageUpdate = Database['public']['Tables']['api_usage']['Update'];
-type Subscription = Database['public']['Tables']['subscriptions']['Row'];
+type ApiUsage = {
+  id: string;
+  user_id: string;
+  date: string;
+  huggingface_requests: number;
+};
+
+type Subscription = {
+  id: string;
+  user_id: string;
+  plan_type: 'free' | 'premium' | 'family';
+  status: string;
+  current_period_end: string;
+};
+
+// Custom type for profile query result with subscriptions relationship
+type ProfileWithSubscriptions = {
+  id: string;
+  subscriptions?: Subscription[];
+};
 
 interface AIQuotaData {
   used: number;
@@ -43,18 +58,12 @@ export function useAIQuota() {
       setError(null);
       
       // Buscar dados do perfil do usuário com informações do plano
-      const { data: profileData, error: profileError } = await supabase
-        .from('profiles')
-        .select(`
-          *,
-          subscriptions (
-            plan_type,
-            status,
-            current_period_end
-          )
-        `)
-        .eq('id', userId)
-        .single();
+
+        const { data: profileData, error: profileError } = await supabase
+          .from('profiles')
+          .select(`*, subscriptions (plan_type, status, current_period_end)`)
+          .eq('id', userId)
+          .single();
 
       if (profileError) {
         throw profileError;
@@ -62,11 +71,12 @@ export function useAIQuota() {
 
       // Determinar o tier baseado no plano
       let tier: 'free' | 'premium' | 'family' = 'free';
-      if (profileData?.subscriptions && Array.isArray(profileData.subscriptions) && profileData.subscriptions.length > 0) {
-        const subscription = profileData.subscriptions[0] as Subscription;
-        if (subscription.plan_type === 'premium') {
+      const subsArr = (profileData as ProfileWithSubscriptions)?.subscriptions;
+      if (Array.isArray(subsArr) && subsArr.length > 0) {
+        const subscription = subsArr[0];
+        if (subscription?.plan_type === 'premium') {
           tier = 'premium';
-        } else if (subscription.plan_type === 'family') {
+        } else if (subscription?.plan_type === 'family') {
           tier = 'family';
         }
       }
@@ -88,12 +98,7 @@ export function useAIQuota() {
         // Registro não existe, criar um novo
         const { data: newUsage, error: createError } = await supabase
           .from('api_usage')
-          .insert([{
-            user_id: userId,
-            date: today,
-            usage_count: 0,
-            huggingface_requests: 0
-          }])
+          .insert([{ user_id: userId, date: today, huggingface_requests: 0 }])
           .select()
           .single();
 
@@ -140,11 +145,7 @@ export function useAIQuota() {
 
       const { error } = await supabase
         .from('api_usage')
-        .upsert([{
-          user_id: userId,
-          date: today,
-          huggingface_requests: newUsage
-        }]);
+        .upsert([{ user_id: userId, date: today, huggingface_requests: newUsage }]);
 
       if (error) {
         throw error;

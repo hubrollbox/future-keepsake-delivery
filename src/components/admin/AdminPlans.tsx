@@ -11,11 +11,21 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Plus, Edit, Trash2, CreditCard, Search, Users } from "lucide-react";
-import { Database } from "@/integrations/supabase/types";
 
-type Plan = Database['public']['Tables']['plans']['Row'];
-type PlanInsert = Database['public']['Tables']['plans']['Insert'];
-type PlanUpdate = Database['public']['Tables']['plans']['Update'];
+type Plan = {
+  id: string;
+  name: string;
+  description?: string;
+  price?: number;
+  duration_months?: number;
+  features?: string[];
+  active?: boolean;
+  created_at?: string;
+  updated_at?: string;
+};
+
+type PlanInsert = Omit<Plan, 'id' | 'created_at' | 'updated_at'>;
+type PlanUpdate = Partial<Plan>;
 
 interface PlanFormData {
   name: string;
@@ -391,6 +401,7 @@ const AdminPlans = () => {
                   min="0"
                   value={formData.price}
                   onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) || 0 })}
+                  placeholder="Digite o valor do plano" // Add a descriptive placeholder for accessibility
                 />
               </div>
               
@@ -402,6 +413,7 @@ const AdminPlans = () => {
                   min="1"
                   value={formData.duration_months}
                   onChange={(e) => setFormData({ ...formData, duration_months: parseInt(e.target.value) || 1 })}
+                  placeholder="Digite a duração em meses" // Add placeholder for accessibility
                 />
               </div>
             </div>
@@ -423,6 +435,8 @@ const AdminPlans = () => {
                 checked={formData.active}
                 onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
                 className="rounded border-gray-300"
+                title="Plano ativo"
+                aria-label="Plano ativo"
               />
               <Label htmlFor="active">Plano ativo</Label>
             </div>
