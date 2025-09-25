@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import type { Database } from './types';
+import type { Database } from './database.types';
 
 // Lovable environment: explicit constants (publishable keys are safe in frontend)
 const supabaseUrl = 'https://mlxmymmoysbtnvcehggn.supabase.co';

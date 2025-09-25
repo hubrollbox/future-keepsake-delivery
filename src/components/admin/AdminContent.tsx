@@ -14,7 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Plus, Edit, Trash2, Bell, Trophy, Target, Search } from "lucide-react";
-import { Database } from "@/integrations/supabase/types";
+import { Database } from "@/integrations/supabase/database.types";
 
 type Notification = Database['public']['Tables']['notifications']['Row'];
 type NotificationInsert = Database['public']['Tables']['notifications']['Insert'];
@@ -32,8 +32,8 @@ interface NotificationFormData {
   title: string;
   message: string;
   type: string;
-  keepsake_id?: string;
-  user_id?: string;
+  keepsake_id?: string | null | undefined;
+  user_id?: string | undefined;
   content?: string;
 }
 
@@ -71,8 +71,10 @@ const AdminContent = () => {
   // Estados para conquistas
   const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [achievementFormData, setAchievementFormData] = useState<AchievementFormData>({
+    title: "",
     name: "",
     description: "",
+    points: 0,
     reward: 0,
     icon: "",
     category: ""

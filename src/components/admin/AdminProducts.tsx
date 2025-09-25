@@ -13,7 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Plus, Edit, Trash2, Package, Search, Filter, Minus, Upload, Download } from "lucide-react";
-import { Database } from "@/integrations/supabase/types";
+import { Database } from "@/integrations/supabase/database.types";
 
 type Product = Database['public']['Tables']['products']['Row'];
 type ProductInsert = Database['public']['Tables']['products']['Insert'];

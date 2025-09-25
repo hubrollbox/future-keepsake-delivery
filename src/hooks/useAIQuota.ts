@@ -2,9 +2,22 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../integrations/supabase/client';
 import { useAuth } from './useAuth';
 import { toast } from 'sonner';
+import { Tables } from "../integrations/supabase/database.types";
 
 type ApiUsage = {
   id: string;
+  user_id: string;
+  date: string;
+  huggingface_requests: number;
+};
+
+type ApiUsageInsert = {
+  user_id: string;
+  date: string;
+  huggingface_requests: number;
+};
+
+type ApiUsageUpdate = {
   user_id: string;
   date: string;
   huggingface_requests: number;
@@ -19,9 +32,8 @@ type Subscription = {
 };
 
 // Custom type for profile query result with subscriptions relationship
-type ProfileWithSubscriptions = {
-  id: string;
-  subscriptions?: Subscription[];
+type ProfileWithSubscriptions = Tables<'profiles'> & {
+  subscriptions?: Subscription | null;
 };
 
 interface AIQuotaData {
@@ -98,7 +110,7 @@ export function useAIQuota() {
         // Registro não existe, criar um novo
         const { data: newUsage, error: createError } = await supabase
           .from('api_usage')
-          .insert([{ user_id: userId, date: today, huggingface_requests: 0 }])
+          .insert([{ user_id: userId, date: today, huggingface_requests: 0 } as ApiUsageInsert])
           .select()
           .single();
 
@@ -145,7 +157,7 @@ export function useAIQuota() {
 
       const { error } = await supabase
         .from('api_usage')
-        .upsert([{ user_id: userId, date: today, huggingface_requests: newUsage }]);
+        .upsert([{ user_id: userId, date: today, huggingface_requests: newUsage }] as ApiUsageUpdate[]);
 
       if (error) {
         throw error;
