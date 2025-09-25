@@ -53,24 +53,27 @@ const QUOTA_LIMITS = {
 
 export function useAIQuota() {
   const { user, profile } = useAuth();
+  // Confirmação: user.id deve corresponder ao campo 'user_id' das tabelas 'api_usage' e 'subscriptions'
+  // e ao campo 'id' da tabela 'profiles' (Supabase Auth UUID)
   const [quota, setQuota] = useState<AIQuotaData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const fetchQuota = async () => {
-    if (!profile?.id) {
-      setError('Profile not available');
+    if (!user?.id) {
+      setError('User not authenticated');
       setLoading(false);
       return;
     }
 
-    const userId: string = profile.id;
+    // userId corresponde ao user.id do Supabase Auth
+    const userId: string = user.id;
 
     try {
       setError(null);
       
       // Buscar dados do perfil do usuário com informações do plano
-
+      // Query à tabela 'profiles' pelo campo 'id'
         const { data: profileData, error: profileError } = await supabase
           .from('profiles')
           .select(`*, subscriptions (plan_type, status, current_period_end)`)
@@ -97,6 +100,7 @@ export function useAIQuota() {
       const today = new Date().toISOString().split('T')[0] as string;
 
       // Buscar uso atual da API
+      // Query à tabela 'api_usage' pelo campo 'user_id'
       const { data: usage, error: usageError } = await supabase
         .from('api_usage')
         .select('*')
@@ -106,8 +110,9 @@ export function useAIQuota() {
 
       // Se não há registro para hoje, criar um
       let currentUsage = 0;
-      if (usageError && usageError.code === 'PGRST116') {
+      if (usageError && usageError.code === 'PGR      psql -h <HOST> -p <PORT> -U <USER> -d <DATABASE>ST116') {
         // Registro não existe, criar um novo
+        // Inserção na tabela 'api_usage' com 'user_id'
         const { data: newUsage, error: createError } = await supabase
           .from('api_usage')
           .insert([{ user_id: userId, date: today, huggingface_requests: 0 } as ApiUsageInsert])
@@ -145,16 +150,17 @@ export function useAIQuota() {
   };
 
   const incrementUsage = async () => {
-    if (!profile?.id || !quota) {
+    if (!user?.id || !quota) {
       throw new Error('User not authenticated or quota not loaded');
     }
 
-    const userId: string = profile.id;
+    const userId: string = user.id;
 
     try {
       const today = new Date().toISOString().split('T')[0] as string;
       const newUsage = quota.used + 1;
 
+      // Upsert na tabela 'api_usage' com 'user_id'
       const { error } = await supabase
         .from('api_usage')
         .upsert([{ user_id: userId, date: today, huggingface_requests: newUsage }] as ApiUsageUpdate[]);
