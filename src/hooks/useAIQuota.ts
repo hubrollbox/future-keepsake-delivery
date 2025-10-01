@@ -110,7 +110,7 @@ export function useAIQuota() {
 
       // Se não há registro para hoje, criar um
       let currentUsage = 0;
-      if (usageError && usageError.code === 'PGR      psql -h <HOST> -p <PORT> -U <USER> -d <DATABASE>ST116') {
+      if (usageError && usageError.code === 'PGRST116') {
         // Registro não existe, criar um novo
         // Inserção na tabela 'api_usage' com 'user_id'
         const { data: newUsage, error: createError } = await supabase
