@@ -96,14 +96,15 @@ module.exports = [
     }
   },
   {
-    files: ['scripts/**/*.js'],
+    files: ['ops/scripts/**/*.js', 'run-tests.js'],
     languageOptions: {
       globals: {
         require: 'readonly',
         module: 'readonly',
         __dirname: 'readonly',
         __filename: 'readonly',
-        process: 'readonly'
+        process: 'readonly',
+        fetch: 'readonly'
       },
       ecmaVersion: 2020,
       sourceType: 'commonjs'

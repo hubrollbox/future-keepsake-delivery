@@ -217,8 +217,7 @@ async function createSQLFunctions() {
       // Se a função não existe, crie-a usando SQL bruto
       await supabase.sql(createCheckCronJobFunction);
     }
-  // eslint-disable-next-line no-unused-vars
-    } catch (_) {
+    } catch {
       // Ignorar erros aqui, eles serão tratados na função principal
   }
 }

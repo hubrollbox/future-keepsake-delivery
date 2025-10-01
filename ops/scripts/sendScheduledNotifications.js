@@ -55,8 +55,7 @@ async function processScheduledNotifications() {
         .from('scheduled_notifications')
         .update({ status: 'sent', sent_at: new Date().toISOString() })
         .eq('id', notif.id);
-    // eslint-disable-next-line no-unused-vars
-    } catch (_) {
+    } catch {
       await supabase
         .from('scheduled_notifications')
         .update({ status: 'error' })
