@@ -52,7 +52,7 @@ const QUOTA_LIMITS = {
 } as const;
 
 export function useAIQuota() {
-  const { user, profile } = useAuth();
+  const { user } = useAuth();
   // Confirmação: user.id deve corresponder ao campo 'user_id' das tabelas 'api_usage' e 'subscriptions'
   // e ao campo 'id' da tabela 'profiles' (Supabase Auth UUID)
   const [quota, setQuota] = useState<AIQuotaData | null>(null);
