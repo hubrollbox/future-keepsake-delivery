@@ -1,27 +1,18 @@
 import { vi } from 'vitest';
 import React from 'react';
 import '@testing-library/jest-dom';
+import { mockSupabaseClient } from './mocks/supabase';
 
 // Note: Jest-dom matchers are automatically available in vitest
 
-// Mock do Supabase
+// Mock do Supabase com implementação completa
 vi.mock('@supabase/supabase-js', () => ({
-  createClient: vi.fn(() => ({
-    auth: {
-      getSession: vi.fn(),
-      signInWithPassword: vi.fn(),
-      signOut: vi.fn(),
-      onAuthStateChange: vi.fn(),
-    },
-    from: vi.fn(() => ({
-      select: vi.fn().mockReturnThis(),
-      insert: vi.fn().mockReturnThis(),
-      update: vi.fn().mockReturnThis(),
-      delete: vi.fn().mockReturnThis(),
-      eq: vi.fn().mockReturnThis(),
-      single: vi.fn(),
-    })),
-  })),
+  createClient: vi.fn(() => mockSupabaseClient),
+}));
+
+// Mock do cliente Supabase do projeto
+vi.mock('@/integrations/supabase/client', () => ({
+  supabase: mockSupabaseClient,
 }));
 
 // Mock do React Router

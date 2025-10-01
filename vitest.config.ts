@@ -17,14 +17,24 @@ export default defineConfig({
     globals: true,
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'json', 'html'],
+      reporter: ['text', 'json', 'html', 'lcov'],
       exclude: [
         'node_modules/',
         'src/__tests__/',
         '**/*.d.ts',
         'dist/',
-        'build/'
-      ]
+        'build/',
+        'src/integrations/supabase/types.ts',
+        'src/integrations/supabase/database.types.ts',
+        '**/*.config.*',
+        '**/main.tsx'
+      ],
+      thresholds: {
+        lines: 60,
+        functions: 60,
+        branches: 50,
+        statements: 60
+      }
     },
     testTimeout: 10000,
     include: ['src/pages/**/*.test.tsx', 'src/__tests__/components/**/*.test.tsx'],
