@@ -1,21 +1,10 @@
-
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Mail, Plus, Calendar, Edit, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
-interface Delivery {
-  id: string;
-  title: string;
-  recipient_name: string;
-  delivery_date: string;
-  created_at: string;
-  status: string | null;
-  message?: string;
-}
+import type { Delivery } from "@/types/admin";
 
 interface TimeCapsuleSectionProps {
   deliveries: Delivery[];
@@ -81,10 +70,10 @@ const TimeCapsuleSection = ({ deliveries, loading, onDelete }: TimeCapsuleSectio
               {deliveries.map((delivery) => (
                 <Card key={delivery.id} className="border border-blue-100 bg-blue-50/50">
                   <CardContent className="p-4">
-                     <div className="flex justify-between items-start mb-2">
+          <div className="flex justify-between items-start mb-2">
                       <div className="flex-1">
                         <h4 className="font-semibold text-blue-900">{delivery.title || "Mensagem"}</h4>
-                        <p className="text-sm text-gray-600">Para: {delivery.recipient_name}</p>
+                        <p className="text-sm text-gray-600">Para: {delivery.recipient_name || "Destinatário"}</p>
                         <div className="flex flex-col gap-1 mt-1 text-xs text-gray-500">
                           <p className="flex items-center gap-1">
                             <Calendar className="h-3 w-3" />

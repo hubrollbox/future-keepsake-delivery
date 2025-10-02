@@ -1,11 +1,6 @@
 
 import { Trophy, Medal, Award } from "lucide-react";
-
-interface TopUser {
-  user_id: string;
-  name: string;
-  count: number;
-}
+import type { TopUser } from "@/types/admin";
 
 interface TopUsersRankingProps {
   users: TopUser[];
@@ -35,16 +30,16 @@ const TopUsersRanking = ({ users }: TopUsersRankingProps) => {
         <p className="text-misty-gray text-center py-8">Nenhum utilizador encontrado</p>
       ) : (
         users.map((user, index) => (
-          <div key={user.user_id} className="flex items-center gap-4 p-3 rounded-xl bg-lavender-mist/30 hover:bg-lavender-mist/50 transition-colors">
+          <div key={user.id} className="flex items-center gap-4 p-3 rounded-xl bg-lavender-mist/30 hover:bg-lavender-mist/50 transition-colors">
             <div className="flex-shrink-0">
               {getRankIcon(index)}
             </div>
             <div className="flex-1 min-w-0">
               <p className="font-medium text-steel-blue truncate">
-                {user.name}
+                {user.full_name || user.email}
               </p>
               <p className="text-sm text-misty-gray">
-                {user.count} {user.count === 1 ? 'entrega' : 'entregas'}
+                {user.keepsakeCount} {user.keepsakeCount === 1 ? 'entrega' : 'entregas'}
               </p>
             </div>
             <div className="flex-shrink-0">

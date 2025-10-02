@@ -7,6 +7,7 @@ import UserStatsSection from "@/components/dashboard/UserStatsSection";
 import TimeCapsuleSection from "@/components/dashboard/TimeCapsuleSection";
 import { KeepsakesList } from "@/components/dashboard/KeepsakesList";
 import { Button } from "@/components/ui/button";
+import type { Delivery } from "@/types/admin";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PlusCircle, Clock, Package, CheckCircle } from "lucide-react";
@@ -17,6 +18,17 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { profile, loading } = useAuth();
   const { deliveries, loading: deliveriesLoading, deleteDelivery } = useDeliveries();
+
+  // Transform deliveries to match Delivery interface
+  const transformedDeliveries: Delivery[] = deliveries.map(d => ({
+    id: d.id,
+    title: String(d.title || "Sem título"),
+    recipient_name: String(d.location || "Destinatário desconhecido"),
+    delivery_date: String(d.delivery_date),
+    created_at: String(d.created_at || new Date().toISOString()),
+    status: d.status ? String(d.status) : null,
+    ...(d.description && { message: String(d.description) })
+  }));
 
 // Estado para confirmação de eliminação removido (gerido dentro de KeepsakesList)
 
@@ -41,7 +53,7 @@ const Dashboard = () => {
         <div className="dashboard-grid grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-8">
           <div className="xl:col-span-2 space-y-6 md:space-y-8">
             <TimeCapsuleSection
-              deliveries={deliveries as any[]}
+              deliveries={transformedDeliveries}
               loading={deliveriesLoading}
               onDelete={deleteDelivery}
             />

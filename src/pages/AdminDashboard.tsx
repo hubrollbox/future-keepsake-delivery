@@ -2,7 +2,6 @@
 import { lazy, Suspense } from 'react';
 import { Navigate, Routes, Route } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { useAdmin } from "@/hooks/useAdmin";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { Loader2 } from "lucide-react";
 
@@ -17,10 +16,9 @@ const AdminPlans = lazy(() => import("@/components/admin/AdminPlans"));
 const AdminContent = lazy(() => import("@/components/admin/AdminContent"));
 
 const AdminDashboardPage = () => {
-  const { user, loading: authLoading } = useAuth();
-  const { isAdmin, loading: adminLoading } = useAdmin();
+  const { user, isAdmin, loading } = useAuth();
 
-  if (authLoading || adminLoading) {
+  if (loading) {
     return (
       <div className="min-h-screen bg-lavender-mist flex items-center justify-center">
         <div className="flex items-center space-x-2">
