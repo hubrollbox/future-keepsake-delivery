@@ -48,7 +48,7 @@ const Navigation = () => {
   ];
 
   return (
-    <nav className="bg-white shadow-sm border-b border-lavender-mist sticky top-0 z-50">
+    <nav className="bg-keepla-white shadow-keepla-sm border-b border-keepla-gray sticky top-0 z-50">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -66,7 +66,7 @@ const Navigation = () => {
               <Link
                 key={item.name}
                 to={item.href}
-                className="text-steel-blue hover:text-dusty-rose transition-colors font-medium"
+                className="text-keepla-black hover:text-keepla-red transition-colors font-semibold"
               >
                 {item.name}
               </Link>
@@ -81,7 +81,7 @@ const Navigation = () => {
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8">
                       <AvatarImage src={profile?.avatar_url || ""} alt={profile?.full_name || ""} />
-                      <AvatarFallback className="bg-dusty-rose text-white">
+                      <AvatarFallback className="bg-keepla-red text-white">
                         {profile?.full_name
                           ? profile.full_name.charAt(0).toUpperCase()
                           : user.email?.charAt(0).toUpperCase()}
@@ -140,13 +140,13 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-lavender-mist mobile-spacing">
+          <div className="md:hidden border-t border-keepla-gray py-4">
             <div className="flex flex-col space-y-2">
               {menuItems.map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
-                  className="text-steel-blue hover:text-dusty-rose transition-colors font-medium px-4 py-3 touch-target rounded-md hover:bg-lavender-mist/50"
+                  className="text-keepla-black hover:text-keepla-red transition-colors font-semibold px-4 py-3 touch-target rounded-md hover:bg-keepla-gray"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}

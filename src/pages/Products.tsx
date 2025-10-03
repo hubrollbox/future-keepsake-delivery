@@ -5,7 +5,7 @@ import ProductsSection from "@/components/products/ProductsSection";
 
 const Products = () => {
   return (
-    <div className="min-h-screen bg-lavender-mist">
+    <div className="min-h-screen bg-keepla-white">
       <Navigation />
       <main>
         <ProductsSection />
