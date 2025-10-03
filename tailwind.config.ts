@@ -46,9 +46,10 @@ export default {
 				'body': ['clamp(0.875rem, 1.2vw, 1rem)', { lineHeight: '1.6', fontWeight: '400' }],
 			},
 			fontFamily: {
-				'fraunces': ['Fraunces', 'serif'],
 				'sans': ['Inter', 'system-ui', 'sans-serif'],
-				'serif': ['Fraunces', 'serif'],
+				'serif': ['Georgia', 'serif'],
+				'inter': ['Inter', 'system-ui', 'sans-serif'],
+				'georgia': ['Georgia', 'serif'],
 			},
 			spacing: {
 				'safe-top': 'env(safe-area-inset-top)',
@@ -100,22 +101,12 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Paleta oficial da marca keepla conforme manual
-				'lavender-mist': '#F5F2F8', // Fundo principal
-				'steel-blue': '#3D4A5A', // Texto principal (azul petróleo claro)
-				'dusty-rose': '#DAB8C3', // Acento emocional (rosa antigo)
-				'sand-beige': '#ECE5DA', // Fundo de secções (bege areia)
-				'midnight-soft': '#4A5568', // Botão principal (azul meia-noite suave)
-				'misty-gray': '#A0AEC0', // Elementos secundários (cinza esfumado)
-				'earthy-burgundy': '#8B3A62', // Bordô Terroso - cor de contraste principal
-				// Manter algumas cores para compatibilidade
-				'gentle-black': '#3D4A5A',
-				'soft-gray': '#718096',
-				'golden-honey': '#E6B800',
-				'warm-cream': '#FAF8F5',
-				'sage-green': '#9CAF88',
-				'warm-yellow': '#F7E98E',
-				'warm-brown': '#8B6914',
+				// Paleta oficial Keepla.pt - Memória Viva
+				'keepla-red': '#E63946', // Vermelho Keepla - cor principal/logo
+				'keepla-red-deep': '#C6282E', // Vermelho profundo - CTAs/botões
+				'keepla-black': '#000000', // Preto - fundos
+				'keepla-white': '#FFFFFF', // Branco - fundos
+				'keepla-gray': '#F5F5F5', // Cinza claro para subtileza
 			},
 			borderRadius: {
 				lg: '12px',
@@ -187,8 +178,8 @@ export default {
 				'bounce-gentle': 'bounce-gentle 2s infinite'
 			},
 			boxShadow: {
-				'soft': '0 4px 20px 0 rgba(218, 184, 195, 0.15)',
-				'gentle': '0 2px 12px 0 rgba(218, 184, 195, 0.1)',
+				'keepla': '0 4px 20px 0 rgba(230, 57, 70, 0.15)',
+				'keepla-sm': '0 2px 12px 0 rgba(230, 57, 70, 0.1)',
 			}
 		}
 	},

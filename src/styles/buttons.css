@@ -1,31 +1,31 @@
 
 .btn-gentle {
-  @apply px-8 py-4 rounded-xl font-medium transition-all duration-200 shadow-soft hover:shadow-md border-2 border-dusty-rose;
+  @apply px-8 py-4 rounded-md font-medium transition-all duration-200 shadow-keepla-sm hover:shadow-keepla border-2 border-keepla-red;
 }
 .btn-primary {
-  @apply bg-earthy-burgundy text-white btn-gentle hover:bg-earthy-burgundy/90 border-2 border-dusty-rose focus-visible:ring-2 focus-visible:ring-dusty-rose;
+  @apply bg-keepla-red text-white px-8 py-4 rounded-md font-medium transition-all duration-200 hover:bg-keepla-red-deep shadow-keepla-sm;
 }
 .btn-secondary {
-  @apply border-2 border-earthy-burgundy text-earthy-burgundy btn-gentle hover:bg-dusty-rose/20 hover:text-earthy-burgundy;
+  @apply border-2 border-keepla-red text-keepla-red px-8 py-4 rounded-md font-medium transition-all duration-200 hover:bg-keepla-red hover:text-white;
 }
 .btn-outline-brand {
-  @apply border-2 border-dusty-rose text-earthy-burgundy bg-transparent hover:bg-dusty-rose/10 transition-colors duration-200;
+  @apply border-2 border-keepla-red text-keepla-red bg-transparent transition-all duration-200 hover:bg-keepla-red hover:text-white;
 }
 .btn-brand {
-  background: var(--brand-accent);
+  background: var(--keepla-red);
   color: #fff;
-  font-weight: 700;
-  box-shadow: 0 2px 18px 0 #dab8c31c;
+  font-weight: 600;
+  box-shadow: 0 2px 12px 0 rgba(230, 57, 70, 0.1);
 }
 
 .btn-brand-outline {
   background: transparent;
-  color: var(--brand-accent);
-  border: 2px solid var(--brand-accent);
+  color: var(--keepla-red);
+  border: 2px solid var(--keepla-red);
 }
 
 a, .underline-link, .brand-link {
-  color: var(--brand-accent);
+  color: var(--keepla-red);
   text-decoration: underline;
   text-underline-offset: 3px;
   font-weight: 600;
@@ -37,12 +37,12 @@ a, .underline-link, .brand-link {
 a:focus-visible,
 .underline-link:focus-visible,
 .brand-link:focus-visible {
-  color: var(--brand-secondary);
-  background: #DAB8C322;
-  box-shadow: 0 0 0 3px #DAB8C3aa;
-  outline: 2px solid #DAB8C3;
+  color: var(--keepla-black);
+  background: rgba(230, 57, 70, 0.1);
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.3);
+  outline: 2px solid var(--keepla-red);
 }
 a:hover, .underline-link:hover, .brand-link:hover {
-  color: #DAB8C3;
-  background-color: #8B3A6212;
+  color: var(--keepla-red-deep);
+  background-color: rgba(230, 57, 70, 0.05);
 }

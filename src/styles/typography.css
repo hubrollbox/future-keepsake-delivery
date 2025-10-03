@@ -1,40 +1,70 @@
+/* 
+ * Keepla.pt Typography
+ * Fonte principal: Inter (títulos, corpo, logo)
+ * Fonte secundária: Georgia (frases emotivas, subtítulos)
+ */
 
 body, html {
-  font-family: 'Fraunces', serif;
+  font-family: 'Inter', sans-serif;
   font-size: 16px;
-  color: var(--brand-secondary);
-  background: var(--brand-background);
+  color: var(--keepla-black);
+  background: var(--keepla-white);
+  line-height: 1.6;
 }
 
+/* Hierarquia de títulos com Inter Bold */
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Fraunces', serif;
-  font-weight: 600;
-  color: var(--brand-secondary);
-  text-shadow: 0 1px 0 #ECE5DA;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  color: var(--keepla-black);
   letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
+h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); }
+h2 { font-size: clamp(2rem, 4vw, 2.5rem); }
+h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
+h4 { font-size: clamp(1.25rem, 2.5vw, 1.5rem); }
+
+/* Texto emotivo com Georgia itálico */
+.text-emotional,
+.quote,
+blockquote {
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  font-size: clamp(1.125rem, 2vw, 1.25rem);
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* Destaque de marca */
+.brand-highlight,
 .text-brand-primary {
-  color: var(--brand-primary);
-  font-weight: bold;
-  background: linear-gradient(90deg, #DAB8C3 60%, #ECE5DA 100%);
-  border-radius: 0.5em;
-  padding: 0 0.2em;
+  color: var(--keepla-red);
+  font-weight: 700;
 }
 
-.brand-highlight {
-  @apply text-brand-primary;
+/* Subtítulos emocionais */
+.subtitle-emotional {
+  font-family: 'Georgia', serif;
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  font-style: italic;
+  color: var(--text-secondary);
 }
 
-.text-section-title {
-  font-size: 2.25rem;
-  font-family: 'Fraunces', serif;
-  font-weight: 700;
-  color: var(--brand-secondary);
+/* Corpo de texto */
+p {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.875rem, 1.2vw, 1rem);
+  line-height: 1.6;
+  color: var(--keepla-black);
 }
-.text-section-title-sm {
-  font-size: 1.5rem;
-  font-family: 'Fraunces', serif;
-  font-weight: 700;
-  color: var(--brand-secondary);
+
+/* Detalhes e citações pequenas */
+.text-small,
+small {
+  font-family: 'Georgia', serif;
+  font-size: 0.875rem;
+  font-style: italic;
+  color: var(--text-secondary);
 }

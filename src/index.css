@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import './styles/colors.css';
 @import './styles/typography.css';
 @import './styles/buttons.css';
@@ -15,51 +15,51 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 0 0% 0%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 0 0% 0%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --popover-foreground: 0 0% 0%;
+    --primary: 354 76% 59%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 354 62% 47%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 354 76% 59%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.75rem;
-    --brand-primary: 218 184 195;
-    --brand-secondary: 61 20 35;
-    --brand-background: 245 242 248;
-    --brand-neutral: 236 229 218;
-    --brand-accent: 139 58 98;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 354 76% 59%;
+    --radius: 0.5rem;
+    --keepla-red: 354 76% 59%;
+    --keepla-red-deep: 354 62% 47%;
+    --keepla-black: 0 0% 0%;
+    --keepla-white: 0 0% 100%;
+    --keepla-gray: 0 0% 96%;
   }
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 354 76% 59%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 354 62% 47%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 354 76% 59%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 354 76% 59%;
   }
   .emotional-spacing { 
     padding-top: 5rem; /* py-20 */
@@ -85,56 +85,34 @@
       padding-bottom: 3.5rem;
     }
   }
-  .btn-gentle { 
-    padding: 1rem 2rem; /* px-8 py-4 */
-    border-radius: 0.75rem; /* rounded-xl */ 
-    font-weight: 500; /* font-medium */
-    transition: all 200ms; /* transition-all duration-200 */
-    box-shadow: 0 2px 18px 0 rgba(218, 184, 195, 0.11), 0 1.5px 5px 0 rgba(139, 58, 98, 0.13); /* shadow-soft */
-    border: 2px solid var(--dusty-rose); /* border-2 border-dusty-rose */
-  }
-  .btn-gentle:hover {
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* hover:shadow-md */
-  }
   .btn-primary { 
-    background-color: var(--earthy-burgundy);
-    color: white;
+    background-color: hsl(var(--keepla-red));
+    color: hsl(var(--keepla-white));
     padding: 1rem 2rem;
-    border-radius: 0.75rem;
+    border-radius: 0.5rem;
     font-weight: 500;
     transition: all 200ms;
-    box-shadow: 0 2px 18px 0 rgba(218, 184, 195, 0.11), 0 1.5px 5px 0 rgba(139, 58, 98, 0.13);
-    border: 2px solid var(--dusty-rose);
+    border: none;
   }
   .btn-primary:hover {
-    background-color: rgba(var(--earthy-burgundy), 0.9);
+    background-color: hsl(var(--keepla-red-deep));
   }
   .btn-primary:focus-visible {
-    outline: none;
-    outline-width: 2px;
-    --ring-color: var(--dusty-rose);
+    outline: 2px solid hsl(var(--keepla-red));
+    outline-offset: 2px;
   }
   .btn-secondary {
-    border: 2px solid var(--earthy-burgundy);
-    color: var(--earthy-burgundy);
-    padding: 2rem 1rem;
-    border-radius: 0.75rem;
+    border: 2px solid hsl(var(--keepla-red));
+    color: hsl(var(--keepla-red));
+    background-color: transparent;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
     font-weight: 500;
     transition: all 200ms;
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   }
   .btn-secondary:hover {
-    background-color: rgba(var(--dusty-rose), 0.2);
-    color: var(--earthy-burgundy);
-  }
-  .btn-outline-brand {
-    border: 2px solid var(--dusty-rose);
-    color: var(--earthy-burgundy);
-    background-color: transparent;
-    transition: background-color 0.2s, color 0.2s;
-  }
-  .btn-outline-brand:hover {
-    background-color: rgba(var(--dusty-rose), 0.1);
+    background-color: hsl(var(--keepla-red));
+    color: hsl(var(--keepla-white));
   }
 
   [data-sonner-toast][data-swiped=true] {
@@ -146,18 +124,18 @@
    CAMPOS DE INPUT E FOCO
    -------------------------------- */
   input, textarea, select {
-    border-radius: 0.75rem;
-    background-color: white;
-    border: 1px solid rgba(218, 184, 195, 0.25);
+    border-radius: 0.5rem;
+    background-color: hsl(var(--keepla-white));
+    border: 1px solid hsl(var(--border));
     padding: 0.75rem 1rem;
-    color: #3D4A5A;
+    color: hsl(var(--foreground));
     transition: all 200ms;
-    min-height: 44px; /* Acessibilidade touch */
+    min-height: 44px;
   }
   input:focus-visible, textarea:focus-visible, select:focus-visible {
-    box-shadow: 0 0 0 3px #dab8c33c;
-    outline: 2px solid #DAB8C3;
-    border-color: #DAB8C3;
+    outline: 2px solid hsl(var(--keepla-red));
+    outline-offset: 0px;
+    border-color: hsl(var(--keepla-red));
   }
 
   /* -------------------------------
@@ -169,22 +147,17 @@
     font-style: italic;
   }
 
-  h1, h2, h3, h4, h5, h5 {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    line-height: 1.3;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    line-height: 1.2;
     letter-spacing: -0.02em;
-    color: theme('colors.steel-blue');
-    text-shadow: 0 1px 0 #ECE5DA;
-    letter-spacing: -0.02em;
+    color: hsl(var(--foreground));
   }
 
   .brand-highlight, .text-brand-primary {
-    color: #DAB8C3;
+    color: hsl(var(--keepla-red));
     font-weight: bold;
-    background: linear-gradient(90deg, #DAB8C3 60%, #ECE5DA 100%);
-    border-radius: 0.5em;
-    padding: 0 0.2em;
   }
 
   /* -------------------------------
