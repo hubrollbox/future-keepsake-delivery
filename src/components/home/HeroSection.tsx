@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import heroImage from "@/assets/hero-memory.jpg";
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -16,12 +17,15 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-lavender-mist via-sand-beige/30 to-dusty-rose/20 overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-dusty-rose animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-24 h-24 rounded-full bg-steel-blue animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/4 w-16 h-16 rounded-full bg-golden-honey animate-pulse delay-500"></div>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background image */}
+      <div className="absolute inset-0">
+        <img 
+          src={heroImage} 
+          alt="" 
+          className="w-full h-full object-cover opacity-20"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-keepla-white/90 via-keepla-white/80 to-keepla-white/90"></div>
       </div>
 
       <div className="container mx-auto px-4 text-center relative z-10">
