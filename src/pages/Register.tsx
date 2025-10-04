@@ -22,7 +22,7 @@ const Register = () => {
           </Button>
         </div>
         <div className="text-center mb-8">
-          <img src="/keepla logo.png" alt="Keepla Logo" className="h-20 mx-auto mb-4" />
+          <img src="/keepla-logo.png" alt="Keepla Logo" className="h-20 mx-auto mb-4" />
         </div>
         <SecureRegisterForm />
       </div>
