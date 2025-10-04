@@ -4,18 +4,18 @@ import { useState } from "react";
 import { motion, easeOut } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Check, Star, Zap, Sparkles, Crown, ArrowRight } from "lucide-react";
+import { Check, ArrowRight } from "lucide-react";
 import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { trackSubscription, trackButtonClick } from '@/lib/analytics';
+import cartaEscrita from "@/assets/carta-escrita.jpg";
 
 const freemiumPlans = [
   {
     id: 'free',
     name: 'Gratuito',
-    description: 'Perfeito para começar sua jornada de memórias',
+    description: 'Perfeito para começar a tua jornada de memórias',
     price: { monthly: 0, yearly: 0 },
     features: [
       '3 cápsulas do tempo por mês',
@@ -29,10 +29,6 @@ const freemiumPlans = [
       'Sem personalização avançada',
       'Sem backup em nuvem'
     ],
-    icon: <Sparkles className="h-6 w-6" />,
-    color: 'text-gray-600',
-    bgColor: 'bg-gray-100',
-    borderColor: 'border-gray-200',
     aiQuota: 3,
     keepsakeLimit: '3 por mês'
   },
@@ -52,32 +48,24 @@ const freemiumPlans = [
       'Suporte prioritário'
     ],
     popular: true,
-    icon: <Zap className="h-6 w-6" />,
-    color: 'text-blue-600',
-    bgColor: 'bg-blue-100',
-    borderColor: 'border-blue-200',
     aiQuota: 50,
     keepsakeLimit: 'Ilimitadas'
   },
   {
     id: 'family',
     name: 'Família',
-    description: 'Compartilhe memórias com toda a família',
+    description: 'Partilha memórias com toda a família',
     price: { monthly: 39.90, yearly: 399.90 },
     features: [
       'Tudo do Premium',
       '100 sugestões de IA por dia',
       'Até 6 contas familiares',
       'Cápsulas colaborativas',
-      'Álbum familiar compartilhado',
-      'Controle parental',
+      'Álbum familiar partilhado',
+      'Controlo parental',
       'Relatórios de atividade',
       'Suporte dedicado 24/7'
     ],
-    icon: <Crown className="h-6 w-6" />,
-    color: 'text-purple-600',
-    bgColor: 'bg-purple-100',
-    borderColor: 'border-purple-200',
     aiQuota: 100,
     keepsakeLimit: 'Ilimitadas'
   }
@@ -89,30 +77,27 @@ function Pricing() {
   const navigate = useNavigate();
 
   const handleSelectPlan = (planId: string) => {
-    // Track button click
     trackButtonClick(`select_plan_${planId}`, 'pricing_page');
     
     if (!user) {
-      toast.error('Faça login para continuar');
+      toast.error('Faz login para continuar');
       navigate('/login');
       return;
     }
 
     if (planId === 'free') {
-      toast.success('Você já está no plano gratuito!');
+      toast.success('Já estás no plano gratuito!');
       navigate('/dashboard');
       return;
     }
 
-    // Track subscription intent
     const plan = freemiumPlans.find(p => p.id === planId);
     if (plan) {
       trackSubscription(plan.name, 'subscribe');
     }
 
-    // Aqui seria integrado com Stripe
-    toast.info('Redirecionando para pagamento...', {
-      description: 'Em breve você será redirecionado para o Stripe'
+    toast.info('A redirecionar para pagamento...', {
+      description: 'Em breve serás redirecionado para o Stripe'
     });
   };
 
@@ -139,62 +124,72 @@ function Pricing() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-keepla-white">
       <Navigation />
       
       <main>
-        {/* Hero Section */}
-        <div className="py-20 px-4 md:px-0">
-          <div className="max-w-4xl mx-auto text-center mb-16">
+        {/* Hero Section com imagem de fundo */}
+        <div className="relative py-20 px-4 md:px-0 overflow-hidden">
+          {/* Background image */}
+          <div className="absolute inset-0">
+            <img 
+              src={cartaEscrita} 
+              alt="" 
+              className="w-full h-full object-cover opacity-10"
+            />
+            <div className="absolute inset-0 bg-keepla-white/80"></div>
+          </div>
+
+          <div className="max-w-4xl mx-auto text-center mb-16 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <Badge variant="outline" className="mb-4 text-blue-600 border-blue-600">
-                ✨ Planos com IA Integrada
-              </Badge>
-              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-                Preserve Memórias com
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                  Inteligência Artificial
+              <div className="flex justify-center mb-8">
+                <img src="/keepla-logo.png" alt="keepla Logo" className="h-16" />
+              </div>
+              
+              <h1 className="text-4xl md:text-6xl font-bold text-keepla-black mb-6 font-inter">
+                Memórias que Ficam,
+                <span className="block text-keepla-red font-georgia italic">
+                  Entregues para Sempre
                 </span>
               </h1>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed mb-8">
-                Escolha o plano perfeito para guardar e entregar suas memórias mais preciosas no momento exato. 
-                Com sugestões inteligentes de IA para tornar suas mensagens ainda mais especiais.
+              
+              <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed mb-8 font-inter">
+                Escolhe o plano perfeito para guardar e entregar as tuas memórias mais preciosas no momento exato.
               </p>
 
-              {/* Billing Toggle */}
+              {/* Billing Toggle - minimalista */}
               <div className="flex items-center justify-center gap-4 mb-8">
-                <span className={`text-sm font-medium ${
-                  billingCycle === 'monthly' ? 'text-gray-900' : 'text-gray-500'
+                <span className={`text-sm font-medium font-inter ${
+                  billingCycle === 'monthly' ? 'text-keepla-black' : 'text-gray-400'
                 }`}>
                   Mensal
                 </span>
                 <button
                   onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'yearly' : 'monthly')}
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                    billingCycle === 'yearly' ? 'bg-blue-600' : 'bg-gray-200'
+                    billingCycle === 'yearly' ? 'bg-keepla-red' : 'bg-keepla-gray'
                   }`}
                   aria-label="Alternar ciclo de cobrança mensal/anual"
-                  title="Alternar ciclo de cobrança mensal/anual"
                 >
                   <span
-                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                    className={`inline-block h-4 w-4 transform rounded-full bg-keepla-white transition-transform ${
                       billingCycle === 'yearly' ? 'translate-x-6' : 'translate-x-1'
                     }`}
                   />
                 </button>
-                <span className={`text-sm font-medium ${
-                  billingCycle === 'yearly' ? 'text-gray-900' : 'text-gray-500'
+                <span className={`text-sm font-medium font-inter ${
+                  billingCycle === 'yearly' ? 'text-keepla-black' : 'text-gray-400'
                 }`}>
                   Anual
                 </span>
                 {billingCycle === 'yearly' && (
-                  <Badge className="bg-green-100 text-green-800 ml-2">
-                    Economize 17%
-                  </Badge>
+                  <span className="bg-keepla-red text-keepla-white text-xs px-3 py-1 rounded-full font-inter ml-2">
+                    Poupa 17%
+                  </span>
                 )}
               </div>
             </motion.div>
@@ -205,7 +200,7 @@ function Pricing() {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20"
+            className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20 relative z-10 px-4"
           >
             {freemiumPlans.map((plan) => (
               <motion.div
@@ -214,45 +209,40 @@ function Pricing() {
                 className="relative"
               >
                 {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <Badge className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-1">
-                      <Star className="h-3 w-3 mr-1" />
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                    <span className="bg-keepla-red text-keepla-white text-sm px-4 py-1 rounded-full font-inter font-medium">
                       Mais Popular
-                    </Badge>
+                    </span>
                   </div>
                 )}
                 
-                <Card className={`h-full transition-all duration-300 hover:shadow-xl ${
-                  plan.popular ? 'ring-2 ring-blue-500 shadow-lg scale-105' : 'hover:scale-105'
-                }`}>
+                <Card className={`h-full transition-all duration-300 border-2 ${
+                  plan.popular 
+                    ? 'border-keepla-red shadow-keepla hover:shadow-keepla' 
+                    : 'border-keepla-gray hover:border-keepla-black'
+                } bg-keepla-white`}>
                   <CardHeader className="text-center pb-4">
-                    <div className={`inline-flex items-center justify-center w-12 h-12 rounded-full mb-4 ${
-                      plan.bgColor
-                    }`}>
-                      <div className={plan.color}>
-                        {plan.icon}
-                      </div>
-                    </div>
-                    
-                    <CardTitle className="text-2xl font-bold">{plan.name}</CardTitle>
-                    <CardDescription className="text-gray-600">
+                    <CardTitle className="text-2xl font-bold text-keepla-black font-inter mb-2">
+                      {plan.name}
+                    </CardTitle>
+                    <CardDescription className="text-gray-600 font-inter">
                       {plan.description}
                     </CardDescription>
                     
-                    <div className="mt-4">
+                    <div className="mt-6">
                       <div className="flex items-baseline justify-center">
-                        <span className="text-4xl font-bold text-gray-900">
-                          € {billingCycle === 'monthly' ? plan.price.monthly : plan.price.yearly}
+                        <span className="text-5xl font-bold text-keepla-black font-inter">
+                          €{billingCycle === 'monthly' ? plan.price.monthly : plan.price.yearly}
                         </span>
                         {plan.price.monthly > 0 && (
-                          <span className="text-gray-500 ml-1">
+                          <span className="text-gray-500 ml-2 font-inter">
                             /{billingCycle === 'monthly' ? 'mês' : 'ano'}
                           </span>
                         )}
                       </div>
                       {billingCycle === 'yearly' && plan.price.monthly > 0 && (
-                        <p className="text-sm text-gray-500 mt-1">
-                          € {(plan.price.yearly / 12).toFixed(2)}/mês
+                        <p className="text-sm text-gray-500 mt-2 font-inter">
+                          €{(plan.price.yearly / 12).toFixed(2)}/mês
                         </p>
                       )}
                     </div>
@@ -260,22 +250,22 @@ function Pricing() {
                   
                   <CardContent className="space-y-6">
                     {/* Features */}
-                    <div className="space-y-3">
+                    <div className="space-y-3 border-t border-keepla-gray pt-6">
                       {plan.features.map((feature, featureIndex) => (
                         <div key={featureIndex} className="flex items-start gap-3">
-                          <Check className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span className="text-sm text-gray-700">{feature}</span>
+                          <Check className="h-5 w-5 text-keepla-red mt-0.5 flex-shrink-0" />
+                          <span className="text-sm text-keepla-black font-inter">{feature}</span>
                         </div>
                       ))}
                     </div>
                     
                     {/* Limitations */}
                     {plan.limitations && (
-                      <div className="border-t pt-4">
-                        <p className="text-xs text-gray-500 mb-2">Limitações:</p>
+                      <div className="border-t border-keepla-gray pt-4">
+                        <p className="text-xs text-gray-400 mb-2 font-inter">Limitações:</p>
                         <div className="space-y-1">
                           {plan.limitations.map((limitation, limitIndex) => (
-                            <p key={limitIndex} className="text-xs text-gray-400">
+                            <p key={limitIndex} className="text-xs text-gray-400 font-inter">
                               • {limitation}
                             </p>
                           ))}
@@ -286,12 +276,10 @@ function Pricing() {
                     {/* CTA Button */}
                     <Button
                       onClick={() => handleSelectPlan(plan.id)}
-                      className={`w-full mt-6 ${
+                      className={`w-full mt-6 font-inter font-semibold ${
                         plan.popular
-                          ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'
-                          : plan.id === 'free'
-                          ? 'bg-gray-600 hover:bg-gray-700'
-                          : 'bg-purple-600 hover:bg-purple-700'
+                          ? 'bg-keepla-red hover:bg-keepla-red-deep text-keepla-white'
+                          : 'bg-keepla-black hover:bg-gray-800 text-keepla-white'
                       }`}
                       size="lg"
                     >
@@ -309,27 +297,43 @@ function Pricing() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.6 }}
-            className="mt-20 text-center"
+            className="mt-20 text-center relative z-10 px-4"
           >
-            <h2 className="text-2xl font-bold text-gray-900 mb-8">
-              Dúvidas frequentes
+            <h2 className="text-3xl font-bold text-keepla-black mb-8 font-inter">
+              Dúvidas Frequentes
             </h2>
             <div className="max-w-2xl mx-auto space-y-4 text-left">
-              <details className="bg-white p-4 rounded-lg shadow-sm">
-                <summary className="font-medium cursor-pointer">Posso cancelar a qualquer momento?</summary>
-                <p className="text-gray-600 mt-2">Sim, você pode cancelar sua assinatura a qualquer momento sem taxas adicionais.</p>
+              <details className="bg-keepla-white p-6 rounded-lg border-2 border-keepla-gray hover:border-keepla-black transition-colors">
+                <summary className="font-medium cursor-pointer text-keepla-black font-inter">
+                  Posso cancelar a qualquer momento?
+                </summary>
+                <p className="text-gray-600 mt-3 font-inter">
+                  Sim, podes cancelar a tua subscrição a qualquer momento sem taxas adicionais.
+                </p>
               </details>
-              <details className="bg-white p-4 rounded-lg shadow-sm">
-                <summary className="font-medium cursor-pointer">Como funciona o plano familiar?</summary>
-                <p className="text-gray-600 mt-2">O plano familiar permite até 6 contas conectadas, com cápsulas colaborativas e controle parental.</p>
+              <details className="bg-keepla-white p-6 rounded-lg border-2 border-keepla-gray hover:border-keepla-black transition-colors">
+                <summary className="font-medium cursor-pointer text-keepla-black font-inter">
+                  Como funciona o plano familiar?
+                </summary>
+                <p className="text-gray-600 mt-3 font-inter">
+                  O plano familiar permite até 6 contas conectadas, com cápsulas colaborativas e controlo parental.
+                </p>
               </details>
-              <details className="bg-white p-4 rounded-lg shadow-sm">
-                <summary className="font-medium cursor-pointer">As sugestões de IA são seguras?</summary>
-                <p className="text-gray-600 mt-2">Sim, utilizamos IA responsável e suas mensagens são processadas com total privacidade e segurança.</p>
+              <details className="bg-keepla-white p-6 rounded-lg border-2 border-keepla-gray hover:border-keepla-black transition-colors">
+                <summary className="font-medium cursor-pointer text-keepla-black font-inter">
+                  As sugestões de IA são seguras?
+                </summary>
+                <p className="text-gray-600 mt-3 font-inter">
+                  Sim, utilizamos IA responsável e as tuas mensagens são processadas com total privacidade e segurança.
+                </p>
               </details>
-              <details className="bg-white p-4 rounded-lg shadow-sm">
-                <summary className="font-medium cursor-pointer">Posso fazer upgrade do meu plano?</summary>
-                <p className="text-gray-600 mt-2">Sim, você pode fazer upgrade a qualquer momento e pagar apenas a diferença proporcional.</p>
+              <details className="bg-keepla-white p-6 rounded-lg border-2 border-keepla-gray hover:border-keepla-black transition-colors">
+                <summary className="font-medium cursor-pointer text-keepla-black font-inter">
+                  Posso fazer upgrade do meu plano?
+                </summary>
+                <p className="text-gray-600 mt-3 font-inter">
+                  Sim, podes fazer upgrade a qualquer momento e pagar apenas a diferença proporcional.
+                </p>
               </details>
             </div>
           </motion.div>
