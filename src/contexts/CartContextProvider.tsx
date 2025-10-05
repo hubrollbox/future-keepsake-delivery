@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 import { CartContext, CartItem } from "./CartContext";
+import { logger } from "@/lib/logger";
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [items, setItems] = useState<CartItem[]>([]);
@@ -22,7 +23,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (error) throw error;
       setItems(data || []);
     } catch (error) {
-      console.error("Error fetching cart items:", typeof error === "object" ? JSON.stringify(error, null, 2) : error);
+      logger.error("Error fetching cart items", error);
       toast({
         title: "Erro",
         description: "Não foi possível carregar o carrinho.",
@@ -33,7 +34,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [user, toast]);
 
-  const addToCart = async (productId: string, title: string, price: number) => {
+  const addToCart = async (productId: string, title: string, _price: number) => {
     if (!user) {
       toast({
         title: "Login necessário",
@@ -48,13 +49,14 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         await updateQuantity(existingItem.id, existingItem.quantity + 1);
         return;
       }
+      
+      // SECURITY: Don't send price from client - the database trigger will set the correct price
       const { data, error } = await supabase
         .from("cart_items")
         .insert({
           user_id: user.id,
           product_id: productId,
-          product_title: title,
-          product_price: price,
+          // Price and title will be set by validate_cart_item_price() trigger
           quantity: 1,
         })
         .select()
@@ -66,7 +68,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         description: `${title} foi adicionado ao carrinho.`,
       });
     } catch (error) {
-      console.error("Error adding to cart:", typeof error === "object" ? JSON.stringify(error, null, 2) : error);
+      logger.error("Error adding to cart", error);
       toast({
         title: "Erro",
         description: "Não foi possível adicionar o produto ao carrinho.",
@@ -88,7 +90,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (error) throw error;
       setItems(prev => prev.map(item => item.id === itemId ? { ...item, quantity } : item));
     } catch (error) {
-      console.error("Error updating quantity:", typeof error === "object" ? JSON.stringify(error, null, 2) : error);
+      logger.error("Error updating quantity", error);
       toast({
         title: "Erro",
         description: "Não foi possível atualizar a quantidade.",
@@ -110,7 +112,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         description: "O produto foi removido do carrinho.",
       });
     } catch (error) {
-      console.error("Error removing from cart:", typeof error === "object" ? JSON.stringify(error, null, 2) : error);
+      logger.error("Error removing from cart", error);
       toast({
         title: "Erro",
         description: "Não foi possível remover o produto.",
@@ -129,7 +131,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (error) throw error;
       setItems([]);
     } catch (error) {
-      console.error("Error clearing cart:", typeof error === "object" ? JSON.stringify(error, null, 2) : error);
+      logger.error("Error clearing cart", error);
       throw error;
     }
   };
