@@ -34,11 +34,13 @@
     --input: 0 0% 90%;
     --ring: 354 76% 59%;
     --radius: 0.5rem;
-    --keepla-red: 354 76% 59%;
-    --keepla-red-deep: 354 62% 47%;
-    --keepla-black: 0 0% 0%;
-    --keepla-white: 0 0% 100%;
-    --keepla-gray: 0 0% 96%;
+    
+    /* Identidade Visual Keepla.pt - Manual oficial */
+    --keepla-red: 354 76% 59%;        /* #E63946 - Cor principal/logo */
+    --keepla-red-deep: 354 62% 47%;   /* #C6282E - CTAs/botões */
+    --keepla-black: 0 0% 0%;          /* #000000 - Fundos/texto */
+    --keepla-white: 0 0% 100%;        /* #FFFFFF - Fundos/contraste */
+    --keepla-gray: 0 0% 96%;          /* Cinza suave para fundos secundários */
   }
   .dark {
     --background: 0 0% 0%;
