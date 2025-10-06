@@ -1,10 +1,16 @@
-
 import { Heart, Clock, Star } from "lucide-react";
+import capsulaImage from "@/assets/capsula-escrita.jpg";
+import ruaPalacioImage from "@/assets/rua-palacio.jpg";
 
 const StorySection = () => {
   return (
-    <section className="py-20 md:py-28 bg-white/80 backdrop-blur-sm">
-      <div className="container mx-auto px-4">
+    <section className="py-20 md:py-28 bg-white/80 backdrop-blur-sm relative overflow-hidden">
+      {/* Background decorativo */}
+      <div className="absolute inset-0 opacity-5">
+        <img src={ruaPalacioImage} alt="" className="w-full h-full object-cover grayscale" />
+      </div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-16">
@@ -51,16 +57,31 @@ const StorySection = () => {
             </div>
           </div>
 
-          {/* Quote */}
+          {/* Quote com imagem */}
           <div className="text-center">
-            <div className="emotion-card p-12 max-w-4xl mx-auto">
-              <blockquote className="text-2xl md:text-3xl font-fraunces italic text-steel-blue mb-6 leading-relaxed">
-                "Guardamos aquilo que é importante. Protegemos aquilo que é íntimo. 
-                Acreditamos que a entrega certa pode mudar o dia — ou até a vida — de quem a recebe."
-              </blockquote>
-              <p className="text-earthy-burgundy font-semibold text-lg font-fraunces">
-                — Porque o amor, quando guardado com cuidado, chega sempre na hora certa.
-              </p>
+            <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto items-center">
+              {/* Imagem */}
+              <div className="order-2 md:order-1">
+                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+                  <img 
+                    src={capsulaImage} 
+                    alt="Pessoa a escrever memórias num parque" 
+                    className="w-full h-full object-cover grayscale contrast-110 brightness-95"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                </div>
+              </div>
+              
+              {/* Texto */}
+              <div className="order-1 md:order-2 emotion-card p-8 md:p-12">
+                <blockquote className="text-xl md:text-2xl font-fraunces italic text-steel-blue mb-6 leading-relaxed">
+                  "Guardamos aquilo que é importante. Protegemos aquilo que é íntimo. 
+                  Acreditamos que a entrega certa pode mudar o dia — ou até a vida — de quem a recebe."
+                </blockquote>
+                <p className="text-earthy-burgundy font-semibold text-lg font-fraunces">
+                  — Porque o amor, quando guardado com cuidado, chega sempre na hora certa.
+                </p>
+              </div>
             </div>
           </div>
         </div>

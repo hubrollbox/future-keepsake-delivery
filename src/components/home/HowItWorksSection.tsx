@@ -1,7 +1,7 @@
-
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Clock, Package, Heart, Mail } from "lucide-react";
+import bicicletaImage from "@/assets/bicicleta-marginal.jpg";
 
 const HowItWorksSection = () => {
   const navigate = useNavigate();
@@ -30,8 +30,13 @@ const HowItWorksSection = () => {
   ];
 
   return (
-    <section className="py-20 md:py-28 bg-white/80 backdrop-blur-sm">
-      <div className="container mx-auto px-4">
+    <section className="py-20 md:py-28 bg-white/80 backdrop-blur-sm relative">
+      {/* Imagem de fundo subtil */}
+      <div className="absolute right-0 top-1/4 w-1/3 h-1/2 opacity-10 hidden lg:block">
+        <img src={bicicletaImage} alt="" className="w-full h-full object-cover grayscale rounded-l-3xl" />
+      </div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
           <div className="text-center mb-16">

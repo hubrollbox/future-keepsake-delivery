@@ -1,6 +1,6 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Star, Quote } from "lucide-react";
+import memorialImage from "@/assets/memorial-pc.jpg";
 
 const TestimonialsSection = () => {
   const testimonials = [
@@ -25,8 +25,13 @@ const TestimonialsSection = () => {
   ];
 
   return (
-    <section className="py-20 md:py-28 bg-white/80 backdrop-blur-sm">
-      <div className="container mx-auto px-4">
+    <section className="py-20 md:py-28 bg-white/80 backdrop-blur-sm relative overflow-hidden">
+      {/* Background com imagem */}
+      <div className="absolute inset-0 opacity-5">
+        <img src={memorialImage} alt="" className="w-full h-full object-cover grayscale" />
+      </div>
+      
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-fraunces font-bold text-steel-blue mb-6">
