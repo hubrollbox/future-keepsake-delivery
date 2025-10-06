@@ -23,20 +23,20 @@ const HeroSection = () => {
         <img 
           src={heroImage} 
           alt="" 
-          className="w-full h-full object-cover grayscale opacity-30"
+          className="w-full h-full object-cover opacity-15"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-keepla-white/95 via-keepla-white/90 to-keepla-white/85"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-keepla-white/85 via-keepla-white/75 to-keepla-white/80"></div>
       </div>
 
       <div className="container mx-auto px-4 text-center relative z-10">
         <div className="max-w-4xl mx-auto">
-          {/* Logo/Selo Keepla */}
+          {/* Logo/Selo Keepla - Aumentado e visível */}
           <div className="mb-8 mt-16">
-            <div className="w-32 h-32 mx-auto mb-6">
+            <div className="w-40 h-40 mx-auto mb-6 bg-white/80 rounded-full p-4 shadow-xl">
               <img 
                 src="/lovable-uploads/63935007-5aa4-4a0f-8ff5-f6bb5674cc7d.png" 
                 alt="Keepla - Futuro Presente" 
-                className="w-full h-full object-contain drop-shadow-lg"
+                className="w-full h-full object-contain"
               />
             </div>
           </div>
