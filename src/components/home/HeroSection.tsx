@@ -18,27 +18,25 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background image - P&B emotivo */}
+      {/* Background image visível */}
       <div className="absolute inset-0">
         <img 
           src={heroImage} 
-          alt="" 
-          className="w-full h-full object-cover opacity-15"
+          alt="Mãos a segurar uma carta – memória Keepla" 
+          className="w-full h-full object-cover opacity-100"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-keepla-white/85 via-keepla-white/75 to-keepla-white/80"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/20"></div>
       </div>
 
       <div className="container mx-auto px-4 text-center relative z-10">
         <div className="max-w-4xl mx-auto">
-          {/* Logo/Selo Keepla - Aumentado e visível */}
+          {/* Logo Keepla oficial */}
           <div className="mb-8 mt-16">
-            <div className="w-40 h-40 mx-auto mb-6 bg-white/80 rounded-full p-4 shadow-xl">
-              <img 
-                src="/lovable-uploads/63935007-5aa4-4a0f-8ff5-f6bb5674cc7d.png" 
-                alt="Keepla - Futuro Presente" 
-                className="w-full h-full object-contain"
-              />
-            </div>
+            <img 
+              src="/keepla-logo.png" 
+              alt="Keepla" 
+              className="mx-auto w-28 h-28 object-contain"
+            />
           </div>
 
           {/* Main headline - Inter Bold */}
