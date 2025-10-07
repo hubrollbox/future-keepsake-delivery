@@ -31,12 +31,14 @@ export const plans: PublicPlan[] = [
     name: "Gratuito",
     price: "0€",
     period: "/mês",
-    description: "Perfeito para começar a sua jornada no tempo",
+    description: "Perfeito para testes e exploração inicial",
     features: [
-      "1 cápsula digital por mês",
-      "Mensagens de texto simples",
-      "Suporte por email",
-      "Calendário básico"
+      "1 cápsula por mês",
+      "Armazenamento: 10MB",
+      "Duração: 1 ano",
+      "Agendamento simples",
+      "Texto/Imagem básico",
+      "Sem notificações personalizadas"
     ],
     buttonText: "Começar Grátis",
     popular: false,
@@ -45,37 +47,19 @@ export const plans: PublicPlan[] = [
   {
     id: "personal",
     name: "Pessoal",
-    price: "5,99€",
+    price: "4,99€",
     period: "/mês",
-    description: "Para quem quer preservar memórias especiais com qualidade premium",
+    description: "Para o utilizador individual que quer preservar memórias",
     features: [
-      "5 cápsulas digitais por mês",
-      "Upload de imagens e vídeos (até 100MB)",
-      "Notificações prioritárias",
-      "Histórico completo",
-      "10% desconto em serviços físicos"
+      "10 cápsulas por mês",
+      "50MB por cápsula",
+      "Duração: 5 anos",
+      "Texto/Imagem/Áudio",
+      "Notificações por email",
+      "Gamificação",
+      "Edição pós-envio"
     ],
     buttonText: "Escolher Pessoal",
-    popular: false,
-    color: "border-amber-200",
-    badge: "Valor"
-  },
-  {
-    id: "timekeeper",
-    name: "Guardião do Tempo",
-    price: "10,99€",
-    period: "/mês",
-    description: "O plano premium para verdadeiros guardiões das memórias",
-    features: [
-      "Cápsulas digitais ilimitadas (~10 por mês)",
-      "Sistema de selos e conquistas",
-      "Árvore de memórias interativa",
-      "Acesso ao mural de cápsulas públicas",
-      "Acesso antecipado a funcionalidades",
-      "Prioridade nas entregas",
-      "15% desconto em serviços físicos"
-    ],
-    buttonText: "Tornar-me Guardião",
     popular: true,
     color: "border-amber-500",
     badge: "Mais Popular"
@@ -83,22 +67,61 @@ export const plans: PublicPlan[] = [
   {
     id: "family",
     name: "Família",
-    price: "19,99€",
+    price: "9,99€",
     period: "/mês",
-    description: "Conecte toda a família através do tempo com funcionalidades exclusivas",
+    description: "Ideal para famílias e grupos partilharem memórias",
     features: [
-      "Até 4 membros da família",
-      "Todas as funcionalidades do Guardião do Tempo",
-      "Timeline familiar colaborativa",
-      "Cápsulas partilhadas",
-      "Gestão familiar centralizada",
-      "20% desconto em eventos especiais",
-      "20% desconto em serviços físicos"
+      "50 cápsulas por mês",
+      "250MB por cápsula",
+      "Duração: 10 anos",
+      "Partilha familiar",
+      "Multi-destinatários",
+      "Todas funcionalidades do Pessoal",
+      "Criação de álbuns"
     ],
     buttonText: "Escolher Família",
     popular: false,
     color: "border-amber-300",
     badge: "Premium"
+  },
+  {
+    id: "events",
+    name: "Eventos",
+    price: "Desde 99€",
+    period: "/pacote",
+    description: "Para casamentos, empresas e eventos especiais",
+    features: [
+      "Ilimitado durante ativação",
+      "Lote mínimo: 20 cápsulas",
+      "2GB de armazenamento total",
+      "6 meses após evento",
+      "Página personalizada",
+      "QR code de acesso",
+      "Suporte premium",
+      "Download pós-entrega"
+    ],
+    buttonText: "Contactar",
+    popular: false,
+    color: "border-purple-300",
+    badge: "Empresas"
+  },
+  {
+    id: "individual",
+    name: "Individual",
+    price: "1,99€",
+    period: "/cápsula",
+    description: "Pagamento avulso para utilizador ocasional",
+    features: [
+      "1 cápsula única",
+      "20MB de armazenamento",
+      "Duração: 1 a 10 anos (escolha)",
+      "Agendamento flexível",
+      "Mensagem individual",
+      "Notificação única"
+    ],
+    buttonText: "Comprar Cápsula",
+    popular: false,
+    color: "border-gray-200"
   }
 ];
 
@@ -134,6 +157,36 @@ export const storageServices: PublicService[] = [
 
 export const digitalServices: PublicService[] = [
   {
+    id: "gift-simple",
+    name: "Presente com Alma Simples",
+    price: "12,99€",
+    description: "Mensagem personalizada com texto, áudio, imagem e selo digital",
+    category: "digital",
+    popular: true
+  },
+  {
+    id: "gift-eternal-moments",
+    name: "Presente Momentos Eternos",
+    price: "29,99€",
+    description: "Pack multimédia com álbum digital/galeria com até 3 vídeos",
+    category: "digital",
+    popular: true
+  },
+  {
+    id: "gift-premium",
+    name: "Presente Com Alma Premium",
+    price: "59,99€",
+    description: "Pack completo com carta manuscrita digitalizada, vídeo e arte exclusiva",
+    category: "digital"
+  },
+  {
+    id: "gift-limited-edition",
+    name: "Edição Limitada",
+    price: "Sob consulta",
+    description: "Colaborações com artistas para experiências exclusivas e surpresas",
+    category: "digital"
+  },
+  {
     id: "digital-letter-simple",
     name: "Carta Digital Simples",
     price: "3,99€",
@@ -145,8 +198,7 @@ export const digitalServices: PublicService[] = [
     name: "Carta Digital Premium",
     price: "7,99€",
     description: "Com verificação blockchain e formatação especial",
-    category: "digital",
-    popular: true
+    category: "digital"
   },
   {
     id: "video-editing",

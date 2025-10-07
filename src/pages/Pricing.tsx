@@ -15,59 +15,69 @@ const freemiumPlans = [
   {
     id: 'free',
     name: 'Gratuito',
-    description: 'Perfeito para começar a tua jornada de memórias',
+    description: 'Para testes e curiosos',
     price: { monthly: 0, yearly: 0 },
     features: [
-      '3 cápsulas do tempo por mês',
-      '3 sugestões de IA por dia',
-      'Entrega por email',
-      'Mensagens de até 500 caracteres',
-      'Suporte por email'
+      '1 cápsula por mês',
+      '10MB de armazenamento',
+      'Duração: 1 ano',
+      'Agendamento simples',
+      'Texto/Imagem básico'
     ],
     limitations: [
-      'Sem anexos de mídia',
-      'Sem personalização avançada',
-      'Sem backup em nuvem'
+      'Sem notificações personalizadas',
+      'Sem áudio/vídeo',
+      'Sem gamificação'
     ],
-    aiQuota: 3,
-    keepsakeLimit: '3 por mês'
+    keepsakeLimit: '1 por mês'
   },
   {
-    id: 'premium',
-    name: 'Premium',
-    description: 'Para quem quer preservar memórias sem limites',
-    price: { monthly: 19.90, yearly: 199.90 },
+    id: 'personal',
+    name: 'Pessoal',
+    description: 'Para o utilizador individual',
+    price: { monthly: 4.99, yearly: 44.99 },
     features: [
-      'Cápsulas ilimitadas',
-      '50 sugestões de IA por dia',
-      'Anexos de fotos e vídeos',
-      'Mensagens ilimitadas',
-      'Entrega por email, SMS e WhatsApp',
-      'Personalização avançada',
-      'Backup automático',
-      'Suporte prioritário'
+      '10 cápsulas por mês',
+      '50MB por cápsula',
+      'Duração: 5 anos',
+      'Texto/Imagem/Áudio',
+      'Notificações por email',
+      'Gamificação',
+      'Edição pós-envio'
     ],
     popular: true,
-    aiQuota: 50,
-    keepsakeLimit: 'Ilimitadas'
+    keepsakeLimit: '10 por mês'
   },
   {
     id: 'family',
     name: 'Família',
-    description: 'Partilha memórias com toda a família',
-    price: { monthly: 39.90, yearly: 399.90 },
+    description: 'Para famílias e grupos',
+    price: { monthly: 9.99, yearly: 99 },
     features: [
-      'Tudo do Premium',
-      '100 sugestões de IA por dia',
-      'Até 6 contas familiares',
-      'Cápsulas colaborativas',
-      'Álbum familiar partilhado',
-      'Controlo parental',
-      'Relatórios de atividade',
-      'Suporte dedicado 24/7'
+      '50 cápsulas por mês',
+      '250MB por cápsula',
+      'Duração: 10 anos',
+      'Partilha familiar',
+      'Multi-destinatários',
+      'Todas funcionalidades do Pessoal',
+      'Criação de álbuns'
     ],
-    aiQuota: 100,
-    keepsakeLimit: 'Ilimitadas'
+    keepsakeLimit: '50 por mês'
+  },
+  {
+    id: 'individual',
+    name: 'Individual',
+    description: 'Pagamento avulso',
+    price: { monthly: 1.99, yearly: 1.99 },
+    features: [
+      '1 cápsula única',
+      '20MB de armazenamento',
+      'Duração: 1-10 anos (escolha)',
+      'Agendamento flexível',
+      'Mensagem individual',
+      'Notificação única'
+    ],
+    keepsakeLimit: '1 cápsula'
   }
 ];
 

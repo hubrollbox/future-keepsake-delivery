@@ -50,19 +50,19 @@ export const adminPlans: AdminPlan[] = [
     id: 'free',
     name: 'Gratuito',
     publicPrice: 0,
-    internalCost: 0.50, // Custo de infraestrutura por usuário
-    margin: -100, // Plano de aquisição (prejuízo controlado)
+    internalCost: 0.40,
+    margin: -100,
     monthlyCapsulesLimit: 1,
     features: [
-      '1 cápsula digital por mês',
-      'Mensagens de texto simples',
-      'Suporte por email',
-      'Calendário básico'
+      '1 cápsula por mês',
+      'Armazenamento: 10MB',
+      'Duração: 1 ano',
+      'Agendamento simples',
+      'Texto/Imagem básico'
     ],
     restrictions: [
-      'Sem upload de mídia',
-      'Sem notificações prioritárias',
-      'Sem histórico completo',
+      'Sem notificações personalizadas',
+      'Sem áudio/vídeo',
       'Sem gamificação'
     ],
     isPopular: false,
@@ -72,85 +72,156 @@ export const adminPlans: AdminPlan[] = [
   {
     id: 'personal',
     name: 'Pessoal',
-    publicPrice: 5.99,
-    internalCost: 1.20, // Infraestrutura + storage + processamento
-    margin: 80, // Margem de 80%
-    monthlyCapsulesLimit: 5,
+    publicPrice: 4.99,
+    internalCost: 1.00,
+    margin: 80,
+    monthlyCapsulesLimit: 10,
     features: [
-      '5 cápsulas digitais por mês',
-      'Upload de imagens e vídeos (até 100MB)',
-      'Notificações prioritárias',
-      'Histórico completo',
-      '10% desconto em serviços físicos'
+      '10 cápsulas por mês',
+      '50MB por cápsula',
+      'Duração: 5 anos',
+      'Texto/Imagem/Áudio',
+      'Notificações por email',
+      'Gamificação',
+      'Edição pós-envio'
     ],
     restrictions: [
-      'Sem gamificação avançada',
-      'Sem acesso antecipado',
-      'Sem mural público'
-    ],
-    isPopular: false,
-    color: 'border-amber-200',
-    buttonText: 'Escolher Pessoal'
-  },
-  {
-    id: 'timekeeper',
-    name: 'Guardião do Tempo',
-    publicPrice: 10.99,
-    internalCost: 2.50, // Infraestrutura premium + features avançadas
-    margin: 77, // Margem de 77%
-    monthlyCapsulesLimit: 999, // Ilimitado (limite técnico alto)
-    features: [
-      'Cápsulas digitais ilimitadas (~10 por mês)',
-      'Sistema de selos e conquistas',
-      'Árvore de memórias interativa',
-      'Acesso ao mural de cápsulas públicas',
-      'Acesso antecipado a funcionalidades',
-      'Prioridade nas entregas',
-      '15% desconto em serviços físicos'
-    ],
-    restrictions: [
-      'Uso justo: ~10 cápsulas/mês recomendado'
+      'Sem partilha familiar',
+      'Sem multi-destinatários'
     ],
     isPopular: true,
     color: 'border-amber-500',
-    buttonText: 'Tornar-me Guardião'
+    buttonText: 'Escolher Pessoal'
   },
   {
     id: 'family',
     name: 'Família',
-    publicPrice: 19.99,
-    internalCost: 4.80, // Infraestrutura para 4 usuários + features colaborativas
-    margin: 76, // Margem de 76%
-    monthlyCapsulesLimit: 999, // Ilimitado compartilhado
+    publicPrice: 9.99,
+    internalCost: 2.20,
+    margin: 78,
+    monthlyCapsulesLimit: 50,
     features: [
-      'Até 4 membros da família',
-      'Todas as funcionalidades do Guardião do Tempo',
-      'Timeline familiar colaborativa',
-      'Cápsulas partilhadas',
-      'Gestão familiar centralizada',
-      '20% desconto em eventos especiais',
-      '20% desconto em serviços físicos'
+      '50 cápsulas por mês',
+      '250MB por cápsula',
+      'Duração: 10 anos',
+      'Partilha familiar',
+      'Multi-destinatários',
+      'Todas funcionalidades do Pessoal',
+      'Criação de álbuns'
     ],
     restrictions: [
-      'Máximo 4 membros ativos',
-      'Uso justo: ~15 cápsulas/mês total'
+      'Uso justo: até 50 cápsulas/mês'
     ],
     isPopular: false,
     color: 'border-amber-300',
     buttonText: 'Escolher Família'
+  },
+  {
+    id: 'events',
+    name: 'Eventos',
+    publicPrice: 99,
+    internalCost: 25.00,
+    margin: 75,
+    monthlyCapsulesLimit: 999,
+    features: [
+      'Ilimitado durante ativação',
+      'Lote mínimo: 20 cápsulas',
+      '2GB total',
+      '6 meses após evento',
+      'Página personalizada',
+      'QR code',
+      'Suporte premium',
+      'Download pós-entrega'
+    ],
+    restrictions: [
+      'Mínimo 20 cápsulas',
+      'Pagamento único'
+    ],
+    isPopular: false,
+    color: 'border-purple-300',
+    buttonText: 'Contactar'
+  },
+  {
+    id: 'individual',
+    name: 'Individual',
+    publicPrice: 1.99,
+    internalCost: 0.35,
+    margin: 82,
+    monthlyCapsulesLimit: 1,
+    features: [
+      '1 cápsula única',
+      '20MB armazenamento',
+      'Duração: 1-10 anos',
+      'Agendamento',
+      'Mensagem individual',
+      'Notificação única'
+    ],
+    restrictions: [
+      'Pagamento por cápsula',
+      'Sem subscrição'
+    ],
+    isPopular: false,
+    color: 'border-gray-200',
+    buttonText: 'Comprar Cápsula'
   }
 ];
 
 // ===== SERVIÇOS ADMINISTRATIVOS =====
 
 export const adminServices: AdminService[] = [
+  // PRESENTES COM ALMA
+  {
+    id: 'gift_simple',
+    name: 'Presente com Alma Simples',
+    category: 'digital',
+    publicPrice: 12.99,
+    internalCost: 2.50,
+    margin: 81,
+    unit: 'pagamento único',
+    description: 'Texto, áudio, imagem, entrega agendada, selo digital simbólico',
+    limitations: ['Para aniversários e datas especiais']
+  },
+  {
+    id: 'gift_eternal_moments',
+    name: 'Presente Momentos Eternos',
+    category: 'digital',
+    publicPrice: 29.99,
+    internalCost: 6.00,
+    margin: 80,
+    unit: 'pagamento único',
+    description: 'Pack multimédia: texto, fotos, vídeos (até 3), visual interativo',
+    limitations: ['Casamentos e grandes recordações']
+  },
+  {
+    id: 'gift_premium',
+    name: 'Presente Com Alma Premium',
+    category: 'digital',
+    publicPrice: 59.99,
+    internalCost: 15.00,
+    margin: 75,
+    unit: 'pagamento único',
+    description: 'Tudo do "Momentos Eternos" + carta manuscrita, ilustração, carta áudio',
+    limitations: ['Grande declaração, ofertas especiais']
+  },
+  {
+    id: 'gift_limited_edition',
+    name: 'Edição Limitada',
+    category: 'digital',
+    publicPrice: 0, // Sob consulta
+    internalCost: 0,
+    margin: 0,
+    unit: 'sob consulta',
+    description: 'Colaborações com artistas, skins/fundos, experiências surpresa',
+    limitations: ['Campanhas sazonais/parcerias']
+  },
+
   // ARMAZENAMENTO FÍSICO
   {
     id: 'storage_1kg',
     name: 'Armazenamento Físico 1kg',
     category: 'storage',
     publicPrice: 5.00,
-    internalCost: 1.50, // Espaço + segurança + manuseamento
+    internalCost: 1.50,
     margin: 70,
     unit: '/mês',
     description: 'Até 1kg - cartas, pequenos objetos',
@@ -161,7 +232,7 @@ export const adminServices: AdminService[] = [
     name: 'Armazenamento Físico 5kg',
     category: 'storage',
     publicPrice: 10.00,
-    internalCost: 2.80, // Espaço maior + manuseamento
+    internalCost: 2.80,
     margin: 72,
     unit: '/mês',
     description: 'Até 5kg - livros, roupas, presentes médios',
@@ -174,7 +245,7 @@ export const adminServices: AdminService[] = [
     name: 'Carta Digital Premium',
     category: 'digital',
     publicPrice: 3.50,
-    internalCost: 0.30, // Processamento + templates premium
+    internalCost: 0.30,
     margin: 91,
     unit: 'por carta',
     description: 'Formatação especial, templates exclusivos, verificação blockchain',
@@ -185,7 +256,7 @@ export const adminServices: AdminService[] = [
     name: 'Edição de Vídeo Profissional',
     category: 'digital',
     publicPrice: 17.50,
-    internalCost: 5.00, // Tempo de editor + software + processamento
+    internalCost: 5.00,
     margin: 71,
     unit: 'por vídeo',
     description: 'Edição profissional até 2 minutos, transições, música',
@@ -198,7 +269,7 @@ export const adminServices: AdminService[] = [
     name: 'Cápsula Física Individual',
     category: 'capsule',
     publicPrice: 27.50,
-    internalCost: 8.50, // Material + produção + envio
+    internalCost: 8.50,
     margin: 69,
     unit: 'por cápsula',
     description: 'Caixa metálica personalizada, gravação laser, 15x15x8cm',
@@ -209,7 +280,7 @@ export const adminServices: AdminService[] = [
     name: 'Cápsula Física Premium',
     category: 'capsule',
     publicPrice: 37.50,
-    internalCost: 12.00, // Material premium + fechadura + produção
+    internalCost: 12.00,
     margin: 68,
     unit: 'por cápsula',
     description: 'Com fechadura, maior capacidade, gravação personalizada, 20x20x12cm',
@@ -220,7 +291,7 @@ export const adminServices: AdminService[] = [
     name: 'Cápsula Física Coletiva',
     category: 'capsule',
     publicPrice: 55.00,
-    internalCost: 18.00, // Material + produção em lote + coordenação
+    internalCost: 18.00,
     margin: 67,
     unit: 'por cápsula',
     description: 'Para eventos, escolas, empresas - até 50 contribuições, 30x30x20cm',
@@ -231,7 +302,7 @@ export const adminServices: AdminService[] = [
     name: 'Cápsula Física Luxo',
     category: 'capsule',
     publicPrice: 72.50,
-    internalCost: 25.00, // Material premium + cerimónia + produção artesanal
+    internalCost: 25.00,
     margin: 66,
     unit: 'por cápsula',
     description: 'Artesanal, cerimónia de abertura, gravação artística, 25x25x15cm',
