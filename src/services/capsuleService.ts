@@ -17,12 +17,22 @@ export interface Capsule {
 import { supabase } from "@/integrations/supabase/client";
 
 export async function fetchCapsules(): Promise<Capsule[]> {
+  // Obter o usuário atual
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  if (!user) throw new Error("Usuário não autenticado");
+  
   // Use deliveries table as it's the closest match to capsules in the current schema
+  // Adicionando filtro de user_id para garantir que apenas as cápsulas do usuário sejam retornadas
   const { data, error } = await supabase
     .from("deliveries")
-    .select("id, type, location, created_at, delivery_date, status, title, description, digital_file_url");
+    .select("id, type, location, created_at, delivery_date, status, title, description, digital_file_url, user_id")
+    .eq("user_id", user.id);
   
-  if (error) throw new Error(error.message);
+  if (error) {
+    console.error("Erro ao buscar cápsulas:", error);
+    throw new Error("Não foi possível carregar suas cápsulas do tempo");
+  }
   
   // Transform deliveries data to match Capsule interface
   const capsules: Capsule[] = (data || []).map(delivery => ({
