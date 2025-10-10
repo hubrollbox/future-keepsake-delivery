@@ -34,7 +34,12 @@ export const useKeepsakes = () => {
     try {
       const { data, error } = await supabase
         .from('keepsakes')
-        .select('id, title, delivery_date, status, type, message_content, recipient_email, recipient_phone, sent_at')
+        .select(`
+          id, title, delivery_date, status, type, message_content, sent_at,
+          recipients (
+            email, phone
+          )
+        `)
         .eq('user_id', user.id)
         .order('delivery_date', { ascending: false });
 
@@ -56,7 +61,16 @@ export const useKeepsakes = () => {
         }
         throw error;
       }
-      setKeepsakes(data || []);
+      
+      // Mapear os dados para incluir as informações dos destinatários
+      const mappedData = (data || []).map(k => ({
+        ...k,
+        recipient_email: k.recipients?.[0]?.email,
+        recipient_phone: k.recipients?.[0]?.phone,
+        recipients: undefined // Remover o campo recipients para manter a interface Keepsake
+      }));
+      
+      setKeepsakes(mappedData);
     } catch (e) {
       console.error('Erro ao carregar keepsakes:', e);
       // Só mostra toast de erro se há usuário autenticado
@@ -82,7 +96,12 @@ export const useKeepsakes = () => {
     try {
       let query = supabase
         .from('keepsakes')
-        .select('id, title, delivery_date, status, type, message_content, recipient_email, recipient_phone, sent_at')
+        .select(`
+          id, title, delivery_date, status, type, message_content, sent_at,
+          recipients (
+            email, phone
+          )
+        `)
         .eq('user_id', user.id)
         .order('delivery_date', { ascending: false });
 
@@ -113,7 +132,16 @@ export const useKeepsakes = () => {
         }
         throw error;
       }
-      return data || [];
+      
+      // Mapear os dados para incluir as informações dos destinatários
+      const mappedData = (data || []).map(k => ({
+        ...k,
+        recipient_email: k.recipients?.[0]?.email,
+        recipient_phone: k.recipients?.[0]?.phone,
+        recipients: undefined // Remover o campo recipients para manter a interface Keepsake
+      }));
+      
+      return mappedData;
     } catch (e) {
       console.error('Erro ao carregar keepsakes paginados:', e);
       // Só mostra toast de erro se não for problema de autenticação
