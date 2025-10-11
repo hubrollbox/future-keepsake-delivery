@@ -35,7 +35,7 @@ const About = () => {
         {/* Hero Section */}
         <div className="text-center max-w-4xl mx-auto mb-16">
           <div className="flex justify-center mb-8">
-            <img src="/keepla-logo-red-new.svg" alt="Logo" width={80} height={80} className="drop-shadow-sm" />
+            <img src="/keepla-logo-red.png" alt="Logo" width={80} height={80} className="drop-shadow-sm" />
           </div>
           
           <h1 className="text-5xl md:text-6xl font-fraunces font-bold text-steel-blue mb-6 leading-tight">

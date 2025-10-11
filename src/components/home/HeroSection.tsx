@@ -32,9 +32,9 @@ const HeroSection = () => {
           {/* Logo Keepla oficial */}
           <div className="mb-8 mt-16">
             <img 
-              src="/keepla-logo-red-new.svg" 
-              alt="Keepla" 
-              className="mx-auto w-28 h-28 object-contain"
+               src="/keepla-logo-red.png" 
+               alt="Keepla" 
+               className="mx-auto w-28 h-28 object-contain"
             />
           </div>
 

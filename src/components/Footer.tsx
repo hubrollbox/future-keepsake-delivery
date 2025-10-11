@@ -13,7 +13,7 @@ const Footer = () => {
             {/* Brand Section */}
             <div className="md:col-span-2">
               <div className="flex items-center justify-start mb-6">
-                <img src="/keepla-logo-white.svg" alt="Logo Monocromático" style={{width: 120, height: 120}} />
+                <img src="/keepla-logo-black.png" alt="Logo Monocromático" style={{width: 120, height: 120}} />
               </div>
               <p className="text-gray-400 leading-relaxed mb-6 max-w-md text-center md:text-left font-georgia italic">
                 Guardamos emoções para o tempo certo. Cada entrega é uma ponte entre o presente e o futuro, 

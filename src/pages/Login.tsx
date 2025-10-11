@@ -93,7 +93,7 @@ const Login = () => {
     <div className="min-h-screen bg-lavender-mist flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <img src="/keepla-logo-red-new.svg" alt="keepla Logo" className="h-20 mx-auto mb-4" />
+          <img src="/keepla-logo-red.png" alt="keepla Logo" className="h-20 mx-auto mb-4" />
         </div>
         <Card className="emotion-card shadow-soft border-0">
           <CardHeader className="text-center">
