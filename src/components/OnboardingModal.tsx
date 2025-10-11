@@ -40,11 +40,11 @@ export default function OnboardingModal() {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
       <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none select-none">
-        <img src="/keepla%20logo%20monocromatico.png" alt="Logo" className="w-96 h-96 object-contain" />
+        <img src="/keepla-logo-black.svg" alt="Logo" className="w-96 h-96 object-contain" />
       </div>
       <Card className="max-w-md w-full shadow-xl relative z-10 overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none select-none z-0">
-          <img src="/keepla%20logo%20monocromatico.png" alt="Logo" className="w-96 h-96 object-contain" />
+          <img src="/keepla-logo-black.svg" alt="Logo" className="w-96 h-96 object-contain" />
         </div>
         <CardHeader className="relative z-10">
           <CardTitle className="text-center w-full">Bem-vindo à keepla!</CardTitle>

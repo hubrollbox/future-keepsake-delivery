@@ -157,7 +157,7 @@ function Pricing() {
               transition={{ duration: 0.6 }}
             >
               <div className="flex justify-center mb-8">
-                <img src="/keepla-logo.png" alt="keepla Logo" className="h-16" />
+                <img src="/keepla-logo-red.svg" alt="keepla Logo" className="h-16" />
               </div>
               
               <h1 className="text-4xl md:text-6xl font-bold text-keepla-black mb-6 font-inter">
