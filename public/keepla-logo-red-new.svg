@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <defs>
+    <style>
+      .circle { fill: none; stroke: #e63946; stroke-width: 8; }
+      .text-main { font-family: Arial, sans-serif; font-size: 40px; font-weight: bold; fill: #e63946; }
+      .text-circle { font-family: Arial, sans-serif; font-size: 14px; fill: #e63946; }
+      .icon { stroke: #e63946; stroke-width: 2; fill: none; }
+    </style>
+  </defs>
+  <circle cx="150" cy="150" r="145" class="circle"/>
+  <text x="150" y="160" text-anchor="middle" class="text-main">keepla</text>
+  
+  <!-- Envelope icon at top -->
+  <path d="M150,70 L130,85 L150,100 L170,85 Z" class="icon"/>
+  <path d="M130,85 L130,115 L170,115 L170,85" class="icon"/>
+  
+  <!-- Hourglass icon at bottom -->
+  <path d="M140,200 L160,200 L160,210 L150,220 L140,210 Z" class="icon"/>
+  <path d="M140,240 L160,240 L160,230 L150,220 L140,230 Z" class="icon"/>
+  <line x1="140" y1="200" x2="140" y2="240" class="icon"/>
+  <line x1="160" y1="200" x2="160" y2="240" class="icon"/>
+  
+  <!-- Circular text -->
+  <path id="top-curve" d="M150,30 A120,120 0 0,1 270,150" fill="none" />
+  <path id="bottom-curve" d="M150,270 A120,120 0 0,1 30,150" fill="none" />
+  
+  <text class="text-circle">
+    <textPath href="#top-curve" startOffset="50%" text-anchor="middle">futuro presente</textPath>
+  </text>
+  <text class="text-circle">
+    <textPath href="#bottom-curve" startOffset="50%" text-anchor="middle">presente futuro</textPath>
+  </text>
+</svg>
