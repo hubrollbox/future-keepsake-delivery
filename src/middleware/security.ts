@@ -37,11 +37,11 @@ function applyCSP() {
   cspMeta.httpEquiv = 'Content-Security-Policy';
   cspMeta.content = 
     "default-src 'self'; " +
-    "script-src 'self' https://js.stripe.com https://analytics.keepla.pt; " +
+    "script-src 'self' https://js.stripe.com https://analytics.keepla.pt https://www.googletagmanager.com; " +
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
     "img-src 'self' data: https://keepla-uploads.s3.amazonaws.com; " +
     "font-src 'self' https://fonts.gstatic.com; " +
-    "connect-src 'self' https://*.supabase.co https://api.stripe.com; " +
+    "connect-src 'self' https://*.supabase.co https://api.stripe.com https://region1.google-analytics.com https://www.google-analytics.com; " +
     "frame-src 'self' https://js.stripe.com;";
   
   // Add the meta element to the head
@@ -59,11 +59,7 @@ function applySecurityHeaders() {
   noSniffMeta.content = 'nosniff';
   document.head.appendChild(noSniffMeta);
   
-  // X-Frame-Options
-  const frameOptionsMeta = document.createElement('meta');
-  frameOptionsMeta.httpEquiv = 'X-Frame-Options';
-  frameOptionsMeta.content = 'DENY';
-  document.head.appendChild(frameOptionsMeta);
+  // X-Frame-Options is configured at server level (vercel.json)
   
   // X-XSS-Protection
   const xssMeta = document.createElement('meta');
