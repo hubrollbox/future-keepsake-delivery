@@ -23,6 +23,12 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js')
       .then((registration) => {
         console.log('SW registered: ', registration);
+
+        // Forçar ativação imediata do novo SW e recarregar a página quando assumir o controlo
+        navigator.serviceWorker.controller?.postMessage({ type: 'SKIP_WAITING' });
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          window.location.reload();
+        });
       })
       .catch((registrationError) => {
         console.log('SW registration failed: ', registrationError);

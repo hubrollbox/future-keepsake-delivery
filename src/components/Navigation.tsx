@@ -54,7 +54,7 @@ const Navigation = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <img 
-               src="/keepla-logo-red.png" 
+               src="/keepla-logo-red.png?v=3" 
                alt="keepla Logo" 
                className="w-16 h-16"
                loading="eager"

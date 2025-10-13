@@ -14,12 +14,12 @@ const Footer = () => {
             <div className="md:col-span-2">
               <div className="flex items-center justify-start mb-6">
                 <img 
-                  src="/keepla-logo-black.png" 
+                  src="/keepla-logo-black.png?v=3" 
                   alt="Logo Monocromático" 
                   style={{width: 120, height: 120}} 
                   loading="eager" 
                   decoding="async"
-                  onError={(e) => { e.currentTarget.src = '/keepla-logo-red.png'; }}
+                  onError={(e) => { e.currentTarget.src = '/lovable-uploads/a58d6383-77f7-451e-b692-d10c4298397e.png'; }}
                 />
               </div>
               <p className="text-gray-400 leading-relaxed mb-6 max-w-md text-center md:text-left font-georgia italic">

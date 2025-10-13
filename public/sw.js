@@ -1,4 +1,4 @@
-const CACHE_NAME = 'keepla-v2';
+const CACHE_NAME = 'keepla-v3';
 const urlsToCache = [
   '/',
   '/manifest.json',
@@ -62,6 +62,32 @@ self.addEventListener('fetch', (event) => {
   // Não guardar documentos HTML no cache
   if (request.destination === 'document') {
     return event.respondWith(fetch(request));
+  }
+
+  // Tratar logos com estratégia network-first para evitar versões antigas em cache
+  const isKeeplaLogo = url.pathname.includes('/keepla-logo');
+  if (isKeeplaLogo) {
+    return event.respondWith(
+      fetch(request)
+        .then((networkResponse) => {
+          if (
+            networkResponse &&
+            networkResponse.status === 200 &&
+            networkResponse.type === 'basic'
+          ) {
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(request, responseToCache);
+            });
+          }
+          return networkResponse;
+        })
+        .catch(async () => {
+          const cached = await caches.match(request);
+          if (cached) return cached;
+          return Response.error();
+        })
+    );
   }
 
   event.respondWith(
