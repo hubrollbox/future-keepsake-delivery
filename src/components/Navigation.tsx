@@ -57,6 +57,9 @@ const Navigation = () => {
                src="/keepla-logo-red.png" 
                alt="keepla Logo" 
                className="w-16 h-16"
+               loading="eager"
+               decoding="async"
+               onError={(e) => { e.currentTarget.src = '/lovable-uploads/a58d6383-77f7-451e-b692-d10c4298397e.png'; }}
             />
           </Link>
 

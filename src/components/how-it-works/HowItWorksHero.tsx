@@ -3,7 +3,14 @@ const HowItWorksHero = () => {
   return (
     <div className="text-center max-w-6xl mx-auto mb-12 md:mb-20">
       <div className="flex justify-center mb-8">
-        <img src="/keepla-logo-red.png" alt="keepla Logo" style={{width: 80, height: 80}} />
+<img 
+  src="/keepla-logo-red.png" 
+  alt="keepla Logo" 
+  style={{width: 80, height: 80}} 
+  loading="eager"
+  decoding="async"
+  onError={(e) => { e.currentTarget.src = '/lovable-uploads/a58d6383-77f7-451e-b692-d10c4298397e.png'; }}
+/>
       </div>
       
       <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-steel-blue mb-6 md:mb-8 leading-tight tracking-tight font-fraunces">

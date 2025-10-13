@@ -35,6 +35,9 @@ const HeroSection = () => {
                src="/keepla-logo-red.png" 
                alt="Keepla" 
                className="mx-auto w-28 h-28 object-contain"
+               loading="eager"
+               decoding="async"
+               onError={(e) => { e.currentTarget.src = '/lovable-uploads/a58d6383-77f7-451e-b692-d10c4298397e.png'; }}
             />
           </div>
 
