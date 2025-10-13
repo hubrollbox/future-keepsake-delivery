@@ -20,7 +20,17 @@ const FinalCTA = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-5xl mx-auto text-center">
           <div className="flex justify-center mb-5 md:mb-12">
-            <img src="/keepla-logo-red.png" alt="keepla Logo" width={100} height={100} className="drop-shadow-lg" aria-label="Logo" />
+            <img 
+              src="/keepla-logo-red.png" 
+              alt="keepla Logo" 
+              width={100} 
+              height={100} 
+              className="drop-shadow-lg" 
+              aria-label="Logo" 
+              loading="eager" 
+              decoding="async" 
+              onError={(e) => { e.currentTarget.src = '/lovable-uploads/a58d6383-77f7-451e-b692-d10c4298397e.png'; }}
+            />
           </div>
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-fraunces font-bold mb-2 md:mb-4 leading-tight text-steel-blue" style={{ textShadow: "0 1px 0 #ECE5DA" }}>
             Pronto para a Tua Primeira<br />

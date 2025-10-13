@@ -22,7 +22,14 @@ const Register = () => {
           </Button>
         </div>
         <div className="text-center mb-8">
-          <img src="/keepla-logo-red.png" alt="keepla Logo" className="h-20 mx-auto mb-4" />
+<img 
+  src="/keepla-logo-red.png" 
+  alt="keepla Logo" 
+  className="h-20 mx-auto mb-4" 
+  loading="eager" 
+  decoding="async" 
+  onError={(e) => { e.currentTarget.src = '/lovable-uploads/a58d6383-77f7-451e-b692-d10c4298397e.png'; }}
+/>
         </div>
         <SecureRegisterForm />
       </div>

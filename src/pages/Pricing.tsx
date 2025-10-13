@@ -157,7 +157,14 @@ function Pricing() {
               transition={{ duration: 0.6 }}
             >
               <div className="flex justify-center mb-8">
-                <img src="/keepla-logo-red.png" alt="keepla Logo" className="h-16" />
+                <img 
+                  src="/keepla-logo-red.png" 
+                  alt="keepla Logo" 
+                  className="h-16" 
+                  loading="eager" 
+                  decoding="async" 
+                  onError={(e) => { e.currentTarget.src = '/lovable-uploads/a58d6383-77f7-451e-b692-d10c4298397e.png'; }}
+                />
               </div>
               
               <h1 className="text-4xl md:text-6xl font-bold text-keepla-black mb-6 font-inter">
