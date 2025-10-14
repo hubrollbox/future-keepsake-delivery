@@ -58,9 +58,9 @@ const FinalCTA = () => {
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
             <Button 
-              variant="brand-outline" 
+              variant="ghost" 
               size="lg" 
-              className="px-8 py-5 text-base md:text-lg min-h-[48px] md:min-h-[56px] border-earthy-burgundy text-earthy-burgundy hover:bg-dusty-rose/20 hover:text-earthy-burgundy transition-all duration-200 focus-visible:ring-2 focus-visible:ring-dusty-rose underline underline-offset-2 decoration-dusty-rose"
+              className="px-8 py-5 text-base md:text-lg min-h-[48px] md:min-h-[56px] bg-white text-keepla-black border-2 border-keepla-black hover:bg-keepla-black hover:text-white transition-all duration-200 focus-visible:ring-2 focus-visible:ring-keepla-black"
               onClick={() => handleNavigation('/contact')}
               aria-label="Falar com o suporte da keepla"
             >

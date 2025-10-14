@@ -66,7 +66,7 @@
   "scripts": {
     "dev": "vite",
     "build:dev": "tsc -b && vite build --mode development",
-    "build:prod": "tsc -b && vite build --mode production",
+    "build:prod": "tsc -b && node scripts/generate-sitemap.js && vite build --mode production",
     "build": "npm run lint && npm run test && npm run build:prod",
     "preview": "vite preview",
     "lint": "npx eslint . --report-unused-disable-directives --no-error-on-unmatched-pattern",
