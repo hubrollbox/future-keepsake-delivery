@@ -85,7 +85,7 @@ self.addEventListener('fetch', (event) => {
         .catch(async () => {
           const cached = await caches.match(request);
           if (cached) return cached;
-          return Response.error();
+          return self.Response.error();
         })
     );
   }

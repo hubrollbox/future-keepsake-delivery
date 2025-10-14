@@ -59,6 +59,6 @@ try {
     fs.writeFileSync(robotsPath, updated, 'utf8');
     console.log('[sitemap] Updated existing Sitemap line in robots.txt');
   }
-} catch (err) {
-  console.warn('[sitemap] robots.txt not found or unreadable; skipping update');
+} catch (e) {
+  console.warn('[sitemap] robots.txt not found or unreadable; skipping update', e);
 }
