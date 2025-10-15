@@ -204,7 +204,7 @@ function CreateKeepsake() {
                           variant="outline"
                           onClick={prevStep}
                           disabled={isSubmitting}
-                          className="border-steel-blue text-steel-blue hover:bg-steel-blue hover:text-white"
+                          className="border-steel-blue text-steel-blue hover:bg-steel-blue/10 hover:text-steel-blue focus-visible:ring-2 focus-visible:ring-steel-blue/40"
                         >
                           Anterior
                         </Button>
