@@ -164,7 +164,16 @@ function CreateKeepsake() {
   ];
 
   const canProceed = () => {
-    if (validationErrors && Array.isArray(validationErrors) && validationErrors.length > 0) return false;
+    // Permitir avançar na Etapa 1 se o tipo estiver definido (valor por defeito "digital")
+    if (currentStep === 1) {
+      const type = form.getValues().type;
+      return !!type;
+    }
+
+    if (validationErrors && Array.isArray(validationErrors) && validationErrors.length > 0) {
+      return false;
+    }
+
     return stepValidation[currentStep] || false;
   };
 
@@ -238,7 +247,7 @@ function CreateKeepsake() {
                       <Button
                         type={currentStep === 5 ? "submit" : "button"}
                         onClick={currentStep === 5 ? undefined : nextStep}
-                        disabled={!canProceed() || isSubmitting || isValidating}
+                        disabled={isSubmitting || isValidating}
                         className="bg-gradient-to-r from-dusty-rose to-sage-green hover:from-dusty-rose/90 hover:to-sage-green/90 text-white px-8"
                       >
                         {isSubmitting ? (
