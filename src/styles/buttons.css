@@ -6,10 +6,10 @@
   @apply bg-keepla-red text-white px-8 py-4 rounded-md font-medium transition-all duration-200 hover:bg-keepla-red-deep shadow-keepla-sm;
 }
 .btn-secondary {
-  @apply border-2 border-keepla-red text-keepla-red px-8 py-4 rounded-md font-medium transition-all duration-200 hover:bg-keepla-red hover:text-white;
+  @apply border-2 border-keepla-red text-keepla-red px-8 py-4 rounded-md font-medium transition-all duration-200 hover:bg-keepla-red/10 hover:text-keepla-red;
 }
 .btn-outline-brand {
-  @apply border-2 border-keepla-red text-keepla-red bg-transparent transition-all duration-200 hover:bg-keepla-red hover:text-white;
+  @apply border-2 border-keepla-red text-keepla-red bg-transparent transition-all duration-200 hover:bg-keepla-red/10 hover:text-keepla-red;
 }
 .btn-brand {
   background: var(--keepla-red);

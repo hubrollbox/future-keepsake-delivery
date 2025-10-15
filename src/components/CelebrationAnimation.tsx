@@ -197,7 +197,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
               <Button
                 variant="outline"
                 onClick={handleShare}
-                className="border-dusty-rose text-dusty-rose hover:bg-dusty-rose hover:text-white px-8 py-3"
+                className="border-dusty-rose text-dusty-rose hover:bg-dusty-rose/10 hover:text-dusty-rose px-8 py-3"
               >
                 <Share2 className="w-5 h-5 mr-2" />
                 Compartilhar

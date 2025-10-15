@@ -15,9 +15,9 @@ export const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         brand: "bg-keepla-red text-white hover:bg-keepla-red-deep shadow-keepla-sm",
-        "brand-outline": "border-2 border-keepla-red text-keepla-red hover:bg-keepla-red hover:text-white",
-        gentle: "bg-keepla-gray text-keepla-black hover:bg-keepla-red hover:text-white",
-        "gold-outline": "border-2 border-keepla-red text-keepla-red hover:bg-keepla-red hover:text-white",
+        "brand-outline": "border-2 border-keepla-red text-keepla-red hover:bg-keepla-red/10 hover:text-keepla-red",
+        gentle: "bg-keepla-gray text-keepla-black hover:bg-keepla-gray/80 hover:text-keepla-black",
+        "gold-outline": "border-2 border-keepla-red text-keepla-red hover:bg-keepla-red/10 hover:text-keepla-red",
       },
       size: {
         default: "h-10 px-4 py-2",

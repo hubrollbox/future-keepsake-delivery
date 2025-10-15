@@ -242,7 +242,7 @@ const StorytellingOnboarding: React.FC<StorytellingOnboardingProps> = ({
                           key={index}
                           variant="outline"
                           onClick={() => handleChoice(option)}
-                          className="p-6 h-auto text-left justify-start hover:bg-dusty-rose hover:text-white hover:border-dusty-rose transition-all duration-300 transform hover:scale-105"
+                          className="p-6 h-auto text-left justify-start hover:bg-dusty-rose/10 hover:text-dusty-rose hover:border-dusty-rose transition-all duration-300 transform hover:scale-105"
                         >
                           <div className="flex items-center space-x-3">
                             <div className="w-8 h-8 rounded-full bg-dusty-rose/20 flex items-center justify-center">
