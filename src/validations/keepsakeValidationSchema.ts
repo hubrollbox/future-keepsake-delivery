@@ -194,9 +194,9 @@ export const keepsakeTypeSchema = z.enum(['digital', 'physical'], {
   errorMap: () => ({ message: 'Selecione um tipo válido de cápsula' }),
 });
 
-export const deliveryChannelSchema = z.enum(['email', 'sms', 'physical'], {
-  errorMap: () => ({ message: 'Selecione um canal de entrega válido' }),
-});
+export const deliveryChannelSchema = z.enum(['email'], {
+  errorMap: () => ({ message: 'Canal de entrega fixo: email' }),
+}).default('email');
 
 // ============================================================================
 // ESQUEMA PRINCIPAL DO FORMULÁRIO - VERSÃO MELHORADA
@@ -227,7 +227,7 @@ export const keepsakeFormSchema = z.object({
   total_cost: z.number().min(0, 'Custo total deve ser positivo').default(0),
   
   // Campos condicionais
-  recipient_contact: z.string().optional(),
+  recipient_contact: emailSchema,
   street: z.string().optional(),
   city: z.string().optional(),
   state: z.string().optional(),
@@ -251,46 +251,7 @@ export const keepsakeFormSchema = z.object({
       });
     }
   }
-  
-  if (data.delivery_channel === 'sms') {
-    if (!data.recipient_contact) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'Número de telefone é obrigatório',
-        path: ['recipient_contact']
-      });
-    } else if (!phoneSchema.safeParse(data.recipient_contact).success) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'Número de telefone inválido',
-        path: ['recipient_contact']
-      });
-    }
-  }
-  
-  if (data.delivery_channel === 'physical') {
-    if (!data.street) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'Morada é obrigatória',
-        path: ['street']
-      });
-    }
-    if (!data.city) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'Cidade é obrigatória',
-        path: ['city']
-      });
-    }
-    if (!data.postal_code) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'Código postal é obrigatório',
-        path: ['postal_code']
-      });
-    }
-  }
+  // Canais SMS e físico removidos no fluxo simplificado
 });
 
 // ============================================================================
@@ -305,8 +266,8 @@ export const stepValidationSchemas = {
   type: z.object({ type: keepsakeTypeSchema }),
   recipient: z.object({
     recipient_name: recipientNameSchema,
-    delivery_channel: deliveryChannelSchema,
     relationship: relationshipSchema,
+    recipient_contact: emailSchema,
   }),
   message: z.object({
     title: titleSchema,
@@ -370,16 +331,6 @@ export const validateConditionalFields = (data: Partial<KeepsakeFormValues>) => 
   
   if (data.delivery_channel === 'email' && !data.recipient_contact) {
     errors.recipient_contact = 'Email é obrigatório para entrega por email';
-  }
-  
-  if (data.delivery_channel === 'sms' && !data.recipient_contact) {
-    errors.recipient_contact = 'Telefone é obrigatório para entrega por SMS';
-  }
-  
-  if (data.delivery_channel === 'physical') {
-    if (!data.street) errors.street = 'Morada é obrigatória para entrega física';
-    if (!data.city) errors.city = 'Cidade é obrigatória para entrega física';
-    if (!data.postal_code) errors.postal_code = 'Código postal é obrigatório para entrega física';
   }
   
   return Object.keys(errors).length > 0 ? errors : null;

@@ -38,14 +38,11 @@ const STEP_VALIDATION_CONFIG: StepValidationConfig[] = [
   },
   {
     step: 2,
-    fields: ['recipient_name', 'delivery_channel', 'recipient_contact', 'street', 'city', 'postal_code'],
+    fields: ['recipient_name', 'recipient_contact'],
     customValidation: async (data) => {
       // Validação customizada para dados do destinatário
-      if (data.delivery_channel === 'email' && data.recipient_contact) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(data.recipient_contact);
-      }
-      return true;
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return data.recipient_contact ? emailRegex.test(data.recipient_contact) : false;
     }
   },
   {
@@ -92,6 +89,7 @@ export const useKeepsakeForm = () => {
       total_cost: 0,
       channel_cost: 0,
       country: 'Portugal',
+      recipient_contact: '',
     },
   });
 
@@ -110,28 +108,16 @@ export const useKeepsakeForm = () => {
       
       for (const field of config.fields) {
         const fieldValue = currentData[field];
-        
-        // Validação condicional baseada no canal de entrega
-          if (step === 2) {
-            if (currentData.delivery_channel === 'email' && String(field) === 'recipient_contact') {
-              if (!fieldValue) stepErrors.push('Email é obrigatório');
-            } else if (currentData.delivery_channel === 'sms' && String(field) === 'recipient_contact') {
-              if (!fieldValue) stepErrors.push('Telefone é obrigatório');
-            } else if (currentData.delivery_channel === 'physical') {
-              if (['street', 'city', 'postal_code'].includes(String(field)) && !fieldValue) {
-                stepErrors.push(`${String(field)} é obrigatório para entrega física`);
-              }
-            }
-          } else if (!fieldValue && String(field) !== 'selected_products') {
-            stepErrors.push(`${String(field)} é obrigatório`);
-          }
+        if (!fieldValue && String(field) !== 'selected_products') {
+          stepErrors.push(`${String(field)} é obrigatório`);
+        }
       }
 
       // Executar validação customizada se existir
       if (config.customValidation) {
-        const isCustomValid = await config.customValidation({ 
-          ...currentData, 
-          total_cost: currentData.total_cost || 0, 
+        const isCustomValid = await config.customValidation({
+          recipient_contact: currentData.recipient_contact,
+          total_cost: currentData.total_cost || 0,
           channel_cost: currentData.channel_cost || 0,
           selected_products: currentData.selected_products || []
         });
@@ -243,36 +229,21 @@ export const useKeepsakeForm = () => {
         delivery_channel: string;
         created_at: string;
         updated_at: string;
-        email?: string;
+        email: string;
         phone?: string | null;
       } = {
         keepsake_id: keepsakeData.id,
         name: formData.recipient_name,
         relationship: formData.relationship || null,
-        delivery_channel: formData.delivery_channel,
+        delivery_channel: 'email',
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
+        email: '',
       };
 
-      // Campos obrigatórios baseados no canal de entrega
-      if (formData.delivery_channel === 'email') {
-        recipientPayload.email = formData.recipient_contact || '';
-        // Phone pode ser null para email
-        recipientPayload.phone = null;
-      } else if (formData.delivery_channel === 'sms') {
-        recipientPayload.phone = formData.recipient_contact || '';
-        // Email pode ser null para SMS  
-        recipientPayload.email = '';
-      } else if (formData.delivery_channel === 'physical') {
-        // Para entrega física, ambos email e phone podem ser opcionais
-        recipientPayload.email = formData.recipient_contact || '';
-        recipientPayload.phone = null;
-        (recipientPayload as any).street = formData.street;
-        (recipientPayload as any).city = formData.city;
-        (recipientPayload as any).state = formData.state || null;
-        (recipientPayload as any).postal_code = formData.postal_code;
-        (recipientPayload as any).country = formData.country || 'Portugal';
-      }
+      // Fluxo simplificado: apenas email
+      recipientPayload.email = formData.recipient_contact || '';
+      recipientPayload.phone = null;
 
       const { error: recipientError } = await supabase
         .from('recipients')

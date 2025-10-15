@@ -3,9 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Card, CardContent } from "@/components/ui/card";
-import { User, Mail, MessageCircle, MapPin } from "lucide-react";
+import { User, Mail } from "lucide-react";
 import { KeepsakeFormData } from "@/hooks/useKeepsakeForm";
 import { UseFormReturn } from "react-hook-form";
 import { KeepsakeFormValues } from "@/validations/keepsakeValidationSchema";
@@ -26,55 +24,18 @@ interface RecipientStepProps {
 }
 
 const RecipientStep = ({ formData, updateFormData, nextStep, prevStep, form }: RecipientStepProps) => {
-  const deliveryChannels = [
-    {
-      value: 'email' as const,
-      label: 'Email',
-      icon: Mail,
-      cost: 0,
-      description: 'Entrega gratuita por email',
-      placeholder: 'email@exemplo.com'
-    },
-    {
-      value: 'sms' as const,
-      label: 'SMS',
-      icon: MessageCircle,
-      cost: 0.20,
-      description: 'Mensagem de texto',
-      placeholder: '+351 912 345 678'
-    },
-    {
-      value: 'physical' as const,
-      label: 'Morada Física',
-      icon: MapPin,
-      cost: 2.00,
-      description: 'Entrega física em Portugal',
-      placeholder: 'Rua, número, código postal, cidade'
-    }
-  ];
+  const EMAIL_PLACEHOLDER = 'email@exemplo.com';
 
-  const handleChannelChange = (channel: 'email' | 'sms' | 'physical') => {
-    const selectedChannel = deliveryChannels.find(c => c.value === channel);
-    updateFormData({
-      delivery_channel: channel,
-      channel_cost: selectedChannel?.cost || 0,
-      recipient_contact: '',
-      street: '',
-      city: '',
-      state: '',
-      postal_code: '',
-      country: 'Portugal'
-    });
-  };
+  // Fluxo simplificado: canal fixo email, sem necessidade de alterar canal
 
   const handleNext = async () => {
-    const isValid = await form.trigger(['recipient_name', 'delivery_channel']);
+    const isValid = await form.trigger(['recipient_name', 'recipient_contact']);
     if (isValid) {
       nextStep();
     }
   };
 
-  const selectedChannel = deliveryChannels.find(c => c.value === formData.delivery_channel);
+  // Canal fixo: email
 
   return (
     <div className="space-y-6">
@@ -137,85 +98,32 @@ const RecipientStep = ({ formData, updateFormData, nextStep, prevStep, form }: R
           />
         </div>
 
-        <FormField
-          control={form.control}
-          name="delivery_channel"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-steel-blue font-medium mb-4 block">
-                Canal de Entrega *
-              </FormLabel>
-              <FormControl>
-                <RadioGroup
-                  value={field.value}
-                  onValueChange={(value) => {
-                    field.onChange(value);
-                    handleChannelChange(value as 'email' | 'sms' | 'physical');
-                  }}
-                  className="space-y-3"
-                >
-                  {deliveryChannels.map((channel) => {
-                    const IconComponent = channel.icon;
-                    return (
-                      <Card
-                        key={channel.value}
-                        className={`cursor-pointer transition-all hover:shadow-soft ${
-                          field.value === channel.value
-                            ? 'border-dusty-rose bg-dusty-rose/5'
-                            : 'border-sand-beige hover:border-dusty-rose/50'
-                        }`}
-                      >
-                        <CardContent className="p-4">
-                          <div className="flex items-center space-x-3">
-                            <RadioGroupItem value={channel.value} id={channel.value} />
-                            <IconComponent className="h-5 w-5 text-dusty-rose" />
-                            <div className="flex-1">
-                              <div className="flex items-center justify-between">
-                                <Label
-                                  htmlFor={channel.value}
-                                  className="font-medium text-steel-blue cursor-pointer"
-                                >
-                                  {channel.label}
-                                </Label>
-                                <span className="font-semibold text-steel-blue">
-                                  {channel.cost === 0 ? 'Grátis' : `${channel.cost.toFixed(2)} €`}
-                                </span>
-                              </div>
-                              <p className="text-sm text-misty-gray mt-1">
-                                {channel.description}
-                              </p>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    );
-                  })}
-                </RadioGroup>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {/* Fluxo simplificado: canal de entrega fixo (Email) */}
+        <div className="rounded-lg border border-sand-beige p-4 bg-lavender-mist/30">
+          <div className="flex items-center gap-2 text-steel-blue">
+            <Mail className="h-5 w-5 text-dusty-rose" />
+            <span className="font-medium">Entrega por Email (Grátis)</span>
+          </div>
+          <p className="text-sm text-misty-gray mt-1">Usamos email para entregar a tua memória no futuro.</p>
+        </div>
 
-        {selectedChannel && selectedChannel.value !== 'physical' && (
-          <div>
+        <div>
             <Label htmlFor="recipient_contact" className="text-steel-blue font-medium">
-              {selectedChannel.label} do Destinatário *
+              Email do Destinatário *
             </Label>
             <Input
               id="recipient_contact"
-              type={selectedChannel.value === 'email' ? 'email' : 'text'}
+              type="email"
               value={formData.recipient_contact}
               onChange={(e) => updateFormData({ recipient_contact: e.target.value })}
-              placeholder={selectedChannel.placeholder}
+              placeholder={EMAIL_PLACEHOLDER}
               className="mt-1"
               required
-              pattern={selectedChannel.value === 'sms' ? "[+0-9s()-]{9,}" : undefined}
+              
             />
           </div>
-        )}
 
-        {selectedChannel && selectedChannel.value === 'physical' && (
+        {false && (
           <div className="grid md:grid-cols-2 gap-4">
             <div className="md:col-span-2">
               <Label htmlFor="street" className="text-steel-blue font-medium">Morada *</Label>

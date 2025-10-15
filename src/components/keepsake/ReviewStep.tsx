@@ -3,9 +3,10 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, User, Mail, MessageCircle, MapPin, Gift } from "lucide-react";
+import { Calendar, User, Mail, Gift } from "lucide-react";
 import { KeepsakeFormData } from "@/hooks/useKeepsakeForm";
 import { useToast } from "@/hooks/use-toast";
+import { BASE_PRICE_EUR } from "@/lib/simplePricing";
 
 interface ReviewStepProps {
   formData: KeepsakeFormData;
@@ -15,23 +16,9 @@ interface ReviewStepProps {
 }
 
 const ReviewStep = ({ formData, onBack, onSubmit, loading }: ReviewStepProps) => {
-  const getChannelIcon = () => {
-    switch (formData.delivery_channel) {
-      case 'email': return Mail;
-      case 'sms': return MessageCircle;
-      case 'physical': return MapPin;
-      default: return Mail;
-    }
-  };
+  const getChannelIcon = () => Mail;
 
-  const getChannelLabel = () => {
-    switch (formData.delivery_channel) {
-      case 'email': return 'Email';
-      case 'sms': return 'SMS';
-      case 'physical': return 'Morada Física';
-      default: return 'Email';
-    }
-  };
+  const getChannelLabel = () => 'Email';
 
   const ChannelIcon = getChannelIcon();
   const { toast } = useToast();
@@ -140,6 +127,10 @@ const ReviewStep = ({ formData, onBack, onSubmit, loading }: ReviewStepProps) =>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
+              <div className="flex justify-between">
+                <span>Mensagem digital (preço base):</span>
+                <span>{BASE_PRICE_EUR.toFixed(2)} €</span>
+              </div>
               <div className="flex justify-between">
                 <span>Canal de entrega ({getChannelLabel()}):</span>
                 <span>{formData.channel_cost === 0 ? 'Grátis' : `${formData.channel_cost.toFixed(2)} €`}</span>

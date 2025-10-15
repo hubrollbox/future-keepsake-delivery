@@ -75,16 +75,19 @@ const getEmotionalMessage = (step: number, hasErrors: boolean): string => {
     '💝 Quase lá! Vamos ajustar alguns detalhes...',
     '✨ Sua mensagem está quase perfeita!',
     '💌 Falta pouco para sua cápsula ficar pronta!'
-  ];
+  ] as const;
   
   const successMessages = [
     '💝 Que título lindo! Vamos para o próximo passo...',
     '✨ Sua mensagem está tocante! Agora vamos programar a entrega...',
     '🎉 Perfeito! Sua cápsula do tempo está pronta para ser criada!'
-  ];
+  ] as const;
   
   const messages = hasErrors ? errorMessages : successMessages;
-  return (messages[step - 1] || messages[0]) as string;
+  const idx = Math.max(0, Math.min(messages.length - 1, step - 1));
+  const selected = messages[idx];
+  const fallback = hasErrors ? errorMessages[0] : successMessages[0];
+  return selected !== undefined ? selected : fallback;
 };
 
 export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({

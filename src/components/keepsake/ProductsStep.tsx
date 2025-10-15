@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { Star, Package, Gift, Lock, Users, Video, ShoppingCart, Truck } from "lucide-react";
 import { KeepsakeFormData } from "@/hooks/useKeepsakeForm";
+import { BASE_PRICE_EUR, computeExtrasTotal, computeTotalSimple } from "@/lib/simplePricing";
 import { UseFormReturn } from "react-hook-form";
 import { KeepsakeFormValues } from "@/validations/keepsakeValidationSchema";
 
@@ -86,7 +87,10 @@ const ProductsStep = ({ formData, updateFormData, nextStep, prevStep, form }: Pr
       ];
     }
 
-    const total = newSelectedProducts.reduce((sum: number, p: { price: number }) => sum + p.price, formData.channel_cost);
+    const total = computeTotalSimple({
+      ...formData,
+      selected_products: newSelectedProducts,
+    });
 
     updateFormData({
       selected_products: newSelectedProducts,
@@ -95,9 +99,8 @@ const ProductsStep = ({ formData, updateFormData, nextStep, prevStep, form }: Pr
   };
 
   const handleNext = () => {
-    // Calcular custo total
-    const productsCost = formData.selected_products.reduce((sum: number, p: { price: number }) => sum + p.price, 0);
-    const total = productsCost + formData.channel_cost;
+    // Calcular custo total simples (5€ base + extras + canal)
+    const total = computeTotalSimple(formData);
     
     updateFormData({ total_cost: total });
     nextStep();
@@ -112,10 +115,10 @@ const ProductsStep = ({ formData, updateFormData, nextStep, prevStep, form }: Pr
       <div className="text-center mb-8">
         <Gift className="h-12 w-12 text-dusty-rose mx-auto mb-4" />
         <h2 className="text-2xl font-serif text-steel-blue mb-2">
-          Extras & Produtos
+          Queres adicionar um presente especial?
         </h2>
         <p className="text-misty-gray">
-          Personaliza a tua cápsula com extras especiais
+          Os extras são opcionais. A mensagem digital tem preço base de {BASE_PRICE_EUR.toFixed(2)} €.
         </p>
       </div>
 
@@ -182,7 +185,7 @@ const ProductsStep = ({ formData, updateFormData, nextStep, prevStep, form }: Pr
               ))}
               <div className="border-t border-dusty-rose/20 pt-1 mt-2 flex justify-between font-semibold">
                 <span>Total Extras:</span>
-                <span>{formData.selected_products.reduce((sum: number, p: { price: number }) => sum + p.price, 0).toFixed(2)} €</span>
+                <span>{computeExtrasTotal(formData).toFixed(2)} €</span>
               </div>
             </div>
           </CardContent>

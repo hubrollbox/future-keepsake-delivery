@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { AlertCircle, Crown, Home, Save, Zap } from 'lucide-react';
+import { Home, Save, Zap } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import ProgressStepper from '../components/ProgressStepper';
 import MessageStep from '../components/keepsake/MessageStep';
@@ -12,29 +12,17 @@ import { useKeepsakeForm, KeepsakeFormData } from '@/hooks/useKeepsakeForm';
 import TypeStep from '@/components/keepsake/TypeStep';
 import ProductsStep from '@/components/keepsake/ProductsStep';
 import SuccessStep from '@/components/keepsake/SuccessStep';
-import { Alert, AlertDescription } from '@/components/ui/alert';
+// Removidos alerts não utilizados no fluxo simplificado
 import { Form } from '@/components/ui/form';
 
-interface PlanLimits {
-  maxMessageLength: number;
-  maxProducts: number;
-  maxValue: number;
-}
-
-const LIMITS_BY_PLAN: Record<string, PlanLimits> = {
-  free: { maxMessageLength: 500, maxProducts: 1, maxValue: 30 },
-  premium: { maxMessageLength: 2000, maxProducts: 5, maxValue: 200 },
-  family: { maxMessageLength: 5000, maxProducts: 10, maxValue: 500 }
-};
+// Fluxo simplificado: sem limitações por plano
 
 function CreateKeepsake() {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
   
   // Estados do componente
-  const [userPlan] = useState<string>('free');
-  const [planLimits, setPlanLimits] = useState<PlanLimits | null>(null);
-  const [planValidationErrors, setPlanValidationErrors] = useState<string[]>([]);
+  // Fluxo simplificado: remover estado de plano e validação associada
   
   const {
     form,
@@ -62,43 +50,7 @@ function CreateKeepsake() {
     }
   }, [user, authLoading, navigate]);
 
-  // Carregar dados do plano do usuário
-  useEffect(() => {
-    if (userPlan) {
-      const limits = LIMITS_BY_PLAN[userPlan];
-      if (limits) {
-        setPlanLimits(limits);
-      }
-    } else {
-      const freeLimits = LIMITS_BY_PLAN.free;
-      if (freeLimits) {
-        setPlanLimits(freeLimits);
-      }
-    }
-  }, [userPlan]);
-
-  // Validação baseada no plano
-  const validatePlan = (data: any) => {
-    if (!planLimits) return [];
-    
-    const errors: string[] = [];
-    
-    if (data.message && data.message.length > planLimits.maxMessageLength) {
-      errors.push(`Mensagem muito longa. Máximo: ${planLimits.maxMessageLength} caracteres`);
-    }
-    
-    return errors;
-  };
-
-  // Atualizar validação quando dados do formulário mudarem
-  useEffect(() => {
-    const subscription = form.watch((data) => {
-      const errors = validatePlan(data as KeepsakeFormData);
-      setPlanValidationErrors(errors);
-    });
-    
-    return () => subscription.unsubscribe();
-  }, [form, validatePlan]);
+  // Removida validação baseada em plano
 
   // Aviso sobre mudanças não guardadas
   useEffect(() => {
@@ -132,12 +84,12 @@ function CreateKeepsake() {
 
   const renderStepContent = () => {
     const common = { form, nextStep, prevStep };
-    const formData = { 
+    const formData: KeepsakeFormData = { 
       ...form.getValues(), 
       total_cost: form.getValues().total_cost || 0, 
       channel_cost: form.getValues().channel_cost || 0,
       selected_products: form.getValues().selected_products || []
-    };
+    } as KeepsakeFormData;
     const updateFormData = (data: Partial<KeepsakeFormData>) => {
       Object.entries(data).forEach(([k, v]) => form.setValue(k as keyof KeepsakeFormData, v));
     };
@@ -212,7 +164,6 @@ function CreateKeepsake() {
   ];
 
   const canProceed = () => {
-    if (planValidationErrors.length > 0) return false;
     if (validationErrors && Array.isArray(validationErrors) && validationErrors.length > 0) return false;
     return stepValidation[currentStep] || false;
   };
@@ -239,31 +190,7 @@ function CreateKeepsake() {
           />
         </div>
 
-        {/* Plan Validation Errors */}
-        {planValidationErrors.length > 0 && (
-          <Alert className="mb-6 border-amber-200 bg-amber-50">
-            <AlertCircle className="h-4 w-4 text-amber-600" />
-            <AlertDescription className="text-amber-800">
-              <div className="font-medium mb-2">Limitações do Plano {userPlan.toUpperCase()}:</div>
-              <ul className="list-disc list-inside space-y-1">
-                {planValidationErrors.map((error, index) => (
-                  <li key={`plan-error-${error.slice(0, 20).replace(/\s+/g, '-')}-${index}`}>{error}</li>
-                ))}
-              </ul>
-              <div className="mt-3">
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={() => navigate('/pricing')}
-                  className="border-amber-300 text-amber-700 hover:bg-amber-100"
-                >
-                  <Crown className="w-4 h-4 mr-2" />
-                  Fazer Upgrade
-                </Button>
-              </div>
-            </AlertDescription>
-          </Alert>
-        )}
+        {/* Fluxo simplificado: sem erros de plano/upgrade */}
 
         {/* Form Content */}
         <Card className="max-w-4xl mx-auto shadow-xl border-0 bg-white/80 backdrop-blur-sm">

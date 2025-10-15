@@ -11,14 +11,7 @@ interface SuccessStepProps {
 }
 
 const SuccessStep = ({ formData }: SuccessStepProps) => {
-  const getChannelLabel = () => {
-    switch (formData.delivery_channel) {
-      case 'email': return 'email';
-      case 'sms': return 'SMS';
-      case 'physical': return 'morada física';
-      default: return 'email';
-    }
-  };
+  const getChannelLabel = () => 'email';
 
   return (
     <div className="text-center space-y-6">

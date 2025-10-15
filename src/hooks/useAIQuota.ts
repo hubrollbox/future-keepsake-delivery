@@ -11,18 +11,6 @@ type ApiUsage = {
   huggingface_requests: number;
 };
 
-type ApiUsageInsert = {
-  user_id: string;
-  date: string;
-  huggingface_requests: number;
-};
-
-type ApiUsageUpdate = {
-  user_id: string;
-  date: string;
-  huggingface_requests: number;
-};
-
 type Subscription = {
   id: string;
   user_id: string;
@@ -60,14 +48,14 @@ export function useAIQuota() {
   const [error, setError] = useState<string | null>(null);
 
   const fetchQuota = async () => {
-    if (!user?.id) {
+    if (!user || !user.id) {
       setError('User not authenticated');
       setLoading(false);
       return;
     }
 
     // userId corresponde ao user.id do Supabase Auth
-    const userId: string = user.id;
+    const userId = user.id;
 
     try {
       setError(null);
@@ -115,7 +103,7 @@ export function useAIQuota() {
         // Inserção na tabela 'api_usage' com 'user_id'
         const { data: newUsage, error: createError } = await supabase
           .from('api_usage')
-          .insert([{ user_id: userId, date: today, huggingface_requests: 0 } as ApiUsageInsert])
+          .insert([{ user_id: userId, date: today, huggingface_requests: 0 }])
           .select()
           .single();
 
@@ -163,7 +151,7 @@ export function useAIQuota() {
       // Upsert na tabela 'api_usage' com 'user_id'
       const { error } = await supabase
         .from('api_usage')
-        .upsert([{ user_id: userId, date: today, huggingface_requests: newUsage }] as ApiUsageUpdate[]);
+        .upsert([{ user_id: userId, date: today, huggingface_requests: newUsage }]);
 
       if (error) {
         throw error;
