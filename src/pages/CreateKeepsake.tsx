@@ -31,8 +31,6 @@ function CreateKeepsake() {
     isSubmitting,
     isValidating,
     hasUnsavedChanges,
-    validationErrors,
-    stepValidation,
     nextStep,
     prevStep,
     submitKeepsake,
@@ -163,19 +161,7 @@ function CreateKeepsake() {
     'Sucesso'
   ];
 
-  const canProceed = () => {
-    // Permitir avançar na Etapa 1 se o tipo estiver definido (valor por defeito "digital")
-    if (currentStep === 1) {
-      const type = form.getValues().type;
-      return !!type;
-    }
-
-    if (validationErrors && Array.isArray(validationErrors) && validationErrors.length > 0) {
-      return false;
-    }
-
-    return stepValidation[currentStep] || false;
-  };
+  // Removida lógica de canProceed — validação acontece dentro de nextStep/submit
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-lavender-mist via-white to-sage-green">
