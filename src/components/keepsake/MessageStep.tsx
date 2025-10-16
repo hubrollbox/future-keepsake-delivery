@@ -1,6 +1,5 @@
 
 
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -19,14 +18,7 @@ interface MessageStepProps {
   form: UseFormReturn<KeepsakeFormValues>;
 }
 
-const MessageStep = ({ updateFormData, nextStep, prevStep, form }: MessageStepProps) => {
-  const handleNext = async () => {
-    // Validar os campos deste passo usando react-hook-form
-    const isValid = await form.trigger(['title', 'message', 'delivery_date']);
-    if (isValid) {
-      nextStep();
-    }
-  };
+const MessageStep = ({ updateFormData, form }: MessageStepProps) => {
 
   return (
     <div className="space-y-6">

@@ -1,5 +1,4 @@
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Monitor, Package, CheckCircle2 } from "lucide-react";
 import { FormField, FormItem, FormControl, Form } from "@/components/ui/form";
@@ -14,7 +13,7 @@ interface TypeStepProps {
   form: UseFormReturn<KeepsakeFormValues>;
 }
 
-const TypeStep = ({ selectedType, onTypeSelect, onNext, form }: TypeStepProps) => {
+const TypeStep = ({ selectedType, onTypeSelect, form }: TypeStepProps) => {
   const types = [
     {
       value: 'digital' as const,

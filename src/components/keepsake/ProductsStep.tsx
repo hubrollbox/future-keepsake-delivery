@@ -1,6 +1,5 @@
 
 import { useState, useEffect, useCallback } from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
@@ -28,7 +27,7 @@ interface ProductsStepProps {
   form: UseFormReturn<KeepsakeFormValues>;
 }
 
-const ProductsStep = ({ formData, updateFormData, nextStep, prevStep, form }: ProductsStepProps) => {
+const ProductsStep = ({ formData, updateFormData }: ProductsStepProps) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -98,13 +97,7 @@ const ProductsStep = ({ formData, updateFormData, nextStep, prevStep, form }: Pr
     });
   };
 
-  const handleNext = () => {
-    // Calcular custo total simples (5€ base + extras + canal)
-    const total = computeTotalSimple(formData);
-    
-    updateFormData({ total_cost: total });
-    nextStep();
-  };
+  
 
   if (loading) {
     return <div className="text-center py-8">A carregar produtos...</div>;

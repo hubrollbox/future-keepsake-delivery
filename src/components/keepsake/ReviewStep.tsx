@@ -1,6 +1,5 @@
 
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, User, Mail, Gift } from "lucide-react";
@@ -14,7 +13,7 @@ interface ReviewStepProps {
   loading: boolean;
 }
 
-const ReviewStep = ({ formData, onBack, onSubmit, loading }: ReviewStepProps) => {
+const ReviewStep = ({ formData }: ReviewStepProps) => {
   const getChannelIcon = () => Mail;
 
   const getChannelLabel = () => 'Email';

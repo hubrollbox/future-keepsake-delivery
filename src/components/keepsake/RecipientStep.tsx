@@ -1,6 +1,5 @@
 
 
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { User, Mail } from "lucide-react";
@@ -23,17 +22,12 @@ interface RecipientStepProps {
   form: UseFormReturn<KeepsakeFormValues>;
 }
 
-const RecipientStep = ({ formData, updateFormData, nextStep, prevStep, form }: RecipientStepProps) => {
+const RecipientStep = ({ formData, updateFormData, form }: RecipientStepProps) => {
   const EMAIL_PLACEHOLDER = 'email@exemplo.com';
 
   // Fluxo simplificado: canal fixo email, sem necessidade de alterar canal
 
-  const handleNext = async () => {
-    const isValid = await form.trigger(['recipient_name', 'recipient_contact']);
-    if (isValid) {
-      nextStep();
-    }
-  };
+  
 
   // Canal fixo: email
 
