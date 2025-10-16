@@ -32,23 +32,23 @@ const HeroSection = () => {
           {/* Logo Keepla oficial */}
           <div className="mb-8 mt-16">
             <img 
-               src="/keepla-logo-red.png?v=3" 
+               src="/keepla-logo-white.png?v=3" 
                alt="Keepla" 
                className="mx-auto w-28 h-28 object-contain"
                loading="eager"
                decoding="async"
-               onError={(e) => { e.currentTarget.src = '/lovable-uploads/a58d6383-77f7-451e-b692-d10c4298397e.png'; }}
+               onError={(e) => { e.currentTarget.src = '/keepla-logo-white.png'; }}
             />
           </div>
 
           {/* Main headline - Inter Bold */}
-          <h1 className="text-5xl md:text-7xl font-bold text-keepla-black mb-6 leading-tight tracking-tight">
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
             Presente no
             <span className="block text-keepla-red italic">Futuro</span>
           </h1>
 
           {/* Subtitle - Inter Regular */}
-          <p className="text-xl md:text-2xl text-gray-100 mb-8 font-normal max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-gray-200 mb-8 font-normal max-w-2xl mx-auto leading-relaxed">
             Cria cápsulas do tempo que guardam as tuas palavras, emoções e memórias para serem entregues no momento perfeito.
           </p>
 

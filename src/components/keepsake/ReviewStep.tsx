@@ -24,7 +24,7 @@ const ReviewStep = ({ formData }: ReviewStepProps) => {
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <Gift className="h-12 w-12 text-dusty-rose mx-auto mb-4" />
+        <Gift className="h-12 w-12 text-keepla-red mx-auto mb-4" />
         <h2 className="text-2xl font-serif text-steel-blue mb-2">
           Revisão Final
         </h2>
@@ -38,7 +38,7 @@ const ReviewStep = ({ formData }: ReviewStepProps) => {
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center gap-2">
-              <Calendar className="h-5 w-5 text-dusty-rose" />
+              <Calendar className="h-5 w-5 text-keepla-red" />
               Mensagem
             </CardTitle>
           </CardHeader>
@@ -73,7 +73,7 @@ const ReviewStep = ({ formData }: ReviewStepProps) => {
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-lg flex items-center gap-2">
-              <User className="h-5 w-5 text-dusty-rose" />
+              <User className="h-5 w-5 text-keepla-red" />
               Destinatário
             </CardTitle>
           </CardHeader>
@@ -87,7 +87,7 @@ const ReviewStep = ({ formData }: ReviewStepProps) => {
               </div>
               <div className="text-right">
                 <div className="flex items-center gap-2">
-                  <ChannelIcon className="h-4 w-4 text-dusty-rose" />
+                  <ChannelIcon className="h-4 w-4 text-keepla-red" />
                   <span className="text-sm text-steel-blue">{getChannelLabel()}</span>
                 </div>
                 <p className="text-sm text-misty-gray">{formData.recipient_contact}</p>
@@ -141,7 +141,7 @@ const ReviewStep = ({ formData }: ReviewStepProps) => {
               ))}
               <div className="border-t border-dusty-rose/20 pt-2 mt-2 flex justify-between font-semibold text-lg">
                 <span>Total:</span>
-                <span className="text-dusty-rose">{formData.total_cost.toFixed(2)} €</span>
+                <span className="text-keepla-red">{formData.total_cost.toFixed(2)} €</span>
               </div>
             </div>
           </CardContent>

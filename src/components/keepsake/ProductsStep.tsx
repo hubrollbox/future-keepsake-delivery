@@ -106,7 +106,7 @@ const ProductsStep = ({ formData, updateFormData }: ProductsStepProps) => {
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <Gift className="h-12 w-12 text-dusty-rose mx-auto mb-4" />
+        <Gift className="h-12 w-12 text-keepla-red mx-auto mb-4" />
         <h2 className="text-2xl font-serif text-steel-blue mb-2">
           Queres adicionar um presente especial?
         </h2>
@@ -125,15 +125,15 @@ const ProductsStep = ({ formData, updateFormData }: ProductsStepProps) => {
               key={product.id}
               className={`transition-all hover:shadow-soft ${
                 isSelected
-                  ? 'border-dusty-rose bg-dusty-rose/5'
-                  : 'border-sand-beige hover:border-dusty-rose/50'
+                  ? 'border-keepla-red bg-keepla-red/5'
+                  : 'border-sand-beige hover:border-keepla-red/50'
               }`}
             >
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
-                    <div className="p-2 rounded-lg bg-dusty-rose/10">
-                      <IconComponent className="h-5 w-5 text-dusty-rose" />
+                    <div className="p-2 rounded-lg bg-keepla-red/10">
+                      <IconComponent className="h-5 w-5 text-keepla-red" />
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
@@ -166,7 +166,7 @@ const ProductsStep = ({ formData, updateFormData }: ProductsStepProps) => {
       </div>
 
       {formData.selected_products.length > 0 && (
-        <Card className="bg-sand-beige/30 border-dusty-rose/20">
+        <Card className="bg-sand-beige/30 border-keepla-red/20">
           <CardContent className="p-4">
             <h3 className="font-semibold text-steel-blue mb-2">Resumo dos Extras</h3>
             <div className="space-y-1 text-sm">
@@ -176,7 +176,7 @@ const ProductsStep = ({ formData, updateFormData }: ProductsStepProps) => {
                   <span>{product.price.toFixed(2)} €</span>
                 </div>
               ))}
-              <div className="border-t border-dusty-rose/20 pt-1 mt-2 flex justify-between font-semibold">
+              <div className="border-t border-keepla-red/20 pt-1 mt-2 flex justify-between font-semibold">
                 <span>Total Extras:</span>
                 <span>{computeExtrasTotal(formData).toFixed(2)} €</span>
               </div>

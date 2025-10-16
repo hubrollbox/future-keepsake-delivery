@@ -71,8 +71,8 @@ const TypeStep = ({ selectedType, onTypeSelect, form }: TypeStepProps) => {
                         <Card
                           className={`relative cursor-pointer transition-all hover:shadow-soft hover:scale-[1.01] ${
                             selectedType === type.value
-                              ? 'border-dusty-rose bg-dusty-rose/5 ring-2 ring-dusty-rose'
-                              : 'border-sand-beige hover:border-dusty-rose/50'
+                              ? 'border-keepla-red bg-keepla-red/5 ring-2 ring-keepla-red'
+                              : 'border-sand-beige hover:border-keepla-red/50'
                           }`}
                           onClick={() => {
                             field.onChange(type.value);
@@ -94,7 +94,7 @@ const TypeStep = ({ selectedType, onTypeSelect, form }: TypeStepProps) => {
                                 <ul className="space-y-1">
                                   {type.features.map((feature, index) => (
                                     <li key={index} className="text-sm text-steel-blue flex items-center">
-                                      <span className="w-1.5 h-1.5 bg-dusty-rose rounded-full mr-2" />
+                                      <span className="w-1.5 h-1.5 bg-keepla-red rounded-full mr-2" />
                                       {feature}
                                     </li>
                                   ))}

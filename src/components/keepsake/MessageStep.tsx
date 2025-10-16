@@ -23,7 +23,7 @@ const MessageStep = ({ updateFormData, form }: MessageStepProps) => {
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <MessageSquare className="h-12 w-12 text-dusty-rose mx-auto mb-4" />
+        <MessageSquare className="h-12 w-12 text-keepla-red mx-auto mb-4" />
         <h2 className="text-2xl font-serif text-steel-blue mb-2">
           A Tua Mensagem
         </h2>

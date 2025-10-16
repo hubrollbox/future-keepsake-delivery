@@ -204,7 +204,7 @@ function CreateKeepsake() {
                           variant="outline"
                           onClick={prevStep}
                           disabled={isSubmitting}
-                          className="border-steel-blue text-steel-blue hover:bg-steel-blue/10 hover:text-steel-blue focus-visible:ring-2 focus-visible:ring-steel-blue/40"
+                          className="border-keepla-red text-keepla-red hover:bg-keepla-red/10 hover:text-keepla-red focus-visible:ring-2 focus-visible:ring-keepla-red/40"
                         >
                           Anterior
                         </Button>
@@ -234,7 +234,7 @@ function CreateKeepsake() {
                         type={currentStep === 5 ? "submit" : "button"}
                         onClick={currentStep === 5 ? undefined : nextStep}
                         disabled={isSubmitting || isValidating}
-                        className="bg-gradient-to-r from-dusty-rose to-sage-green hover:from-dusty-rose/90 hover:to-sage-green/90 text-white px-8"
+                        className="bg-keepla-red hover:bg-keepla-red-deep text-white px-8"
                       >
                         {isSubmitting ? (
                           <>

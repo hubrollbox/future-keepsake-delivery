@@ -34,7 +34,7 @@ const RecipientStep = ({ formData, updateFormData, form }: RecipientStepProps) =
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <User className="h-12 w-12 text-dusty-rose mx-auto mb-4" />
+        <User className="h-12 w-12 text-keepla-red mx-auto mb-4" />
         <h2 className="text-2xl font-serif text-steel-blue mb-2">
           Destinatário
         </h2>
@@ -95,7 +95,7 @@ const RecipientStep = ({ formData, updateFormData, form }: RecipientStepProps) =
         {/* Fluxo simplificado: canal de entrega fixo (Email) */}
         <div className="rounded-lg border border-sand-beige p-4 bg-lavender-mist/30">
           <div className="flex items-center gap-2 text-steel-blue">
-            <Mail className="h-5 w-5 text-dusty-rose" />
+            <Mail className="h-5 w-5 text-keepla-red" />
             <span className="font-medium">Entrega por Email (Grátis)</span>
           </div>
           <p className="text-sm text-misty-gray mt-1">Usamos email para entregar a tua memória no futuro.</p>
