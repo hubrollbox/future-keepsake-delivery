@@ -42,7 +42,7 @@ const HeroSection = () => {
           </div>
 
           {/* Main headline - Inter Bold */}
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
+          <h1 className="text-5xl md:text-7xl font-bold text-keepla-black mb-6 leading-tight tracking-tight">
             Presente no
             <span className="block text-keepla-red italic">Futuro</span>
           </h1>
