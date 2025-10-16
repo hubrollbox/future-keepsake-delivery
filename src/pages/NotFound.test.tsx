@@ -11,9 +11,9 @@ describe('NotFound Page', () => {
       </BrowserRouter>
     );
     
-    // Check if the page contains the 404 message
+    // Check if the page contains the 404 message and subtitle
     expect(getByText(/404/i)).toBeInTheDocument();
-    expect(getByText(/Oops! Page not found/i)).toBeInTheDocument();
+    expect(getByText(/Página não encontrada/i)).toBeInTheDocument();
     
     // Check if there's a link to go back to home
     const homeLink = getByText(/Return to Home/i);
