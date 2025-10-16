@@ -52,8 +52,9 @@ const STEP_VALIDATION_CONFIG: StepValidationConfig[] = [
   {
     step: 4,
     fields: ['selected_products'],
-    customValidation: async (data) => {
-      return (data.selected_products?.length ?? 0) > 0;
+    customValidation: async () => {
+      // Extras são opcionais; não bloquear progressão neste passo
+      return true;
     }
   },
 ];

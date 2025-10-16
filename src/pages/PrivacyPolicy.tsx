@@ -5,7 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import SeloDoTempoIcon from "@/components/SeloDoTempoIcon";
+// Removido ícone antigo e substituído por novo logo Keepla
 
 const PrivacyPolicy = () => {
   const navigate = useNavigate();
@@ -28,7 +28,16 @@ const PrivacyPolicy = () => {
         </div>
 
         <div className="text-center mb-8">
-          <SeloDoTempoIcon size={60} className="mx-auto mb-4" />
+          <img
+            src="/keepla-logo-black.png?v=3"
+            alt="Keepla"
+            className="mx-auto mb-4 w-20 h-20 object-contain"
+            loading="eager"
+            decoding="async"
+            onError={(e) => {
+              e.currentTarget.src = "/keepla-logo-red.png?v=3";
+            }}
+          />
           <h1 className="text-hero text-steel-blue font-fraunces mb-2">Política de Privacidade</h1>
           <p className="text-misty-gray">Última atualização: 28 de maio de 2025</p>
         </div>

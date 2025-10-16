@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, User, Mail, Gift } from "lucide-react";
 import { KeepsakeFormData } from "@/hooks/useKeepsakeForm";
-import { useToast } from "@/hooks/use-toast";
 import { BASE_PRICE_EUR } from "@/lib/simplePricing";
 
 interface ReviewStepProps {
@@ -21,7 +20,7 @@ const ReviewStep = ({ formData, onBack, onSubmit, loading }: ReviewStepProps) =>
   const getChannelLabel = () => 'Email';
 
   const ChannelIcon = getChannelIcon();
-  const { toast } = useToast();
+  
 
   return (
     <div className="space-y-6">
@@ -150,27 +149,7 @@ const ReviewStep = ({ formData, onBack, onSubmit, loading }: ReviewStepProps) =>
         </Card>
       </div>
 
-      <div className="flex flex-col-reverse gap-4 sm:flex-row sm:justify-between pt-6">
-        <Button variant="outline" onClick={onBack} disabled={loading}>
-          Voltar
-        </Button>
-        <Button 
-          onClick={async () => {
-            try {
-              const maybePromise = onSubmit();
-              if (maybePromise instanceof Promise) {
-                await (maybePromise as Promise<void>);
-              }
-            } catch (error: unknown) {
-              toast({ title: "Erro ao selar", description: error instanceof Error ? error.message : "Tenta novamente.", variant: "destructive" });
-            }
-          }}
-          disabled={loading}
-          className="bg-dusty-rose hover:bg-dusty-rose/90 text-white px-8"
-        >
-          {loading ? "A selar..." : "Selar Cápsula + Pagar"}
-        </Button>
-      </div>
+      {/* Navegação controlada pela barra inferior de CreateKeepsake */}
     </div>
   );
 };

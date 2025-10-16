@@ -42,19 +42,19 @@ const HeroSection = () => {
           </div>
 
           {/* Main headline - Inter Bold */}
-          <h1 className="text-5xl md:text-7xl font-bold text-keepla-black mb-6 leading-tight tracking-tight">
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
             Presente no
             <span className="block text-keepla-red italic">Futuro</span>
           </h1>
 
           {/* Subtitle - Inter Regular */}
-          <p className="text-xl md:text-2xl text-keepla-black/70 mb-8 font-normal max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-gray-100 mb-8 font-normal max-w-2xl mx-auto leading-relaxed">
             Cria cápsulas do tempo que guardam as tuas palavras, emoções e memórias para serem entregues no momento perfeito.
           </p>
 
           {/* Value proposition - Georgia Itálico (emotivo) */}
           <div className="mb-12 text-lg max-w-3xl mx-auto">
-            <p className="italic text-keepla-black/60" style={{ fontFamily: 'Georgia, serif' }}>
+            <p className="italic text-gray-200" style={{ fontFamily: 'Georgia, serif' }}>
               "Uma carta para o futuro é uma ponte entre quem somos hoje e quem seremos amanhã."
             </p>
           </div>
@@ -79,7 +79,7 @@ const HeroSection = () => {
           </div>
 
           {/* Social proof - Minimalista */}
-          <div className="flex flex-wrap justify-center items-center gap-8 text-sm text-keepla-black/60">
+          <div className="flex flex-wrap justify-center items-center gap-8 text-sm text-gray-300">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 bg-keepla-red rounded-full"></span>
               <span>Entregas seguras</span>

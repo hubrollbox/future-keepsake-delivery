@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Monitor, Package } from "lucide-react";
+import { Monitor, Package, CheckCircle2 } from "lucide-react";
 import { FormField, FormItem, FormControl, Form } from "@/components/ui/form";
 import { UseFormReturn } from "react-hook-form";
 import { KeepsakeFormValues } from "@/validations/keepsakeValidationSchema";
@@ -70,15 +70,17 @@ const TypeStep = ({ selectedType, onTypeSelect, onNext, form }: TypeStepProps) =
                           />
                         </FormControl>
                         <Card
-                          className={`cursor-pointer transition-all hover:shadow-soft ${
+                          className={`relative cursor-pointer transition-all hover:shadow-soft hover:scale-[1.01] ${
                             selectedType === type.value
-                              ? 'border-dusty-rose bg-dusty-rose/5'
+                              ? 'border-dusty-rose bg-dusty-rose/5 ring-2 ring-dusty-rose'
                               : 'border-sand-beige hover:border-dusty-rose/50'
                           }`}
                           onClick={() => {
                             field.onChange(type.value);
                             onTypeSelect(type.value);
                           }}
+                          role="radio"
+                          aria-checked={selectedType === type.value}
                         >
                           <CardContent className="p-6">
                             <div className="flex items-start space-x-4">
@@ -100,6 +102,11 @@ const TypeStep = ({ selectedType, onTypeSelect, onNext, form }: TypeStepProps) =
                                 </ul>
                               </div>
                             </div>
+                            {selectedType === type.value && (
+                              <div className="absolute top-3 right-3 text-dusty-rose">
+                                <CheckCircle2 className="h-6 w-6" aria-hidden="true" />
+                              </div>
+                            )}
                           </CardContent>
                         </Card>
                       </FormItem>
@@ -112,18 +119,7 @@ const TypeStep = ({ selectedType, onTypeSelect, onNext, form }: TypeStepProps) =
         />
       </Form>
 
-      <div className="flex justify-center pt-6">
-        <Button 
-          onClick={async () => {
-            const isValid = await form.trigger('type');
-            if (isValid) onNext();
-          }}
-          disabled={!selectedType || form.formState.isSubmitting}
-          className="bg-dusty-rose hover:bg-dusty-rose/90 text-white px-8"
-        >
-          Continuar
-        </Button>
-      </div>
+      {/* Navegação principal controlada pela barra inferior de CreateKeepsake */}
     </div>
   );
 };

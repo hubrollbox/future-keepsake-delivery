@@ -1,104 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://localhost:8080/</loc>
-    <lastmod>2025-10-15</lastmod>
+    <loc>https://keepla.pt/</loc>
+    <lastmod>2025-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>http://localhost:8080/landing</loc>
-    <lastmod>2025-10-15</lastmod>
+    <loc>https://keepla.pt/landing</loc>
+    <lastmod>2025-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://localhost:8080/login</loc>
-    <lastmod>2025-10-15</lastmod>
+    <loc>https://keepla.pt/login</loc>
+    <lastmod>2025-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://localhost:8080/register</loc>
-    <lastmod>2025-10-15</lastmod>
+    <loc>https://keepla.pt/register</loc>
+    <lastmod>2025-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://localhost:8080/dashboard</loc>
-    <lastmod>2025-10-15</lastmod>
+    <loc>https://keepla.pt/dashboard</loc>
+    <lastmod>2025-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://localhost:8080/create-keepsake</loc>
-    <lastmod>2025-10-15</lastmod>
+    <loc>https://keepla.pt/create-keepsake</loc>
+    <lastmod>2025-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://localhost:8080/profile</loc>
-    <lastmod>2025-10-15</lastmod>
+    <loc>https://keepla.pt/profile</loc>
+    <lastmod>2025-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://localhost:8080/about</loc>
-    <lastmod>2025-10-15</lastmod>
+    <loc>https://keepla.pt/about</loc>
+    <lastmod>2025-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://localhost:8080/contact</loc>
-    <lastmod>2025-10-15</lastmod>
+    <loc>https://keepla.pt/contact</loc>
+    <lastmod>2025-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://localhost:8080/how-it-works</loc>
-    <lastmod>2025-10-15</lastmod>
+    <loc>https://keepla.pt/how-it-works</loc>
+    <lastmod>2025-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://localhost:8080/pricing</loc>
-    <lastmod>2025-10-15</lastmod>
+    <loc>https://keepla.pt/pricing</loc>
+    <lastmod>2025-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://localhost:8080/products</loc>
-    <lastmod>2025-10-15</lastmod>
+    <loc>https://keepla.pt/products</loc>
+    <lastmod>2025-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://localhost:8080/faq</loc>
-    <lastmod>2025-10-15</lastmod>
+    <loc>https://keepla.pt/faq</loc>
+    <lastmod>2025-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://localhost:8080/partnerships</loc>
-    <lastmod>2025-10-15</lastmod>
+    <loc>https://keepla.pt/partnerships</loc>
+    <lastmod>2025-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://localhost:8080/checkout</loc>
-    <lastmod>2025-10-15</lastmod>
+    <loc>https://keepla.pt/checkout</loc>
+    <lastmod>2025-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://localhost:8080/terms</loc>
-    <lastmod>2025-10-15</lastmod>
+    <loc>https://keepla.pt/terms</loc>
+    <lastmod>2025-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://localhost:8080/privacy</loc>
-    <lastmod>2025-10-15</lastmod>
+    <loc>https://keepla.pt/privacy</loc>
+    <lastmod>2025-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

@@ -204,6 +204,11 @@
     border-color: theme('colors.earthy-burgundy');
   }
 
+  /* Fundo da cor de marca para elementos ativos do stepper */
+  .bg-brand-primary {
+    background-color: theme('colors.earthy-burgundy');
+  }
+
   .hover-brand:hover {
     background-color: rgba(139, 58, 98, 0.04);
     transition: all 0.2s ease;

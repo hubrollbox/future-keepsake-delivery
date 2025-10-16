@@ -188,18 +188,7 @@ const RecipientStep = ({ formData, updateFormData, nextStep, prevStep, form }: R
         )}
       </div>
 
-      <div className="flex justify-between pt-6">
-        <Button variant="outline" onClick={prevStep}>
-          Voltar
-        </Button>
-        <Button 
-          onClick={handleNext}
-          disabled={form.formState.isSubmitting}
-          className="bg-dusty-rose hover:bg-dusty-rose/90 text-white px-8"
-        >
-          Próximo Passo
-        </Button>
-      </div>
+      {/* Navegação controlada pela barra inferior de CreateKeepsake */}
     </div>
   );
 };
