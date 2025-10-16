@@ -195,7 +195,7 @@ const RegisterForm = () => {
               <>
                 Aceito os{" "}
                 <a
-                  href="/terms-conditions"
+                  href="/terms"
                   target="_blank"
                   className="underline text-dusty-rose hover:text-earthy-burgundy"
                 >

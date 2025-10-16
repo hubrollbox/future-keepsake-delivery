@@ -94,7 +94,7 @@ const Footer = () => {
               <ul className="space-y-3">
                 <li>
                   <button 
-                    onClick={() => {window.scrollTo(0,0); navigate('/terms-conditions')}}
+                    onClick={() => {window.scrollTo(0,0); navigate('/terms')}}
                     className="text-gray-400 hover:text-keepla-red transition-colors duration-200"
                   >
                     Termos e Condições
@@ -102,7 +102,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <button 
-                    onClick={() => {window.scrollTo(0,0); navigate('/privacy-policy')}}
+                    onClick={() => {window.scrollTo(0,0); navigate('/privacy')}}
                     className="text-gray-400 hover:text-keepla-red transition-colors duration-200"
                   >
                     Política de Privacidade
