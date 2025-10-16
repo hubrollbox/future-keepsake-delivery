@@ -32,6 +32,7 @@ export default defineConfig(({ mode }) => ({
     target: 'es2020',
     minify: 'terser',
     sourcemap: false,
+    chunkSizeWarningLimit: 2000,
     rollupOptions: {
       external: [
         // '@supabase/supabase-js'

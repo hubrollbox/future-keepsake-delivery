@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { keepsakeFormSchema, KeepsakeFormValues } from '@/validations/keepsakeValidationSchema';
+import { computeTotalSimple } from '@/lib/simplePricing';
 import { useAuth } from '@/hooks/useAuth';
 
 // ============================================================================
@@ -200,9 +201,17 @@ export const useKeepsakeForm = () => {
 
       const formData = form.getValues();
       
-      // Calcular custo total
-
-
+      // Calcular custo total simples e garantir que está refletido no estado
+      const computedTotal = computeTotalSimple({
+        ...formData,
+        selected_products: formData.selected_products || [],
+        channel_cost: formData.channel_cost || 0,
+        total_cost: formData.total_cost || 0,
+      } as any);
+      // Atualizar total no formulário para manter consistência
+      try {
+        form.setValue('total_cost', computedTotal, { shouldDirty: true, shouldValidate: false });
+      } catch {}
 
       // Inserir dados na base de dados com transação
       const { data: keepsakeData, error: keepsakeError } = await supabase
@@ -214,6 +223,7 @@ export const useKeepsakeForm = () => {
           delivery_date: formData.delivery_date,
           type: formData.type,
           status: 'scheduled',
+          total_cost: computedTotal,
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         })
@@ -228,6 +238,7 @@ export const useKeepsakeForm = () => {
         name: string;
         relationship: string | null;
         delivery_channel: string;
+        channel_cost?: number | null;
         created_at: string;
         updated_at: string;
         email: string;
@@ -237,6 +248,7 @@ export const useKeepsakeForm = () => {
         name: formData.recipient_name,
         relationship: formData.relationship || null,
         delivery_channel: 'email',
+        channel_cost: formData.channel_cost || 0,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
         email: '',

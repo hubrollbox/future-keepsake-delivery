@@ -189,24 +189,24 @@
 
 @layer utilities {
   .bg-brand-gradient {
-    background: linear-gradient(135deg, theme('colors.earthy-burgundy') 0%, rgba(139, 58, 98, 0.8) 100%);
+    background: linear-gradient(135deg, theme('colors.keepla-red') 0%, theme('colors.keepla-red-deep') 100%);
   }
   
   .bg-warm-gradient {
-    background: linear-gradient(135deg, theme('colors.sand-beige') 0%, rgba(236, 229, 218, 0.5) 100%);
+    background: linear-gradient(135deg, theme('colors.keepla-gray') 0%, rgba(236, 229, 218, 0.5) 100%);
   }
   
   .text-brand-primary {
-    color: theme('colors.earthy-burgundy');
+    color: theme('colors.keepla-red');
   }
   
   .border-brand-primary {
-    border-color: theme('colors.earthy-burgundy');
+    border-color: theme('colors.keepla-red');
   }
 
   /* Fundo da cor de marca para elementos ativos do stepper */
   .bg-brand-primary {
-    background-color: theme('colors.earthy-burgundy');
+    background-color: theme('colors.keepla-red');
   }
 
   .hover-brand:hover {
