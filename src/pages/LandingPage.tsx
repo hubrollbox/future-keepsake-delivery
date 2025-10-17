@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import Navigation from '@/components/Navigation';
+import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 
 const LandingPage: React.FC = () => {
@@ -61,184 +65,121 @@ const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black">
-        {/* Background Image Overlay */}
-        <div className="absolute inset-0 bg-black/60 z-10"></div>
-        
-        {/* Background Image */}
-        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
-             style={{
-               backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23000000;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23333333;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='800' fill='url(%23bg)'/%3E%3Cg opacity='0.1'%3E%3Ccircle cx='300' cy='200' r='100' fill='%23ffffff'/%3E%3Ccircle cx='900' cy='600' r='150' fill='%23ffffff'/%3E%3Cpath d='M400,400 Q600,200 800,400 T1200,400' stroke='%23ffffff' stroke-width='2' fill='none'/%3E%3C/g%3E%3C/svg%3E")`
-             }}>
-        </div>
+    <div className="min-h-screen bg-lavender-mist">
+      <Navigation />
 
-        {/* Content */}
-        <div className="relative z-20 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-          {/* Logo */}
-          <div className="mb-8">
-            <div className="inline-flex items-center space-x-3">
-              <div className="text-4xl sm:text-5xl font-bold text-white font-inter">
-                Keepla
-                <span className="inline-block w-3 h-3 sm:w-4 sm:h-4 bg-[#E63946] rounded-full ml-1 mb-2"></span>
-                <span className="text-lg sm:text-xl font-normal">pt</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Headline */}
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 font-georgia leading-tight">
-            E se pudesses enviar uma memória...
-            <br />
-            <span className="text-[#E63946]">para o futuro?</span>
-          </h1>
-
-          {/* Subheadline */}
-          <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto font-inter leading-relaxed">
-            Keepla.pt é a cápsula do tempo digital e emocional. 
-            <br className="hidden sm:block" />
-            Estamos a abrir inscrições limitadas para clientes piloto.
-          </p>
-
-          {/* CTA Button */}
-          <Button 
-            onClick={scrollToForm}
-            className="bg-[#C6282E] hover:bg-[#A01E24] text-white font-semibold py-4 px-8 text-lg rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
-          >
-            Quero ser cliente piloto
-          </Button>
-        </div>
-      </section>
-
-      {/* Explanation Section */}
-      <section className="py-16 sm:py-24 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="mb-12">
-            <p className="text-xl sm:text-2xl md:text-3xl text-gray-800 font-georgia leading-relaxed mb-8">
-              Alguns momentos merecem chegar na altura certa.
-              <br />
-              Com a Keepla podes guardar mensagens, memórias e recordações — e recebê-las no futuro.
-            </p>
-          </div>
-
-          {/* Icons */}
-          <div className="flex flex-col sm:flex-row justify-center items-center space-y-8 sm:space-y-0 sm:space-x-16">
-            <div className="flex flex-col items-center">
-              <div className="text-6xl mb-4">📩</div>
-              <p className="text-gray-600 font-inter font-medium">Mensagem</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="text-6xl mb-4">⏳</div>
-              <p className="text-gray-600 font-inter font-medium">Tempo</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="text-6xl mb-4">❤️</div>
-              <p className="text-gray-600 font-inter font-medium">Emoção</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section Before Form */}
-      <section className="py-12 bg-gray-50">
-        <div className="max-w-2xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <Button 
-            onClick={scrollToForm}
-            className="bg-[#C6282E] hover:bg-[#A01E24] text-white font-semibold py-4 px-8 text-lg rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
-          >
-            Quero ser cliente piloto
-          </Button>
-        </div>
-      </section>
-
-      {/* Signup Form Section */}
-      <section id="signup-form" className="py-16 sm:py-24 bg-white">
-        <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4 font-inter">
-              Inscreve-te agora
-            </h2>
-            <p className="text-gray-600 font-inter">
-              Inscrição gratuita. Serás dos primeiros a experimentar.
-            </p>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2 font-inter">
-                Nome *
-              </label>
-              <Input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C6282E] focus:border-transparent"
-                placeholder="O teu nome completo"
+      {/* Hero Section com identidade Keepla */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-black/30 via-black/20 to-black/25">
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <div className="max-w-4xl mx-auto">
+            {/* Logo Keepla */}
+            <div className="mb-8 mt-16">
+              <img 
+                src="/keepla-logo-white.png?v=3" 
+                alt="Keepla" 
+                className="mx-auto w-28 h-28 object-contain"
+                loading="eager"
+                decoding="async"
+                onError={(e) => { e.currentTarget.src = '/keepla-logo-white.png'; }}
               />
             </div>
 
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2 font-inter">
-                Email *
-              </label>
-              <Input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#C6282E] focus:border-transparent"
-                placeholder="o.teu.email@exemplo.com"
-              />
-            </div>
+            {/* Headline alinhada com marca */}
+            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
+              E se pudesses enviar uma memória...
+              <span className="block text-keepla-red italic">para o futuro?</span>
+            </h1>
 
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              className="w-full bg-[#C6282E] hover:bg-[#A01E24] text-white font-semibold py-4 px-6 text-lg rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            {/* Subheadline */}
+            <p className="text-xl md:text-2xl text-gray-200 mb-8 font-normal max-w-2xl mx-auto leading-relaxed">
+              Estamos a abrir inscrições limitadas para clientes piloto.
+            </p>
+
+            {/* CTA principal */}
+            <Button 
+              variant="brand"
+              size="lg"
+              onClick={scrollToForm}
+              className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-lg font-semibold"
             >
-              {isSubmitting ? 'A processar...' : 'Inscreve-me'}
+              Quero ser cliente piloto
             </Button>
-          </form>
+          </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-black text-white py-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            {/* Logo */}
-            <div className="mb-6">
-              <div className="inline-flex items-center space-x-2">
-                <span className="text-2xl font-bold text-gray-400 font-inter">
-                  Keepla.pt
-                </span>
-              </div>
+      {/* Explicação curta com identidade visual */}
+      <section className="py-16 md:py-24 bg-white/80 backdrop-blur-sm">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <p className="text-xl md:text-2xl text-misty-gray font-fraunces leading-relaxed mb-8">
+            Alguns momentos merecem chegar na altura certa. Guarda mensagens e memórias — e recebe-as no futuro.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center items-center space-y-8 sm:space-y-0 sm:space-x-16">
+            <div className="emotion-card p-6">
+              <p className="text-steel-blue font-fraunces font-semibold">Mensagem</p>
             </div>
-
-            {/* Contact */}
-            <div className="mb-6">
-              <p className="text-gray-400 font-inter">
-                <a href="mailto:info@keepla.pt" className="hover:text-white transition-colors">
-                  info@keepla.pt
-                </a>
-              </p>
+            <div className="emotion-card p-6">
+              <p className="text-steel-blue font-fraunces font-semibold">Tempo</p>
             </div>
-
-            {/* Legal Notice */}
-            <div className="border-t border-gray-800 pt-6">
-              <p className="text-sm text-gray-500 font-inter">
-                © Keepla.pt 2025 – Todos os direitos reservados.
-              </p>
+            <div className="emotion-card p-6">
+              <p className="text-steel-blue font-fraunces font-semibold">Emoção</p>
             </div>
           </div>
         </div>
-      </footer>
+      </section>
+
+      {/* Formulário de inscrição dentro de Card */}
+      <section id="signup-form" className="py-16 md:py-24 bg-white">
+        <div className="max-w-md mx-auto px-4">
+          <Card className="emotion-card">
+            <CardHeader>
+              <CardTitle className="text-steel-blue font-fraunces">Inscreve-te agora</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <Label htmlFor="name" className="text-gentle-black font-medium">Nome *</Label>
+                  <Input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    className="mt-2 rounded-xl border-gray-200"
+                    placeholder="O teu nome completo"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="email" className="text-gentle-black font-medium">Email *</Label>
+                  <Input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                    className="mt-2 rounded-xl border-gray-200"
+                    placeholder="o.teu.email@exemplo.com"
+                  />
+                </div>
+
+                <Button
+                  type="submit"
+                  variant="brand"
+                  disabled={isSubmitting}
+                  className="w-full text-lg py-4 rounded-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? 'A processar...' : 'Inscreve-me'}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      <Footer />
     </div>
   );
 };

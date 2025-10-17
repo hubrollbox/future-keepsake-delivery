@@ -15,7 +15,7 @@ import { generatePaymentLink } from "@/lib/paymentLink";
 import { calculatePricing, validatePricingConfiguration } from "@/lib/adminPricingData";
 
 const Checkout = () => {
-  const { items, getTotalPrice, clearCart } = useCart();
+  const { items, getTotalPrice, clearCart, loading: cartLoading } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -42,6 +42,17 @@ const Checkout = () => {
         description: "Precisa estar autenticado para finalizar a compra.",
         variant: "destructive",
       });
+      return;
+    }
+
+    // Bloquear submissão se o carrinho estiver vazio
+    if (items.length === 0) {
+      toast({
+        title: "Carrinho vazio",
+        description: "Adicione produtos ao carrinho antes de confirmar o pedido.",
+        variant: "destructive",
+      });
+      navigate("/products");
       return;
     }
 
@@ -156,8 +167,28 @@ const Checkout = () => {
       setLoading(false);
     }
   };
+  // Mostrar estado de carregamento do carrinho
+  if (cartLoading) {
+    return (
+      <div className="min-h-screen bg-warm-gradient">
+        <Navigation />
+        <div className="container mx-auto px-4 py-16">
+          <Card className="max-w-md mx-auto emotion-card">
+            <CardContent className="p-8 text-center">
+              <div className="animate-pulse">
+                <div className="h-6 bg-gray-200 rounded w-3/4 mx-auto mb-4" />
+                <div className="h-4 bg-gray-200 rounded w-1/2 mx-auto" />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
-  if (items.length === 0) {
+  // Exibir mensagem quando carrinho estiver vazio (após carregar)
+  if (!cartLoading && items.length === 0) {
     return (
       <div className="min-h-screen bg-warm-gradient">
         <Navigation />
