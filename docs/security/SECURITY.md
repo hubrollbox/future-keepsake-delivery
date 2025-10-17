@@ -139,6 +139,11 @@ Regularly test the application for security vulnerabilities using:
 3. **Penetration Testing**: Conduct regular penetration tests
 4. **Security Reviews**: Perform code reviews with a security focus
 
+## Incidentes, RCA e Prevenção
+
+- Consulte a análise de causa raiz e medidas preventivas aplicadas ao fluxo de criação de cápsulas e proteção de destinatários:
+  - `docs/security/rca-keepsake-auth-recipient-rls.md`
+
 ## Reporting Security Issues
 
 If you discover a security vulnerability, please report it responsibly by contacting the security team at security@futurepresente.example.com. Do not disclose security vulnerabilities publicly until they have been addressed by the team.
