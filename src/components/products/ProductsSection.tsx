@@ -62,18 +62,12 @@ const ProductsSection = () => {
       poetry: "Um cofre único para o teu gesto mais precioso"
     },
     {
-      name: "Cápsula Premium",
-      price: "desde 25 €",
-      icon: "lock",
-      description: "Com fechadura, maior capacidade e documentação",
-      poetry: "Segurança e beleza para os momentos mais importantes"
-    },
-    {
       name: "Cápsula Coletiva",
       price: "desde 49 €",
       icon: "users",
       description: "Para grupos, com evento de abertura",
-      poetry: "Memórias partilhadas, momentos inesquecíveis"
+      poetry: "Memórias partilhadas, momentos inesquecíveis",
+      popular: true
     }
   ];
 
@@ -107,6 +101,7 @@ const ProductsSection = () => {
   icon: string;
   description: string;
   poetry: string;
+  popular?: boolean;
 }
 
 const ProductCard = ({ product, category }: { product: Product, category: string }) => {
@@ -133,6 +128,9 @@ const ProductCard = ({ product, category }: { product: Product, category: string
               <div className="font-semibold text-steel-blue">
                 {product.price}
               </div>
+              {product.popular && (
+                <Badge className="mt-2 bg-earthy-burgundy text-white">Popular</Badge>
+              )}
             </div>
           </div>
         </CardHeader>
@@ -165,7 +163,7 @@ const ProductCard = ({ product, category }: { product: Product, category: string
           <h2 className="text-2xl font-serif text-steel-blue mb-6 text-center">
             Produtos Digitais
           </h2>
-          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
             {digitalProducts.map((product, index) => (
               <ProductCard key={index} product={product} category="Digital" />
             ))}
@@ -177,7 +175,7 @@ const ProductCard = ({ product, category }: { product: Product, category: string
           <h2 className="text-2xl font-serif text-steel-blue mb-6 text-center">
             Produtos Físicos
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {physicalProducts.map((product, index) => (
               <ProductCard key={index} product={product} category="Físico" />
             ))}
