@@ -67,6 +67,17 @@ const AdminBlog = () => {
     setForm({ ...post });
     setIsDialogOpen(true);
   };
+  // Auto-generate slug from title if slug is empty or matches previous auto-slug
+  const slugify = (text: string) => {
+    return text
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/\p{Diacritic}+/gu, "")
+      .replace(/[^a-z0-9\s-]/g, "")
+      .trim()
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-");
+  };
 
   const savePost = async () => {
     try {
@@ -76,18 +87,18 @@ const AdminBlog = () => {
         return;
       }
 
+      const normalizedSlug = (form.slug || "").trim().toLowerCase();
+      const finalSlug = normalizedSlug || slugify(form.title || "");
+
       const payload: any = {
         ...form,
-        // Normalize slug to lowercase to satisfy DB constraint
-        slug: (form.slug || "").trim().toLowerCase(),
-        // Sanitize HTML content and excerpt before saving
+        slug: finalSlug,
         content: sanitizeHtml(form.content || ""),
         excerpt: sanitizeInput(form.excerpt || ""),
         tags: form.tags || [],
         updated_at: new Date().toISOString(),
       };
 
-      // Ensure author_id is set for RLS author policies; admins also allowed
       if (!payload.author_id) {
         payload.author_id = user.id;
       }
@@ -140,6 +151,12 @@ const AdminBlog = () => {
       toast({ title: "Erro", description: "Não foi possível alterar o estado do artigo.", variant: "destructive" });
     }
   };
+
+  // Open creation dialog when query param new=1 is present
+  const params = new URLSearchParams(window.location.search);
+  if (params.get("new") === "1") {
+    openNewDialog();
+  }
 
   return (
     <div className="space-y-6">
@@ -206,7 +223,15 @@ const AdminBlog = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
             <div>
               <Label>Título</Label>
-              <Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
+              <Input value={form.title} onChange={(e) => {
+                const newTitle = e.target.value;
+                const autoSlug = slugify(newTitle);
+                setForm({
+                  ...form,
+                  title: newTitle,
+                  slug: form.slug ? form.slug : autoSlug,
+                });
+              }} />
             </div>
             <div>
               <Label>Slug</Label>
@@ -227,6 +252,13 @@ const AdminBlog = () => {
             <div>
               <Label>Tags (vírgulas)</Label>
               <Input value={(form.tags || []).join(',')} onChange={(e) => setForm({ ...form, tags: e.target.value.split(',').map(t => t.trim()).filter(Boolean) })} />
+            </div>
+            <div>
+              <Label>Estado</Label>
+              <select value={form.status} onChange={(e) => setForm({ ...form, status: (e.target.value as 'draft' | 'published') })} className="w-full border rounded px-3 py-2">
+                <option value="draft">Rascunho</option>
+                <option value="published">Publicado</option>
+              </select>
             </div>
           </div>
 

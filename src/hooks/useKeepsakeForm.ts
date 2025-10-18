@@ -20,6 +20,7 @@ export interface KeepsakeFormState {
   hasUnsavedChanges: boolean;
   validationErrors: Record<string, string[]>;
   stepValidation: Record<number, boolean>;
+  submissionError?: string;
 }
 
 export interface StepValidationConfig {
@@ -220,7 +221,7 @@ export const useKeepsakeForm = () => {
           user_id: user.id,
           title: formData.title,
           message_content: formData.message,
-          delivery_date: formData.delivery_date,
+          delivery_date: new Date(formData.delivery_date).toISOString(),
           type: formData.type,
           status: 'scheduled',
           total_cost: computedTotal,
@@ -290,16 +291,29 @@ export const useKeepsakeForm = () => {
       setFormState(prev => ({ 
         ...prev, 
         currentStep: 6,
-        hasUnsavedChanges: false 
+        hasUnsavedChanges: false,
+        submissionError: undefined,
       }));
       
       return true;
 
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Erro ao criar cápsula:', error);
+      const message = error instanceof Error
+        ? error.message
+        : (typeof error === 'object' && error && 'message' in (error as any)
+          ? String((error as any).message)
+          : 'Ocorreu um erro inesperado. Tente novamente.');
+
+      // Tentar identificar erros comuns para melhorar mensagem
+      const hint = (typeof error === 'object' && error && 'hint' in (error as any)) ? String((error as any).hint) : undefined;
+      const details = (typeof error === 'object' && error && 'details' in (error as any)) ? String((error as any).details) : undefined;
+      const fullDescription = [message, hint, details].filter(Boolean).join(' \u2022 ');
+
+      setFormState(prev => ({ ...prev, submissionError: fullDescription }));
       toast({
         title: 'Erro ao criar cápsula',
-        description: 'Ocorreu um erro inesperado. Tente novamente.',
+        description: fullDescription,
         variant: 'destructive',
       });
       return false;
@@ -341,6 +355,7 @@ export const useKeepsakeForm = () => {
     hasUnsavedChanges: formState.hasUnsavedChanges,
     validationErrors: formState.validationErrors,
     stepValidation: formState.stepValidation,
+    submissionError: formState.submissionError,
     nextStep,
     prevStep,
     goToStep,

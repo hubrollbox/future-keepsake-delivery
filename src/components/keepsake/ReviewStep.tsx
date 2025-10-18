@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, User, Mail, Gift } from "lucide-react";
 import { KeepsakeFormData } from "@/hooks/useKeepsakeForm";
-import { BASE_PRICE_EUR, computeTotalSimple } from "@/lib/simplePricing";
+import { computeTotalSimple, getBasePriceEur } from "@/lib/simplePricing";
 
 interface ReviewStepProps {
   formData: KeepsakeFormData;
@@ -23,6 +23,11 @@ const ReviewStep = ({ formData }: ReviewStepProps) => {
   const safeProducts = Array.isArray(formData.selected_products) ? formData.selected_products : [];
   const safeChannelCost = typeof formData.channel_cost === 'number' ? formData.channel_cost : Number(formData.channel_cost) || 0;
   const displayedTotal = computeTotalSimple({
+    ...formData,
+    selected_products: safeProducts,
+    channel_cost: safeChannelCost,
+  } as any);
+  const basePrice = getBasePriceEur({
     ...formData,
     selected_products: safeProducts,
     channel_cost: safeChannelCost,
@@ -134,7 +139,7 @@ const ReviewStep = ({ formData }: ReviewStepProps) => {
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span>Mensagem digital (preço base):</span>
-                <span>{BASE_PRICE_EUR.toFixed(2)} €</span>
+                <span>{basePrice === 0 ? 'Grátis' : `${basePrice.toFixed(2)} €`}</span>
               </div>
               <div className="flex justify-between">
                 <span>Canal de entrega ({getChannelLabel()}):</span>

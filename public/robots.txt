@@ -14,4 +14,4 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: http://localhost:5174/sitemap.xml
+Sitemap: https://keepla.pt/sitemap.xml

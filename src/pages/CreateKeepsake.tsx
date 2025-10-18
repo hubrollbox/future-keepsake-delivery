@@ -193,6 +193,14 @@ function CreateKeepsake() {
             <Form {...form}>
               <form onSubmit={form.handleSubmit(submitKeepsake)} className="space-y-6">
                 {renderStepContent()}
+
+                {/* Inline error feedback on Review step */}
+                {currentStep === 5 && formState.submissionError && (
+                  <div className="rounded-md border border-red-300 bg-red-50 text-red-700 p-3">
+                    <p className="font-medium">Erro ao criar cápsula</p>
+                    <p className="text-sm mt-1">{formState.submissionError}</p>
+                  </div>
+                )}
                 
                 {/* Navigation Buttons */}
                 {currentStep < 6 && (

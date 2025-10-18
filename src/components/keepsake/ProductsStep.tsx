@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { Star, Package, Gift, Lock, Users, Video, ShoppingCart, Truck } from "lucide-react";
 import { KeepsakeFormData } from "@/hooks/useKeepsakeForm";
-import { BASE_PRICE_EUR, computeExtrasTotal, computeTotalSimple } from "@/lib/simplePricing";
+import { computeExtrasTotal, computeTotalSimple } from "@/lib/simplePricing";
 import { UseFormReturn } from "react-hook-form";
 import { KeepsakeFormValues } from "@/validations/keepsakeValidationSchema";
 
@@ -111,7 +111,7 @@ const ProductsStep = ({ formData, updateFormData }: ProductsStepProps) => {
           Queres adicionar um presente especial?
         </h2>
         <p className="text-misty-gray">
-          Os extras são opcionais. A mensagem digital tem preço base de {BASE_PRICE_EUR.toFixed(2)} €.
+          A mensagem digital é gratuita sem extras. Os extras são opcionais.
         </p>
       </div>
 
