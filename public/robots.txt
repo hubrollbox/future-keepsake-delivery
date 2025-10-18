@@ -14,4 +14,4 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: http://localhost:8080/sitemap.xml
+Sitemap: http://localhost:5174/sitemap.xml

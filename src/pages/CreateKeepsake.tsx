@@ -189,72 +189,74 @@ function CreateKeepsake() {
 
         {/* Form Content */}
         <Card className="max-w-4xl mx-auto shadow-xl border-0 bg-white/80 backdrop-blur-sm">
-          <CardContent className="p-8">
+          <CardContent className="p-8 pb-24 sm:pb-8">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(submitKeepsake)} className="space-y-6">
                 {renderStepContent()}
                 
                 {/* Navigation Buttons */}
                 {currentStep < 6 && (
-                  <div className="flex justify-between items-center pt-6 border-t border-gray-200">
-                    <div className="flex items-center space-x-4">
-                      {currentStep > 1 && (
+                  <div className="fixed bottom-0 left-0 right-0 z-30 bg-white/95 backdrop-blur-md px-4 py-3 shadow-lg sm:static sm:bg-transparent sm:shadow-none sm:px-0 sm:py-0 sm:border-t sm:border-gray-200">
+                    <div className="max-w-4xl mx-auto flex justify-between items-center">
+                      <div className="flex items-center space-x-4">
+                        {currentStep > 1 && (
+                          <Button
+                            type="button"
+                            variant="outline"
+                            onClick={prevStep}
+                            disabled={isSubmitting}
+                            className="border-keepla-red text-keepla-red hover:bg-keepla-red/10 hover:text-keepla-red focus-visible:ring-2 focus-visible:ring-keepla-red/40"
+                          >
+                            Anterior
+                          </Button>
+                        )}
+
                         <Button
                           type="button"
                           variant="outline"
-                          onClick={prevStep}
+                          onClick={() => navigate('/dashboard')}
                           disabled={isSubmitting}
-                          className="border-keepla-red text-keepla-red hover:bg-keepla-red/10 hover:text-keepla-red focus-visible:ring-2 focus-visible:ring-keepla-red/40"
+                          className="border-gray-300 text-gray-600 hover:bg-gray-100"
                         >
-                          Anterior
+                          <Home className="w-4 h-4 mr-2" />
+                          Dashboard
                         </Button>
-                      )}
-                      
-                      <Button
-                        type="button"
-                        variant="outline"
-                        onClick={() => navigate('/dashboard')}
-                        disabled={isSubmitting}
-                        className="border-gray-300 text-gray-600 hover:bg-gray-100"
-                      >
-                        <Home className="w-4 h-4 mr-2" />
-                        Dashboard
-                      </Button>
-                    </div>
+                      </div>
 
-                    <div className="flex items-center space-x-4">
-                      {hasUnsavedChanges && (
-                        <div className="flex items-center text-amber-600 text-sm">
-                          <Save className="w-4 h-4 mr-1" />
-                          Alterações não guardadas
-                        </div>
-                      )}
-                      
-                      <Button
-                        type={currentStep === 5 ? "submit" : "button"}
-                        onClick={currentStep === 5 ? undefined : nextStep}
-                        disabled={isSubmitting || isValidating}
-                        className="bg-keepla-red hover:bg-keepla-red-deep text-white px-8"
-                      >
-                        {isSubmitting ? (
-                          <>
-                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                            A criar...
-                          </>
-                        ) : isValidating ? (
-                          <>
-                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                            A validar...
-                          </>
-                        ) : currentStep === 5 ? (
-                          'Criar Cápsula'
-                        ) : (
-                          'Próximo'
+                      <div className="flex items-center space-x-4">
+                        {hasUnsavedChanges && (
+                          <div className="flex items-center text-amber-600 text-sm">
+                            <Save className="w-4 h-4 mr-1" />
+                            Alterações não guardadas
+                          </div>
                         )}
-                        {currentStep < 5 && !isSubmitting && !isValidating && (
-                          <Zap className="w-4 h-4 ml-2" />
-                        )}
-                      </Button>
+
+                        <Button
+                          type={currentStep === 5 ? "submit" : "button"}
+                          onClick={currentStep === 5 ? undefined : nextStep}
+                          disabled={isSubmitting || isValidating}
+                          className="bg-keepla-red hover:bg-keepla-red-deep text-white px-8"
+                        >
+                          {isSubmitting ? (
+                            <>
+                              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                              A criar...
+                            </>
+                          ) : isValidating ? (
+                            <>
+                              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                              A validar...
+                            </>
+                          ) : currentStep === 5 ? (
+                            'Criar Cápsula'
+                          ) : (
+                            'Próximo'
+                          )}
+                          {currentStep < 5 && !isSubmitting && !isValidating && (
+                            <Zap className="w-4 h-4 ml-2" />
+                          )}
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 )}

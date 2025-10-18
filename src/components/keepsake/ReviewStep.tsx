@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, User, Mail, Gift } from "lucide-react";
 import { KeepsakeFormData } from "@/hooks/useKeepsakeForm";
-import { BASE_PRICE_EUR } from "@/lib/simplePricing";
+import { BASE_PRICE_EUR, computeTotalSimple } from "@/lib/simplePricing";
 
 interface ReviewStepProps {
   formData: KeepsakeFormData;
@@ -20,6 +20,13 @@ const ReviewStep = ({ formData }: ReviewStepProps) => {
 
   const ChannelIcon = getChannelIcon();
   
+  const safeProducts = Array.isArray(formData.selected_products) ? formData.selected_products : [];
+  const safeChannelCost = typeof formData.channel_cost === 'number' ? formData.channel_cost : Number(formData.channel_cost) || 0;
+  const displayedTotal = computeTotalSimple({
+    ...formData,
+    selected_products: safeProducts,
+    channel_cost: safeChannelCost,
+  } as any);
 
   return (
     <div className="space-y-6">
@@ -97,7 +104,7 @@ const ReviewStep = ({ formData }: ReviewStepProps) => {
         </Card>
 
         {/* Produtos Selecionados */}
-        {formData.selected_products.length > 0 && (
+        {safeProducts.length > 0 && (
           <Card>
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2">
@@ -107,10 +114,10 @@ const ReviewStep = ({ formData }: ReviewStepProps) => {
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                {formData.selected_products.map((product) => (
+                {safeProducts.map((product) => (
                   <div key={product.id} className="flex justify-between items-center">
                     <span className="text-steel-blue">{product.name}</span>
-                    <Badge variant="outline">{product.price.toFixed(2)} €</Badge>
+                    <Badge variant="outline">{Number(product.price).toFixed(2)} €</Badge>
                   </div>
                 ))}
               </div>
@@ -131,17 +138,17 @@ const ReviewStep = ({ formData }: ReviewStepProps) => {
               </div>
               <div className="flex justify-between">
                 <span>Canal de entrega ({getChannelLabel()}):</span>
-                <span>{formData.channel_cost === 0 ? 'Grátis' : `${formData.channel_cost.toFixed(2)} €`}</span>
+                <span>{safeChannelCost === 0 ? 'Grátis' : `${safeChannelCost.toFixed(2)} €`}</span>
               </div>
-              {formData.selected_products.map((product) => (
+              {safeProducts.map((product) => (
                 <div key={product.id} className="flex justify-between">
                   <span>{product.name}:</span>
-                  <span>{product.price.toFixed(2)} €</span>
+                  <span>{Number(product.price).toFixed(2)} €</span>
                 </div>
               ))}
               <div className="border-t border-dusty-rose/20 pt-2 mt-2 flex justify-between font-semibold text-lg">
                 <span>Total:</span>
-                <span className="text-keepla-red">{formData.total_cost.toFixed(2)} €</span>
+                <span className="text-keepla-red">{Number(displayedTotal).toFixed(2)} €</span>
               </div>
             </div>
           </CardContent>
