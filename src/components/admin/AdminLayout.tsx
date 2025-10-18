@@ -17,7 +17,7 @@ import {
   Menu,
   X
 } from "lucide-react";
-import SeloDoTempoIcon from "@/components/SeloDoTempoIcon";
+import { useAuth } from "@/hooks/useAuth";
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -27,6 +27,7 @@ interface AdminLayoutProps {
 const AdminLayout = ({ children, activeSection }: AdminLayoutProps) => {
   const navigate = useNavigate();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const { signOut } = useAuth();
 
   const menuItems = [
     { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, path: "/admin" },
@@ -35,6 +36,7 @@ const AdminLayout = ({ children, activeSection }: AdminLayoutProps) => {
     { id: "products", label: "Produtos", icon: ShoppingCart, path: "/admin/products" },
     { id: "plans", label: "Planos", icon: Crown, path: "/admin/plans" },
     { id: "content", label: "Conteúdo", icon: FileText, path: "/admin/content" },
+    { id: "blog", label: "Blog", icon: FileText, path: "/admin/blog" },
     { id: "messages", label: "Mensagens", icon: MessageSquare, path: "/admin/messages" },
     { id: "payments", label: "Pagamentos", icon: CreditCard, path: "/admin/payments" },
     { id: "warehouse", label: "Armazém", icon: Warehouse, path: "/admin/warehouse" },
@@ -48,7 +50,8 @@ const AdminLayout = ({ children, activeSection }: AdminLayoutProps) => {
           <div className="p-6 border-b border-dusty-rose/20">
             <div className="flex items-center justify-between">
               <div className={`flex items-center space-x-3 ${isCollapsed ? 'justify-center' : ''}`}>
-                <SeloDoTempoIcon className="w-8 h-8" />
+                {/* Replace old icon with updated brand logo */}
+                <img src="/keepla-logo-red.png" alt="keepla" className="w-8 h-8" />
                 {!isCollapsed && (
                   <div>
                     <h2 className="font-fraunces font-semibold text-steel-blue">keepla</h2>
@@ -102,6 +105,7 @@ const AdminLayout = ({ children, activeSection }: AdminLayoutProps) => {
             </Button>
             <Button
               variant="ghost"
+              onClick={() => signOut().then(() => navigate('/'))}
               className={`w-full ${isCollapsed ? 'justify-center px-2' : 'justify-start'} text-steel-blue hover:text-earthy-burgundy hover:bg-sand-beige/50`}
               title={isCollapsed ? "Sair" : undefined}
             >

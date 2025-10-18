@@ -29,7 +29,8 @@ import NotFound from "@/pages/NotFound";
 import TermsConditions from "@/pages/TermsConditions";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import LandingPage from "@/pages/LandingPage";
-
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 
 
 const queryClient = new QueryClient();
@@ -50,6 +51,9 @@ function App() {
                 <Sonner />
                 <Routes>
                   <Route path="/" element={<Index />} />
+                  {/* Blog público */}
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/:slug" element={<BlogPost />} />
                   <Route path="/landing" element={<LandingPage />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />

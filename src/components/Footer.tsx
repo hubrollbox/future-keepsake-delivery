@@ -35,55 +35,22 @@ const Footer = () => {
 
             {/* Navigation Links */}
             <div>
-              <h4 className="font-inter font-bold text-lg mb-4 text-white">Navegação</h4>
-              <ul className="space-y-3">
+              <h3 className="text-white font-semibold mb-2">Navegação</h3>
+              <ul className="space-y-1 text-sm">
                 <li>
-                  <button 
-                    onClick={() => {window.scrollTo(0,0); navigate('/')}}
-                    className="text-gray-400 hover:text-keepla-red transition-colors duration-200"
-                  >
-                    Início
-                  </button>
+                  <a href="/" className="hover:underline">Início</a>
                 </li>
                 <li>
-                  <button 
-                    onClick={() => {window.scrollTo(0,0); navigate('/about')}}
-                    className="text-gray-400 hover:text-keepla-red transition-colors duration-200"
-                  >
-                    Sobre Nós
-                  </button>
+                  <a href="/products" className="hover:underline">Produtos</a>
                 </li>
                 <li>
-                  <button 
-                    onClick={() => {window.scrollTo(0,0); navigate('/products')}}
-                    className="text-gray-400 hover:text-keepla-red transition-colors duration-200"
-                  >
-                    Produtos
-                  </button>
+                  <a href="/pricing" className="hover:underline">Preços</a>
                 </li>
                 <li>
-                  <button 
-                    onClick={() => {window.scrollTo(0,0); navigate('/how-it-works')}}
-                    className="text-gray-400 hover:text-keepla-red transition-colors duration-200"
-                  >
-                    Como Funciona
-                  </button>
+                  <a href="/how-it-works" className="hover:underline">Como Funciona</a>
                 </li>
                 <li>
-                  <button 
-                    onClick={() => {window.scrollTo(0,0); navigate('/contact')}}
-                    className="text-gray-400 hover:text-keepla-red transition-colors duration-200"
-                  >
-                    Contacto
-                  </button>
-                </li>
-                <li>
-                  <button 
-                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                    className="text-gray-400 hover:text-keepla-red transition-colors duration-200"
-                  >
-                    Voltar ao Topo
-                  </button>
+                  <a href="/blog" className="hover:underline">Blog</a>
                 </li>
               </ul>
             </div>

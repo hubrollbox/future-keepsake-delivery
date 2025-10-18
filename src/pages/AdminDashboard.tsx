@@ -1,6 +1,6 @@
 
 import { lazy, Suspense } from 'react';
-import { Navigate, Routes, Route } from "react-router-dom";
+import { Navigate, Routes, Route, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { Loader2 } from "lucide-react";
@@ -14,9 +14,13 @@ const AdminClients = lazy(() => import("@/components/admin/AdminClients"));
 const AdminProducts = lazy(() => import("@/components/admin/AdminProducts"));
 const AdminPlans = lazy(() => import("@/components/admin/AdminPlans"));
 const AdminContent = lazy(() => import("@/components/admin/AdminContent"));
+const AdminBlog = lazy(() => import("@/components/admin/AdminBlog"));
 
 const AdminDashboardPage = () => {
   const { user, isAdmin, loading } = useAuth();
+  const location = useLocation();
+  const path = location.pathname.replace(/^\/admin\/?/, "");
+  const activeSection = path === "" ? "dashboard" : path;
 
   if (loading) {
     return (
@@ -46,7 +50,7 @@ const AdminDashboardPage = () => {
   }
 
   return (
-    <AdminLayout activeSection="dashboard">
+    <AdminLayout activeSection={activeSection}>
       <Suspense fallback={<div>Carregando...</div>}>
         <Routes>
           <Route index element={<AdminDashboard />} />
@@ -55,6 +59,7 @@ const AdminDashboardPage = () => {
           <Route path="products" element={<AdminProducts />} />
           <Route path="plans" element={<AdminPlans />} />
           <Route path="content" element={<AdminContent />} />
+          <Route path="blog" element={<AdminBlog />} />
           <Route path="messages" element={<AdminMessages />} />
           <Route path="payments" element={<AdminPayments />} />
           <Route path="clients" element={<AdminClients />} />
