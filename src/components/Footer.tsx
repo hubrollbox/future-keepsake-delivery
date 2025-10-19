@@ -38,19 +38,19 @@ const Footer = () => {
               <h3 className="text-white font-semibold mb-2">Navegação</h3>
               <ul className="space-y-1 text-sm">
                 <li>
-                  <a href="/" className="hover:underline">Início</a>
+                  <a href="/" className="text-gray-300 hover:text-keepla-red transition-colors underline-offset-4 hover:underline">Início</a>
                 </li>
                 <li>
-                  <a href="/products" className="hover:underline">Produtos</a>
+                  <a href="/products" className="text-gray-300 hover:text-keepla-red transition-colors underline-offset-4 hover:underline">Produtos</a>
                 </li>
                 <li>
-                  <a href="/pricing" className="hover:underline">Preços</a>
+                  <a href="/pricing" className="text-gray-300 hover:text-keepla-red transition-colors underline-offset-4 hover:underline">Preços</a>
                 </li>
                 <li>
-                  <a href="/how-it-works" className="hover:underline">Como Funciona</a>
+                  <a href="/how-it-works" className="text-gray-300 hover:text-keepla-red transition-colors underline-offset-4 hover:underline">Como Funciona</a>
                 </li>
                 <li>
-                  <a href="/blog" className="hover:underline">Blog</a>
+                  <a href="/blog" className="text-gray-300 hover:text-keepla-red transition-colors underline-offset-4 hover:underline">Blog</a>
                 </li>
               </ul>
             </div>

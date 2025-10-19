@@ -49,7 +49,7 @@ const FinalCTA = () => {
             <Button 
               size="lg" 
               variant="brand"
-              className="px-8 py-5 text-base md:text-lg min-h-[48px] md:min-h-[56px] group bg-earthy-burgundy text-white hover:bg-earthy-burgundy/90 hover:scale-105 border-2 border-dusty-rose shadow-soft transition-all duration-200 focus-visible:ring-2 focus-visible:ring-dusty-rose"
+              className="px-8 py-5 text-base md:text-lg min-h-[48px] md:min-h-[56px] group hover:scale-105 border-2 border-keepla-red shadow-keepla-sm transition-all duration-200 focus-visible:ring-2 focus-visible:ring-keepla-red/30"
               onClick={() => handleNavigation('/register')}
               aria-label="Criar conta gratuitamente"
             >

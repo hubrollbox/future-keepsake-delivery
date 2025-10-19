@@ -148,7 +148,7 @@ const AdminDashboard = () => {
         <CardContent>
           <div className="flex items-center justify-between">
             <p className="text-sm text-misty-gray">Gerir conteúdos e publicar artigos.</p>
-            <Button onClick={() => navigate('/admin/blog?new=1')} className="bg-earthy-burgundy text-white hover:bg-earthy-burgundy/90">
+            <Button onClick={() => navigate('/admin/blog?new=1')} variant="brand">
               <Plus className="h-4 w-4 mr-2" /> Criar Post
             </Button>
           </div>

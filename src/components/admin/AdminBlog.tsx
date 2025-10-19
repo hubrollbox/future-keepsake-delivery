@@ -162,7 +162,7 @@ const AdminBlog = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-fraunces text-steel-blue">Gestão de Blog</h1>
-        <Button onClick={openNewDialog} className="bg-earthy-burgundy text-white hover:bg-earthy-burgundy/90">
+        <Button onClick={openNewDialog} variant="brand">
           <Plus className="h-4 w-4 mr-2" /> Novo Artigo
         </Button>
       </div>
@@ -215,14 +215,14 @@ const AdminBlog = () => {
       </Card>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-3xl">
+        <DialogContent className="max-w-3xl bg-white text-keepla-black border border-keepla-black shadow-lg">
           <DialogHeader>
-            <DialogTitle>{editingPost ? "Editar Artigo" : "Novo Artigo"}</DialogTitle>
+            <DialogTitle className="text-keepla-black">{editingPost ? "Editar Artigo" : "Novo Artigo"}</DialogTitle>
           </DialogHeader>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
             <div>
-              <Label>Título</Label>
+              <Label className="text-keepla-black">Título</Label>
               <Input value={form.title} onChange={(e) => {
                 const newTitle = e.target.value;
                 const autoSlug = slugify(newTitle);
@@ -234,27 +234,27 @@ const AdminBlog = () => {
               }} />
             </div>
             <div>
-              <Label>Slug</Label>
+              <Label className="text-keepla-black">Slug</Label>
               <Input value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} />
             </div>
             <div className="md:col-span-2">
-              <Label>Excerto</Label>
+              <Label className="text-keepla-black">Excerto</Label>
               <Textarea value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })} />
             </div>
             <div className="md:col-span-2">
-              <Label>Conteúdo</Label>
+              <Label className="text-keepla-black">Conteúdo</Label>
               <ReactQuill theme="snow" value={form.content || ""} onChange={(val) => setForm({ ...form, content: val })} />
             </div>
             <div>
-              <Label>Imagem de capa (URL)</Label>
+              <Label className="text-keepla-black">Imagem de capa (URL)</Label>
               <Input value={form.cover_image_url} onChange={(e) => setForm({ ...form, cover_image_url: e.target.value })} />
             </div>
             <div>
-              <Label>Tags (vírgulas)</Label>
+              <Label className="text-keepla-black">Tags (vírgulas)</Label>
               <Input value={(form.tags || []).join(',')} onChange={(e) => setForm({ ...form, tags: e.target.value.split(',').map(t => t.trim()).filter(Boolean) })} />
             </div>
             <div>
-              <Label>Estado</Label>
+              <Label className="text-keepla-black">Estado</Label>
               <select value={form.status} onChange={(e) => setForm({ ...form, status: (e.target.value as 'draft' | 'published') })} className="w-full border rounded px-3 py-2">
                 <option value="draft">Rascunho</option>
                 <option value="published">Publicado</option>
@@ -264,7 +264,7 @@ const AdminBlog = () => {
 
           <div className="flex justify-end space-x-2 mt-4">
             <Button variant="outline" onClick={() => setIsDialogOpen(false)}>Cancelar</Button>
-            <Button className="bg-earthy-burgundy text-white hover:bg-earthy-burgundy/90" onClick={savePost}>
+            <Button variant="brand" onClick={savePost}>
               Guardar
             </Button>
           </div>
