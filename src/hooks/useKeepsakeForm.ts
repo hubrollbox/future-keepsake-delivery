@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { keepsakeFormSchema, KeepsakeFormValues } from '@/validations/keepsakeValidationSchema';
@@ -81,10 +82,10 @@ export const useKeepsakeForm = () => {
   const submittingRef = useRef(false);
 
   // Configuração do React Hook Form com validação melhorada
-  const form = useForm({
+  const form = useForm<z.input<typeof keepsakeFormSchema>>({
     resolver: zodResolver(keepsakeFormSchema),
-    mode: 'onChange' as const,
-    reValidateMode: 'onChange' as const,
+    mode: 'onChange',
+    reValidateMode: 'onChange',
     defaultValues: {
       type: 'digital',
       delivery_channel: 'email',
@@ -292,7 +293,7 @@ export const useKeepsakeForm = () => {
         ...prev, 
         currentStep: 6,
         hasUnsavedChanges: false,
-        submissionError: undefined,
+        submissionError: '',
       }));
       
       return true;
