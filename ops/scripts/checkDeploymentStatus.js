@@ -153,6 +153,19 @@ async function checkDeploymentStatus() {
       } else {
         console.log('✅ Tabela cron_job_logs está acessível');
       }
+
+      // Verificar tabela blog_posts
+      const { error: blogPostsError } = await supabase
+        .from('blog_posts')
+        .select('id')
+        .limit(1);
+      
+      if (blogPostsError) {
+        console.error('❌ Erro ao verificar tabela blog_posts:', blogPostsError.message);
+        console.log('ℹ️ Dica: verifica se a migração `20251018_add_blog_posts.sql` foi aplicada no teu projeto Supabase.');
+      } else {
+        console.log('✅ Tabela blog_posts está acessível');
+      }
     } catch (_) {
       console.error('❌ Erro ao verificar tabelas:', _.message);
     }
