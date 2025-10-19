@@ -1,11 +1,13 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Package, TrendingUp, Clock, Mail, Calendar, Database, Loader2 } from "lucide-react";
+import { Users, Package, TrendingUp, Clock, Mail, Calendar, Database, Loader2, Plus } from "lucide-react";
 import useAdminData from "@/hooks/useAdminData";
 import { supabase } from "@/integrations/supabase/client";
 import DeliveriesBarChart from "@/components/dashboard/DeliveriesBarChart";
 import TopUsersRanking from "@/components/dashboard/TopUsersRanking";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 interface RecentDelivery {
   id: string;
@@ -27,6 +29,7 @@ const AdminDashboard = () => {
   const [recentDeliveries, setRecentDeliveries] = useState<RecentDelivery[]>([]);
   const [warehouseRecords, setWarehouseRecords] = useState<RecentWarehouseItem[]>([]);
   const [loadingLists, setLoadingLists] = useState(true);
+  const navigate = useNavigate();
 
   const fetchRecentData = useCallback(async () => {
     setLoadingLists(true);
@@ -134,6 +137,23 @@ const AdminDashboard = () => {
           </Card>
         ))}
       </div>
+
+      {/* Quick Actions: Blog */}
+      <Card className="emotion-card border-dusty-rose/20">
+        <CardHeader>
+          <CardTitle className="text-steel-blue font-fraunces flex items-center space-x-2">
+            <span>Blog</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-misty-gray">Gerir conteúdos e publicar artigos.</p>
+            <Button onClick={() => navigate('/admin/blog?new=1')} className="bg-earthy-burgundy text-white hover:bg-earthy-burgundy/90">
+              <Plus className="h-4 w-4 mr-2" /> Criar Post
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
 
       <div className="grid lg:grid-cols-2 gap-8">
         {/* Deliveries by Month Chart */}

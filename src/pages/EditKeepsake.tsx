@@ -140,6 +140,7 @@ const EditKeepsake = () => {
         .update({
           title: values.title,
           message_content: values.message_content,
+          message: values.message_content,
           delivery_date: values.delivery_date,
           updated_at: new Date().toISOString(),
         })

@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "@/components/ui/loading-spinner";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 interface BlogPost {
   id: string;
@@ -17,7 +20,9 @@ interface BlogPost {
 const Blog = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { isAdmin } = useAuth();
 
   useEffect(() => {
     const fetchPublished = async () => {
@@ -33,6 +38,7 @@ const Blog = () => {
       } catch (err) {
         console.error("Erro a carregar blog:", err);
         setPosts([]);
+        setError("Não foi possível carregar os artigos. Verifica a tabela \"blog_posts\" no Supabase.");
       } finally {
         setLoading(false);
       }
@@ -57,8 +63,22 @@ const Blog = () => {
     <div className="min-h-screen bg-lavender-mist">
       <Navigation />
       <main className="container mx-auto px-4 py-16">
-        <h1 className="text-hero-sm font-fraunces text-steel-blue mb-6">Blog</h1>
-        <p className="text-misty-gray mb-10">Histórias, novidades e reflexões sobre guardar emoções.</p>
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-hero-sm font-fraunces text-steel-blue">Blog</h1>
+            <p className="text-misty-gray">Histórias, novidades e reflexões sobre guardar emoções.</p>
+          </div>
+          {isAdmin && (
+            <Button onClick={() => navigate('/admin/blog?new=1')} className="bg-earthy-burgundy text-white hover:bg-earthy-burgundy/90">
+              <Plus className="h-4 w-4 mr-2" /> Criar Post
+            </Button>
+          )}
+        </div>
+        {error && (
+          <div className="emotion-card p-4 mb-6 border border-earthy-burgundy/30 text-earthy-burgundy">
+            {error}
+          </div>
+        )}
 
         {loading ? (
           <LoadingSpinner size="lg" text="A carregar artigos..." />
@@ -79,6 +99,22 @@ const Blog = () => {
                 </article>
               );
             })}
+          </div>
+        )}
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h1 className="text-hero-sm font-fraunces text-steel-blue">Blog</h1>
+            <p className="text-misty-gray">Histórias, novidades e reflexões sobre guardar emoções.</p>
+          </div>
+          {isAdmin && (
+            <Button onClick={() => navigate('/admin/blog?new=1')} className="bg-earthy-burgundy text-white hover:bg-earthy-burgundy/90">
+              <Plus className="h-4 w-4 mr-2" /> Criar Post
+            </Button>
+          )}
+        </div>
+        {error && (
+          <div className="emotion-card p-4 mb-6 border border-earthy-burgundy/30 text-earthy-burgundy">
+            {error}
           </div>
         )}
       </main>
