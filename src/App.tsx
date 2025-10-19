@@ -31,6 +31,7 @@ import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import LandingPage from "@/pages/LandingPage";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import BlogAdmin from "./pages/admin/BlogAdmin";
 
 
 const queryClient = new QueryClient();
@@ -70,6 +71,7 @@ function App() {
                   <Route path="/partnerships" element={<Partnerships />} />
                   <Route path="/checkout" element={<Checkout />} />
                   <Route path="/admin/*" element={<AdminDashboard />} />
+                  <Route path="/admin/blog" element={<BlogAdmin />} />
                   <Route path="/terms" element={<TermsConditions />} />
                   <Route path="/privacy" element={<PrivacyPolicy />} />
                   <Route path="*" element={<NotFound />} />
