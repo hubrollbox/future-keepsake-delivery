@@ -63,29 +63,6 @@ const Blog = () => {
     <div className="min-h-screen bg-lavender-mist">
       <Navigation />
       <main className="container mx-auto px-4 py-16">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-hero-sm font-fraunces text-steel-blue">Blog</h1>
-            <p className="text-misty-gray">Histórias, novidades e reflexões sobre guardar emoções.</p>
-          </div>
-          {isAdmin && (
-            <Button onClick={() => navigate('/admin/blog?new=1')} variant="brand">
-              <Plus className="h-4 w-4 mr-2" /> Criar Post
-            </Button>
-          )}
-        </div>
-        {error && (
-          <div className="bg-keepla-white border-2 border-keepla-red text-keepla-red p-4 mb-6 rounded-lg">
-            <p className="font-medium">{error}</p>
-            {isAdmin ? (
-              <div className="mt-3">
-                <Button size="sm" variant="brand" onClick={() => navigate('/admin/blog?new=1')}>Criar primeiro artigo</Button>
-              </div>
-            ) : (
-              <p className="text-keepla-black mt-2">Se o problema persistir, por favor <a href="/contact" className="underline hover:text-keepla-red">contacta o suporte</a>.</p>
-            )}
-          </div>
-        )}
 
         {loading ? (
           <LoadingSpinner size="lg" text="A carregar artigos..." />
