@@ -185,7 +185,7 @@ function Pricing() {
                     <div className="mt-6">
                       <div className="flex items-baseline justify-center">
                         <span className="text-5xl font-bold text-keepla-black font-inter">
-                          €{billingCycle === 'monthly' ? plan.price_monthly : plan.price_yearly}
+                          €{Number(billingCycle === 'monthly' ? plan.price_monthly : plan.price_yearly) || 0}
                         </span>
                         {plan.price_monthly > 0 && (
                           <span className="text-gray-500 ml-2 font-inter">
@@ -193,7 +193,7 @@ function Pricing() {
                           </span>
                         )}
                       </div>
-                      {billingCycle === 'yearly' && plan.price_monthly > 0 && (
+                      {billingCycle === 'yearly' && typeof plan.price_yearly === 'number' && plan.price_monthly > 0 && (
                         <p className="text-sm text-gray-500 mt-2 font-inter">
                           €{(plan.price_yearly / 12).toFixed(2)}/mês
                         </p>
@@ -203,7 +203,7 @@ function Pricing() {
                   <CardContent className="space-y-6">
                     {/* Features */}
                     <div className="space-y-3 border-t border-keepla-gray pt-6">
-                      {plan.features.map((feature, featureIndex) => (
+                      {(plan.features ?? []).map((feature, featureIndex) => (
                         <div key={featureIndex} className="flex items-start gap-3">
                           <Check className="h-5 w-5 text-keepla-red mt-0.5 flex-shrink-0" />
                           <span className="text-sm text-keepla-black font-inter">{feature}</span>
@@ -211,11 +211,11 @@ function Pricing() {
                       ))}
                     </div>
                     {/* Limitations */}
-                    {plan.limitations && (
+                    {Array.isArray(plan.limitations) && plan.limitations.length > 0 && (
                       <div className="border-t border-keepla-gray pt-4">
                         <p className="text-xs text-gray-400 mb-2 font-inter">Limitações:</p>
                         <div className="space-y-1">
-                          {plan.limitations.map((limitation, limitIndex) => (
+                          {(plan.limitations ?? []).map((limitation, limitIndex) => (
                             <p key={limitIndex} className="text-xs text-gray-400 font-inter">
                               • {limitation}
                             </p>
