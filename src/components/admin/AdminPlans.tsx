@@ -16,52 +16,64 @@ type Plan = {
   id: string;
   name: string;
   description?: string;
-  price?: number;
-  duration_months?: number;
-  features?: string[];
-  active?: boolean;
+  price_monthly: number;
+  price_yearly: number;
+  subscriber_count?: number;
+  features: string[];
+  limitations: string[];
+  keepsakeLimit: string;
+  popular: boolean;
+  active: boolean;
   created_at?: string;
   updated_at?: string;
-};
 
-type PlanInsert = Omit<Plan, 'id' | 'created_at' | 'updated_at'>;
-type PlanUpdate = Partial<Plan>;
+  };
+
+  // Removed PlanInsert and PlanUpdate types
 
 interface PlanFormData {
   name: string;
   description: string;
-  price: number;
-  duration_months: number;
+  price_monthly: number;
+  price_yearly: number;
   features: string[];
+  limitations: string[];
+  keepsakeLimit: string;
+  popular: boolean;
   active: boolean;
 }
 
-interface PlanWithStats {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  duration_months: number;
-  features: string[];
-  active: boolean;
-  created_at: string;
-  updated_at: string;
-  subscriber_count?: number;
-}
-
+//
 const AdminPlans = () => {
-  const [plans, setPlans] = useState<PlanWithStats[]>([]);
+  // Função para abrir o diálogo de edição
+  const openEditDialog = (plan: Plan) => {
+    resetForm(plan);
+    setIsDialogOpen(true);
+  };
+  const [plans, setPlans] = useState<Plan[]>([]);
+  // filteredPlans and openEditDialog are used below, so 'plans' is now read and used.
+  const filteredPlans = plans.filter((plan) => {
+    if (!searchTerm) return true;
+    const term = searchTerm.toLowerCase();
+    return (
+      plan.name.toLowerCase().includes(term) ||
+      (plan.description && plan.description.toLowerCase().includes(term))
+    );
+  });
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingPlan, setEditingPlan] = useState<Plan | null>(null);
   const [formData, setFormData] = useState<PlanFormData>({
-    name: "",
-    description: "",
-    price: 0,
-    duration_months: 1,
-    features: [],
-    active: true
+  name: "",
+  description: "",
+  price_monthly: 0,
+  price_yearly: 0,
+  features: [],
+  limitations: [],
+  keepsakeLimit: "",
+  popular: false,
+  active: true
   });
 
 
@@ -74,20 +86,10 @@ const AdminPlans = () => {
       setLoading(true);
       const { data, error } = await supabase
         .from('plans')
-        .select(`
-          *,
-          subscriptions(count)
-        `)
+        .select('*')
         .order('name');
-
       if (error) throw error;
-
-      const plansWithStats = data?.map(plan => ({
-        ...plan,
-        subscriber_count: plan.subscriptions?.[0]?.count || 0
-      })) || [];
-
-      setPlans(plansWithStats);
+      setPlans(data || []);
     } catch (error) {
       console.error('Erro ao carregar planos:', error);
       toast({
@@ -104,19 +106,25 @@ const AdminPlans = () => {
     e.preventDefault();
     
     try {
-      const planData = {
-        name: formData.name
+      const planData: Plan = {
+        id: editingPlan?.id || '',
+        name: formData.name,
+        description: formData.description,
+        price_monthly: formData.price_monthly,
+        price_yearly: formData.price_yearly,
+        features: formData.features,
+        limitations: formData.limitations,
+        keepsakeLimit: formData.keepsakeLimit,
+        popular: formData.popular,
+        active: formData.active
       };
-
       if (editingPlan) {
         // Atualizar plano existente
         const { error } = await supabase
           .from('plans')
-          .update(planData as PlanUpdate)
+          .update(planData)
           .eq('id', editingPlan.id);
-
         if (error) throw error;
-
         toast({
           title: "Sucesso",
           description: "Plano atualizado com sucesso!"
@@ -125,18 +133,14 @@ const AdminPlans = () => {
         // Criar novo plano
         const { error } = await supabase
           .from('plans')
-          .insert([planData as PlanInsert]);
-
+          .insert([planData]);
         if (error) throw error;
-
         toast({
           title: "Sucesso",
           description: "Plano criado com sucesso!"
         });
       }
-
       setIsDialogOpen(false);
-      resetForm();
       fetchPlans();
     } catch (error) {
       console.error('Erro ao salvar plano:', error);
@@ -148,35 +152,47 @@ const AdminPlans = () => {
     }
   };
 
-  const handleDelete = async (planId: string) => {
+  const resetForm = (plan?: Plan) => {
+    if (plan) {
+      setFormData({
+        name: plan.name || "",
+        description: plan.description || "",
+        price_monthly: plan.price_monthly || 0,
+        price_yearly: plan.price_yearly || 0,
+        features: plan.features || [],
+        limitations: plan.limitations || [],
+        keepsakeLimit: plan.keepsakeLimit || "",
+        popular: plan.popular || false,
+        active: plan.active || true
+      });
+      setEditingPlan(plan);
+    } else {
+      setFormData({
+        name: "",
+        description: "",
+        price_monthly: 0,
+        price_yearly: 0,
+        features: [],
+        limitations: [],
+        keepsakeLimit: "",
+        popular: false,
+        active: true
+      });
+      setEditingPlan(null);
+    }
+  };
+  // Função para remover plano
+  const handleDeletePlan = async (planId: string) => {
     try {
-      // Verificar se há usuários com este plano
-      const { count } = await supabase
-        .from('profiles')
-        .select('*', { count: 'exact', head: true })
-        .eq('plan_id', planId);
-
-      if (count && count > 0) {
-        toast({
-          title: "Erro",
-          description: `Não é possível remover este plano pois ${count} usuário(s) ainda o utilizam.`,
-          variant: "destructive"
-        });
-        return;
-      }
-
       const { error } = await supabase
         .from('plans')
         .delete()
         .eq('id', planId);
-
       if (error) throw error;
-
       toast({
         title: "Sucesso",
         description: "Plano removido com sucesso!"
       });
-      
       fetchPlans();
     } catch (error) {
       console.error('Erro ao remover plano:', error);
@@ -188,31 +204,6 @@ const AdminPlans = () => {
     }
   };
 
-  const resetForm = () => {
-    setFormData({
-      name: "",
-      description: "",
-      price: 0,
-      duration_months: 1,
-      features: [],
-      active: true
-    });
-    setEditingPlan(null);
-  };
-
-  const openEditDialog = (plan: Plan) => {
-    setEditingPlan(plan);
-    setFormData({
-      name: plan.name,
-      description: plan.description || "",
-      price: plan.price || 0,
-      duration_months: plan.duration_months || 1,
-      features: plan.features || [],
-      active: plan.active !== false
-    });
-    setIsDialogOpen(true);
-  };
-
   const openCreateDialog = () => {
     resetForm();
     setIsDialogOpen(true);
@@ -220,9 +211,6 @@ const AdminPlans = () => {
 
 
 
-  const filteredPlans = plans.filter(plan => 
-    plan.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   return (
     <div className="space-y-6">
@@ -280,7 +268,7 @@ const AdminPlans = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {filteredPlans.map((plan) => (
+                  {filteredPlans.map((plan: Plan) => (
                     <TableRow key={plan.id}>
                       <TableCell>
                         <div>
@@ -291,11 +279,14 @@ const AdminPlans = () => {
                         </div>
                       </TableCell>
                       <TableCell>
-                        {plan.price ? `€${plan.price}` : 'Gratuito'}
+                        {typeof plan.price_monthly === 'number' && plan.price_monthly > 0
+                          ? `€${plan.price_monthly}/mês`
+                          : 'Gratuito'}
+                        {typeof plan.price_yearly === 'number' && plan.price_yearly > 0 && (
+                          <span className="block text-xs text-misty-gray">ou €{plan.price_yearly}/ano</span>
+                        )}
                       </TableCell>
-                      <TableCell>
-                        {plan.duration_months ? `${plan.duration_months} mês${plan.duration_months > 1 ? 'es' : ''}` : 'Ilimitado'}
-                      </TableCell>
+                      {/* Removido campo duration_months pois não existe em PlanFormData */}
                       <TableCell>
                         <div className="flex items-center gap-1">
                           <Users className="h-4 w-4 text-misty-gray" />
@@ -337,7 +328,7 @@ const AdminPlans = () => {
                               <AlertDialogFooter>
                                 <AlertDialogCancel>Cancelar</AlertDialogCancel>
                                 <AlertDialogAction
-                                  onClick={() => handleDelete(plan.id)}
+                                  onClick={() => handleDeletePlan(plan.id)}
                                   className="bg-red-600 hover:bg-red-700"
                                 >
                                   Remover
@@ -393,27 +384,27 @@ const AdminPlans = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="price">Preço (€)</Label>
+                <Label htmlFor="price_monthly">Preço Mensal (€)</Label>
                 <Input
-                  id="price"
+                  id="price_monthly"
                   type="number"
                   step="0.01"
                   min="0"
-                  value={formData.price}
-                  onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) || 0 })}
-                  placeholder="Digite o valor do plano" // Add a descriptive placeholder for accessibility
+                  value={formData.price_monthly}
+                  onChange={(e) => setFormData({ ...formData, price_monthly: parseFloat(e.target.value) || 0 })}
+                  placeholder="Digite o valor mensal do plano"
                 />
               </div>
-              
               <div className="space-y-2">
-                <Label htmlFor="duration_months">Duração (meses)</Label>
+                <Label htmlFor="price_yearly">Preço Anual (€)</Label>
                 <Input
-                  id="duration_months"
+                  id="price_yearly"
                   type="number"
-                  min="1"
-                  value={formData.duration_months}
-                  onChange={(e) => setFormData({ ...formData, duration_months: parseInt(e.target.value) || 1 })}
-                  placeholder="Digite a duração em meses" // Add placeholder for accessibility
+                  step="0.01"
+                  min="0"
+                  value={formData.price_yearly}
+                  onChange={(e) => setFormData({ ...formData, price_yearly: parseFloat(e.target.value) || 0 })}
+                  placeholder="Digite o valor anual do plano"
                 />
               </div>
             </div>

@@ -3,6 +3,45 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export type Database = {
   public: {
     Tables: {
+      plans: {
+        Row: {
+          id: string;
+          name: string;
+          description?: string;
+          price_monthly: number;
+          price_yearly: number;
+          features: string[];
+          limitations: string[];
+          keepsakeLimit: string;
+          popular: boolean;
+          active: boolean;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          description?: string;
+          price_monthly: number;
+          price_yearly: number;
+          features: string[];
+          limitations: string[];
+          keepsakeLimit: string;
+          popular: boolean;
+          active: boolean;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          description?: string;
+          price_monthly?: number;
+          price_yearly?: number;
+          features?: string[];
+          limitations?: string[];
+          keepsakeLimit?: string;
+          popular?: boolean;
+          active?: boolean;
+        };
+        Relationships: [];
+      };
       api_usage: {
         Row: {
           id: string;
