@@ -51,7 +51,9 @@ const AdminPlans = () => {
     setIsDialogOpen(true);
   };
   const [plans, setPlans] = useState<Plan[]>([]);
-  // filteredPlans and openEditDialog are used below, so 'plans' is now read and used.
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  // filteredPlans depende de searchTerm, por isso é declarado após
   const filteredPlans = plans.filter((plan) => {
     if (!searchTerm) return true;
     const term = searchTerm.toLowerCase();
@@ -60,8 +62,6 @@ const AdminPlans = () => {
       (plan.description && plan.description.toLowerCase().includes(term))
     );
   });
-  const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingPlan, setEditingPlan] = useState<Plan | null>(null);
   const [formData, setFormData] = useState<PlanFormData>({
