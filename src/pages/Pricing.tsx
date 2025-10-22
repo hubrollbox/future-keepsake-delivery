@@ -9,6 +9,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { trackSubscription, trackButtonClick } from '@/lib/analytics';
+import Navigation from "@/components/Navigation";
 
 const freemiumPlans = [
   {
@@ -136,9 +137,11 @@ function Pricing() {
 
   return (
     <div>
+      <Navigation />
       <main>
-        <div>
-          <p>Escolhe o plano perfeito para guardar e entregar as tuas memórias mais preciosas no momento exato.</p>
+        <div className="max-w-6xl mx-auto px-4 pt-12">
+          <h1 className="text-4xl font-bold text-keepla-black text-center mb-3">Planos e Preços</h1>
+          <p className="text-center text-gray-700 mb-8">Escolhe o plano perfeito para guardar e entregar as tuas memórias mais preciosas no momento exato.</p>
           {/* Billing Toggle - minimalista */}
           <div className="flex items-center justify-center gap-4 mb-8">
             <span className={`text-sm font-medium font-inter ${billingCycle === 'monthly' ? 'text-keepla-black' : 'text-gray-400'}`}>Mensal</span>

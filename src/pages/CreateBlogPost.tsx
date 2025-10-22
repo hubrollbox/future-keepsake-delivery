@@ -19,6 +19,13 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
   const [coverFile, setCoverFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
 
+  const slugify = (input: string) =>
+    input
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+
   useEffect(() => {
     if (!editId) return;
     // Load existing post for editing
@@ -59,14 +66,18 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
         coverUrl = publicData?.publicUrl || publicData?.public_url || undefined;
       }
 
+      const { data: userData } = await supabase.auth.getUser();
+      const authorId = userData?.user?.id;
+
       const row = {
         title,
-        slug: slug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        slug: slugify(slug || title),
         excerpt,
         content,
         tags: tags.split(',').map(t => t.trim()).filter(Boolean),
         cover_image_url: coverUrl,
         status: publish ? 'published' : 'draft',
+        author_id: authorId
       } as any;
 
       if (editId) {

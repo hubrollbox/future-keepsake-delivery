@@ -107,6 +107,14 @@ export default {
 				'keepla-black': '#000000', // Preto - fundos
 				'keepla-white': '#FFFFFF', // Branco - fundos
 				'keepla-gray': '#F5F5F5', // Cinza claro para subtileza
+				
+				// Cores do tema existente
+				'earthy-burgundy': '#8B4513', // Cor principal para botões e elementos
+				'dusty-rose': '#D4A574', // Rosa empoeirado
+				'sand-beige': '#F5E6D3', // Bege areia
+				'steel-blue': '#4682B4', // Azul aço
+				'misty-gray': '#9CA3AF', // Cinza névoa
+				'golden-honey': '#DAA520', // Mel dourado
 			},
 			borderRadius: {
 				lg: '12px',

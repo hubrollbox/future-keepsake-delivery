@@ -273,8 +273,6 @@ export const useKeepsakeForm = () => {
         relationship: string | null;
         delivery_channel: string;
         channel_cost?: number | null;
-        created_at: string;
-        updated_at: string;
         email: string;
         phone?: string | null;
       } = {
@@ -283,8 +281,6 @@ export const useKeepsakeForm = () => {
         relationship: formData.relationship || null,
         delivery_channel: 'email',
         channel_cost: formData.channel_cost || 0,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
         email: '',
       };
 
