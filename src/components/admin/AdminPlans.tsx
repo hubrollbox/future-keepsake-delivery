@@ -329,7 +329,7 @@ const AdminPlans = () => {
                                 <AlertDialogCancel>Cancelar</AlertDialogCancel>
                                 <AlertDialogAction
                                   onClick={() => handleDeletePlan(plan.id)}
-                                  className="bg-red-600 hover:bg-red-700"
+                                  className="bg-keepla-red hover:bg-keepla-red-deep text-white"
                                 >
                                   Remover
                                 </AlertDialogAction>
@@ -436,7 +436,8 @@ const AdminPlans = () => {
               <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
                 Cancelar
               </Button>
-              <Button type="submit" className="bg-earthy-burgundy hover:bg-earthy-burgundy/90">
+-              <Button type="submit" className="bg-earthy-burgundy hover:bg-earthy-burgundy/90">
++              <Button type="submit" variant="brand">
                 {editingPlan ? "Atualizar" : "Criar"} Plano
               </Button>
             </div>

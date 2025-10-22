@@ -47,28 +47,28 @@ const About = () => {
             />
           </div>
           
-          <h1 className="text-5xl md:text-6xl font-fraunces font-bold text-steel-blue mb-6 leading-tight">
-            Manifesto
-            <span className="text-earthy-burgundy block">keepla</span>
+          <h1 className="text-5xl md:text-6xl font-fraunces font-bold text-keepla-black mb-6 leading-tight">
+            Somos a{" "}
+            <span className="text-keepla-red block">keepla</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-misty-gray mb-8 leading-relaxed">
-            Mais do que uma aplicação tecnológica, somos um espaço de 
-            <span className="text-earthy-burgundy font-semibold"> memória, sensibilidade e presença.</span>
+          <p className="text-xl md:text-2xl text-keepla-gray mb-8 leading-relaxed">
+            Uma plataforma dedicada à preservação de{" "}
+            <span className="text-keepla-red font-semibold"> memória, sensibilidade e presença.</span>
           </p>
         </div>
 
         {/* Missão */}
         <div className="emotion-card max-w-4xl mx-auto mb-16 p-12">
-          <h2 className="text-3xl md:text-4xl font-fraunces font-bold text-steel-blue mb-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-fraunces font-bold text-keepla-black mb-6 text-center">
             A Nossa Missão
           </h2>
-          <blockquote className="text-xl md:text-2xl text-steel-blue text-center leading-relaxed italic font-fraunces mb-6">
-            "Guardar emoções para o tempo certo. Porque há coisas que só fazem sentido 
-            quando chegam no momento perfeito. E esse momento, só tu o conheces."
+          <blockquote className="text-xl md:text-2xl text-keepla-black text-center leading-relaxed italic font-fraunces mb-6">
+            "Acreditamos que há momentos que merecem ser guardados com o cuidado de quem sabe 
+            que o tempo é o nosso bem mais precioso."
           </blockquote>
-          <p className="text-earthy-burgundy font-semibold text-center text-lg font-fraunces">
-            — Presente no futuro
+          <p className="text-keepla-red font-semibold text-center text-lg font-fraunces">
+            — Equipa keepla
           </p>
         </div>
 

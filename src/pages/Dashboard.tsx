@@ -35,17 +35,17 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-lavender-mist flex items-center justify-center">
+      <div className="min-h-screen bg-keepla-white flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-dusty-rose mx-auto mb-4"></div>
-          <h2 className="text-xl font-serif text-steel-blue">A carregar o seu dashboard...</h2>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-keepla-red mx-auto mb-4"></div>
+          <h2 className="text-xl font-serif text-keepla-black">A carregar o seu dashboard...</h2>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-lavender-mist">
+    <div className="min-h-screen bg-keepla-white">
       <Navigation />
       <main className="dashboard-layout container mx-auto max-w-7xl">
         <ProfileHeader />

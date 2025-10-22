@@ -66,10 +66,10 @@ function CreateKeepsake() {
   // Renderizar loading se ainda a carregar autenticação
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-lavender-mist flex items-center justify-center">
+      <div className="min-h-screen bg-keepla-white flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-dusty-rose mx-auto"></div>
-          <p className="mt-4 text-steel-blue">A carregar...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-keepla-red mx-auto"></div>
+          <p className="mt-4 text-keepla-black">A carregar...</p>
         </div>
       </div>
     );
@@ -164,16 +164,15 @@ function CreateKeepsake() {
   // Removida lógica de canProceed — validação acontece dentro de nextStep/submit
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-lavender-mist via-white to-sage-green">
+    <div className="min-h-screen bg-keepla-white">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-steel-blue mb-2">
+          <h1 className="text-4xl font-bold text-keepla-black mb-2">
             Criar Nova Cápsula do Tempo
           </h1>
-          <p className="text-steel-blue/70 max-w-2xl mx-auto">
-            Crie uma mensagem especial para ser entregue no futuro. 
-            Adicione produtos únicos para tornar o momento ainda mais especial.
+          <p className="text-keepla-gray max-w-2xl mx-auto">
+            Guarda as tuas memórias mais preciosas para serem entregues no momento perfeito.
           </p>
         </div>
 

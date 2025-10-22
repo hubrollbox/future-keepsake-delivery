@@ -108,37 +108,37 @@ const ProductCard = ({ product, category }: { product: Product, category: string
     const IconComponent = iconMap[product.icon as keyof typeof iconMap] || Gift;
     
     return (
-      <Card className="h-full border-dusty-rose/20 hover:border-dusty-rose/40 transition-all duration-300 hover:shadow-soft">
+      <Card className="h-full border-keepla-gray/20 hover:border-keepla-red/40 transition-all duration-300 hover:shadow-soft">
         <CardHeader className="pb-3">
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-dusty-rose/10">
-                <IconComponent className="h-5 w-5 text-dusty-rose" />
+              <div className="p-2 rounded-lg bg-keepla-red/10">
+                <IconComponent className="h-5 w-5 text-keepla-red" />
               </div>
               <div>
-                <CardTitle className="text-lg text-steel-blue font-serif">
+                <CardTitle className="text-lg text-keepla-black font-serif">
                   {product.name}
                 </CardTitle>
-                <Badge variant="outline" className="mt-1 text-xs border-dusty-rose/30 text-dusty-rose">
+                <Badge variant="outline" className="mt-1 text-xs border-keepla-gray/30 text-keepla-gray">
                   {category}
                 </Badge>
               </div>
             </div>
             <div className="text-right">
-              <div className="font-semibold text-steel-blue">
+              <div className="font-semibold text-keepla-black">
                 {product.price}
               </div>
               {product.popular && (
-                <Badge className="mt-2 bg-earthy-burgundy text-white">Popular</Badge>
+                <Badge className="mt-2 bg-keepla-red text-white">Popular</Badge>
               )}
             </div>
           </div>
         </CardHeader>
         <CardContent className="pt-0">
-          <p className="text-sm text-misty-gray mb-3">
+          <p className="text-sm text-keepla-gray mb-3">
             {product.description}
           </p>
-          <p className="text-sm italic text-dusty-rose font-serif mb-4">
+          <p className="text-sm italic text-keepla-red font-serif mb-4">
             "{product.poetry}"
           </p>
         </CardContent>

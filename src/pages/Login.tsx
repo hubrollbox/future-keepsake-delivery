@@ -90,7 +90,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-lavender-mist flex items-center justify-center px-4">
+    <div className="min-h-screen bg-keepla-white flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
   <img 
@@ -104,8 +104,8 @@ const Login = () => {
         </div>
         <Card className="emotion-card shadow-soft border-0">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-semibold text-steel-blue font-fraunces">
-              Entrar como Guardião
+            <CardTitle className="text-2xl font-semibold text-keepla-black font-fraunces">
+              Entrar na keepla
             </CardTitle>
           </CardHeader>
           <CardContent>

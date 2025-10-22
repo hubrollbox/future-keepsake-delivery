@@ -14,7 +14,7 @@ import LoadingSpinner from "@/components/ui/loading-spinner";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-lavender-mist">
+    <div className="min-h-screen bg-keepla-white">
       <Navigation />
       <OnboardingModal />
 

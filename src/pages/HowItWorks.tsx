@@ -22,7 +22,7 @@ const HowItWorks = () => {
   };
 
   return (
-    <div className="min-h-screen bg-lavender-mist">
+    <div className="min-h-screen bg-keepla-white">
       <Navigation />
       <main className={`container mx-auto px-4 py-8 md:py-16 transition-opacity duration-300 ${isNavigating ? 'opacity-50' : 'opacity-100'}`}>
         <HowItWorksHero />

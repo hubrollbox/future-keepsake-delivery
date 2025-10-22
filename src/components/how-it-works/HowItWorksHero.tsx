@@ -13,18 +13,19 @@ const HowItWorksHero = () => {
 />
       </div>
       
-      <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-steel-blue mb-6 md:mb-8 leading-tight tracking-tight font-fraunces">
-        Como Funciona o
-        <span className="text-earthy-burgundy block md:inline"> keepla</span>
+      <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-keepla-black mb-6 md:mb-8 leading-tight tracking-tight font-fraunces">
+        Como funciona a{" "}
+        <span className="text-keepla-red block md:inline"> keepla</span>
       </h1>
       
-      <p className="text-xl md:text-2xl lg:text-3xl text-dusty-rose mb-6 md:mb-8 max-w-4xl mx-auto font-bold leading-relaxed font-fraunces italic">
-        Presente no futuro
+      <p className="text-xl md:text-2xl lg:text-3xl text-keepla-red mb-6 md:mb-8 max-w-4xl mx-auto font-bold leading-relaxed font-fraunces italic">
+        "Transformamos momentos em memórias eternas, 
+        <br className="hidden md:block" />
+        entregues no momento perfeito."
       </p>
       
-      <p className="text-lg md:text-xl text-misty-gray max-w-4xl mx-auto leading-relaxed">
-        Descobre como podes enviar presentes para o futuro e tornares-te um verdadeiro 
-        <strong className="text-earthy-burgundy"> Guardião do Tempo</strong>.
+      <p className="text-lg md:text-xl text-keepla-gray max-w-3xl mx-auto leading-relaxed">
+        Somos o teu <strong className="text-keepla-red"> Guardião do Tempo</strong>.
       </p>
     </div>
   );
