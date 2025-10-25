@@ -436,8 +436,7 @@ const AdminPlans = () => {
               <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
                 Cancelar
               </Button>
--              <Button type="submit" className="bg-earthy-burgundy hover:bg-earthy-burgundy/90">
-+              <Button type="submit" variant="brand">
+              <Button type="submit" variant="brand">
                 {editingPlan ? "Atualizar" : "Criar"} Plano
               </Button>
             </div>
