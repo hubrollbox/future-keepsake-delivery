@@ -15,7 +15,7 @@ const CartButton: React.FC<CartButtonProps> = ({ onClick }) => {
 
   return (
     <Button
-      variant="gold-outline"
+      variant="brand-outline"
       size="sm"
       onClick={onClick}
       className="relative hover:scale-105 transition-all duration-200"

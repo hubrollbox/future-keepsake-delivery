@@ -101,12 +101,13 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Paleta oficial Keepla.pt - Memória Viva
-				'keepla-red': '#E63946', // Vermelho Keepla - cor principal/logo
-				'keepla-red-deep': '#C6282E', // Vermelho profundo - CTAs/botões
-				'keepla-black': '#000000', // Preto - fundos
-				'keepla-white': '#FFFFFF', // Branco - fundos
-				'keepla-gray': '#F5F5F5', // Cinza claro para subtileza
+				// Paleta Oficial Keepla.pt Brand Book - Memória Viva
+				'keepla-red': '#E63946',           // Keepla Red - Selo emocional, destaque principal
+				'keepla-red-deep': '#C6282E',      // Deep Red CTA - Botões, call-to-actions
+				'keepla-black': '#000000',         // Black - Fundos, texto, fotografia P&B
+				'keepla-white': '#FFFFFF',         // White - Fundos alternativos, texto sobre escuro
+				'keepla-gray': '#E0E0E0',          // Gray Neutral - Divisores, fundos secundários
+				'keepla-gray-neutral': '#E0E0E0',  // Alias explícito Brand Book
 				
 				// Cores do tema existente
 				'earthy-burgundy': '#8B4513', // Cor principal para botões e elementos

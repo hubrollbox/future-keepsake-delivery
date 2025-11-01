@@ -1,27 +1,39 @@
 /* 
- * Keepla.pt Brand Colors
+ * Keepla.pt Brand Colors - Oficial Brand Book
  * Conceito: Memória Viva - Minimalismo com emoção
- * Fotografia sempre em preto e branco
- * Cor de destaque: Vermelho Keepla #E63946
+ * Regra: Preto e branco da memória + vermelho do presente que pulsa
+ * Fotografia: SEMPRE em preto e branco
  */
 
 :root {
-  /* Cores principais Keepla */
-  --keepla-red: #E63946;
-  --keepla-red-deep: #C6282E;
-  --keepla-black: #000000;
-  --keepla-white: #FFFFFF;
-  --keepla-gray: #F5F5F5;
+  /* Paleta Oficial Keepla.pt Brand Book */
+  --keepla-red: #E63946;           /* Keepla Red - Selo emocional, destaque principal */
+  --keepla-red-deep: #C6282E;      /* Deep Red CTA - Botões e call-to-actions */
+  --keepla-black: #000000;         /* Black - Fundos, texto, fotografia */
+  --keepla-white: #FFFFFF;         /* White - Fundos alternativos, texto sobre escuro */
+  --keepla-gray-neutral: #E0E0E0;  /* Gray Neutral - Divisores, fundos secundários */
+  --keepla-gray: #E0E0E0;          /* Alias para compatibilidade */
   
-  /* Aliases semânticos */
+  /* Aliases semânticos - Brand Book */
+  --color-primary: var(--keepla-red);
+  --color-cta: var(--keepla-red-deep);
+  --color-background: var(--keepla-white);
+  --color-text: var(--keepla-black);
+  --color-border: var(--keepla-gray-neutral);
+  
+  /* Compatibilidade */
   --brand-primary: var(--keepla-red);
   --brand-secondary: var(--keepla-red-deep);
   --brand-background: var(--keepla-white);
-  --brand-neutral: var(--keepla-gray);
+  --brand-neutral: var(--keepla-gray-neutral);
   --text-main: var(--keepla-black);
   --text-secondary: #666666;
   --error: var(--keepla-red-deep);
   --success: var(--keepla-black);
+  
+  /* Transição e raio padrão - Brand Book */
+  --transition-default: 0.3s ease;
+  --radius-default: 12px;
 }
 
 /* Classes utilitárias */
@@ -38,12 +50,22 @@
 
 .border-keepla-red { border-color: var(--keepla-red); }
 .border-keepla-red-deep { border-color: var(--keepla-red-deep); }
+.border-keepla-gray-neutral { border-color: var(--keepla-gray-neutral); }
 
-/* Sombras minimalistas */
+/* Sombras minimalistas - Brand Book */
 .shadow-keepla {
   box-shadow: 0 4px 20px 0 rgba(230, 57, 70, 0.15);
 }
 
 .shadow-keepla-sm {
   box-shadow: 0 2px 12px 0 rgba(230, 57, 70, 0.1);
+}
+
+/* Imagens em P&B - Brand Book Rule */
+.image-bw {
+  filter: grayscale(100%);
+}
+
+.image-bw-keepla {
+  filter: grayscale(100%) contrast(1.1);
 }
