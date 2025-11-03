@@ -136,18 +136,16 @@ function Pricing() {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
 
   return (
-    <div>
+    <div className="min-h-screen bg-keepla-white">
       <Navigation />
-      <header className="max-w-5xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-keepla-black">Planos e Preços</h1>
-        
-      </header>
-      <main>
-        <div className="max-w-6xl mx-auto px-4 pt-12">
-          <h1 className="text-4xl font-bold text-keepla-black text-center mb-3">Planos e Preços</h1>
-          <p className="text-center text-gray-700 mb-8">Escolhe o plano perfeito para guardar e entregar as tuas memórias mais preciosas no momento exato.</p>
-          {/* Billing Toggle - minimalista */}
-          <div className="flex items-center justify-center gap-4 mb-8">
+      <main className="container mx-auto px-4 py-8 md:py-16">
+        {/* Hero Section */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold text-keepla-black mb-4">Planos e Preços</h1>
+          <p className="text-lg text-gray-700 max-w-2xl mx-auto">Escolhe o plano perfeito para guardar e entregar as tuas memórias mais preciosas no momento exato.</p>
+        </div>
+        {/* Billing Toggle */}
+        <div className="flex items-center justify-center gap-4 mb-12">
             <span className={`text-sm font-medium font-inter ${billingCycle === 'monthly' ? 'text-keepla-black' : 'text-gray-400'}`}>Mensal</span>
             <button
               onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'yearly' : 'monthly')}
@@ -164,10 +162,10 @@ function Pricing() {
                 Poupa 17%
               </span>
             )}
-          </div>
+        </div>
 
-          {/* Pricing Cards */}
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-20 relative z-10 px-4">
+        {/* Pricing Cards */}
+        <div className="grid md:grid-cols-3 gap-8 mb-20">
             {plans.map((plan) => (
               <div key={plan.id} className="relative">
                 {plan.popular && (
@@ -249,12 +247,12 @@ function Pricing() {
             ))}
           </div>
 
-          {/* FAQ Section */}
-          <div className="mt-20 text-center relative z-10 px-4">
-            <h2 className="text-3xl font-bold text-keepla-black mb-8 font-inter">
-              Dúvidas Frequentes
-            </h2>
-            <div className="max-w-2xl mx-auto space-y-4 text-left">
+        {/* FAQ Section */}
+        <div className="mt-20 text-center">
+          <h2 className="text-3xl font-bold text-keepla-black mb-8 font-inter">
+            Dúvidas Frequentes
+          </h2>
+          <div className="max-w-2xl mx-auto space-y-4 text-left">
               <details className="bg-keepla-white p-6 rounded-lg border-2 border-keepla-gray hover:border-keepla-black transition-colors">
                 <summary className="font-medium cursor-pointer text-keepla-black font-inter">
                   Posso cancelar a qualquer momento?
@@ -287,17 +285,13 @@ function Pricing() {
                   Sim, podes fazer upgrade a qualquer momento e pagar apenas a diferença proporcional.
                 </p>
               </details>
-            </div>
-          {/* End FAQ Section */}
+          </div>
         </div>
-      </div>
       </main>
-  
+      
       <Footer />
-  
-  </div>
+    </div>
   );
-  
-
 }
+
 export default Pricing;
