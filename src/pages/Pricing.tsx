@@ -1,3 +1,4 @@
+import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -136,7 +137,7 @@ function Pricing() {
 
   return (
     <div>
-      {/* Removido Navigation */}
+      <Navigation />
       <header className="max-w-5xl mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold text-keepla-black">Planos e Preços</h1>
         <p className="mt-2 text-sm text-keepla-black">Site monocromático com acentos em vermelho — sem outras cores.</p>

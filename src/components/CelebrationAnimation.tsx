@@ -35,18 +35,16 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
   useEffect(() => {
     if (!isVisible) return;
     
-    // Sequência de animação
     const phases = [
-      () => setAnimationPhase(1), // Fade in
-      () => setShowConfetti(true), // Confetti
-      () => setAnimationPhase(2), // Conteúdo principal
+      () => setAnimationPhase(1),
+      () => setShowConfetti(true),
+      () => setAnimationPhase(2),
     ];
 
     phases.forEach((phase, index) => {
       setTimeout(phase, index * 500);
     });
 
-    // Auto-close após 8 segundos
     const autoClose = setTimeout(() => {
       onClose();
     }, 8000);
@@ -72,7 +70,6 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
         url: `${window.location.origin}/keepsake/${keepsakeId}`
       });
     } else {
-      // Fallback para copiar link
       navigator.clipboard.writeText(`${window.location.origin}/keepsake/${keepsakeId}`);
     }
   };
@@ -82,7 +79,6 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
       
-      {/* Confetti Animation */}
       {showConfetti && (
         <div className="absolute inset-0 pointer-events-none">
           {[...Array(50)].map((_, i) => (
@@ -101,93 +97,81 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
         </div>
       )}
 
-      {/* Card Principal */}
       <Card className={`w-full max-w-2xl transition-all duration-1000 ${
         animationPhase >= 1 
           ? 'opacity-100 scale-100 translate-y-0' 
           : 'opacity-0 scale-75 translate-y-10'
       }`}>
         
-        {/* Header Gradient */}
-        <div className="h-3 bg-gradient-to-r from-dusty-rose via-golden-honey to-earthy-burgundy" />
+        <div className="h-3 bg-keepla-red" />
         
         <CardContent className="p-8 text-center">
           
-          {/* Ícone Principal Animado */}
           <div className="relative mb-6">
-            <div className="w-24 h-24 mx-auto bg-gradient-to-br from-dusty-rose to-earthy-burgundy rounded-full flex items-center justify-center animate-pulse-gentle">
+            <div className="w-24 h-24 mx-auto bg-keepla-red rounded-full flex items-center justify-center animate-pulse-gentle">
               <Gift className="w-12 h-12 text-white" />
             </div>
             
-            {/* Elementos Orbitais */}
             <div className="absolute inset-0 animate-spin-slow">
-              <Sparkles className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2 w-6 h-6 text-golden-honey" />
-              <Heart className="absolute right-0 top-1/2 transform translate-x-2 -translate-y-1/2 w-5 h-5 text-dusty-rose" />
-              <Star className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-2 w-5 h-5 text-earthy-burgundy" />
+              <Sparkles className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2 w-6 h-6 text-keepla-red" />
+              <Heart className="absolute right-0 top-1/2 transform translate-x-2 -translate-y-1/2 w-5 h-5 text-keepla-red" />
+              <Star className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-2 w-5 h-5 text-keepla-red-deep" />
             </div>
           </div>
 
-          {/* Título Principal */}
-          <h1 className="text-4xl font-serif text-steel-blue mb-4 animate-slide-up">
+          <h1 className="text-4xl font-georgia text-keepla-black mb-4 animate-slide-up">
             🎉 Cápsula Criada com Sucesso!
           </h1>
 
-          {/* Subtítulo */}
-          <p className="text-xl text-misty-gray mb-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          <p className="text-xl text-gray-600 mb-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
             Sua mensagem especial está programada para tocar corações
           </p>
 
-          {/* Detalhes da Cápsula */}
-          <div className="bg-gradient-to-br from-lavender-mist to-warm-cream rounded-xl p-6 mb-8 animate-slide-up" style={{ animationDelay: '0.4s' }}>
+          <div className="bg-keepla-gray rounded-xl p-6 mb-8 animate-slide-up" style={{ animationDelay: '0.4s' }}>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
               
-              {/* Título */}
               <div className="space-y-2">
-                <div className="w-12 h-12 mx-auto bg-white rounded-full flex items-center justify-center shadow-soft">
-                  <Sparkles className="w-6 h-6 text-dusty-rose" />
+                <div className="w-12 h-12 mx-auto bg-white rounded-full flex items-center justify-center shadow-md">
+                  <Sparkles className="w-6 h-6 text-keepla-red" />
                 </div>
-                <h3 className="font-semibold text-steel-blue">Título</h3>
-                <p className="text-sm text-misty-gray font-medium">"{keepsakeTitle}"</p>
+                <h3 className="font-semibold text-keepla-black">Título</h3>
+                <p className="text-sm text-gray-600 font-medium">"{keepsakeTitle}"</p>
               </div>
 
-              {/* Data de Entrega */}
               <div className="space-y-2">
-                <div className="w-12 h-12 mx-auto bg-white rounded-full flex items-center justify-center shadow-soft">
-                  <Calendar className="w-6 h-6 text-earthy-burgundy" />
+                <div className="w-12 h-12 mx-auto bg-white rounded-full flex items-center justify-center shadow-md">
+                  <Calendar className="w-6 h-6 text-keepla-red-deep" />
                 </div>
-                <h3 className="font-semibold text-steel-blue">Entrega</h3>
-                <p className="text-sm text-misty-gray font-medium">{formatDate(deliveryDate)}</p>
+                <h3 className="font-semibold text-keepla-black">Entrega</h3>
+                <p className="text-sm text-gray-600 font-medium">{formatDate(deliveryDate)}</p>
               </div>
 
-              {/* Destinatários */}
               <div className="space-y-2">
-                <div className="w-12 h-12 mx-auto bg-white rounded-full flex items-center justify-center shadow-soft">
-                  <Heart className="w-6 h-6 text-golden-honey" />
+                <div className="w-12 h-12 mx-auto bg-white rounded-full flex items-center justify-center shadow-md">
+                  <Heart className="w-6 h-6 text-keepla-red" />
                 </div>
-                <h3 className="font-semibold text-steel-blue">Destinatários</h3>
-                <p className="text-sm text-misty-gray font-medium">
+                <h3 className="font-semibold text-keepla-black">Destinatários</h3>
+                <p className="text-sm text-gray-600 font-medium">
                   {recipientCount} {recipientCount === 1 ? 'pessoa' : 'pessoas'}
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Mensagem Motivacional */}
-          <div className="bg-white border-2 border-dusty-rose/20 rounded-xl p-6 mb-8 animate-slide-up" style={{ animationDelay: '0.6s' }}>
-            <CheckCircle className="w-8 h-8 text-green-500 mx-auto mb-3" />
-            <p className="text-steel-blue leading-relaxed">
+          <div className="bg-white border-2 border-keepla-gray rounded-xl p-6 mb-8 animate-slide-up" style={{ animationDelay: '0.6s' }}>
+            <CheckCircle className="w-8 h-8 text-green-600 mx-auto mb-3" />
+            <p className="text-keepla-black leading-relaxed">
               <strong>Sua cápsula está segura!</strong> Ela será entregue automaticamente na data programada. 
               Você receberá uma confirmação quando a mensagem for enviada.
             </p>
           </div>
 
-          {/* Botões de Ação */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up" style={{ animationDelay: '0.8s' }}>
             
             <Button
               onClick={onClose}
-              className="bg-dusty-rose hover:bg-dusty-rose/90 text-white px-8 py-3"
+              className="bg-keepla-red hover:bg-keepla-red-deep text-white px-8 py-3"
             >
               <CheckCircle className="w-5 h-5 mr-2" />
               Perfeito!
@@ -197,7 +181,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
               <Button
                 variant="outline"
                 onClick={handleShare}
-                className="border-dusty-rose text-dusty-rose hover:bg-dusty-rose/10 hover:text-dusty-rose px-8 py-3"
+                className="border-keepla-red text-keepla-red hover:bg-keepla-red/10 hover:text-keepla-red px-8 py-3"
               >
                 <Share2 className="w-5 h-5 mr-2" />
                 Compartilhar
@@ -207,7 +191,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
             <Button
               variant="ghost"
               onClick={() => window.location.href = '/dashboard'}
-              className="text-misty-gray hover:text-steel-blue px-8 py-3"
+              className="text-gray-600 hover:text-keepla-black px-8 py-3"
             >
               <Eye className="w-5 h-5 mr-2" />
               Ver Dashboard
@@ -217,7 +201,6 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
         </CardContent>
       </Card>
 
-      {/* Estilos CSS Customizados */}
       <style>{`
         @keyframes confetti {
           0% {

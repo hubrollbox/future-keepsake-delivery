@@ -108,14 +108,6 @@ export default {
 				'keepla-white': '#FFFFFF',         // White - Fundos alternativos, texto sobre escuro
 				'keepla-gray': '#E0E0E0',          // Gray Neutral - Divisores, fundos secundários
 				'keepla-gray-neutral': '#E0E0E0',  // Alias explícito Brand Book
-				
-				// Cores do tema existente
-				'earthy-burgundy': '#8B4513', // Cor principal para botões e elementos
-				'dusty-rose': '#D4A574', // Rosa empoeirado
-				'sand-beige': '#F5E6D3', // Bege areia
-				'steel-blue': '#4682B4', // Azul aço
-				'misty-gray': '#9CA3AF', // Cinza névoa
-				'golden-honey': '#DAA520', // Mel dourado
 			},
 			borderRadius: {
 				lg: '12px',

@@ -38,9 +38,8 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
 }) => {
   const [showPreview, setShowPreview] = useState(false);
   const [ambientMode, setAmbientMode] = useState(true);
-
-  // Simular a experiência de recebimento
   const [simulationStep, setSimulationStep] = useState(0);
+  
   const simulationSteps = [
     'Notificação recebida',
     'Abrindo a cápsula...',
@@ -56,38 +55,6 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
     }, 2000);
     return () => clearTimeout(timer);
   }, [showPreview, simulationStep, simulationSteps.length]);
-
-  const getEmotionTheme = (emotion: string) => {
-    const themes = {
-      love: {
-        gradient: 'from-red-400 via-pink-400 to-red-600',
-        accent: 'text-red-600',
-        bg: 'bg-red-50',
-        particles: '❤️'
-      },
-      gratitude: {
-        gradient: 'from-yellow-400 via-orange-400 to-yellow-600',
-        accent: 'text-yellow-600',
-        bg: 'bg-yellow-50',
-        particles: '🙏'
-      },
-      hope: {
-        gradient: 'from-blue-400 via-cyan-400 to-blue-600',
-        accent: 'text-blue-600',
-        bg: 'bg-blue-50',
-        particles: '⭐'
-      },
-      nostalgia: {
-        gradient: 'from-purple-400 via-indigo-400 to-purple-600',
-        accent: 'text-purple-600',
-        bg: 'bg-purple-50',
-        particles: '🌅'
-      }
-    };
-    return themes[emotion as keyof typeof themes] || themes.love;
-  };
-
-  const theme = getEmotionTheme(data.emotion);
 
   const formatDeliveryDate = (date: Date) => {
     const now = new Date();
@@ -106,18 +73,18 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
     <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl animate-in slide-in-from-bottom duration-500">
         <div className="text-center">
-          <div className="w-16 h-16 bg-gradient-to-br from-dusty-rose to-steel-blue rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 bg-keepla-red rounded-full flex items-center justify-center mx-auto mb-4">
             <Mail className="w-8 h-8 text-white" />
           </div>
-          <h3 className="text-xl font-semibold text-steel-blue mb-2">
+          <h3 className="text-xl font-semibold text-keepla-black mb-2">
             Você tem uma cápsula do tempo!
           </h3>
-          <p className="text-misty-gray mb-4">
+          <p className="text-gray-600 mb-4">
             "{data.title}" está pronta para ser aberta
           </p>
           <Button 
             onClick={() => setSimulationStep(1)}
-            className="w-full bg-dusty-rose hover:bg-dusty-rose/90"
+            className="w-full bg-keepla-red hover:bg-keepla-red-deep text-keepla-white"
           >
             Abrir Cápsula
           </Button>
@@ -127,7 +94,7 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
   );
 
   const CapsuleOpening = () => (
-    <div className="fixed inset-0 bg-gradient-to-br from-steel-blue via-dusty-rose to-golden-honey flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-keepla-black flex items-center justify-center z-50">
       <div className="text-center text-white">
         <div className="relative">
           <div className="w-32 h-32 border-4 border-white rounded-full animate-spin mx-auto mb-8"></div>
@@ -135,23 +102,23 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
             <Package className="w-16 h-16 text-white animate-pulse" />
           </div>
         </div>
-        <h2 className="text-2xl font-serif mb-4">Abrindo sua cápsula...</h2>
+        <h2 className="text-2xl font-georgia mb-4">Abrindo sua cápsula...</h2>
         <p className="text-white/80">Preparando uma experiência especial</p>
       </div>
     </div>
   );
 
   const ContentReveal = () => (
-    <div className={`fixed inset-0 bg-gradient-to-br ${theme.gradient} flex items-center justify-center z-50 p-4`}>
+    <div className="fixed inset-0 bg-keepla-red flex items-center justify-center z-50 p-4">
       <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 max-w-2xl w-full shadow-2xl">
         <div className="text-center mb-6">
-          <div className="text-4xl mb-4 animate-bounce">{theme.particles}</div>
-          <h2 className="text-3xl font-serif text-steel-blue mb-2">{data.title}</h2>
-          <p className="text-misty-gray">De você para {data.recipientName}</p>
+          <div className="text-4xl mb-4 animate-bounce">💖</div>
+          <h2 className="text-3xl font-georgia text-keepla-black mb-2">{data.title}</h2>
+          <p className="text-gray-600">De você para {data.recipientName}</p>
         </div>
         
-        <div className={`${theme.bg} rounded-2xl p-6 mb-6`}>
-          <p className="text-steel-blue leading-relaxed text-lg">
+        <div className="bg-keepla-gray rounded-2xl p-6 mb-6">
+          <p className="text-keepla-black leading-relaxed text-lg">
             {data.message}
           </p>
         </div>
@@ -159,7 +126,7 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
         <div className="flex justify-center space-x-4">
           <Button 
             onClick={() => setSimulationStep(3)}
-            className="bg-dusty-rose hover:bg-dusty-rose/90"
+            className="bg-keepla-red hover:bg-keepla-red-deep text-keepla-white"
           >
             Continuar Experiência
           </Button>
@@ -171,7 +138,6 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
   const FullExperience = () => (
     <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
       <div className="relative w-full h-full flex items-center justify-center">
-        {/* Ambient Particles */}
         {ambientMode && (
           <div className="absolute inset-0 overflow-hidden">
             {[...Array(20)].map((_, i) => (
@@ -185,20 +151,18 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
                   fontSize: `${Math.random() * 20 + 10}px`
                 }}
               >
-                {theme.particles}
+                ❤️
               </div>
             ))}
           </div>
         )}
 
-        {/* Main Content */}
         <div className="relative z-10 bg-white/10 backdrop-blur-md rounded-3xl p-8 max-w-4xl w-full mx-4 border border-white/20">
           <div className="text-center text-white mb-8">
-            <h1 className="text-4xl md:text-6xl font-serif mb-4">{data.title}</h1>
+            <h1 className="text-4xl md:text-6xl font-georgia mb-4">{data.title}</h1>
             <p className="text-xl opacity-90">Para {data.recipientName}</p>
           </div>
 
-          {/* Media Preview */}
           {data.mediaUrl && (
             <div className="bg-black/50 rounded-2xl p-4 mb-8">
               <div className="aspect-video bg-gray-800 rounded-xl flex items-center justify-center">
@@ -210,14 +174,12 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
             </div>
           )}
 
-          {/* Message Content */}
           <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 mb-8">
             <p className="text-white text-lg leading-relaxed">
               {data.message}
             </p>
           </div>
 
-          {/* Controls */}
           <div className="flex justify-center space-x-4">
             <Button
               variant="outline"
@@ -229,14 +191,13 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
             </Button>
             <Button
               onClick={() => setShowPreview(false)}
-              className="bg-dusty-rose hover:bg-dusty-rose/90"
+              className="bg-keepla-red hover:bg-keepla-red-deep text-keepla-white"
             >
               Fechar Preview
             </Button>
           </div>
         </div>
 
-        {/* Close Button */}
         <Button
           variant="ghost"
           size="sm"
@@ -251,15 +212,13 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
 
   return (
     <div className="max-w-4xl mx-auto p-6">
-      {/* Preview Card */}
       <Card className="overflow-hidden shadow-xl border-0">
-        <div className={`h-2 bg-gradient-to-r ${theme.gradient}`}></div>
+        <div className="h-2 bg-keepla-red"></div>
         
         <CardContent className="p-8">
-          {/* Header */}
           <div className="flex items-start justify-between mb-6">
             <div className="flex items-center space-x-4">
-              <div className={`w-12 h-12 bg-gradient-to-br ${theme.gradient} rounded-full flex items-center justify-center`}>
+              <div className="w-12 h-12 bg-keepla-red rounded-full flex items-center justify-center">
                 {data.type === 'digital' ? (
                   <Mail className="w-6 h-6 text-white" />
                 ) : (
@@ -267,79 +226,75 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
                 )}
               </div>
               <div>
-                <h2 className="text-2xl font-serif text-steel-blue">{data.title}</h2>
-                <p className="text-misty-gray">Cápsula do tempo {data.type === 'digital' ? 'digital' : 'física'}</p>
+                <h2 className="text-2xl font-georgia text-keepla-black">{data.title}</h2>
+                <p className="text-gray-600">Cápsula do tempo {data.type === 'digital' ? 'digital' : 'física'}</p>
               </div>
             </div>
-            <Badge className={`${theme.bg} ${theme.accent} border-0`}>
+            <Badge className="bg-keepla-gray text-keepla-black border-0">
               {data.emotion}
             </Badge>
           </div>
 
-          {/* Content Preview */}
-          <div className={`${theme.bg} rounded-xl p-6 mb-6`}>
+          <div className="bg-keepla-gray rounded-xl p-6 mb-6">
             <div className="flex items-center space-x-2 mb-4">
-              <User className="w-4 h-4 text-misty-gray" />
-              <span className="text-sm text-misty-gray">Para: {data.recipientName}</span>
+              <User className="w-4 h-4 text-gray-600" />
+              <span className="text-sm text-gray-600">Para: {data.recipientName}</span>
             </div>
-            <p className="text-steel-blue leading-relaxed mb-4">
+            <p className="text-keepla-black leading-relaxed mb-4">
               {data.message.length > 200 ? `${data.message.substring(0, 200)}...` : data.message}
             </p>
             {data.message.length > 200 && (
-              <Button variant="ghost" size="sm" className={theme.accent}>
+              <Button variant="ghost" size="sm" className="text-keepla-red">
                 Ler mensagem completa
               </Button>
             )}
           </div>
 
-          {/* Delivery Info */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-            <div className="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
-              <Calendar className="w-5 h-5 text-dusty-rose" />
+            <div className="flex items-center space-x-3 p-4 bg-keepla-gray rounded-lg">
+              <Calendar className="w-5 h-5 text-keepla-red" />
               <div>
-                <div className="font-semibold text-steel-blue">Data de Entrega</div>
-                <div className="text-sm text-misty-gray">
+                <div className="font-semibold text-keepla-black">Data de Entrega</div>
+                <div className="text-sm text-gray-600">
                   {data.deliveryDate.toLocaleDateString('pt-PT')}
                 </div>
               </div>
             </div>
-            <div className="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
-              <Clock className="w-5 h-5 text-dusty-rose" />
+            <div className="flex items-center space-x-3 p-4 bg-keepla-gray rounded-lg">
+              <Clock className="w-5 h-5 text-keepla-red" />
               <div>
-                <div className="font-semibold text-steel-blue">Tempo Restante</div>
-                <div className="text-sm text-misty-gray">
+                <div className="font-semibold text-keepla-black">Tempo Restante</div>
+                <div className="text-sm text-gray-600">
                   {formatDeliveryDate(data.deliveryDate)}
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Preview Button */}
           <div className="text-center mb-6">
             <Button
               onClick={() => {
                 setShowPreview(true);
                 setSimulationStep(0);
               }}
-              className="bg-gradient-to-r from-dusty-rose to-steel-blue text-white px-8 py-3 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+              className="bg-keepla-red hover:bg-keepla-red-deep text-white px-8 py-3 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:scale-105"
             >
               <Sparkles className="w-5 h-5 mr-2" />
               Prévia da Experiência de Recebimento
             </Button>
           </div>
 
-          {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               variant="outline"
               onClick={onEdit}
-              className="flex-1 sm:flex-none"
+              className="flex-1 sm:flex-none border-keepla-black text-keepla-black hover:bg-keepla-gray"
             >
               Editar Cápsula
             </Button>
             <Button
               onClick={onConfirm}
-              className="flex-1 sm:flex-none bg-dusty-rose hover:bg-dusty-rose/90"
+              className="flex-1 sm:flex-none bg-keepla-red hover:bg-keepla-red-deep text-keepla-white"
             >
               Confirmar e Agendar
             </Button>
@@ -347,7 +302,6 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
         </CardContent>
       </Card>
 
-      {/* Immersive Preview Overlay */}
       {showPreview && (
         <>
           {simulationStep === 0 && <NotificationPreview />}
@@ -357,7 +311,6 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
         </>
       )}
 
-      {/* Custom Styles */}
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
@@ -372,4 +325,3 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
 };
 
 export default ImmersivePreview;
-

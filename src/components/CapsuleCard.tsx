@@ -23,10 +23,10 @@ const CapsuleCard = ({
 }: CapsuleCardProps) => {
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "pending": return "bg-sand-beige text-steel-blue";
-      case "delivered": return "bg-earthy-burgundy/10 text-earthy-burgundy";
-      case "scheduled": return "bg-dusty-rose/20 text-steel-blue";
-      default: return "bg-misty-gray/20 text-steel-blue";
+      case "pending": return "bg-keepla-gray text-keepla-black";
+      case "delivered": return "bg-keepla-red/10 text-keepla-red-deep";
+      case "scheduled": return "bg-keepla-gray-neutral text-keepla-black";
+      default: return "bg-keepla-gray text-keepla-black";
     }
   };
 
@@ -49,12 +49,12 @@ const CapsuleCard = ({
   };
 
   return (
-    <Card className="emotion-card border-dusty-rose/20 gentle-hover">
+    <Card className="border-keepla-gray hover:border-keepla-red transition-colors">
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-2">
             {getTypeIcon(type)}
-            <CardTitle className="text-lg font-fraunces text-steel-blue">{title}</CardTitle>
+            <CardTitle className="text-lg font-inter text-keepla-black">{title}</CardTitle>
           </div>
           <Badge className={`${getStatusColor(status)} border-0 font-medium`}>
             {getStatusText(status)}
@@ -62,24 +62,24 @@ const CapsuleCard = ({
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-misty-gray text-sm leading-relaxed">{description}</p>
+        <p className="text-gray-600 text-sm leading-relaxed">{description}</p>
         
         <div className="space-y-2 text-sm">
           <div className="flex items-center justify-between">
-            <span className="text-steel-blue font-medium">Para:</span>
-            <span className="text-misty-gray">{recipient}</span>
+            <span className="text-keepla-black font-medium">Para:</span>
+            <span className="text-gray-600">{recipient}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-steel-blue font-medium">Entrega:</span>
-            <span className="text-misty-gray">{deliveryDate}</span>
+            <span className="text-keepla-black font-medium">Entrega:</span>
+            <span className="text-gray-600">{deliveryDate}</span>
           </div>
         </div>
 
         <div className="pt-2">
           <Button 
-            variant="brand-outline" 
+            variant="outline" 
             size="sm" 
-            className="w-full group"
+            className="w-full group border-keepla-red text-keepla-red hover:bg-keepla-red hover:text-keepla-white"
           >
             Ver Detalhes
             <ArrowRight className="h-3 w-3 ml-1 group-hover:translate-x-1 transition-transform" />
