@@ -140,7 +140,7 @@ function Pricing() {
       <Navigation />
       <header className="max-w-5xl mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold text-keepla-black">Planos e Preços</h1>
-        <p className="mt-2 text-sm text-keepla-black">Site monocromático com acentos em vermelho — sem outras cores.</p>
+        
       </header>
       <main>
         <div className="max-w-6xl mx-auto px-4 pt-12">
