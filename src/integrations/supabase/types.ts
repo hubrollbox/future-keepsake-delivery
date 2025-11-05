@@ -97,7 +97,7 @@ export type Database = {
           created_at: string | null
           endpoint: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           request_count: number | null
           user_id: string | null
           window_start: string | null
@@ -106,7 +106,7 @@ export type Database = {
           created_at?: string | null
           endpoint: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           request_count?: number | null
           user_id?: string | null
           window_start?: string | null
@@ -115,7 +115,7 @@ export type Database = {
           created_at?: string | null
           endpoint?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           request_count?: number | null
           user_id?: string | null
           window_start?: string | null
@@ -637,7 +637,7 @@ export type Database = {
           id: number
           reward: number
           target: number
-          time_limit: unknown | null
+          time_limit: unknown
           title: string
         }
         Insert: {
@@ -646,7 +646,7 @@ export type Database = {
           id?: number
           reward: number
           target: number
-          time_limit?: unknown | null
+          time_limit?: unknown
           title: string
         }
         Update: {
@@ -655,7 +655,7 @@ export type Database = {
           id?: number
           reward?: number
           target?: number
-          time_limit?: unknown | null
+          time_limit?: unknown
           title?: string
         }
         Relationships: []
@@ -807,7 +807,7 @@ export type Database = {
           created_at: string | null
           error_message: string | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           metadata: Json | null
           resource_id: string | null
           resource_type: string | null
@@ -820,7 +820,7 @@ export type Database = {
           created_at?: string | null
           error_message?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           metadata?: Json | null
           resource_id?: string | null
           resource_type?: string | null
@@ -833,7 +833,7 @@ export type Database = {
           created_at?: string | null
           error_message?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           metadata?: Json | null
           resource_id?: string | null
           resource_type?: string | null
@@ -944,7 +944,7 @@ export type Database = {
           created_at: string | null
           expires_at: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           last_accessed: string | null
           session_token: string
           user_agent: string | null
@@ -954,7 +954,7 @@ export type Database = {
           created_at?: string | null
           expires_at: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           last_accessed?: string | null
           session_token: string
           user_agent?: string | null
@@ -964,7 +964,7 @@ export type Database = {
           created_at?: string | null
           expires_at?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           last_accessed?: string | null
           session_token?: string
           user_agent?: string | null
@@ -1031,37 +1031,26 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      calculate_level: {
-        Args: Record<PropertyKey, never> | { points: number }
-        Returns: number
-      }
-      get_current_user_role: {
-        Args: Record<PropertyKey, never>
-        Returns: string
-      }
+      calculate_level:
+        | { Args: never; Returns: number }
+        | { Args: { points: number }; Returns: number }
+      get_current_user_role: { Args: never; Returns: string }
       get_recipient_stats_secure: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           recent_recipients: number
           total_recipients: number
         }[]
       }
-      is_admin: {
-        Args: { required_permission?: string; uid: string } | { uid: string }
-        Returns: boolean
-      }
-      is_admin_secure: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
-      is_admin_user: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
-      is_profile_admin: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
+      is_admin:
+        | { Args: { uid: string }; Returns: boolean }
+        | {
+            Args: { required_permission?: string; uid: string }
+            Returns: boolean
+          }
+      is_admin_secure: { Args: never; Returns: boolean }
+      is_admin_user: { Args: never; Returns: boolean }
+      is_profile_admin: { Args: never; Returns: boolean }
       log_security_event: {
         Args: {
           p_action: string
@@ -1076,14 +1065,8 @@ export type Database = {
         }
         Returns: undefined
       }
-      send_due_deliveries: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      send_due_keepsakes: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      send_due_deliveries: { Args: never; Returns: undefined }
+      send_due_keepsakes: { Args: never; Returns: undefined }
       validate_checkout_session: {
         Args: { p_user_id: string }
         Returns: {
