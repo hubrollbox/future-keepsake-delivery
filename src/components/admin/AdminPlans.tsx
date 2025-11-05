@@ -89,7 +89,22 @@ const AdminPlans = () => {
         .select('*')
         .order('name');
       if (error) throw error;
-      setPlans(data || []);
+      const mapped = (data || []).map((p: any) => ({
+        id: p.id,
+        name: p.name,
+        description: p.description ?? "",
+        price_monthly: Number(p.price_monthly ?? 0),
+        price_yearly: Number(p.price_yearly ?? 0),
+        subscriber_count: p.subscriber_count ?? 0,
+        features: Array.isArray(p.features) ? p.features : [],
+        limitations: Array.isArray(p.limitations) ? p.limitations : [],
+        keepsakeLimit: p.keepsake_limit ?? "",
+        popular: p.popular ?? false,
+        active: p.active ?? true,
+        created_at: p.created_at,
+        updated_at: p.updated_at,
+      }));
+      setPlans(mapped as Plan[]);
     } catch (error) {
       console.error('Erro ao carregar planos:', error);
       toast({
@@ -106,15 +121,14 @@ const AdminPlans = () => {
     e.preventDefault();
     
     try {
-      const planData: Plan = {
-        id: editingPlan?.id || '',
+      const dbPayload = {
         name: formData.name,
-        description: formData.description,
+        description: formData.description || null,
         price_monthly: formData.price_monthly,
         price_yearly: formData.price_yearly,
         features: formData.features,
         limitations: formData.limitations,
-        keepsakeLimit: formData.keepsakeLimit,
+        keepsake_limit: formData.keepsakeLimit,
         popular: formData.popular,
         active: formData.active
       };
@@ -122,7 +136,7 @@ const AdminPlans = () => {
         // Atualizar plano existente
         const { error } = await supabase
           .from('plans')
-          .update(planData)
+          .update(dbPayload)
           .eq('id', editingPlan.id);
         if (error) throw error;
         toast({
@@ -133,7 +147,7 @@ const AdminPlans = () => {
         // Criar novo plano
         const { error } = await supabase
           .from('plans')
-          .insert([planData]);
+          .insert([dbPayload]);
         if (error) throw error;
         toast({
           title: "Sucesso",

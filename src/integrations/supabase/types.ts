@@ -537,16 +537,49 @@ export type Database = {
       }
       plans: {
         Row: {
+          active: boolean
+          created_at: string
+          description: string | null
+          features: string[]
           id: string
+          keepsake_limit: string | null
+          limitations: string[]
           name: string
+          popular: boolean
+          price_monthly: number
+          price_yearly: number
+          subscriber_count: number
+          updated_at: string
         }
         Insert: {
+          active?: boolean
+          created_at?: string
+          description?: string | null
+          features?: string[]
           id?: string
+          keepsake_limit?: string | null
+          limitations?: string[]
           name: string
+          popular?: boolean
+          price_monthly?: number
+          price_yearly?: number
+          subscriber_count?: number
+          updated_at?: string
         }
         Update: {
+          active?: boolean
+          created_at?: string
+          description?: string | null
+          features?: string[]
           id?: string
+          keepsake_limit?: string | null
+          limitations?: string[]
           name?: string
+          popular?: boolean
+          price_monthly?: number
+          price_yearly?: number
+          subscriber_count?: number
+          updated_at?: string
         }
         Relationships: []
       }
