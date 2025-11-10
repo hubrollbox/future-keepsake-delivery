@@ -5,81 +5,12 @@ import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check, ArrowRight } from "lucide-react";
+import { Check, ShoppingCart } from "lucide-react";
 import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { trackSubscription, trackButtonClick } from '@/lib/analytics';
-
-const freemiumPlans = [
-  {
-    id: 'free',
-    name: 'Gratuito',
-    description: 'Para testes e curiosos',
-    price: { monthly: 0, yearly: 0 },
-    features: [
-      '1 cápsula por mês',
-      '10MB de armazenamento',
-      'Duração: 1 ano',
-      'Agendamento simples',
-      'Texto/Imagem básico'
-    ],
-    limitations: [
-      'Sem notificações personalizadas',
-      'Sem áudio/vídeo',
-      'Sem gamificação'
-    ],
-    keepsakeLimit: '1 por mês'
-  },
-  {
-    id: 'personal',
-    name: 'Pessoal',
-    description: 'Para o utilizador individual',
-    price: { monthly: 4.99, yearly: 44.99 },
-    features: [
-      '10 cápsulas por mês',
-      '50MB por cápsula',
-      'Duração: 5 anos',
-      'Texto/Imagem/Áudio',
-      'Notificações por email',
-      'Gamificação',
-      'Edição pós-envio'
-    ],
-    popular: true,
-    keepsakeLimit: '10 por mês'
-  },
-  {
-    id: 'family',
-    name: 'Família',
-    description: 'Para famílias e grupos',
-    price: { monthly: 9.99, yearly: 99 },
-    features: [
-      '50 cápsulas por mês',
-      '250MB por cápsula',
-      'Duração: 10 anos',
-      'Partilha familiar',
-      'Multi-destinatários',
-      'Todas funcionalidades do Pessoal',
-      'Criação de álbuns'
-    ],
-    keepsakeLimit: '50 por mês'
-  },
-  {
-    id: 'individual',
-    name: 'Individual',
-    description: 'Pagamento avulso',
-    price: { monthly: 1.99, yearly: 1.99 },
-    features: [
-      '1 cápsula única',
-      '20MB de armazenamento',
-      'Duração: 1-10 anos (escolha)',
-      'Agendamento flexível',
-      'Mensagem individual',
-      'Notificação única'
-    ],
-    keepsakeLimit: '1 cápsula'
-  }
-];
+import { useCart } from '@/contexts/CartContext';
 
 function usePlans() {
   type Plan = {
@@ -111,8 +42,9 @@ function usePlans() {
 function Pricing() {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { addToCart } = useCart();
 
-  const handleSelectPlan = (planId: string) => {
+  const handleSelectPlan = async (planId: string, planName: string, price: number) => {
     trackButtonClick(`select_plan_${planId}`, 'pricing_page');
     
     if (!user) {
@@ -127,9 +59,13 @@ function Pricing() {
       return;
     }
 
-    const plan = freemiumPlans.find(p => p.id === planId);
-    if (plan) {
-      trackSubscription(plan.name, 'subscribe');
+    try {
+      await addToCart(planId, planName, price);
+      toast.success(`${planName} adicionado ao carrinho!`);
+      trackSubscription(planName, 'subscribe');
+      navigate('/checkout');
+    } catch (error) {
+      toast.error('Erro ao adicionar plano ao carrinho');
     }
   };
   const plans = usePlans();
@@ -230,7 +166,11 @@ function Pricing() {
                     )}
                     {/* CTA Button */}
                     <Button
-                      onClick={() => handleSelectPlan(plan.id)}
+                      onClick={() => handleSelectPlan(
+                        plan.id, 
+                        plan.name, 
+                        billingCycle === 'monthly' ? plan.price_monthly : plan.price_yearly
+                      )}
                       className={`w-full mt-6 font-inter font-semibold ${
                         plan.popular
                           ? 'bg-keepla-red hover:bg-keepla-red-deep text-keepla-white'
@@ -238,8 +178,8 @@ function Pricing() {
                       }`}
                       size="lg"
                     >
-                      {plan.id === 'free' ? 'Começar Grátis' : 'Escolher Plano'}
-                      <ArrowRight className="h-4 w-4 ml-2" />
+                      {plan.id === 'free' ? 'Começar Grátis' : 'Adicionar ao Carrinho'}
+                      <ShoppingCart className="h-4 w-4 ml-2" />
                     </Button>
                   </CardContent>
                 </Card>

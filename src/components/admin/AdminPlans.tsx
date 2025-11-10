@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
@@ -425,11 +426,15 @@ const AdminPlans = () => {
 
             <div className="space-y-2">
               <Label htmlFor="features">Funcionalidades</Label>
-              <Input
+              <Textarea
                 id="features"
-                value={formData.features.join(', ')}
-                onChange={(e) => setFormData({ ...formData, features: e.target.value.split(',').map(f => f.trim()).filter(f => f) })}
-                placeholder="Separar por vírgulas"
+                value={Array.isArray(formData.features) ? formData.features.join('\n') : ''}
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setFormData({
+                  ...formData,
+                  features: e.target.value.split('\n').filter((f: string) => f.trim())
+                })}
+                placeholder="Uma funcionalidade por linha"
+                className="min-h-[120px] whitespace-pre-wrap"
               />
             </div>
 
