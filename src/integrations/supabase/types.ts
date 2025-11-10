@@ -591,6 +591,7 @@ export type Database = {
           icon: string | null
           id: string
           name: string
+          poetry: string | null
           price: number
           stock: number
           type: string
@@ -602,6 +603,7 @@ export type Database = {
           icon?: string | null
           id?: string
           name: string
+          poetry?: string | null
           price: number
           stock?: number
           type: string
@@ -613,6 +615,7 @@ export type Database = {
           icon?: string | null
           id?: string
           name?: string
+          poetry?: string | null
           price?: number
           stock?: number
           type?: string

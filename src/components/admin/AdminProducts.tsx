@@ -25,9 +25,9 @@ interface ProductFormData {
   price: number;
   stock: number;
   type: string;
-  category: string;
   active: boolean;
   icon?: string;
+  poetry?: string;
 }
 
 const AdminProducts = () => {
@@ -44,9 +44,9 @@ const AdminProducts = () => {
     price: 0,
     stock: 0,
     type: "physical",
-    category: "general",
     active: true,
-    icon: ""
+    icon: "",
+    poetry: ""
   });
   const [csvFile, setCsvFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -96,10 +96,10 @@ const AdminProducts = () => {
           price: formData.price,
           stock: formData.stock,
           type: formData.type,
-          category: formData.category,
           active: formData.active,
-          icon: formData.icon || null
-        };
+          icon: formData.icon || null,
+          poetry: formData.poetry || null
+        } as any;
 
         const { error } = await supabase
           .from('products')
@@ -120,10 +120,10 @@ const AdminProducts = () => {
           price: formData.price,
           stock: formData.stock,
           type: formData.type,
-          category: formData.category,
           active: formData.active,
-          icon: formData.icon || null
-        };
+          icon: formData.icon || null,
+          poetry: formData.poetry || null
+        } as any;
 
         const { error } = await supabase
           .from('products')
@@ -206,9 +206,9 @@ const AdminProducts = () => {
       price: 0,
       stock: 0,
       type: "physical",
-      category: "general",
       active: true,
-      icon: ""
+      icon: "",
+      poetry: ""
     });
     setEditingProduct(null);
   };
@@ -221,9 +221,9 @@ const AdminProducts = () => {
       price: product.price,
       stock: product.stock,
       type: product.type,
-      category: product.category,
       active: product.active || true,
-      icon: product.icon || ""
+      icon: product.icon || "",
+      poetry: (product as any).poetry || ""
     });
     setIsDialogOpen(true);
   };
@@ -325,7 +325,6 @@ const AdminProducts = () => {
           price: priceIndex >= 0 ? parseFloat(values[priceIndex] || '0') || 0 : 0,
           stock: stockIndex >= 0 ? parseInt(values[stockIndex] || '0') || 0 : 0,
           type: typeIndex >= 0 ? values[typeIndex] || 'physical' : 'physical',
-          category: 'general',
           active: activeIndex >= 0 ? values[activeIndex]?.toLowerCase() === 'sim' : true,
           icon: iconIndex >= 0 ? values[iconIndex] || null : null
         };
@@ -660,6 +659,17 @@ const AdminProducts = () => {
                 value={formData.icon}
                 onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
                 placeholder="https://exemplo.com/icone.png"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="poetry">Frase Emotiva</Label>
+              <Textarea
+                id="poetry"
+                value={formData.poetry}
+                onChange={(e) => setFormData({ ...formData, poetry: e.target.value })}
+                rows={2}
+                placeholder="Uma frase poética que transmite a essência do produto..."
               />
             </div>
 

@@ -1,167 +1,78 @@
-
-
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { useCart } from "@/contexts/CartContext";
+import { ShoppingCart } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useCart } from "@/contexts/useCart";
 import { toast } from "sonner";
-import { 
-  Star, 
-  Package, 
-  Gift, 
-  Lock, 
-  Users, 
-  Video, 
-  ShoppingCart, 
-  Truck,
-  Mail
-} from "lucide-react";
+
+interface Product {
+  id: string;
+  name: string;
+  description: string | null;
+  price: number;
+  icon: string | null;
+  poetry: string | null;
+  type: string;
+  stock: number;
+  active: boolean;
+}
 
 const ProductsSection = () => {
   const { addToCart } = useCart();
-  
-  const iconMap = {
-    star: Star,
-    package: Package,
-    gift: Gift,
-    lock: Lock,
-    users: Users,
-    video: Video,
-    'shopping-cart': ShoppingCart,
-    truck: Truck,
-    mail: Mail
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('active', true)
+        .gt('stock', 0)
+        .order('type', { ascending: true });
+
+      if (error) throw error;
+      setProducts(data || []);
+    } catch (error) {
+      console.error('Erro ao carregar produtos:', error);
+      toast.error('Erro ao carregar produtos');
+    } finally {
+      setLoading(false);
+    }
   };
-
-  const digitalProducts = [
-    {
-      id: "digital-letter-simple",
-      name: "Carta Digital Simples",
-      price: "Grátis",
-      priceValue: 0,
-      icon: "mail",
-      description: "Texto entregue por email na data marcada",
-      poetry: "Palavras que atravessam o tempo"
-    },
-    {
-      id: "digital-letter-premium",
-      name: "Carta Digital Premium",
-      price: "2,50 €",
-      priceValue: 2.50,
-      icon: "star",
-      description: "Formatação rica, verificação blockchain, certificado",
-      poetry: "Elegância digital para memórias eternas"
-    }
-  ];
-
-  const physicalProducts = [
-    {
-      id: "physical-gift-storage",
-      name: "Presente Físico Guardado",
-      price: "desde 1,90€/mês",
-      priceValue: 1.90,
-      icon: "package",
-      description: "Armazenamento seguro com controlo climático",
-      poetry: "Guardamos os teus tesouros até ao momento certo"
-    },
-    {
-      id: "capsule-individual",
-      name: "Cápsula Individual",
-      price: "desde 15 €",
-      priceValue: 15,
-      icon: "gift",
-      description: "Caixa personalizada para um presente simbólico",
-      poetry: "Um cofre único para o teu gesto mais precioso"
-    },
-    {
-      id: "capsule-collective",
-      name: "Cápsula Coletiva",
-      price: "desde 49 €",
-      priceValue: 49,
-      icon: "users",
-      description: "Para grupos, com evento de abertura",
-      poetry: "Memórias partilhadas, momentos inesquecíveis",
-      popular: true
-    }
-  ];
-
-  const additionalServices = [
-    {
-      id: "video-editing",
-      name: "Edição de Vídeo Profissional",
-      price: "9,90 €",
-      priceValue: 9.90,
-      icon: "video",
-      description: "Vídeo editado profissionalmente (até 1 minuto)",
-      poetry: "Transformamos momentos em cinema"
-    },
-    {
-      id: "purchase-service",
-      name: "Serviço de Compra",
-      price: "10% + 5 € mín.",
-      priceValue: 5,
-      icon: "shopping-cart",
-      description: "Compramos o produto por ti",
-      poetry: "Encontramos e guardamos aquilo que mais importa"
-    },
-    {
-      id: "scheduled-delivery",
-      name: "Entrega Programada",
-      price: "desde 6,50 €",
-      priceValue: 6.50,
-      icon: "truck",
-      description: "Entrega em Portugal Continental na data exacta",
-      poetry: "Pontualidade que honra cada momento especial"
-    }
-  ];
-
-  interface Product {
-  id: string;
-  name: string;
-  price: string;
-  priceValue: number;
-  icon: string;
-  description: string;
-  poetry: string;
-  popular?: boolean;
-}
 
   const handleAddToCart = async (product: Product) => {
     try {
-      await addToCart(product.id, product.name, product.priceValue);
+      await addToCart(product.id, product.name, product.price);
       toast.success(`${product.name} adicionado ao carrinho!`);
     } catch (error) {
       toast.error("Erro ao adicionar produto ao carrinho");
     }
   };
 
-const ProductCard = ({ product, category }: { product: Product, category: string }) => {
-    const IconComponent = iconMap[product.icon as keyof typeof iconMap] || Gift;
-    
+  const getProductsByType = (type: string) => {
+    return products.filter(p => p.type === type);
+  };
+
+  const ProductCard = ({ product }: { product: Product }) => {
     return (
       <Card className="h-full border-keepla-gray/20 hover:border-keepla-red/40 transition-all duration-300 hover:shadow-keepla-sm bg-keepla-white">
         <CardHeader className="pb-3">
           <div className="flex items-start justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-keepla-red/10">
-                <IconComponent className="h-5 w-5 text-keepla-red" />
-              </div>
-              <div>
-                <CardTitle className="text-lg text-keepla-black font-serif">
-                  {product.name}
-                </CardTitle>
-                <Badge variant="outline" className="mt-1 text-xs border-keepla-gray/30 text-keepla-black">
-                  {category}
-                </Badge>
-              </div>
+            <div className="flex-1">
+              <CardTitle className="text-lg text-keepla-black font-serif">
+                {product.name}
+              </CardTitle>
             </div>
-            <div className="text-right">
+            <div className="text-right ml-4">
               <div className="font-semibold text-keepla-black">
-                {product.price}
+                {product.price === 0 ? 'Grátis' : `€${product.price.toFixed(2)}`}
               </div>
-              {product.popular && (
-                <Badge className="mt-2 bg-keepla-red text-keepla-white">Popular</Badge>
-              )}
             </div>
           </div>
         </CardHeader>
@@ -169,9 +80,11 @@ const ProductCard = ({ product, category }: { product: Product, category: string
           <p className="text-sm text-keepla-black mb-3">
             {product.description}
           </p>
-          <p className="text-sm italic text-keepla-red font-serif mb-4">
-            "{product.poetry}"
-          </p>
+          {product.poetry && (
+            <p className="text-sm italic text-keepla-red font-serif mb-4">
+              "{product.poetry}"
+            </p>
+          )}
           <Button
             onClick={() => handleAddToCart(product)}
             variant="brand"
@@ -186,6 +99,23 @@ const ProductCard = ({ product, category }: { product: Product, category: string
     );
   };
 
+  if (loading) {
+    return (
+      <div className="py-16 bg-keepla-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-keepla-red mx-auto"></div>
+            <p className="text-keepla-black mt-4">A carregar produtos...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const digitalProducts = getProductsByType('digital');
+  const physicalProducts = getProductsByType('physical');
+  const serviceProducts = getProductsByType('service');
+
   return (
     <div className="py-16 bg-keepla-white">
       <div className="container mx-auto px-4">
@@ -198,49 +128,60 @@ const ProductCard = ({ product, category }: { product: Product, category: string
           </p>
         </div>
 
-        {/* Produtos Digitais */}
-        <div className="mb-16">
-          <h2 className="text-2xl font-serif text-keepla-black mb-6 text-center">
-            Produtos Digitais
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
-            {digitalProducts.map((product, index) => (
-              <ProductCard key={index} product={product} category="Digital" />
-            ))}
+        {digitalProducts.length > 0 && (
+          <div className="mb-16">
+            <h2 className="text-2xl font-serif text-keepla-black mb-6 text-center">
+              Produtos Digitais
+            </h2>
+            <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+              {digitalProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* Produtos Físicos */}
-        <div className="mb-16">
-          <h2 className="text-2xl font-serif text-keepla-black mb-6 text-center">
-            Produtos Físicos
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {physicalProducts.map((product, index) => (
-              <ProductCard key={index} product={product} category="Físico" />
-            ))}
+        {physicalProducts.length > 0 && (
+          <div className="mb-16">
+            <h2 className="text-2xl font-serif text-keepla-black mb-6 text-center">
+              Produtos Físicos
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              {physicalProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* Serviços Adicionais */}
-        <div className="mb-16">
-          <h2 className="text-2xl font-serif text-keepla-black mb-6 text-center">
-            Serviços Adicionais
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {additionalServices.map((product, index) => (
-              <ProductCard key={index} product={product} category="Serviço" />
-            ))}
+        {serviceProducts.length > 0 && (
+          <div className="mb-16">
+            <h2 className="text-2xl font-serif text-keepla-black mb-6 text-center">
+              Serviços Adicionais
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              {serviceProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* CTA */}
-        <div className="text-center">
-          <Link to="/create-keepsake">
-            <Button variant="brand" size="lg" className="px-8 py-3">
-              Criar a Minha Cápsula
-            </Button>
-          </Link>
+        {products.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-keepla-black">Nenhum produto disponível no momento.</p>
+          </div>
+        )}
+
+        <div className="text-center mt-12">
+          <Button 
+            variant="brand" 
+            size="lg" 
+            className="px-8 py-3"
+            onClick={() => window.location.href = '/create-keepsake'}
+          >
+            Criar a Minha Cápsula
+          </Button>
         </div>
       </div>
     </div>
