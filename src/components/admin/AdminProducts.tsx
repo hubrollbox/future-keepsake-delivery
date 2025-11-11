@@ -221,7 +221,7 @@ const AdminProducts = () => {
       price: product.price,
       stock: product.stock,
       type: product.type,
-      active: product.active || true,
+      active: product.active ?? true,
       icon: product.icon || "",
       poetry: (product as any).poetry || ""
     });
@@ -500,26 +500,30 @@ const AdminProducts = () => {
                       </TableCell>
                       <TableCell>€{product.price.toFixed(2)}</TableCell>
                       <TableCell>
-                        <div className="flex items-center gap-1 min-w-[120px]">
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => handleStockUpdate(product.id, product.stock - 1)}
-                            disabled={product.stock <= 0}
-                            className="h-8 w-8 p-0"
-                          >
-                            <Minus className="h-3 w-3" />
-                          </Button>
-                          <span className="min-w-[2rem] text-center text-sm">{product.stock}</span>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => handleStockUpdate(product.id, product.stock + 1)}
-                            className="h-8 w-8 p-0"
-                          >
-                            <Plus className="h-3 w-3" />
-                          </Button>
-                        </div>
+                        {product.type === 'service' ? (
+                          <span className="text-sm text-misty-gray">N/A</span>
+                        ) : (
+                          <div className="flex items-center gap-1 min-w-[120px]">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => handleStockUpdate(product.id, product.stock - 1)}
+                              disabled={product.stock <= 0}
+                              className="h-8 w-8 p-0"
+                            >
+                              <Minus className="h-3 w-3" />
+                            </Button>
+                            <span className="min-w-[2rem] text-center text-sm">{product.stock}</span>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => handleStockUpdate(product.id, product.stock + 1)}
+                              className="h-8 w-8 p-0"
+                            >
+                              <Plus className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        )}
                       </TableCell>
                       <TableCell>
                         <Badge variant={product.active ? "default" : "secondary"}>
@@ -639,17 +643,19 @@ const AdminProducts = () => {
                   required
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="stock">Stock *</Label>
-                <Input
-                  id="stock"
-                  type="number"
-                  min="0"
-                  value={formData.stock}
-                  onChange={(e) => setFormData({ ...formData, stock: parseInt(e.target.value) || 0 })}
-                  required
-                />
-              </div>
+              {formData.type !== 'service' && (
+                <div className="space-y-2">
+                  <Label htmlFor="stock">Stock *</Label>
+                  <Input
+                    id="stock"
+                    type="number"
+                    min="0"
+                    value={formData.stock}
+                    onChange={(e) => setFormData({ ...formData, stock: parseInt(e.target.value) || 0 })}
+                    required
+                  />
+                </div>
+              )}
             </div>
 
             <div className="space-y-2">
