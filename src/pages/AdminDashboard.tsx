@@ -4,8 +4,8 @@ import { Navigate, Routes, Route, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import AdminLayout from "@/components/admin/AdminLayout";
 import { Loader2 } from "lucide-react";
+import AdminDashboard from "@/components/admin/AdminDashboard";
 
-const AdminDashboard = lazy(() => import("@/components/admin/AdminDashboard"));
 const AdminDeliveries = lazy(() => import("@/components/admin/AdminDeliveries"));
 const AdminWarehouse = lazy(() => import("@/components/admin/AdminWarehouse"));
 const AdminMessages = lazy(() => import("@/components/admin/AdminMessages"));
