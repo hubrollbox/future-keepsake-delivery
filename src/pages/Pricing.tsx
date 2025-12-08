@@ -1,4 +1,5 @@
 import Navigation from "@/components/Navigation";
+import SEOHead from "@/components/SEOHead";
 import Footer from "@/components/Footer";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -73,6 +74,11 @@ function Pricing() {
 
   return (
     <div className="min-h-screen bg-keepla-white">
+      <SEOHead 
+        title="Planos e Preços"
+        description="Escolhe o plano perfeito para guardar e entregar as tuas memórias mais preciosas. Planos gratuitos e premium disponíveis."
+        keywords="preços keepla, planos subscrição, cápsula tempo preços, memórias premium"
+      />
       <Navigation />
       <main className="container mx-auto px-4 py-8 md:py-16">
         {/* Hero Section */}
