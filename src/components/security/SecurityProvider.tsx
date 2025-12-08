@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect } from 'react';
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { initializeSecurity } from '@/middleware/security';
 
 interface SecurityContextType {
@@ -11,8 +11,8 @@ export const useSecurityContext = () => {
   return useContext(SecurityContext);
 };
 
-export const SecurityProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isSecure, setIsSecure] = React.useState(false);
+export const SecurityProvider = ({ children }: { children: ReactNode }) => {
+  const [isSecure, setIsSecure] = useState(false);
 
   useEffect(() => {
     try {
