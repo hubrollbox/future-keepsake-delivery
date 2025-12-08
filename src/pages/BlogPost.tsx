@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { sanitizeHtml } from "@/components/auth/SecureInputValidation";
+import DOMPurify from "dompurify";
 
 interface BlogPost {
   id: string;
@@ -88,7 +88,10 @@ export default function BlogPost() {
   };
 
   const coverUrl = safeUrl(post.cover_image_url);
-  const safeContent = sanitizeHtml(post.content);
+  const safeContent = DOMPurify.sanitize(post.content, {
+    ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'a', 'img', 'blockquote', 'pre', 'code', 'span', 'div'],
+    ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'target', 'rel']
+  });
 
   return (
     <article className="container mx-auto px-4 py-24 prose prose-lg">
