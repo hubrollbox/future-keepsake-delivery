@@ -1,9 +1,9 @@
-
 import { Button } from "@/components/ui/button";
 import { Heart, Star, BookOpen } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import SEOHead from "@/components/SEOHead";
 
 
 const About = () => {
@@ -29,6 +29,11 @@ const About = () => {
 
   return (
     <div className="min-h-screen bg-white/90">
+      <SEOHead 
+        title="Sobre Nós"
+        description="Conhece a Keepla: uma plataforma dedicada à preservação de memória, sensibilidade e presença. Descobre a nossa missão e valores."
+        keywords="sobre keepla, missão keepla, valores, memórias, cápsula tempo portugal"
+      />
       <Navigation />
 
       <main className="container mx-auto px-4 py-16">

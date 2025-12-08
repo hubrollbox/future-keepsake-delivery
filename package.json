@@ -57,6 +57,7 @@
     "react-day-picker": "^9.7.0",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.59.0",
+    "react-joyride": "^2.9.3",
     "react-quill": "^2.0.0",
     "react-resizable-panels": "^3.0.3",
     "react-router-dom": "^6.26.1",

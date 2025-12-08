@@ -7,6 +7,7 @@ import LoadingSpinner from "@/components/ui/loading-spinner";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import SEOHead from "@/components/SEOHead";
 
 interface BlogPost {
   id: string;
@@ -61,6 +62,11 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-lavender-mist">
+      <SEOHead 
+        title="Blog"
+        description="Artigos sobre memórias, keepsakes, cápsulas do tempo e como guardar momentos especiais para o futuro."
+        keywords="blog keepla, artigos memórias, cápsulas tempo, dicas presentes"
+      />
       <Navigation />
       <main className="container mx-auto px-4 py-16">
 

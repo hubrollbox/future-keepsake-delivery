@@ -1,4 +1,3 @@
-
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +8,7 @@ import DeliveryTypesDetailed from "@/components/how-it-works/DeliveryTypesDetail
 import HowItWorksFAQ from "@/components/how-it-works/HowItWorksFAQ";
 import SecurityGuarantees from "@/components/how-it-works/SecurityGuarantees";
 import HowItWorksCTA from "@/components/how-it-works/HowItWorksCTA";
+import SEOHead from "@/components/SEOHead";
 
 const HowItWorks = () => {
   const navigate = useNavigate();
@@ -23,6 +23,11 @@ const HowItWorks = () => {
 
   return (
     <div className="min-h-screen bg-keepla-white">
+      <SEOHead 
+        title="Como Funciona"
+        description="Descobre como a Keepla funciona: cria keepsakes, agenda entregas e surpreende quem amas no momento certo."
+        keywords="como funciona keepla, criar keepsake, agendar entrega, cápsula tempo"
+      />
       <Navigation />
       <main className={`container mx-auto px-4 py-8 md:py-16 transition-opacity duration-300 ${isNavigating ? 'opacity-50' : 'opacity-100'}`}>
         <HowItWorksHero />

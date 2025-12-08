@@ -8,6 +8,8 @@ import TimeCapsuleSection from "@/components/dashboard/TimeCapsuleSection";
 import { KeepsakesList } from "@/components/dashboard/KeepsakesList";
 import { Button } from "@/components/ui/button";
 import type { Delivery } from "@/types/admin";
+import SEOHead from "@/components/SEOHead";
+import GuidedTour from "@/components/GuidedTour";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PlusCircle, Clock, Package, CheckCircle } from "lucide-react";
@@ -46,9 +48,16 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-keepla-white">
+      <SEOHead 
+        title="Dashboard"
+        description="Gere os teus keepsakes, acompanha entregas e descobre as tuas estatísticas. A tua central de memórias."
+      />
+      <GuidedTour />
       <Navigation />
       <main className="dashboard-layout container mx-auto max-w-7xl">
-        <ProfileHeader />
+        <div data-tour="profile">
+          <ProfileHeader />
+        </div>
 
         <div className="dashboard-grid grid grid-cols-1 xl:grid-cols-3 gap-4 md:gap-8">
           <div className="xl:col-span-2 space-y-6 md:space-y-8">
@@ -59,7 +68,7 @@ const Dashboard = () => {
             />
 
             {/* Keepsakes Section */}
-            <div className="space-y-3">
+            <div className="space-y-3" data-tour="keepsakes-list">
               <div className="flex justify-between items-center">
                 <h3 className="text-lg font-serif font-semibold text-steel-blue">
                   Minhas Cápsulas
@@ -68,6 +77,7 @@ const Dashboard = () => {
                   onClick={() => navigate("/create-keepsake")}
                   size="sm"
                   className="flex items-center gap-1 bg-dusty-rose hover:bg-dusty-rose/90"
+                  data-tour="create-keepsake"
                 >
                   <PlusCircle className="h-4 w-4" /> Nova Cápsula
                 </Button>
@@ -155,7 +165,7 @@ const Dashboard = () => {
           </div>
 
           {/* Secção de Estatísticas */}
-          <div className="xl:col-span-1">
+          <div className="xl:col-span-1" data-tour="stats">
             <UserStatsSection
               profile={profile}
               totalDeliveries={deliveries.length}
