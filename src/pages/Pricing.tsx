@@ -141,13 +141,13 @@ function Pricing() {
       <main className="container mx-auto px-4 py-12 md:py-20">
         {/* Hero Section */}
         <div className="text-center mb-16 max-w-3xl mx-auto">
+          <p className="section-tagline mb-4">Memórias que ficam, entregues para sempre</p>
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 font-inter leading-tight">
             Escolhe a forma perfeita de enviar{" "}
             <span className="text-primary">amor</span> através do tempo
           </h1>
-          <p className="text-lg md:text-xl text-muted-foreground font-inter">
+          <p className="hero-subtitle text-muted-foreground mx-auto">
             Preços transparentes, memórias eternas. Sem subscrições, sem surpresas.
-            <br className="hidden md:block" />
             Paga uma vez, guarda para sempre.
           </p>
         </div>
@@ -283,16 +283,17 @@ function Pricing() {
 
         {/* Final CTA */}
         <div className="text-center bg-foreground text-background rounded-2xl p-10 md:p-16 max-w-4xl mx-auto">
+          <p className="font-georgia italic text-background/70 mb-4">O momento perfeito é agora</p>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 font-inter">
             Pronto para criar a tua primeira memória?
           </h2>
-          <p className="text-background/80 mb-8 font-inter text-lg">
+          <p className="subtitle-emotional text-background/80 mb-8">
             Começa grátis. Sem cartão de crédito. Sem compromisso.
           </p>
           <Button
             onClick={() => navigate(user ? "/create-keepsake" : "/register")}
             size="lg"
-            className="bg-primary hover:bg-secondary text-primary-foreground font-inter font-semibold px-8 py-6 text-lg"
+            className="bg-primary hover:bg-secondary text-primary-foreground font-inter font-semibold px-8 py-6 text-lg shadow-keepla hover:shadow-keepla-intense transition-all"
           >
             Começar Grátis Agora
           </Button>
