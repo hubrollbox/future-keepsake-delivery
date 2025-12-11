@@ -6,13 +6,15 @@
  */
 
 :root {
-  /* Paleta Oficial Keepla.pt Brand Book */
-  --keepla-red: #E63946;           /* Keepla Red - Selo emocional, destaque principal */
-  --keepla-red-deep: #C6282E;      /* Deep Red CTA - Botões e call-to-actions */
+  /* Paleta Oficial Keepla.pt Brand Book - Vermelho Intenso (Crimson) */
+  --keepla-red: #DC143C;           /* Crimson - Selo emocional intenso */
+  --keepla-red-deep: #B01030;      /* Deep Crimson CTA - Botões e call-to-actions */
+  --keepla-red-glow: #E8365A;      /* Glow effect para hover states */
   --keepla-black: #000000;         /* Black - Fundos, texto, fotografia */
   --keepla-white: #FFFFFF;         /* White - Fundos alternativos, texto sobre escuro */
   --keepla-gray-neutral: #E0E0E0;  /* Gray Neutral - Divisores, fundos secundários */
   --keepla-gray: #E0E0E0;          /* Alias para compatibilidade */
+  --keepla-gray-dark: #262626;     /* Dark gray para gradientes */
   
   /* Aliases semânticos - Brand Book */
   --color-primary: var(--keepla-red);
@@ -39,9 +41,20 @@
 /* Classes utilitárias */
 .bg-keepla-red { background-color: var(--keepla-red); }
 .bg-keepla-red-deep { background-color: var(--keepla-red-deep); }
+.bg-keepla-red-glow { background-color: var(--keepla-red-glow); }
 .bg-keepla-black { background-color: var(--keepla-black); }
 .bg-keepla-white { background-color: var(--keepla-white); }
 .bg-keepla-gray { background-color: var(--keepla-gray); }
+.bg-keepla-gray-dark { background-color: var(--keepla-gray-dark); }
+
+/* Gradientes dramáticos */
+.bg-keepla-gradient {
+  background: linear-gradient(135deg, var(--keepla-red) 0%, var(--keepla-red-deep) 100%);
+}
+
+.bg-keepla-dark-gradient {
+  background: linear-gradient(180deg, var(--keepla-black) 0%, var(--keepla-gray-dark) 100%);
+}
 
 .text-keepla-red { color: var(--keepla-red); }
 .text-keepla-red-deep { color: var(--keepla-red-deep); }
@@ -52,20 +65,32 @@
 .border-keepla-red-deep { border-color: var(--keepla-red-deep); }
 .border-keepla-gray-neutral { border-color: var(--keepla-gray-neutral); }
 
-/* Sombras minimalistas - Brand Book */
+/* Sombras intensas - Brand Book */
 .shadow-keepla {
-  box-shadow: 0 4px 20px 0 rgba(230, 57, 70, 0.15);
+  box-shadow: 0 4px 24px 0 rgba(220, 20, 60, 0.25);
 }
 
 .shadow-keepla-sm {
-  box-shadow: 0 2px 12px 0 rgba(230, 57, 70, 0.1);
+  box-shadow: 0 2px 12px 0 rgba(220, 20, 60, 0.15);
 }
 
-/* Imagens em P&B - Brand Book Rule */
+.shadow-keepla-glow {
+  box-shadow: 0 0 40px rgba(220, 20, 60, 0.35);
+}
+
+.shadow-keepla-intense {
+  box-shadow: 0 8px 32px 0 rgba(220, 20, 60, 0.3);
+}
+
+/* Imagens em P&B - Brand Book Rule - MAIS CONTRASTE */
 .image-bw {
-  filter: grayscale(100%);
+  filter: grayscale(100%) contrast(1.15);
 }
 
 .image-bw-keepla {
-  filter: grayscale(100%) contrast(1.1);
+  filter: grayscale(100%) contrast(1.2) brightness(0.95);
+}
+
+.image-bw-dramatic {
+  filter: grayscale(100%) contrast(1.25) brightness(0.9);
 }
