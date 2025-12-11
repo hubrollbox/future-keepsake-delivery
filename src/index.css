@@ -20,28 +20,30 @@
     --card-foreground: 0 0% 0%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 0%;
-    --primary: 354 76% 59%;
+    --primary: 348 83% 47%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 354 62% 47%;
+    --secondary: 348 83% 38%;
     --secondary-foreground: 0 0% 100%;
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 40%;
-    --accent: 354 76% 59%;
+    --accent: 348 83% 47%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
     --border: 0 0% 90%;
     --input: 0 0% 90%;
-    --ring: 354 76% 59%;
+    --ring: 348 83% 47%;
     --radius: 0.5rem;
     
-    /* Identidade Visual Keepla.pt - Brand Book Oficial */
-    --keepla-red: 354 76% 59%;           /* #E63946 - Keepla Red - Selo emocional */
-    --keepla-red-deep: 354 62% 47%;      /* #C6282E - Deep Red CTA - Botões */
+    /* Identidade Visual Keepla.pt - Brand Book Oficial - Vermelho Intenso */
+    --keepla-red: 348 83% 47%;           /* #DC143C - Crimson - Selo emocional intenso */
+    --keepla-red-deep: 348 83% 38%;      /* #B01030 - Deep Crimson CTA - Botões */
+    --keepla-red-glow: 348 83% 55%;      /* Glow effect para hover */
     --keepla-black: 0 0% 0%;             /* #000000 - Black - Fundos/texto */
     --keepla-white: 0 0% 100%;           /* #FFFFFF - White - Fundos/contraste */
     --keepla-gray: 0 0% 88%;             /* #E0E0E0 - Gray Neutral - Divisores */
     --keepla-gray-neutral: 0 0% 88%;     /* #E0E0E0 - Alias Brand Book */
+    --keepla-gray-dark: 0 0% 15%;        /* #262626 - Dark gray para gradientes */
   }
   .dark {
     --background: 0 0% 0%;
@@ -50,19 +52,19 @@
     --card-foreground: 0 0% 100%;
     --popover: 0 0% 5%;
     --popover-foreground: 0 0% 100%;
-    --primary: 354 76% 59%;
+    --primary: 348 83% 47%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 354 62% 47%;
+    --secondary: 348 83% 38%;
     --secondary-foreground: 0 0% 100%;
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 60%;
-    --accent: 354 76% 59%;
+    --accent: 348 83% 47%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 100%;
     --border: 0 0% 20%;
     --input: 0 0% 20%;
-    --ring: 354 76% 59%;
+    --ring: 348 83% 47%;
   }
   .emotional-spacing { 
     padding-top: 5rem; /* py-20 */

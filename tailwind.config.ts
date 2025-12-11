@@ -101,13 +101,15 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Paleta Oficial Keepla.pt Brand Book - Memória Viva
-				'keepla-red': '#E63946',           // Keepla Red - Selo emocional, destaque principal
-				'keepla-red-deep': '#C6282E',      // Deep Red CTA - Botões, call-to-actions
+			// Paleta Oficial Keepla.pt Brand Book - Memória Viva - Vermelho Intenso
+				'keepla-red': '#DC143C',           // Crimson - Selo emocional intenso
+				'keepla-red-deep': '#B01030',      // Deep Crimson CTA - Botões, call-to-actions
+				'keepla-red-glow': '#E8365A',      // Glow effect para hover states
 				'keepla-black': '#000000',         // Black - Fundos, texto, fotografia P&B
 				'keepla-white': '#FFFFFF',         // White - Fundos alternativos, texto sobre escuro
 				'keepla-gray': '#E0E0E0',          // Gray Neutral - Divisores, fundos secundários
 				'keepla-gray-neutral': '#E0E0E0',  // Alias explícito Brand Book
+				'keepla-gray-dark': '#262626',     // Dark gray para gradientes e fundos escuros
 			},
 			borderRadius: {
 				lg: '12px',
@@ -179,8 +181,10 @@ export default {
 				'bounce-gentle': 'bounce-gentle 2s infinite'
 			},
 			boxShadow: {
-				'keepla': '0 4px 20px 0 rgba(230, 57, 70, 0.15)',
-				'keepla-sm': '0 2px 12px 0 rgba(230, 57, 70, 0.1)',
+				'keepla': '0 4px 24px 0 rgba(220, 20, 60, 0.25)',
+				'keepla-sm': '0 2px 12px 0 rgba(220, 20, 60, 0.15)',
+				'keepla-glow': '0 0 40px rgba(220, 20, 60, 0.35)',
+				'keepla-intense': '0 8px 32px 0 rgba(220, 20, 60, 0.3)',
 			}
 		}
 	},
