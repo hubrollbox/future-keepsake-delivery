@@ -52,44 +52,46 @@ const About = () => {
             />
           </div>
           
-          <h1 className="text-5xl md:text-6xl font-fraunces font-bold text-keepla-black mb-6 leading-tight">
+          <h1 className="text-5xl md:text-6xl font-inter font-bold text-foreground mb-6 leading-tight">
             Somos a{" "}
-            <span className="text-keepla-red block">keepla</span>
+            <span className="text-primary block font-georgia italic">keepla</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-keepla-gray mb-8 leading-relaxed">
+          <p className="hero-subtitle text-muted-foreground mb-8">
             Uma plataforma dedicada à preservação de{" "}
-            <span className="text-keepla-red font-semibold"> memória, sensibilidade e presença.</span>
+            <span className="text-primary font-semibold">memória, sensibilidade e presença.</span>
           </p>
         </div>
 
         {/* Missão */}
-        <div className="emotion-card max-w-4xl mx-auto mb-16 p-12">
-          <h2 className="text-3xl md:text-4xl font-fraunces font-bold text-keepla-black mb-6 text-center">
+        <div className="emotion-card max-w-4xl mx-auto mb-16 p-12 bg-card border border-border rounded-2xl">
+          <p className="section-tagline text-center">A nossa promessa</p>
+          <h2 className="text-3xl md:text-4xl font-inter font-bold text-foreground mb-6 text-center">
             A Nossa Missão
           </h2>
-          <blockquote className="text-xl md:text-2xl text-keepla-black text-center leading-relaxed italic font-fraunces mb-6">
+          <blockquote className="testimonial-quote text-center mb-6">
             "Acreditamos que há momentos que merecem ser guardados com o cuidado de quem sabe 
             que o tempo é o nosso bem mais precioso."
           </blockquote>
-          <p className="text-keepla-red font-semibold text-center text-lg font-fraunces">
+          <p className="slogan text-center">
             — Equipa keepla
           </p>
         </div>
 
         {/* Valores */}
         <div className="mb-16">
-          <h2 className="text-3xl md:text-4xl font-fraunces font-bold text-steel-blue mb-8 text-center">
+          <p className="section-tagline text-center">O que nos move</p>
+          <h2 className="text-3xl md:text-4xl font-inter font-bold text-foreground mb-8 text-center">
             A Nossa Essência
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {values.map((value, index) => (
-              <div key={index} className="emotion-card text-center p-8 hover:scale-105 transition-all duration-300 group">
-                <div className="w-16 h-16 bg-earthy-burgundy/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-earthy-burgundy/20 transition-colors">
-                  <value.icon className="h-8 w-8 text-earthy-burgundy" />
+              <div key={index} className="bg-card border border-border rounded-2xl text-center p-8 hover:shadow-keepla hover:scale-105 transition-all duration-300 group">
+                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/20 transition-colors">
+                  <value.icon className="h-8 w-8 text-primary" />
                 </div>
-                <h3 className="text-xl font-fraunces font-semibold text-steel-blue mb-4">{value.title}</h3>
-                <p className="text-misty-gray leading-relaxed">{value.description}</p>
+                <h3 className="text-xl font-inter font-semibold text-foreground mb-4">{value.title}</h3>
+                <p className="text-muted-foreground leading-relaxed font-georgia italic">{value.description}</p>
               </div>
             ))}
           </div>
@@ -97,7 +99,7 @@ const About = () => {
 
         {/* Conceito Selo do Tempo */}
         <div className="mb-16">
-          <div className="emotion-card p-12 max-w-5xl mx-auto text-center">
+          <div className="bg-card border border-border rounded-2xl p-12 max-w-5xl mx-auto text-center">
             <img 
               src="/keepla-logo-red.png" 
               alt="Logo" 
@@ -106,16 +108,17 @@ const About = () => {
               decoding="async" 
               onError={(e) => { e.currentTarget.src = '/lovable-uploads/a58d6383-77f7-451e-b692-d10c4298397e.png'; }}
             />
-            <h2 className="text-3xl md:text-4xl font-fraunces font-bold text-steel-blue mb-6">
+            <p className="section-tagline">A nossa identidade</p>
+            <h2 className="text-3xl md:text-4xl font-inter font-bold text-foreground mb-6">
               Conceito: Selo do Tempo
             </h2>
-            <p className="text-lg text-misty-gray leading-relaxed mb-8">
+            <p className="text-lg text-muted-foreground leading-relaxed mb-8">
               O conceito "Selo do Tempo" foi inspirado em carimbos postais e marcações temporais, 
               evocando a ideia de autenticidade e oficialidade de uma correspondência especial. 
               O selo circular com marcações de tempo simboliza a validação da mensagem para o futuro.
             </p>
-            <div className="bg-sand-beige/50 rounded-2xl p-8">
-              <blockquote className="text-xl font-fraunces italic text-steel-blue">
+            <div className="bg-muted rounded-2xl p-8">
+              <blockquote className="testimonial-quote">
                 "Cada entrega é uma promessa ao futuro, selada com o carinho do presente."
               </blockquote>
             </div>
@@ -123,28 +126,29 @@ const About = () => {
         </div>
 
         {/* CTA */}
-        <div className="text-center emotion-card p-12 max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-fraunces font-bold text-steel-blue mb-6">
+        <div className="text-center bg-foreground text-background rounded-2xl p-12 max-w-4xl mx-auto">
+          <p className="font-georgia italic text-background/70 mb-4">A tua história começa aqui</p>
+          <h2 className="text-3xl md:text-4xl font-inter font-bold mb-6">
             Quer Fazer Parte da Nossa História?
           </h2>
-          <p className="text-lg text-misty-gray mb-8 leading-relaxed">
+          <p className="subtitle-emotional text-background/80 mb-8">
             Junta-te à nossa comunidade e ajuda-nos a continuar a criar 
             momentos mágicos para milhares de pessoas.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Button 
               size="lg" 
-              variant="brand"
               onClick={() => navigate('/register')}
-              className="group"
+              className="bg-primary hover:bg-secondary text-primary-foreground font-inter font-semibold px-8 py-6 shadow-keepla hover:shadow-keepla-intense transition-all group"
             >
-              <Heart className="mr-2 h-5 w-5 group-hover:animate-bounce-gentle" />
+              <Heart className="mr-2 h-5 w-5 group-hover:animate-bounce" />
               Começar Agora
             </Button>
             <Button 
-              variant="brand-outline" 
+              variant="outline" 
               size="lg" 
               onClick={() => navigate('/contact')}
+              className="border-2 border-background text-background hover:bg-background/10 font-inter font-semibold px-8 py-6"
             >
               Falar Connosco
             </Button>

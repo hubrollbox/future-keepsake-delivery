@@ -42,19 +42,19 @@ const HeroSection = () => {
           </div>
 
           {/* Main headline - Inter Bold */}
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight font-inter">
             Presente no
-            <span className="block text-keepla-red italic">Futuro</span>
+            <span className="block text-primary font-georgia italic">Futuro</span>
           </h1>
 
-          {/* Subtitle - Inter Regular */}
-          <p className="text-xl md:text-2xl text-gray-200 mb-8 font-normal max-w-2xl mx-auto leading-relaxed">
+          {/* Subtitle - Georgia Emotivo */}
+          <p className="hero-subtitle text-gray-100 mb-8 mx-auto">
             Cria cápsulas do tempo que guardam as tuas palavras, emoções e memórias para serem entregues no momento perfeito.
           </p>
 
-          {/* Value proposition - Georgia Itálico (emotivo) */}
+          {/* Value proposition - Georgia Slogan */}
           <div className="mb-12 text-lg max-w-3xl mx-auto">
-            <p className="italic text-gray-200" style={{ fontFamily: 'Georgia, serif' }}>
+            <p className="slogan text-gray-100">
               "Uma carta para o futuro é uma ponte entre quem somos hoje e quem seremos amanhã."
             </p>
           </div>

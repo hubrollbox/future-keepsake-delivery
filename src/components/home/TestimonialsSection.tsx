@@ -34,10 +34,11 @@ const TestimonialsSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-fraunces font-bold text-steel-blue mb-6">
-              Primeiros <span className="text-earthy-burgundy">Guardiões do Tempo</span>
+            <p className="section-tagline">O que dizem de nós</p>
+            <h2 className="text-4xl md:text-5xl font-inter font-bold text-foreground mb-6">
+              Primeiros <span className="text-primary">Guardiões do Tempo</span>
             </h2>
-            <p className="text-xl text-misty-gray max-w-3xl mx-auto leading-relaxed">
+            <p className="hero-subtitle text-muted-foreground max-w-3xl mx-auto">
               Os nossos primeiros utilizadores já estão a criar memórias especiais. 
               Estas são algumas das suas experiências.
             </p>
@@ -45,14 +46,14 @@ const TestimonialsSection = () => {
 
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <Card key={index} className="emotion-card p-8 hover:scale-105 transition-all duration-300 border border-dusty-rose/20 group h-full">
+              <Card key={index} className="bg-card border border-border rounded-2xl p-8 hover:shadow-keepla hover:scale-105 transition-all duration-300 group h-full">
                 <CardContent className="p-0 flex flex-col h-full">
                   <div className="flex justify-center mb-6">
-                    <Quote className="h-8 w-8 text-earthy-burgundy" />
+                    <Quote className="h-8 w-8 text-primary" />
                   </div>
                   
                   <div className="flex-1">
-                    <p className="text-misty-gray italic mb-6 leading-relaxed text-lg">
+                    <p className="testimonial-quote mb-6">
                       "{testimonial.text}"
                     </p>
                   </div>
@@ -61,15 +62,15 @@ const TestimonialsSection = () => {
                     {[...Array(testimonial.rating)].map((_, i) => (
                       <Star 
                         key={i} 
-                        className="h-5 w-5 text-earthy-burgundy fill-current group-hover:animate-bounce-gentle" 
+                        className="h-5 w-5 text-primary fill-current group-hover:animate-bounce" 
                         style={{ animationDelay: `${i * 0.1}s` }} 
                       />
                     ))}
                   </div>
                   
                   <div className="text-center">
-                    <p className="font-semibold text-steel-blue text-lg font-fraunces">— {testimonial.name}</p>
-                    <p className="text-earthy-burgundy text-sm">{testimonial.location}</p>
+                    <p className="font-semibold text-foreground text-lg font-inter">— {testimonial.name}</p>
+                    <p className="text-primary text-sm font-georgia italic">{testimonial.location}</p>
                   </div>
                 </CardContent>
               </Card>
