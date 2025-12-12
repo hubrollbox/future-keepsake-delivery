@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Star, Quote } from "lucide-react";
 import memorialImage from "@/assets/memorial-pc.jpg";
+import { motion, Variants } from "framer-motion";
 
 const TestimonialsSection = () => {
   const testimonials = [
@@ -24,6 +25,25 @@ const TestimonialsSection = () => {
     }
   ];
 
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15
+      }
+    }
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] }
+    }
+  };
+
   return (
     <section className="py-20 md:py-28 bg-white/80 backdrop-blur-sm relative overflow-hidden">
       {/* Background com imagem */}
@@ -33,7 +53,13 @@ const TestimonialsSection = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
             <p className="section-tagline">O que dizem de nós</p>
             <h2 className="text-4xl md:text-5xl font-inter font-bold text-foreground mb-6">
               Primeiros <span className="text-primary">Guardiões do Tempo</span>
@@ -42,40 +68,48 @@ const TestimonialsSection = () => {
               Os nossos primeiros utilizadores já estão a criar memórias especiais. 
               Estas são algumas das suas experiências.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <motion.div 
+            className="grid md:grid-cols-3 gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
             {testimonials.map((testimonial, index) => (
-              <Card key={index} className="bg-card border border-border rounded-2xl p-8 hover:shadow-keepla hover:scale-105 transition-all duration-300 group h-full">
-                <CardContent className="p-0 flex flex-col h-full">
-                  <div className="flex justify-center mb-6">
-                    <Quote className="h-8 w-8 text-primary" />
-                  </div>
-                  
-                  <div className="flex-1">
-                    <p className="testimonial-quote mb-6">
-                      "{testimonial.text}"
-                    </p>
-                  </div>
+              <motion.div key={index} variants={itemVariants}>
+                <Card className="bg-card border border-border rounded-2xl p-8 hover:shadow-keepla hover:scale-105 transition-all duration-300 group h-full">
+                  <CardContent className="p-0 flex flex-col h-full">
+                    <div className="flex justify-center mb-6">
+                      <Quote className="h-8 w-8 text-primary" />
+                    </div>
+                    
+                    <div className="flex-1">
+                      <p className="testimonial-quote mb-6">
+                        "{testimonial.text}"
+                      </p>
+                    </div>
 
-                  <div className="flex justify-center mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star 
-                        key={i} 
-                        className="h-5 w-5 text-primary fill-current group-hover:animate-bounce" 
-                        style={{ animationDelay: `${i * 0.1}s` }} 
-                      />
-                    ))}
-                  </div>
-                  
-                  <div className="text-center">
-                    <p className="font-semibold text-foreground text-lg font-inter">— {testimonial.name}</p>
-                    <p className="text-primary text-sm font-georgia italic">{testimonial.location}</p>
-                  </div>
-                </CardContent>
-              </Card>
+                    <div className="flex justify-center mb-4">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <Star 
+                          key={i} 
+                          className="h-5 w-5 text-primary fill-current group-hover:animate-bounce" 
+                          style={{ animationDelay: `${i * 0.1}s` }} 
+                        />
+                      ))}
+                    </div>
+                    
+                    <div className="text-center">
+                      <p className="font-semibold text-foreground text-lg font-inter">— {testimonial.name}</p>
+                      <p className="text-primary text-sm font-georgia italic">{testimonial.location}</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

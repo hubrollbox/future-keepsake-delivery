@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Clock, Package, Heart, Mail } from "lucide-react";
 import bicicletaImage from "@/assets/bicicleta-marginal.jpg";
+import { motion, Variants } from "framer-motion";
 
 const HowItWorksSection = () => {
   const navigate = useNavigate();
@@ -29,6 +30,25 @@ const HowItWorksSection = () => {
     }
   ];
 
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15
+      }
+    }
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] }
+    }
+  };
+
   return (
     <section className="py-20 md:py-28 bg-white/80 backdrop-blur-sm relative">
       {/* Imagem de fundo subtil */}
@@ -39,62 +59,80 @@ const HowItWorksSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-fraunces font-bold text-steel-blue mb-6">
-              Como <span className="text-earthy-burgundy">Funciona</span>
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
+            <h2 className="text-4xl md:text-5xl font-inter font-bold text-foreground mb-6">
+              Como <span className="text-primary">Funciona</span>
             </h2>
-            <p className="text-xl text-misty-gray max-w-3xl mx-auto leading-relaxed">
+            <p className="hero-subtitle text-muted-foreground max-w-3xl mx-auto">
               Em apenas quatro passos simples, podes criar uma experiência inesquecível para o futuro.
             </p>
-          </div>
+          </motion.div>
 
           {/* Steps */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+          <motion.div 
+            className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
             {steps.map((step, index) => (
-              <div key={index} className="text-center group">
+              <motion.div key={index} className="text-center group" variants={itemVariants}>
                 <div className="relative mb-6">
-                  <div className="w-20 h-20 bg-earthy-burgundy/10 rounded-2xl flex items-center justify-center mx-auto group-hover:bg-earthy-burgundy/20 transition-colors">
-                    <step.icon className="h-10 w-10 text-earthy-burgundy" />
+                  <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto group-hover:bg-primary/20 transition-colors">
+                    <step.icon className="h-10 w-10 text-primary" />
                   </div>
-                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-earthy-burgundy text-white rounded-full flex items-center justify-center font-bold text-sm">
+                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-sm">
                     {index + 1}
                   </div>
                 </div>
-                <h3 className="text-lg font-fraunces font-semibold text-steel-blue mb-3">{step.title}</h3>
-                <p className="text-misty-gray leading-relaxed">{step.description}</p>
-              </div>
+                <h3 className="text-lg font-inter font-semibold text-foreground mb-3">{step.title}</h3>
+                <p className="text-muted-foreground leading-relaxed font-georgia italic">{step.description}</p>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           {/* CTA */}
-          <div className="text-center">
-            <div className="emotion-card p-8 max-w-3xl mx-auto">
-              <h3 className="text-2xl font-fraunces font-semibold text-steel-blue mb-4">
+          <motion.div 
+            className="text-center"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+          >
+            <div className="bg-card border border-border rounded-2xl p-8 max-w-3xl mx-auto">
+              <h3 className="text-2xl font-inter font-semibold text-foreground mb-4">
                 Pronto para Começar?
               </h3>
-              <p className="text-misty-gray mb-6 leading-relaxed">
+              <p className="text-muted-foreground mb-6 leading-relaxed font-georgia italic">
                 Cria a tua primeira entrega temporal em menos de 5 minutos.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button 
                   size="lg" 
-                  variant="brand"
+                  className="bg-primary hover:bg-secondary text-primary-foreground group"
                   onClick={() => navigate('/register')}
-                  className="group"
                 >
                   Começar Agora
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
                 <Button 
-                  variant="brand-outline" 
+                  variant="outline" 
                   size="lg" 
+                  className="border-2 border-primary text-primary hover:bg-primary/10"
                   onClick={() => navigate('/how-it-works')}
                 >
                   Saber Mais
                 </Button>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
