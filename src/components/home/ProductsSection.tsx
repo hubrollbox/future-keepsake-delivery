@@ -1,7 +1,7 @@
-
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { Mail, Package, Clock, ArrowRight } from "lucide-react";
+import { motion, Variants } from "framer-motion";
 
 const ProductsSection = () => {
   const navigate = useNavigate();
@@ -36,94 +36,132 @@ const ProductsSection = () => {
     }
   ];
 
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15
+      }
+    }
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] }
+    }
+  };
+
   return (
-    <section className="py-20 md:py-28 bg-lavender-mist">
+    <section className="py-20 md:py-28 bg-muted">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-fraunces font-bold text-steel-blue mb-6">
-              Os Nossos <span className="text-earthy-burgundy">Presentes com Alma</span>
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
+            <h2 className="text-4xl md:text-5xl font-inter font-bold text-foreground mb-6">
+              Os Nossos <span className="text-primary">Presentes com Alma</span>
             </h2>
-            <p className="text-xl text-misty-gray max-w-3xl mx-auto leading-relaxed">
+            <p className="hero-subtitle text-muted-foreground max-w-3xl mx-auto">
               Cada produto foi pensado para criar momentos únicos e inesquecíveis. 
               Escolhe a forma perfeita de enviar o teu amor através do tempo.
             </p>
-          </div>
+          </motion.div>
 
           {/* Products Grid */}
-          <div className="grid lg:grid-cols-3 gap-8 mb-16">
+          <motion.div 
+            className="grid lg:grid-cols-3 gap-8 mb-16"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
             {products.map((product, index) => (
-              <div 
+              <motion.div 
                 key={index} 
-                className={`emotion-card p-8 h-full flex flex-col relative ${
+                className={`bg-card border rounded-2xl p-8 h-full flex flex-col relative ${
                   product.highlight 
-                    ? 'border-2 border-earthy-burgundy shadow-lg scale-105 bg-white' 
-                    : 'border border-dusty-rose/20'
-                } hover:scale-105 transition-all duration-300 group`}
+                    ? 'border-2 border-primary shadow-keepla scale-105' 
+                    : 'border-border'
+                } hover:shadow-keepla hover:scale-105 transition-all duration-300 group`}
+                variants={itemVariants}
               >
                 {product.highlight && (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-earthy-burgundy text-white px-4 py-2 rounded-full text-sm font-semibold">
+                    <span className="bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-semibold">
                       Mais Popular
                     </span>
                   </div>
                 )}
 
                 <div className="text-center mb-6">
-                  <div className="w-16 h-16 bg-earthy-burgundy/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-earthy-burgundy/20 transition-colors">
-                    <product.icon className="h-8 w-8 text-earthy-burgundy" />
+                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
+                    <product.icon className="h-8 w-8 text-primary" />
                   </div>
-                  <h3 className="text-2xl font-fraunces font-bold text-steel-blue mb-2">{product.title}</h3>
-                  <p className="text-dusty-rose font-medium italic">{product.subtitle}</p>
+                  <h3 className="text-2xl font-inter font-bold text-foreground mb-2">{product.title}</h3>
+                  <p className="text-primary font-georgia italic">{product.subtitle}</p>
                 </div>
 
                 <div className="flex-1">
-                  <p className="text-misty-gray leading-relaxed mb-6">{product.description}</p>
+                  <p className="text-muted-foreground leading-relaxed mb-6">{product.description}</p>
                   
                   <div className="space-y-3 mb-8">
                     {product.features.map((feature, idx) => (
                       <div key={idx} className="flex items-center space-x-3">
-                        <div className="w-2 h-2 bg-earthy-burgundy rounded-full flex-shrink-0"></div>
-                        <span className="text-steel-blue font-medium">{feature}</span>
+                        <div className="w-2 h-2 bg-primary rounded-full flex-shrink-0"></div>
+                        <span className="text-foreground font-medium">{feature}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 <div className="text-center">
-                  <p className="text-2xl font-fraunces font-bold text-earthy-burgundy mb-6">{product.price}</p>
+                  <p className="text-2xl font-inter font-bold text-primary mb-6">{product.price}</p>
                   <Button 
-                    variant={product.highlight ? "brand" : "brand-outline"}
-                    className="w-full group"
+                    className={`w-full group ${product.highlight ? 'bg-primary hover:bg-secondary text-primary-foreground' : 'bg-background border-2 border-primary text-primary hover:bg-primary/10'}`}
                     onClick={() => navigate('/register')}
                   >
                     Começar Agora
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           {/* CTA */}
-          <div className="text-center">
-            <div className="emotion-card p-8 max-w-3xl mx-auto">
-              <h3 className="text-2xl font-fraunces font-semibold text-steel-blue mb-4">
+          <motion.div 
+            className="text-center"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+          >
+            <div className="bg-card border border-border rounded-2xl p-8 max-w-3xl mx-auto">
+              <h3 className="text-2xl font-inter font-semibold text-foreground mb-4">
                 Não Sabes Qual Escolher?
               </h3>
-              <p className="text-misty-gray mb-6 leading-relaxed">
+              <p className="text-muted-foreground mb-6 leading-relaxed font-georgia italic">
                 A nossa equipa está aqui para te ajudar a criar a experiência perfeita para o teu momento especial.
               </p>
               <Button 
-                variant="brand-outline" 
+                variant="outline" 
                 size="lg"
+                className="border-2 border-primary text-primary hover:bg-primary/10"
                 onClick={() => navigate('/contact')}
               >
                 Falar com a Nossa Equipa
               </Button>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
