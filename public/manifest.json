@@ -1,27 +1,86 @@
-
 {
   "name": "keepla - Presentes para o Futuro",
   "short_name": "keepla",
-  "description": "Plataforma para agendar entregas de presentes físicos e digitais para datas futuras.",
+  "description": "Plataforma para agendar entregas de presentes físicos e digitais para datas futuras. Memórias que ficam, entregues para sempre.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#F5F2F8",
-  "theme_color": "#3D4A5A",
+  "background_color": "#000000",
+  "theme_color": "#DC143C",
   "orientation": "portrait-primary",
   "categories": ["lifestyle", "utilities"],
   "lang": "pt",
+  "scope": "/",
   "icons": [
+    {
+      "src": "/keepla-logo-red.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/keepla-logo-red.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/keepla-logo-red.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/keepla-logo-red.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/keepla-logo-red.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
     {
       "src": "/keepla-logo-red.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/keepla-logo-red.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/keepla-logo-red.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/keepla-logo-red.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Criar Keepsake",
+      "short_name": "Criar",
+      "description": "Criar uma nova memória",
+      "url": "/criar-keepsake",
+      "icons": [{ "src": "/keepla-logo-red.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "Ver as minhas memórias",
+      "url": "/dashboard",
+      "icons": [{ "src": "/keepla-logo-red.png", "sizes": "192x192" }]
     }
   ]
 }
