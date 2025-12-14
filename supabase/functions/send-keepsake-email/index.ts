@@ -16,6 +16,16 @@ interface KeepsakeEmailData {
   delivery_date: string
 }
 
+// HTML entity encoding to prevent XSS attacks
+function escapeHtml(unsafe: string): string {
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -37,6 +47,12 @@ serve(async (req) => {
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
     }
+
+    // Sanitize user inputs to prevent XSS
+    const safeRecipientName = escapeHtml(recipient_name || 'destinatário');
+    const safeSenderName = escapeHtml(sender_name || 'alguém especial');
+    const safeTitle = escapeHtml(title);
+    const safeMessageContent = escapeHtml(message_content).replace(/\n/g, '<br>');
 
     // Email template
     const emailHtml = `
@@ -60,12 +76,12 @@ serve(async (req) => {
           <p>Uma mensagem especial chegou para você!</p>
         </div>
         <div class="content">
-          <p>Olá <strong>${recipient_name || 'destinatário'}</strong>,</p>
-          <p>Você recebeu uma cápsula digital de <strong>${sender_name || 'alguém especial'}</strong>!</p>
+          <p>Olá <strong>${safeRecipientName}</strong>,</p>
+          <p>Você recebeu uma cápsula digital de <strong>${safeSenderName}</strong>!</p>
           
           <div class="message-box">
-            <h3>📝 ${title}</h3>
-            <p>${message_content.replace(/\n/g, '<br>')}</p>
+            <h3>📝 ${safeTitle}</h3>
+            <p>${safeMessageContent}</p>
           </div>
           
           <p><strong>Data de entrega:</strong> ${new Date(delivery_date).toLocaleDateString('pt-BR')}</p>
