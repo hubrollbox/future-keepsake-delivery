@@ -57,13 +57,13 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
         const fileExt = coverFile.name.split('.').pop();
         const fileName = `${Date.now()}.${fileExt}`;
         const { data: uploadData, error: uploadError } = await supabase.storage
-          .from('public')
-          .upload(`blog-covers/${fileName}`, coverFile, { cacheControl: '3600', upsert: false });
+          .from('blog-covers')
+          .upload(fileName, coverFile, { cacheControl: '3600', upsert: false });
 
         if (uploadError) throw uploadError;
 
-        const { data: publicData } = supabase.storage.from('public').getPublicUrl(uploadData.path) as any;
-        coverUrl = publicData?.publicUrl || publicData?.public_url || undefined;
+        const { data: publicData } = supabase.storage.from('blog-covers').getPublicUrl(uploadData.path);
+        coverUrl = publicData?.publicUrl || undefined;
       }
 
       const { data: userData } = await supabase.auth.getUser();
