@@ -1,11 +1,15 @@
+// src/__tests__/setup.ts
+
 import { vi } from 'vitest';
 import React from 'react';
 import '@testing-library/jest-dom';
 import { mockSupabaseClient } from './mocks/supabase';
 
-// Note: Jest-dom matchers are automatically available in vitest
+/* =========================
+   Supabase
+========================= */
 
-// Mock do Supabase com implementação completa
+// Mock do SDK Supabase
 vi.mock('@supabase/supabase-js', () => ({
   createClient: vi.fn(() => mockSupabaseClient),
 }));
@@ -15,37 +19,69 @@ vi.mock('@/integrations/supabase/client', () => ({
   supabase: mockSupabaseClient,
 }));
 
-// Mock do React Router
+/* =========================
+   React Router
+========================= */
+
 vi.mock('react-router-dom', () => ({
   useNavigate: () => vi.fn(),
   useLocation: () => ({ pathname: '/' }),
+  useParams: () => ({}),
   BrowserRouter: ({ children }: { children: React.ReactNode }) => children,
   Routes: ({ children }: { children: React.ReactNode }) => children,
   Route: ({ element }: { element: React.ReactNode }) => element,
-  Link: ({ children, to }: { children: React.ReactNode; to: string }) => {
-    return React.createElement('a', { href: to }, children);
-  },
+  Link: ({ children, to }: { children: React.ReactNode; to: string }) =>
+    React.createElement('a', { href: to }, children),
 }));
 
-// Mock do Stripe
+/* =========================
+   Stripe
+========================= */
+
 vi.mock('@stripe/stripe-js', () => ({
-  loadStripe: vi.fn(() => Promise.resolve({
-    redirectToCheckout: vi.fn(),
-    confirmCardPayment: vi.fn(),
-  })),
+  loadStripe: vi.fn(() =>
+    Promise.resolve({
+      redirectToCheckout: vi.fn(),
+      confirmCardPayment: vi.fn(),
+    })
+  ),
 }));
 
-// Mock de variáveis de ambiente
+/* =========================
+   Browser APIs (jsdom)
+========================= */
+
+// matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: vi.fn().mockImplementation(query => ({
     matches: false,
     media: query,
     onchange: null,
-    addListener: vi.fn(),
-    removeListener: vi.fn(),
+    addListener: vi.fn(), // deprecated
+    removeListener: vi.fn(), // deprecated
     addEventListener: vi.fn(),
     removeEventListener: vi.fn(),
     dispatchEvent: vi.fn(),
   })),
+});
+
+// IntersectionObserver (necessário para framer-motion)
+class MockIntersectionObserver {
+  constructor() {}
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+Object.defineProperty(window, 'IntersectionObserver', {
+  writable: true,
+  configurable: true,
+  value: MockIntersectionObserver,
+});
+
+Object.defineProperty(global, 'IntersectionObserver', {
+  writable: true,
+  configurable: true,
+  value: MockIntersectionObserver,
 });
