@@ -144,7 +144,8 @@ export default function BlogPostPage() {
         )}
 
         <div
-          className="prose prose-neutral dark:prose-invert max-w-none whitespace-pre-line"
+          className="prose prose-neutral dark:prose-invert max-w-none"
+          style={{ whiteSpace: "pre-wrap" }}
           dangerouslySetInnerHTML={{ __html: safeContent }}
         />
 
