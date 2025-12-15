@@ -134,14 +134,6 @@ export default function BlogPostPage() {
           {post.title}
         </h1>
 
-        <p className="mt-2 text-sm text-muted-foreground">
-          {new Date(post.created_at).toLocaleDateString("pt-PT", {
-            day: "numeric",
-            month: "long",
-            year: "numeric"
-          })}
-        </p>
-
         {coverUrl && (
           <img
             src={coverUrl}
@@ -152,7 +144,7 @@ export default function BlogPostPage() {
         )}
 
         <div
-          className="prose prose-neutral dark:prose-invert max-w-none"
+          className="prose prose-neutral dark:prose-invert max-w-none whitespace-pre-line"
           dangerouslySetInnerHTML={{ __html: safeContent }}
         />
 
