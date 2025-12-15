@@ -16,7 +16,7 @@ interface BlogPost {
   slug: string;
   excerpt?: string;
   cover_image_url?: string;
-  created_at?: string | null;
+  published_at?: string | null;
 }
 
 const containerVariants: Variants = {
@@ -67,9 +67,9 @@ const Blog = () => {
       try {
         const { data, error } = await supabase
           .from("blog_posts")
-          .select("id,title,slug,excerpt,cover_image_url,created_at,status")
+          .select("id,title,slug,excerpt,cover_image_url,published_at,status")
           .eq("status", "published")
-          .order("created_at", { ascending: false });
+          .order("published_at", { ascending: false });
         if (error) throw error;
         setPosts((data || []) as any);
       } catch (err) {
@@ -197,7 +197,7 @@ const Blog = () => {
                       </p>
                     )}
                     <p className="text-xs text-muted-foreground mt-4 uppercase tracking-wide">
-                      {post.created_at ? new Date(post.created_at).toLocaleDateString('pt-PT', {
+                      {post.published_at ? new Date(post.published_at).toLocaleDateString('pt-PT', {
                         day: 'numeric',
                         month: 'long',
                         year: 'numeric'
