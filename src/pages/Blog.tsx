@@ -83,17 +83,26 @@ const Blog = () => {
     fetchPublished();
   }, []);
 
+  // Safe URL com proxy fallback para contornar CSP
   const safeUrl = (url?: string) => {
     if (!url) return undefined;
+
     try {
       const u = new URL(url, window.location.origin);
       if (u.protocol === "http:" || u.protocol === "https:") return u.href;
-      if (url.startsWith("/") || url.startsWith("./") || url.startsWith("../")) return url;
-      return undefined;
     } catch {
-      if (url.startsWith("/") || url.startsWith("./") || url.startsWith("../")) return url;
-      return undefined;
+      // ignorar erro de URL inválida
     }
+
+    // Se for uma URL externa bloqueada por CSP, podemos usar um proxy simples
+    if (url.startsWith("https://mlxmymmoysbtnvcehggn.supabase.co")) {
+      return `/api/proxy-image?url=${encodeURIComponent(url)}`;
+    }
+
+    // URLs relativas ao site
+    if (url.startsWith("/") || url.startsWith("./") || url.startsWith("../")) return url;
+
+    return undefined;
   };
 
   return (
@@ -196,13 +205,7 @@ const Blog = () => {
                         {post.excerpt}
                       </p>
                     )}
-                    <p className="text-xs text-muted-foreground mt-4 uppercase tracking-wide">
-                      {post.published_at ? new Date(post.published_at).toLocaleDateString('pt-PT', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric'
-                      }) : ''}
-                    </p>
+                    {/* Data removida para tornar posts intemporais */}
                   </div>
                 </motion.article>
               );
