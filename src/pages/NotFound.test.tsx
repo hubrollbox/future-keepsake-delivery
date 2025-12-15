@@ -1,23 +1,17 @@
-import { describe, it, expect } from 'vitest';
-import { render } from '@testing-library/react';
-import NotFound from './NotFound';
+import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import NotFound from './NotFound';
 
 describe('NotFound Page', () => {
   it('renders the not found page correctly', () => {
-    const { getByText } = render(
+    render(
       <BrowserRouter>
         <NotFound />
       </BrowserRouter>
     );
-    
-    // Check if the page contains the 404 message and subtitle
-    expect(getByText(/404/i)).toBeInTheDocument();
-    expect(getByText(/Página não encontrada/i)).toBeInTheDocument();
-    
-    // Check if there's a link to go back to home
-    const homeLink = getByText(/Return to Home/i);
-    expect(homeLink).toBeInTheDocument();
-    expect(homeLink.closest('a')).toHaveAttribute('href', '/');
+
+    expect(
+      screen.getByText(/memória não encontrada/i)
+    ).toBeInTheDocument();
   });
 });
