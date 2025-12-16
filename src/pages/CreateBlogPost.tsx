@@ -56,14 +56,17 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
       if (coverFile) {
         const fileExt = coverFile.name.split('.').pop();
         const fileName = `${Date.now()}.${fileExt}`;
+        
+        // CORREÇÃO 1: Usar o bucket 'blog-covers' e o path correto
         const { data: uploadData, error: uploadError } = await supabase.storage
           .from('blog-covers')
-          .upload(fileName, coverFile, { cacheControl: '3600', upsert: false });
+          .upload(`${fileName}`, coverFile, { cacheControl: '3600', upsert: false });
 
         if (uploadError) throw uploadError;
 
-        const { data: publicData } = supabase.storage.from('blog-covers').getPublicUrl(uploadData.path);
-        coverUrl = publicData?.publicUrl || undefined;
+        // CORREÇÃO 2: Obter o URL público do bucket 'blog-covers'
+        const { data: publicData } = supabase.storage.from('blog-covers').getPublicUrl(uploadData.path) as any;
+        coverUrl = publicData?.publicUrl || publicData?.public_url || undefined;
       }
 
       const { data: userData } = await supabase.auth.getUser();
