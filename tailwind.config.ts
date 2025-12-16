@@ -47,8 +47,6 @@ export default {
 			fontFamily: {
 				sans: ["Inter", "system-ui", "sans-serif"],
 				serif: ["Georgia", "serif"],
-				inter: ["Inter", "system-ui", "sans-serif"],
-				georgia: ["Georgia", "serif"],
 			},
 			spacing: {
 				"safe-top": "env(safe-area-inset-top)",
@@ -91,30 +89,21 @@ export default {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))",
 				},
-				sidebar: {
-					DEFAULT: "hsl(var(--sidebar-background))",
-					foreground: "hsl(var(--sidebar-foreground))",
-					primary: "hsl(var(--sidebar-primary))",
-					"primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-					accent: "hsl(var(--sidebar-accent))",
-					"accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-					border: "hsl(var(--sidebar-border))",
-					ring: "hsl(var(--sidebar-ring))",
-				},
 
-				// Keepla – versão estruturada (nova)
-				"keepla-red": {
-					DEFAULT: "#C8102E",
-					deep: "#A00D25",
+				/* === Keepla — única fonte de verdade === */
+				keepla: {
+					red: {
+						DEFAULT: "#C8102E",
+						deep: "#A00D25",
+						glow: "#E8365A",
+					},
+					gray: {
+						light: "#E0E0E0",
+						dark: "#262626",
+					},
+					black: "#000000",
+					white: "#FFFFFF",
 				},
-
-				// Keepla – paleta existente (mantida)
-				"keepla-red-glow": "#E8365A",
-				"keepla-black": "#000000",
-				"keepla-white": "#FFFFFF",
-				"keepla-gray": "#E0E0E0",
-				"keepla-gray-neutral": "#E0E0E0",
-				"keepla-gray-dark": "#262626",
 			},
 			borderRadius: {
 				lg: "12px",
@@ -142,10 +131,6 @@ export default {
 					"0%": { transform: "translateY(30px)", opacity: "0" },
 					"100%": { transform: "translateY(0)", opacity: "1" },
 				},
-				"bounce-gentle": {
-					"0%, 100%": { transform: "translateY(-5%)" },
-					"50%": { transform: "translateY(0)" },
-				},
 			},
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
@@ -153,13 +138,10 @@ export default {
 				"fade-in": "fade-in 0.6s ease-out",
 				"scale-in": "scale-in 0.4s ease-out",
 				"slide-up": "slide-up 0.5s ease-out",
-				"bounce-gentle": "bounce-gentle 2s infinite",
 			},
 			boxShadow: {
-				keepla: "0 4px 24px 0 rgba(200, 16, 46, 0.25)",
-				"keepla-sm": "0 2px 12px 0 rgba(200, 16, 46, 0.15)",
+				keepla: "0 4px 24px rgba(200, 16, 46, 0.25)",
 				"keepla-glow": "0 0 40px rgba(200, 16, 46, 0.35)",
-				"keepla-intense": "0 8px 32px 0 rgba(200, 16, 46, 0.3)",
 			},
 		},
 	},
