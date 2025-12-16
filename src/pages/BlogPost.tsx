@@ -1,172 +1,126 @@
-import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import DOMPurify from "dompurify";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useParams } from "react-router-dom";
+import LoadingSpinner from "@/components/ui/loading-spinner";
+import Markdown from "react-markdown";
 import SEOHead from "@/components/SEOHead";
 
-interface BlogPost {
+interface BlogPostType {
   id: string;
   title: string;
   slug: string;
-  excerpt?: string;
   content: string;
   cover_image_url?: string;
-  tags?: string[];
-  status: "draft" | "published";
-  created_at: string;
   published_at?: string | null;
+  author_id?: string;
 }
 
-export default function BlogPostPage() {
+const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [post, setPost] = useState<BlogPost | null>(null);
+  const [post, setPost] = useState<BlogPostType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!slug) return;
-
     const fetchPost = async () => {
       setLoading(true);
-      setError(null);
-
-      const { data, error } = await supabase
-        .from("blog_posts")
-        .select(
-          "id,title,slug,excerpt,content,cover_image_url,tags,status,created_at,published_at"
-        )
-        .eq("slug", slug)
-        .eq("status", "published")
-        .single();
-
-      if (error) {
+      try {
+        const { data, error } = await supabase
+          .from("blog_posts")
+          .select("*")
+          .eq("slug", slug)
+          .eq("status", "published")
+          .single();
+        
+        if (error) throw error;
+        setPost(data as BlogPostType);
+      } catch (err) {
+        console.error("Erro a carregar artigo:", err);
         setError("Artigo não encontrado ou não publicado.");
-        setPost(null);
-      } else {
-        setPost(data as BlogPost);
+      } finally {
+        setLoading(false);
       }
-
-      setLoading(false);
     };
-
     fetchPost();
   }, [slug]);
 
-  const safeUrl = (url?: string) => {
-    if (!url) return undefined;
-    try {
-      const u = new URL(url, window.location.origin);
-      if (u.protocol === "http:" || u.protocol === "https:") return u.href;
-    } catch {
-      if (url.startsWith("/")) return url;
-    }
-    return undefined;
-  };
-
   if (loading) {
     return (
-      <div className="min-h-screen">
-        <Navigation />
-        <div className="container mx-auto px-4 py-24">
-          <p>A carregar artigo…</p>
-        </div>
-        <Footer />
+      <div className="min-h-screen bg-keepla-white flex items-center justify-center">
+        <LoadingSpinner size="lg" text="A carregar artigo..." />
       </div>
     );
   }
 
   if (error || !post) {
     return (
-      <div className="min-h-screen">
+      <div className="min-h-screen bg-keepla-white">
         <Navigation />
-        <div className="container mx-auto px-4 py-24">
-          <p className="text-destructive mb-4">{error}</p>
-          <Link to="/blog" className="underline">
-            ← Voltar ao blog
-          </Link>
-        </div>
+        <main className="container mx-auto px-4 py-16 text-center">
+          <h1 className="text-3xl font-bold text-keepla-red">Erro</h1>
+          <p className="mt-4 text-keepla-black">{error || "Artigo não encontrado."}</p>
+        </main>
         <Footer />
       </div>
     );
   }
 
-  const coverUrl = safeUrl(post.cover_image_url);
-
-  const safeContent = DOMPurify.sanitize(post.content, {
-    ALLOWED_TAGS: [
-      "p",
-      "br",
-      "strong",
-      "em",
-      "ul",
-      "ol",
-      "li",
-      "h1",
-      "h2",
-      "h3",
-      "h4",
-      "blockquote",
-      "pre",
-      "code",
-      "img",
-      "a"
-    ],
-    ALLOWED_ATTR: ["href", "src", "alt", "title", "target", "rel"]
-  });
+  // Lógica para determinar se é vídeo
+  const isVideo = post.cover_image_url && (
+    post.cover_image_url.toLowerCase().endsWith('.mp4') || 
+    post.cover_image_url.toLowerCase().endsWith('.mov') ||
+    post.cover_image_url.toLowerCase().endsWith('.webm')
+  );
 
   return (
-    <div className="min-h-screen bg-background">
-      <SEOHead
+    <div className="min-h-screen bg-keepla-white">
+      <SEOHead 
         title={post.title}
-        description={post.excerpt || post.title}
+        description={post.content.substring(0, 150) + '...'}
+        keywords="blog keepla, artigos memórias, cápsulas tempo, dicas presentes"
       />
-
       <Navigation />
+      <main className="container mx-auto px-4 py-16 max-w-4xl">
+        <article>
+          <h1 className="text-4xl md:text-5xl font-serif text-keepla-black mb-4">
+            {post.title}
+          </h1>
+          <p className="text-sm text-keepla-gray mb-8">
+            Publicado a {post.published_at ? new Date(post.published_at).toLocaleDateString('pt-PT') : 'Data Desconhecida'}
+          </p>
 
-      <article className="container mx-auto px-4 py-24 max-w-3xl">
-        <Link to="/blog" className="text-sm underline">
-          ← Voltar ao blog
-        </Link>
-
-        <h1 className="mt-6 text-4xl font-bold tracking-tight">
-          {post.title}
-        </h1>
-
-        {coverUrl && (
-          <img
-            src={coverUrl}
-            alt={post.title}
-            className="my-10 w-full rounded-lg"
-            loading="lazy"
-          />
-        )}
-
-        <div
-          className="prose prose-neutral dark:prose-invert max-w-none"
-          style={{ whiteSpace: "pre-wrap" }}
-          dangerouslySetInnerHTML={{ __html: safeContent }}
-        />
-
-        {post.tags && post.tags.length > 0 && (
-          <div className="mt-12">
-            <p className="text-sm font-medium mb-2">Tags</p>
-            <div className="flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="px-2 py-1 text-xs border rounded"
-                >
-                  {tag}
-                </span>
-              ))}
+          {/* CORREÇÃO APLICADA AQUI: Renderizar vídeo ou imagem */}
+          {post.cover_image_url && (
+            <div className="mb-10 rounded-lg overflow-hidden shadow-xl">
+              {isVideo ? (
+                <video 
+                  controls 
+                  src={post.cover_image_url} 
+                  className="w-full h-auto object-cover" 
+                  autoPlay 
+                  loop 
+                  muted
+                />
+              ) : (
+                <img 
+                  src={post.cover_image_url} 
+                  alt={post.title} 
+                  className="w-full h-auto object-cover" 
+                />
+              )}
             </div>
-          </div>
-        )}
-      </article>
+          )}
 
+          <div className="prose prose-lg max-w-none text-keepla-black">
+            <Markdown>{post.content}</Markdown>
+          </div>
+        </article>
+      </main>
       <Footer />
     </div>
   );
-}
+};
+
+export default BlogPost;
