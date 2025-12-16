@@ -221,48 +221,22 @@ export const useKeepsakeForm = () => {
         title: formData.title,
         delivery_date: new Date(formData.delivery_date).toISOString(),
         type: formData.type,
-        status: 'scheduled',
+        // CORREÇÃO 3: Alterar status para 'pending_payment'
+        status: 'pending_payment', 
         total_cost: computedTotal,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       };
 
-      // Tentar inserção compatível com ambos os esquemas (com e sem coluna 'message')
-      let keepsakeData: any;
-      let keepsakeError: any;
-
-      const firstAttempt = await supabase
+      // CORREÇÃO 4: Simplificar a inserção, removendo a lógica de retry
+      const { data: keepsakeData, error: keepsakeError } = await supabase
         .from('keepsakes')
         .insert({
           ...basePayload,
           message_content: formData.message,
-          message: formData.message,
         })
         .select()
         .single();
-
-      keepsakeData = firstAttempt.data;
-      keepsakeError = firstAttempt.error;
-
-      // Se a coluna 'message' não existir, tenta novamente só com 'message_content'
-      if (
-        keepsakeError &&
-        typeof keepsakeError.message === 'string' &&
-        keepsakeError.message.toLowerCase().includes('column') &&
-        keepsakeError.message.toLowerCase().includes('"message"')
-      ) {
-        const secondAttempt = await supabase
-          .from('keepsakes')
-          .insert({
-            ...basePayload,
-            message_content: formData.message,
-          })
-          .select()
-          .single();
-
-        keepsakeData = secondAttempt.data;
-        keepsakeError = secondAttempt.error;
-      }
 
       if (keepsakeError) throw keepsakeError;
 
