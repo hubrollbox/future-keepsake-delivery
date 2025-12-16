@@ -57,14 +57,13 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
         const fileExt = coverFile.name.split('.').pop();
         const fileName = `${Date.now()}.${fileExt}`;
         
-        // CORREÇÃO 1: Usar o bucket 'blog-covers' e o path correto
+        // Assumindo que o bucket 'blog-covers' é o correto e que a RLS está configurada
         const { data: uploadData, error: uploadError } = await supabase.storage
           .from('blog-covers')
           .upload(`${fileName}`, coverFile, { cacheControl: '3600', upsert: false });
 
         if (uploadError) throw uploadError;
 
-        // CORREÇÃO 2: Obter o URL público do bucket 'blog-covers'
         const { data: publicData } = supabase.storage.from('blog-covers').getPublicUrl(uploadData.path) as any;
         coverUrl = publicData?.publicUrl || publicData?.public_url || undefined;
       }
@@ -172,8 +171,14 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
         </div>
 
         <div>
-          <label htmlFor="cover-file" className="block text-sm font-medium">Imagem de capa (opcional)</label>
-          <input id="cover-file" type="file" accept="image/*" onChange={(e) => setCoverFile(e.target.files?.[0] || null)} className="mt-1" />
+          <label htmlFor="cover-file" className="block text-sm font-medium">Imagem/Vídeo de capa (opcional)</label>
+          <input 
+            id="cover-file" 
+            type="file" 
+            accept="image/*,video/*" // <--- CORREÇÃO APLICADA AQUI
+            onChange={(e) => setCoverFile(e.target.files?.[0] || null)} 
+            className="mt-1" 
+          />
         </div>
 
         <div className="pt-4">
