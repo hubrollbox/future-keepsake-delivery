@@ -1,138 +1,194 @@
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { useParams } from "react-router-dom";
 import LoadingSpinner from "@/components/ui/loading-spinner";
-import Markdown from "react-markdown";
-import SEOHead from "@/components/SEOHead";
+import { Button } from "@/components/ui/button";
 
-interface BlogPostType {
-  id: string;
-  title: string;
-  slug: string;
-  content: string;
-  cover_image_url?: string;
-  published_at?: string | null;
-  author_id?: string;
+function slugify(text: string) {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "");
 }
 
-const BlogPost = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const [post, setPost] = useState<BlogPostType | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export default function BlogPost() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(!!id);
+
+  const [title, setTitle] = useState("");
+  const [slug, setSlug] = useState("");
+  const [excerpt, setExcerpt] = useState("");
+  const [content, setContent] = useState("");
+  const [tags, setTags] = useState("");
+  const [coverFile, setCoverFile] = useState<File | null>(null);
+  const [existingCoverUrl, setExistingCoverUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchPost = async () => {
-      setLoading(true);
-      try {
-        const { data, error } = await supabase
-          .from("blog_posts")
-          .select("*")
-          .eq("slug", slug)
-          .eq("status", "published")
-          .single();
+    if (!id) return;
 
-        if (error) throw error;
-        setPost(data as BlogPostType);
-      } catch (err) {
-        console.error("Erro a carregar artigo:", err);
-        setError("Artigo não encontrado ou não publicado.");
-      } finally {
-        setLoading(false);
+    const loadPost = async () => {
+      const { data, error } = await supabase
+        .from("blog_posts")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+      if (error || !data) {
+        navigate("/admin/blog");
+        return;
       }
+
+      setTitle(data.title ?? "");
+      setSlug(data.slug ?? "");
+      setExcerpt(data.excerpt ?? "");
+      setContent(data.content ?? "");
+      setExistingCoverUrl(data.cover_image_url ?? null);
+
+      if (Array.isArray(data.tags)) {
+        setTags(data.tags.join(", "));
+      } else {
+        setTags("");
+      }
+
+      setInitialLoading(false);
     };
 
-    fetchPost();
-  }, [slug]);
+    loadPost();
+  }, [id, navigate]);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-keepla-white flex items-center justify-center">
-        <LoadingSpinner size="lg" text="A carregar artigo..." />
-      </div>
-    );
+  const uploadCover = async (): Promise<string | null> => {
+    if (!coverFile) return null;
+
+    const ext = coverFile.name.split(".").pop();
+    const fileName = `blog/${crypto.randomUUID()}.${ext}`;
+
+    const { error } = await supabase.storage
+      .from("media")
+      .upload(fileName, coverFile, { upsert: false });
+
+    if (error) throw error;
+
+    const { data } = supabase.storage
+      .from("media")
+      .getPublicUrl(fileName);
+
+    return data.publicUrl;
+  };
+
+  const handleSubmit = async (publish: boolean) => {
+    setLoading(true);
+
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) throw new Error("Sem utilizador autenticado");
+
+      let coverUrl: string | null = null;
+
+      if (coverFile) {
+        coverUrl = await uploadCover();
+      }
+
+      const row: any = {
+        title,
+        slug: slugify(slug || title),
+        excerpt,
+        content,
+        tags: tags
+          .split(",")
+          .map(t => t.trim())
+          .filter(Boolean),
+        status: publish ? "published" : "draft",
+        author_id: user.id,
+      };
+
+      // 🔴 correção crítica: só atualiza capa se houver nova
+      if (coverUrl) {
+        row.cover_image_url = coverUrl;
+      }
+
+      if (id) {
+        await supabase.from("blog_posts").update(row).eq("id", id);
+      } else {
+        await supabase.from("blog_posts").insert(row);
+      }
+
+      navigate("/admin/blog");
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (initialLoading) {
+    return <LoadingSpinner />;
   }
-
-  if (error || !post) {
-    return (
-      <div className="min-h-screen bg-keepla-white">
-        <Navigation />
-        <main className="container mx-auto px-4 py-16 text-center">
-          <h1 className="text-3xl font-bold text-keepla-red">Erro</h1>
-          <p className="mt-4 text-keepla-black">
-            {error || "Artigo não encontrado."}
-          </p>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-
-  /* -------------------------------
-     Determinar corretamente se é vídeo
-     ------------------------------- */
-  const isVideo =
-    typeof post.cover_image_url === "string" &&
-    (
-      post.cover_image_url.toLowerCase().endsWith(".mp4") ||
-      post.cover_image_url.toLowerCase().endsWith(".mov") ||
-      post.cover_image_url.toLowerCase().endsWith(".webm")
-    );
 
   return (
-    <div className="min-h-screen bg-keepla-white">
-      <SEOHead
-        title={post.title}
-        description={post.content.substring(0, 150) + "..."}
-        keywords="blog keepla, artigos memórias, cápsulas tempo, dicas presentes"
+    <div className="max-w-3xl mx-auto space-y-4">
+      <input
+        className="w-full border p-2"
+        placeholder="Título"
+        value={title}
+        onChange={e => setTitle(e.target.value)}
       />
 
-      <Navigation />
+      <input
+        className="w-full border p-2"
+        placeholder="Slug (opcional)"
+        value={slug}
+        onChange={e => setSlug(e.target.value)}
+      />
 
-      <main className="container mx-auto px-4 py-16 max-w-4xl">
-        <article>
-          <h1 className="text-4xl md:text-5xl font-serif text-keepla-black mb-4">
-            {post.title}
-          </h1>
+      <textarea
+        className="w-full border p-2"
+        placeholder="Excerto"
+        value={excerpt}
+        onChange={e => setExcerpt(e.target.value)}
+      />
 
-          <p className="text-sm text-keepla-gray mb-8">
-            Publicado a{" "}
-            {post.published_at
-              ? new Date(post.published_at).toLocaleDateString("pt-PT")
-              : "Data desconhecida"}
-          </p>
+      <textarea
+        className="w-full border p-2 min-h-[200px]"
+        placeholder="Conteúdo"
+        value={content}
+        onChange={e => setContent(e.target.value)}
+      />
 
-          {post.cover_image_url && (
-            <div className="mb-10 rounded-lg overflow-hidden shadow-xl">
-              {isVideo ? (
-                <video
-                  src={post.cover_image_url}
-                  controls
-                  preload="metadata"
-                  className="w-full h-auto object-cover"
-                />
-              ) : (
-                <img
-                  src={post.cover_image_url}
-                  alt={post.title}
-                  className="w-full h-auto object-cover"
-                  loading="eager"
-                />
-              )}
-            </div>
-          )}
+      <input
+        className="w-full border p-2"
+        placeholder="Tags (separadas por vírgula)"
+        value={tags}
+        onChange={e => setTags(e.target.value)}
+      />
 
-          <div className="prose prose-lg max-w-none text-keepla-black">
-            <Markdown>{post.content}</Markdown>
-          </div>
-        </article>
-      </main>
+      {existingCoverUrl && !coverFile && (
+        <div className="text-sm text-gray-500">
+          Capa atual definida
+        </div>
+      )}
 
-      <Footer />
+      <input
+        type="file"
+        accept="image/*,video/*"
+        onChange={e => setCoverFile(e.target.files?.[0] ?? null)}
+      />
+
+      <div className="flex gap-2">
+        <Button disabled={loading} onClick={() => handleSubmit(false)}>
+          Guardar rascunho
+        </Button>
+        <Button disabled={loading} onClick={() => handleSubmit(true)}>
+          Publicar
+        </Button>
+      </div>
     </div>
   );
-};
-
-export default BlogPost;
+}
