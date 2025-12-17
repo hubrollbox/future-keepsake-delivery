@@ -61,7 +61,6 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [existingCoverUrl, setExistingCoverUrl] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [currentPostId, setCurrentPostId] = useState<string | null>(null);
 
   const {
     register,
@@ -73,7 +72,7 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
     clearErrors,
     formState: { errors, isDirty },
   } = useForm<BlogPostFormData>({
-    resolver: zodResolver(blogPostSchema),
+    resolver: zodResolver(blogPostSchema) as any,
     defaultValues: {
       title: '',
       slug: '',
@@ -114,7 +113,6 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
       setCoverFile(null);
       setExistingCoverUrl(null);
       setImagePreview(null);
-      setCurrentPostId(null);
       return;
     }
 
@@ -140,7 +138,6 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
         });
 
         setExistingCoverUrl(data.cover_image_url);
-        setCurrentPostId(data.id);
       } catch (error) {
         console.error('Erro ao carregar post:', error);
         toast({
@@ -287,9 +284,10 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
       }
 
       // Upload da imagem (se houver)
-      let coverUrl = existingCoverUrl;
+      let coverUrl: string | null = existingCoverUrl;
       if (coverFile) {
-        coverUrl = await uploadCover();
+        const uploadedUrl = await uploadCover();
+        coverUrl = uploadedUrl;
       }
 
       // Preparar dados para inserção/atualização
@@ -312,25 +310,18 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
 
       // Inserir ou atualizar
       let error;
-      let resultData: any;
       
       if (editId) {
         const result = await supabase
           .from('blog_posts')
           .update(postData)
-          .eq('id', editId)
-          .select()
-          .single();
+          .eq('id', editId);
         error = result.error;
-        resultData = result.data;
       } else {
         const result = await supabase
           .from('blog_posts')
-          .insert([{ ...postData, created_at: new Date().toISOString() }])
-          .select()
-          .single();
+          .insert([{ ...postData, created_at: new Date().toISOString() }]);
         error = result.error;
-        resultData = result.data;
       }
 
       if (error) throw error;
@@ -349,9 +340,6 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
         setCoverFile(null);
         setExistingCoverUrl(null);
         setImagePreview(null);
-        setCurrentPostId(null);
-      } else {
-        setCurrentPostId(resultData.id);
       }
 
       // Chamar callback se fornecido
@@ -396,7 +384,10 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
         </Button>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={(e) => {
+        e.preventDefault();
+        handleSubmit(onSubmit)(e);
+      }} className="space-y-6">
         {/* Título */}
         <div className="space-y-2">
           <label htmlFor="title" className="block text-sm font-medium text-gray-700">
