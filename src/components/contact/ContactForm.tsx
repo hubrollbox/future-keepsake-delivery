@@ -1,112 +1,123 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
-interface ContactFormData {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-}
+// Schema de validação com Zod
+const contactFormSchema = z.object({
+  name: z
+    .string()
+    .min(1, "Nome é obrigatório")
+    .max(100, "O nome não pode exceder 100 caracteres")
+    .trim(),
+  email: z
+    .string()
+    .min(1, "Email é obrigatório")
+    .email("Por favor, insira um email válido")
+    .max(254, "O email não pode exceder 254 caracteres")
+    .trim(),
+  subject: z
+    .string()
+    .min(1, "Assunto é obrigatório")
+    .max(200, "O assunto não pode exceder 200 caracteres")
+    .trim(),
+  message: z
+    .string()
+    .min(10, "A mensagem deve ter pelo menos 10 caracteres")
+    .max(2000, "A mensagem não pode exceder 2000 caracteres")
+    .trim(),
+  // Campo honeypot para proteção contra spam (deve permanecer vazio)
+  honeypot: z.string().max(0, "Erro na validação do formulário").optional(),
+});
+
+type ContactFormData = z.infer<typeof contactFormSchema>;
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState<ContactFormData>({
-    name: "",
-    email: "",
-    subject: "",
-    message: ""
-  });
-  const [loading, setLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+    watch,
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+      honeypot: "",
+    },
+  });
 
-  const validateForm = (): boolean => {
-    if (!formData.name.trim()) {
-      toast({
-        title: "Erro",
-        description: "Nome é obrigatório",
-        variant: "destructive"
-      });
-      return false;
+  const messageValue = watch("message");
+
+  const onSubmit = async (data: ContactFormData) => {
+    // Se o honeypot foi preenchido, não processamos o envio
+    if (data.honeypot) {
+      console.warn("Bot detection: honeypot field filled");
+      return;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email.trim() || !emailRegex.test(formData.email)) {
-      toast({
-        title: "Erro",
-        description: "Email válido é obrigatório",
-        variant: "destructive"
-      });
-      return false;
-    }
-
-    if (!formData.subject.trim()) {
-      toast({
-        title: "Erro",
-        description: "Assunto é obrigatório",
-        variant: "destructive"
-      });
-      return false;
-    }
-
-    if (!formData.message.trim() || formData.message.length < 10) {
-      toast({
-        title: "Erro",
-        description: "Mensagem deve ter pelo menos 10 caracteres",
-        variant: "destructive"
-      });
-      return false;
-    }
-
-    return true;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!validateForm()) return;
-
-    setLoading(true);
+    setIsSubmitting(true);
 
     try {
-      const { error } = await supabase.functions.invoke('send-contact-email', {
+      const { error } = await supabase.functions.invoke("send-contact-email", {
         body: {
-          name: formData.name.trim(),
-          email: formData.email.trim(),
-          subject: formData.subject.trim(),
-          message: formData.message.trim()
-        }
+          name: data.name,
+          email: data.email,
+          subject: data.subject,
+          message: data.message,
+        },
       });
 
-      if (error) throw error;
+      if (error) {
+        // Tentativa de extrair uma mensagem de erro mais específica
+        let errorMessage = "Não foi possível enviar a mensagem. Tente novamente.";
+
+        if (error.message?.includes("Failed to fetch")) {
+          errorMessage = "Erro de conexão. Verifique sua internet e tente novamente.";
+        } else if (error.message?.includes("timeout")) {
+          errorMessage = "A operação demorou muito tempo. Tente novamente.";
+        } else if (error.message) {
+          errorMessage = `Erro: ${error.message}`;
+        }
+
+        throw new Error(errorMessage);
+      }
 
       toast({
         title: "Mensagem enviada!",
         description: "Obrigado pelo seu contacto. Entraremos em contacto em breve.",
       });
 
-      // Reset form
-      setFormData({ name: "", email: "", subject: "", message: "" });
+      // Reset do formulário APENAS em caso de sucesso
+      reset();
 
     } catch (error: unknown) {
-      console.error('Error sending contact form:', error);
+      console.error("Error sending contact form:", error);
+
+      const errorMessage = error instanceof Error 
+        ? error.message 
+        : "Não foi possível enviar a mensagem. Tente novamente.";
+
       toast({
         title: "Erro",
-        description: "Não foi possível enviar a mensagem. Tente novamente.",
-        variant: "destructive"
+        description: errorMessage,
+        variant: "destructive",
       });
     } finally {
-      setLoading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -118,76 +129,111 @@ const ContactForm = () => {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          {/* Campo Honeypot (proteção contra spam - escondido visualmente) */}
+          <div className="sr-only" aria-hidden="true">
+            <Label htmlFor="honeypot">Não preencha este campo</Label>
+            <Input
+              id="honeypot"
+              {...register("honeypot")}
+              tabIndex={-1}
+              autoComplete="off"
+            />
+          </div>
+
           <div>
-            <Label htmlFor="name" className="text-steel-blue font-medium">Nome completo</Label>
+            <Label htmlFor="name" className="text-steel-blue font-medium">
+              Nome completo *
+            </Label>
             <Input
               id="name"
-              name="name"
-              type="text"
-              value={formData.name}
-              onChange={handleInputChange}
+              {...register("name")}
               placeholder="O teu nome"
-              required
-              maxLength={100}
               className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90"
+              aria-required="true"
+              aria-invalid={errors.name ? "true" : "false"}
+              aria-describedby={errors.name ? "name-error" : undefined}
             />
+            {errors.name && (
+              <p id="name-error" className="text-red-500 text-sm mt-1">
+                {errors.name.message}
+              </p>
+            )}
           </div>
 
           <div>
-            <Label htmlFor="email" className="text-steel-blue font-medium">Email</Label>
+            <Label htmlFor="email" className="text-steel-blue font-medium">
+              Email *
+            </Label>
             <Input
               id="email"
-              name="email"
               type="email"
-              value={formData.email}
-              onChange={handleInputChange}
+              {...register("email")}
               placeholder="teu@email.com"
-              required
-              maxLength={254}
               className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90"
+              aria-required="true"
+              aria-invalid={errors.email ? "true" : "false"}
+              aria-describedby={errors.email ? "email-error" : undefined}
             />
+            {errors.email && (
+              <p id="email-error" className="text-red-500 text-sm mt-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           <div>
-            <Label htmlFor="subject" className="text-steel-blue font-medium">Assunto</Label>
+            <Label htmlFor="subject" className="text-steel-blue font-medium">
+              Assunto *
+            </Label>
             <Input
               id="subject"
-              name="subject"
-              type="text"
-              value={formData.subject}
-              onChange={handleInputChange}
+              {...register("subject")}
               placeholder="Como podemos ajudar?"
-              required
-              maxLength={200}
               className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90"
+              aria-required="true"
+              aria-invalid={errors.subject ? "true" : "false"}
+              aria-describedby={errors.subject ? "subject-error" : undefined}
             />
+            {errors.subject && (
+              <p id="subject-error" className="text-red-500 text-sm mt-1">
+                {errors.subject.message}
+              </p>
+            )}
           </div>
 
           <div>
-            <Label htmlFor="message" className="text-steel-blue font-medium">Mensagem</Label>
+            <Label htmlFor="message" className="text-steel-blue font-medium">
+              Mensagem *
+            </Label>
             <Textarea
               id="message"
-              name="message"
-              value={formData.message}
-              onChange={handleInputChange}
+              {...register("message")}
               placeholder="Conta-nos mais detalhes..."
               rows={5}
-              required
-              maxLength={2000}
               className="border-dusty-rose/30 focus:border-earthy-burgundy bg-white/90 resize-none"
+              aria-required="true"
+              aria-invalid={errors.message ? "true" : "false"}
+              aria-describedby={errors.message ? "message-error message-counter" : "message-counter"}
             />
-            <p className="text-xs text-misty-gray mt-1">
-              {formData.message.length}/2000 caracteres
-            </p>
+            <div className="flex justify-between items-center mt-1">
+              <p id="message-counter" className="text-xs text-misty-gray">
+                {messageValue?.length || 0}/2000 caracteres
+              </p>
+              {errors.message && (
+                <p id="message-error" className="text-red-500 text-sm">
+                  {errors.message.message}
+                </p>
+              )}
+            </div>
           </div>
 
-          <Button 
-            type="submit" 
+          <Button
+            type="submit"
             className="w-full bg-earthy-burgundy text-white hover:bg-earthy-burgundy/90 font-semibold py-3 rounded-xl transition-all duration-200"
-            disabled={loading}
+            disabled={isSubmitting}
           >
-            {loading ? "A enviar..." : "Enviar Mensagem"}
+            {isSubmitting ? "A enviar..." : "Enviar Mensagem"}
           </Button>
         </form>
       </CardContent>
