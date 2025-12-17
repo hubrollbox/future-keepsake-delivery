@@ -52,6 +52,7 @@ export const GamificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
       return;
     }
 
+    setLoading(true);
     try {
       const data = await gamificationService.getUserStats();
       if (data) {
@@ -61,12 +62,14 @@ export const GamificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
           total_points: data.total_points,
           current_level: currentLevel, // Poderíamos usar data.current_level se quiséssemos persistir
           current_streak: data.current_streak,
-          next_level_points,
+          next_level_points: nextLevelPoints,
           progress_to_next_level: progress
         });
       }
     } catch (error) {
       console.error("Failed to fetch gamification stats", error);
+    } finally {
+      setLoading(false);
     }
   }, [user]);
 

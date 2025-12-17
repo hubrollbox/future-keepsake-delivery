@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingSpinner from "@/components/ui/loading-spinner";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Calendar, Tag, Share2 } from "lucide-react";
+import { ArrowLeft, Calendar, Tag } from "lucide-react";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
 import { useToast } from "@/hooks/use-toast";
@@ -30,6 +30,22 @@ const BlogPost = () => {
   const { toast } = useToast();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: post?.title,
+        text: post?.excerpt,
+        url: window.location.href,
+      }).catch(console.error);
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      toast({
+        title: "Link copiado",
+        description: "Link do artigo copiado para a área de transferência",
+      });
+    }
+  };
 
   useEffect(() => {
     let cleanupTimer: (() => void) | undefined;
@@ -171,6 +187,30 @@ const BlogPost = () => {
                 ))}
               </div>
             )}
+
+            <Button onClick={handleShare} variant="outline" className="mb-6 gap-2">
+              <div className="flex items-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-share-2"
+                >
+                  <circle cx="18" cy="5" r="3" />
+                  <circle cx="6" cy="12" r="3" />
+                  <circle cx="18" cy="19" r="3" />
+                  <line x1="8.59" x2="15.42" y1="13.51" y2="17.49" />
+                  <line x1="15.41" x2="8.59" y1="6.51" y2="10.49" />
+                </svg>
+                Partilhar Artigo
+              </div>
+            </Button>
           </header>
 
           <div className="prose prose-lg dark:prose-invert max-w-none">

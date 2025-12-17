@@ -18,7 +18,7 @@ import { PlusCircle, Clock, Package, CheckCircle } from "lucide-react";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { profile, loading } = useAuth();
+  const { loading } = useAuth();
   const { deliveries, loading: deliveriesLoading, deleteDelivery } = useDeliveries();
 
   // Transform deliveries to match Delivery interface
