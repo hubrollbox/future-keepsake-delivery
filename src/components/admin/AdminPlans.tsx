@@ -256,7 +256,7 @@ const AdminPlans = () => {
       </Card>
 
       {/* Tabela de Planos */}
-      <Card>
+      <Card className="border-dusty-rose/20">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <CreditCard className="h-5 w-5" />
@@ -330,7 +330,7 @@ const AdminPlans = () => {
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                               <AlertDialogHeader>
-                                <AlertDialogTitle>Confirmar remoção</AlertDialogTitle>
+                                <AlertDialogTitle className="font-fraunces text-steel-blue">Confirmar remoção</AlertDialogTitle>
                                 <AlertDialogDescription>
                                   Tem a certeza que deseja remover o plano "{plan.name}"? Esta ação não pode ser desfeita.
                                   {plan.subscriber_count && plan.subscriber_count > 0 && (

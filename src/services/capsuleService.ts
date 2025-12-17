@@ -34,21 +34,35 @@ export async function fetchCapsules(): Promise<Capsule[]> {
     throw new Error("Não foi possível carregar suas cápsulas do tempo");
   }
   
-  // Transform deliveries data to match Capsule interface
-  const capsules: Capsule[] = (data || []).map(delivery => ({
-    id: delivery.id,
-    type: delivery.type === "physical" ? "Física" : "Digital",
-    physical_location: delivery.location || undefined,
-    digital_link: delivery.digital_file_url || undefined,
-    created_at: delivery.created_at || new Date().toISOString(),
-    delivery_date: delivery.delivery_date,
-    status: delivery.status,
-    sender_name: "Utilizador", // Default sender name since we don't have this in deliveries
-    sender_contact: "N/A", // Default contact
-    recipient_name: "N/A", // No recipient name in deliveries table
-    recipient_contact: "N/A", // No recipient email in deliveries table  
-    notes: delivery.description || undefined,
-  }));
+  const capsules: Capsule[] = await Promise.all(
+    (data || []).map(async (delivery) => {
+      let signedUrl: string | undefined = undefined;
+      if (delivery.digital_file_url) {
+        const { data: signed, error: signedErr } = await supabase.storage
+          .from("digital-files")
+          .createSignedUrl(delivery.digital_file_url, 3600);
+        if (!signedErr) {
+          signedUrl = signed?.signedUrl || undefined;
+        } else {
+          signedUrl = undefined;
+        }
+      }
+      const base = {
+        id: delivery.id,
+        type: delivery.type === "physical" ? "Física" : "Digital",
+        physical_location: delivery.location || undefined,
+        created_at: delivery.created_at || new Date().toISOString(),
+        delivery_date: delivery.delivery_date,
+        status: delivery.status,
+        sender_name: "Utilizador",
+        sender_contact: "N/A",
+        recipient_name: "N/A",
+        recipient_contact: "N/A",
+        notes: delivery.description || undefined,
+      } as Capsule;
+      return signedUrl ? { ...base, digital_link: signedUrl } : base;
+    })
+  );
   
   return capsules;
 }

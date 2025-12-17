@@ -439,7 +439,7 @@ const AdminContent = () => {
       </div>
 
       {/* Pesquisa */}
-      <Card>
+      <Card className="border-dusty-rose/20">
         <CardContent className="pt-6">
           <div className="relative">
             <Search className="absolute left-3 top-3 h-4 w-4 text-misty-gray" />
@@ -479,7 +479,7 @@ const AdminContent = () => {
             </Button>
           </div>
 
-          <Card>
+          <Card className="border-dusty-rose/20">
             <CardContent>
               {loading ? (
                 <div className="text-center py-8">
@@ -525,8 +525,8 @@ const AdminContent = () => {
                               </AlertDialogTrigger>
                               <AlertDialogContent>
                                 <AlertDialogHeader>
-                                  <AlertDialogTitle>Confirmar remoção</AlertDialogTitle>
-                                  <AlertDialogDescription>
+                                <AlertDialogTitle className="font-fraunces text-steel-blue">Confirmar remoção</AlertDialogTitle>
+                                <AlertDialogDescription>
                                     Tem a certeza que deseja remover a notificação "{notification.title}"?
                                   </AlertDialogDescription>
                                 </AlertDialogHeader>
@@ -562,7 +562,7 @@ const AdminContent = () => {
             </Button>
           </div>
 
-          <Card>
+          <Card className="border-dusty-rose/20">
             <CardContent>
               {loading ? (
                 <div className="text-center py-8">
@@ -606,7 +606,7 @@ const AdminContent = () => {
                               </AlertDialogTrigger>
                               <AlertDialogContent>
                                 <AlertDialogHeader>
-                                  <AlertDialogTitle>Confirmar remoção</AlertDialogTitle>
+                                  <AlertDialogTitle className="font-fraunces text-steel-blue">Confirmar remoção</AlertDialogTitle>
                                   <AlertDialogDescription>
                                     Tem a certeza que deseja remover a conquista "{achievement.title}"?
                                   </AlertDialogDescription>
@@ -636,14 +636,14 @@ const AdminContent = () => {
         {/* Tab de Missões */}
         <TabsContent value="quests" className="space-y-4">
           <div className="flex justify-between items-center">
-            <h2 className="text-xl font-semibold">Missões ({filteredQuests.length})</h2>
+            <h2 className="text-xl font-fraunces font-semibold text-steel-blue">Missões ({filteredQuests.length})</h2>
             <Button onClick={() => { resetQuestForm(); setIsQuestDialogOpen(true); }} className="bg-earthy-burgundy hover:bg-earthy-burgundy/90">
               <Plus className="h-4 w-4 mr-2" />
               Nova Missão
             </Button>
           </div>
 
-          <Card>
+          <Card className="border-dusty-rose/20">
             <CardContent>
               {loading ? (
                 <div className="text-center py-8">
@@ -700,7 +700,7 @@ const AdminContent = () => {
                               </AlertDialogTrigger>
                               <AlertDialogContent>
                                 <AlertDialogHeader>
-                                  <AlertDialogTitle>Confirmar remoção</AlertDialogTitle>
+                                  <AlertDialogTitle className="font-fraunces text-steel-blue">Confirmar remoção</AlertDialogTitle>
                                   <AlertDialogDescription>
                                     Tem a certeza que deseja remover a missão "{quest.title}"?
                                   </AlertDialogDescription>
@@ -732,7 +732,7 @@ const AdminContent = () => {
       <Dialog open={isNotificationDialogOpen} onOpenChange={setIsNotificationDialogOpen}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
-            <DialogTitle>
+            <DialogTitle className="font-fraunces text-steel-blue">
               {editingNotification ? "Editar Notificação" : "Nova Notificação"}
             </DialogTitle>
           </DialogHeader>
@@ -790,7 +790,7 @@ const AdminContent = () => {
       <Dialog open={isAchievementDialogOpen} onOpenChange={setIsAchievementDialogOpen}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
-            <DialogTitle>
+            <DialogTitle className="font-fraunces text-steel-blue">
               {editingAchievement ? "Editar Conquista" : "Nova Conquista"}
             </DialogTitle>
           </DialogHeader>
@@ -853,7 +853,7 @@ const AdminContent = () => {
       <Dialog open={isQuestDialogOpen} onOpenChange={setIsQuestDialogOpen}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
-            <DialogTitle>
+            <DialogTitle className="font-fraunces text-steel-blue">
               {editingQuest ? "Editar Missão" : "Nova Missão"}
             </DialogTitle>
           </DialogHeader>

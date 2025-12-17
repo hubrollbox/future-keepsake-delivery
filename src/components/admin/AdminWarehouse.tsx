@@ -178,8 +178,8 @@ const AdminWarehouse = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Gestão de Armazém</h1>
-          <p className="text-muted-foreground">Gerir itens e stock do armazém</p>
+          <h1 className="text-2xl font-fraunces font-bold text-steel-blue tracking-tight">Gestão de Armazém</h1>
+          <p className="text-misty-gray">Gerir itens e stock do armazém</p>
         </div>
         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
           <DialogTrigger asChild>
@@ -190,14 +190,14 @@ const AdminWarehouse = () => {
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>{editingItem ? 'Editar Item' : 'Adicionar Novo Item'}</DialogTitle>
-              <DialogDescription>
+              <DialogTitle className="font-fraunces text-steel-blue">{editingItem ? 'Editar Item' : 'Adicionar Novo Item'}</DialogTitle>
+              <DialogDescription className="text-misty-gray">
                 {editingItem ? 'Edite as informações do item.' : 'Adicione um novo item ao armazém.'}
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <Label htmlFor="name">Nome</Label>
+                <Label htmlFor="name" className="text-gray-700">Nome</Label>
                 <Input
                   id="name"
                   value={formData.name}
@@ -263,7 +263,7 @@ const AdminWarehouse = () => {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {filteredItems.map((item) => (
-          <Card key={item.id}>
+          <Card key={item.id} className="border-dusty-rose/20">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 <div className="flex items-center space-x-2">

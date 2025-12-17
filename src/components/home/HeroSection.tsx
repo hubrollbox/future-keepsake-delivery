@@ -60,7 +60,7 @@ const HeroSection = () => {
 
           {/* Subtitle - Georgia Emotivo */}
           <motion.p 
-            className="hero-subtitle text-gray-100 mb-8 mx-auto"
+            className="hero-subtitle text-white drop-shadow-md mb-8 mx-auto font-medium"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
@@ -75,7 +75,7 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
           >
-            <p className="slogan text-gray-100">
+            <p className="slogan text-white font-medium drop-shadow-md">
               "Uma carta para o futuro é uma ponte entre quem somos hoje e quem seremos amanhã."
             </p>
           </motion.div>

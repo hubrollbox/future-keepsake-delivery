@@ -107,10 +107,10 @@ const AdminPayments = () => {
   if (loading) {
     return (
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900">Pagamentos</h1>
+        <h1 className="text-2xl font-fraunces font-bold text-steel-blue">Pagamentos</h1>
         <div className="animate-pulse space-y-4">
           {[...Array(3)].map((_, i) => (
-            <Card key={i}>
+            <Card key={i} className="border-dusty-rose/20">
               <CardContent className="p-6">
                 <div className="h-6 bg-gray-200 rounded w-1/2 mb-4"></div>
                 <div className="h-4 bg-gray-200 rounded w-3/4"></div>
@@ -125,7 +125,7 @@ const AdminPayments = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 className="text-2xl font-bold text-gray-900">Pagamentos</h1>
+        <h1 className="text-2xl font-fraunces font-bold text-steel-blue">Pagamentos</h1>
         <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -160,13 +160,13 @@ const AdminPayments = () => {
 
       <div className="grid gap-4">
         {filteredPayments.map((payment) => (
-          <Card key={payment.id} className="hover:shadow-md transition-shadow">
+          <Card key={payment.id} className="hover:shadow-md transition-shadow border-dusty-rose/20">
             <CardContent className="p-6">
               <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
                 <div className="flex-1 space-y-2">
                   <div className="flex items-center gap-2">
-                    <CreditCard className="h-4 w-4 text-blue-600" />
-                    <h3 className="text-lg font-semibold text-gray-900">
+                    <CreditCard className="h-4 w-4 text-steel-blue" />
+                    <h3 className="text-lg font-semibold text-steel-blue">
                       {formatAmount(payment.amount, payment.currency)}
                     </h3>
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(payment.status)}`}>

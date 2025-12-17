@@ -217,12 +217,12 @@ const AdminBlog = () => {
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="max-w-3xl bg-white text-keepla-black border border-keepla-black shadow-lg">
           <DialogHeader>
-            <DialogTitle className="text-keepla-black">{editingPost ? "Editar Artigo" : "Novo Artigo"}</DialogTitle>
+            <DialogTitle className="font-fraunces text-steel-blue">{editingPost ? "Editar Artigo" : "Novo Artigo"}</DialogTitle>
           </DialogHeader>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
             <div>
-              <Label className="text-keepla-black">Título</Label>
+              <Label className="text-gray-700">Título</Label>
               <Input value={form.title} onChange={(e) => {
                 const newTitle = e.target.value;
                 const autoSlug = slugify(newTitle);
@@ -234,28 +234,68 @@ const AdminBlog = () => {
               }} />
             </div>
             <div>
-              <Label className="text-keepla-black">Slug</Label>
+              <Label className="text-gray-700">Slug</Label>
               <Input value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })} />
             </div>
             <div className="md:col-span-2">
-              <Label className="text-keepla-black">Excerto</Label>
+              <Label className="text-gray-700">Excerto</Label>
               <Textarea value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })} />
             </div>
             <div className="md:col-span-2">
-              <Label className="text-keepla-black">Conteúdo</Label>
+              <Label className="text-gray-700">Conteúdo</Label>
               <ReactQuill theme="snow" value={form.content || ""} onChange={(val) => setForm({ ...form, content: val })} />
             </div>
-            <div>
-              <Label className="text-keepla-black">Imagem de capa (URL)</Label>
-              <Input value={form.cover_image_url} onChange={(e) => setForm({ ...form, cover_image_url: e.target.value })} />
+            <div className="md:col-span-2">
+              <Label className="text-gray-700">Imagem de capa (URL)</Label>
+              <div className="flex gap-2">
+                <Input value={form.cover_image_url} onChange={(e) => setForm({ ...form, cover_image_url: e.target.value })} placeholder="https://..." />
+                <Button variant="outline" size="icon" className="shrink-0" onClick={() => document.getElementById('image-upload')?.click()}>
+                  <UploadCloud className="h-4 w-4" />
+                </Button>
+                <input
+                  type="file"
+                  id="image-upload"
+                  className="hidden"
+                  accept="image/*"
+                  onChange={async (e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+
+                    try {
+                      setLoading(true);
+                      const fileExt = file.name.split('.').pop();
+                      const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
+                      const filePath = `${fileName}`;
+
+                      const { error: uploadError } = await supabase.storage
+                        .from('blog-covers')
+                        .upload(filePath, file);
+
+                      if (uploadError) throw uploadError;
+
+                      const { data: { publicUrl } } = supabase.storage
+                        .from('blog-covers')
+                        .getPublicUrl(filePath);
+
+                      setForm({ ...form, cover_image_url: publicUrl });
+                      toast({ title: "Sucesso", description: "Imagem carregada com sucesso." });
+                    } catch (error: any) {
+                      console.error('Error uploading image:', error);
+                      toast({ title: "Erro", description: "Falha ao carregar imagem.", variant: "destructive" });
+                    } finally {
+                      setLoading(false);
+                    }
+                  }}
+                />
+              </div>
             </div>
             <div>
-              <Label className="text-keepla-black">Tags (vírgulas)</Label>
+              <Label className="text-gray-700">Tags (vírgulas)</Label>
               <Input value={(form.tags || []).join(',')} onChange={(e) => setForm({ ...form, tags: e.target.value.split(',').map(t => t.trim()).filter(Boolean) })} />
             </div>
             <div>
-              <Label className="text-keepla-black">Estado</Label>
-              <select value={form.status} onChange={(e) => setForm({ ...form, status: (e.target.value as 'draft' | 'published') })} className="w-full border rounded px-3 py-2">
+              <Label className="text-gray-700">Estado</Label>
+              <select value={form.status} onChange={(e) => setForm({ ...form, status: (e.target.value as 'draft' | 'published') })} className="w-full border rounded px-3 py-2 text-sm">
                 <option value="draft">Rascunho</option>
                 <option value="published">Publicado</option>
               </select>

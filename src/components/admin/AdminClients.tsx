@@ -103,42 +103,42 @@ const AdminClients: React.FC = () => {
 
   return (
     <div className="bg-white border border-dusty-rose/20 rounded-2xl shadow-soft p-6">
-      <h3 className="text-lg font-serif font-semibold text-gentle-black mb-4">
+      <h3 className="text-2xl font-fraunces font-semibold text-steel-blue mb-4">
         Gestão de Clientes
       </h3>
       
       {loading ? (
-        <div className="text-soft-gray">A carregar clientes...</div>
+        <div className="text-misty-gray">A carregar clientes...</div>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-dusty-rose/20">
-                <th className="text-left py-2 px-4 font-medium text-gentle-black">Nome</th>
-                <th className="text-left py-2 px-4 font-medium text-gentle-black">Email</th>
-                <th className="text-left py-2 px-4 font-medium text-gentle-black">Plano</th>
-                <th className="text-left py-2 px-4 font-medium text-gentle-black">Pontos</th>
-                <th className="text-left py-2 px-4 font-medium text-gentle-black">Nível</th>
-                <th className="text-left py-2 px-4 font-medium text-gentle-black">Admin</th>
-                <th className="text-left py-2 px-4 font-medium text-gentle-black">Ações</th>
+                <th className="text-left py-2 px-4 font-medium text-gray-700">Nome</th>
+                <th className="text-left py-2 px-4 font-medium text-gray-700">Email</th>
+                <th className="text-left py-2 px-4 font-medium text-gray-700">Plano</th>
+                <th className="text-left py-2 px-4 font-medium text-gray-700">Pontos</th>
+                <th className="text-left py-2 px-4 font-medium text-gray-700">Nível</th>
+                <th className="text-left py-2 px-4 font-medium text-gray-700">Admin</th>
+                <th className="text-left py-2 px-4 font-medium text-gray-700">Ações</th>
               </tr>
             </thead>
             <tbody>
               {clients.map(client => (
                 <tr key={client.id} className="border-b border-dusty-rose/10">
-                  <td className="py-2 px-4 text-gentle-black">
+                  <td className="py-2 px-4 text-gray-600">
                     {client.full_name || "Nome não definido"}
                   </td>
-                  <td className="py-2 px-4 text-gentle-black">
+                  <td className="py-2 px-4 text-gray-600">
                     {client.email || "Email não definido"}
                   </td>
-                  <td className="py-2 px-4 text-gentle-black capitalize">
+                  <td className="py-2 px-4 text-gray-600 capitalize">
                     {client.plan_type || "free"}
                   </td>
-                  <td className="py-2 px-4 text-gentle-black">
+                  <td className="py-2 px-4 text-gray-600">
                     {client.total_points || 0}
                   </td>
-                  <td className="py-2 px-4 text-gentle-black">
+                  <td className="py-2 px-4 text-gray-600">
                     {client.level || 1}
                   </td>
                   <td className="py-2 px-4">

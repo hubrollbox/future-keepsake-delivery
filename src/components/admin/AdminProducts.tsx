@@ -410,7 +410,7 @@ const AdminProducts = () => {
       </div>
 
       {/* Filtros e Pesquisa */}
-      <Card>
+      <Card className="border-dusty-rose/20">
         <CardContent className="pt-6">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
@@ -551,7 +551,7 @@ const AdminProducts = () => {
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                               <AlertDialogHeader>
-                                <AlertDialogTitle>Confirmar remoção</AlertDialogTitle>
+                                <AlertDialogTitle className="font-fraunces text-steel-blue">Confirmar remoção</AlertDialogTitle>
                                 <AlertDialogDescription>
                                   Tem a certeza que deseja remover o produto "{product.name}"? Esta ação não pode ser desfeita.
                                 </AlertDialogDescription>
