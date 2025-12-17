@@ -1,4 +1,18 @@
+/* ================================
+   TAILWIND BASE (OBRIGATÓRIO PRIMEIRO)
+   ================================ */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* ================================
+   FONTES
+   ================================ */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ================================
+   CSS DO PROJETO
+   ================================ */
 @import './styles/colors.css';
 @import './styles/typography.css';
 @import './styles/buttons.css';
@@ -7,335 +21,162 @@
 @import './styles/variables.css';
 @import './styles/mobile-responsive.css';
 
-/* Import Tailwind base styles */
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
+/* ================================
+   BASE GLOBAL
+   ================================ */
 @layer base {
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 0%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
-    --primary: 348 83% 47%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 348 83% 38%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 40%;
-    --accent: 348 83% 47%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
     --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 348 83% 47%;
     --radius: 0.5rem;
-    
-    /* Identidade Visual Keepla.pt - Brand Book Oficial - Vermelho Intenso */
-    --keepla-red: 348 83% 47%;           /* #DC143C - Crimson - Selo emocional intenso */
-    --keepla-red-deep: 348 83% 38%;      /* #B01030 - Deep Crimson CTA - Botões */
-    --keepla-red-glow: 348 83% 55%;      /* Glow effect para hover */
-    --keepla-black: 0 0% 0%;             /* #000000 - Black - Fundos/texto */
-    --keepla-white: 0 0% 100%;           /* #FFFFFF - White - Fundos/contraste */
-    --keepla-gray: 0 0% 88%;             /* #E0E0E0 - Gray Neutral - Divisores */
-    --keepla-gray-neutral: 0 0% 88%;     /* #E0E0E0 - Alias Brand Book */
-    --keepla-gray-dark: 0 0% 15%;        /* #262626 - Dark gray para gradientes */
+
+    /* Brand Keepla */
+    --keepla-red: 348 83% 47%;
+    --keepla-red-deep: 348 83% 38%;
+    --keepla-white: 0 0% 100%;
+    --keepla-black: 0 0% 0%;
   }
+
   .dark {
     --background: 0 0% 0%;
     --foreground: 0 0% 100%;
-    --card: 0 0% 5%;
-    --card-foreground: 0 0% 100%;
-    --popover: 0 0% 5%;
-    --popover-foreground: 0 0% 100%;
-    --primary: 348 83% 47%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 348 83% 38%;
-    --secondary-foreground: 0 0% 100%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 60%;
-    --accent: 348 83% 47%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 100%;
     --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 348 83% 47%;
-  }
-  .emotional-spacing { 
-    padding-top: 5rem; /* py-20 */
-    padding-bottom: 5rem;
-    
-    @media (min-width: 768px) { /* md: breakpoint */
-      padding-top: 8rem; /* py-32 */
-      padding-bottom: 8rem;
-    }
-    
-    @media (min-width: 1024px) { /* lg: breakpoint */
-      padding-top: 10rem; /* py-40 */
-      padding-bottom: 10rem;
-    }
-  }
-  .gentle-spacing { 
-    padding-top: 2rem; /* py-8 */
-    padding-bottom: 2rem;
-  }
-  @media (min-width: 768px) { /* md: breakpoint */
-    .gentle-spacing {
-      padding-top: 3.5rem; /* py-14 */
-      padding-bottom: 3.5rem;
-    }
-  }
-  .btn-primary { 
-    background-color: hsl(var(--keepla-red));
-    color: hsl(var(--keepla-white));
-    padding: 1rem 2rem;
-    border-radius: 0.5rem;
-    font-weight: 500;
-    transition: all 200ms;
-    border: none;
-  }
-  .btn-primary:hover {
-    background-color: hsl(var(--keepla-red-deep));
-  }
-  .btn-primary:focus-visible {
-    outline: 2px solid hsl(var(--keepla-red));
-    outline-offset: 2px;
-  }
-  .btn-secondary {
-    border: 2px solid hsl(var(--keepla-red));
-    color: hsl(var(--keepla-red));
-    background-color: transparent;
-    padding: 1rem 2rem;
-    border-radius: 0.5rem;
-    font-weight: 500;
-    transition: all 200ms;
-  }
-  .btn-secondary:hover {
-    background-color: hsl(var(--keepla-red));
-    color: hsl(var(--keepla-white));
   }
 
-  [data-sonner-toast][data-swiped=true] {
-    user-select: none;
-    -webkit-user-select: none;
-}
-
-/* --------------------------------
-   CAMPOS DE INPUT E FOCO
-   -------------------------------- */
-  input, textarea, select {
-    border-radius: 0.5rem;
-    background-color: hsl(var(--keepla-white));
-    border: 1px solid hsl(var(--border));
-    padding: 0.75rem 1rem;
+  html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    background-color: hsl(var(--background));
     color: hsl(var(--foreground));
-    transition: all 200ms;
-    min-height: 44px;
-  }
-  input:focus-visible, textarea:focus-visible, select:focus-visible {
-    outline: 2px solid hsl(var(--keepla-red));
-    outline-offset: 0px;
-    border-color: hsl(var(--keepla-red));
   }
 
-  /* -------------------------------
-    PLACEHOLDER, TÍTULOS E DESTAQUE
-    ------------------------------- */
-  ::placeholder {
-    color: #A0AEC0;
-    opacity: 0.9;
-    font-style: italic;
+  *, *::before, *::after {
+    box-sizing: inherit;
+  }
+
+  img, video {
+    max-width: 100%;
+    height: auto;
+    display: block;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Inter', sans-serif;
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: -0.02em;
-    color: hsl(var(--foreground));
-  }
-
-  .brand-highlight, .text-brand-primary {
-    color: hsl(var(--keepla-red));
-    font-weight: bold;
-  }
-
-  /* -------------------------------
-     ERROS, SUCESSO E ALERTAS
-     ------------------------------- */
-  .form-error, .form-erro {
-    color: #c00a42;
-    background: #dab8c322;
-    border-radius: 6px;
-    padding: 0.25em 1em;
-    font-weight: 500;
-    margin-top: 0.3em;
-    margin-bottom: 0.6em;
-    font-size: 0.97em;
-  }
-  .form-success {
-    color: #3D4A5A;
-    background: #dab8c345;
-    border-radius: 6px;
-    padding: 0.3em 1em;
-    font-weight: 500;
-    margin-top: 0.3em;
-    margin-bottom: 0.6em;
-    font-size: 0.97em;
   }
 }
 
-@layer utilities {
-  .bg-brand-gradient {
-    background: linear-gradient(135deg, theme('colors.keepla-red') 0%, theme('colors.keepla-red-deep') 100%);
+/* ================================
+   SPACING (SEM NESTING ILEGAL)
+   ================================ */
+.emotional-spacing {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+@media (min-width: 768px) {
+  .emotional-spacing {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
   }
-  
-  .bg-warm-gradient {
-    background: linear-gradient(135deg, theme('colors.keepla-gray') 0%, rgba(236, 229, 218, 0.5) 100%);
-  }
-  
-  .text-brand-primary {
-    color: theme('colors.keepla-red');
-  }
-  
-  .border-brand-primary {
-    border-color: theme('colors.keepla-red');
-  }
-
-  /* Fundo da cor de marca para elementos ativos do stepper */
-  .bg-brand-primary {
-    background-color: theme('colors.keepla-red');
-  }
-
-  .hover-brand:hover {
-    background-color: rgba(139, 58, 98, 0.04);
-    transition: all 0.2s ease;
-  }
-
-  /* Gentle button styles seguindo o manual */
-  .btn-gentle {
-    /* purgecss start ignore */
-    padding: 2rem 1rem;
-    border-radius: 0.75rem;
-    font-weight: 500;
-    transition: all 200ms;
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    /* purgecss end ignore */
-  }
-
-  .btn-primary {
-    /* purgecss start ignore */
-    background-color: var(--earthy-burgundy);
-    color: white;
-    padding: 2rem 1rem;
-    border-radius: 0.75rem;
-    font-weight: 500;
-    transition: all 200ms;
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    /* purgecss end ignore */
-  }
-
-  .btn-secondary {
-    /* purgecss start ignore */
-    border: 2px solid theme('colors.earthy-burgundy');
-    color: theme('colors.earthy-burgundy');
-    padding: 2rem 1rem;
-    border-radius: 0.75rem;
-    font-weight: 500;
-    transition: all 200ms;
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    /* purgecss end ignore */
-  }
-
-  /* Smooth performance optimizations */
-  .will-change-transform {
-    will-change: transform;
-  }
-
-  .gpu-accelerated {
-    transform: translateZ(0);
-  }
-  .shadow-soft {
-    box-shadow: 0 2px 18px 0 #dab8c31c, 0 1.5px 5px 0 #8b3a6222;
-  }
-
-  .focus-ring-brand {
-    outline: 2px solid #DAB8C3;
-    outline-offset: 2px;
-    box-shadow: 0 0 0 2px #dab8c355;
-    transition: outline 0.2s;
-  }
-
-  /* Uniformizar mínimo para atmosferas clicáveis (botões e inputs) */
-  .min-touch {
-    min-height: 44px;
-    min-width: 44px;
-  }
-
-  .underline-brand {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 4px;
-    color: #8B3A62;
-  }
-  .underline-brand:hover, .underline-brand:focus {
-    color: #3D4A5A;
-    background: #dab8c340;
+}
+@media (min-width: 1024px) {
+  .emotional-spacing {
+    padding-top: 10rem;
+    padding-bottom: 10rem;
   }
 }
 
-a, .underline-link, .brand-link {
-  color: #8B3A62;
-  text-decoration: none;
-  text-underline-offset: 3px;
+.gentle-spacing {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+@media (min-width: 768px) {
+  .gentle-spacing {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+}
+
+/* ================================
+   INPUTS
+   ================================ */
+input, textarea, select {
+  border-radius: 0.5rem;
+  background-color: hsl(var(--keepla-white));
+  border: 1px solid hsl(var(--border));
+  padding: 0.75rem 1rem;
+  min-height: 44px;
+  transition: all 200ms;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid hsl(var(--keepla-red));
+  border-color: hsl(var(--keepla-red));
+}
+
+/* ================================
+   BOTÕES (UMA ÚNICA DEFINIÇÃO)
+   ================================ */
+.btn-primary {
+  background-color: hsl(var(--keepla-red));
+  color: hsl(var(--keepla-white));
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: background-color 200ms;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: hsl(var(--keepla-red-deep));
+}
+
+.btn-secondary {
+  border: 2px solid hsl(var(--keepla-red));
+  color: hsl(var(--keepla-red));
+  background: transparent;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 200ms;
+}
+
+.btn-secondary:hover {
+  background-color: hsl(var(--keepla-red));
+  color: hsl(var(--keepla-white));
+}
+
+/* ================================
+   LINKS
+   ================================ */
+a {
+  color: hsl(var(--keepla-red));
   font-weight: 600;
-  background-color: transparent;
-  border-radius: 3px;
-  transition: color 0.2s, background 0.2s, box-shadow 0.2s;
-  outline: none;
-}
-a:focus-visible, .underline-link:focus-visible, .brand-link:focus-visible {
-  color: #3D4A5A;
-  background: #DAB8C322;
-  box-shadow: 0 0 0 3px #DAB8C3aa;
-  outline: 2px solid #DAB8C3;
-  outline-offset: 2px;
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-}
-a:hover, .underline-link:hover, .brand-link:hover {
-  color: #DAB8C3;
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  background-color: #8B3A6212;
-}
-.focus-ring-brand {
-  outline: 2px solid #DAB8C3;
-  outline-offset: 2px;
-  transition: outline 0.2s;
-}
-.skip-link:focus-visible, .skip-link:focus {
-  position: absolute;
-  left: 16px;
-  top: 16px;
-  z-index: 50;
-  display: block;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  border-radius: 0.75rem;
-  background: #dab8c3;
-  color: #3D4A5A;
-  outline: 2px solid #8B3A62;
-  box-shadow: 0 2px 12px 0 #dab8c370;
-  font-weight: bold;
   text-decoration: none;
-  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
 }
-.nav-link, .nav-link.active { text-decoration: none; }
-html, body { max-width: 100vw; overflow-x: hidden; box-sizing: border-box; }
 
+a:hover,
+a:focus-visible {
+  text-decoration: underline;
+}
+
+/* ================================
+   UTILITÁRIOS SIMPLES (SEM theme())
+   ================================ */
+.bg-brand-primary {
+  background-color: hsl(var(--keepla-red));
+}
+
+.text-brand-primary {
+  color: hsl(var(--keepla-red));
+}
+
+.border-brand-primary {
+  border-color: hsl(var(--keepla-red));
+}
