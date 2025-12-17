@@ -84,25 +84,20 @@ const Blog = () => {
     fetchPublished();
   }, []);
 
-  // Safe URL com proxy fallback para contornar CSP
-  const safeUrl = (url?: string) => {
+  // Função simplificada para URLs
+  const getImageUrl = (url?: string) => {
     if (!url) return undefined;
-
-    try {
-      const u = new URL(url, window.location.origin);
-      if (u.protocol === "http:" || u.protocol === "https:") return u.href;
-    } catch {
-      // ignorar erro de URL inválida
+    
+    // Se for uma URL do Supabase Storage, verifica se tem o formato correto
+    if (url.includes("supabase.co/storage")) {
+      return url;
     }
-
-    // Se for uma URL externa bloqueada por CSP, podemos usar um proxy simples
-    if (url.startsWith("https://mlxmymmoysbtnvcehggn.supabase.co")) {
-      return `/api/proxy-image?url=${encodeURIComponent(url)}`;
+    
+    // URLs relativas
+    if (url.startsWith("/") || url.startsWith("./") || url.startsWith("../")) {
+      return url;
     }
-
-    // URLs relativas ao site
-    if (url.startsWith("/") || url.startsWith("./") || url.startsWith("../")) return url;
-
+    
     return undefined;
   };
 
@@ -179,7 +174,7 @@ const Blog = () => {
             variants={containerVariants}
           >
             {posts.map((post) => {
-              const coverUrl = safeUrl(post.cover_image_url);
+              const coverUrl = getImageUrl(post.cover_image_url);
               return (
                 <motion.article 
                   key={post.id} 
@@ -188,13 +183,21 @@ const Blog = () => {
                   whileHover={{ y: -4 }}
                   onClick={() => navigate(`/blog/${post.slug}`)}
                 >
-                  {coverUrl && (
+                  {coverUrl ? (
                     <div className="overflow-hidden">
                       <img 
                         src={coverUrl} 
                         alt={post.title} 
                         className="w-full h-48 object-cover grayscale group-hover:grayscale-0 transition-all duration-500" 
+                        onError={(e) => {
+                          // Fallback se a imagem não carregar
+                          (e.target as HTMLImageElement).style.display = 'none';
+                        }}
                       />
+                    </div>
+                  ) : (
+                    <div className="w-full h-48 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
+                      <span className="text-muted-foreground font-serif italic">Sem imagem</span>
                     </div>
                   )}
                   <div className="p-6">
