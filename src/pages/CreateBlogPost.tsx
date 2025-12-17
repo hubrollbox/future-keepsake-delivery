@@ -8,8 +8,20 @@ type Props = {
   onSaved?: () => void;
 };
 
+type BlogRow = {
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  tags: string[];
+  status: 'published' | 'draft';
+  author_id?: string | null;
+  cover_image_url?: string;
+};
+
 const CreateBlogPost = ({ editId, onSaved }: Props) => {
   const navigate = useNavigate();
+
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
   const [excerpt, setExcerpt] = useState('');
@@ -26,26 +38,42 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '');
 
+  /* --------------------------------
+     Carregar post para edição
+     -------------------------------- */
   useEffect(() => {
     if (!editId) return;
-    // Load existing post for editing
+
     (async () => {
-      const { data, error } = await supabase.from('blog_posts').select('*').eq('id', editId).single();
-      if (error) {
+      const { data, error } = await supabase
+        .from('blog_posts')
+        .select('*')
+        .eq('id', editId)
+        .single();
+
+      if (error || !data) {
         console.error('Erro ao carregar post para edição', error);
         return;
       }
-      if (data) {
-        setTitle(data.title || '');
-        setSlug(data.slug || '');
-        setExcerpt(data.excerpt || '');
-        setContent(data.content || '');
-        setTags((data.tags || []).join(', '));
-        setPublish(data.status === 'published');
+
+      setTitle(data.title ?? '');
+      setSlug(data.slug ?? '');
+      setExcerpt(data.excerpt ?? '');
+      setContent(data.content ?? '');
+
+      if (Array.isArray(data.tags)) {
+        setTags(data.tags.join(', '));
+      } else {
+        setTags('');
       }
+
+      setPublish(data.status === 'published');
     })();
   }, [editId]);
 
+  /* --------------------------------
+     Submissão
+     -------------------------------- */
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
@@ -54,43 +82,61 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
       let coverUrl: string | undefined;
 
       if (coverFile) {
-        const fileExt = coverFile.name.split('.').pop();
+        const fileExt = coverFile.name.split('.').pop()?.toLowerCase();
         const fileName = `${Date.now()}.${fileExt}`;
-        
-        // Assumindo que o bucket 'blog-covers' é o correto e que a RLS está configurada
+
         const { data: uploadData, error: uploadError } = await supabase.storage
           .from('blog-covers')
-          .upload(`${fileName}`, coverFile, { cacheControl: '3600', upsert: false });
+          .upload(fileName, coverFile, {
+            cacheControl: '3600',
+            upsert: false
+          });
 
         if (uploadError) throw uploadError;
 
-        const { data: publicData } = supabase.storage.from('blog-covers').getPublicUrl(uploadData.path) as any;
-        coverUrl = publicData?.publicUrl || publicData?.public_url || undefined;
+        const { data: publicData } = supabase.storage
+          .from('blog-covers')
+          .getPublicUrl(uploadData.path);
+
+        coverUrl = publicData.publicUrl;
       }
 
       const { data: userData } = await supabase.auth.getUser();
-      const authorId = userData?.user?.id;
+      const authorId = userData?.user?.id ?? null;
 
-      const row = {
+      const row: BlogRow = {
         title,
         slug: slugify(slug || title),
         excerpt,
         content,
-        tags: tags.split(',').map(t => t.trim()).filter(Boolean),
-        cover_image_url: coverUrl,
+        tags: tags
+          .split(',')
+          .map(t => t.trim())
+          .filter(Boolean),
         status: publish ? 'published' : 'draft',
         author_id: authorId
-      } as any;
+      };
 
-      if (editId) {
-        const { error: updateError } = await supabase.from('blog_posts').update(row).eq('id', editId);
-        if (updateError) throw updateError;
-      } else {
-        const { error: insertError } = await supabase.from('blog_posts').insert(row);
-        if (insertError) throw insertError;
+      if (coverUrl) {
+        row.cover_image_url = coverUrl;
       }
 
-      if (onSaved) onSaved();
+      if (editId) {
+        const { error } = await supabase
+          .from('blog_posts')
+          .update(row)
+          .eq('id', editId);
+
+        if (error) throw error;
+      } else {
+        const { error } = await supabase
+          .from('blog_posts')
+          .insert(row);
+
+        if (error) throw error;
+      }
+
+      onSaved?.();
       navigate('/admin/blog');
     } catch (err) {
       console.error('Erro ao salvar post:', err);
@@ -102,22 +148,28 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
 
   return (
     <div className="max-w-3xl mx-auto py-12">
-      <h1 className="text-3xl font-bold mb-6">Criar Post do Blog</h1>
+      <h1 className="text-3xl font-bold mb-6">
+        {editId ? 'Editar Post do Blog' : 'Criar Post do Blog'}
+      </h1>
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="post-title" className="block text-sm font-medium">Título</label>
+          <label htmlFor="post-title" className="block text-sm font-medium">
+            Título
+          </label>
           <input
             id="post-title"
             className="mt-1 block w-full rounded-md border p-2"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            placeholder="Título do artigo"
           />
         </div>
 
         <div>
-          <label htmlFor="post-slug" className="block text-sm font-medium">Slug (opcional)</label>
+          <label htmlFor="post-slug" className="block text-sm font-medium">
+            Slug (opcional)
+          </label>
           <input
             id="post-slug"
             className="mt-1 block w-full rounded-md border p-2"
@@ -128,62 +180,79 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
         </div>
 
         <div>
-          <label htmlFor="post-excerpt" className="block text-sm font-medium">Resumo (excerpt)</label>
+          <label htmlFor="post-excerpt" className="block text-sm font-medium">
+            Resumo
+          </label>
           <textarea
             id="post-excerpt"
             className="mt-1 block w-full rounded-md border p-2"
             value={excerpt}
             onChange={(e) => setExcerpt(e.target.value)}
             rows={3}
-            placeholder="Resumo curto do artigo"
           />
         </div>
 
         <div>
-          <label htmlFor="post-content" className="block text-sm font-medium">Conteúdo</label>
+          <label htmlFor="post-content" className="block text-sm font-medium">
+            Conteúdo
+          </label>
           <textarea
             id="post-content"
             className="mt-1 block w-full rounded-md border p-2 font-mono"
             value={content}
             onChange={(e) => setContent(e.target.value)}
             rows={10}
-            placeholder="Escreva o post em Markdown ou HTML..."
             required
           />
         </div>
 
         <div>
-          <label htmlFor="post-tags" className="block text-sm font-medium">Tags (separadas por vírgula)</label>
+          <label htmlFor="post-tags" className="block text-sm font-medium">
+            Tags (separadas por vírgula)
+          </label>
           <input
             id="post-tags"
             className="mt-1 block w-full rounded-md border p-2"
             value={tags}
             onChange={(e) => setTags(e.target.value)}
-            placeholder="memórias, produto, release"
           />
         </div>
 
-        <div className="flex items-center gap-4">
-          <label className="flex items-center gap-2">
-            <input type="checkbox" checked={publish} onChange={(e) => setPublish(e.target.checked)} />
-            <span>Publicar imediatamente</span>
-          </label>
+        <div className="flex items-center gap-2">
+          <input
+            id="post-publish"
+            type="checkbox"
+            checked={publish}
+            onChange={(e) => setPublish(e.target.checked)}
+          />
+          <label htmlFor="post-publish">Publicar imediatamente</label>
         </div>
 
         <div>
-          <label htmlFor="cover-file" className="block text-sm font-medium">Imagem/Vídeo de capa (opcional)</label>
-          <input 
-            id="cover-file" 
-            type="file" 
-            accept="image/*,video/*" // <--- CORREÇÃO APLICADA AQUI
-            onChange={(e) => setCoverFile(e.target.files?.[0] || null)} 
-            className="mt-1" 
+          <label htmlFor="cover-file" className="block text-sm font-medium">
+            Imagem ou vídeo de capa (opcional)
+          </label>
+          <input
+            id="cover-file"
+            type="file"
+            accept="image/*,video/*"
+            onChange={(e) => setCoverFile(e.target.files?.[0] || null)}
+            className="mt-1"
           />
         </div>
 
-        <div className="pt-4">
-          <Button type="submit" disabled={loading}>{loading ? 'A gravar...' : editId ? 'Salvar alterações' : 'Criar Post'}</Button>
-          <Button type="button" variant="ghost" onClick={() => navigate('/admin/blog')} className="ml-2">Cancelar</Button>
+        <div className="pt-4 flex gap-2">
+          <Button type="submit" disabled={loading}>
+            {loading ? 'A gravar...' : editId ? 'Salvar alterações' : 'Criar Post'}
+          </Button>
+
+          <Button
+            type="button"
+            variant="ghost"
+            onClick={() => navigate('/admin/blog')}
+          >
+            Cancelar
+          </Button>
         </div>
       </form>
     </div>
