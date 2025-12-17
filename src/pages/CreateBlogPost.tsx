@@ -2,254 +2,607 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+// Schema de validação com Zod
+const blogPostSchema = z.object({
+  title: z
+    .string()
+    .min(1, 'O título é obrigatório')
+    .max(200, 'O título não pode exceder 200 caracteres'),
+  slug: z
+    .string()
+    .max(200, 'O slug não pode exceder 200 caracteres')
+    .optional()
+    .or(z.literal('')),
+  excerpt: z
+    .string()
+    .max(500, 'O excerto não pode exceder 500 caracteres')
+    .optional()
+    .or(z.literal('')),
+  content: z
+    .string()
+    .min(10, 'O conteúdo deve ter pelo menos 10 caracteres'),
+  tags: z
+    .string()
+    .optional()
+    .or(z.literal('')),
+  publish: z.boolean().default(false),
+});
+
+type BlogPostFormData = z.infer<typeof blogPostSchema>;
+
+// Função para gerar slug com suporte a caracteres acentuados
+function slugify(text: string): string {
+  if (!text) return '';
+  
+  return text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)+/g, '')
+    .trim();
+}
 
 type Props = {
   editId?: string | null;
   onSaved?: () => void;
 };
 
-type BlogRow = {
-  title: string;
-  slug: string;
-  excerpt: string;
-  content: string;
-  tags: string[];
-  status: 'published' | 'draft';
-  author_id?: string | null;
-  cover_image_url?: string;
-};
-
 const CreateBlogPost = ({ editId, onSaved }: Props) => {
   const navigate = useNavigate();
-
-  const [title, setTitle] = useState('');
-  const [slug, setSlug] = useState('');
-  const [excerpt, setExcerpt] = useState('');
-  const [content, setContent] = useState('');
-  const [tags, setTags] = useState('');
-  const [publish, setPublish] = useState(false);
+  const { toast } = useToast();
+  
   const [coverFile, setCoverFile] = useState<File | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [existingCoverUrl, setExistingCoverUrl] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [currentPostId, setCurrentPostId] = useState<string | null>(null);
 
-  const slugify = (input: string) =>
-    input
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/^-+|-+$/g, '');
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    setValue,
+    setError,
+    clearErrors,
+    formState: { errors, isDirty },
+  } = useForm<BlogPostFormData>({
+    resolver: zodResolver(blogPostSchema),
+    defaultValues: {
+      title: '',
+      slug: '',
+      excerpt: '',
+      content: '',
+      tags: '',
+      publish: false,
+    },
+  });
 
-  /* --------------------------------
-     Carregar post para edição
-     -------------------------------- */
+  const title = watch('title');
+  const slug = watch('slug');
+  const publish = watch('publish');
+  const content = watch('content');
+  const excerpt = watch('excerpt');
+
+  // Efeito para gerar slug automático
   useEffect(() => {
-    if (!editId) return;
+    if (title && (!slug || slug === slugify(title))) {
+      const generatedSlug = slugify(title);
+      if (generatedSlug !== slug) {
+        setValue('slug', generatedSlug, { shouldValidate: true });
+      }
+    }
+  }, [title, slug, setValue]);
 
-    (async () => {
-      const { data, error } = await supabase
-        .from('blog_posts')
-        .select('*')
-        .eq('id', editId)
-        .single();
+  // Carregar post existente para edição
+  useEffect(() => {
+    if (!editId) {
+      reset({
+        title: '',
+        slug: '',
+        excerpt: '',
+        content: '',
+        tags: '',
+        publish: false,
+      });
+      setCoverFile(null);
+      setExistingCoverUrl(null);
+      setImagePreview(null);
+      setCurrentPostId(null);
+      return;
+    }
 
-      if (error || !data) {
-        console.error('Erro ao carregar post para edição', error);
+    const loadPost = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('blog_posts')
+          .select('*')
+          .eq('id', editId)
+          .single();
+
+        if (error || !data) {
+          throw new Error('Post não encontrado');
+        }
+
+        reset({
+          title: data.title || '',
+          slug: data.slug || '',
+          excerpt: data.excerpt || '',
+          content: data.content || '',
+          tags: Array.isArray(data.tags) ? data.tags.join(', ') : '',
+          publish: data.status === 'published',
+        });
+
+        setExistingCoverUrl(data.cover_image_url);
+        setCurrentPostId(data.id);
+      } catch (error) {
+        console.error('Erro ao carregar post:', error);
+        toast({
+          title: 'Erro',
+          description: 'Não foi possível carregar o post para edição.',
+          variant: 'destructive',
+        });
+      }
+    };
+
+    loadPost();
+  }, [editId, reset, toast]);
+
+  // Preview da imagem selecionada
+  useEffect(() => {
+    if (coverFile) {
+      const previewUrl = URL.createObjectURL(coverFile);
+      setImagePreview(previewUrl);
+      
+      return () => {
+        URL.revokeObjectURL(previewUrl);
+      };
+    } else {
+      setImagePreview(null);
+    }
+  }, [coverFile]);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    
+    if (file) {
+      // Validação do tipo de arquivo
+      const validTypes = [
+        'image/jpeg',
+        'image/png', 
+        'image/gif',
+        'image/webp',
+        'video/mp4',
+        'video/webm',
+      ];
+      
+      const maxSize = 10 * 1024 * 1024; // 10MB
+      
+      if (!validTypes.includes(file.type)) {
+        toast({
+          title: 'Erro',
+          description: 'Formato de arquivo não suportado. Use imagens (JPEG, PNG, GIF, WebP) ou vídeos (MP4, WebM).',
+          variant: 'destructive',
+        });
+        e.target.value = ''; // Limpa o input
         return;
       }
-
-      setTitle(data.title ?? '');
-      setSlug(data.slug ?? '');
-      setExcerpt(data.excerpt ?? '');
-      setContent(data.content ?? '');
-
-      if (Array.isArray(data.tags)) {
-        setTags(data.tags.join(', '));
-      } else {
-        setTags('');
+      
+      if (file.size > maxSize) {
+        toast({
+          title: 'Erro',
+          description: 'O arquivo é muito grande. O tamanho máximo é 10MB.',
+          variant: 'destructive',
+        });
+        e.target.value = ''; // Limpa o input
+        return;
       }
+    }
+    
+    setCoverFile(file);
+  };
 
-      setPublish(data.status === 'published');
-    })();
-  }, [editId]);
+  const handleRemoveImage = () => {
+    setCoverFile(null);
+    setExistingCoverUrl(null);
+    setImagePreview(null);
+    
+    // Limpa o input file
+    const fileInput = document.getElementById('cover-file') as HTMLInputElement;
+    if (fileInput) fileInput.value = '';
+  };
 
-  /* --------------------------------
-     Submissão
-     -------------------------------- */
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setLoading(true);
+  const uploadCover = async (): Promise<string | null> => {
+    // Se não há arquivo novo e temos uma URL existente, mantemos a existente
+    if (!coverFile && existingCoverUrl) return existingCoverUrl;
+    
+    // Se não há arquivo novo e não temos URL existente, retornamos null
+    if (!coverFile) return null;
 
     try {
-      let coverUrl: string | undefined;
+      const fileExt = coverFile.name.split('.').pop();
+      const fileName = `blog-covers/${crypto.randomUUID()}.${fileExt}`;
 
-      if (coverFile) {
-        const fileExt = coverFile.name.split('.').pop()?.toLowerCase();
-        const fileName = `${Date.now()}.${fileExt}`;
+      const { error: uploadError } = await supabase.storage
+        .from('media')
+        .upload(fileName, coverFile, {
+          cacheControl: '3600',
+          upsert: true,
+        });
 
-        const { data: uploadData, error: uploadError } = await supabase.storage
-          .from('blog-covers')
-          .upload(fileName, coverFile, {
-            cacheControl: '3600',
-            upsert: false
-          });
-
-        if (uploadError) throw uploadError;
-
-        const { data: publicData } = supabase.storage
-          .from('blog-covers')
-          .getPublicUrl(uploadData.path);
-
-        coverUrl = publicData.publicUrl;
+      if (uploadError) {
+        console.error('Erro no upload:', uploadError);
+        throw new Error('Falha no upload da imagem');
       }
 
-      const { data: userData } = await supabase.auth.getUser();
-      const authorId = userData?.user?.id ?? null;
+      const { data: urlData } = supabase.storage
+        .from('media')
+        .getPublicUrl(fileName);
 
-      const row: BlogRow = {
-        title,
-        slug: slugify(slug || title),
-        excerpt,
-        content,
-        tags: tags
-          .split(',')
-          .map(t => t.trim())
-          .filter(Boolean),
-        status: publish ? 'published' : 'draft',
-        author_id: authorId
+      return urlData.publicUrl;
+    } catch (error) {
+      console.error('Erro ao fazer upload:', error);
+      throw error;
+    }
+  };
+
+  const onSubmit = async (data: BlogPostFormData) => {
+    if (isSubmitting) return;
+    
+    setIsSubmitting(true);
+
+    try {
+      // Verificar autenticação
+      const { data: userData, error: userError } = await supabase.auth.getUser();
+      
+      if (userError || !userData.user) {
+        throw new Error('Utilizador não autenticado. Por favor, faça login novamente.');
+      }
+
+      // Verificar slug único (exceto para o post atual em edição)
+      const finalSlug = data.slug || slugify(data.title);
+      
+      if (finalSlug) {
+        const { data: existingPosts, error: slugError } = await supabase
+          .from('blog_posts')
+          .select('id')
+          .eq('slug', finalSlug)
+          .neq('id', editId || '');
+
+        if (slugError) throw slugError;
+        
+        if (existingPosts && existingPosts.length > 0) {
+          setError('slug', {
+            type: 'manual',
+            message: 'Já existe um post com este slug. Por favor, escolha outro.',
+          });
+          throw new Error('Slug já está em uso');
+        }
+      }
+
+      // Upload da imagem (se houver)
+      let coverUrl = existingCoverUrl;
+      if (coverFile) {
+        coverUrl = await uploadCover();
+      }
+
+      // Preparar dados para inserção/atualização
+      const postData = {
+        title: data.title.trim(),
+        slug: finalSlug,
+        excerpt: data.excerpt?.trim() || null,
+        content: data.content.trim(),
+        tags: data.tags
+          ? data.tags
+              .split(',')
+              .map((tag: string) => tag.trim())
+              .filter((tag: string) => tag.length > 0)
+          : [],
+        status: data.publish ? 'published' : 'draft',
+        author_id: userData.user.id,
+        cover_image_url: coverUrl,
+        updated_at: new Date().toISOString(),
       };
 
-      if (coverUrl) {
-        row.cover_image_url = coverUrl;
-      }
-
+      // Inserir ou atualizar
+      let error;
+      let resultData: any;
+      
       if (editId) {
-        const { error } = await supabase
+        const result = await supabase
           .from('blog_posts')
-          .update(row)
-          .eq('id', editId);
-
-        if (error) throw error;
+          .update(postData)
+          .eq('id', editId)
+          .select()
+          .single();
+        error = result.error;
+        resultData = result.data;
       } else {
-        const { error } = await supabase
+        const result = await supabase
           .from('blog_posts')
-          .insert(row);
-
-        if (error) throw error;
+          .insert([{ ...postData, created_at: new Date().toISOString() }])
+          .select()
+          .single();
+        error = result.error;
+        resultData = result.data;
       }
 
+      if (error) throw error;
+
+      // Feedback de sucesso
+      toast({
+        title: 'Sucesso!',
+        description: editId 
+          ? (data.publish ? 'Post atualizado e publicado!' : 'Post atualizado como rascunho!')
+          : (data.publish ? 'Post criado e publicado!' : 'Post criado como rascunho!'),
+      });
+
+      // Limpar formulário se for uma criação nova (não edição)
+      if (!editId) {
+        reset();
+        setCoverFile(null);
+        setExistingCoverUrl(null);
+        setImagePreview(null);
+        setCurrentPostId(null);
+      } else {
+        setCurrentPostId(resultData.id);
+      }
+
+      // Chamar callback se fornecido
       onSaved?.();
-      navigate('/admin/blog');
-    } catch (err) {
-      console.error('Erro ao salvar post:', err);
-      alert('Erro ao salvar post. Ver consola para mais detalhes.');
+
+      // Navegar de volta se for uma edição
+      if (editId) {
+        setTimeout(() => {
+          navigate('/admin/blog');
+        }, 1500);
+      }
+    } catch (error: unknown) {
+      console.error('Erro ao salvar post:', error);
+      
+      // Não mostrar toast se o erro for de slug (já tratado no form)
+      if (error instanceof Error && error.message !== 'Slug já está em uso') {
+        const errorMessage = error.message || 'Ocorreu um erro ao salvar o post. Por favor, tente novamente.';
+        
+        toast({
+          title: 'Erro',
+          description: errorMessage,
+          variant: 'destructive',
+        });
+      }
     } finally {
-      setLoading(false);
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
-    <div className="max-w-3xl mx-auto py-12">
-      <h1 className="text-3xl font-bold mb-6">
-        {editId ? 'Editar Post do Blog' : 'Criar Post do Blog'}
-      </h1>
+    <div className="max-w-4xl mx-auto p-4 md:p-6">
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+          {editId ? 'Editar Post do Blog' : 'Criar Post do Blog'}
+        </h1>
+        <Button
+          variant="outline"
+          onClick={() => navigate('/admin/blog')}
+          disabled={isSubmitting}
+        >
+          Voltar
+        </Button>
+      </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="post-title" className="block text-sm font-medium">
-            Título
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        {/* Título */}
+        <div className="space-y-2">
+          <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+            Título *
           </label>
           <input
-            id="post-title"
-            className="mt-1 block w-full rounded-md border p-2"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
+            id="title"
+            {...register('title')}
+            placeholder="Título do post"
+            className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            aria-required="true"
+            aria-invalid={errors.title ? 'true' : 'false'}
+            aria-describedby={errors.title ? 'title-error' : undefined}
           />
+          {errors.title && (
+            <p id="title-error" className="text-red-600 text-sm mt-1">
+              {errors.title.message}
+            </p>
+          )}
         </div>
 
-        <div>
-          <label htmlFor="post-slug" className="block text-sm font-medium">
-            Slug (opcional)
+        {/* Slug */}
+        <div className="space-y-2">
+          <label htmlFor="slug" className="block text-sm font-medium text-gray-700">
+            Slug (URL)
           </label>
-          <input
-            id="post-slug"
-            className="mt-1 block w-full rounded-md border p-2"
-            value={slug}
-            onChange={(e) => setSlug(e.target.value)}
-            placeholder="ex: meu-post-incrivel"
-          />
+          <div className="flex items-center space-x-2">
+            <span className="text-gray-500">/blog/</span>
+            <input
+              id="slug"
+              {...register('slug')}
+              placeholder="slug-do-post"
+              className="flex-1 border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              aria-describedby={errors.slug ? 'slug-error slug-help' : 'slug-help'}
+              onChange={(e) => {
+                clearErrors('slug');
+                register('slug').onChange(e);
+              }}
+            />
+          </div>
+          <p id="slug-help" className="text-sm text-gray-500">
+            Será gerado automaticamente a partir do título. Pode editar manualmente.
+          </p>
+          {errors.slug && (
+            <p id="slug-error" className="text-red-600 text-sm mt-1">
+              {errors.slug.message}
+            </p>
+          )}
         </div>
 
-        <div>
-          <label htmlFor="post-excerpt" className="block text-sm font-medium">
-            Resumo
+        {/* Excerto */}
+        <div className="space-y-2">
+          <label htmlFor="excerpt" className="block text-sm font-medium text-gray-700">
+            Excerto
           </label>
           <textarea
-            id="post-excerpt"
-            className="mt-1 block w-full rounded-md border p-2"
-            value={excerpt}
-            onChange={(e) => setExcerpt(e.target.value)}
+            id="excerpt"
+            {...register('excerpt')}
+            placeholder="Breve descrição do post"
             rows={3}
+            className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
+            aria-describedby={errors.excerpt ? 'excerpt-error excerpt-counter' : 'excerpt-counter'}
           />
+          <div className="flex justify-between items-center">
+            <p id="excerpt-counter" className="text-sm text-gray-500">
+              {excerpt?.length || 0}/500 caracteres
+            </p>
+            {errors.excerpt && (
+              <p id="excerpt-error" className="text-red-600 text-sm">
+                {errors.excerpt.message}
+              </p>
+            )}
+          </div>
         </div>
 
-        <div>
-          <label htmlFor="post-content" className="block text-sm font-medium">
-            Conteúdo
+        {/* Conteúdo */}
+        <div className="space-y-2">
+          <label htmlFor="content" className="block text-sm font-medium text-gray-700">
+            Conteúdo *
           </label>
           <textarea
-            id="post-content"
-            className="mt-1 block w-full rounded-md border p-2 font-mono"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            rows={10}
-            required
+            id="content"
+            {...register('content')}
+            placeholder="Escreva o conteúdo do post aqui..."
+            rows={12}
+            className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-y font-mono text-sm"
+            aria-required="true"
+            aria-invalid={errors.content ? 'true' : 'false'}
+            aria-describedby={errors.content ? 'content-error content-counter' : 'content-counter'}
           />
+          <div className="flex justify-between items-center">
+            <p id="content-counter" className="text-sm text-gray-500">
+              {content?.length || 0} caracteres
+            </p>
+            {errors.content && (
+              <p id="content-error" className="text-red-600 text-sm">
+                {errors.content.message}
+              </p>
+            )}
+          </div>
         </div>
 
-        <div>
-          <label htmlFor="post-tags" className="block text-sm font-medium">
-            Tags (separadas por vírgula)
+        {/* Tags */}
+        <div className="space-y-2">
+          <label htmlFor="tags" className="block text-sm font-medium text-gray-700">
+            Tags
           </label>
           <input
-            id="post-tags"
-            className="mt-1 block w-full rounded-md border p-2"
-            value={tags}
-            onChange={(e) => setTags(e.target.value)}
+            id="tags"
+            {...register('tags')}
+            placeholder="tecnologia, blog, dicas (separadas por vírgula)"
+            className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            aria-describedby="tags-help"
           />
+          <p id="tags-help" className="text-sm text-gray-500">
+            Separe as tags por vírgulas
+          </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        {/* Status de publicação */}
+        <div className="flex items-center space-x-3 p-4 border border-gray-200 rounded-lg">
           <input
-            id="post-publish"
+            id="publish"
             type="checkbox"
-            checked={publish}
-            onChange={(e) => setPublish(e.target.checked)}
+            {...register('publish')}
+            className="h-4 w-4 text-blue-600 rounded focus:ring-blue-500"
           />
-          <label htmlFor="post-publish">Publicar imediatamente</label>
+          <div className="space-y-0.5">
+            <label htmlFor="publish" className="text-sm font-medium text-gray-700">
+              Publicar imediatamente
+            </label>
+            <p className="text-sm text-gray-500">
+              {publish 
+                ? 'O post será visível publicamente após salvar.' 
+                : 'O post será salvo como rascunho e não será visível publicamente.'}
+            </p>
+          </div>
         </div>
 
-        <div>
-          <label htmlFor="cover-file" className="block text-sm font-medium">
+        {/* Imagem de capa */}
+        <div className="space-y-4">
+          <label className="block text-sm font-medium text-gray-700">
             Imagem ou vídeo de capa (opcional)
           </label>
-          <input
-            id="cover-file"
-            type="file"
-            accept="image/*,video/*"
-            onChange={(e) => setCoverFile(e.target.files?.[0] || null)}
-            className="mt-1"
-          />
+          
+          {(existingCoverUrl || imagePreview) && (
+            <div className="space-y-2">
+              <p className="text-sm text-gray-600">Pré-visualização:</p>
+              <div className="relative max-w-md">
+                {(imagePreview || existingCoverUrl) && (
+                  <img
+                    src={imagePreview || existingCoverUrl || ''}
+                    alt="Pré-visualização da capa"
+                    className="rounded-lg border border-gray-300 max-h-64 object-cover w-full"
+                  />
+                )}
+                <Button
+                  type="button"
+                  variant="destructive"
+                  size="sm"
+                  onClick={handleRemoveImage}
+                  className="absolute top-2 right-2"
+                  disabled={isSubmitting}
+                >
+                  Remover
+                </Button>
+              </div>
+            </div>
+          )}
+
+          <div>
+            <input
+              type="file"
+              id="cover-file"
+              accept="image/*,video/*"
+              onChange={handleFileChange}
+              className="w-full border border-gray-300 rounded-lg p-2 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              aria-describedby="cover-help"
+              disabled={isSubmitting}
+            />
+            <p id="cover-help" className="text-sm text-gray-500 mt-1">
+              Formatos suportados: JPG, PNG, GIF, WebP, MP4, WebM. Máximo: 10MB
+            </p>
+          </div>
         </div>
 
-        <div className="pt-4 flex gap-2">
-          <Button type="submit" disabled={loading}>
-            {loading ? 'A gravar...' : editId ? 'Salvar alterações' : 'Criar Post'}
+        {/* Botões de ação */}
+        <div className="flex flex-col sm:flex-row gap-3 pt-6 border-t border-gray-200">
+          <Button
+            type="submit"
+            disabled={isSubmitting || (!editId && !isDirty)}
+            className="flex-1"
+          >
+            {isSubmitting 
+              ? 'A salvar...' 
+              : editId 
+                ? (publish ? 'Atualizar e Publicar' : 'Atualizar Rascunho')
+                : (publish ? 'Criar e Publicar' : 'Criar Rascunho')}
           </Button>
-
+          
           <Button
             type="button"
-            variant="ghost"
+            variant="outline"
             onClick={() => navigate('/admin/blog')}
+            disabled={isSubmitting}
+            className="flex-1"
           >
             Cancelar
           </Button>
