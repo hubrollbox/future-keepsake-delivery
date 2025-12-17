@@ -12,7 +12,6 @@ import Index from "@/pages/Index";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Dashboard from "@/pages/Dashboard";
-
 import CreateKeepsake from "@/pages/CreateKeepsake";
 import EditKeepsake from "@/pages/EditKeepsake";
 import Profile from "@/pages/Profile";
@@ -32,7 +31,7 @@ import LandingPage from "@/pages/LandingPage";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import BlogAdmin from "./pages/admin/BlogAdmin";
-
+import CreateBlogPost from "./pages/admin/CreateBlogPost";
 
 const queryClient = new QueryClient();
 
@@ -52,9 +51,12 @@ function App() {
                 <Sonner />
                 <Routes>
                   <Route path="/" element={<Index />} />
+                  
                   {/* Blog público */}
                   <Route path="/blog" element={<Blog />} />
                   <Route path="/blog/:slug" element={<BlogPost />} />
+                  
+                  {/* Páginas principais */}
                   <Route path="/landing" element={<LandingPage />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
@@ -71,10 +73,20 @@ function App() {
                   <Route path="/faq" element={<FAQ />} />
                   <Route path="/partnerships" element={<Partnerships />} />
                   <Route path="/checkout" element={<Checkout />} />
+                  
+                  {/* Admin do Blog */}
                   <Route path="/admin/blog" element={<BlogAdmin />} />
+                  <Route path="/admin/blog/new" element={<CreateBlogPost />} />
+                  <Route path="/admin/blog/edit/:id" element={<CreateBlogPost />} />
+                  
+                  {/* Admin Dashboard geral */}
                   <Route path="/admin/*" element={<AdminDashboard />} />
+                  
+                  {/* Legal pages */}
                   <Route path="/terms" element={<TermsConditions />} />
                   <Route path="/privacy" element={<PrivacyPolicy />} />
+                  
+                  {/* 404 - deve ser a última rota */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </CartProvider>
