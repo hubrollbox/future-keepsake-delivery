@@ -91,9 +91,9 @@ const BlogPost = () => {
             Publicado a {post.published_at ? new Date(post.published_at).toLocaleDateString('pt-PT') : 'Data Desconhecida'}
           </p>
 
-          {/* CORREÇÃO APLICADA AQUI: Renderizar vídeo ou imagem */}
+          {/* CORREÇÃO APLICADA AQUI: Renderizar vídeo ou imagem com estilos de visibilidade forçada */}
           {post.cover_image_url && (
-            <div className="mb-10 rounded-lg overflow-hidden shadow-xl">
+            <div className="mb-10 rounded-lg overflow-hidden shadow-xl" style={{ minHeight: '200px' }}>
               {isVideo ? (
                 <video 
                   controls 
@@ -102,12 +102,14 @@ const BlogPost = () => {
                   autoPlay 
                   loop 
                   muted
+                  style={{ display: 'block', visibility: 'visible' }} // Estilos de visibilidade forçada
                 />
               ) : (
                 <img 
                   src={post.cover_image_url} 
                   alt={post.title} 
                   className="w-full h-auto object-cover" 
+                  style={{ minHeight: '200px', display: 'block', visibility: 'visible' }} // Estilos de visibilidade forçada
                 />
               )}
             </div>
