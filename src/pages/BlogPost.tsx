@@ -34,8 +34,8 @@ const BlogPost = () => {
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: post?.title,
-        text: post?.excerpt,
+        title: post?.title || "Artigo Keepla",
+        text: post?.excerpt || "",
         url: window.location.href,
       }).catch(console.error);
     } else {
