@@ -93,9 +93,9 @@ export default {
 				/* === Keepla — única fonte de verdade === */
 				keepla: {
 					red: {
-						DEFAULT: "#C8102E",
-						deep: "#A00D25",
-						glow: "#E8365A",
+						DEFAULT: "#DC143C", // Crimson - Igual ao CSS
+						deep: "#B01030",    // Deep Crimson - Igual ao CSS
+						glow: "#E8365A",    // Glow - Igual ao CSS
 					},
 					gray: {
 						light: "#E0E0E0",

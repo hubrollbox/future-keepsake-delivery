@@ -12,7 +12,7 @@ interface UserStatsSectionProps {
   totalDeliveries: number;
 }
 
-const UserStatsSection = ({ profile, totalDeliveries }: UserStatsSectionProps) => {
+const UserStatsSection = ({ totalDeliveries }: Omit<UserStatsSectionProps, 'profile'>) => {
   return (
     <div className="mb-8">
       <Card className="shadow-soft border-green-200">
@@ -23,7 +23,7 @@ const UserStatsSection = ({ profile, totalDeliveries }: UserStatsSectionProps) =
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <UserStats profile={profile!} totalDeliveries={totalDeliveries} />
+          <UserStats totalDeliveries={totalDeliveries} />
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <h4 className="font-semibold mb-3 text-green-800 flex items-center gap-2">

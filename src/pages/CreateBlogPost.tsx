@@ -153,16 +153,17 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
 
   // Preview da imagem selecionada
   useEffect(() => {
-    if (coverFile) {
-      const previewUrl = URL.createObjectURL(coverFile);
-      setImagePreview(previewUrl);
-      
-      return () => {
-        URL.revokeObjectURL(previewUrl);
-      };
-    } else {
+    if (!coverFile) {
       setImagePreview(null);
+      return;
     }
+
+    const previewUrl = URL.createObjectURL(coverFile);
+    setImagePreview(previewUrl);
+    
+    return () => {
+      URL.revokeObjectURL(previewUrl);
+    };
   }, [coverFile]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

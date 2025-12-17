@@ -3,13 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingSpinner from "@/components/ui/loading-spinner";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Calendar, Tag } from "lucide-react";
+import { ArrowLeft, Calendar, Tag, Share2 } from "lucide-react";
 import { format } from "date-fns";
 import { pt } from "date-fns/locale";
 import { useToast } from "@/hooks/use-toast";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
+import { gamificationService } from "@/services/gamificationService";
 
 interface BlogPost {
   id: string;
@@ -31,6 +32,8 @@ const BlogPost = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let cleanupTimer: (() => void) | undefined;
+
     const fetchPost = async () => {
       if (!slug) {
         navigate("/blog");
@@ -51,6 +54,17 @@ const BlogPost = () => {
         }
 
         setPost(data);
+
+        // Gamification: View
+        gamificationService.trackEvent('content_view', { 
+          slug, 
+          title: data.title,
+          type: 'blog_post' 
+        });
+
+        // Gamification: Reading Timer (60s)
+        cleanupTimer = gamificationService.trackReadingTime(data.id);
+
       } catch (error) {
         console.error("Erro ao carregar post:", error);
         toast({
@@ -65,6 +79,10 @@ const BlogPost = () => {
     };
 
     fetchPost();
+
+    return () => {
+      if (cleanupTimer) cleanupTimer();
+    };
   }, [slug, navigate, toast]);
 
   if (loading) {

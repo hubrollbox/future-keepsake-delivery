@@ -1,11 +1,4 @@
-
-# 🕰️ FuturoPresente - Plataforma de Cápsulas do Tempo Digitais
-
-[→ Brand Book Keepla 2025](docs/brandbook/README.md)
-
-![FuturoPresente Logo](https://via.placeholder.com/200x80/DAB8C3/3D4A5A?text=FuturoPresente)
-
-Conecte momentos especiais através do tempo
+# 🕰️ Keepla - Future Keepsake Delivery
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -13,356 +6,142 @@ Conecte momentos especiais através do tempo
 [![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)](https://supabase.com/)
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)](https://vitejs.dev/)
 
+> **Conecte momentos especiais através do tempo.**
+>
+> [📚 Documentação Completa](docs/README.md) | [🎨 Brand Book](docs/brandbook/README.md)
 
 ## 📖 Sobre o Projeto
 
-**FuturoPresente** é uma plataforma inovadora que permite criar, agendar e enviar cápsulas do tempo digitais. Conecte pessoas através do tempo, preservando momentos especiais e entregando-os no futuro perfeito.
+**Keepla** (anteriormente FuturoPresente) é uma plataforma inovadora que permite criar, agendar e enviar cápsulas do tempo digitais. Nossa missão é transformar a forma como as pessoas se conectam emocionalmente, permitindo que memórias, mensagens e sentimentos sejam preservados hoje e entregues no momento perfeito no futuro.
 
-### 🎯 Missão
+---
 
-Transformar a forma como as pessoas se conectam emocionalmente, permitindo que momentos especiais sejam preservados e entregues no momento certo, criando experiências únicas e duradouras.
+## ✨ Funcionalidades Principais
 
+### 🕰️ Cápsulas do Tempo (Keepsakes)
+- **Criação Intuitiva**: Interface amigável para criar mensagens personalizadas.
+- **Agendamento Preciso**: Defina datas exatas para entrega futura.
+- **Multimídia**: Suporte para texto e imagens (expansível para vídeo/áudio).
+- **Status em Tempo Real**: Acompanhe o status (Agendado, Enviado, Entregue).
 
-## ✨ Principais Funcionalidades
+### 🚀 Entrega Inteligente
+- **Processamento Automático**: Cron jobs via `pg_cron` e Supabase Edge Functions.
+- **Timezone Aware**: Entregas baseadas no fuso horário de Portugal.
+- **Notificações**: Emails transacionais via Resend.
 
-### 🕰️ Cápsulas do Tempo Digitais
+### 🎮 Gamificação & Engajamento (Novo!)
+- **Sistema de Pontos**: Ganhe pontos por atividades (login diário, leitura de blog, partilhas).
+- **Streaks**: Recompensas por consistência (7, 30, 90 dias).
+- **Níveis e Progresso**: Visualização clara do crescimento do usuário.
+- **Anti-fraude**: Validação server-side de limites e intervalos de ações.
 
-- **Criação Intuitiva**: Interface amigável para criar mensagens personalizadas
-- **Agendamento Flexível**: Defina datas futuras para entrega automática
-- **Múltiplos Formatos**: Suporte para texto, imagens e conteúdo multimídia
-- **Validação Avançada**: Sistema robusto de validação de dados
-
-### 🚀 Entrega Automática
-
-- **Sistema Inteligente**: Processamento automático baseado em timezone de Portugal
-- **Cron Jobs**: Execução a cada minuto para máxima precisão
-- **Fallback Robusto**: Sistema de backup em caso de falhas
-- **Logs Detalhados**: Monitoramento completo de todas as operações
-
-### 🎮 Sistema de Gamificação
-
-- **Conquistas**: Desbloqueie insígnias por atividades especiais
-- **Missões**: Complete desafios e ganhe recompensas
-- **Ranking**: Sistema de pontuação e classificação
-- **Progressão**: Acompanhe seu crescimento na plataforma
+### 📝 Blog & Conteúdo
+- **Gestão de Conteúdo**: Sistema de blog integrado com Supabase.
+- **Leitura Engajada**: Tracking de tempo de leitura para recompensas.
 
 ### 🔐 Segurança e Privacidade
+- **Autenticação Segura**: Supabase Auth com proteção RLS (Row Level Security).
+- **Dados Protegidos**: Criptografia e políticas estritas de acesso.
+- **Conformidade**: Preparado para GDPR.
 
-- **Autenticação Robusta**: Sistema seguro de login e registro
-- **RLS (Row Level Security)**: Proteção de dados a nível de base de dados
-- **Criptografia**: Dados sensíveis protegidos
-- **Políticas de Privacidade**: Conformidade com GDPR
-
+---
 
 ## 🛠️ Stack Tecnológica
 
 ### Frontend
+- **Framework**: [React 18](https://reactjs.org/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Linguagem**: [TypeScript](https://www.typescriptlang.org/)
+- **Estilização**: [Tailwind CSS](https://tailwindcss.com/)
+- **Componentes**: [shadcn/ui](https://ui.shadcn.com/)
+- **Estado/Data Fetching**: [TanStack Query](https://tanstack.com/query/latest)
+- **Roteamento**: [React Router](https://reactrouter.com/)
 
-- **React 18** - Biblioteca para interfaces de utilizador
-- **TypeScript** - Tipagem estática para JavaScript
-- **Vite** - Build tool moderna e rápida
-- **Tailwind CSS** - Framework CSS utilitário
-- **React Hook Form** - Gestão de formulários
-- **Zod** - Validação de esquemas TypeScript-first
-
-### Backend & Base de Dados
-
-- **Supabase** - Backend-as-a-Service completo
-  - PostgreSQL - Base de dados relacional
-  - Auth - Autenticação e autorização
-  - Edge Functions - Funções serverless
-  - Storage - Armazenamento de ficheiros
-  - Real-time - Atualizações em tempo real
+### Backend (Serverless)
+- **Plataforma**: [Supabase](https://supabase.com/)
+- **Banco de Dados**: PostgreSQL
+- **Edge Functions**: Deno / TypeScript
+- **Storage**: Supabase Storage
 
 ### Integrações
+- **Emails**: [Resend](https://resend.com/)
+- **Pagamentos**: [Stripe](https://stripe.com/)
 
-- **Resend** - Serviço de envio de emails transacionais
-- **Stripe** - Processamento de pagamentos
-- **pg_cron** - Agendamento de tarefas na base de dados
+---
 
-### Ferramentas de Desenvolvimento
-
-- **Cypress** - Testes end-to-end
-- **ESLint** - Linting de código
-- **Prettier** - Formatação de código
-
-
-## 🔧 Correções Recentes da Base de Dados
-
-### Inconsistências Resolvidas
-
-- **Campo de Conteúdo**: Corrigida inconsistência entre campos `message` e `message_content` na tabela `keepsakes`
-- **Mapeamento de Dados**: Atualizado hook `useKeepsakes` para usar consistentemente `message_content`
-- **Validação de Formulários**: Corrigidos schemas de validação para usar `message_content`
-- **Componentes UI**: Atualizados componentes `KeepsakesList` e `EditKeepsake` para usar o campo correto
-
-### Migração Aplicada
-
-- **20250108000000_fix_keepsakes_schema_inconsistency.sql**: Remove campo duplicado `message` e mantém apenas `message_content`
-
-## 🚀 Instalação e Configuração
+## 🚀 Como Começar
 
 ### Pré-requisitos
-
-- **Node.js** (versão 18 ou superior)
-- **npm** ou **yarn**
-- **Conta Supabase** (gratuita)
-- **Conta Resend** (para envio de emails)
-- **Conta Stripe** (para pagamentos - opcional)
-
-### 1. Clone o Repositório
-
-```bash
-git clone https://github.com/seu-usuario/future-keepsake-delivery.git
-cd future-keepsake-delivery
-```
-
-### 2. Instale as Dependências
-
-```bash
-npm install
-# ou
-yarn install
-```
-
-### 3. Configuração de Variáveis de Ambiente
-
-**IMPORTANTE**: As chaves secretas (service role keys, stripe secret keys) devem ser configuradas apenas como secrets do Supabase, nunca como variáveis de ambiente do frontend.
-
-Copie o arquivo `.env.example` para `.env` e configure as variáveis públicas:
-
-```bash
-cp .env.example .env
-```
-
-Configure apenas as variáveis públicas no `.env`:
-
-- `VITE_SUPABASE_URL` - URL pública do seu projeto Supabase
-- `VITE_SUPABASE_ANON_KEY` - Chave anônima pública do Supabase
-- `VITE_STRIPE_PUBLIC_KEY` - Chave pública do Stripe (opcional)
-
-### 4. Configuração da Base de Dados
-
-#### 3.1 Configurar Supabase
-
-1. Crie um novo projeto no [Supabase](https://supabase.com/)
-2. Execute as migrações SQL localizadas em `supabase/migrations/`
-3. Configure as políticas RLS (Row Level Security)
-4. Ative as extensões necessárias: `pg_cron`, `http`
-
-#### 3.2 Deploy das Edge Functions
-
-```bash
-# Instalar Supabase CLI
-npm install -g @supabase/cli
-
-# Login no Supabase
-supabase login
-
-# Deploy das funções
-supabase functions deploy send-keepsakes
-supabase functions deploy send-contact-email
-supabase functions deploy send-deliveries
-```
-
-### 4. Variáveis de Ambiente
-
-Crie um arquivo `.env.local` na raiz do projeto:
-
-```env
-# === SUPABASE CONFIGURAÇÃO ===
-VITE_SUPABASE_URL=https://seu-projeto.supabase.co
-VITE_SUPABASE_ANON_KEY=sua_chave_anonima
-VITE_SUPABASE_SERVICE_ROLE_KEY=sua_chave_service_role
-
-# === EMAIL CONFIGURAÇÃO ===
-VITE_RESEND_API_KEY=re_sua_chave_resend
-RESEND_API_KEY=re_sua_chave_resend
-
-# === PAGAMENTOS (OPCIONAL) ===
-VITE_STRIPE_PUBLISHABLE_KEY=pk_test_sua_chave_stripe
-STRIPE_SECRET_KEY=sk_test_sua_chave_stripe
-
-# === APLICAÇÃO ===
-VITE_APP_URL=http://localhost:5173
-VITE_APP_NAME=FuturoPresente
-VITE_SUPPORT_EMAIL=suporte@futuropresente.com
-
-# === EDGE FUNCTIONS ===
-SUPABASE_URL=https://seu-projeto.supabase.co
-SUPABASE_SERVICE_ROLE_KEY=sua_chave_service_role
-```
-
-### 5. Executar o Projeto
-
-```bash
-# Desenvolvimento
-npm run dev
-
-# Build de produção
-npm run build
-
-# Preview da build
-npm run preview
-```
-
-O projeto estará disponível em `http://localhost:5173`
-
-
-## 📧 Sistema de Entrega Automática
-
-### Funcionalidades Implementadas
-
-#### 🔄 Processamento Automático
-
-- **Cron Job**: Execução a cada minuto via `pg_cron`
-- **Timezone**: Configurado para Portugal (`Europe/Lisbon`)
-- **Fallback**: Sistema de backup em SQL caso Edge Function falhe
-- **Logs**: Registro detalhado de todas as operações
-
-#### 📨 Edge Function `send-keepsakes`
-
-- **Localização**: `supabase/functions/send-keepsakes/`
-- **Trigger**: Chamada automática via cron job
-- **Funcionalidades**:
-  - Busca cápsulas com `delivery_date <= NOW()` e `status = 'pending'`
-  - Envia emails personalizados para destinatários
-  - Atualiza status para `'sent'` e define `sent_at`
-  - Cria notificações para utilizadores
-  - Tratamento robusto de erros
-
-#### 🗄️ Função SQL `send_due_capsules()`
-
-- **Backup**: Executa quando Edge Function falha
-- **Funcionalidades**: Mesma lógica da Edge Function em SQL puro
-- **Performance**: Otimizada com índices específicos
-
-### Scripts Disponíveis
-
-```bash
-# Desenvolvimento
-npm run dev              # Servidor de desenvolvimento
-npm run build           # Build de produção
-npm run preview         # Preview da build
-npm run lint            # Verificação de código
-npm run type-check      # Verificação de tipos TypeScript
-
-# Testes
-npm run test            # Testes unitários
-npm run test:e2e        # Testes end-to-end com Cypress
-npm run cypress:open    # Interface gráfica do Cypress
-
-# Base de Dados
-npm run db:reset        # Reset da base de dados
-npm run db:seed         # Seed de dados de teste
-npm run db:migrate      # Executar migrações
-```
-
-
-## 🚀 Deploy para Vercel
-
-### Configuração Automática via GitHub Actions
-
-O projeto está configurado para deploy automático no Vercel através do GitHub Actions. Para configurar:
-
-#### 1. Secrets do GitHub
-
-Adicione os seguintes secrets no seu repositório GitHub (Settings → Secrets and variables → Actions):
-
-```bash
-# Vercel Configuration
-VERCEL_TOKEN=your_vercel_token
-VERCEL_ORG_ID=your_vercel_org_id
-VERCEL_PROJECT_ID=your_vercel_project_id
-
-# Environment Variables
-VITE_SUPABASE_URL=your_supabase_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-VITE_STRIPE_PUBLIC_KEY=your_stripe_public_key
-VITE_SENTRY_DSN=your_sentry_dsn
-VITE_GA_MEASUREMENT_ID=your_ga_measurement_id
-```
-
-#### 2. Como obter os valores do Vercel
-
-
-1. **VERCEL_TOKEN**
-
-- Acesse [Vercel Dashboard](https://vercel.com/account/tokens)
-- Crie um novo token de acesso
-
-
-1. **VERCEL_ORG_ID** e **VERCEL_PROJECT_ID**
-
-- Execute `npx vercel link` no projeto
-- Os IDs serão salvos em `.vercel/project.json`
-
-#### 3. Deploy Manual
-
-Para deploy manual via CLI:
-
-```bash
-# Instalar Vercel CLI
-npm i -g vercel
-
-# Login
-vercel login
-
-# Deploy
-vercel --prod
-```bash
-
-### Configuração de Environment Variables no Vercel
-
-No dashboard do Vercel, configure as seguintes variáveis:
-
-- `VITE_SUPABASE_URL`
-- `VITE_SUPABASE_ANON_KEY`
-- `VITE_STRIPE_PUBLIC_KEY`
-- `VITE_SENTRY_DSN`
-- `VITE_GA_MEASUREMENT_ID`
-
-## 📁 Estrutura do Projeto
+- Node.js (v18+)
+- npm ou yarn ou bun
+
+### Instalação
+
+1. **Clone o repositório**
+   ```bash
+   git clone https://github.com/seu-usuario/keepla.git
+   cd keepla
+   ```
+
+2. **Instale as dependências**
+   ```bash
+   npm install
+   # ou
+   bun install
+   ```
+
+3. **Configuração de Ambiente**
+   Crie um arquivo `.env` na raiz baseado no `.env.example`:
+   ```env
+   VITE_SUPABASE_URL=sua_url_supabase
+   VITE_SUPABASE_ANON_KEY=sua_chave_anonima
+   ```
+
+4. **Execute o servidor de desenvolvimento**
+   ```bash
+   npm run dev
+   ```
+   Acesse `http://localhost:8080` (ou a porta indicada).
+
+---
+
+## 📂 Estrutura do Projeto
 
 ```
-future-keepsake-delivery/
+/
+├── public/              # Assets estáticos
 ├── src/
-│   ├── components/   # Componentes reutilizáveis
-│   ├── pages/        # Páginas da aplicação
-│   ├── contexts/     # Contextos globais (autenticação, carrinho, gamificação)
-│   ├── hooks/        # Hooks customizados
-├── supabase/
-│   ├── migrations/   # Scripts de migração do banco de dados
-│   └── functions/    # Edge Functions do Supabase
-│       └── send-keepsakes/  # Função para entrega automática de keepsakes
-├── scripts/         # Scripts utilitários
-│   ├── testSendKeepsakes.js       # Teste da função send-keepsakes
-│   ├── updateKeepsakeStatus.js    # Atualização manual de status
-│   ├── serveKeepsakeFunction.js   # Servidor local da Edge Function
-│   ├── deployKeepsakeFunction.js  # Implantação da Edge Function
-│   └── checkDeploymentStatus.js   # Verificação do status da implantação
+│   ├── components/      # Componentes React reutilizáveis
+│   │   ├── dashboard/   # Componentes específicos do dashboard
+│   │   ├── gamification/# Componentes de gamificação
+│   │   └── ui/          # Componentes base (shadcn)
+│   ├── contexts/        # React Contexts (Auth, Gamification, Cart)
+│   ├── hooks/           # Custom React Hooks
+│   ├── integrations/    # Configurações de serviços externos (Supabase)
+│   ├── pages/           # Páginas da aplicação (Rotas)
+│   ├── services/        # Camada de serviço (API calls, lógica de negócios)
+│   └── styles/          # Arquivos CSS globais
+├── supabase/            # Migrations e configurações do Supabase
+└── docs/                # Documentação detalhada do projeto
 ```
 
-## 🧪 Testes
+---
 
-Execute testes E2E com o Cypress:
+## 📜 Scripts Disponíveis
 
+- `npm run dev`: Inicia o servidor de desenvolvimento.
+- `npm run build`: Compila o projeto para produção.
+- `npm run preview`: Visualiza o build de produção localmente.
+- `npm run lint`: Executa a verificação de linting.
 
-```bash
-npx cypress open
-```
+---
 
-## 🤝 Contribuindo
+## 🤝 Contribuição
 
-Pull requests são bem-vindos!
+Contribuições são bem-vindas! Por favor, leia o arquivo [CONTRIBUTING.md](docs/development/CONTRIBUTING.md) para detalhes sobre nosso código de conduta e o processo para enviar pull requests.
 
-Para contribuir:
-
-- Siga as boas práticas de código.
-- Descreva claramente suas alterações no PR.
-- Certifique-se de que os testes estejam passando.
+---
 
 ## 📄 Licença
 
-Este projeto está sob a licença MIT.
-Consulte o arquivo LICENSE para mais informações.
+Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.

@@ -167,7 +167,6 @@ const Dashboard = () => {
           {/* Secção de Estatísticas */}
           <div className="xl:col-span-1" data-tour="stats">
             <UserStatsSection
-              profile={profile}
               totalDeliveries={deliveries.length}
             />
           </div>

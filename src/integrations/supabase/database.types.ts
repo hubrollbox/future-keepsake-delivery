@@ -3,6 +3,27 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export type Database = {
   public: {
     Tables: {
+      pilot_users: {
+        Row: {
+          id: string;
+          name: string;
+          email: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          email: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          email?: string;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
       plans: {
         Row: {
           id: string;
@@ -266,6 +287,122 @@ export type Database = {
           category?: string;
         };
         Relationships: [];
+      };
+      point_rules: {
+        Row: {
+          action_type: string;
+          points: number;
+          daily_limit: number | null;
+          min_interval_seconds: number;
+          description: string | null;
+          is_active: boolean;
+          created_at: string;
+        };
+        Insert: {
+          action_type: string;
+          points: number;
+          daily_limit?: number | null;
+          min_interval_seconds?: number;
+          description?: string | null;
+          is_active?: boolean;
+          created_at?: string;
+        };
+        Update: {
+          action_type?: string;
+          points?: number;
+          daily_limit?: number | null;
+          min_interval_seconds?: number;
+          description?: string | null;
+          is_active?: boolean;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
+      user_stats: {
+        Row: {
+          user_id: string;
+          total_points: number;
+          current_level: number;
+          current_streak: number;
+          last_activity_date: string | null;
+          longest_streak: number;
+          milestones: Json;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          user_id: string;
+          total_points?: number;
+          current_level?: number;
+          current_streak?: number;
+          last_activity_date?: string | null;
+          longest_streak?: number;
+          milestones?: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          user_id?: string;
+          total_points?: number;
+          current_level?: number;
+          current_streak?: number;
+          last_activity_date?: string | null;
+          longest_streak?: number;
+          milestones?: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "user_stats_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: true;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      point_events: {
+        Row: {
+          id: string;
+          user_id: string;
+          action_type: string;
+          points: number;
+          metadata: Json;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          action_type: string;
+          points: number;
+          metadata?: Json;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          user_id?: string;
+          action_type?: string;
+          points?: number;
+          metadata?: Json;
+          created_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "point_events_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "point_events_action_type_fkey";
+            columns: ["action_type"];
+            isOneToOne: false;
+            referencedRelation: "point_rules";
+            referencedColumns: ["action_type"];
+          }
+        ];
       };
       profiles: {
         Row: {

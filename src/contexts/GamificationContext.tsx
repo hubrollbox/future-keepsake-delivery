@@ -1,86 +1,109 @@
-import React, { createContext, useContext, useCallback } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import React, { createContext, useContext, useCallback, useState, useEffect } from 'react';
+import { gamificationService, GamificationActionType } from '@/services/gamificationService';
 import { useAuth } from '@/hooks/useAuth';
 
+interface UserStats {
+  total_points: number;
+  current_level: number;
+  current_streak: number;
+  next_level_points: number;
+  progress_to_next_level: number;
+}
+
 interface GamificationContextType {
-  addPoints: (points: number, reason: string) => Promise<void>;
-  checkAchievements: (currentPoints?: number) => Promise<void>;
+  stats: UserStats | null;
+  trackAction: (action: GamificationActionType, metadata?: any) => Promise<void>;
+  loading: boolean;
+  refreshStats: () => Promise<void>;
 }
 
 const GamificationContext = createContext<GamificationContextType | undefined>(undefined);
 
 export const GamificationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { user, profile, refreshProfile } = useAuth();
+  const { user } = useAuth();
+  const [stats, setStats] = useState<UserStats | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const checkAchievements = useCallback(async (currentPoints?: number) => {
-    if (!user || !profile) return;
+  const calculateLevelProgress = (points: number) => {
+    // Exemplo de fórmula logarítmica ou por faixas para níveis
+    // Nível 1: 0-500
+    // Nível 2: 501-1500
+    // Nível 3: 1501-3000
+    // etc.
+    const levelBase = 500;
+    const currentLevel = Math.floor(points / levelBase) + 1;
+    const nextLevelPoints = currentLevel * levelBase;
+    const currentLevelStart = (currentLevel - 1) * levelBase;
+    
+    const progress = Math.min(100, Math.max(0, 
+      ((points - currentLevelStart) / (nextLevelPoints - currentLevelStart)) * 100
+    ));
+
+    return {
+      currentLevel,
+      nextLevelPoints,
+      progress
+    };
+  };
+
+  const refreshStats = useCallback(async () => {
+    if (!user) {
+      setStats(null);
+      return;
+    }
 
     try {
-      // Fetch all achievements that are not yet unlocked by the user
-      const { data: allAchievements, error: achievementsError } = await supabase
-        .from('achievements')
-        .select('*');
-
-      if (achievementsError) throw achievementsError;
-
-      // Check for new achievements based on points
-      const pointsToCheck = currentPoints || profile.total_points || 0;
-      
-      for (const achievement of allAchievements || []) {
-        if (pointsToCheck >= achievement.points) {
-          // Check if user already has this achievement
-          const { data: existingAchievement } = await supabase
-            .from('user_achievements')
-            .select('*')
-            .eq('user_id', user.id)
-            .eq('achievement_id', achievement.id)
-            .single();
-
-          if (!existingAchievement) {
-            // Award the achievement
-            await supabase
-              .from('user_achievements')
-              .insert({
-                user_id: user.id,
-                achievement_id: achievement.id
-              });
-          }
-        }
+      const data = await gamificationService.getUserStats();
+      if (data) {
+        const { currentLevel, nextLevelPoints, progress } = calculateLevelProgress(data.total_points);
+        
+        setStats({
+          total_points: data.total_points,
+          current_level: currentLevel, // Poderíamos usar data.current_level se quiséssemos persistir
+          current_streak: data.current_streak,
+          next_level_points,
+          progress_to_next_level: progress
+        });
       }
     } catch (error) {
-      console.error("Erro ao verificar conquistas:", error);
+      console.error("Failed to fetch gamification stats", error);
     }
-  }, [user, profile]);
+  }, [user]);
 
-  const addPoints = useCallback(async (points: number, reason: string) => {
-    if (!user || !profile) return;
+  // Initial load
+  useEffect(() => {
+    refreshStats();
+  }, [refreshStats]);
 
-    try {
-      const newTotalPoints = (profile.total_points || 0) + points;
-
-      // Update user's total points
-      const { error } = await supabase
-        .from('profiles')
-        .update({ 
-          total_points: newTotalPoints,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', user.id)
-        .single();
-
-      if (error) throw error;
-
-      console.log(`Pontos adicionados: ${points} por ${reason}. Total: ${newTotalPoints}`);
-      await refreshProfile(); // Refresh profile to get updated points
-      await checkAchievements(newTotalPoints); // Check for new achievements after adding points
-    } catch (error) {
-      console.error("Erro ao adicionar pontos:", error);
+  // Daily login tracking
+  useEffect(() => {
+    if (user) {
+      // Tenta registrar login diário (o backend vai ignorar se já foi hoje)
+      gamificationService.trackEvent('daily_login').then((result) => {
+        if (result?.success) {
+          refreshStats();
+        }
+      });
     }
-  }, [user, profile, refreshProfile, checkAchievements]);
+  }, [user, refreshStats]);
+
+  const trackAction = useCallback(async (action: GamificationActionType, metadata?: any) => {
+    if (!user) return;
+    
+    // Otimisticamente poderíamos atualizar a UI, mas como há validação no server,
+    // melhor esperar a resposta para garantir consistência.
+    const result = await gamificationService.trackEvent(action, metadata);
+    
+    if (result?.success) {
+      await refreshStats();
+    }
+  }, [user, refreshStats]);
 
   const value = {
-    addPoints,
-    checkAchievements,
+    stats,
+    trackAction,
+    loading,
+    refreshStats
   };
 
   return (
