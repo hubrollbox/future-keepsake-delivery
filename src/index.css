@@ -8,7 +8,7 @@
 /* ================================
    FONTES
    ================================ */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?familyInter:wght@300;400;500;600;700&display=swap');
 
 /* ================================
    CSS DO PROJETO
@@ -63,21 +63,11 @@
     display: block;
   }
 
-  /* === TÍTULOS: COR EXPLÍCITA (CORREÇÃO CRÍTICA) === */
+  /* TÍTULOS: SEM COR (INTENCIONAL) */
   h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: -0.02em;
-    color: hsl(var(--foreground));
-  }
-
-  .dark h1,
-  .dark h2,
-  .dark h3,
-  .dark h4,
-  .dark h5,
-  .dark h6 {
-    color: hsl(var(--keepla-white));
   }
 }
 
@@ -178,10 +168,9 @@ a:focus-visible {
 }
 
 /* ================================
-   CTA GENÉRICO (SEGURANÇA)
+   CTA (SÓ QUANDO APLICADO)
    ================================ */
-.cta,
-.cta * {
+.cta {
   color: hsl(var(--keepla-white));
 }
 
