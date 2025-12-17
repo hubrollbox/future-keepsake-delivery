@@ -17,6 +17,7 @@ interface BlogPost {
   excerpt?: string;
   cover_image_url?: string;
   published_at?: string | null;
+  status?: string;
 }
 
 const containerVariants: Variants = {
@@ -71,7 +72,7 @@ const Blog = () => {
           .eq("status", "published")
           .order("published_at", { ascending: false });
         if (error) throw error;
-        setPosts((data || []) as any);
+        setPosts(data || []);
       } catch (err) {
         console.error("Erro a carregar blog:", err);
         setPosts([]);
@@ -126,7 +127,7 @@ const Blog = () => {
         >
           <div>
             <h1 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight">Blog</h1>
-            <p className="text-muted-foreground mt-2 font-georgia italic">
+            <p className="text-muted-foreground mt-2 font-serif italic">
               Histórias, novidades e reflexões sobre guardar emoções.
             </p>
           </div>
@@ -168,7 +169,7 @@ const Blog = () => {
           </motion.div>
         ) : posts.length === 0 && !error ? (
           <motion.div variants={itemVariants}>
-            <p className="text-muted-foreground text-center py-12 font-georgia italic">
+            <p className="text-muted-foreground text-center py-12 font-serif italic">
               Ainda não existem artigos publicados.
             </p>
           </motion.div>
