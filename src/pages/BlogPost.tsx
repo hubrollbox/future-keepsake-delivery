@@ -33,7 +33,7 @@ const BlogPost = () => {
           .eq("slug", slug)
           .eq("status", "published")
           .single();
-        
+
         if (error) throw error;
         setPost(data as BlogPostType);
       } catch (err) {
@@ -43,6 +43,7 @@ const BlogPost = () => {
         setLoading(false);
       }
     };
+
     fetchPost();
   }, [slug]);
 
@@ -60,56 +61,64 @@ const BlogPost = () => {
         <Navigation />
         <main className="container mx-auto px-4 py-16 text-center">
           <h1 className="text-3xl font-bold text-keepla-red">Erro</h1>
-          <p className="mt-4 text-keepla-black">{error || "Artigo não encontrado."}</p>
+          <p className="mt-4 text-keepla-black">
+            {error || "Artigo não encontrado."}
+          </p>
         </main>
         <Footer />
       </div>
     );
   }
 
-  // Lógica para determinar se é vídeo
-  const isVideo = post.cover_image_url && (
-    post.cover_image_url.toLowerCase().endsWith('.mp4') || 
-    post.cover_image_url.toLowerCase().endsWith('.mov') ||
-    post.cover_image_url.toLowerCase().endsWith('.webm')
-  );
+  /* -------------------------------
+     Determinar corretamente se é vídeo
+     ------------------------------- */
+  const isVideo =
+    typeof post.cover_image_url === "string" &&
+    (
+      post.cover_image_url.toLowerCase().endsWith(".mp4") ||
+      post.cover_image_url.toLowerCase().endsWith(".mov") ||
+      post.cover_image_url.toLowerCase().endsWith(".webm")
+    );
 
   return (
     <div className="min-h-screen bg-keepla-white">
-      <SEOHead 
+      <SEOHead
         title={post.title}
-        description={post.content.substring(0, 150) + '...'}
+        description={post.content.substring(0, 150) + "..."}
         keywords="blog keepla, artigos memórias, cápsulas tempo, dicas presentes"
       />
+
       <Navigation />
+
       <main className="container mx-auto px-4 py-16 max-w-4xl">
         <article>
           <h1 className="text-4xl md:text-5xl font-serif text-keepla-black mb-4">
             {post.title}
           </h1>
+
           <p className="text-sm text-keepla-gray mb-8">
-            Publicado a {post.published_at ? new Date(post.published_at).toLocaleDateString('pt-PT') : 'Data Desconhecida'}
+            Publicado a{" "}
+            {post.published_at
+              ? new Date(post.published_at).toLocaleDateString("pt-PT")
+              : "Data desconhecida"}
           </p>
 
-          {/* CORREÇÃO APLICADA AQUI: Renderizar vídeo ou imagem com estilos de visibilidade forçada */}
           {post.cover_image_url && (
-            <div className="mb-10 rounded-lg overflow-hidden shadow-xl" style={{ minHeight: '200px' }}>
+            <div className="mb-10 rounded-lg overflow-hidden shadow-xl">
               {isVideo ? (
-                <video 
-                  controls 
-                  src={post.cover_image_url} 
-                  className="w-full h-auto object-cover" 
-                  autoPlay 
-                  loop 
-                  muted
-                  style={{ display: 'block', visibility: 'visible' }} // Estilos de visibilidade forçada
+                <video
+                  src={post.cover_image_url}
+                  controls
+                  preload="metadata"
+                  className="w-full h-auto object-cover"
                 />
               ) : (
-                <img 
-                  src={post.cover_image_url} 
-                  alt={post.title} 
-                  className="w-full h-auto object-cover" 
-                  style={{ minHeight: '200px', display: 'block', visibility: 'visible' }} // Estilos de visibilidade forçada
+                <img
+                  src={post.cover_image_url}
+                  alt={post.title}
+                  className="w-full h-auto object-cover"
+                  loading="eager"
                 />
               )}
             </div>
@@ -120,6 +129,7 @@ const BlogPost = () => {
           </div>
         </article>
       </main>
+
       <Footer />
     </div>
   );
