@@ -63,15 +63,26 @@
     display: block;
   }
 
+  /* === TÍTULOS: COR EXPLÍCITA (CORREÇÃO CRÍTICA) === */
   h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: -0.02em;
+    color: hsl(var(--foreground));
+  }
+
+  .dark h1,
+  .dark h2,
+  .dark h3,
+  .dark h4,
+  .dark h5,
+  .dark h6 {
+    color: hsl(var(--keepla-white));
   }
 }
 
 /* ================================
-   SPACING (SEM NESTING ILEGAL)
+   SPACING
    ================================ */
 .emotional-spacing {
   padding-top: 5rem;
@@ -121,7 +132,7 @@ select:focus-visible {
 }
 
 /* ================================
-   BOTÕES (UMA ÚNICA DEFINIÇÃO)
+   BOTÕES
    ================================ */
 .btn-primary {
   background-color: hsl(var(--keepla-red));
@@ -167,7 +178,15 @@ a:focus-visible {
 }
 
 /* ================================
-   UTILITÁRIOS SIMPLES (SEM theme())
+   CTA GENÉRICO (SEGURANÇA)
+   ================================ */
+.cta,
+.cta * {
+  color: hsl(var(--keepla-white));
+}
+
+/* ================================
+   UTILITÁRIOS
    ================================ */
 .bg-brand-primary {
   background-color: hsl(var(--keepla-red));
