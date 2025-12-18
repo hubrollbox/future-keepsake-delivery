@@ -104,6 +104,12 @@ export default {
 					black: "#000000",
 					white: "#FFFFFF",
 				},
+
+				/* Backwards-compatible single-key palette requested */
+				"keepla-red": {
+					DEFAULT: "#C8102E", // Vermelho Carmesim
+					deep: "#A00D25",    // Hover / states
+				},
 			},
 			borderRadius: {
 				lg: "12px",

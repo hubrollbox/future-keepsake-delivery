@@ -225,25 +225,26 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
 
     try {
       const fileExt = coverFile.name.split('.').pop();
-      const fileName = `blog-covers/${crypto.randomUUID()}.${fileExt}`;
+      const fileName = `${crypto.randomUUID()}.${fileExt}`;
 
+      // Upload para o bucket correto 'blog-covers'
       const { error: uploadError } = await supabase.storage
-        .from('media')
+        .from('blog-covers')
         .upload(fileName, coverFile, {
           cacheControl: '3600',
-          upsert: true,
+          upsert: false,
         });
 
       if (uploadError) {
         console.error('Erro no upload:', uploadError);
-        throw new Error('Falha no upload da imagem');
+        throw new Error('Falha no upload do ficheiro');
       }
 
       const { data: urlData } = supabase.storage
-        .from('media')
-        .getPublicUrl(fileName);
+        .from('blog-covers')
+        .getPublicUrl(fileName) as any;
 
-      return urlData.publicUrl;
+      return urlData?.publicUrl || null;
     } catch (error) {
       console.error('Erro ao fazer upload:', error);
       throw error;

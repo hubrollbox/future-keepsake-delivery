@@ -154,13 +154,31 @@ const BlogPost = () => {
 
         <article className="max-w-4xl mx-auto">
           <header className="mb-8">
-            {post.cover_image_url && (
-              <img
-                src={post.cover_image_url}
-                alt={post.title}
-                className="w-full h-64 object-cover rounded-lg mb-6"
-              />
-            )}
+            {post.cover_image_url && (() => {
+              const isVideo = /\.(mp4|webm|ogg)$/i.test(post.cover_image_url);
+              return (
+                <div className="mb-6 rounded-lg overflow-hidden shadow-xl" style={{ minHeight: '200px' }}>
+                  {isVideo ? (
+                    <video
+                      controls
+                      src={post.cover_image_url}
+                      className="w-full h-auto object-cover"
+                      autoPlay={false}
+                      loop={false}
+                      muted={false}
+                      style={{ display: 'block', visibility: 'visible' }}
+                    />
+                  ) : (
+                    <img
+                      src={post.cover_image_url}
+                      alt={post.title}
+                      className="w-full h-64 object-cover rounded-lg"
+                      style={{ minHeight: '200px', display: 'block', visibility: 'visible' }}
+                    />
+                  )}
+                </div>
+              );
+            })()}
 
             {formattedDate && (
               <div className="flex items-center text-muted-foreground mb-3">
