@@ -69,10 +69,10 @@ const TypeStep = ({ selectedType, onTypeSelect, form }: TypeStepProps) => {
                           />
                         </FormControl>
                         <Card
-                          className={`relative cursor-pointer transition-all hover:shadow-soft hover:scale-[1.01] ${
+                          className={`relative cursor-pointer transition-all hover:shadow-md hover:scale-[1.01] ${
                             selectedType === type.value
                               ? 'border-keepla-red bg-keepla-red/5 ring-2 ring-keepla-red'
-                              : 'border-sand-beige hover:border-keepla-red/50'
+                              : 'border-white/50 hover:border-keepla-red/50'
                           }`}
                           onClick={() => {
                             field.onChange(type.value);

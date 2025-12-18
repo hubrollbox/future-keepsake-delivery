@@ -3,9 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingSpinner from "@/components/ui/loading-spinner";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Calendar, Tag } from "lucide-react";
-import { format } from "date-fns";
-import { pt } from "date-fns/locale";
+import { ArrowLeft, Tag } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -129,10 +127,6 @@ const BlogPost = () => {
     );
   }
 
-  const formattedDate = post.published_at
-    ? format(new Date(post.published_at), "dd 'de' MMMM 'de' yyyy", { locale: pt })
-    : null;
-
   return (
     <div className="min-h-screen bg-background">
       <SEOHead 
@@ -179,13 +173,6 @@ const BlogPost = () => {
                 </div>
               );
             })()}
-
-            {formattedDate && (
-              <div className="flex items-center text-muted-foreground mb-3">
-                <Calendar className="h-4 w-4 mr-2" />
-                <span className="text-sm">{formattedDate}</span>
-              </div>
-            )}
 
             <h1 className="text-4xl font-bold text-foreground mb-4">{post.title}</h1>
             {post.excerpt && (

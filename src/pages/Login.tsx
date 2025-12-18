@@ -102,7 +102,7 @@ const Login = () => {
     onError={(e) => { e.currentTarget.src = '/lovable-uploads/a58d6383-77f7-451e-b692-d10c4298397e.png'; }}
   />
         </div>
-        <Card className="emotion-card shadow-soft border-0">
+        <Card className="emotion-card shadow-md border-0">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-semibold text-keepla-black font-fraunces">
               Entrar na keepla
@@ -111,7 +111,7 @@ const Login = () => {
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-4">
               <div>
-                <Label htmlFor="email" className="text-steel-blue">Email</Label>
+                <Label htmlFor="email" className="text-keepla-gray-dark">Email</Label>
                 <Input
                   id="email"
                   name="email"
@@ -119,7 +119,7 @@ const Login = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="teu@email.com"
-                  className={`border-dusty-rose/30 focus:border-dusty-rose ${errors.email ? "border-red-500" : ""}`}
+                  className={`border-keepla-red/30 focus:border-keepla-red ${errors.email ? "border-red-500" : ""}`}
                   required
                   autoComplete="email"
                 />
@@ -128,7 +128,7 @@ const Login = () => {
                 )}
               </div>
               <div>
-                <Label htmlFor="password" className="text-steel-blue">Palavra-passe</Label>
+                <Label htmlFor="password" className="text-keepla-gray-dark">Palavra-passe</Label>
                 <Input
                   id="password"
                   name="password"
@@ -137,7 +137,7 @@ const Login = () => {
                   onChange={handleInputChange}
                   placeholder="A tua palavra-passe"
                   autoComplete="current-password"
-                  className={`border-dusty-rose/30 focus:border-dusty-rose ${errors.password ? "border-red-500" : ""}`}
+                  className={`border-keepla-red/30 focus:border-keepla-red ${errors.password ? "border-red-500" : ""}`}
                   required
                 />
                 {errors.password && (
@@ -155,11 +155,11 @@ const Login = () => {
               </Button>
             </form>
             <div className="mt-6 text-center">
-              <p className="text-sm text-misty-gray">
+              <p className="text-sm text-keepla-gray-light">
                 Ainda não és um Guardião do Tempo?{" "}
                 <Button 
                   variant="link" 
-                  className="p-0 h-auto font-semibold text-dusty-rose"
+                  className="p-0 h-auto font-semibold text-keepla-red"
                   onClick={() => navigate('/register')}
                 >
                   Torna-te um aqui
@@ -172,7 +172,7 @@ const Login = () => {
           <Button 
             variant="ghost" 
             onClick={() => navigate('/')}
-            className="text-steel-blue hover:text-dusty-rose"
+            className="text-keepla-gray-dark hover:text-keepla-red"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Voltar ao início

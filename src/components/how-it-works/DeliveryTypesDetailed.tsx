@@ -7,34 +7,34 @@ const DeliveryTypesDetailed = () => {
   return (
     <div className="mb-12 md:mb-20">
       <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-blue mb-8 md:mb-12 text-center font-fraunces">
-        Três Formas de <span className="text-earthy-burgundy">Viajar no Tempo</span>
+        Três Formas de <span className="text-keepla-red">Viajar no Tempo</span>
       </h2>
-      <p className="text-lg md:text-xl text-misty-gray mb-8 md:mb-10 text-center max-w-4xl mx-auto leading-relaxed">
+      <p className="text-lg md:text-xl text-keepla-gray-light mb-8 md:mb-10 text-center max-w-4xl mx-auto leading-relaxed">
         Cada tipo de entrega é uma experiência única, adaptada às tuas necessidades e sonhos. Desde cápsulas digitais instantâneas até experiências físicas premium.
       </p>
       
       <div className="grid md:grid-cols-3 gap-6 md:gap-8">
         {/* Cápsulas Digitais */}
-        <Card className="p-6 md:p-8 hover:shadow-soft transition-all duration-300 hover:scale-105 rounded-2xl bg-white/70 backdrop-blur-sm border border-dusty-rose/20 group">
+        <Card className="p-6 md:p-8 hover:shadow-md transition-all duration-300 hover:scale-105 rounded-2xl bg-white/70 backdrop-blur-sm border border-keepla-red/20 group">
           <CardContent className="pt-6 text-center">
             <div className="relative mb-6">
-              <Cloud className="h-16 w-16 md:h-20 md:w-20 text-earthy-burgundy mx-auto group-hover:animate-bounce-gentle" />
+              <Cloud className="h-16 w-16 md:h-20 md:w-20 text-keepla-red mx-auto group-hover:animate-bounce-gentle" />
               <Badge variant="default" className="absolute -top-2 -right-2 bg-green-500 text-white text-xs">
                 Digital
               </Badge>
             </div>
-            <h3 className="text-xl md:text-2xl font-bold mb-4 text-steel-blue font-fraunces">Cápsulas Digitais</h3>
-            <p className="text-misty-gray mb-6 leading-relaxed">
+            <h3 className="text-xl md:text-2xl font-bold mb-4 text-keepla-gray-dark font-fraunces">Cápsulas Digitais</h3>
+            <p className="text-keepla-gray-light mb-6 leading-relaxed">
               Cartas, vídeos, fotos e áudios protegidos com tecnologia blockchain. Entrega instantânea e segura.
             </p>
             
             {/* Fluxo Digital */}
             <div className="space-y-4 mb-6 text-left">
               <div className="flex items-start space-x-3">
-                <Upload className="h-5 w-5 text-earthy-burgundy mt-0.5 flex-shrink-0" />
+                <Upload className="h-5 w-5 text-keepla-red mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-sm font-medium text-steel-blue">1. Upload Seguro</p>
-                  <p className="text-xs text-misty-gray">Carrega ficheiros até 100MB</p>
+                  <p className="text-sm font-medium text-keepla-gray-dark">1. Upload Seguro</p>
+                  <p className="text-xs text-keepla-gray-light">Carrega ficheiros até 100MB</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">

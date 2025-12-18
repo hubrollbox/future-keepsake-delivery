@@ -84,20 +84,11 @@ const Blog = () => {
     fetchPublished();
   }, []);
 
-  // Função simplificada para URLs
+  // Função para URLs do bucket blog-covers
   const getImageUrl = (url?: string) => {
     if (!url) return undefined;
-    
-    // Se for uma URL do Supabase Storage, verifica se tem o formato correto
-    if (url.includes("supabase.co/storage")) {
-      return url;
-    }
-    
-    // URLs relativas
-    if (url.startsWith("/") || url.startsWith("./") || url.startsWith("../")) {
-      return url;
-    }
-    
+    if (url.startsWith("http")) return url;
+    if (url.includes("supabase.co/storage/v1/object/public/")) return url;
     return undefined;
   };
 

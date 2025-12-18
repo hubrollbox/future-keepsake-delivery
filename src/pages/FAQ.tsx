@@ -58,16 +58,16 @@ const FAQ = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-lavender-mist">
+    <div className="min-h-screen bg-background">
       <Navigation />
       
       <main className="py-16">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-serif text-steel-blue mb-4">
+            <h1 className="text-4xl font-serif text-keepla-gray-dark mb-4">
               Suporte & Perguntas Frequentes
             </h1>
-            <p className="text-lg text-misty-gray max-w-2xl mx-auto">
+            <p className="text-lg text-keepla-gray-light max-w-2xl mx-auto">
               Encontra respostas para as tuas questões sobre cápsulas do tempo e os nossos serviços.
             </p>
           </div>
@@ -76,15 +76,15 @@ const FAQ = () => {
             <Accordion type="single" collapsible className="space-y-4">
               {faqs.map((faq, index) => (
                 <AccordionItem key={`faq-${faq.question.slice(0, 20).replace(/\s+/g, '-')}-${index}`} value={`item-${index}`}>
-                  <Card className="border-dusty-rose/20">
+                  <Card className="border-keepla-red/20">
                     <AccordionTrigger className="px-6 py-4 hover:no-underline">
-                      <h3 className="text-left font-semibold text-steel-blue">
+                      <h3 className="text-left font-semibold text-keepla-gray-dark">
                         {faq.question}
                       </h3>
                     </AccordionTrigger>
                     <AccordionContent>
                       <CardContent className="pt-0 px-6 pb-6">
-                        <p className="text-misty-gray leading-relaxed">
+                        <p className="text-keepla-gray-light leading-relaxed">
                           {faq.answer}
                         </p>
                       </CardContent>
@@ -96,24 +96,24 @@ const FAQ = () => {
           </div>
 
           <div className="text-center">
-            <Card className="bg-sand-beige/30 border-dusty-rose/30">
+            <Card className="bg-white/50 border-keepla-red/20">
               <CardHeader>
-                <CardTitle className="text-steel-blue font-serif">
+                <CardTitle className="text-keepla-gray-dark font-serif">
                   Ainda tens dúvidas?
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <p className="text-misty-gray">
+                <p className="text-keepla-gray-light">
                   A nossa equipa está sempre disponível para te ajudar com qualquer questão sobre as tuas cápsulas do tempo.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link to="/contact">
-                    <Button className="flex items-center gap-2 bg-dusty-rose hover:bg-dusty-rose/90 text-white">
+                    <Button className="flex items-center gap-2 bg-keepla-red hover:bg-keepla-red/90 text-white">
                       <Mail className="h-4 w-4" />
                       Contactar por Email
                     </Button>
                   </Link>
-                  <Button variant="outline" className="flex items-center gap-2 border-dusty-rose text-dusty-rose hover:bg-dusty-rose/10">
+                  <Button variant="outline" className="flex items-center gap-2 border-keepla-red text-keepla-red hover:bg-keepla-red/10">
                     <MessageCircle className="h-4 w-4" />
                     Chat em Directo
                   </Button>

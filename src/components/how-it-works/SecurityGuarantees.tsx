@@ -30,7 +30,7 @@ const SecurityGuarantees = () => {
             desc: "Reembolso completo se algo correr mal. Cobertura de seguro até €10.000 por entrega. O teu tempo merece total confiança" 
           }
         ].map((item, index) => (
-          <Card key={index} className="text-center p-6 md:p-8 hover:shadow-soft transition-all duration-300 hover:scale-105 rounded-2xl bg-white/70 backdrop-blur-sm border border-dusty-rose/20 group">
+          <Card key={index} className="text-center p-6 md:p-8 hover:shadow-md transition-all duration-300 hover:scale-105 rounded-2xl bg-white/70 backdrop-blur-sm border border-keepla-red/20 group">
             <CardContent className="pt-6">
               <item.icon className="h-16 w-16 md:h-20 md:w-20 text-earthy-burgundy mx-auto mb-4 md:mb-6" />
               <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-steel-blue font-fraunces">{item.title}</h3>

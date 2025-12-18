@@ -40,7 +40,7 @@ const HowItWorksFAQ = () => {
       
       <div className="grid md:grid-cols-2 gap-6 md:gap-8">
         {faqItems.map((item, index) => (
-          <Card key={index} className="p-6 md:p-8 hover:shadow-soft transition-all duration-300 hover:scale-[1.02] rounded-2xl bg-white/70 backdrop-blur-sm border border-dusty-rose/20">
+          <Card key={index} className="p-6 md:p-8 hover:shadow-md transition-all duration-300 hover:scale-[1.02] rounded-2xl bg-white/70 backdrop-blur-sm border border-keepla-red/20">
             <CardContent className="pt-6">
               <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-earthy-burgundy font-fraunces">{item.question}</h3>
               <p className="text-misty-gray text-sm md:text-base leading-relaxed">{item.answer}</p>

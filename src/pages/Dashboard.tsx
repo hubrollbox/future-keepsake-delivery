@@ -70,7 +70,7 @@ const Dashboard = () => {
             {/* Keepsakes Section */}
             <div className="space-y-3" data-tour="keepsakes-list">
               <div className="flex justify-between items-center">
-                <h3 className="text-lg font-serif font-semibold text-steel-blue">
+                <h3 className="text-lg font-serif font-semibold text-keepla-gray-dark">
                   Minhas Cápsulas
                 </h3>
                 <Button
@@ -122,7 +122,7 @@ const Dashboard = () => {
                   </TabsContent>
                 </Tabs>
               ) : (
-                <p className="text-soft-gray">A carregar cápsulas...</p>
+                <p className="text-keepla-gray-light">A carregar cápsulas...</p>
               )}
             </div>
 
@@ -130,34 +130,34 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <button
                 onClick={() => navigate("/create-keepsake")}
-                className="emotion-card p-6 text-left hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-warm-cream to-sandy-beige border-2 border-dusty-rose/20"
+                className="emotion-card p-6 text-left hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-white to-white border-2 border-keepla-red/20"
               >
                 <div className="flex items-center mb-3">
-                  <div className="w-12 h-12 bg-dusty-rose/20 rounded-full flex items-center justify-center mr-4">
+                  <div className="w-12 h-12 bg-keepla-red/20 rounded-full flex items-center justify-center mr-4">
                     <span className="text-2xl">💌</span>
                   </div>
-                  <h3 className="text-lg font-serif font-semibold text-steel-blue">
+                  <h3 className="text-lg font-serif font-semibold text-keepla-gray-dark">
                     Nova Cápsula
                   </h3>
                 </div>
-                <p className="text-sm text-misty-gray">
+                <p className="text-sm text-keepla-gray-light">
                   Criar uma nova mensagem para o futuro
                 </p>
               </button>
 
               <button
                 onClick={() => navigate("/profile")}
-                className="emotion-card p-6 text-left hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-warm-cream to-sandy-beige border-2 border-dusty-rose/20"
+                className="emotion-card p-6 text-left hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-white to-white border-2 border-keepla-red/20"
               >
                 <div className="flex items-center mb-3">
-                  <div className="w-12 h-12 bg-dusty-rose/20 rounded-full flex items-center justify-center mr-4">
+                  <div className="w-12 h-12 bg-keepla-red/20 rounded-full flex items-center justify-center mr-4">
                     <span className="text-2xl">⚙️</span>
                   </div>
-                  <h3 className="text-lg font-serif font-semibold text-steel-blue">
+                  <h3 className="text-lg font-serif font-semibold text-keepla-gray-dark">
                     Perfil
                   </h3>
                 </div>
-                <p className="text-sm text-misty-gray">
+                <p className="text-sm text-keepla-gray-light">
                   Gerir as tuas informações pessoais
                 </p>
               </button>

@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, Phone, MapPin, Clock, MessageCircle, Heart } from "lucide-react";
+import { Mail, MapPin, Clock, MessageCircle, Heart } from "lucide-react";
 
 const ContactInfo = () => {
   return (
@@ -13,7 +13,7 @@ const ContactInfo = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-misty-gray mb-4 leading-relaxed">
+          <p className="text-keepla-gray-light mb-4 leading-relaxed">
             Estamos sempre disponíveis para te ajudar a criar a entrega temporal perfeita. 
             Seja uma dúvida simples ou um projecto especial, a nossa equipa está aqui para ti.
           </p>
@@ -28,26 +28,10 @@ const ContactInfo = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-steel-blue font-medium text-lg mb-2">info@keepla.pt</p>
+          <p className="text-keepla-gray-dark font-medium text-lg mb-2">info@keepla.pt</p>
           <p className="text-misty-gray text-sm">
             Para questões gerais, suporte técnico ou parcerias. 
             Respondemos normalmente em menos de 2 horas durante o horário de funcionamento.
-          </p>
-        </CardContent>
-      </Card>
-
-      <Card className="emotion-card border-dusty-rose/20">
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2 text-earthy-burgundy font-fraunces">
-            <Phone className="h-5 w-5" />
-            <span>Telefone</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-steel-blue font-medium text-lg mb-2">220 145 169</p>
-          <p className="text-misty-gray text-sm">
-            Preferes falar directamente? Liga-nos! A nossa equipa de apoio está pronta 
-            para esclarecer todas as tuas dúvidas sobre entregas temporais.
           </p>
         </CardContent>
       </Card>
@@ -60,7 +44,7 @@ const ContactInfo = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-steel-blue font-medium mb-2">
+          <div className="text-keepla-gray-dark font-medium mb-2">
             <p>Rua Brito Capelo</p>
             <p>Edifício Diplomata</p>
             <p>4450 Matosinhos</p>

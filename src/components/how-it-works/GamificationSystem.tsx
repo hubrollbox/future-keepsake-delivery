@@ -3,7 +3,7 @@ import { Trophy, Target, Gift, Calendar } from "lucide-react";
 
 const GamificationSystem = () => {
   return (
-    <div className="mb-12 md:mb-20 bg-white/70 backdrop-blur-sm rounded-3xl p-6 md:p-10 shadow-soft border border-dusty-rose/20 transition-all hover:shadow-md">
+    <div className="mb-12 md:mb-20 bg-white/70 backdrop-blur-sm rounded-3xl p-6 md:p-10 shadow-md border border-keepla-red/20 transition-all hover:shadow-md">
       <div className="text-center mb-8 md:mb-12">
         <Trophy className="h-16 w-16 md:h-20 md:w-20 text-earthy-burgundy mx-auto mb-6 animate-bounce-gentle" />
         <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-blue mb-6 font-fraunces">Torna-te um Guardião do Tempo</h3>

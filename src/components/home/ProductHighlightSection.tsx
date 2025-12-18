@@ -45,7 +45,7 @@ const ProductHighlightSection = () => {
 
       <div className="grid md:grid-cols-3 gap-6 md:gap-8 mb-12">
         {products.map((product, index) => (
-          <Card key={index} className="emotion-card hover:shadow-soft hover:scale-105 transition-all duration-300 border border-dusty-rose/20 group">
+          <Card key={index} className="emotion-card hover:shadow-md hover:scale-105 transition-all duration-300 border border-keepla-red/20 group">
             <CardContent className="p-8 text-center">
               <div className="w-20 h-20 bg-earthy-burgundy/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-earthy-burgundy/20 transition-colors">
                 <product.icon className="h-10 w-10 text-earthy-burgundy" />

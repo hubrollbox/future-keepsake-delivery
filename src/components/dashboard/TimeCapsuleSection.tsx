@@ -18,9 +18,9 @@ const TimeCapsuleSection = ({ deliveries, loading, onDelete }: TimeCapsuleSectio
   const getStatusColor = (status: string | null) => {
     switch (status) {
       case "scheduled": return "bg-warm-yellow text-warm-brown";
-      case "delivered": return "bg-sage-green text-gentle-black";
-      case "cancelled": return "bg-dusty-rose text-gentle-black";
-      default: return "bg-misty-gray text-gentle-black";
+      case "delivered": return "bg-green-100 text-keepla-gray-dark";
+      case "cancelled": return "bg-keepla-red/10 text-keepla-red";
+      default: return "bg-keepla-gray-light/20 text-keepla-gray-dark";
     }
   };
 
@@ -41,7 +41,7 @@ const TimeCapsuleSection = ({ deliveries, loading, onDelete }: TimeCapsuleSectio
 
   return (
     <div className="mb-8">
-      <Card className="shadow-soft border-blue-200">
+      <Card className="shadow-md border-blue-200">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="text-xl font-serif text-blue-900 flex items-center gap-2">
             <Mail className="h-5 w-5" />

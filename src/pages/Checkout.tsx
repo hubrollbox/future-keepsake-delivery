@@ -215,7 +215,7 @@ const Checkout = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gentle-black mb-4 font-serif">Finalizar Compra</h1>
+            <h1 className="text-4xl font-bold text-keepla-gray-dark mb-4 font-serif">Finalizar Compra</h1>
             <p className="text-emotional">Quase lá! Complete os seus dados para receber os seus presentes com alma.</p>
           </div>
           
@@ -230,7 +230,7 @@ const Checkout = () => {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div>
-                    <Label htmlFor="email" className="text-gentle-black font-medium">Email *</Label>
+                    <Label htmlFor="email" className="text-keepla-gray-dark font-medium">Email *</Label>
                     <Input
                       id="email"
                       type="email"
@@ -248,7 +248,7 @@ const Checkout = () => {
                     )}
                   </div>
                   <div>
-                    <Label htmlFor="notes" className="text-gentle-black font-medium">Notas especiais (opcional)</Label>
+                    <Label htmlFor="notes" className="text-keepla-gray-dark font-medium">Notas especiais (opcional)</Label>
                     <Textarea
                       id="notes"
                       value={contactInfo.notes}
@@ -270,7 +270,7 @@ const Checkout = () => {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div>
-                    <Label htmlFor="name" className="text-gentle-black font-medium">Nome Completo *</Label>
+                    <Label htmlFor="name" className="text-keepla-gray-dark font-medium">Nome Completo *</Label>
                     <Input
                       id="name"
                       value={shippingInfo.name}
@@ -287,7 +287,7 @@ const Checkout = () => {
                     )}
                   </div>
                   <div>
-                    <Label htmlFor="address" className="text-gentle-black font-medium">Endereço *</Label>
+                    <Label htmlFor="address" className="text-keepla-gray-dark font-medium">Endereço *</Label>
                     <Input
                       id="address"
                       value={shippingInfo.address}
@@ -305,7 +305,7 @@ const Checkout = () => {
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="city" className="text-gentle-black font-medium">Cidade *</Label>
+                      <Label htmlFor="city" className="text-keepla-gray-dark font-medium">Cidade *</Label>
                       <Input
                         id="city"
                         value={shippingInfo.city}
@@ -322,7 +322,7 @@ const Checkout = () => {
                       )}
                     </div>
                     <div>
-                      <Label htmlFor="postalCode" className="text-gentle-black font-medium">Código Postal *</Label>
+                      <Label htmlFor="postalCode" className="text-keepla-gray-dark font-medium">Código Postal *</Label>
                       <Input
                         id="postalCode"
                         value={shippingInfo.postalCode}
@@ -341,7 +341,7 @@ const Checkout = () => {
                     </div>
                   </div>
                   <div>
-                    <Label htmlFor="phone" className="text-gentle-black font-medium">Telefone *</Label>
+                    <Label htmlFor="phone" className="text-keepla-gray-dark font-medium">Telefone *</Label>
                     <Input
                       id="phone"
                       type="tel"
@@ -385,7 +385,7 @@ const Checkout = () => {
                         <div key={item.id} className="py-3 border-b border-gray-100 last:border-0">
                           <div className="flex justify-between items-start">
                             <div className="flex-1">
-                              <h4 className="font-medium text-gentle-black">{item.product_title}</h4>
+                              <h4 className="font-medium text-keepla-gray-dark">{item.product_title}</h4>
                               <p className="text-sm text-emotional">Quantidade: {item.quantity}</p>
                               {(item as any).planId && (
                                 <p className="text-xs text-gray-500 mt-1">Plano: {(item as any).planId}</p>
@@ -402,7 +402,7 @@ const Checkout = () => {
                                   €{originalPrice.toFixed(2)}
                                 </p>
                               )}
-                              <p className="font-semibold text-gentle-black">
+                              <p className="font-semibold text-keepla-gray-dark">
                                 €{calculatedPrice.toFixed(2)}
                               </p>
                             </div>
@@ -436,7 +436,7 @@ const Checkout = () => {
                               </div>
                             )}
                             <div className="flex justify-between items-center text-xl font-bold">
-                              <span className="text-gentle-black">Total:</span>
+                              <span className="text-keepla-gray-dark">Total:</span>
                               <span className="text-gold">€{totalCalculated.toFixed(2)}</span>
                             </div>
                           </div>

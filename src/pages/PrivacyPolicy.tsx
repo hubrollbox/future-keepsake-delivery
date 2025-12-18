@@ -20,7 +20,7 @@ const PrivacyPolicy = () => {
           <Button 
             variant="ghost" 
             onClick={() => navigate('/')} 
-            className="flex items-center space-x-2 text-steel-blue hover:text-dusty-rose"
+            className="flex items-center space-x-2 text-keepla-gray-dark hover:text-keepla-red"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Voltar ao Início</span>
@@ -38,7 +38,7 @@ const PrivacyPolicy = () => {
               e.currentTarget.src = "/keepla-logo-red.png?v=3";
             }}
           />
-          <h1 className="text-hero text-steel-blue font-fraunces mb-2">Política de Privacidade</h1>
+          <h1 className="text-hero text-keepla-gray-dark font-fraunces mb-2">Política de Privacidade</h1>
           <p className="text-misty-gray">Última atualização: 28 de maio de 2025</p>
         </div>
 

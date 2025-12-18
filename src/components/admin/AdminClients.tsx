@@ -144,8 +144,8 @@ const AdminClients: React.FC = () => {
                   <td className="py-2 px-4">
                     <span className={`px-2 py-1 rounded-full text-xs ${
                       client.is_admin 
-                        ? "bg-earthy-burgundy/20 text-earthy-burgundy" 
-                        : "bg-misty-gray/20 text-misty-gray"
+                        ? "bg-keepla-red/20 text-keepla-red" 
+                        : "bg-keepla-gray-light/20 text-keepla-gray-light"
                     }`}>
                       {client.is_admin ? "Admin" : "User"}
                     </span>

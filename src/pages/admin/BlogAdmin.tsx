@@ -46,7 +46,7 @@ const BlogAdmin = () => {
                 <div className="flex justify-between">
                   <div>
                     <h2 className="font-medium">{p.title}</h2>
-                    <p className="text-sm text-misty-gray">{p.slug}</p>
+                    <p className="text-sm text-keepla-gray-light">{p.slug}</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <Button size="sm" onClick={() => navigate(`/admin/blog?edit=${p.id}`)}>Editar</Button>

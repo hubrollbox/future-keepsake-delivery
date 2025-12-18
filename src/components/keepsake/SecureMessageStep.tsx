@@ -92,7 +92,7 @@ const SecureMessageStep: React.FC<SecureMessageStepProps> = ({
             onChange={(e) => updateField('title', e.target.value)}
             placeholder="Ex: Para a minha filha aos 18 anos"
             className={cn(
-              "border-sand-beige focus:border-dusty-rose",
+              "border-white/50 focus:border-keepla-red",
               errors.title && "border-red-500"
             )}
             maxLength={200}
@@ -112,7 +112,7 @@ const SecureMessageStep: React.FC<SecureMessageStepProps> = ({
             onChange={(e) => updateField('message', e.target.value)}
             placeholder="Escreve aqui a tua mensagem para o futuro..."
             className={cn(
-              "min-h-[150px] border-sand-beige focus:border-dusty-rose resize-none",
+              "min-h-[150px] border-white/50 focus:border-keepla-red resize-none",
               errors.message && "border-red-500"
             )}
             maxLength={5000}
@@ -132,7 +132,7 @@ const SecureMessageStep: React.FC<SecureMessageStepProps> = ({
               <Button
                 variant="outline"
                 className={cn(
-                  "w-full justify-start text-left font-normal border-sand-beige",
+                  "w-full justify-start text-left font-normal border-white/50",
                   !selectedDate && "text-muted-foreground",
                   errors.delivery_date && "border-red-500"
                 )}

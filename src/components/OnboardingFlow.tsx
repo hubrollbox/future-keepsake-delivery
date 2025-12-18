@@ -205,12 +205,12 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[500px]">
             
             {/* Lado Visual */}
-            <div className="bg-gradient-to-br from-lavender-mist to-warm-cream p-8 flex flex-col items-center justify-center text-center">
+            <div className="bg-gradient-to-br from-white to-white/50 p-8 flex flex-col items-center justify-center text-center">
               <div className="text-8xl mb-6 animate-bounce-gentle">
                 {currentStepData.visual}
               </div>
               
-              <div className="flex items-center justify-center w-16 h-16 bg-white rounded-full shadow-soft mb-4">
+              <div className="flex items-center justify-center w-16 h-16 bg-white rounded-full shadow-md mb-4">
                 {currentStepData.icon}
               </div>
               
@@ -290,7 +290,7 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
         <Heart className="w-6 h-6 text-steel-blue" />
       </div>
       <div className="absolute top-1/2 left-20 opacity-30 animate-float" style={{ animationDelay: '2s' }}>
-        <Star className="w-5 h-5 text-golden-honey" />
+        <Star className="w-5 h-5 text-keepla-red" />
       </div>
 
       {/* Estilos CSS customizados */}

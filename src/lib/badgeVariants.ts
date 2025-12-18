@@ -6,12 +6,12 @@ export const badgeVariants = cva(
     variants: {
       variant: {
         default:
-          "border-transparent bg-dusty-rose text-steel-blue hover:bg-dusty-rose/80",
+          "border-transparent bg-keepla-red text-white hover:bg-keepla-red/80",
         secondary:
-          "border-transparent bg-misty-gray text-steel-blue hover:bg-misty-gray/80",
+          "border-transparent bg-keepla-gray-light text-keepla-gray-dark hover:bg-keepla-gray-light/80",
         destructive:
-          "border-transparent bg-earthy-burgundy text-white hover:bg-earthy-burgundy/80",
-        outline: "text-steel-blue border-dusty-rose/30",
+          "border-transparent bg-keepla-red text-white hover:bg-keepla-red/80",
+        outline: "text-keepla-gray-dark border-keepla-red/30",
       },
     },
     defaultVariants: {

@@ -123,7 +123,7 @@ const ProductsStep = ({ formData, updateFormData }: ProductsStepProps) => {
           return (
             <Card
               key={product.id}
-              className={`transition-all hover:shadow-soft ${
+              className={`transition-all hover:shadow-md ${
                 isSelected
                   ? 'border-keepla-red bg-keepla-red/5'
                   : 'border-sand-beige hover:border-keepla-red/50'

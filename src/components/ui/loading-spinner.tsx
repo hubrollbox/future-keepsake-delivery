@@ -19,13 +19,13 @@ const LoadingSpinner = ({ size = "md", className, text }: LoadingSpinnerProps) =
     <div className={cn("flex flex-col items-center justify-center gap-3", className)}>
       <div 
         className={cn(
-          "animate-spin rounded-full border-2 border-dusty-rose/20 border-t-dusty-rose",
+          "animate-spin rounded-full border-2 border-keepla-red/20 border-t-keepla-red",
           sizeClasses[size]
         )}
         aria-hidden="true"
       />
       {text && (
-        <p className="text-sm text-misty-gray font-medium animate-pulse">
+        <p className="text-sm text-keepla-gray-light font-medium animate-pulse">
           {text}
         </p>
       )}

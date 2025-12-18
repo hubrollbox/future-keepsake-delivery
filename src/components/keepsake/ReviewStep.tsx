@@ -131,7 +131,7 @@ const ReviewStep = ({ formData }: ReviewStepProps) => {
         )}
 
         {/* Resumo de Custos */}
-        <Card className="bg-sand-beige/30 border-dusty-rose/30">
+        <Card className="bg-white/50 border-keepla-red/20">
           <CardHeader className="pb-3">
             <CardTitle className="text-lg text-steel-blue">Resumo de Custos</CardTitle>
           </CardHeader>

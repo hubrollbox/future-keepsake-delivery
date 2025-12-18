@@ -65,7 +65,7 @@ const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-lavender-mist">
+    <div className="min-h-screen bg-background">
       <Navigation />
 
       {/* Hero Section com identidade Keepla */}
@@ -111,18 +111,18 @@ const LandingPage: React.FC = () => {
       {/* Explicação curta com identidade visual */}
       <section className="py-16 md:py-24 bg-white/80 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <p className="text-xl md:text-2xl text-misty-gray font-fraunces leading-relaxed mb-8">
+          <p className="text-xl md:text-2xl text-keepla-gray-light font-fraunces leading-relaxed mb-8">
             Alguns momentos merecem chegar na altura certa. Guarda mensagens e memórias — e recebe-as no futuro.
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-8 sm:space-y-0 sm:space-x-16">
             <div className="emotion-card p-6">
-              <p className="text-steel-blue font-fraunces font-semibold">Mensagem</p>
+              <p className="text-keepla-gray-dark font-fraunces font-semibold">Mensagem</p>
             </div>
             <div className="emotion-card p-6">
-              <p className="text-steel-blue font-fraunces font-semibold">Tempo</p>
+              <p className="text-keepla-gray-dark font-fraunces font-semibold">Tempo</p>
             </div>
             <div className="emotion-card p-6">
-              <p className="text-steel-blue font-fraunces font-semibold">Emoção</p>
+              <p className="text-keepla-gray-dark font-fraunces font-semibold">Emoção</p>
             </div>
           </div>
         </div>
@@ -133,12 +133,12 @@ const LandingPage: React.FC = () => {
         <div className="max-w-md mx-auto px-4">
           <Card className="emotion-card">
             <CardHeader>
-              <CardTitle className="text-steel-blue font-fraunces">Inscreve-te agora</CardTitle>
+              <CardTitle className="text-keepla-gray-dark font-fraunces">Inscreve-te agora</CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <Label htmlFor="name" className="text-gentle-black font-medium">Nome *</Label>
+                  <Label htmlFor="name" className="text-keepla-gray-dark font-medium">Nome *</Label>
                   <Input
                     type="text"
                     id="name"
@@ -152,7 +152,7 @@ const LandingPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="email" className="text-gentle-black font-medium">Email *</Label>
+                  <Label htmlFor="email" className="text-keepla-gray-dark font-medium">Email *</Label>
                   <Input
                     type="email"
                     id="email"

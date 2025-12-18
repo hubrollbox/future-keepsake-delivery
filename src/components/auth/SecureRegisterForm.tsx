@@ -77,7 +77,7 @@ const SecureRegisterForm = () => {
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl font-serif text-steel-blue text-center">
+        <CardTitle className="text-2xl font-serif text-keepla-gray-dark text-center">
           Criar Conta
         </CardTitle>
       </CardHeader>
@@ -122,7 +122,7 @@ const SecureRegisterForm = () => {
             {getFieldErrors('password').map((error, index) => (
               <p key={index} className="text-sm text-red-600 mt-1">{error}</p>
             ))}
-            <p className="text-xs text-misty-gray mt-1">
+            <p className="text-xs text-keepla-gray-light mt-1">
               Mínimo 8 caracteres, deve incluir maiúscula, minúscula, número
             </p>
           </div>
@@ -143,7 +143,7 @@ const SecureRegisterForm = () => {
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-dusty-rose hover:bg-dusty-rose/90"
+            className="w-full bg-keepla-red hover:bg-keepla-red/90"
           >
             {isSubmitting ? 'A criar conta...' : 'Criar Conta'}
           </Button>

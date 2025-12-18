@@ -91,7 +91,7 @@ const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'delivered':
-        return <Star className="w-4 h-4 text-golden-honey" />;
+        return <Star className="w-4 h-4 text-keepla-red" />;
       case 'scheduled':
         return <Clock className="w-4 h-4 text-blue-500" />;
       default:
@@ -115,7 +115,7 @@ const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({
   const TimelineView = () => (
     <div className="relative">
       {/* Timeline Line */}
-      <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-dusty-rose via-steel-blue to-golden-honey"></div>
+      <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-keepla-red via-keepla-gray-dark to-keepla-red"></div>
       
       <div className="space-y-8">
         {displayEvents
@@ -143,37 +143,37 @@ const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({
                 </div>
                 {/* Pulse Animation for Upcoming Events */}
                 {event.daysUntil <= 30 && (
-                  <div className="absolute inset-0 rounded-full bg-dusty-rose animate-ping opacity-20"></div>
+                  <div className="absolute inset-0 rounded-full bg-keepla-red animate-ping opacity-20"></div>
                 )}
               </div>
 
               {/* Event Card */}
-              <Card className="flex-1 hover:shadow-lg transition-all duration-300 border-l-4 border-l-dusty-rose">
+              <Card className="flex-1 hover:shadow-lg transition-all duration-300 border-l-4 border-l-keepla-red">
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center space-x-2">
                       {getStatusIcon(event.status)}
-                      <h3 className="font-semibold text-steel-blue">{event.title}</h3>
+                      <h3 className="font-semibold text-keepla-gray-dark">{event.title}</h3>
                     </div>
                     <Badge className={getEmotionColor(event.emotion)}>
                       {event.emotion}
                     </Badge>
                   </div>
                   
-                  <p className="text-misty-gray mb-3">{event.description}</p>
+                  <p className="text-keepla-gray-light mb-3">{event.description}</p>
                   
                   <div className="flex items-center justify-between text-sm">
                     <div className="flex items-center space-x-4">
                       <span className="flex items-center space-x-1">
-                        <Heart className="w-4 h-4 text-dusty-rose" />
+                        <Heart className="w-4 h-4 text-keepla-red" />
                         <span>Para: {event.recipient}</span>
                       </span>
                     </div>
                     <div className="text-right">
-                      <div className="font-semibold text-steel-blue">
+                      <div className="font-semibold text-keepla-gray-dark">
                         {formatTimeUntil(event.daysUntil)}
                       </div>
-                      <div className="text-xs text-misty-gray">
+                      <div className="text-xs text-keepla-gray-light">
                         {event.deliveryDate.toLocaleDateString('pt-PT')}
                       </div>
                     </div>
@@ -205,11 +205,11 @@ const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({
                 <Package className="w-5 h-5 text-purple-500" />
               )}
             </div>
-            <h3 className="font-semibold text-steel-blue mb-2">{event.title}</h3>
-            <p className="text-sm text-misty-gray mb-3">{event.description}</p>
+            <h3 className="font-semibold text-keepla-gray-dark mb-2">{event.title}</h3>
+            <p className="text-sm text-keepla-gray-light mb-3">{event.description}</p>
             <div className="text-xs text-misty-gray">
               <div>Para: {event.recipient}</div>
-              <div className="font-semibold text-dusty-rose mt-1">
+              <div className="font-semibold text-keepla-red mt-1">
                 Em {formatTimeUntil(event.daysUntil)}
               </div>
             </div>
@@ -224,10 +224,10 @@ const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({
       {/* Header Controls */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 space-y-4 md:space-y-0">
         <div>
-          <h2 className="text-3xl font-serif text-steel-blue mb-2">
+          <h2 className="text-3xl font-serif text-keepla-gray-dark mb-2">
             Sua Jornada no Tempo
           </h2>
-          <p className="text-misty-gray">
+          <p className="text-keepla-gray-light">
             Acompanhe suas entregas futuras e reviva memórias passadas
           </p>
         </div>
@@ -270,26 +270,26 @@ const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
         <Card>
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-dusty-rose">
+            <div className="text-2xl font-bold text-keepla-red">
               {displayEvents.filter(e => e.status === 'scheduled').length}
             </div>
-            <div className="text-sm text-misty-gray">Agendadas</div>
+            <div className="text-sm text-keepla-gray-light">Agendadas</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-steel-blue">
+            <div className="text-2xl font-bold text-keepla-gray-dark">
               {displayEvents.filter(e => e.daysUntil <= 30).length}
             </div>
-            <div className="text-sm text-misty-gray">Este Mês</div>
+            <div className="text-sm text-keepla-gray-light">Este Mês</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-golden-honey">
+            <div className="text-2xl font-bold text-keepla-red">
               {displayEvents.filter(e => e.status === 'delivered').length}
             </div>
-            <div className="text-sm text-misty-gray">Entregues</div>
+            <div className="text-sm text-keepla-gray-light">Entregues</div>
           </CardContent>
         </Card>
         <Card>
@@ -297,13 +297,13 @@ const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({
             <div className="text-2xl font-bold text-purple-500">
               {Math.min(...displayEvents.map(e => e.daysUntil))}
             </div>
-            <div className="text-sm text-misty-gray">Dias até próxima</div>
+            <div className="text-sm text-keepla-gray-light">Dias até próxima</div>
           </CardContent>
         </Card>
       </div>
 
       {/* Main Content */}
-      <div className="bg-white rounded-xl shadow-soft p-6">
+      <div className="bg-white rounded-xl shadow-md p-6">
         {currentView === 'timeline' ? <TimelineView /> : <CalendarView />}
       </div>
 
@@ -311,15 +311,15 @@ const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({
       {displayEvents.length === 0 && (
         <div className="text-center py-12">
           <div className="w-24 h-24 bg-lavender-mist rounded-full flex items-center justify-center mx-auto mb-4">
-            <Calendar className="w-12 h-12 text-dusty-rose" />
+            <Calendar className="w-12 h-12 text-keepla-red" />
           </div>
-          <h3 className="text-xl font-semibold text-steel-blue mb-2">
+          <h3 className="text-xl font-semibold text-keepla-gray-dark mb-2">
             Sua jornada começa aqui
           </h3>
-          <p className="text-misty-gray mb-6">
+          <p className="text-keepla-gray-light mb-6">
             Crie sua primeira cápsula do tempo e comece a construir memórias para o futuro
           </p>
-          <Button className="bg-dusty-rose hover:bg-dusty-rose/90">
+          <Button className="bg-keepla-red hover:bg-keepla-red/90">
             Criar Primeira Cápsula
           </Button>
         </div>
