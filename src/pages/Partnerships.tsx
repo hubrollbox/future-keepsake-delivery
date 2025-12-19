@@ -23,7 +23,7 @@ const Partnerships = () => {
           <Button 
             variant="ghost" 
             onClick={() => navigate('/')} 
-            className="flex items-center space-x-2 text-steel-blue hover:text-dusty-rose"
+            className="flex items-center space-x-2 text-keepla-gray-dark hover:text-keepla-red"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Voltar ao Início</span>

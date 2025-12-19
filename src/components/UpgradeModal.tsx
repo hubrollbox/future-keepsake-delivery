@@ -107,7 +107,7 @@ const UPGRADE_OPTIONS: Record<string, UpgradeOption[]> = {
         'Filtro vintage',
         'Qualidade premium'
       ],
-      color: 'text-rose-600',
+      color: 'text-keepla-red',
       gradient: 'from-rose-500 to-pink-600'
     }
   ],

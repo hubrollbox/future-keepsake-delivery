@@ -55,7 +55,7 @@ const SecureContactForm = () => {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <Label htmlFor="name" className="text-steel-blue font-medium">
+          <Label htmlFor="name" className="text-keepla-gray-dark font-medium">
             Nome *
           </Label>
           <Input
@@ -65,7 +65,7 @@ const SecureContactForm = () => {
             onChange={(e) => updateField('name', e.target.value)}
             placeholder="O teu nome"
             className={cn(
-              "border-sand-beige focus:border-dusty-rose",
+              "border-keepla-gray-light focus:border-keepla-red",
               errors.name && "border-red-500"
             )}
             maxLength={100}
@@ -77,7 +77,7 @@ const SecureContactForm = () => {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="email" className="text-steel-blue font-medium">
+          <Label htmlFor="email" className="text-keepla-gray-dark font-medium">
             Email *
           </Label>
           <Input
@@ -87,7 +87,7 @@ const SecureContactForm = () => {
             onChange={(e) => updateField('email', e.target.value)}
             placeholder="teu@email.com"
             className={cn(
-              "border-sand-beige focus:border-dusty-rose",
+              "border-keepla-gray-light focus:border-keepla-red",
               errors.email && "border-red-500"
             )}
             maxLength={254}
@@ -100,7 +100,7 @@ const SecureContactForm = () => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="subject" className="text-steel-blue font-medium">
+        <Label htmlFor="subject" className="text-keepla-gray-dark font-medium">
           Assunto *
         </Label>
         <Input
@@ -110,7 +110,7 @@ const SecureContactForm = () => {
           onChange={(e) => updateField('subject', e.target.value)}
           placeholder="Assunto da mensagem"
           className={cn(
-            "border-sand-beige focus:border-dusty-rose",
+            "border-keepla-gray-light focus:border-keepla-red",
             errors.subject && "border-red-500"
           )}
           maxLength={200}
@@ -122,7 +122,7 @@ const SecureContactForm = () => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="message" className="text-steel-blue font-medium">
+        <Label htmlFor="message" className="text-keepla-gray-dark font-medium">
           Mensagem *
         </Label>
         <Textarea
@@ -131,7 +131,7 @@ const SecureContactForm = () => {
           onChange={(e) => updateField('message', e.target.value)}
           placeholder="Escreve aqui a tua mensagem..."
           className={cn(
-            "min-h-[120px] border-sand-beige focus:border-dusty-rose resize-none",
+            "min-h-[120px] border-keepla-gray-light focus:border-keepla-red resize-none",
             errors.message && "border-red-500"
           )}
           maxLength={5000}
@@ -140,14 +140,14 @@ const SecureContactForm = () => {
         {errors.message && (
           <p className="text-sm text-red-500">{errors.message}</p>
         )}
-        <p className="text-sm text-misty-gray">
+        <p className="text-sm text-keepla-gray-light">
           {data.message?.length || 0}/5000 caracteres
         </p>
       </div>
 
       <Button 
         type="submit" 
-        className="w-full bg-dusty-rose hover:bg-dusty-rose/90 text-white font-medium py-3"
+        className="w-full bg-keepla-red hover:bg-keepla-red/90 text-white font-medium py-3"
         disabled={isSubmitting}
       >
         {isSubmitting ? "A enviar..." : "Enviar Mensagem"}

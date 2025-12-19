@@ -28,12 +28,12 @@ const PlanCard = ({
   return (
     <Card className={`emotion-card relative gentle-hover ${
       isPopular 
-        ? 'border-earthy-burgundy/40 ring-2 ring-earthy-burgundy/20' 
-        : 'border-dusty-rose/20'
+        ? 'border-keepla-red/40 ring-2 ring-keepla-red/20' 
+        : 'border-keepla-red/20'
     }`}>
       {isPopular && (
         <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-          <Badge className="bg-earthy-burgundy text-white border-0 px-3 py-1">
+          <Badge className="bg-keepla-red text-white border-0 px-3 py-1">
             <Star className="h-3 w-3 mr-1" />
             Mais Popular
           </Badge>
@@ -41,15 +41,15 @@ const PlanCard = ({
       )}
       
       <CardHeader className="text-center pb-6">
-        <CardTitle className="text-2xl font-fraunces text-steel-blue mb-2">{name}</CardTitle>
+        <CardTitle className="text-2xl font-fraunces text-keepla-gray-dark mb-2">{name}</CardTitle>
         <div className="space-y-1">
           <div className="flex items-center justify-center space-x-2">
-            <span className="text-3xl font-bold text-earthy-burgundy">{price}</span>
+            <span className="text-3xl font-bold text-keepla-red">{price}</span>
             {originalPrice && (
-              <span className="text-lg text-misty-gray line-through">{originalPrice}</span>
+              <span className="text-lg text-keepla-gray-light line-through">{originalPrice}</span>
             )}
           </div>
-          <p className="text-misty-gray text-sm">{description}</p>
+          <p className="text-keepla-gray-light text-sm">{description}</p>
         </div>
       </CardHeader>
       
@@ -57,8 +57,8 @@ const PlanCard = ({
         <ul className="space-y-3">
           {features.map((feature, index) => (
             <li key={`feature-${feature.slice(0, 15).replace(/\s+/g, '-')}-${index}`} className="flex items-start space-x-3">
-              <Check className="h-5 w-5 text-earthy-burgundy mt-0.5 flex-shrink-0" />
-              <span className="text-steel-blue text-sm leading-relaxed">{feature}</span>
+              <Check className="h-5 w-5 text-keepla-red mt-0.5 flex-shrink-0" />
+              <span className="text-keepla-gray-dark text-sm leading-relaxed">{feature}</span>
             </li>
           ))}
         </ul>

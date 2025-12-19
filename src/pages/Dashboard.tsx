@@ -76,7 +76,7 @@ const Dashboard = () => {
                 <Button
                   onClick={() => navigate("/create-keepsake")}
                   size="sm"
-                  className="flex items-center gap-1 bg-dusty-rose hover:bg-dusty-rose/90"
+                  className="flex items-center gap-1 bg-keepla-red hover:bg-keepla-red/90"
                   data-tour="create-keepsake"
                 >
                   <PlusCircle className="h-4 w-4" /> Nova Cápsula

@@ -186,15 +186,15 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
                     onClick={() => handleStepClick(index)}
                     className={`w-3 h-3 rounded-full transition-all duration-200 ${
                       index === currentStep 
-                        ? 'bg-dusty-rose scale-125' 
+                        ? 'bg-keepla-red scale-125' 
                         : index < currentStep || completedSteps.has(index)
-                        ? 'bg-dusty-rose/60' 
+                        ? 'bg-keepla-red/60' 
                         : 'bg-gray-300'
                     }`}
                   />
                 ))}
               </div>
-              <span className="text-sm text-misty-gray">
+              <span className="text-sm text-keepla-gray-light">
                 {currentStep + 1} de {steps.length}
               </span>
             </div>
@@ -214,18 +214,18 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
                 {currentStepData.icon}
               </div>
               
-              <h1 className="text-3xl md:text-4xl font-serif text-steel-blue mb-2">
+              <h1 className="text-3xl md:text-4xl font-serif text-keepla-gray-dark mb-2">
                 {currentStepData.title}
               </h1>
               
-              <p className="text-lg text-misty-gray font-medium">
+              <p className="text-lg text-keepla-gray-light font-medium">
                 {currentStepData.subtitle}
               </p>
             </div>
 
             {/* Lado do Conteúdo */}
             <div className="p-8 flex flex-col justify-center">
-              <p className="text-lg text-steel-blue leading-relaxed mb-6">
+              <p className="text-lg text-keepla-gray-dark leading-relaxed mb-6">
                 {currentStepData.description}
               </p>
 
@@ -233,8 +233,8 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
               <div className="space-y-3 mb-8">
                 {currentStepData.tips.map((tip, index) => (
                   <div key={index} className="flex items-start space-x-3">
-                    <CheckCircle className="w-5 h-5 text-dusty-rose mt-0.5 flex-shrink-0" />
-                    <span className="text-steel-blue">{tip}</span>
+                    <CheckCircle className="w-5 h-5 text-keepla-red mt-0.5 flex-shrink-0" />
+                    <span className="text-keepla-gray-dark">{tip}</span>
                   </div>
                 ))}
               </div>
@@ -243,7 +243,7 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
               {currentStepData.action && (
                 <Button
                   onClick={currentStepData.action.onClick}
-                  className="mb-6 bg-dusty-rose hover:bg-dusty-rose/90 text-white"
+                  className="mb-6 bg-keepla-red hover:bg-keepla-red/90 text-white"
                 >
                   {currentStepData.action.text}
                 </Button>

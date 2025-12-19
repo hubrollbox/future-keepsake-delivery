@@ -37,10 +37,10 @@ const ReviewStep = ({ formData }: ReviewStepProps) => {
     <div className="space-y-6">
       <div className="text-center mb-8">
         <Gift className="h-12 w-12 text-keepla-red mx-auto mb-4" />
-        <h2 className="text-2xl font-serif text-steel-blue mb-2">
+        <h2 className="text-2xl font-serif text-keepla-gray-dark mb-2">
           Revisão Final
         </h2>
-        <p className="text-misty-gray">
+        <p className="text-keepla-gray-light">
           Confirma os detalhes da tua cápsula antes de selar
         </p>
       </div>
@@ -57,18 +57,18 @@ const ReviewStep = ({ formData }: ReviewStepProps) => {
           <CardContent>
             <div className="space-y-2">
               <div>
-                <span className="font-medium text-steel-blue">Título:</span>
-                <p className="text-misty-gray">{formData.title}</p>
+                <span className="font-medium text-keepla-gray-dark">Título:</span>
+                <p className="text-keepla-gray-light">{formData.title}</p>
               </div>
               <div>
-                <span className="font-medium text-steel-blue">Conteúdo:</span>
-                <p className="text-misty-gray text-sm bg-lavender-mist/50 p-3 rounded-lg mt-1">
+                <span className="font-medium text-keepla-gray-dark">Conteúdo:</span>
+                <p className="text-keepla-gray-light text-sm bg-lavender-mist/50 p-3 rounded-lg mt-1">
                   {formData.message}
                 </p>
               </div>
               <div>
-                <span className="font-medium text-steel-blue">Data de Entrega:</span>
-                <p className="text-misty-gray">
+                <span className="font-medium text-keepla-gray-dark">Data de Entrega:</span>
+                <p className="text-keepla-gray-light">
                   {new Date(formData.delivery_date).toLocaleDateString('pt-PT', {
                     weekday: 'long',
                     year: 'numeric',
@@ -92,17 +92,17 @@ const ReviewStep = ({ formData }: ReviewStepProps) => {
           <CardContent>
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-medium text-steel-blue">{formData.recipient_name}</p>
+                <p className="font-medium text-keepla-gray-dark">{formData.recipient_name}</p>
                 {formData.relationship && (
-                  <p className="text-sm text-misty-gray">{formData.relationship}</p>
+                  <p className="text-sm text-keepla-gray-light">{formData.relationship}</p>
                 )}
               </div>
               <div className="text-right">
                 <div className="flex items-center gap-2">
                   <ChannelIcon className="h-4 w-4 text-keepla-red" />
-                  <span className="text-sm text-steel-blue">{getChannelLabel()}</span>
+                  <span className="text-sm text-keepla-gray-dark">{getChannelLabel()}</span>
                 </div>
-                <p className="text-sm text-misty-gray">{formData.recipient_contact}</p>
+                <p className="text-sm text-keepla-gray-light">{formData.recipient_contact}</p>
               </div>
             </div>
           </CardContent>
@@ -113,7 +113,7 @@ const ReviewStep = ({ formData }: ReviewStepProps) => {
           <Card>
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2">
-                <Gift className="h-5 w-5 text-dusty-rose" />
+                <Gift className="h-5 w-5 text-keepla-red" />
                 Extras Selecionados
               </CardTitle>
             </CardHeader>
@@ -121,7 +121,7 @@ const ReviewStep = ({ formData }: ReviewStepProps) => {
               <div className="space-y-2">
                 {safeProducts.map((product) => (
                   <div key={product.id} className="flex justify-between items-center">
-                    <span className="text-steel-blue">{product.name}</span>
+                    <span className="text-keepla-gray-dark">{product.name}</span>
                     <Badge variant="outline">{Number(product.price).toFixed(2)} €</Badge>
                   </div>
                 ))}
@@ -133,7 +133,7 @@ const ReviewStep = ({ formData }: ReviewStepProps) => {
         {/* Resumo de Custos */}
         <Card className="bg-white/50 border-keepla-red/20">
           <CardHeader className="pb-3">
-            <CardTitle className="text-lg text-steel-blue">Resumo de Custos</CardTitle>
+            <CardTitle className="text-lg text-keepla-gray-dark">Resumo de Custos</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
@@ -151,7 +151,7 @@ const ReviewStep = ({ formData }: ReviewStepProps) => {
                   <span>{Number(product.price).toFixed(2)} €</span>
                 </div>
               ))}
-              <div className="border-t border-dusty-rose/20 pt-2 mt-2 flex justify-between font-semibold text-lg">
+              <div className="border-t border-keepla-red/20 pt-2 mt-2 flex justify-between font-semibold text-lg">
                 <span>Total:</span>
                 <span className="text-keepla-red">{Number(displayedTotal).toFixed(2)} €</span>
               </div>

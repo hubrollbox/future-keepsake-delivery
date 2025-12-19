@@ -107,10 +107,10 @@ const ProductsStep = ({ formData, updateFormData }: ProductsStepProps) => {
     <div className="space-y-6">
       <div className="text-center mb-8">
         <Gift className="h-12 w-12 text-keepla-red mx-auto mb-4" />
-        <h2 className="text-2xl font-serif text-steel-blue mb-2">
+        <h2 className="text-2xl font-serif text-keepla-gray-dark mb-2">
           Queres adicionar um presente especial?
         </h2>
-        <p className="text-misty-gray">
+        <p className="text-keepla-gray-light">
           A mensagem digital é gratuita sem extras. Os extras são opcionais.
         </p>
       </div>
@@ -126,7 +126,7 @@ const ProductsStep = ({ formData, updateFormData }: ProductsStepProps) => {
               className={`transition-all hover:shadow-md ${
                 isSelected
                   ? 'border-keepla-red bg-keepla-red/5'
-                  : 'border-sand-beige hover:border-keepla-red/50'
+                  : 'border-keepla-gray-light hover:border-keepla-red/50'
               }`}
             >
               <CardContent className="p-4">
@@ -137,18 +137,18 @@ const ProductsStep = ({ formData, updateFormData }: ProductsStepProps) => {
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <h3 className="font-semibold text-steel-blue">
+                        <h3 className="font-semibold text-keepla-gray-dark">
                           {product.name}
                         </h3>
                         <Badge variant="outline" className="text-xs">
                           {product.type}
                         </Badge>
                       </div>
-                      <p className="text-sm text-misty-gray mt-1">
+                      <p className="text-sm text-keepla-gray-light mt-1">
                         {product.description}
                       </p>
                       <div className="flex items-center gap-2 mt-2">
-                        <span className="font-semibold text-steel-blue">
+                        <span className="font-semibold text-keepla-gray-dark">
                           {product.price.toFixed(2)} €
                         </span>
                       </div>
@@ -166,9 +166,9 @@ const ProductsStep = ({ formData, updateFormData }: ProductsStepProps) => {
       </div>
 
       {formData.selected_products.length > 0 && (
-        <Card className="bg-sand-beige/30 border-keepla-red/20">
+        <Card className="bg-keepla-gray-light/30 border-keepla-red/20">
           <CardContent className="p-4">
-            <h3 className="font-semibold text-steel-blue mb-2">Resumo dos Extras</h3>
+            <h3 className="font-semibold text-keepla-gray-dark mb-2">Resumo dos Extras</h3>
             <div className="space-y-1 text-sm">
               {formData.selected_products.map((product: { id: string; name: string; price: number }) => (
                 <div key={product.id} className="flex justify-between">

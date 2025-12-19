@@ -73,17 +73,17 @@ const SecureMessageStep: React.FC<SecureMessageStepProps> = ({
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-serif text-steel-blue mb-2">
+        <h2 className="text-2xl font-serif text-keepla-gray-dark mb-2">
           A Tua Mensagem para o Futuro
         </h2>
-        <p className="text-misty-gray">
+        <p className="text-keepla-gray-light">
           Escreve uma mensagem que será entregue no momento perfeito
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-2">
-          <Label htmlFor="title" className="text-steel-blue font-medium">
+          <Label htmlFor="title" className="text-keepla-gray-dark font-medium">
             Título da Cápsula *
           </Label>
           <Input
@@ -103,7 +103,7 @@ const SecureMessageStep: React.FC<SecureMessageStepProps> = ({
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="message" className="text-steel-blue font-medium">
+          <Label htmlFor="message" className="text-keepla-gray-dark font-medium">
             Mensagem *
           </Label>
           <Textarea
@@ -120,13 +120,13 @@ const SecureMessageStep: React.FC<SecureMessageStepProps> = ({
           {errors.message && (
             <p className="text-sm text-red-500">{errors.message}</p>
           )}
-          <p className="text-sm text-misty-gray">
+          <p className="text-sm text-keepla-gray-light">
             {data.message?.length || 0}/5000 caracteres
           </p>
         </div>
 
         <div className="space-y-2">
-          <Label className="text-steel-blue font-medium">Data de Entrega *</Label>
+          <Label className="text-keepla-gray-dark font-medium">Data de Entrega *</Label>
           <Popover>
             <PopoverTrigger asChild>
               <Button

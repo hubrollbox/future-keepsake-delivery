@@ -83,40 +83,40 @@ const ReferralProgram = () => {
         <Card>
           <CardContent className="p-6 text-center">
             <Users className="w-8 h-8 text-blue-500 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-steel-blue">
+            <div className="text-2xl font-bold text-keepla-gray-dark">
               {stats?.total_referrals || 0}
             </div>
-            <div className="text-sm text-misty-gray">Total de Convites</div>
+            <div className="text-sm text-keepla-gray-light">Total de Convites</div>
           </CardContent>
         </Card>
 
         <Card>
           <CardContent className="p-6 text-center">
             <CheckCircle className="w-8 h-8 text-green-500 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-steel-blue">
+            <div className="text-2xl font-bold text-keepla-gray-dark">
               {stats?.completed_referrals || 0}
             </div>
-            <div className="text-sm text-misty-gray">Registros Completos</div>
+            <div className="text-sm text-keepla-gray-light">Registros Completos</div>
           </CardContent>
         </Card>
 
         <Card>
           <CardContent className="p-6 text-center">
             <Clock className="w-8 h-8 text-yellow-500 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-steel-blue">
+            <div className="text-2xl font-bold text-keepla-gray-dark">
               {stats?.pending_referrals || 0}
             </div>
-            <div className="text-sm text-misty-gray">Pendentes</div>
+            <div className="text-sm text-keepla-gray-light">Pendentes</div>
           </CardContent>
         </Card>
 
         <Card>
           <CardContent className="p-6 text-center">
             <Trophy className="w-8 h-8 text-purple-500 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-steel-blue">
+            <div className="text-2xl font-bold text-keepla-gray-dark">
               {stats?.total_bonus_keepsakes || 0}
             </div>
-            <div className="text-sm text-misty-gray">Cápsulas Bônus</div>
+            <div className="text-sm text-keepla-gray-light">Cápsulas Bônus</div>
           </CardContent>
         </Card>
       </div>
@@ -141,7 +141,7 @@ const ReferralProgram = () => {
             <Button 
               onClick={handleSendInvite}
               disabled={!inviteEmail || isInviting}
-              className="bg-dusty-rose hover:bg-dusty-rose/90"
+              className="bg-keepla-red hover:bg-keepla-red/90"
             >
               {isInviting ? 'Enviando...' : 'Enviar Convite'}
             </Button>
@@ -149,8 +149,8 @@ const ReferralProgram = () => {
 
           <div className="flex items-center gap-2 p-4 bg-gray-50 rounded-lg">
             <div className="flex-1">
-              <div className="text-sm text-misty-gray mb-1">Seu código de referência:</div>
-              <div className="font-mono text-lg font-bold text-steel-blue">
+              <div className="text-sm text-keepla-gray-light mb-1">Seu código de referência:</div>
+              <div className="font-mono text-lg font-bold text-keepla-gray-dark">
                 {stats?.referral_code || 'Carregando...'}
               </div>
             </div>
@@ -178,10 +178,10 @@ const ReferralProgram = () => {
               {referrals.map((referral) => (
                 <div key={referral.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                   <div>
-                    <div className="font-medium text-steel-blue">
+                    <div className="font-medium text-keepla-gray-dark">
                       {referral.referred_email}
                     </div>
-                    <div className="text-sm text-misty-gray">
+                    <div className="text-sm text-keepla-gray-light">
                       Convidado em {new Date(referral.created_at).toLocaleDateString('pt-PT')}
                     </div>
                   </div>

@@ -34,10 +34,10 @@ const TypeStep = ({ selectedType, onTypeSelect, form }: TypeStepProps) => {
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-serif text-steel-blue mb-2">
+        <h2 className="text-2xl font-serif text-keepla-gray-dark mb-2">
           Tipo de Cápsula
         </h2>
-        <p className="text-misty-gray">
+        <p className="text-keepla-gray-light">
           Escolha como deseja entregar sua mensagem no futuro
         </p>
       </div>
@@ -83,9 +83,9 @@ const TypeStep = ({ selectedType, onTypeSelect, form }: TypeStepProps) => {
                         >
                           <CardContent className="p-6">
                             <div className="flex items-start space-x-4">
-                              <IconComponent className="h-8 w-8 text-dusty-rose flex-shrink-0 mt-1" />
+                              <IconComponent className="h-8 w-8 text-keepla-red flex-shrink-0 mt-1" />
                               <div className="flex-1">
-                                <h3 className="font-serif text-lg text-steel-blue mb-2">
+                                <h3 className="font-serif text-lg text-keepla-gray-dark mb-2">
                                   {type.title}
                                 </h3>
                                 <p className="text-misty-gray mb-3">
@@ -93,7 +93,7 @@ const TypeStep = ({ selectedType, onTypeSelect, form }: TypeStepProps) => {
                                 </p>
                                 <ul className="space-y-1">
                                   {type.features.map((feature, index) => (
-                                    <li key={index} className="text-sm text-steel-blue flex items-center">
+                                    <li key={index} className="text-sm text-keepla-gray-dark flex items-center">
                                       <span className="w-1.5 h-1.5 bg-keepla-red rounded-full mr-2" />
                                       {feature}
                                     </li>
@@ -102,7 +102,7 @@ const TypeStep = ({ selectedType, onTypeSelect, form }: TypeStepProps) => {
                               </div>
                             </div>
                             {selectedType === type.value && (
-                              <div className="absolute top-3 right-3 text-dusty-rose">
+                              <div className="absolute top-3 right-3 text-keepla-red">
                                 <CheckCircle2 className="h-6 w-6" aria-hidden="true" />
                               </div>
                             )}

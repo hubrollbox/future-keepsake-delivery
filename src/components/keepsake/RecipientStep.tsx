@@ -35,10 +35,10 @@ const RecipientStep = ({ formData, updateFormData, form }: RecipientStepProps) =
     <div className="space-y-6">
       <div className="text-center mb-8">
         <User className="h-12 w-12 text-keepla-red mx-auto mb-4" />
-        <h2 className="text-2xl font-serif text-steel-blue mb-2">
+        <h2 className="text-2xl font-serif text-keepla-gray-dark mb-2">
           Destinatário
         </h2>
-        <p className="text-misty-gray">
+        <p className="text-keepla-gray-light">
           Para quem é esta cápsula?
         </p>
       </div>
@@ -50,7 +50,7 @@ const RecipientStep = ({ formData, updateFormData, form }: RecipientStepProps) =
             name="recipient_name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-steel-blue font-medium">
+                <FormLabel className="text-keepla-gray-dark font-medium">
                   Nome do Destinatário *
                 </FormLabel>
                 <FormControl>
@@ -73,7 +73,7 @@ const RecipientStep = ({ formData, updateFormData, form }: RecipientStepProps) =
             name="relationship"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-steel-blue font-medium">
+                <FormLabel className="text-keepla-gray-dark font-medium">
                   Relação
                 </FormLabel>
                 <FormControl>
@@ -94,15 +94,15 @@ const RecipientStep = ({ formData, updateFormData, form }: RecipientStepProps) =
 
         {/* Fluxo simplificado: canal de entrega fixo (Email) */}
         <div className="rounded-lg border border-white/50 p-4 bg-white/30">
-          <div className="flex items-center gap-2 text-steel-blue">
+          <div className="flex items-center gap-2 text-keepla-gray-dark">
             <Mail className="h-5 w-5 text-keepla-red" />
             <span className="font-medium">Entrega por Email (Grátis)</span>
           </div>
-          <p className="text-sm text-misty-gray mt-1">Usamos email para entregar a tua memória no futuro.</p>
+          <p className="text-sm text-keepla-gray-light mt-1">Usamos email para entregar a tua memória no futuro.</p>
         </div>
 
         <div>
-            <Label htmlFor="recipient_contact" className="text-steel-blue font-medium">
+            <Label htmlFor="recipient_contact" className="text-keepla-gray-dark font-medium">
               Email do Destinatário *
             </Label>
             <Input
@@ -120,7 +120,7 @@ const RecipientStep = ({ formData, updateFormData, form }: RecipientStepProps) =
         {false && (
           <div className="grid md:grid-cols-2 gap-4">
             <div className="md:col-span-2">
-              <Label htmlFor="street" className="text-steel-blue font-medium">Morada *</Label>
+              <Label htmlFor="street" className="text-keepla-gray-dark font-medium">Morada *</Label>
               <Input
                 id="street"
                 type="text"
@@ -132,7 +132,7 @@ const RecipientStep = ({ formData, updateFormData, form }: RecipientStepProps) =
               />
             </div>
             <div>
-              <Label htmlFor="postal_code" className="text-steel-blue font-medium">Código Postal *</Label>
+              <Label htmlFor="postal_code" className="text-keepla-gray-dark font-medium">Código Postal *</Label>
               <Input
                 id="postal_code"
                 type="text"
@@ -145,7 +145,7 @@ const RecipientStep = ({ formData, updateFormData, form }: RecipientStepProps) =
               />
             </div>
             <div>
-              <Label htmlFor="city" className="text-steel-blue font-medium">Cidade *</Label>
+              <Label htmlFor="city" className="text-keepla-gray-dark font-medium">Cidade *</Label>
               <Input
                 id="city"
                 type="text"
@@ -157,7 +157,7 @@ const RecipientStep = ({ formData, updateFormData, form }: RecipientStepProps) =
               />
             </div>
             <div>
-              <Label htmlFor="state" className="text-steel-blue font-medium">Distrito</Label>
+              <Label htmlFor="state" className="text-keepla-gray-dark font-medium">Distrito</Label>
               <Input
                 id="state"
                 type="text"
@@ -168,7 +168,7 @@ const RecipientStep = ({ formData, updateFormData, form }: RecipientStepProps) =
               />
             </div>
             <div>
-              <Label htmlFor="country" className="text-steel-blue font-medium">País</Label>
+              <Label htmlFor="country" className="text-keepla-gray-dark font-medium">País</Label>
               <Input
                 id="country"
                 type="text"

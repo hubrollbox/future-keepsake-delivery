@@ -24,10 +24,10 @@ const MessageStep = ({ updateFormData, form }: MessageStepProps) => {
     <div className="space-y-6">
       <div className="text-center mb-8">
         <MessageSquare className="h-12 w-12 text-keepla-red mx-auto mb-4" />
-        <h2 className="text-2xl font-serif text-steel-blue mb-2">
+        <h2 className="text-2xl font-serif text-keepla-gray-dark mb-2">
           A Tua Mensagem
         </h2>
-        <p className="text-misty-gray">
+        <p className="text-keepla-gray-light">
           Escreve as palavras que queres partilhar no futuro
         </p>
       </div>
@@ -39,7 +39,7 @@ const MessageStep = ({ updateFormData, form }: MessageStepProps) => {
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-steel-blue font-medium">
+                <FormLabel className="text-keepla-gray-dark font-medium">
                   Título da Cápsula *
                 </FormLabel>
                 <FormControl>
@@ -54,7 +54,7 @@ const MessageStep = ({ updateFormData, form }: MessageStepProps) => {
                     }}
                   />
                 </FormControl>
-                <p className="text-xs text-misty-gray mt-1">
+                <p className="text-xs text-keepla-gray-light mt-1">
                   {field.value?.length || 0}/100 caracteres
                 </p>
                 <FormMessage />
@@ -67,7 +67,7 @@ const MessageStep = ({ updateFormData, form }: MessageStepProps) => {
             name="message"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-steel-blue font-medium">
+                <FormLabel className="text-keepla-gray-dark font-medium">
                   Mensagem *
                 </FormLabel>
                 <FormControl>
@@ -82,7 +82,7 @@ const MessageStep = ({ updateFormData, form }: MessageStepProps) => {
                     }}
                   />
                 </FormControl>
-                <p className="text-xs text-misty-gray mt-1">
+                <p className="text-xs text-keepla-gray-light mt-1">
                   {field.value?.length || 0}/2000 caracteres
                 </p>
                 <FormMessage />

@@ -207,7 +207,7 @@ const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({
             </div>
             <h3 className="font-semibold text-keepla-gray-dark mb-2">{event.title}</h3>
             <p className="text-sm text-keepla-gray-light mb-3">{event.description}</p>
-            <div className="text-xs text-misty-gray">
+            <div className="text-xs text-keepla-gray-light">
               <div>Para: {event.recipient}</div>
               <div className="font-semibold text-keepla-red mt-1">
                 Em {formatTimeUntil(event.daysUntil)}

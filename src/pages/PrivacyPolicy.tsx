@@ -39,12 +39,12 @@ const PrivacyPolicy = () => {
             }}
           />
           <h1 className="text-hero text-keepla-gray-dark font-fraunces mb-2">Política de Privacidade</h1>
-          <p className="text-misty-gray">Última atualização: 28 de maio de 2025</p>
+          <p className="text-keepla-gray-light">Última atualização: 28 de maio de 2025</p>
         </div>
 
         <Card className="max-w-4xl mx-auto emotion-card">
           <CardContent className="p-8">
-            <div className="space-y-8 text-misty-gray">
+            <div className="space-y-8 text-keepla-gray-light">
               <section>
                 <h2 className="text-xl font-semibold text-steel-blue mb-4 font-fraunces">1. Informações que Recolhemos</h2>
                 <div className="ml-4 space-y-4">

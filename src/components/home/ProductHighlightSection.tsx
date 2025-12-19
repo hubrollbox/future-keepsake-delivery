@@ -34,7 +34,7 @@ const ProductHighlightSection = () => {
   return (
     <div className="mb-16 md:mb-20 animate-fade-in">
       <div className="text-center mb-12">
-        <h2 className="text-section-title-sm md:text-section-title text-steel-blue mb-4 md:mb-6 font-fraunces">
+        <h2 className="text-section-title-sm md:text-section-title text-keepla-gray-dark mb-4 md:mb-6 font-fraunces">
           Presentes com Alma
         </h2>
         <p className="text-body md:text-body-large text-misty-gray mb-8 max-w-3xl mx-auto leading-relaxed">
@@ -47,16 +47,16 @@ const ProductHighlightSection = () => {
         {products.map((product, index) => (
           <Card key={index} className="emotion-card hover:shadow-md hover:scale-105 transition-all duration-300 border border-keepla-red/20 group">
             <CardContent className="p-8 text-center">
-              <div className="w-20 h-20 bg-earthy-burgundy/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-earthy-burgundy/20 transition-colors">
-                <product.icon className="h-10 w-10 text-earthy-burgundy" />
+              <div className="w-20 h-20 bg-keepla-red/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-keepla-red/20 transition-colors">
+                <product.icon className="h-10 w-10 text-keepla-red" />
               </div>
-              <h3 className="text-xl font-semibold text-steel-blue mb-3 font-fraunces">{product.title}</h3>
-              <p className="text-misty-gray text-sm mb-4 leading-relaxed">{product.description}</p>
-              <div className="text-lg font-bold text-earthy-burgundy mb-4">{product.price}</div>
+              <h3 className="text-xl font-semibold text-keepla-gray-dark mb-3 font-fraunces">{product.title}</h3>
+              <p className="text-keepla-gray-light text-sm mb-4 leading-relaxed">{product.description}</p>
+              <div className="text-lg font-bold text-keepla-red mb-4">{product.price}</div>
               <ul className="space-y-2 mb-6">
                 {product.features.map((feature, i) => (
-                  <li key={i} className="flex items-center text-sm text-misty-gray">
-                    <Star className="h-4 w-4 text-dusty-rose mr-2 flex-shrink-0" />
+                  <li key={i} className="flex items-center text-sm text-keepla-gray-light">
+                    <Star className="h-4 w-4 text-keepla-red mr-2 flex-shrink-0" />
                     {feature}
                   </li>
                 ))}

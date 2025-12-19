@@ -86,7 +86,7 @@ const SearchFilters = ({
       {/* Search Bar */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-misty-gray h-4 w-4" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-keepla-gray-light h-4 w-4" />
           <Input
             placeholder={placeholder}
             value={filters.searchTerm}
@@ -104,7 +104,7 @@ const SearchFilters = ({
             <Filter className="h-4 w-4" />
             Filtros
             {getActiveFiltersCount() > 0 && (
-              <div className="ml-1 h-5 w-5 flex items-center justify-center p-0 text-xs bg-misty-gray text-steel-blue rounded-full">
+              <div className="ml-1 h-5 w-5 flex items-center justify-center p-0 text-xs bg-keepla-gray-light text-keepla-gray-dark rounded-full">
                 {getActiveFiltersCount()}
               </div>
             )}
@@ -114,7 +114,7 @@ const SearchFilters = ({
             <Button
               variant="ghost"
               onClick={onClearFilters}
-              className="flex items-center gap-2 text-misty-gray hover:text-steel-blue"
+              className="flex items-center gap-2 text-keepla-gray-light hover:text-keepla-gray-dark"
             >
               <X className="h-4 w-4" />
               Limpar
@@ -127,32 +127,32 @@ const SearchFilters = ({
       {hasActiveFilters && (
         <div className="flex flex-wrap gap-2">
           {filters.searchTerm && (
-            <div className="inline-flex items-center rounded-full border border-transparent bg-misty-gray text-steel-blue px-2.5 py-0.5 text-xs font-semibold gap-1">
+            <div className="inline-flex items-center rounded-full border border-transparent bg-keepla-gray-light text-keepla-gray-dark px-2.5 py-0.5 text-xs font-semibold gap-1">
               <Search className="h-3 w-3" />
               {filters.searchTerm}
               <X 
-                className="h-3 w-3 cursor-pointer hover:text-dusty-rose" 
+                className="h-3 w-3 cursor-pointer hover:text-keepla-red" 
                 onClick={() => updateFilter("searchTerm", "")}
               />
             </div>
           )}
           
           {filters.status !== "all" && (
-            <div className="inline-flex items-center rounded-full border border-transparent bg-misty-gray text-steel-blue px-2.5 py-0.5 text-xs font-semibold gap-1">
+            <div className="inline-flex items-center rounded-full border border-transparent bg-keepla-gray-light text-keepla-gray-dark px-2.5 py-0.5 text-xs font-semibold gap-1">
               Estado: {statusOptions.find(s => s.value === filters.status)?.label}
               <X 
-                className="h-3 w-3 cursor-pointer hover:text-dusty-rose" 
+                className="h-3 w-3 cursor-pointer hover:text-keepla-red" 
                 onClick={() => updateFilter("status", "all")}
               />
             </div>
           )}
           
           {(filters.dateFrom || filters.dateTo) && (
-            <div className="inline-flex items-center rounded-full border border-transparent bg-misty-gray text-steel-blue px-2.5 py-0.5 text-xs font-semibold gap-1">
+            <div className="inline-flex items-center rounded-full border border-transparent bg-keepla-gray-light text-keepla-gray-dark px-2.5 py-0.5 text-xs font-semibold gap-1">
               <Calendar className="h-3 w-3" />
               Data: {filters.dateFrom ? format(filters.dateFrom, "dd/MM/yy", { locale: pt }) : "..."} - {filters.dateTo ? format(filters.dateTo, "dd/MM/yy", { locale: pt }) : "..."}
               <X 
-                className="h-3 w-3 cursor-pointer hover:text-dusty-rose" 
+                className="h-3 w-3 cursor-pointer hover:text-keepla-red" 
                 onClick={() => {
                   updateFilter("dateFrom", undefined);
                   updateFilter("dateTo", undefined);
@@ -187,12 +187,12 @@ const SearchFilters = ({
 
       {/* Advanced Filters Panel */}
       {showFilters && (
-        <Card className="emotion-card border-dusty-rose/20">
+        <Card className="emotion-card border-keepla-red/20">
           <CardContent className="p-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {/* Status Filter */}
               <div className="space-y-2">
-                <label className="text-sm font-medium text-steel-blue">Estado</label>
+                <label className="text-sm font-medium text-keepla-gray-dark">Estado</label>
                 <div>
                   <SelectTrigger
                     value={filters.status}
@@ -216,7 +216,7 @@ const SearchFilters = ({
 
               {/* Date From Filter */}
               <div className="space-y-2">
-                <label className="text-sm font-medium text-steel-blue">Data Inicial</label>
+                <label className="text-sm font-medium text-keepla-gray-dark">Data Inicial</label>
                 <div className="relative">
                   <Button
                     variant="outline"
@@ -242,7 +242,7 @@ const SearchFilters = ({
 
               {/* Date To Filter */}
               <div className="space-y-2">
-                <label className="text-sm font-medium text-steel-blue">Data Final</label>
+                <label className="text-sm font-medium text-keepla-gray-dark">Data Final</label>
                 <div className="relative">
                   <Button
                     variant="outline"
@@ -269,7 +269,7 @@ const SearchFilters = ({
               {/* Category Filter */}
               {showCategoryFilter && (
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-steel-blue">Categoria</label>
+                  <label className="text-sm font-medium text-keepla-gray-dark">Categoria</label>
                   <div>
                     <SelectTrigger
                       value={filters.category}
@@ -295,7 +295,7 @@ const SearchFilters = ({
               {/* User Type Filter */}
               {showUserTypeFilter && (
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-steel-blue">Tipo de Utilizador</label>
+                  <label className="text-sm font-medium text-keepla-gray-dark">Tipo de Utilizador</label>
                   <div>
                     <SelectTrigger
                       value={filters.userType}
