@@ -1,5 +1,4 @@
 import * as React from "react"
-
 import { cn } from "@/lib/utils"
 
 const Card = React.forwardRef<
@@ -9,7 +8,7 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-lg border border-keepla-gray/30 bg-white/90 text-keepla-black shadow-sm",
+      "rounded-xl border border-keepla-gray-200 bg-keepla-white text-foreground shadow-sm",
       className
     )}
     {...props}
@@ -36,7 +35,7 @@ const CardTitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      "text-2xl font-semibold leading-none tracking-tight text-keepla-black",
+      "text-xl font-semibold leading-tight text-keepla-gray-900",
       className
     )}
     {...props}
@@ -50,7 +49,10 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-misty-gray", className)}
+    className={cn(
+      "text-sm text-keepla-gray-700 leading-relaxed",
+      className
+    )}
     {...props}
   />
 ))
@@ -70,10 +72,20 @@ const CardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex items-center p-6 pt-0", className)}
+    className={cn(
+      "flex items-center gap-3 p-6 pt-0 border-t border-keepla-gray-200",
+      className
+    )}
     {...props}
   />
 ))
 CardFooter.displayName = "CardFooter"
 
-export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
+export {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardDescription,
+  CardContent,
+}
