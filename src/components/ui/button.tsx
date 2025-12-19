@@ -4,31 +4,42 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-keepla-red disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         default:
-          "bg-keepla-red text-keepla-white hover:bg-keepla-red-deep",
+          "bg-keepla-black text-white hover:bg-keepla-gray-dark",
         outline:
-          "border border-keepla-gray-300 bg-transparent text-keepla-gray-900 hover:bg-keepla-gray-100",
+          "border border-keepla-gray-dark text-keepla-gray-dark hover:bg-keepla-gray-light",
         ghost:
-          "bg-transparent text-keepla-gray-900 hover:bg-keepla-gray-100",
+          "text-keepla-gray-dark hover:bg-keepla-gray-light",
         subtle:
-          "bg-keepla-gray-100 text-keepla-gray-900 hover:bg-keepla-gray-200",
+          "bg-keepla-gray-light text-keepla-gray-dark hover:bg-keepla-gray",
         danger:
-          "bg-red-600 text-white hover:bg-red-700",
+          "bg-keepla-red text-white hover:opacity-90",
+
+        /* KEEPLA */
+        brand:
+          "bg-keepla-black text-white hover:bg-keepla-gray-dark",
+        "brand-outline":
+          "border border-keepla-black text-keepla-black hover:bg-keepla-gray-light",
+        link:
+          "text-keepla-black underline-offset-4 hover:underline",
+        gentle:
+          "bg-transparent text-keepla-gray hover:text-keepla-black"
       },
       size: {
-        default: "h-10 px-4",
-        sm: "h-9 px-3 text-xs",
-        lg: "h-12 px-6 text-base",
-      },
+        default: "h-10 px-4 py-2",
+        sm: "h-9 px-3",
+        lg: "h-11 px-8",
+        icon: "h-10 w-10"
+      }
     },
     defaultVariants: {
       variant: "default",
-      size: "default",
-    },
+      size: "default"
+    }
   }
 )
 
@@ -43,13 +54,14 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size }), className)}
+        className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
       />
     )
   }
 )
+
 Button.displayName = "Button"
 
 export { Button, buttonVariants }
