@@ -1,48 +1,24 @@
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors
+      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
+      disabled:pointer-events-none disabled:opacity-50;
+  }
 
-.btn-gentle {
-  @apply px-8 py-4 rounded-md font-medium transition-all duration-200 shadow-keepla-sm hover:shadow-keepla border-2 border-keepla-red;
-}
-.btn-primary {
-  @apply bg-keepla-red text-white px-8 py-4 rounded-md font-medium transition-all duration-200 hover:bg-keepla-red-deep shadow-keepla-sm;
-}
-.btn-secondary {
-  @apply border-2 border-keepla-red text-keepla-red px-8 py-4 rounded-md font-medium transition-all duration-200 hover:bg-keepla-red/10 hover:text-keepla-red;
-}
-.btn-outline-brand {
-  @apply border-2 border-keepla-red text-keepla-red bg-transparent transition-all duration-200 hover:bg-keepla-red/10 hover:text-keepla-red;
-}
-.btn-brand {
-  background: var(--keepla-red);
-  color: #fff;
-  font-weight: 600;
-  box-shadow: 0 2px 12px 0 rgba(230, 57, 70, 0.1);
-}
+  .btn-brand {
+    @apply bg-keepla-red text-white hover:bg-keepla-red/90;
+  }
 
-.btn-brand-outline {
-  background: transparent;
-  color: var(--keepla-red);
-  border: 2px solid var(--keepla-red);
-}
+  .btn-brand-outline {
+    @apply border border-keepla-red text-keepla-red hover:bg-keepla-red/10;
+  }
 
-a, .underline-link, .brand-link {
-  color: var(--keepla-red);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  font-weight: 600;
-  background-color: transparent;
-  border-radius: 3px;
-  transition: color 0.2s, background 0.2s, box-shadow 0.2s;
-  outline: none;
-}
-a:focus-visible,
-.underline-link:focus-visible,
-.brand-link:focus-visible {
-  color: var(--keepla-black);
-  background: rgba(230, 57, 70, 0.1);
-  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.3);
-  outline: 2px solid var(--keepla-red);
-}
-a:hover, .underline-link:hover, .brand-link:hover {
-  color: var(--keepla-red-deep);
-  background-color: rgba(230, 57, 70, 0.05);
+  .btn-muted {
+    @apply bg-muted text-foreground hover:bg-muted/80;
+  }
+
+  /* REMOVIDO:
+     hover:shadow-keepla
+     → classe inexistente, causava crash em produção
+  */
 }
