@@ -8,6 +8,22 @@ import { CartProvider } from "@/contexts/CartContextProvider";
 import { GamificationProvider } from "@/contexts/GamificationContext";
 import { useEffect } from "react";
 import { initializeSecurity } from "@/middleware/security";
+
+/**
+ * LAYOUT PATTERNS REFERENCE
+ * 
+ * Este arquivo define a estrutura de rotas global da aplicação.
+ * Veja @/config/layoutPatterns.ts para o mapeamento completo de layouts.
+ * 
+ * Padrões de layout:
+ * - PUBLIC: Navigation + Footer (landing, blog, sobre, preços, etc.)
+ * - AUTHENTICATED: Navigation + Footer + Protected (dashboard, criar, editar)
+ * - ADMIN: Navigation + sem Footer + Admin-only (admin/blog, admin/*)
+ * - MINIMAL: Sem Navigation/Footer (login, register)
+ * 
+ * Todas as rotas herdam os Providers:
+ * QueryClientProvider → BrowserRouter → AuthProvider → GamificationProvider → CartProvider
+ */
 import Index from "@/pages/Index";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";

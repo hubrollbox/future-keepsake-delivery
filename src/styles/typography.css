@@ -3,7 +3,50 @@
  * Fonte principal: Inter (títulos, corpo de texto, botões, UI)
  * Fonte secundária: Georgia (frases emotivas, citações, subtítulos reflexivos)
  * Regra: Clareza digital (Inter) + Emoção narrativa (Georgia)
+ * 
+ * IMPORTANTE: Usar APENAS font-inter e font-georgia (não font-fraunces!)
  */
+
+@layer components {
+  /* ===== HEADINGS COM INTER ===== */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-inter font-bold text-keepla-black tracking-tight;
+  }
+
+  h1 { @apply text-h1; }
+  h2 { @apply text-h2; }
+  h3 { @apply text-h3; }
+
+  /* ===== TEXT STYLES ===== */
+  .text-body {
+    @apply font-inter text-base leading-relaxed text-keepla-gray-900;
+  }
+
+  .text-emotional {
+    @apply font-georgia italic text-lg text-keepla-gray-700 leading-relaxed;
+  }
+
+  .text-slogan {
+    @apply font-georgia italic text-2xl text-keepla-red font-medium;
+  }
+
+  .text-subtitle {
+    @apply font-georgia italic text-lg text-keepla-gray-700;
+  }
+
+  /* ===== SEMANTIC ALIASES (for backward compat) ===== */
+  .font-fraunces {
+    @apply font-inter;
+  }
+
+  .brand-highlight {
+    @apply text-keepla-red font-bold;
+  }
+
+  .text-brand-primary {
+    @apply text-keepla-red font-bold;
+  }
+}
 
 body, html {
   font-family: 'Inter', sans-serif;
