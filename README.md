@@ -8,7 +8,7 @@
 
 > **Conecte momentos especiais através do tempo.**
 >
-> [📚 Documentação Completa](docs/README.md) | [🎨 Brand Book](docs/brandbook/README.md)
+> [📚 Documentação Completa](docs/README.md) | [🎨 Identidade da Marca](docs/brand/README.md)
 
 ## 📖 Sobre o Projeto
 
