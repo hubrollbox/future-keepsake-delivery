@@ -9,7 +9,7 @@ const PartnershipBenefits = () => {
       <div className="grid md:grid-cols-2 gap-8">
         <Card className="bg-white shadow-lg border border-gray-200">
           <CardContent className="p-8">
-            <Target className="h-12 w-12 text-gold mb-4" />
+            <Target className="h-12 w-12 text-keepla-gray-dark mb-4" />
             <h4 className="text-xl font-semibold mb-4 text-black">Mercado em Crescimento</h4>
             <p className="text-gray-600">
               O mercado de experiências personalizadas e entregas programadas está em rápida expansão. 
@@ -20,7 +20,7 @@ const PartnershipBenefits = () => {
 
         <Card className="bg-white shadow-lg border border-gray-200">
           <CardContent className="p-8">
-            <Award className="h-12 w-12 text-gold mb-4" />
+            <Award className="h-12 w-12 text-keepla-gray-dark mb-4" />
             <h4 className="text-xl font-semibold mb-4 text-black">Tecnologia Avançada</h4>
             <p className="text-gray-600">
               Acesso a tecnologia de ponta, incluindo sistemas de armazenamento seguros 

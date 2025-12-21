@@ -17,15 +17,15 @@ const DeliveriesBarChart: React.FC<BarChartProps> = ({ data }) => {
         data.map((item) => (
           <div key={item.month} className="flex flex-col items-center justify-end flex-1 min-w-0 h-full">
             <div
-              className="w-full max-w-[40px] bg-gradient-to-t from-earthy-burgundy to-dusty-rose rounded-t-lg transition-all duration-300 hover:opacity-80 relative group"
+              className="w-full max-w-[40px] bg-keepla-red rounded-t-lg transition-all duration-300 hover:opacity-80 relative group"
               style={{ height: `${Math.max((item.count / maxCount) * 100, 4)}%` }}
               title={`${item.count} entregas`}
             >
-              <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-steel-blue text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+              <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-keepla-gray-dark text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
                 {item.count} entregas
               </div>
             </div>
-            <span className="text-xs text-misty-gray mt-2 text-center font-medium">
+            <span className="text-xs text-keepla-gray mt-2 text-center font-medium">
               {item.month}
             </span>
           </div>

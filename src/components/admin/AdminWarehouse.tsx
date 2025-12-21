@@ -169,7 +169,7 @@ const AdminWarehouse = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-keepla-red"></div>
       </div>
     );
   }
@@ -178,8 +178,8 @@ const AdminWarehouse = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-fraunces font-bold text-steel-blue tracking-tight">Gestão de Armazém</h1>
-          <p className="text-misty-gray">Gerir itens e stock do armazém</p>
+          <h1 className="text-2xl font-fraunces font-bold text-keepla-gray-800 tracking-tight">Gestão de Armazém</h1>
+          <p className="text-keepla-gray">Gerir itens e stock do armazém</p>
         </div>
         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
           <DialogTrigger asChild>
@@ -190,8 +190,8 @@ const AdminWarehouse = () => {
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle className="font-fraunces text-steel-blue">{editingItem ? 'Editar Item' : 'Adicionar Novo Item'}</DialogTitle>
-              <DialogDescription className="text-misty-gray">
+              <DialogTitle className="font-fraunces text-keepla-gray-800">{editingItem ? 'Editar Item' : 'Adicionar Novo Item'}</DialogTitle>
+              <DialogDescription className="text-keepla-gray">
                 {editingItem ? 'Edite as informações do item.' : 'Adicione um novo item ao armazém.'}
               </DialogDescription>
             </DialogHeader>
@@ -263,7 +263,7 @@ const AdminWarehouse = () => {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {filteredItems.map((item) => (
-          <Card key={item.id} className="border-dusty-rose/20">
+          <Card key={item.id} className="border-keepla-gray/20">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 <div className="flex items-center space-x-2">

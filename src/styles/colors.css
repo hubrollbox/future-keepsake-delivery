@@ -1,96 +1,43 @@
-/* 
- * Keepla.pt Brand Colors - Oficial Brand Book
- * Conceito: Memória Viva - Minimalismo com emoção
- * Regra: Preto e branco da memória + vermelho do presente que pulsa
- * Fotografia: SEMPRE em preto e branco
- */
+/* Keepla - Minimal brand variables (strict) */
 
 :root {
-  /* Paleta Oficial Keepla.pt Brand Book - Vermelho Intenso (Crimson) */
-  --keepla-red: #DC143C;           /* Crimson - Selo emocional intenso */
-  --keepla-red-deep: #B01030;      /* Deep Crimson CTA - Botões e call-to-actions */
-  --keepla-red-glow: #E8365A;      /* Glow effect para hover states */
-  --keepla-black: #000000;         /* Black - Fundos, texto, fotografia */
-  --keepla-white: #FFFFFF;         /* White - Fundos alternativos, texto sobre escuro */
-  --keepla-gray-neutral: #E0E0E0;  /* Gray Neutral - Divisores, fundos secundários */
-  --keepla-gray: #E0E0E0;          /* Alias para compatibilidade */
-  --keepla-gray-dark: #262626;     /* Dark gray para gradientes */
-  
-  /* Aliases semânticos - Brand Book */
-  --color-primary: var(--keepla-red);
-  --color-cta: var(--keepla-red-deep);
+  /* Core palette - single source of truth */
+  --keepla-red: #E63946;         /* Strict accent — validated */
+  --keepla-red-deep: #C6282E;    /* Use only for stronger CTAs when needed */
+  --keepla-black: #000000;
+  --keepla-white: #FFFFFF;
+  --keepla-gray-100: #F5F5F5;
+  --keepla-gray-200: #E0E0E0;
+  --keepla-gray-500: #6B6B6B;
+  --keepla-gray-800: #262626;
+
   --color-background: var(--keepla-white);
   --color-text: var(--keepla-black);
-  --color-border: var(--keepla-gray-neutral);
-  
-  /* Compatibilidade */
-  --brand-primary: var(--keepla-red);
-  --brand-secondary: var(--keepla-red-deep);
-  --brand-background: var(--keepla-white);
-  --brand-neutral: var(--keepla-gray-neutral);
-  --text-main: var(--keepla-black);
-  --text-secondary: #666666;
-  --error: var(--keepla-red-deep);
-  --success: var(--keepla-black);
-  
-  /* Transição e raio padrão - Brand Book */
-  --transition-default: 0.3s ease;
-  --radius-default: 12px;
+  --color-accent: var(--keepla-red);
+
+  --transition-default: 0.2s ease;
+  --radius-default: 10px;
 }
 
-/* Classes utilitárias */
+/* Utility classes (minimal) */
 .bg-keepla-red { background-color: var(--keepla-red); }
 .bg-keepla-red-deep { background-color: var(--keepla-red-deep); }
-.bg-keepla-red-glow { background-color: var(--keepla-red-glow); }
 .bg-keepla-black { background-color: var(--keepla-black); }
 .bg-keepla-white { background-color: var(--keepla-white); }
-.bg-keepla-gray { background-color: var(--keepla-gray); }
-.bg-keepla-gray-dark { background-color: var(--keepla-gray-dark); }
-
-/* Gradientes dramáticos */
-.bg-keepla-gradient {
-  background: linear-gradient(135deg, var(--keepla-red) 0%, var(--keepla-red-deep) 100%);
-}
-
-.bg-keepla-dark-gradient {
-  background: linear-gradient(180deg, var(--keepla-black) 0%, var(--keepla-gray-dark) 100%);
-}
+.bg-keepla-gray { background-color: var(--keepla-gray-100); }
+.bg-keepla-gray-dark { background-color: var(--keepla-gray-800); }
 
 .text-keepla-red { color: var(--keepla-red); }
 .text-keepla-red-deep { color: var(--keepla-red-deep); }
 .text-keepla-black { color: var(--keepla-black); }
 .text-keepla-white { color: var(--keepla-white); }
+.text-keepla-gray { color: var(--keepla-gray-500); }
 
 .border-keepla-red { border-color: var(--keepla-red); }
-.border-keepla-red-deep { border-color: var(--keepla-red-deep); }
-.border-keepla-gray-neutral { border-color: var(--keepla-gray-neutral); }
+.border-keepla-gray { border-color: var(--keepla-gray-200); }
 
-/* Sombras intensas - Brand Book */
-.shadow-keepla {
-  box-shadow: 0 4px 24px 0 rgba(220, 20, 60, 0.25);
-}
+/* Keep photography rules utilities */
+.image-bw { filter: grayscale(100%); }
+.image-bw-contrast { filter: grayscale(100%) contrast(1.1); }
 
-.shadow-keepla-sm {
-  box-shadow: 0 2px 12px 0 rgba(220, 20, 60, 0.15);
-}
-
-.shadow-keepla-glow {
-  box-shadow: 0 0 40px rgba(220, 20, 60, 0.35);
-}
-
-.shadow-keepla-intense {
-  box-shadow: 0 8px 32px 0 rgba(220, 20, 60, 0.3);
-}
-
-/* Imagens em P&B - Brand Book Rule - MAIS CONTRASTE */
-.image-bw {
-  filter: grayscale(100%) contrast(1.15);
-}
-
-.image-bw-keepla {
-  filter: grayscale(100%) contrast(1.2) brightness(0.95);
-}
-
-.image-bw-dramatic {
-  filter: grayscale(100%) contrast(1.25) brightness(0.9);
-}
+/* Intentionally NO gradients, no metallic/glow/shadows beyond UI basics */

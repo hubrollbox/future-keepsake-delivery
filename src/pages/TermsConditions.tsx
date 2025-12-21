@@ -10,7 +10,7 @@ const TermsConditions = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-lavender-mist">
+    <div className="min-h-screen bg-keepla-white">
       <Navigation />
 
       <main className="container mx-auto px-4 py-8">
@@ -38,12 +38,12 @@ const TermsConditions = () => {
             }}
           />
           <h1 className="text-hero text-keepla-gray-dark font-fraunces mb-2">Termos e Condições</h1>
-          <p className="text-misty-gray">Última atualização: 28 de maio de 2025</p>
+          <p className="text-keepla-gray">Última atualização: 28 de maio de 2025</p>
         </div>
 
         <Card className="max-w-4xl mx-auto emotion-card">
           <CardContent className="p-8">
-            <div className="space-y-8 text-misty-gray">
+            <div className="space-y-8 text-keepla-gray">
               <section>
                 <h2 className="text-xl font-semibold text-keepla-gray-dark mb-4 font-fraunces">1. Aceitação dos Termos</h2>
                 <p className="leading-relaxed">

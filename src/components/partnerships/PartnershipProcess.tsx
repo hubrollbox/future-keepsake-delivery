@@ -6,12 +6,12 @@ const PartnershipProcess = () => {
     <div className="mb-16">
       <Card className="bg-white shadow-lg max-w-4xl mx-auto border border-gray-200">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl text-gold">Como Tornar-se Parceiro</CardTitle>
+          <CardTitle className="text-2xl text-keepla-gray-dark">Como Tornar-se Parceiro</CardTitle>
         </CardHeader>
         <CardContent className="p-8">
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-12 h-12 bg-gold text-black rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
+              <div className="w-12 h-12 bg-keepla-gray rounded-full text-keepla-black flex items-center justify-center mx-auto mb-4 font-bold">
                 1
               </div>
               <h4 className="font-semibold mb-2">Contacta-nos</h4>
@@ -20,7 +20,7 @@ const PartnershipProcess = () => {
               </p>
             </div>
             <div className="text-center">
-              <div className="w-12 h-12 bg-gold text-black rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
+              <div className="w-12 h-12 bg-keepla-gray rounded-full text-keepla-black flex items-center justify-center mx-auto mb-4 font-bold">
                 2
               </div>
               <h4 className="font-semibold mb-2">Avaliação</h4>
@@ -29,7 +29,7 @@ const PartnershipProcess = () => {
               </p>
             </div>
             <div className="text-center">
-              <div className="w-12 h-12 bg-gold text-black rounded-full flex items-center justify-center mx-auto mb-4 font-bold">
+              <div className="w-12 h-12 bg-keepla-gray rounded-full text-keepla-black flex items-center justify-center mx-auto mb-4 font-bold">
                 3
               </div>
               <h4 className="font-semibold mb-2">Integração</h4>

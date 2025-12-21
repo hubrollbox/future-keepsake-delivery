@@ -78,14 +78,15 @@ const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({
   const displayEvents = events.length > 0 ? events : mockEvents;
 
   const getEmotionColor = (emotion: string) => {
+    // Simplified palette: only neutral gray blocks and a subtle red accent for 'love'
     const colors = {
-      love: 'bg-red-100 text-red-700 border-red-200',
-      nostalgia: 'bg-orange-100 text-orange-700 border-orange-200',
-      hope: 'bg-blue-100 text-blue-700 border-blue-200',
-      gratitude: 'bg-yellow-100 text-yellow-700 border-yellow-200',
-      celebration: 'bg-pink-100 text-pink-700 border-pink-200'
+      love: 'bg-keepla-red/10 text-keepla-red border-keepla-red/20',
+      nostalgia: 'bg-keepla-gray/10 text-keepla-gray border-keepla-gray',
+      hope: 'bg-keepla-gray/10 text-keepla-gray border-keepla-gray',
+      gratitude: 'bg-keepla-gray/10 text-keepla-gray border-keepla-gray',
+      celebration: 'bg-keepla-gray/10 text-keepla-gray border-keepla-gray'
     };
-    return colors[emotion as keyof typeof colors] || 'bg-gray-100 text-gray-700 border-gray-200';
+    return colors[emotion as keyof typeof colors] || 'bg-keepla-gray/10 text-keepla-gray border-keepla-gray';
   };
 
   const getStatusIcon = (status: string) => {
@@ -115,7 +116,7 @@ const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({
   const TimelineView = () => (
     <div className="relative">
       {/* Timeline Line */}
-      <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-keepla-red via-keepla-gray-dark to-keepla-red"></div>
+      <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-keepla-gray-dark"></div>
       
       <div className="space-y-8">
         {displayEvents
@@ -130,16 +131,16 @@ const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({
             >
               {/* Timeline Dot */}
               <div className="relative z-10">
-                <div className={`w-16 h-16 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 ${
+                <div className={`w-16 h-16 rounded-full flex items-center justify-center transition-all duration-300 ${
                   event.type === 'digital' 
-                    ? 'bg-gradient-to-br from-blue-400 to-blue-600' 
-                    : 'bg-gradient-to-br from-purple-400 to-purple-600'
+                    ? 'bg-keepla-gray' 
+                    : 'bg-keepla-red'
                 }`}>
                   {event.type === 'digital' ? (
-                    <Mail className="w-8 h-8 text-white" />
-                  ) : (
-                    <Package className="w-8 h-8 text-white" />
-                  )}
+                      <Mail className="w-8 h-8 text-white" />
+                    ) : (
+                      <Package className="w-8 h-8 text-white" />
+                    )}
                 </div>
                 {/* Pulse Animation for Upcoming Events */}
                 {event.daysUntil <= 30 && (
@@ -310,7 +311,7 @@ const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({
       {/* Empty State */}
       {displayEvents.length === 0 && (
         <div className="text-center py-12">
-          <div className="w-24 h-24 bg-lavender-mist rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="w-24 h-24 bg-keepla-gray rounded-full flex items-center justify-center mx-auto mb-4">
             <Calendar className="w-12 h-12 text-keepla-red" />
           </div>
           <h3 className="text-xl font-semibold text-keepla-gray-dark mb-2">

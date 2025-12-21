@@ -155,15 +155,9 @@ const StorytellingOnboarding: React.FC<StorytellingOnboardingProps> = ({
 
   if (!currentStoryStep) return null;
 
-  const getEmotionTheme = (emotion: string) => {
-    const themes = {
-      wonder: 'from-purple-400 to-pink-400',
-      love: 'from-red-400 to-pink-400',
-      friendship: 'from-blue-400 to-cyan-400',
-      legacy: 'from-yellow-400 to-orange-400',
-      excitement: 'from-green-400 to-blue-400'
-    };
-    return themes[emotion as keyof typeof themes] || 'from-gray-400 to-gray-600';
+  // No gradients or decorative color themes allowed. Keep a neutral header bar.
+  const getEmotionTheme = (_emotion: string) => {
+    return 'bg-keepla-gray';
   };
 
   useEffect(() => {
@@ -176,7 +170,7 @@ const StorytellingOnboarding: React.FC<StorytellingOnboardingProps> = ({
   }, [currentStep, currentStoryStep?.interactive, showInteractive]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-white/50 to-keepla-red/10 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-keepla-white flex items-center justify-center p-4">
       {/* Background Image */}
       <div 
         className="absolute inset-0 opacity-20 bg-cover bg-center"
@@ -206,12 +200,12 @@ const StorytellingOnboarding: React.FC<StorytellingOnboardingProps> = ({
         <Card className={`overflow-hidden shadow-2xl transition-all duration-500 ${
           isAnimating ? 'opacity-50 scale-95' : 'opacity-100 scale-100'
         }`}>
-          {/* Header with Gradient */}
-          <div className={`h-2 bg-gradient-to-r ${getEmotionTheme(currentStoryStep.emotion)}`} />
+          {/* Header bar (neutral) */}
+          <div className={`h-2 ${getEmotionTheme(currentStoryStep.emotion)}`} />
           
           <CardContent className="p-0">
             {/* Visual Section */}
-            <div className="text-center py-12 px-8 bg-gradient-to-br from-white to-gray-50">
+            <div className="text-center py-12 px-8 bg-keepla-white">
               <div className="text-8xl mb-6 animate-pulse">
                 {currentStoryStep.visual}
               </div>
@@ -232,7 +226,7 @@ const StorytellingOnboarding: React.FC<StorytellingOnboardingProps> = ({
 
                 {/* Interactive Section */}
                 {currentStoryStep.interactive && showInteractive && (
-                  <div className="mt-12 p-8 bg-gradient-to-br from-white/30 to-keepla-red/10 rounded-2xl border border-keepla-red/20">
+                  <div className="mt-12 p-8 bg-keepla-gray/10 rounded-2xl border border-keepla-red/20">
                     <h3 className="text-xl font-semibold text-keepla-gray-dark mb-6 text-center">
                       {currentStoryStep.interactive.question}
                     </h3>

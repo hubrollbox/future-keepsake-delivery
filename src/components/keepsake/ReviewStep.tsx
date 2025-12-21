@@ -62,7 +62,7 @@ const ReviewStep = ({ formData }: ReviewStepProps) => {
               </div>
               <div>
                 <span className="font-medium text-keepla-gray-dark">Conteúdo:</span>
-                <p className="text-keepla-gray-light text-sm bg-lavender-mist/50 p-3 rounded-lg mt-1">
+                <p className="text-keepla-gray-light text-sm bg-keepla-gray/10 p-3 rounded-lg mt-1">
                   {formData.message}
                 </p>
               </div>

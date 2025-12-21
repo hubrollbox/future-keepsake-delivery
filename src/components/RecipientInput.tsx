@@ -90,7 +90,7 @@ const RecipientInput: React.FC<RecipientInputProps> = ({
               <Badge
                 key={recipient.id}
                 variant="secondary"
-                className="px-3 py-1 bg-gradient-to-r from-keepla-red/10 to-keepla-red/10 border border-keepla-red/20 text-keepla-gray-dark"
+                className="px-3 py-1 bg-keepla-gray/10 border border-keepla-red/20 text-keepla-gray-dark"
               >
                 <span className="inline-flex items-center gap-2">
                   <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-keepla-red/20">

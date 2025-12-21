@@ -36,10 +36,10 @@ const NotificationList: React.FC<NotificationListProps> = ({ onClose }) => {
     }
   };
 
-  if (loading) {
+    if (loading) {
     return (
       <div className="p-4 text-center">
-        <p className="text-misty-gray">A carregar notificações...</p>
+        <p className="text-keepla-gray">A carregar notificações...</p>
       </div>
     );
   }
@@ -47,7 +47,7 @@ const NotificationList: React.FC<NotificationListProps> = ({ onClose }) => {
   return (
     <div className="w-full">
       <div className="flex items-center justify-between p-4 border-b">
-        <h3 className="font-semibold text-steel-blue">Notificações</h3>
+      <h3 className="font-semibold text-keepla-gray-800">Notificações</h3>
         {unreadCount > 0 && (
           <Button
             variant="ghost"
@@ -71,8 +71,8 @@ const NotificationList: React.FC<NotificationListProps> = ({ onClose }) => {
             {notifications.map((notification, index) => (
               <div key={notification.id}>
                 <div
-                  className={`p-3 hover:bg-lavender-mist/50 cursor-pointer rounded-lg transition-colors ${
-                    !notification.read_at ? 'bg-dusty-rose/10' : ''
+                  className={`p-3 hover:bg-keepla-gray/50 cursor-pointer rounded-lg transition-colors ${
+                    !notification.read_at ? 'bg-keepla-gray/10' : ''
                   }`}
                   onClick={() => handleNotificationClick(notification.id, !!notification.read_at)}
                 >
@@ -82,17 +82,17 @@ const NotificationList: React.FC<NotificationListProps> = ({ onClose }) => {
                     </span>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between">
-                        <p className="font-medium text-steel-blue text-sm truncate">
+                        <p className="font-medium text-keepla-gray-800 text-sm truncate">
                           {notification.title}
                         </p>
                         {!notification.read_at && (
-                          <div className="w-2 h-2 bg-dusty-rose rounded-full flex-shrink-0 ml-2" />
+                          <div className="w-2 h-2 bg-keepla-red rounded-full flex-shrink-0 ml-2" />
                         )}
                       </div>
-                      <p className="text-misty-gray text-xs mt-1 line-clamp-2">
+                      <p className="text-keepla-gray text-xs mt-1 line-clamp-2">
                         {notification.content}
                       </p>
-                      <p className="text-misty-gray text-xs mt-1">
+                      <p className="text-keepla-gray text-xs mt-1">
                         {notification.created_at && formatDistanceToNow(
                           new Date(notification.created_at),
                           { addSuffix: true, locale: pt }

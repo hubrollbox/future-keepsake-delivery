@@ -355,18 +355,14 @@
 
 /* Loading state improvements */
 .loading-skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
+  background-color: #E0E0E0;
+  animation: loading-fade 1.2s infinite;
 }
 
-@keyframes loading {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
+@keyframes loading-fade {
+  0% { opacity: 0.85; }
+  50% { opacity: 0.5; }
+  100% { opacity: 0.85; }
 }
 
 /* Accessibility improvements */

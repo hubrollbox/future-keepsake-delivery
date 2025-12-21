@@ -11,7 +11,7 @@ const PrivacyPolicy = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-lavender-mist">
+    <div className="min-h-screen bg-keepla-white">
       <Navigation />
 
       <main className="container mx-auto px-4 py-8">
@@ -46,10 +46,10 @@ const PrivacyPolicy = () => {
           <CardContent className="p-8">
             <div className="space-y-8 text-keepla-gray-light">
               <section>
-                <h2 className="text-xl font-semibold text-steel-blue mb-4 font-fraunces">1. Informações que Recolhemos</h2>
+                <h2 className="text-xl font-semibold text-keepla-gray-800 mb-4 font-fraunces">1. Informações que Recolhemos</h2>
                 <div className="ml-4 space-y-4">
                   <div>
-                    <h3 className="font-medium mb-2 text-steel-blue">1.1 Informações Pessoais</h3>
+                    <h3 className="font-medium mb-2 text-keepla-gray-800">1.1 Informações Pessoais</h3>
                     <p className="leading-relaxed">
                       Recolhemos informações que nos fornece diretamente, incluindo nome, email, morada, 
                       número de telefone e informações de pagamento necessárias para prestar o nosso serviço.
@@ -57,7 +57,7 @@ const PrivacyPolicy = () => {
                   </div>
                   
                   <div>
-                    <h3 className="font-medium mb-2 text-steel-blue">1.2 Informações de Utilização</h3>
+                    <h3 className="font-medium mb-2 text-keepla-gray-800">1.2 Informações de Utilização</h3>
                     <p className="leading-relaxed">
                       Recolhemos automaticamente informações sobre como utiliza a nossa plataforma, 
                       incluindo endereços IP, tipo de browser, páginas visitadas e tempo de utilização.
@@ -65,7 +65,7 @@ const PrivacyPolicy = () => {
                   </div>
                   
                   <div>
-                    <h3 className="font-medium mb-2 text-steel-blue">1.3 Conteúdo dos Utilizadores</h3>
+                    <h3 className="font-medium mb-2 text-keepla-gray-800">1.3 Conteúdo dos Utilizadores</h3>
                     <p className="leading-relaxed">
                       Armazenamos de forma segura as mensagens, ficheiros e informações sobre presentes 
                       que escolhe guardar na nossa plataforma para entrega futura.
@@ -75,7 +75,7 @@ const PrivacyPolicy = () => {
               </section>
 
               <section>
-                <h2 className="text-xl font-semibold text-steel-blue mb-4 font-fraunces">2. Como Utilizamos as Suas Informações</h2>
+                <h2 className="text-xl font-semibold text-keepla-gray-800 mb-4 font-fraunces">2. Como Utilizamos as Suas Informações</h2>
                 <ul className="list-disc ml-6 space-y-2 leading-relaxed">
                   <li>Prestar e melhorar os nossos serviços de entrega programada</li>
                   <li>Processar pagamentos e gerir a sua conta</li>
@@ -87,7 +87,7 @@ const PrivacyPolicy = () => {
               </section>
 
               <section>
-                <h2 className="text-xl font-semibold text-steel-blue mb-4 font-fraunces">11. Contacto</h2>
+                <h2 className="text-xl font-semibold text-keepla-gray-800 mb-4 font-fraunces">11. Contacto</h2>
                 <p className="leading-relaxed">
                   Se tiver questões sobre esta Política de Privacidade ou quiser exercer os seus direitos, 
                   contacte o nosso Responsável pela Proteção de Dados através do centro de apoio na 

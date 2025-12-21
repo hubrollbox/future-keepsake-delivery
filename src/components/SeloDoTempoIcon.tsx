@@ -13,30 +13,24 @@ const SeloDoTempoIcon: React.FC<SeloDoTempoIconProps> = ({
   variant = 'default' 
 }) => {
   const palette = {
-    "dusty-rose": "#DAB8C3",
-    "steel-blue": "#3D4A5A",
-    "lavender-mist": "#F5F2F8",
+    grayLight: '#F5F5F5',
+    grayMid: '#E0E0E0',
+    grayDark: '#262626'
   };
+
   const getEnvelopeColor = () => {
     switch (variant) {
-      case 'envelope-pink':
-        return palette["dusty-rose"];
       case 'envelope-black':
-        return palette["steel-blue"];
+        return palette.grayDark;
       case 'negative':
-        return palette["lavender-mist"];
+        return palette.grayLight;
       default:
-        return palette["dusty-rose"];
+        return palette.grayMid;
     }
   };
 
   const getStrokeColor = () => {
-    switch (variant) {
-      case 'negative':
-        return palette["lavender-mist"];
-      default:
-        return palette["steel-blue"];
-    }
+    return palette.grayDark;
   };
 
   return (

@@ -16,7 +16,7 @@ const PartnershipCTA = () => {
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <Button 
           size="lg" 
-          className="text-lg px-8 py-6 bg-gold text-black hover:bg-gold/90 font-semibold"
+          className="text-lg px-8 py-6 bg-keepla-red text-white hover:bg-keepla-red/90 font-semibold"
           onClick={() => navigate('/contact')}
         >
           Propor Parceria
@@ -24,7 +24,7 @@ const PartnershipCTA = () => {
         <Button 
           variant="outline" 
           size="lg" 
-          className="text-lg px-8 py-6 border-gold text-gold hover:bg-gold/10"
+          className="text-lg px-8 py-6 border-keepla-red text-keepla-red hover:bg-keepla-red/10"
           onClick={() => navigate('/contact')}
         >
           Saber Mais

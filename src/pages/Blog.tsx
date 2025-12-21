@@ -187,7 +187,7 @@ const Blog = () => {
                       />
                     </div>
                   ) : (
-                    <div className="w-full h-48 bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center">
+                    <div className="w-full h-48 bg-keepla-gray/10 flex items-center justify-center">
                       <span className="text-muted-foreground font-serif italic">Sem imagem</span>
                     </div>
                   )}

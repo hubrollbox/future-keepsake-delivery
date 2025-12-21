@@ -127,10 +127,10 @@ const Dashboard = () => {
             </div>
 
             {/* Botões de Ação Rápida */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <button
                 onClick={() => navigate("/create-keepsake")}
-                className="emotion-card p-6 text-left hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-white to-white border-2 border-keepla-red/20"
+                className="emotion-card p-6 text-left hover:shadow-lg transition-all duration-300 bg-keepla-white border-2 border-keepla-red/20"
               >
                 <div className="flex items-center mb-3">
                   <div className="w-12 h-12 bg-keepla-red/20 rounded-full flex items-center justify-center mr-4">
@@ -147,7 +147,7 @@ const Dashboard = () => {
 
               <button
                 onClick={() => navigate("/profile")}
-                className="emotion-card p-6 text-left hover:shadow-lg transition-all duration-300 bg-gradient-to-br from-white to-white border-2 border-keepla-red/20"
+                className="emotion-card p-6 text-left hover:shadow-lg transition-all duration-300 bg-keepla-white border-2 border-keepla-red/20"
               >
                 <div className="flex items-center mb-3">
                   <div className="w-12 h-12 bg-keepla-red/20 rounded-full flex items-center justify-center mr-4">

@@ -14,7 +14,7 @@ const Partnerships = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-lavender-mist">
+    <div className="min-h-screen bg-keepla-white">
       <Navigation />
 
       <main className="container mx-auto px-4 py-16">

@@ -8,7 +8,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-lavender-mist flex items-center justify-center px-4">
+    <div className="min-h-screen bg-keepla-white flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         {/* Back Button */}
         <div className="mb-8">

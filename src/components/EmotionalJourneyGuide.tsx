@@ -51,14 +51,14 @@ const EmotionalJourneyGuide: React.FC = () => {
   ];
 
   const emotions = [
-    { id: 'love', label: 'Amor', emoji: '❤️', color: 'text-red-500' },
-    { id: 'gratitude', label: 'Gratidão', emoji: '🙏', color: 'text-yellow-500' },
-    { id: 'hope', label: 'Esperança', emoji: '🌟', color: 'text-blue-500' },
-    { id: 'pride', label: 'Orgulho', emoji: '🦁', color: 'text-purple-500' },
-    { id: 'nostalgia', label: 'Nostalgia', emoji: '🌅', color: 'text-orange-500' },
-    { id: 'encouragement', label: 'Encorajamento', emoji: '💪', color: 'text-green-500' },
-    { id: 'celebration', label: 'Celebração', emoji: '🎉', color: 'text-pink-500' },
-    { id: 'wisdom', label: 'Sabedoria', emoji: '🦉', color: 'text-indigo-500' }
+    { id: 'love', label: 'Amor', emoji: '❤️' },
+    { id: 'gratitude', label: 'Gratidão', emoji: '🙏' },
+    { id: 'hope', label: 'Esperança', emoji: '🌟' },
+    { id: 'pride', label: 'Orgulho', emoji: '🦁' },
+    { id: 'nostalgia', label: 'Nostalgia', emoji: '🌅' },
+    { id: 'encouragement', label: 'Encorajamento', emoji: '💪' },
+    { id: 'celebration', label: 'Celebração', emoji: '🎉' },
+    { id: 'wisdom', label: 'Sabedoria', emoji: '🦉' }
   ];
 
   const timeframes = [
@@ -135,7 +135,7 @@ const EmotionalJourneyGuide: React.FC = () => {
           key={item.id}
           variant={context[field] === item.id ? "default" : "outline"}
           className={`h-auto p-4 flex flex-col items-center space-y-2 transition-all duration-300 hover:scale-105 ${
-            context[field] === item.id ? 'bg-keepla-red text-white' : 'hover:bg-lavender-mist'
+            context[field] === item.id ? 'bg-keepla-red text-white' : 'hover:bg-keepla-gray'
           }`}
           onClick={() => handleSelection(field, item.id)}
         >
@@ -201,7 +201,7 @@ const EmotionalJourneyGuide: React.FC = () => {
           {currentStep === 3 && renderSelectionGrid(timeframes, 'timeframe')}
 
           {/* Suggestions */}
-          <div className="bg-lavender-mist/30 rounded-lg p-4">
+          <div className="bg-keepla-gray/10 rounded-lg p-4">
             <h4 className="font-semibold text-keepla-gray-dark mb-2 flex items-center gap-2">
               <Sparkles className="w-4 h-4" />
               Dicas para esta etapa:
@@ -209,7 +209,7 @@ const EmotionalJourneyGuide: React.FC = () => {
             <ul className="space-y-1 text-sm text-keepla-gray-light">
               {currentStepData.suggestions.map((suggestion, index) => (
                 <li key={index} className="flex items-start gap-2">
-                  <Star className="w-3 h-3 text-golden-honey mt-1 flex-shrink-0" />
+                  <Star className="w-3 h-3 text-keepla-red mt-1 flex-shrink-0" />
                   {suggestion}
                 </li>
               ))}

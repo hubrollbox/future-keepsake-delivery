@@ -69,7 +69,7 @@ const LandingPage: React.FC = () => {
       <Navigation />
 
       {/* Hero Section com identidade Keepla */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-black/30 via-black/20 to-black/25">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-keepla-black/20">
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="max-w-4xl mx-auto">
             {/* Logo Keepla */}

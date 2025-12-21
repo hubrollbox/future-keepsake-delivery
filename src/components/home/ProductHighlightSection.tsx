@@ -37,9 +37,9 @@ const ProductHighlightSection = () => {
         <h2 className="text-section-title-sm md:text-section-title text-keepla-gray-dark mb-4 md:mb-6 font-fraunces">
           Presentes com Alma
         </h2>
-        <p className="text-body md:text-body-large text-misty-gray mb-8 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-body md:text-body-large text-keepla-gray mb-8 max-w-3xl mx-auto leading-relaxed">
           Cada presente é uma promessa ao futuro, guardada com o carinho do presente. 
-          <span className="text-dusty-rose font-medium"> Escolhe como queres tocar o coração de quem amas.</span>
+          <span className="text-keepla-red font-medium"> Escolhe como queres tocar o coração de quem amas.</span>
         </p>
       </div>
 
@@ -50,12 +50,12 @@ const ProductHighlightSection = () => {
               <div className="w-20 h-20 bg-keepla-red/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-keepla-red/20 transition-colors">
                 <product.icon className="h-10 w-10 text-keepla-red" />
               </div>
-              <h3 className="text-xl font-semibold text-keepla-gray-dark mb-3 font-fraunces">{product.title}</h3>
-              <p className="text-keepla-gray-light text-sm mb-4 leading-relaxed">{product.description}</p>
+              <h3 className="text-xl font-semibold text-keepla-gray-800 mb-3 font-fraunces">{product.title}</h3>
+              <p className="text-keepla-gray text-sm mb-4 leading-relaxed">{product.description}</p>
               <div className="text-lg font-bold text-keepla-red mb-4">{product.price}</div>
               <ul className="space-y-2 mb-6">
                 {product.features.map((feature, i) => (
-                  <li key={i} className="flex items-center text-sm text-keepla-gray-light">
+                  <li key={i} className="flex items-center text-sm text-keepla-gray">
                     <Star className="h-4 w-4 text-keepla-red mr-2 flex-shrink-0" />
                     {feature}
                   </li>

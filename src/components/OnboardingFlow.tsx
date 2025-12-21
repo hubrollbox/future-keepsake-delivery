@@ -172,8 +172,8 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
         isAnimating ? 'opacity-50 scale-95' : 'opacity-100 scale-100'
       }`}>
         
-        {/* Header com Progress */}
-        <div className="bg-gradient-to-r from-dusty-rose to-earthy-burgundy h-2" />
+        {/* Header com Progress (neutral) */}
+        <div className="h-2 bg-keepla-gray" />
         
         <CardContent className="p-0">
           {/* Progress Bar */}
@@ -205,7 +205,7 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[500px]">
             
             {/* Lado Visual */}
-            <div className="bg-gradient-to-br from-white to-white/50 p-8 flex flex-col items-center justify-center text-center">
+            <div className="bg-keepla-white p-8 flex flex-col items-center justify-center text-center">
               <div className="text-8xl mb-6 animate-bounce-gentle">
                 {currentStepData.visual}
               </div>
@@ -264,14 +264,14 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
                 <Button
                   variant="ghost"
                   onClick={onSkip}
-                  className="text-misty-gray hover:text-steel-blue"
+                  className="text-keepla-gray hover:text-keepla-gray-dark"
                 >
                   Pular Tutorial
                 </Button>
 
                 <Button
                   onClick={handleNext}
-                  className="flex items-center space-x-2 bg-dusty-rose hover:bg-dusty-rose/90 text-white"
+                  className="flex items-center space-x-2 bg-keepla-red hover:bg-keepla-red/90 text-white"
                 >
                   <span>{currentStep === steps.length - 1 ? 'Começar' : 'Próximo'}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -284,10 +284,10 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
 
       {/* Elementos Flutuantes Decorativos */}
       <div className="absolute top-20 left-10 opacity-30 animate-float">
-        <Clock className="w-8 h-8 text-dusty-rose" />
+        <Clock className="w-8 h-8 text-keepla-gray-dark" />
       </div>
       <div className="absolute bottom-20 right-10 opacity-30 animate-float" style={{ animationDelay: '1s' }}>
-        <Heart className="w-6 h-6 text-steel-blue" />
+        <Heart className="w-6 h-6 text-keepla-gray-dark" />
       </div>
       <div className="absolute top-1/2 left-20 opacity-30 animate-float" style={{ animationDelay: '2s' }}>
         <Star className="w-5 h-5 text-keepla-red" />

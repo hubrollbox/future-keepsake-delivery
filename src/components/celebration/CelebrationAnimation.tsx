@@ -59,28 +59,28 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
       case 'created':
         return {
           icon: Gift,
-          color: 'from-green-400 to-blue-400',
+          color: 'keepla-red',
           emoji: '🎁',
           defaultMessage: 'Sua cápsula do tempo foi criada com sucesso!'
         };
       case 'delivered':
         return {
           icon: CheckCircle,
-          color: 'from-blue-400 to-purple-400',
+          color: 'keepla-red',
           emoji: '📬',
           defaultMessage: 'Sua mensagem foi entregue!'
         };
       case 'received':
         return {
           icon: Heart,
-          color: 'from-pink-400 to-red-400',
+          color: 'keepla-red',
           emoji: '💝',
           defaultMessage: 'Você recebeu uma mensagem especial!'
         };
       default:
         return {
           icon: Sparkles,
-          color: 'from-yellow-400 to-orange-400',
+          color: 'keepla-red',
           emoji: '✨',
           defaultMessage: 'Celebração!'
         };
@@ -106,7 +106,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
             animationDuration: '2s'
           }}
         >
-          <Sparkles className="w-4 h-4 text-yellow-400 opacity-70" />
+          <Sparkles className="w-4 h-4 text-keepla-red opacity-70" />
         </div>
       ))}
 
@@ -114,8 +114,8 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
       <Card className={`w-full max-w-md mx-4 overflow-hidden transform transition-all duration-500 ${
         isVisible ? 'scale-100 translate-y-0' : 'scale-75 translate-y-10'
       }`}>
-        {/* Header com Gradiente */}
-        <div className={`h-2 bg-gradient-to-r ${config.color}`} />
+        {/* Header */}
+        <div className={`h-2 bg-keepla-red`} />
         
         <CardContent className="p-8 text-center">
           {/* Ícone Principal Animado */}
@@ -124,26 +124,26 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
               {config.emoji}
             </div>
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="animate-ping absolute inline-flex h-20 w-20 rounded-full bg-dusty-rose opacity-20"></div>
-              <div className="animate-pulse absolute inline-flex h-16 w-16 rounded-full bg-dusty-rose opacity-30"></div>
+              <div className="animate-ping absolute inline-flex h-20 w-20 rounded-full bg-keepla-gray opacity-12"></div>
+              <div className="animate-pulse absolute inline-flex h-16 w-16 rounded-full bg-keepla-gray opacity-16"></div>
             </div>
           </div>
 
           {/* Título */}
-          <h2 className="text-2xl font-serif font-bold text-steel-blue mb-4">
+          <h2 className="text-2xl font-serif font-bold text-keepla-gray-800 mb-4">
             {title}
           </h2>
 
           {/* Mensagem */}
-          <p className="text-lg text-misty-gray mb-6 leading-relaxed">
+          <p className="text-lg text-keepla-gray mb-6 leading-relaxed">
             {message || config.defaultMessage}
           </p>
 
           {/* Ícones Decorativos */}
           <div className="flex justify-center items-center gap-4 mb-6">
-            <Star className="w-6 h-6 text-golden-honey animate-pulse" />
-            <IconComponent className="w-8 h-8 text-dusty-rose animate-bounce" />
-            <Heart className="w-6 h-6 text-red-400 animate-pulse" style={{ animationDelay: '0.5s' }} />
+            <Star className="w-6 h-6 text-keepla-gray animate-pulse" />
+            <IconComponent className="w-8 h-8 text-keepla-red animate-bounce" />
+            <Heart className="w-6 h-6 text-keepla-red animate-pulse" style={{ animationDelay: '0.5s' }} />
           </div>
 
           {/* Botão de Ação */}
@@ -153,7 +153,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
                 setIsVisible(false);
                 setTimeout(onClose, 500);
               }}
-              className="bg-dusty-rose hover:bg-dusty-rose/90 text-white px-8 py-2"
+              className="bg-keepla-red hover:bg-keepla-red-deep text-white px-8 py-2"
             >
               Continuar
             </Button>
@@ -164,7 +164,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
             <div className="mt-4">
               <div className="w-full bg-gray-200 rounded-full h-1">
                 <div 
-                  className={`bg-gradient-to-r ${config.color} h-1 rounded-full transition-all ease-linear`}
+                  className={`bg-keepla-red h-1 rounded-full transition-all ease-linear`}
                   style={{ 
                     width: '100%',
                     animation: `shrink ${duration}ms linear`
@@ -191,7 +191,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
                 animationDuration: `${2 + Math.random() * 2}s`
               }}
             >
-              <div className={`w-2 h-2 bg-gradient-to-r ${config.color} rounded-full opacity-60`} />
+              <div className={`w-2 h-2 bg-keepla-red rounded-full opacity-60`} />
             </div>
           ))}
         </div>

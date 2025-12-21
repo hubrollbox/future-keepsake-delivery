@@ -170,7 +170,7 @@ const Checkout = () => {
   // Mostrar estado de carregamento do carrinho
   if (cartLoading) {
     return (
-      <div className="min-h-screen bg-warm-gradient">
+      <div className="min-h-screen bg-keepla-white">
         <Navigation />
         <div className="container mx-auto px-4 py-16">
           <Card className="max-w-md mx-auto emotion-card">
@@ -190,7 +190,7 @@ const Checkout = () => {
   // Exibir mensagem quando carrinho estiver vazio (após carregar)
   if (!cartLoading && items.length === 0) {
     return (
-      <div className="min-h-screen bg-warm-gradient">
+      <div className="min-h-screen bg-keepla-white">
         <Navigation />
         <div className="container mx-auto px-4 py-16">
           <Card className="max-w-md mx-auto emotion-card">
@@ -210,7 +210,7 @@ const Checkout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-warm-gradient">
+    <div className="min-h-screen bg-keepla-white">
       <Navigation />
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
@@ -223,8 +223,8 @@ const Checkout = () => {
             <div className="space-y-8">
               <Card className="emotion-card">
                 <CardHeader>
-                  <CardTitle className="flex items-center space-x-3 text-gentle-black font-serif">
-                    <User className="h-5 w-5 text-gold" />
+                    <CardTitle className="flex items-center space-x-3 text-gentle-black font-serif">
+                    <User className="h-5 w-5 text-keepla-red" />
                     <span>Informações de Contacto</span>
                   </CardTitle>
                 </CardHeader>
@@ -263,8 +263,8 @@ const Checkout = () => {
 
               <Card className="emotion-card">
                 <CardHeader>
-                  <CardTitle className="flex items-center space-x-3 text-gentle-black font-serif">
-                    <MapPin className="h-5 w-5 text-gold" />
+                    <CardTitle className="flex items-center space-x-3 text-gentle-black font-serif">
+                    <MapPin className="h-5 w-5 text-keepla-red" />
                     <span>Endereço de Entrega</span>
                   </CardTitle>
                 </CardHeader>
@@ -367,7 +367,7 @@ const Checkout = () => {
               <Card className="emotion-card sticky top-8">
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-3 text-gentle-black font-serif">
-                    <CreditCard className="h-5 w-5 text-gold" />
+                    <CreditCard className="h-5 w-5 text-keepla-red" />
                     <span>Resumo do Pedido</span>
                   </CardTitle>
                 </CardHeader>
@@ -437,7 +437,7 @@ const Checkout = () => {
                             )}
                             <div className="flex justify-between items-center text-xl font-bold">
                               <span className="text-keepla-gray-dark">Total:</span>
-                              <span className="text-gold">€{totalCalculated.toFixed(2)}</span>
+                              <span className="text-keepla-red">€{totalCalculated.toFixed(2)}</span>
                             </div>
                           </div>
                         );

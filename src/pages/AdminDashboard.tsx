@@ -24,7 +24,7 @@ const AdminDashboardPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-lavender-mist flex items-center justify-center">
+      <div className="min-h-screen bg-keepla-white flex items-center justify-center">
         <div className="flex items-center space-x-2">
           <Loader2 className="h-8 w-8 animate-spin text-keepla-red" />
           <span className="text-keepla-gray-dark font-medium">A verificar permissões...</span>
@@ -39,7 +39,7 @@ const AdminDashboardPage = () => {
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-lavender-mist flex items-center justify-center">
+      <div className="min-h-screen bg-keepla-white flex items-center justify-center">
         <div className="text-center emotion-card p-8">
           <h1 className="text-2xl font-bold text-keepla-gray-dark mb-4 font-fraunces">Acesso Negado</h1>
           <p className="text-keepla-gray-light mb-4">Não tens permissões para aceder a esta área.</p>

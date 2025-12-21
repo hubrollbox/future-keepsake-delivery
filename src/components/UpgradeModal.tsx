@@ -58,8 +58,8 @@ const UPGRADE_OPTIONS: Record<string, UpgradeOption[]> = {
         'Música de fundo'
       ],
       badge: 'Mais Popular',
-      color: 'text-red-600',
-      gradient: 'from-red-500 to-pink-600'
+      color: 'text-keepla-gray-dark',
+      gradient: ''
     },
     {
       id: 'photo_collage',
@@ -73,8 +73,8 @@ const UPGRADE_OPTIONS: Record<string, UpgradeOption[]> = {
         'Filtros especiais',
         'Download em alta resolução'
       ],
-      color: 'text-blue-600',
-      gradient: 'from-blue-500 to-purple-600'
+      color: 'text-keepla-gray-dark',
+      gradient: ''
     }
   ],
   amor: [
@@ -92,8 +92,8 @@ const UPGRADE_OPTIONS: Record<string, UpgradeOption[]> = {
         'Entrega em data especial'
       ],
       badge: 'Oferta Especial',
-      color: 'text-pink-600',
-      gradient: 'from-pink-500 to-red-600'
+      color: 'text-keepla-gray-dark',
+      gradient: ''
     },
     {
       id: 'love_photo',
@@ -107,8 +107,8 @@ const UPGRADE_OPTIONS: Record<string, UpgradeOption[]> = {
         'Filtro vintage',
         'Qualidade premium'
       ],
-      color: 'text-keepla-red',
-      gradient: 'from-rose-500 to-pink-600'
+      color: 'text-keepla-gray-dark',
+      gradient: ''
     }
   ],
   conquista: [
@@ -126,8 +126,8 @@ const UPGRADE_OPTIONS: Record<string, UpgradeOption[]> = {
         'Entrega em casa'
       ],
       badge: 'Edição Limitada',
-      color: 'text-yellow-600',
-      gradient: 'from-yellow-500 to-orange-600'
+      color: 'text-keepla-gray-dark',
+      gradient: ''
     },
     {
       id: 'trophy_digital',
@@ -141,8 +141,8 @@ const UPGRADE_OPTIONS: Record<string, UpgradeOption[]> = {
         'Compartilhamento social',
         'Certificado digital'
       ],
-      color: 'text-amber-600',
-      gradient: 'from-amber-500 to-yellow-600'
+      color: 'text-keepla-gray-dark',
+      gradient: ''
     }
   ],
   familia: [
@@ -159,8 +159,8 @@ const UPGRADE_OPTIONS: Record<string, UpgradeOption[]> = {
         'Compartilhamento privado'
       ],
       badge: 'Família',
-      color: 'text-green-600',
-      gradient: 'from-green-500 to-emerald-600'
+      color: 'text-keepla-gray-dark',
+      gradient: ''
     }
   ],
   amizade: [
@@ -176,8 +176,8 @@ const UPGRADE_OPTIONS: Record<string, UpgradeOption[]> = {
         'Stickers exclusivos',
         'Lembrança permanente'
       ],
-      color: 'text-purple-600',
-      gradient: 'from-purple-500 to-indigo-600'
+      color: 'text-keepla-gray-dark',
+      gradient: ''
     }
   ]
 };
@@ -197,8 +197,8 @@ const DEFAULT_OPTIONS: UpgradeOption[] = [
       'Suporte prioritário'
     ],
     badge: 'Recomendado',
-    color: 'text-indigo-600',
-    gradient: 'from-indigo-500 to-purple-600'
+    color: 'text-keepla-gray-dark',
+    gradient: ''
   },
   {
     id: 'ai_enhancement',
@@ -212,8 +212,8 @@ const DEFAULT_OPTIONS: UpgradeOption[] = [
       'Correção automática',
       'Ideias criativas'
     ],
-    color: 'text-violet-600',
-    gradient: 'from-violet-500 to-purple-600'
+    color: 'text-keepla-gray-dark',
+    gradient: ''
   }
 ];
 
@@ -315,12 +315,12 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               className="text-center space-y-2"
             >
               <div className="text-4xl mb-2">{getKeywordEmoji(keywords)}</div>
-              <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              <DialogTitle className="text-2xl font-bold text-keepla-gray-dark">
                 {getPersonalizedTitle(keywords)}
               </DialogTitle>
               <p className="text-gray-600">
                 Detectamos que sua cápsula é sobre{' '}
-                <span className="font-semibold text-purple-600">
+                <span className="font-semibold text-keepla-gray-dark">
                   {keywords.join(', ')}
                 </span>
                 . Aqui estão algumas opções especiais para você!
@@ -340,15 +340,15 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <Card 
+                    <Card 
                     className={`relative cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 ${
-                      isSelected ? 'ring-2 ring-purple-500 shadow-lg' : ''
+                      isSelected ? 'ring-2 ring-keepla-red shadow-lg' : ''
                     }`}
                     onClick={() => !isLoading && handleUpgrade(option.id)}
                   >
                     {option.badge && (
                       <div className="absolute -top-2 -right-2 z-10">
-                        <Badge className={`bg-gradient-to-r ${option.gradient} text-white shadow-lg`}>
+                        <Badge className={`bg-keepla-gray-dark text-white`}>
                           <Star className="w-3 h-3 mr-1" />
                           {option.badge}
                         </Badge>
@@ -356,7 +356,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
                     )}
                     
                     <CardHeader className="text-center pb-2">
-                      <div className={`w-12 h-12 mx-auto mb-2 p-2 rounded-full bg-gradient-to-r ${option.gradient} text-white`}>
+                      <div className={`w-12 h-12 mx-auto mb-2 p-2 rounded-full bg-keepla-gray text-white`}>
                         <IconComponent className="w-full h-full" />
                       </div>
                       <CardTitle className="text-lg font-bold">{option.title}</CardTitle>
@@ -371,12 +371,12 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
                               €{option.originalPrice.toFixed(2)}
                             </span>
                           )}
-                          <span className={`text-2xl font-bold ${option.color}`}>
+                          <span className={`text-2xl font-bold text-keepla-gray-dark`}>
                             €{option.price.toFixed(2)}
                           </span>
                         </div>
                         {option.originalPrice && (
-                          <div className="text-xs text-green-600 font-medium">
+                          <div className="text-xs text-keepla-gray font-medium">
                             Economize €{(option.originalPrice - option.price).toFixed(2)}!
                           </div>
                         )}
@@ -385,14 +385,14 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
                       <ul className="space-y-2 mb-4">
                         {option.features.map((feature, idx) => (
                           <li key={idx} className="flex items-center text-sm text-gray-600">
-                            <Check className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
+                            <Check className="w-4 h-4 text-keepla-gray mr-2 flex-shrink-0" />
                             {feature}
                           </li>
                         ))}
                       </ul>
                       
                       <Button
-                        className={`w-full bg-gradient-to-r ${option.gradient} hover:opacity-90 transition-all duration-200`}
+                        className={`w-full bg-keepla-red hover:opacity-90 transition-all duration-200`}
                         disabled={isLoading}
                         onClick={(e) => {
                           e.stopPropagation();
