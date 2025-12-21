@@ -7,7 +7,7 @@
  * - fallback em erro
  */
 
-import React, { useCallback, CSSProperties } from 'react';
+import { useCallback, CSSProperties } from 'react';
 
 interface KeepslaImageProps {
   src: string;
