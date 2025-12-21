@@ -7,20 +7,20 @@ const ManifestoSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="emotional-spacing">
-      <div className="emotion-card max-w-4xl mx-auto p-8 md:p-12 text-center">
+    <section className="py-section-lg">
+      <div className="bg-keepla-white border border-keepla-gray rounded-2xl max-w-4xl mx-auto p-8 md:p-12 text-center">
         <div className="flex justify-center mb-8">
-          <div className="w-16 h-16 bg-keepla-red/20 rounded-2xl flex items-center justify-center">
+          <div className="w-16 h-16 bg-keepla-red/10 rounded-2xl flex items-center justify-center">
             <Heart className="h-8 w-8 text-keepla-red" />
           </div>
         </div>
         
-        <h2 className="text-section-title text-keepla-black mb-8 font-fraunces">
+        <h2 className="text-3xl md:text-4xl font-bold text-keepla-black mb-8 font-inter">
           Porque Há Coisas Que Só Fazem Sentido<br />
           <span className="text-keepla-red">No Momento Certo</span>
         </h2>
 
-        <div className="space-y-6 text-keepla-gray leading-relaxed mb-8">
+        <div className="space-y-6 text-keepla-gray-700 leading-relaxed mb-8 font-inter">
           <p className="text-xl font-medium text-keepla-black">
             Vivemos num mundo acelerado, onde tudo é imediato — mas há palavras que precisam de amadurecer, 
             de esperar pelo momento perfeito para florescer.

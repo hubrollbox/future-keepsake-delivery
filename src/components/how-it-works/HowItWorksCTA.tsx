@@ -13,15 +13,15 @@ const HowItWorksCTA = ({ onNavigate }: HowItWorksCTAProps) => {
   };
 
   return (
-    <div className="text-center emotion-card p-8 md:p-12 max-w-5xl mx-auto">
-      <Heart className="h-16 w-16 md:h-20 md:w-20 text-earthy-burgundy mx-auto mb-6" />
-      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-blue mb-6 md:mb-8 font-fraunces">
+    <div className="text-center bg-keepla-white border border-keepla-gray rounded-2xl p-8 md:p-12 max-w-5xl mx-auto">
+      <Heart className="h-16 w-16 md:h-20 md:w-20 text-keepla-red mx-auto mb-6" />
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-keepla-black mb-6 md:mb-8 font-inter">
         Pronto para Te Tornares um Guardião do Tempo?
       </h2>
-      <p className="text-xl md:text-2xl text-dusty-rose mb-6 md:mb-8 font-bold font-fraunces italic">
+      <p className="text-xl md:text-2xl text-keepla-red mb-6 md:mb-8 font-bold font-georgia italic">
         Presente no futuro
       </p>
-      <p className="text-lg md:text-xl text-misty-gray mb-8 md:mb-10 leading-relaxed max-w-4xl mx-auto">
+      <p className="text-lg md:text-xl text-keepla-gray-700 mb-8 md:mb-10 leading-relaxed max-w-4xl mx-auto font-inter">
         Começa a criar memórias para o futuro e desbloqueia os teus primeiros selos temporais. 
         <strong className="text-earthy-burgundy"> Junta-te a milhares de Guardiões do Tempo</strong>.
       </p>
