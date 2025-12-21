@@ -174,7 +174,7 @@ const BlogPost = () => {
               );
             })()}
 
-            <h1 className="text-4xl font-bold text-foreground mb-4">{post.title}</h1>
+            <h1 className="text-4xl font-bold text-keepla-black mb-4">{post.title}</h1>
             {post.excerpt && (
               <p className="text-xl text-muted-foreground mb-6">{post.excerpt}</p>
             )}
@@ -184,7 +184,7 @@ const BlogPost = () => {
                 {post.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm"
+                    className="px-3 py-1 bg-keepla-red/10 text-keepla-red rounded-full text-sm"
                   >
                     <Tag className="inline h-3 w-3 mr-1" />
                     {tag}
@@ -220,7 +220,7 @@ const BlogPost = () => {
 
           <div className="prose prose-lg dark:prose-invert max-w-none">
             <div
-              className="whitespace-pre-wrap text-foreground leading-relaxed"
+              className="whitespace-pre-wrap text-keepla-black leading-relaxed"
               dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, "<br/>") }}
             />
           </div>

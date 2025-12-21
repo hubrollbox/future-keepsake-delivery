@@ -87,13 +87,13 @@ const About = () => {
           </motion.div>
           
           <motion.h1 
-            className="text-5xl md:text-6xl font-inter font-bold text-foreground mb-6 leading-tight"
+            className="text-5xl md:text-6xl font-inter font-bold text-keepla-black mb-6 leading-tight text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             Somos a{" "}
-            <span className="text-primary block font-georgia italic">keepla</span>
+            <span className="text-keepla-red block font-georgia italic">keepla</span>
           </motion.h1>
           
           <motion.p 
@@ -103,7 +103,7 @@ const About = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             Uma plataforma dedicada à preservação de{" "}
-            <span className="text-primary font-semibold">memória, sensibilidade e presença.</span>
+            <span className="text-keepla-red font-semibold">memória, sensibilidade e presença.</span>
           </motion.p>
         </motion.div>
 
@@ -116,7 +116,7 @@ const About = () => {
           transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
         >
           <p className="section-tagline text-center">A nossa promessa</p>
-          <h2 className="text-3xl md:text-4xl font-inter font-bold text-foreground mb-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-inter font-bold text-keepla-black mb-6 text-center">
             A Nossa Missão
           </h2>
           <blockquote className="testimonial-quote text-center mb-6">
@@ -138,7 +138,7 @@ const About = () => {
         >
           <motion.p className="section-tagline text-center" variants={itemVariants}>O que nos move</motion.p>
           <motion.h2 
-            className="text-3xl md:text-4xl font-inter font-bold text-foreground mb-8 text-center"
+            className="text-3xl md:text-4xl font-inter font-bold text-keepla-black mb-8 text-center"
             variants={itemVariants}
           >
             A Nossa Essência
@@ -153,10 +153,10 @@ const About = () => {
                 className="bg-card border border-border rounded-2xl text-center p-8 hover:shadow-keepla hover:scale-105 transition-all duration-300 group"
                 variants={itemVariants}
               >
-                <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/20 transition-colors">
-                  <value.icon className="h-8 w-8 text-primary" />
+                <div className="w-16 h-16 bg-keepla-red/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-keepla-red/20 transition-colors">
+                  <value.icon className="h-8 w-8 text-keepla-red" />
                 </div>
-                <h3 className="text-xl font-inter font-semibold text-foreground mb-4">{value.title}</h3>
+                <h3 className="text-xl font-inter font-semibold text-keepla-black mb-4">{value.title}</h3>
                 <p className="text-muted-foreground leading-relaxed font-georgia italic">{value.description}</p>
               </motion.div>
             ))}
@@ -181,7 +181,7 @@ const About = () => {
               onError={(e) => { e.currentTarget.src = '/lovable-uploads/a58d6383-77f7-451e-b692-d10c4298397e.png'; }}
             />
             <p className="section-tagline">A nossa identidade</p>
-            <h2 className="text-3xl md:text-4xl font-inter font-bold text-foreground mb-6">
+            <h2 className="text-3xl md:text-4xl font-inter font-bold text-keepla-black mb-6">
               Conceito: Selo do Tempo
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed mb-8">
@@ -206,7 +206,7 @@ const About = () => {
           transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
         >
           <div className="absolute inset-0 pointer-events-none">
-            <div className="w-3/4 h-24 md:h-52 bg-primary/10 blur-3xl rounded-full absolute left-1/2 top-0 -translate-x-1/2" />
+            <div className="w-3/4 h-24 md:h-52 bg-keepla-red/10 blur-3xl rounded-full absolute left-1/2 top-0 -translate-x-1/2" />
           </div>
           <div className="relative z-10 text-center px-8">
             <motion.p 
@@ -219,7 +219,7 @@ const About = () => {
               A tua história começa aqui
             </motion.p>
             <motion.h2 
-              className="text-3xl md:text-4xl font-inter font-bold text-foreground mb-6"
+              className="text-3xl md:text-4xl font-inter font-bold text-keepla-black mb-6"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -247,7 +247,7 @@ const About = () => {
               <Button 
                 size="lg" 
                 onClick={() => handleNavigation('/register')}
-                className="px-8 py-5 text-base md:text-lg min-h-[48px] md:min-h-[56px] group bg-primary hover:bg-secondary text-primary-foreground font-inter font-semibold shadow-keepla hover:shadow-keepla-intense hover:scale-105 transition-all duration-200"
+                className="px-8 py-5 text-base md:text-lg min-h-[48px] md:min-h-[56px] group bg-keepla-red hover:bg-keepla-red/90 text-keepla-white font-inter font-semibold shadow-keepla hover:shadow-keepla-intense hover:scale-105 transition-all duration-200"
               >
                 <Heart className="mr-2 h-5 w-5 group-hover:animate-bounce" />
                 Começar Agora
@@ -257,7 +257,7 @@ const About = () => {
                 variant="outline" 
                 size="lg" 
                 onClick={() => handleNavigation('/contact')}
-                className="px-8 py-5 text-base md:text-lg min-h-[48px] md:min-h-[56px] bg-background border-2 border-foreground text-foreground hover:bg-foreground/10 font-inter font-semibold transition-all duration-200"
+                className="px-8 py-5 text-base md:text-lg min-h-[48px] md:min-h-[56px] bg-keepla-white border-2 border-keepla-black text-keepla-black hover:bg-keepla-black/10 font-inter font-semibold transition-all duration-200"
               >
                 Falar Connosco
               </Button>

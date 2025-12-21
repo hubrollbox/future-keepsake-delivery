@@ -112,7 +112,7 @@ const Blog = () => {
           variants={itemVariants}
         >
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight">Blog</h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-keepla-black tracking-tight">Blog</h1>
             <p className="text-muted-foreground mt-2 font-serif italic">
               Histórias, novidades e reflexões sobre guardar emoções.
             </p>
@@ -127,7 +127,7 @@ const Blog = () => {
         {/* Error State */}
         {error && (
           <motion.div 
-            className="bg-card border border-primary text-primary p-6 mb-8 rounded-lg"
+            className="bg-card border border-keepla-red text-keepla-red p-6 mb-8 rounded-lg"
             variants={itemVariants}
           >
             <p className="font-medium">{error}</p>
@@ -138,9 +138,9 @@ const Blog = () => {
                 </Button>
               </div>
             ) : (
-              <p className="text-foreground mt-3">
+              <p className="text-keepla-black mt-3">
                 Se o problema persistir, por favor{" "}
-                <a href="/contact" className="underline hover:text-primary transition-colors">
+                <a href="/contact" className="underline hover:text-keepla-red transition-colors">
                   contacta o suporte
                 </a>.
               </p>
@@ -192,7 +192,7 @@ const Blog = () => {
                     </div>
                   )}
                   <div className="p-6">
-                    <h2 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
+                    <h2 className="text-xl font-bold text-keepla-black group-hover:text-keepla-red transition-colors">
                       {post.title}
                     </h2>
                     {post.excerpt && (

@@ -143,8 +143,8 @@ const Products = () => {
             <Sparkles className="h-3 w-3 mr-1" />
             Catálogo Completo
           </Badge>
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 font-inter">
-            Presentes com <span className="text-primary">Alma</span>
+          <h1 className="text-4xl md:text-5xl font-bold text-keepla-black mb-6 font-inter">
+            Presentes com <span className="text-keepla-red">Alma</span>
           </h1>
           <p className="text-lg text-muted-foreground font-inter">
             Cada presente é uma ponte entre o presente e o futuro, carregando o
@@ -174,13 +174,13 @@ const Products = () => {
                     key={product.id}
                     className={`relative h-full transition-all duration-300 ${
                       isHighlighted
-                        ? "border-2 border-primary shadow-xl scale-[1.02]"
+                        ? "border-2 border-keepla-red shadow-xl scale-[1.02]"
                         : "border border-border hover:border-foreground/30 hover:shadow-lg"
                     }`}
                   >
                     {isHighlighted && (
                       <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
-                        <Badge className="bg-primary text-primary-foreground">
+                        <Badge className="bg-keepla-red text-keepla-white">
                           Mais Popular
                         </Badge>
                       </div>
@@ -189,11 +189,11 @@ const Products = () => {
                       <div className="mx-auto p-3 bg-muted rounded-full w-fit mb-4">
                         <IconComponent className="h-6 w-6 text-primary" />
                       </div>
-                      <CardTitle className="text-xl font-bold text-foreground font-inter">
+                      <CardTitle className="text-xl font-bold text-keepla-black font-inter">
                         {product.name}
                       </CardTitle>
                       <div className="mt-4">
-                        <span className="text-4xl font-bold text-primary">
+                        <span className="text-4xl font-bold text-keepla-red">
                           {product.price === 0
                             ? "Grátis"
                             : `${product.price.toFixed(2).replace(".", ",")}€`}
@@ -225,8 +225,8 @@ const Products = () => {
                         onClick={() => handleAddToCart(product)}
                         className={`w-full ${
                           isHighlighted
-                            ? "bg-primary hover:bg-secondary text-primary-foreground"
-                            : "bg-foreground hover:bg-foreground/90 text-background"
+                            ? "bg-keepla-red hover:bg-keepla-red/90 text-keepla-white"
+                            : "bg-keepla-black hover:bg-keepla-black/90 text-keepla-white"
                         }`}
                         size="lg"
                       >

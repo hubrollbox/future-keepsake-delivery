@@ -142,9 +142,9 @@ function Pricing() {
         {/* Hero Section */}
         <div className="text-center mb-16 max-w-3xl mx-auto">
           <p className="section-tagline mb-4">Memórias que ficam, entregues para sempre</p>
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 font-inter leading-tight">
+          <h1 className="text-4xl md:text-5xl font-bold text-keepla-black mb-6 font-inter leading-tight">
             Escolhe a forma perfeita de enviar{" "}
-            <span className="text-primary">amor</span> através do tempo
+            <span className="text-keepla-red">amor</span> através do tempo
           </h1>
           <p className="hero-subtitle text-muted-foreground mx-auto">
             Preços transparentes, memórias eternas. Sem subscrições, sem surpresas.
@@ -158,7 +158,7 @@ function Pricing() {
             <div key={plan.id} className="relative">
               {plan.highlighted && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
-                  <span className="bg-primary text-primary-foreground text-sm px-4 py-1.5 rounded-full font-inter font-medium shadow-lg">
+                  <span className="bg-keepla-red text-keepla-white text-sm px-4 py-1.5 rounded-full font-inter font-medium shadow-lg">
                     Mais Popular
                   </span>
                 </div>
@@ -166,16 +166,16 @@ function Pricing() {
               <Card
                 className={`h-full transition-all duration-300 ${
                   plan.highlighted
-                    ? "border-2 border-primary shadow-xl scale-[1.02]"
+                    ? "border-2 border-keepla-red shadow-xl scale-[1.02]"
                     : "border border-border hover:border-foreground/30 hover:shadow-lg"
                 }`}
               >
                 <CardHeader className="text-center pb-2 pt-8">
-                  <CardTitle className="text-2xl font-bold text-foreground font-inter mb-2">
+                  <CardTitle className="text-2xl font-bold text-keepla-black font-inter mb-2">
                     {plan.name}
                   </CardTitle>
                   <div className="mt-4 mb-2">
-                    <span className="text-4xl md:text-5xl font-bold text-primary font-inter">
+                    <span className="text-4xl md:text-5xl font-bold text-keepla-red font-inter">
                       {plan.price}
                     </span>
                     {plan.priceValue > 0 && (
@@ -192,8 +192,8 @@ function Pricing() {
                   <ul className="space-y-3 mb-8">
                     {plan.features.map((feature, index) => (
                       <li key={index} className="flex items-start gap-3">
-                        <Check className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                        <span className="text-sm text-foreground font-inter">
+                        <Check className="h-5 w-5 text-keepla-red mt-0.5 flex-shrink-0" />
+                        <span className="text-sm text-keepla-black font-inter">
                           {feature}
                         </span>
                       </li>
@@ -201,10 +201,10 @@ function Pricing() {
                   </ul>
                   <Button
                     onClick={() => handleSelectPlan(plan)}
-                    className={`w-full font-inter font-semibold py-6 ${
+                    className={`w-full font-inter font-semibold py-6 transition-all ${
                       plan.highlighted
-                        ? "bg-primary hover:bg-secondary text-primary-foreground"
-                        : "bg-foreground hover:bg-foreground/90 text-background"
+                        ? "bg-keepla-red hover:bg-keepla-red/90 text-keepla-white"
+                        : "bg-keepla-black hover:bg-keepla-black/90 text-keepla-white"
                     }`}
                     size="lg"
                   >
@@ -220,12 +220,12 @@ function Pricing() {
         <div className="mb-20">
           <div className="text-center mb-10">
             <div className="inline-flex items-center gap-2 bg-muted px-4 py-2 rounded-full mb-4">
-              <Clock className="h-4 w-4 text-primary" />
-              <span className="text-sm font-medium text-foreground font-inter">
+              <Clock className="h-4 w-4 text-keepla-red" />
+              <span className="text-sm font-medium text-keepla-black font-inter">
                 Brevemente
               </span>
             </div>
-            <h2 className="text-3xl font-bold text-foreground font-inter">
+            <h2 className="text-3xl font-bold text-keepla-black font-inter">
               Presentes Físicos
             </h2>
             <p className="text-muted-foreground mt-2 font-inter">
@@ -243,7 +243,7 @@ function Pricing() {
                     <product.icon className="h-6 w-6 text-muted-foreground" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground font-inter mb-1">
+                    <h3 className="font-semibold text-keepla-black font-inter mb-1">
                       {product.name}
                     </h3>
                     <p className="text-sm text-muted-foreground font-inter">
@@ -258,7 +258,7 @@ function Pricing() {
 
         {/* FAQ Section */}
         <div className="max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl font-bold text-foreground mb-8 text-center font-inter">
+          <h2 className="text-3xl font-bold text-keepla-black mb-8 text-center font-inter">
             Dúvidas Frequentes
           </h2>
           <div className="space-y-3">
@@ -267,7 +267,7 @@ function Pricing() {
                 key={index}
                 className="group bg-card p-5 rounded-lg border border-border hover:border-foreground/20 transition-colors"
               >
-                <summary className="font-medium cursor-pointer text-foreground font-inter flex items-center justify-between">
+                <summary className="font-medium cursor-pointer text-keepla-black font-inter flex items-center justify-between">
                   {faq.question}
                   <span className="ml-4 text-muted-foreground group-open:rotate-180 transition-transform">
                     ▼
@@ -282,18 +282,18 @@ function Pricing() {
         </div>
 
         {/* Final CTA */}
-        <div className="text-center bg-foreground text-background rounded-2xl p-10 md:p-16 max-w-4xl mx-auto">
-          <p className="font-georgia italic text-background/70 mb-4">O momento perfeito é agora</p>
+        <div className="text-center bg-keepla-black text-keepla-white rounded-2xl p-10 md:p-16 max-w-4xl mx-auto">
+          <p className="font-georgia italic text-keepla-white/70 mb-4">O momento perfeito é agora</p>
           <h2 className="text-3xl md:text-4xl font-bold mb-4 font-inter">
             Pronto para criar a tua primeira memória?
           </h2>
-          <p className="subtitle-emotional text-background/80 mb-8">
+          <p className="subtitle-emotional text-keepla-white/80 mb-8">
             Começa grátis. Sem cartão de crédito. Sem compromisso.
           </p>
           <Button
             onClick={() => navigate(user ? "/create-keepsake" : "/register")}
             size="lg"
-            className="bg-primary hover:bg-secondary text-primary-foreground font-inter font-semibold px-8 py-6 text-lg shadow-keepla hover:shadow-keepla-intense transition-all"
+            className="bg-keepla-red hover:bg-keepla-red/90 text-keepla-white font-inter font-semibold px-8 py-6 text-lg shadow-keepla hover:shadow-keepla-intense transition-all"
           >
             Começar Grátis Agora
           </Button>
