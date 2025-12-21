@@ -36,7 +36,7 @@ const GamificationCard = ({
 
   const getTypeColor = () => {
     if (!unlocked) return "bg-keepla-gray text-gray-600";
-    return "bg-keepla-red/10 text-keepla-red-deep";
+    return "bg-keepla-red/10 text-keepla-red";
   };
 
   const progressPercentage = (progress / maxProgress) * 100;

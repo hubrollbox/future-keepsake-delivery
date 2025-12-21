@@ -12,13 +12,12 @@
 /* ------------------------------------------------------ */
 :root {
   /* Cores de Base */
-  --keepla-black: #1a1a1a;
-  --keepla-white: #ffffff;
-  --keepla-gray: #6b7280;
+  --keepla-black: #000000;
+  --keepla-white: #FFFFFF;
+  --keepla-gray: #6B6B6B;
   
-  /* Vermelho Carmesim (Cor de Destaque) */
-  --keepla-red: #C8102E;
-  --keepla-red-deep: #A00D25;
+  /* Vermelho Oficial Keepla (Cor de Destaque) */
+  --keepla-red: #E63946;
   
   /* Cores de Feedback */
   --color-success: #10b981;
@@ -49,7 +48,8 @@ img {
 }
 
 .btn-primary:hover {
-  background-color: var(--keepla-red-deep);
+  background-color: var(--keepla-red);
+  opacity: 0.9;
 }
 
 /* Destaque de Texto (Links, Frases Emotivas) */

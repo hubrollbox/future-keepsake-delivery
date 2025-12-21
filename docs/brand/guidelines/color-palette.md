@@ -6,8 +6,7 @@ A paleta Keepla é minimalista e emocional: **preto e branco da memória** + **v
 
 | Cor | Nome | Hex | HSL | Uso Principal |
 |-----|------|-----|-----|---------------|
-| 🔴 | **Keepla Red** | `#E63946` | `354° 76% 59%` | Selo da marca, destaque emocional, elementos-chave |
-| 🔴 | **Deep Red CTA** | `#C6282E` | `354° 62% 47%` | Botões, call-to-actions, interações críticas |
+| 🔴 | **Keepla Red** | `#E63946` | `346° 80% 59%` | Acento emocional único - CTA, destaque, ícones |
 | ⚫ | **Black** | `#000000` | `0° 0% 0%` | Fundos principais, texto, fotografia P&B |
 | ⚪ | **White** | `#FFFFFF` | `0° 0% 100%` | Fundos alternativos, texto sobre escuro, equilíbrio |
 | 🔘 | **Gray Neutral** | `#E0E0E0` | `0° 0% 88%` | Divisores subtis, fundos secundários, bordas |
@@ -16,20 +15,21 @@ A paleta Keepla é minimalista e emocional: **preto e branco da memória** + **v
 
 ## 🚫 O Que NÃO Fazer
 
-- ❌ Nunca usar cores além da paleta oficial
-- ❌ Nunca usar fotografias coloridas (exceto em produtos específicos)
-- ❌ Nunca diluir o vermelho Keepla (manter sempre #E63946 ou #C6282E)
-- ❌ Nunca usar gradientes com outras cores
+- ❌ Nunca usar cores além da paleta oficial (preto, branco, cinzento, vermelho #E63946)
+- ❌ Nunca usar fotografias coloridas
+- ❌ Nunca usar gradientes
+- ❌ Nunca usar dourado, metálicos ou efeitos de brilho
+- ❌ Nunca criar múltiplas variações de vermelho
 
 ---
 
 ## ✅ O Que Fazer
 
 - ✅ Fotografia sempre em **preto e branco**
-- ✅ Usar **Keepla Red (#E63946)** apenas como destaque emocional principal
-- ✅ Usar **Deep Red CTA (#C6282E)** em todos os botões de ação
+- ✅ Usar **Keepla Red (#E63946)** como ÚNICO acento (CTAs, ícones, destaque)
 - ✅ Manter **contrastes fortes** (preto/branco/vermelho)
 - ✅ Fundos neutros (preto, branco ou cinzento #E0E0E0)
+- ✅ Usar opacidade/transparency em vez de criar cores novas (ex: `keepla-red/80`)
 
 ---
 
@@ -37,19 +37,26 @@ A paleta Keepla é minimalista e emocional: **preto e branco da memória** + **v
 
 ```css
 :root {
-  /* Cores principais Keepla */
-  --keepla-red: #E63946;           /* 354° 76% 59% */
-  --keepla-red-deep: #C6282E;      /* 354° 62% 47% */
-  --keepla-black: #000000;         /* 0° 0% 0% */
-  --keepla-white: #FFFFFF;         /* 0° 0% 100% */
-  --keepla-gray-neutral: #E0E0E0;  /* 0° 0% 88% */
-  
-  /* Aliases semânticos */
-  --color-primary: var(--keepla-red);
-  --color-cta: var(--keepla-red-deep);
-  --color-background: var(--keepla-white);
-  --color-text: var(--keepla-black);
-  --color-border: var(--keepla-gray-neutral);
+  /* Cores Oficiais Keepla - Fonte Única */
+  --keepla-red: #E63946;           /* Único acento emocional */
+  --keepla-black: #000000;         /* Texto e fundos principais */
+  --keepla-white: #FFFFFF;         /* Fundos alternativos */
+  --keepla-gray-100: #F5F5F5;      /* Fundos suaves */
+  --keepla-gray-200: #E0E0E0;      /* Bordas e divisores */
+  --keepla-gray-500: #6B6B6B;      /* Texto secundário */
+  --keepla-gray-800: #262626;      /* Texto principal alternativo */
+}
+```
+
+Variações de intensity usam **opacity**:
+```css
+.btn-primary {
+  background-color: #E63946;  /* keepla-red */
+}
+
+.btn-primary:hover {
+  background-color: #E63946;
+  opacity: 0.9;  /* Variação por opacity, NÃO por cor diferente */
 }
 ```
 
@@ -60,13 +67,17 @@ A paleta Keepla é minimalista e emocional: **preto e branco da memória** + **v
 ### Botão CTA Principal
 ```css
 .btn-cta {
-  background-color: #C6282E;  /* Deep Red CTA */
-  color: #FFFFFF;              /* White text */
+  background-color: #E63946;  /* Keepla Red */
+  color: #FFFFFF;             /* White text */
   border-radius: 12px;
+}
+
+.btn-cta:hover {
+  opacity: 0.9;  /* Variação por opacity */
 }
 ```
 
-### Selo de Destaque
+### Acento de Destaque
 ```css
 .brand-highlight {
   color: #E63946;  /* Keepla Red */
@@ -89,8 +100,7 @@ Em contextos de dark mode:
 - Fundo: `#000000` (Black)
 - Texto: `#FFFFFF` (White)
 - Destaque: `#E63946` (Keepla Red - mantém-se igual)
-- CTA: `#C6282E` (Deep Red CTA - mantém-se igual)
-- Bordas/Divisores: `#333333` (cinzento mais escuro que #E0E0E0)
+- Bordas/Divisores: `#333333` (cinzento mais escuro)
 
 ---
 

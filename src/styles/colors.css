@@ -2,8 +2,7 @@
 
 :root {
   /* Core palette - single source of truth */
-  --keepla-red: #E63946;         /* Strict accent — validated */
-  --keepla-red-deep: #C6282E;    /* Use only for stronger CTAs when needed */
+  --keepla-red: #E63946;         /* Official emotional accent */
   --keepla-black: #000000;
   --keepla-white: #FFFFFF;
   --keepla-gray-100: #F5F5F5;
@@ -21,14 +20,12 @@
 
 /* Utility classes (minimal) */
 .bg-keepla-red { background-color: var(--keepla-red); }
-.bg-keepla-red-deep { background-color: var(--keepla-red-deep); }
 .bg-keepla-black { background-color: var(--keepla-black); }
 .bg-keepla-white { background-color: var(--keepla-white); }
 .bg-keepla-gray { background-color: var(--keepla-gray-100); }
 .bg-keepla-gray-dark { background-color: var(--keepla-gray-800); }
 
 .text-keepla-red { color: var(--keepla-red); }
-.text-keepla-red-deep { color: var(--keepla-red-deep); }
 .text-keepla-black { color: var(--keepla-black); }
 .text-keepla-white { color: var(--keepla-white); }
 .text-keepla-gray { color: var(--keepla-gray-500); }

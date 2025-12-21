@@ -115,7 +115,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
             <div className="absolute inset-0 animate-spin-slow">
               <Sparkles className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2 w-6 h-6 text-keepla-red" />
               <Heart className="absolute right-0 top-1/2 transform translate-x-2 -translate-y-1/2 w-5 h-5 text-keepla-red" />
-              <Star className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-2 w-5 h-5 text-keepla-red-deep" />
+              <Star className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-2 w-5 h-5 text-keepla-red" />
             </div>
           </div>
 
@@ -141,7 +141,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
 
               <div className="space-y-2">
                 <div className="w-12 h-12 mx-auto bg-white rounded-full flex items-center justify-center shadow-md">
-                  <Calendar className="w-6 h-6 text-keepla-red-deep" />
+                  <Calendar className="w-6 h-6 text-keepla-red" />
                 </div>
                 <h3 className="font-semibold text-keepla-black">Entrega</h3>
                 <p className="text-sm text-gray-600 font-medium">{formatDate(deliveryDate)}</p>
@@ -171,7 +171,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
             
             <Button
               onClick={onClose}
-              className="bg-keepla-red hover:bg-keepla-red-deep text-white px-8 py-3"
+              className="bg-keepla-red hover:bg-keepla-red/90 text-white px-8 py-3"
             >
               <CheckCircle className="w-5 h-5 mr-2" />
               Perfeito!

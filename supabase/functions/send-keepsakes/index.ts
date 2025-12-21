@@ -288,8 +288,8 @@ async function processKeepsakes() {
 
           // Template de email para o destinatário
           const recipientEmailHtml = `
-            <div style="font-family: 'Fraunces', serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #F5F2F8;">
-              <div style="background: white; padding: 30px; border-radius: 12px; border: 2px solid #DAB8C3;">
+            <div style="font-family: 'Fraunces', serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #F5F5F5;">
+              <div style="background: white; padding: 30px; border-radius: 12px; border: 2px solid #E63946;">
                 <h1 style="color: #3D4A5A; margin-bottom: 20px; font-size: 24px;">${sanitizedKeepsake.title}</h1>
                 
                 <p style="color: #3D4A5A; line-height: 1.6; margin-bottom: 20px;">
@@ -343,8 +343,8 @@ async function processKeepsakes() {
           
           if (shouldSendToSender) {
             senderEmailHtml = `
-              <div style="font-family: 'Fraunces', serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #F5F2F8;">
-                <div style="background: white; padding: 30px; border-radius: 12px; border: 2px solid #DAB8C3;">
+              <div style="font-family: 'Fraunces', serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #F5F5F5;">
+                <div style="background: white; padding: 30px; border-radius: 12px; border: 2px solid #E63946;">
                   <h1 style="color: #3D4A5A; margin-bottom: 20px; font-size: 24px;">Sua mensagem foi entregue!</h1>
                   
                   <p style="color: #3D4A5A; line-height: 1.6; margin-bottom: 20px;">

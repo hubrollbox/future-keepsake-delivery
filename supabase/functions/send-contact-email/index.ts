@@ -156,26 +156,26 @@ const handler = async (req: Request): Promise<Response> => {
       to: ["brandadministration@gmail.com"],
       subject: `Nova mensagem de contacto: ${escapeHtml(subject).substring(0, 100)}`,
       html: `
-        <div style="font-family: 'Fraunces', serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #F5F2F8;">
-          <div style="background: white; padding: 30px; border-radius: 12px; border: 2px solid #DAB8C3;">
-            <h1 style="color: #3D4A5A; margin-bottom: 20px; font-size: 24px;">Nova Mensagem de Contacto</h1>
+        <div style="font-family: 'Fraunces', serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #F5F5F5;">
+          <div style="background: white; padding: 30px; border-radius: 12px; border: 2px solid #E63946;">
+            <h1 style="color: #262626; margin-bottom: 20px; font-size: 24px;">Nova Mensagem de Contacto</h1>
             
-            <div style="margin-bottom: 20px; padding: 15px; background-color: #ECE5DA; border-radius: 8px;">
-              <h3 style="color: #3D4A5A; margin: 0 0 10px 0;">Detalhes do Contacto:</h3>
-              <p style="margin: 5px 0; color: #3D4A5A;"><strong>Nome:</strong> ${escapeHtml(name)}</p>
-              <p style="margin: 5px 0; color: #3D4A5A;"><strong>Email:</strong> ${escapeHtml(email)}</p>
-              <p style="margin: 5px 0; color: #3D4A5A;"><strong>Assunto:</strong> ${escapeHtml(subject)}</p>
+            <div style="margin-bottom: 20px; padding: 15px; background-color: #F5F5F5; border-radius: 8px;">
+              <h3 style="color: #262626; margin: 0 0 10px 0;">Detalhes do Contacto:</h3>
+              <p style="margin: 5px 0; color: #262626;"><strong>Nome:</strong> ${escapeHtml(name)}</p>
+              <p style="margin: 5px 0; color: #262626;"><strong>Email:</strong> ${escapeHtml(email)}</p>
+              <p style="margin: 5px 0; color: #262626;"><strong>Assunto:</strong> ${escapeHtml(subject)}</p>
             </div>
             
             <div style="margin-bottom: 20px;">
-              <h3 style="color: #3D4A5A; margin-bottom: 10px;">Mensagem:</h3>
-              <div style="background-color: #F5F2F8; padding: 15px; border-radius: 8px; border-left: 4px solid #DAB8C3;">
-                <p style="color: #3D4A5A; line-height: 1.6; margin: 0;">${escapeHtml(message).replace(/\n/g, '<br>')}</p>
+              <h3 style="color: #262626; margin-bottom: 10px;">Mensagem:</h3>
+              <div style="background-color: #F5F5F5; padding: 15px; border-radius: 8px; border-left: 4px solid #E63946;">
+                <p style="color: #262626; line-height: 1.6; margin: 0;">${escapeHtml(message).replace(/\n/g, '<br>')}</p>
               </div>
             </div>
             
             <div style="text-align: center; margin-top: 30px;">
-              <p style="color: #A0AEC0; font-size: 14px; margin: 0;">
+              <p style="color: #7A7A7A; font-size: 14px; margin: 0;">
                 Mensagem enviada através do formulário de contacto do site FuturoPresente
               </p>
             </div>
@@ -190,20 +190,20 @@ const handler = async (req: Request): Promise<Response> => {
       to: [email],
       subject: "Mensagem recebida - FuturoPresente",
       html: `
-        <div style="font-family: 'Fraunces', serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #F5F2F8;">
-          <div style="background: white; padding: 30px; border-radius: 12px; border: 2px solid #DAB8C3;">
-            <h1 style="color: #3D4A5A; margin-bottom: 20px; font-size: 24px;">Obrigado pelo seu contacto!</h1>
+        <div style="font-family: 'Fraunces', serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #F5F5F5;">
+          <div style="background: white; padding: 30px; border-radius: 12px; border: 2px solid #E63946;">
+            <h1 style="color: #262626; margin-bottom: 20px; font-size: 24px;">Obrigado pelo seu contacto!</h1>
             
-            <p style="color: #3D4A5A; line-height: 1.6; margin-bottom: 20px;">
+            <p style="color: #262626; line-height: 1.6; margin-bottom: 20px;">
               Olá ${escapeHtml(name)},
             </p>
             
-            <p style="color: #3D4A5A; line-height: 1.6; margin-bottom: 20px;">
+            <p style="color: #262626; line-height: 1.6; margin-bottom: 20px;">
               Recebemos a sua mensagem sobre "<strong>${escapeHtml(subject)}</strong>" e entraremos em contacto consigo o mais brevemente possível.
             </p>
             
-            <div style="background-color: #ECE5DA; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <p style="color: #3D4A5A; margin: 0; font-style: italic;">
+            <div style="background-color: #F5F5F5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <p style="color: #262626; margin: 0; font-style: italic;">
                 "O FuturoPresente nasceu de um gesto íntimo: uma mensagem escrita por um pai à filha, para ser lida aos 18 anos. 
                 Mais do que uma aplicação tecnológica, é um espaço de memória, sensibilidade e presença."
               </p>

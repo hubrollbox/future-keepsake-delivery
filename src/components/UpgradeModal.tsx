@@ -422,13 +422,13 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="mt-6 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-200"
+            className="mt-6 p-4 bg-keepla-red/5 rounded-lg border border-keepla-red/30"
           >
-            <div className="flex items-center space-x-2 text-blue-700 mb-2">
+            <div className="flex items-center space-x-2 text-keepla-red mb-2">
               <Sparkles className="w-5 h-5" />
               <span className="font-semibold">Por que fazer upgrade?</span>
             </div>
-            <ul className="text-sm text-blue-600 space-y-1">
+            <ul className="text-sm text-keepla-red space-y-1">
               <li>• Torne sua cápsula mais impactante e memorável</li>
               <li>• Recursos exclusivos não disponíveis na versão gratuita</li>
               <li>• Suporte prioritário e entrega garantida</li>

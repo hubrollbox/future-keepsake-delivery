@@ -119,12 +119,12 @@ const Login = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="teu@email.com"
-                  className={`border-keepla-red/30 focus:border-keepla-red ${errors.email ? "border-red-500" : ""}`}
+                  className={`border-keepla-red/30 focus:border-keepla-red ${errors.email ? "border-keepla-red" : ""}`}
                   required
                   autoComplete="email"
                 />
                 {errors.email && (
-                  <p className="text-red-600 text-sm mt-1">{errors.email}</p>
+                  <p className="text-keepla-red text-sm mt-1">{errors.email}</p>
                 )}
               </div>
               <div>
@@ -137,11 +137,11 @@ const Login = () => {
                   onChange={handleInputChange}
                   placeholder="A tua palavra-passe"
                   autoComplete="current-password"
-                  className={`border-keepla-red/30 focus:border-keepla-red ${errors.password ? "border-red-500" : ""}`}
+                  className={`border-keepla-red/30 focus:border-keepla-red ${errors.password ? "border-keepla-red" : ""}`}
                   required
                 />
                 {errors.password && (
-                  <p className="text-red-600 text-sm mt-1">{errors.password}</p>
+                  <p className="text-keepla-red text-sm mt-1">{errors.password}</p>
                 )}
               </div>
               <Button 

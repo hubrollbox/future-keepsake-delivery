@@ -138,7 +138,7 @@ export const adminPlans: AdminPlan[] = [
       'Pagamento único'
     ],
     isPopular: false,
-    color: 'border-purple-300',
+    color: 'border-keepla-red/30',
     buttonText: 'Contactar'
   },
   {

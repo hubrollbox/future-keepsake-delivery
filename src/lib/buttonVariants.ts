@@ -6,10 +6,10 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         // Brand Book: CTA padrão usa #C6282E (Deep Red CTA)
-        default: "bg-keepla-red-deep text-white hover:bg-keepla-red rounded-xl shadow-keepla-sm",
+        default: "bg-keepla-red text-white hover:bg-keepla-red/90 rounded-xl shadow-keepla-sm",
         
         // Brand Book: Destaque emocional principal (#E63946)
-        brand: "bg-keepla-red text-white hover:bg-keepla-red-deep rounded-xl shadow-keepla-sm font-medium",
+        brand: "bg-keepla-red text-white hover:bg-keepla-red/90 rounded-xl shadow-keepla-sm font-medium",
         
         // Brand Book: Outline com vermelho Keepla
         "brand-outline": "border-2 border-keepla-red bg-transparent text-keepla-red hover:bg-keepla-red hover:text-white rounded-xl transition-all",
@@ -20,7 +20,7 @@ export const buttonVariants = cva(
         // Variantes compatibilidade
         outline: "border-2 border-keepla-red bg-transparent text-keepla-red hover:bg-keepla-red/10 rounded-xl",
         secondary: "bg-keepla-gray-neutral text-keepla-black hover:bg-keepla-gray-neutral/80 rounded-xl",
-        destructive: "bg-keepla-red-deep text-white hover:bg-keepla-red rounded-xl",
+        destructive: "bg-keepla-red text-white hover:bg-keepla-red/90 rounded-xl",
         ghost: "hover:bg-keepla-gray-neutral hover:text-keepla-black rounded-xl",
         link: "text-keepla-red underline-offset-4 hover:underline",
       },

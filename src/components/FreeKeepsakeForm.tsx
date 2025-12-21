@@ -381,7 +381,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
                           type="button"
                           size="sm"
                           onClick={applySuggestion}
-                          className="bg-keepla-red hover:bg-keepla-red-deep text-white"
+                          className="bg-keepla-red hover:bg-keepla-red/90 text-white"
                         >
                           Usar esta sugestão
                         </Button>
@@ -536,7 +536,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
               <Button
                 type="button"
                 onClick={nextStep}
-                className="flex items-center space-x-2 bg-keepla-red hover:bg-keepla-red-deep text-white"
+                className="flex items-center space-x-2 bg-keepla-red hover:bg-keepla-red/90 text-white"
               >
                 <span>Próximo</span>
                 <ChevronRight className="w-4 h-4" />
@@ -545,7 +545,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
               <Button
                 type="submit"
                 disabled={isLoading || !isValid}
-                className="flex items-center space-x-2 bg-keepla-red hover:bg-keepla-red-deep text-white"
+                className="flex items-center space-x-2 bg-keepla-red hover:bg-keepla-red/90 text-white"
               >
                 {isLoading ? (
                   <>

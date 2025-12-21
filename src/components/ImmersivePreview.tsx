@@ -84,7 +84,7 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
           </p>
           <Button 
             onClick={() => setSimulationStep(1)}
-            className="w-full bg-keepla-red hover:bg-keepla-red-deep text-keepla-white"
+            className="w-full bg-keepla-red hover:bg-keepla-red/90 text-keepla-white"
           >
             Abrir Cápsula
           </Button>
@@ -126,7 +126,7 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
         <div className="flex justify-center space-x-4">
           <Button 
             onClick={() => setSimulationStep(3)}
-            className="bg-keepla-red hover:bg-keepla-red-deep text-keepla-white"
+            className="bg-keepla-red hover:bg-keepla-red/90 text-keepla-white"
           >
             Continuar Experiência
           </Button>
@@ -191,7 +191,7 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
             </Button>
             <Button
               onClick={() => setShowPreview(false)}
-              className="bg-keepla-red hover:bg-keepla-red-deep text-keepla-white"
+              className="bg-keepla-red hover:bg-keepla-red/90 text-keepla-white"
             >
               Fechar Preview
             </Button>
@@ -277,7 +277,7 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
                 setShowPreview(true);
                 setSimulationStep(0);
               }}
-              className="bg-keepla-red hover:bg-keepla-red-deep text-white px-8 py-3 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+              className="bg-keepla-red hover:bg-keepla-red/90 text-white px-8 py-3 rounded-xl hover:shadow-lg transition-all duration-300 transform hover:scale-105"
             >
               <Sparkles className="w-5 h-5 mr-2" />
               Prévia da Experiência de Recebimento
@@ -294,7 +294,7 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
             </Button>
             <Button
               onClick={onConfirm}
-              className="flex-1 sm:flex-none bg-keepla-red hover:bg-keepla-red-deep text-keepla-white"
+              className="flex-1 sm:flex-none bg-keepla-red hover:bg-keepla-red/90 text-keepla-white"
             >
               Confirmar e Agendar
             </Button>

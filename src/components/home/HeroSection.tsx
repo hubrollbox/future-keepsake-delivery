@@ -90,7 +90,7 @@ const HeroSection = () => {
             <Button 
               onClick={handleStartJourney}
               size="lg" 
-              className="text-lg px-8 py-6 bg-keepla-red hover:bg-keepla-red-deep text-keepla-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-lg font-semibold"
+              className="text-lg px-8 py-6 bg-keepla-red hover:bg-keepla-red/90 text-keepla-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-lg font-semibold"
             >
               {user ? "Ir para Dashboard" : "Começar a minha jornada"}
             </Button>

@@ -24,7 +24,7 @@ const CapsuleCard = ({
   const getStatusColor = (status: string) => {
     switch (status) {
       case "pending": return "bg-keepla-gray text-keepla-black";
-      case "delivered": return "bg-keepla-red/10 text-keepla-red-deep";
+      case "delivered": return "bg-keepla-red/10 text-keepla-red";
       case "scheduled": return "bg-keepla-gray-neutral text-keepla-black";
       default: return "bg-keepla-gray text-keepla-black";
     }

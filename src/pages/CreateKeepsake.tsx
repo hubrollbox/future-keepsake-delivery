@@ -195,7 +195,7 @@ function CreateKeepsake() {
 
                 {/* Inline error feedback on Review step */}
                 {currentStep === 5 && formState.submissionError && (
-                  <div className="rounded-md border border-red-300 bg-red-50 text-red-700 p-3">
+                  <div className="rounded-md border border-keepla-red/30 bg-keepla-red/5 text-keepla-red p-3">
                     <p className="font-medium">Erro ao criar cápsula</p>
                     <p className="text-sm mt-1">{formState.submissionError}</p>
                   </div>
@@ -242,7 +242,7 @@ function CreateKeepsake() {
                           type={currentStep === 5 ? "submit" : "button"}
                           onClick={currentStep === 5 ? undefined : nextStep}
                           disabled={isSubmitting || isValidating}
-                          className="bg-keepla-red hover:bg-keepla-red-deep text-white px-8 w-full sm:w-auto"
+                          className="bg-keepla-red hover:bg-keepla-red/90 text-white px-8 w-full sm:w-auto"
                         >
                           {isSubmitting ? (
                             <>

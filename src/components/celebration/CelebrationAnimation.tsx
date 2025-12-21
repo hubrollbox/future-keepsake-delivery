@@ -153,7 +153,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
                 setIsVisible(false);
                 setTimeout(onClose, 500);
               }}
-              className="bg-keepla-red hover:bg-keepla-red-deep text-white px-8 py-2"
+              className="bg-keepla-red hover:bg-keepla-red/90 text-white px-8 py-2"
             >
               Continuar
             </Button>

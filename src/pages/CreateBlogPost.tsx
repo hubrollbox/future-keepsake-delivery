@@ -399,13 +399,13 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
             id="title"
             {...register('title')}
             placeholder="Título do post"
-            className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full border border-keepla-gray-200 rounded-lg p-3 focus:ring-2 focus:ring-keepla-red focus:border-keepla-red"
             aria-required="true"
-            aria-invalid={errors.title ? 'true' : 'false'}
+            aria-invalid={errors.title ? true : false}
             aria-describedby={errors.title ? 'title-error' : undefined}
           />
           {errors.title && (
-            <p id="title-error" className="text-red-600 text-sm mt-1">
+            <p id="title-error" className="text-keepla-red text-sm mt-1">
               {errors.title.message}
             </p>
           )}
@@ -422,7 +422,7 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
               id="slug"
               {...register('slug')}
               placeholder="slug-do-post"
-              className="flex-1 border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="flex-1 border border-keepla-gray-200 rounded-lg p-3 focus:ring-2 focus:ring-keepla-red focus:border-keepla-red"
               aria-describedby={errors.slug ? 'slug-error slug-help' : 'slug-help'}
               onChange={(e) => {
                 clearErrors('slug');
@@ -434,7 +434,7 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
             Será gerado automaticamente a partir do título. Pode editar manualmente.
           </p>
           {errors.slug && (
-            <p id="slug-error" className="text-red-600 text-sm mt-1">
+            <p id="slug-error" className="text-keepla-red text-sm mt-1">
               {errors.slug.message}
             </p>
           )}
@@ -450,7 +450,7 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
             {...register('excerpt')}
             placeholder="Breve descrição do post"
             rows={3}
-            className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
+            className="w-full border border-keepla-gray-200 rounded-lg p-3 focus:ring-2 focus:ring-keepla-red focus:border-keepla-red resize-none"
             aria-describedby={errors.excerpt ? 'excerpt-error excerpt-counter' : 'excerpt-counter'}
           />
           <div className="flex justify-between items-center">
@@ -458,7 +458,7 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
               {excerpt?.length || 0}/500 caracteres
             </p>
             {errors.excerpt && (
-              <p id="excerpt-error" className="text-red-600 text-sm">
+              <p id="excerpt-error" className="text-keepla-red text-sm">
                 {errors.excerpt.message}
               </p>
             )}
@@ -475,9 +475,9 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
             {...register('content')}
             placeholder="Escreva o conteúdo do post aqui..."
             rows={12}
-            className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-y font-mono text-sm"
+            className="w-full border border-keepla-gray-200 rounded-lg p-3 focus:ring-2 focus:ring-keepla-red focus:border-keepla-red resize-y font-mono text-sm"
             aria-required="true"
-            aria-invalid={errors.content ? 'true' : 'false'}
+            aria-invalid={errors.content ? true : false}
             aria-describedby={errors.content ? 'content-error content-counter' : 'content-counter'}
           />
           <div className="flex justify-between items-center">
@@ -485,7 +485,7 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
               {content?.length || 0} caracteres
             </p>
             {errors.content && (
-              <p id="content-error" className="text-red-600 text-sm">
+              <p id="content-error" className="text-keepla-red text-sm">
                 {errors.content.message}
               </p>
             )}
@@ -515,7 +515,7 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
             id="publish"
             type="checkbox"
             {...register('publish')}
-            className="h-4 w-4 text-blue-600 rounded focus:ring-blue-500"
+            className="h-4 w-4 text-keepla-red rounded focus:ring-keepla-red"
           />
           <div className="space-y-0.5">
             <label htmlFor="publish" className="text-sm font-medium text-gray-700">
@@ -543,7 +543,7 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
                   <img
                     src={imagePreview || existingCoverUrl || ''}
                     alt="Pré-visualização da capa"
-                    className="rounded-lg border border-gray-300 max-h-64 object-cover w-full"
+                    className="rounded-lg border border-keepla-gray-200 max-h-64 object-cover w-full"
                   />
                 )}
                 <Button
@@ -566,7 +566,7 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
               id="cover-file"
               accept="image/*,video/*"
               onChange={handleFileChange}
-              className="w-full border border-gray-300 rounded-lg p-2 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              className="w-full border border-keepla-gray-200 rounded-lg p-2 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-keepla-red/10 file:text-keepla-red hover:file:bg-keepla-red/20"
               aria-describedby="cover-help"
               disabled={isSubmitting}
             />

@@ -54,14 +54,13 @@ O logotipo deve manter um espaço livre igual a **½ do seu diâmetro** em redor
 
 | Cor | Hex | Uso |
 |------|------|------|
-| **Keepla Red** | `#E63946` | Cor emocional principal (selo, destaque de marca) |
-| **Deep Red CTA** | `#C6282E` | Botões, chamadas para ação |
+| **Keepla Red** | `#E63946` | Acento emocional único - CTA, ícones, destaque |
 | **Black** | `#000000` | Fundo principal, fotografia e contraste |
 | **White** | `#FFFFFF` | Texto e equilíbrio visual |
 | **Gray Neutral** | `#E0E0E0` | Divisores, fundos secundários |
 
 **Regra principal:**  
-A marca vive entre o **preto e branco da memória** e o **vermelho do presente que pulsa**.
+A marca vive entre o **preto e branco da memória** e o **vermelho do presente que pulsa**. Apenas uma cor de acento: `#E63946`.
 
 ---
 
@@ -101,9 +100,10 @@ A fotografia é o **coração emocional da marca**.
 
 ### Call to Action padrão
 - Texto: **"Quero ser cliente piloto"** ou variações contextuais
-- Cor de fundo: `#C6282E`  
+- Cor de fundo: `#E63946` (Keepla Red)
 - Texto branco (`#FFFFFF`)  
 - Bordas arredondadas (8px–12px).
+- Hover: mesma cor com opacidade 0.9
 
 ---
 
@@ -130,7 +130,6 @@ Formato: **1:1**, tamanho 1080×1080px (compatível com Instagram Highlights).
 ```css
 :root {
   --color-primary: #E63946;
-  --color-cta: #C6282E;
   --color-black: #000000;
   --color-white: #FFFFFF;
   --color-gray-neutral: #E0E0E0;
@@ -152,11 +151,11 @@ Use esta checklist para garantir que qualquer novo design segue o Brand Book:
 
 - [ ] Logótipo é sempre circular (nunca horizontal)
 - [ ] Todas as fotografias estão em preto e branco
-- [ ] Cores usadas são exclusivamente da paleta oficial
-- [ ] Botões CTA usam #C6282E como fundo
+- [ ] Cores usadas são exclusivamente da paleta oficial (preto, branco, cinzento, vermelho #E63946)
+- [ ] Botões CTA usam #E63946 como fundo
+- [ ] Sem gradientes, dourados ou metálicos
 - [ ] Tipografia segue hierarquia: Inter (títulos/texto) e Georgia (frases emotivas)
 - [ ] Design é minimalista com espaço em branco intencional
-- [ ] Selo vermelho (#E63946) usado apenas como destaque principal
 - [ ] Ícones são monocromáticos com traço fino e contínuo
 - [ ] Tom de voz é emocional, humano e reflexivo
 - [ ] Mobile-first approach aplicado

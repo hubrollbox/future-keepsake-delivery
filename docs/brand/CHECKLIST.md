@@ -15,15 +15,14 @@ Use esta checklist para garantir que qualquer novo design, componente ou página
 ---
 
 ### 🎨 Cores
-- [ ] Todas as cores usadas pertencem à **paleta oficial**:
-  - `#E63946` (Keepla Red) - Apenas para destaque emocional
-  - `#C6282E` (Deep Red CTA) - Todos os botões de ação
+- [ ] Todas as cores usadas pertencem à **paleta oficial ÚNICA**:
+  - `#E63946` (Keepla Red) - Acento emocional único (CTAs, ícones, destaque)
   - `#000000` (Black) - Fundos/texto
   - `#FFFFFF` (White) - Fundos alternativos/texto sobre escuro
   - `#E0E0E0` (Gray Neutral) - Divisores/fundos secundários
-- [ ] **Nenhuma outra cor** foi introduzida
-- [ ] Vermelho Keepla (`#E63946`) usado **apenas como destaque principal**
-- [ ] Botões CTA usam **sempre** `#C6282E` como fundo
+- [ ] **Nenhuma outra cor** foi introduzida (sem gradientes, dourados, metálicos)
+- [ ] Vermelho Keepla (`#E63946`) é o **ÚNICO acento** em todo projeto
+- [ ] Botões CTA usam **sempre** `#E63946` como fundo
 
 ---
 
@@ -60,9 +59,10 @@ Use esta checklist para garantir que qualquer novo design, componente ou página
 ---
 
 ### 🔘 Botões e CTAs
-- [ ] Botão primário (CTA): fundo `#C6282E`, texto branco
+- [ ] Botão primário (CTA): fundo `#E63946`, texto branco
 - [ ] Botão outline: borda `#E63946`, texto `#E63946`, hover preenche
 - [ ] Botão suave/neutro: fundo `#E0E0E0`, texto preto
+- [ ] Variações por opacity (`0.9`, `0.8`), NOT por cores diferentes
 - [ ] Texto do botão nunca em uppercase total
 - [ ] Textos como: **"Quero ser cliente piloto"**, **"Começar a Guardar"**, etc.
 
@@ -101,18 +101,20 @@ Use esta checklist para garantir que qualquer novo design, componente ou página
 - [ ] Variáveis CSS oficiais usadas:
   ```css
   --keepla-red: #E63946;
-  --keepla-red-deep: #C6282E;
   --keepla-black: #000000;
   --keepla-white: #FFFFFF;
-  --keepla-gray-neutral: #E0E0E0;
+  --keepla-gray-100: #F5F5F5;
+  --keepla-gray-200: #E0E0E0;
+  --keepla-gray-500: #6B6B6B;
+  --keepla-gray-800: #262626;
   ```
 - [ ] Cores HSL corretas no `index.css`:
   ```css
-  --keepla-red: 354 76% 59%;
-  --keepla-red-deep: 354 62% 47%;
+  --keepla-red: 346 80% 59%;  /* #E63946 */
   ```
 - [ ] Classes Tailwind personalizadas usam paleta oficial
 - [ ] Nenhuma cor direta (ex: `#FF0000`, `blue-500`) no código
+- [ ] Nenhuma reference a `keepla-red-deep` ou cores obsoletas
 
 ---
 

@@ -102,7 +102,7 @@ export const plans: PublicPlan[] = [
     ],
     buttonText: "Contactar",
     popular: false,
-    color: "border-purple-300",
+    color: "border-keepla-red/30",
     badge: "Empresas"
   },
   {

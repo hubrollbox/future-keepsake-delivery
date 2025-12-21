@@ -344,7 +344,7 @@ const AdminPlans = () => {
                                 <AlertDialogCancel>Cancelar</AlertDialogCancel>
                                 <AlertDialogAction
                                   onClick={() => handleDeletePlan(plan.id)}
-                                  className="bg-keepla-red hover:bg-keepla-red-deep text-white"
+                                  className="bg-keepla-red hover:bg-keepla-red/90 text-white"
                                 >
                                   Remover
                                 </AlertDialogAction>

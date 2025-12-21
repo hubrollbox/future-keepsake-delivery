@@ -149,7 +149,7 @@ const Checkout = () => {
         description: (
           <span>
             O seu pedido foi registado.<br />
-            <a href={paymentLink} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">Clique aqui para pagar</a>.
+            <a href={paymentLink} target="_blank" rel="noopener noreferrer" className="text-keepla-red underline">Clique aqui para pagar</a>.
           </span>
         ),
       });
@@ -236,12 +236,12 @@ const Checkout = () => {
                       type="email"
                       value={contactInfo.email}
                       onChange={(e) => handleInputChange('contact', 'email', e.target.value)}
-                      className={`mt-2 rounded-xl ${errors.email ? 'border-red-500' : 'border-gray-200'}`}
+                      className={`mt-2 rounded-xl ${errors.email ? 'border-keepla-red' : 'border-gray-200'}`}
                       placeholder="seu@email.com"
                       required
                     />
                     {errors.email && (
-                      <div className="flex items-center space-x-1 mt-1 text-red-500 text-sm">
+                      <div className="flex items-center space-x-1 mt-1 text-keepla-red text-sm">
                         <AlertTriangle className="h-4 w-4" />
                         <span>{errors.email}</span>
                       </div>
@@ -275,12 +275,12 @@ const Checkout = () => {
                       id="name"
                       value={shippingInfo.name}
                       onChange={(e) => handleInputChange('shipping', 'name', e.target.value)}
-                      className={`mt-2 rounded-xl ${errors.name ? 'border-red-500' : 'border-gray-200'}`}
+                      className={`mt-2 rounded-xl ${errors.name ? 'border-keepla-red' : 'border-gray-200'}`}
                       placeholder="João Silva"
                       required
                     />
                     {errors.name && (
-                      <div className="flex items-center space-x-1 mt-1 text-red-500 text-sm">
+                      <div className="flex items-center space-x-1 mt-1 text-keepla-red text-sm">
                         <AlertTriangle className="h-4 w-4" />
                         <span>{errors.name}</span>
                       </div>
@@ -292,12 +292,12 @@ const Checkout = () => {
                       id="address"
                       value={shippingInfo.address}
                       onChange={(e) => handleInputChange('shipping', 'address', e.target.value)}
-                      className={`mt-2 rounded-xl ${errors.address ? 'border-red-500' : 'border-gray-200'}`}
+                      className={`mt-2 rounded-xl ${errors.address ? 'border-keepla-red' : 'border-gray-200'}`}
                       placeholder="Rua das Flores, 123, 2º Esq."
                       required
                     />
                     {errors.address && (
-                      <div className="flex items-center space-x-1 mt-1 text-red-500 text-sm">
+                      <div className="flex items-center space-x-1 mt-1 text-keepla-red text-sm">
                         <AlertTriangle className="h-4 w-4" />
                         <span>{errors.address}</span>
                       </div>
@@ -310,12 +310,12 @@ const Checkout = () => {
                         id="city"
                         value={shippingInfo.city}
                         onChange={(e) => handleInputChange('shipping', 'city', e.target.value)}
-                        className={`mt-2 rounded-xl ${errors.city ? 'border-red-500' : 'border-gray-200'}`}
+                        className={`mt-2 rounded-xl ${errors.city ? 'border-keepla-red' : 'border-gray-200'}`}
                         placeholder="Lisboa"
                         required
                       />
                       {errors.city && (
-                        <div className="flex items-center space-x-1 mt-1 text-red-500 text-sm">
+                        <div className="flex items-center space-x-1 mt-1 text-keepla-red text-sm">
                           <AlertTriangle className="h-4 w-4" />
                           <span>{errors.city}</span>
                         </div>
@@ -327,13 +327,13 @@ const Checkout = () => {
                         id="postalCode"
                         value={shippingInfo.postalCode}
                         onChange={(e) => handleInputChange('shipping', 'postalCode', e.target.value)}
-                        className={`mt-2 rounded-xl ${errors.postalCode ? 'border-red-500' : 'border-gray-200'}`}
+                        className={`mt-2 rounded-xl ${errors.postalCode ? 'border-keepla-red' : 'border-gray-200'}`}
                         placeholder="4450-123"
                         maxLength={8}
                         required
                       />
                       {errors.postalCode && (
-                        <div className="flex items-center space-x-1 mt-1 text-red-500 text-sm">
+                        <div className="flex items-center space-x-1 mt-1 text-keepla-red text-sm">
                           <AlertTriangle className="h-4 w-4" />
                           <span>{errors.postalCode}</span>
                         </div>
@@ -347,13 +347,13 @@ const Checkout = () => {
                       type="tel"
                       value={shippingInfo.phone}
                       onChange={(e) => handleInputChange('shipping', 'phone', e.target.value)}
-                      className={`mt-2 rounded-xl ${errors.phone ? 'border-red-500' : 'border-gray-200'}`}
+                      className={`mt-2 rounded-xl ${errors.phone ? 'border-keepla-red' : 'border-gray-200'}`}
                       placeholder="912 345 678"
                       maxLength={11}
                       required
                     />
                     {errors.phone && (
-                      <div className="flex items-center space-x-1 mt-1 text-red-500 text-sm">
+                      <div className="flex items-center space-x-1 mt-1 text-keepla-red text-sm">
                         <AlertTriangle className="h-4 w-4" />
                         <span>{errors.phone}</span>
                       </div>

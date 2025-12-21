@@ -32,9 +32,8 @@
     --border: 0 0% 90%;
     --radius: 0.5rem;
 
-    /* Brand Keepla */
-    --keepla-red: 348 83% 47%;
-    --keepla-red-deep: 348 83% 38%;
+    /* Brand Keepla - Official Palette */
+    --keepla-red: 346 80% 59%;      /* #E63946 */
     --keepla-white: 0 0% 100%;
     --keepla-black: 0 0% 0%;
   }
@@ -136,7 +135,7 @@ select:focus-visible {
 }
 
 .btn-primary:hover {
-  background-color: hsl(var(--keepla-red-deep));
+  background-color: hsl(var(--keepla-red));
 }
 
 .btn-secondary {
