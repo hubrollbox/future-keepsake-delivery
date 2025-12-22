@@ -242,7 +242,7 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
 
       const { data: urlData } = supabase.storage
         .from('blog-covers')
-        .getPublicUrl(fileName) as any;
+        .getPublicUrl(fileName);
 
       return urlData?.publicUrl || null;
     } catch (error) {
