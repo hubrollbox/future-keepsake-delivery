@@ -96,7 +96,10 @@ export const useCreateDeliveryForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Submit acionado. Passo atual:", currentStep);
+    
     if (currentStep === 3) {
+      console.log("Iniciando processo de criação da entrega...");
       setLoading(true);
       setError("");
 
@@ -144,7 +147,10 @@ export const useCreateDeliveryForm = () => {
           payment_status: "pending",
         };
 
+        console.log("Dados para inserir:", dataToInsert);
+
         if (!validateDeliveryData(dataToInsert)) {
+          console.warn("Falha na validação final dos dados");
           setLoading(false);
           return;
         }
@@ -175,6 +181,7 @@ export const useCreateDeliveryForm = () => {
         toast({ title: "Sucesso", description: "Entrega criada com sucesso!" });
         setCurrentStep(4);
       } catch (err: unknown) {
+        console.error("Erro no processo de submit:", err);
         const errorMessage = err instanceof Error ? err.message : "Erro desconhecido";
         setError(errorMessage);
         let toastMessage = errorMessage;
