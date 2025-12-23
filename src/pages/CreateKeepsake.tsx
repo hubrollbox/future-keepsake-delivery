@@ -81,6 +81,7 @@ function CreateKeepsake() {
   }
 
   const renderStepContent = () => {
+    console.log('CreateKeepsake rendering step:', currentStep);
     const common = { form, nextStep, prevStep };
     const formData: KeepsakeFormData = { 
       ...form.getValues(), 

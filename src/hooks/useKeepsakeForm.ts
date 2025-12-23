@@ -229,16 +229,22 @@ export const useKeepsakeForm = () => {
       };
 
       // CORREÇÃO 4: Simplificar a inserção, removendo a lógica de retry
+      console.log('Submitting keepsake...', basePayload);
       const { data: keepsakeData, error: keepsakeError } = await supabase
         .from('keepsakes')
         .insert({
           ...basePayload,
-          message_content: formData.message,
+          message_content: formData.message || " ", // Ensure not null
+          message: formData.message || " ", // Ensure message column is filled if it exists
         })
         .select()
         .single();
 
-      if (keepsakeError) throw keepsakeError;
+      if (keepsakeError) {
+        console.error('Error inserting keepsake:', keepsakeError);
+        throw keepsakeError;
+      }
+      console.log('Keepsake created:', keepsakeData);
 
       // Inserir dados do destinatário
       const recipientPayload: {
@@ -290,13 +296,17 @@ export const useKeepsakeForm = () => {
         description: 'A sua cápsula do tempo foi criada e será entregue na data especificada.',
       });
 
+      console.log('Success! Advancing to step 6');
       // Resetar formulário e avançar para etapa de sucesso
-      setFormState(prev => ({ 
-        ...prev, 
-        currentStep: 6,
-        hasUnsavedChanges: false,
-        submissionError: '',
-      }));
+      setFormState(prev => {
+        console.log('Updating form state to step 6');
+        return { 
+          ...prev, 
+          currentStep: 6,
+          hasUnsavedChanges: false,
+          submissionError: '',
+        };
+      });
       
       return true;
 
