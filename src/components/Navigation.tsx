@@ -78,6 +78,14 @@ const Navigation = () => {
 
           {/* Right side - Auth */}
           <div className="flex items-center space-x-4">
+            <Button 
+              variant="brand-outline" 
+              onClick={() => navigate("/blog")}
+              className="hidden md:flex"
+            >
+              Caderno
+            </Button>
+
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -155,6 +163,13 @@ const Navigation = () => {
                   {item.name}
                 </Link>
               ))}
+              <Link
+                to="/blog"
+                className="text-keepla-black hover:text-keepla-red transition-colors font-semibold px-4 py-3 touch-target rounded-md hover:bg-keepla-gray"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Caderno
+              </Link>
             </div>
           </div>
         )}
