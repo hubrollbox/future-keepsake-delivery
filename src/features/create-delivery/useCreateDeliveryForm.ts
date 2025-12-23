@@ -84,7 +84,7 @@ export const useCreateDeliveryForm = () => {
   };
 
   const validateDeliveryData = (data: DeliveryInsertData): boolean => {
-    if (!data.title || !data.recipient_name || !data.recipient_email || !data.delivery_date || !data.delivery_time) {
+    if (!data.title || !data.recipient_name || !data.recipient_email || !data.delivery_date || !data.delivery_time || !data.message) {
       toast({
         title: "Erro de Validação",
         description: "Campos obrigatórios estão faltando. Por favor, preencha todos os campos necessários.",
@@ -135,7 +135,7 @@ export const useCreateDeliveryForm = () => {
           recipient_email: formData.recipient_email,
           delivery_date: formData.deliveryDate,
           delivery_time: formData.deliveryTime,
-          message: formData.message,
+          message: formData.message || " ",
           description: formData.description,
           delivery_method: formData.delivery_method === "email" || formData.delivery_method === "physical" ? formData.delivery_method : "email",
           type: deliveryType === "digital" || deliveryType === "physical" ? deliveryType : "digital",
