@@ -39,7 +39,7 @@ function applyCSP() {
     "default-src 'self'; " +
     "script-src 'self' https://js.stripe.com https://analytics.keepla.pt https://www.googletagmanager.com; " +
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
-    "img-src 'self' data: https://keepla-uploads.s3.amazonaws.com; " +
+    "img-src 'self' data: https://keepla-uploads.s3.amazonaws.com https://*.supabase.co; " +
     "font-src 'self' https://fonts.gstatic.com; " +
     "connect-src 'self' https://*.supabase.co https://api.stripe.com https://region1.google-analytics.com https://www.google-analytics.com; " +
     "frame-src 'self' https://js.stripe.com;";
