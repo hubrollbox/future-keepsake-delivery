@@ -221,9 +221,7 @@ export const useKeepsakeForm = () => {
         title: formData.title,
         delivery_date: new Date(formData.delivery_date).toISOString(),
         type: formData.type,
-        // CORREÇÃO 3: Alterar status para 'pending_payment'
-        status: 'pending_payment', 
-        total_cost: computedTotal,
+        status: 'scheduled', // Changed from 'pending_payment' to match enum
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       };
@@ -234,8 +232,7 @@ export const useKeepsakeForm = () => {
         .from('keepsakes')
         .insert({
           ...basePayload,
-          message_content: formData.message || " ", // Ensure not null
-          message: formData.message || " ", // Ensure message column is filled if it exists
+          message: formData.message || " ", // Schema uses 'message', not 'message_content'
         })
         .select()
         .single();
@@ -250,23 +247,12 @@ export const useKeepsakeForm = () => {
       const recipientPayload: {
         keepsake_id: string;
         name: string;
-        relationship: string | null;
-        delivery_channel: string;
-        channel_cost?: number | null;
         email: string;
-        phone?: string | null;
       } = {
         keepsake_id: keepsakeData.id,
         name: formData.recipient_name,
-        relationship: formData.relationship || null,
-        delivery_channel: 'email',
-        channel_cost: formData.channel_cost || 0,
-        email: '',
+        email: formData.recipient_contact || '',
       };
-
-      // Fluxo simplificado: apenas email
-      recipientPayload.email = formData.recipient_contact || '';
-      recipientPayload.phone = null;
 
       const { error: recipientError } = await supabase
         .from('recipients')
@@ -274,22 +260,12 @@ export const useKeepsakeForm = () => {
 
       if (recipientError) throw recipientError;
 
-      // Inserir produtos selecionados
+      // REMOVIDO: Inserção de produtos (não existe no schema mínimo)
+      /* 
       if (formData.selected_products && formData.selected_products.length > 0) {
-        const { error: productsError } = await supabase
-          .from('keepsake_products')
-          .insert(
-            formData.selected_products.map((product: any) => ({
-              keepsake_id: keepsakeData.id,
-              product_id: product.id,
-              quantity: product.quantity || 1,
-              unit_price: product.price,
-              created_at: new Date().toISOString(),
-            }))
-          );
-
-        if (productsError) throw productsError;
-      }
+        ...
+      } 
+      */
 
       toast({
         title: 'Cápsula criada com sucesso!',
