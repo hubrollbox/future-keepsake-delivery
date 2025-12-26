@@ -2,10 +2,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, Package, TrendingUp, Clock, Mail, Calendar, Database, Loader2, Plus } from "lucide-react";
-import useAdminData from "@/hooks/useAdminData";
 import { supabase } from "@/integrations/supabase/client";
-import DeliveriesBarChart from "@/components/dashboard/DeliveriesBarChart";
-import TopUsersRanking from "@/components/dashboard/TopUsersRanking";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
@@ -16,18 +13,18 @@ interface RecentDelivery {
   title: string;
 }
 
-interface RecentWarehouseItem {
-  id: string;
-  client_name: string;
-  product_description: string;
-  received_date: string;
-  status: string;
-}
-
 const AdminDashboard = () => {
-  const { stats, deliveriesByMonth, topUsers, loading } = useAdminData();
+  // Disabled useAdminData for MVP simplification
+  const stats = {
+    totalDeliveries: 0,
+    pendingDeliveries: 0,
+    digitalMessages: 0,
+    warehouseItems: 0,
+    recentPayments: 0,
+  };
+  const loading = false;
+  
   const [recentDeliveries, setRecentDeliveries] = useState<RecentDelivery[]>([]);
-  const [warehouseRecords, setWarehouseRecords] = useState<RecentWarehouseItem[]>([]);
   const [loadingLists, setLoadingLists] = useState(true);
   const navigate = useNavigate();
 
@@ -49,14 +46,6 @@ const AdminDashboard = () => {
       
       setRecentDeliveries(deliveriesData || []);
       
-      // Fetch latest warehouse records
-      const { data: warehouseData } = await supabase
-        .from("warehouse_items")
-        .select("id, client_name, product_description, received_date, status")
-        .order("received_date", { ascending: false })
-        .limit(10);
-      
-      setWarehouseRecords(warehouseData || []);
     } catch (error) {
       console.error("Error fetching recent data:", error);
     } finally {
@@ -71,31 +60,31 @@ const AdminDashboard = () => {
   const dashboardStats = [
     {
       title: "Total de Entregas",
-      value: ((stats as any)?.totalDeliveries || 0).toString(),
+      value: "0",
       icon: <Package className="h-5 w-5" />,
       color: "text-earthy-burgundy"
     },
     {
       title: "Entregas Pendentes (7 dias)",
-      value: ((stats as any)?.pendingDeliveries || 0).toString(),
+      value: "0",
       icon: <Clock className="h-5 w-5" />,
       color: "text-golden-honey"
     },
     {
       title: "Mensagens Digitais",
-      value: ((stats as any)?.digitalMessages || 0).toString(),
+      value: "0",
       icon: <Mail className="h-5 w-5" />,
       color: "text-dusty-rose"
     },
     {
       title: "Itens em Armazém",
-      value: ((stats as any)?.warehouseItems || 0).toString(),
+      value: "0",
       icon: <Database className="h-5 w-5" />,
       color: "text-sage-green"
     },
     {
       title: "Pagamentos Recentes (7 dias)",
-      value: ((stats as any)?.recentPayments || 0).toString(),
+      value: "0",
       icon: <TrendingUp className="h-5 w-5" />,
       color: "text-steel-blue"
     }
@@ -156,34 +145,8 @@ const AdminDashboard = () => {
       </Card>
 
       <div className="grid lg:grid-cols-2 gap-8">
-        {/* Deliveries by Month Chart */}
-        <Card className="emotion-card border-dusty-rose/20">
-          <CardHeader>
-            <CardTitle className="text-steel-blue font-fraunces flex items-center space-x-2">
-              <TrendingUp className="h-5 w-5 text-earthy-burgundy" />
-              <span>Entregas por Mês</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <DeliveriesBarChart data={deliveriesByMonth} />
-          </CardContent>
-        </Card>
-
-        {/* Top Users Ranking */}
-        <Card className="emotion-card border-dusty-rose/20">
-          <CardHeader>
-            <CardTitle className="text-steel-blue font-fraunces flex items-center space-x-2">
-              <Users className="h-5 w-5 text-earthy-burgundy" />
-              <span>Top Utilizadores</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <TopUsersRanking users={topUsers as any} />
-          </CardContent>
-        </Card>
-
-        {/* Upcoming Deliveries */}
-        <Card className="emotion-card border-dusty-rose/20">
+        {/* Upcoming Deliveries - Expanded to full width if needed, or just keep it */}
+        <Card className="emotion-card border-dusty-rose/20 lg:col-span-2">
           <CardHeader>
             <CardTitle className="text-steel-blue font-fraunces flex items-center space-x-2">
               <Calendar className="h-5 w-5 text-earthy-burgundy" />
@@ -218,51 +181,6 @@ const AdminDashboard = () => {
                         {delivery.status === 'scheduled' ? 'Agendado' :
                          delivery.status === 'delivered' ? 'Entregue' : 
                          delivery.status}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Latest Warehouse Records */}
-        <Card className="emotion-card border-dusty-rose/20">
-          <CardHeader>
-            <CardTitle className="text-steel-blue font-fraunces flex items-center space-x-2">
-              <Package className="h-5 w-5 text-earthy-burgundy" />
-              <span>Últimos Registos em Armazém</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {loadingLists ? (
-              <div className="flex items-center">
-                <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                A carregar registos...
-              </div>
-            ) : warehouseRecords.length === 0 ? (
-              <p className="text-misty-gray text-sm">Nenhum registo encontrado no armazém.</p>
-            ) : (
-              <div className="space-y-3">
-                {warehouseRecords.map((item) => (
-                  <div key={item.id} className="flex justify-between items-center py-2 border-b border-lavender-mist last:border-0">
-                    <div className="flex-1">
-                      <p className="font-medium text-steel-blue">{item.client_name}</p>
-                      <p className="text-sm text-misty-gray">{item.product_description}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-xs text-misty-gray">
-                        {new Date(item.received_date).toLocaleDateString('pt-PT')}
-                      </p>
-                      <span className={`text-xs px-2 py-1 rounded ${
-                        item.status === 'stored' ? 'bg-steel-blue/20 text-steel-blue' :
-                        item.status === 'delivered' ? 'bg-sage-green/20 text-sage-green' :
-                        'bg-misty-gray/20 text-misty-gray'
-                      }`}>
-                        {item.status === 'stored' ? 'Armazenado' :
-                         item.status === 'delivered' ? 'Entregue' : 
-                         item.status}
                       </span>
                     </div>
                   </div>
