@@ -1,7 +1,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Package, TrendingUp, Clock, Mail, Calendar, Database, Loader2, Plus } from "lucide-react";
+import { Calendar, Loader2, Plus } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
@@ -14,14 +14,6 @@ interface RecentDelivery {
 }
 
 const AdminDashboard = () => {
-  // Disabled useAdminData for MVP simplification
-  const stats = {
-    totalDeliveries: 0,
-    pendingDeliveries: 0,
-    digitalMessages: 0,
-    warehouseItems: 0,
-    recentPayments: 0,
-  };
   const loading = false;
   
   const [recentDeliveries, setRecentDeliveries] = useState<RecentDelivery[]>([]);
@@ -57,39 +49,6 @@ const AdminDashboard = () => {
     fetchRecentData();
   }, [fetchRecentData]);
 
-  const dashboardStats = [
-    {
-      title: "Total de Entregas",
-      value: "0",
-      icon: <Package className="h-5 w-5" />,
-      color: "text-earthy-burgundy"
-    },
-    {
-      title: "Entregas Pendentes (7 dias)",
-      value: "0",
-      icon: <Clock className="h-5 w-5" />,
-      color: "text-golden-honey"
-    },
-    {
-      title: "Mensagens Digitais",
-      value: "0",
-      icon: <Mail className="h-5 w-5" />,
-      color: "text-dusty-rose"
-    },
-    {
-      title: "Itens em Armazém",
-      value: "0",
-      icon: <Database className="h-5 w-5" />,
-      color: "text-sage-green"
-    },
-    {
-      title: "Pagamentos Recentes (7 dias)",
-      value: "0",
-      icon: <TrendingUp className="h-5 w-5" />,
-      color: "text-steel-blue"
-    }
-  ];
-
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -106,25 +65,6 @@ const AdminDashboard = () => {
           Painel de <span className="text-earthy-burgundy">Administração</span>
         </h1>
         <p className="text-misty-gray">Visão geral da plataforma FuturoPresente</p>
-      </div>
-
-      {/* Statistics Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-        {dashboardStats.map((stat, index) => (
-          <Card key={index} className="emotion-card border-dusty-rose/20">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div className="space-y-2">
-                  <p className="text-sm text-misty-gray">{stat.title}</p>
-                  <p className="text-2xl font-bold text-steel-blue">{stat.value}</p>
-                </div>
-                <div className={`p-3 bg-earthy-burgundy/10 rounded-xl ${stat.color}`}>
-                  {stat.icon}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
       </div>
 
       {/* Quick Actions: Blog */}
