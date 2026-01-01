@@ -97,7 +97,7 @@ const HeroSection = () => {
             <Button 
               variant="outline" 
               size="lg" 
-              className="text-lg px-8 py-6 border-2 border-keepla-black text-keepla-black hover:bg-keepla-black/10 hover:text-keepla-black transition-all duration-300 rounded-lg font-semibold"
+              className="text-lg px-8 py-6 border-2 border-keepla-white text-keepla-white bg-transparent hover:bg-keepla-white/20 hover:text-keepla-white transition-all duration-300 rounded-lg font-semibold"
               onClick={() => navigate("/how-it-works")}
             >
               Como funciona
