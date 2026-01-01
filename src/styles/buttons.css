@@ -1,24 +1,49 @@
-@layer components {
-  .btn {
-    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors
-      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
-      disabled:pointer-events-none disabled:opacity-50;
-  }
+/* Keepla Button Utilities */
 
-  .btn-brand {
-    @apply bg-keepla-red text-white hover:bg-keepla-red/90;
-  }
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
 
-  .btn-brand-outline {
-    @apply border border-keepla-red text-keepla-red hover:bg-keepla-red/10;
-  }
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--keepla-red) / 0.5);
+}
 
-  .btn-muted {
-    @apply bg-muted text-foreground hover:bg-muted/80;
-  }
+.btn:disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
 
-  /* REMOVIDO:
-     hover:shadow-keepla
-     → classe inexistente, causava crash em produção
-  */
+.btn-brand {
+  background-color: hsl(var(--keepla-red));
+  color: white;
+}
+
+.btn-brand:hover {
+  background-color: hsl(var(--keepla-red) / 0.9);
+}
+
+.btn-brand-outline {
+  border: 1px solid hsl(var(--keepla-red));
+  color: hsl(var(--keepla-red));
+  background: transparent;
+}
+
+.btn-brand-outline:hover {
+  background-color: hsl(var(--keepla-red) / 0.1);
+}
+
+.btn-muted {
+  background-color: hsl(var(--muted));
+  color: hsl(var(--foreground));
+}
+
+.btn-muted:hover {
+  background-color: hsl(var(--muted) / 0.8);
 }

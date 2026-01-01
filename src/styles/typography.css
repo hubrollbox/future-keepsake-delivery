@@ -3,60 +3,9 @@
  * Fonte principal: Inter (títulos, corpo de texto, botões, UI)
  * Fonte secundária: Georgia (frases emotivas, citações, subtítulos reflexivos)
  * Regra: Clareza digital (Inter) + Emoção narrativa (Georgia)
- * 
- * IMPORTANTE: Usar APENAS font-inter e font-georgia (não font-fraunces!)
  */
 
-@layer components {
-  /* ===== HEADINGS COM INTER ===== */
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-inter font-bold text-keepla-black tracking-tight;
-  }
-
-  h1 { @apply text-h1; }
-  h2 { @apply text-h2; }
-  h3 { @apply text-h3; }
-
-  /* ===== TEXT STYLES ===== */
-  .text-body {
-    @apply font-inter text-base leading-relaxed text-keepla-gray-900;
-  }
-
-  .text-emotional {
-    @apply font-georgia italic text-lg text-keepla-gray-700 leading-relaxed;
-  }
-
-  .text-slogan {
-    @apply font-georgia italic text-2xl text-keepla-red font-medium;
-  }
-
-  .text-subtitle {
-    @apply font-georgia italic text-lg text-keepla-gray-700;
-  }
-
-  /* ===== SEMANTIC ALIASES (for backward compat) ===== */
-  .font-fraunces {
-    @apply font-inter;
-  }
-
-  .brand-highlight {
-    @apply text-keepla-red font-bold;
-  }
-
-  .text-brand-primary {
-    @apply text-keepla-red font-bold;
-  }
-}
-
-body, html {
-  font-family: 'Inter', sans-serif;
-  font-size: 16px;
-  color: var(--keepla-black);
-  background: var(--keepla-white);
-  line-height: 1.6;
-}
-
-/* Hierarquia de títulos com Inter Bold */
+/* ===== HEADINGS COM INTER ===== */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Inter', sans-serif;
   font-weight: 700;
@@ -70,36 +19,86 @@ h2 { font-size: clamp(2rem, 4vw, 2.5rem); }
 h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
 h4 { font-size: clamp(1.25rem, 2.5vw, 1.5rem); }
 
-/* Texto emotivo com Georgia itálico - PRINCIPAL para emoção */
-.text-emotional,
-.quote,
-blockquote {
+/* ===== TEXT STYLES ===== */
+.text-body {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--keepla-gray-900);
+}
+
+.text-emotional {
   font-family: 'Georgia', serif;
   font-style: italic;
   font-size: clamp(1.125rem, 2vw, 1.375rem);
   line-height: 1.7;
-  color: var(--text-secondary);
-  letter-spacing: 0.01em;
+  color: var(--keepla-gray-700);
 }
 
-/* Destaque de marca - Vermelho Intenso */
+.text-slogan {
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--keepla-red);
+  font-weight: 400;
+}
+
+.text-subtitle {
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  font-size: 1.125rem;
+  color: var(--keepla-gray-700);
+}
+
+/* ===== SEMANTIC ALIASES (for backward compat) ===== */
+.font-fraunces {
+  font-family: 'Inter', sans-serif;
+}
+
 .brand-highlight,
 .text-brand-primary {
   color: var(--keepla-red);
   font-weight: 700;
 }
 
-/* Subtítulos emocionais - Georgia para slogans e taglines */
+/* Body base */
+body, html {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  color: var(--keepla-black);
+  background: var(--keepla-white);
+  line-height: 1.6;
+}
+
+/* Corpo de texto */
+p {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.875rem, 1.2vw, 1rem);
+  line-height: 1.6;
+  color: var(--keepla-gray-900);
+}
+
+/* Texto emotivo com Georgia itálico */
+.quote,
+blockquote {
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
+  line-height: 1.7;
+  color: var(--keepla-gray-700);
+  letter-spacing: 0.01em;
+}
+
+/* Subtítulos emocionais */
 .subtitle-emotional {
   font-family: 'Georgia', serif;
   font-size: clamp(1.125rem, 1.8vw, 1.375rem);
   font-style: italic;
-  color: var(--text-secondary);
+  color: var(--keepla-gray-700);
   line-height: 1.6;
-  letter-spacing: 0.01em;
 }
 
-/* Slogan principal - Georgia grande */
+/* Slogan principal */
 .slogan {
   font-family: 'Georgia', serif;
   font-size: clamp(1.25rem, 2.5vw, 1.75rem);
@@ -109,47 +108,39 @@ blockquote {
   font-weight: 400;
 }
 
-/* Hero subtitle - Georgia emotivo */
+/* Hero subtitle */
 .hero-subtitle {
   font-family: 'Georgia', serif;
   font-size: clamp(1.125rem, 2vw, 1.5rem);
   font-style: italic;
-  color: var(--text-secondary);
+  color: var(--keepla-gray-700);
   line-height: 1.6;
   max-width: 600px;
 }
 
-/* Corpo de texto */
-p {
-  font-family: 'Inter', sans-serif;
-  font-size: clamp(0.875rem, 1.2vw, 1rem);
-  line-height: 1.6;
-  color: var(--keepla-black);
-}
-
-/* Detalhes e citações pequenas */
-.text-small,
-small {
-  font-family: 'Georgia', serif;
-  font-size: 0.875rem;
-  font-style: italic;
-  color: var(--text-secondary);
-}
-
-/* Testimonial quotes - Georgia grande */
+/* Testimonial quotes */
 .testimonial-quote {
   font-family: 'Georgia', serif;
   font-size: clamp(1.125rem, 2vw, 1.25rem);
   font-style: italic;
   line-height: 1.7;
-  color: var(--keepla-black);
+  color: var(--keepla-gray-900);
 }
 
-/* Section taglines - Georgia */
+/* Section taglines */
 .section-tagline {
   font-family: 'Georgia', serif;
   font-size: clamp(1rem, 1.5vw, 1.125rem);
   font-style: italic;
-  color: var(--text-secondary);
+  color: var(--keepla-red);
   margin-bottom: 1rem;
+}
+
+/* Small text */
+.text-small,
+small {
+  font-family: 'Georgia', serif;
+  font-size: 0.875rem;
+  font-style: italic;
+  color: var(--keepla-gray-500);
 }

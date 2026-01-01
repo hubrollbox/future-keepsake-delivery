@@ -27,21 +27,47 @@
    ================================ */
 @layer base {
   :root {
+    /* Semantic tokens - mapped to Keepla palette */
     --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
-    --border: 0 0% 90%;
+    --foreground: 0 0% 15%;          /* #262626 - texto principal */
+    --border: 0 0% 90%;               /* #E5E5E5 */
     --radius: 0.5rem;
+    
+    /* Semantic color tokens */
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 15%;
+    --muted: 0 0% 96%;                /* #F5F5F5 */
+    --muted-foreground: 0 0% 48%;     /* #7A7A7A */
+    --primary: 351 76% 55%;           /* #E63946 - Keepla Red */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 351 76% 45%;         /* Darker red for hover */
+    --secondary-foreground: 0 0% 100%;
+    --accent: 351 76% 55%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --ring: 351 76% 55%;
 
     /* Brand Keepla - Official Palette */
-    --keepla-red: 346 80% 59%;      /* #E63946 */
+    --keepla-red: 351 76% 55%;        /* #E63946 */
     --keepla-white: 0 0% 100%;
     --keepla-black: 0 0% 0%;
+    
+    /* Text colors */
+    --text-primary: 0 0% 15%;         /* #262626 */
+    --text-secondary: 0 0% 48%;       /* #7A7A7A */
   }
 
   .dark {
     --background: 0 0% 0%;
     --foreground: 0 0% 100%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 100%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
     --border: 0 0% 20%;
+    --primary: 351 76% 55%;
+    --primary-foreground: 0 0% 100%;
   }
 
   html, body {
@@ -63,11 +89,12 @@
     display: block;
   }
 
-  /* TÍTULOS: SEM COR (INTENCIONAL) */
+  /* TÍTULOS: Preto para contraste máximo */
   h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: -0.02em;
+    color: hsl(var(--keepla-black));
   }
 }
 

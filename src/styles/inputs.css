@@ -1,42 +1,46 @@
+/* Keepla Input Styles - Brand Compliant */
 
 input, textarea, select {
-  border-radius: 12px;
-  background: #fff;
-  border: 1.5px solid #dab8c340;
+  border-radius: 0.5rem;
+  background: var(--keepla-white);
+  border: 1px solid var(--keepla-gray-200);
   padding: 0.75rem 1rem;
-  color: var(--brand-secondary);
-  font-family: inherit;
+  color: var(--keepla-gray-900);
+  font-family: 'Inter', sans-serif;
   font-size: 1rem;
-  transition: border .2s, box-shadow .2s;
-  min-height: 44px; /* Touch target */
+  transition: border 0.2s, box-shadow 0.2s;
+  min-height: 44px;
 }
-input:focus-visible, textarea:focus-visible, select:focus-visible {
-  box-shadow: 0 0 0 3px #dab8c33c;
-  outline: 2px solid #DAB8C3;
-  border-color: #DAB8C3;
+
+input:focus-visible, 
+textarea:focus-visible, 
+select:focus-visible {
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.15);
+  outline: 2px solid var(--keepla-red);
+  border-color: var(--keepla-red);
 }
+
 ::placeholder {
-  color: #A0AEC0;
+  color: var(--keepla-gray-500);
   opacity: 0.9;
-  font-style: italic;
 }
-.form-error, .form-erro {
-  color: #c00a42;
-  background: #dab8c322;
-  border-radius: 6px;
+
+.form-error {
+  color: var(--keepla-red);
+  background: rgba(230, 57, 70, 0.1);
+  border-radius: 0.375rem;
   padding: 0.25em 1em;
   font-weight: 500;
   margin-top: 0.3em;
-  margin-bottom: 0.6em;
-  font-size: 0.97em;
+  font-size: 0.875rem;
 }
+
 .form-success {
-  color: #3D4A5A;
-  background: #dab8c345;
-  border-radius: 6px;
+  color: #059669;
+  background: rgba(5, 150, 105, 0.1);
+  border-radius: 0.375rem;
   padding: 0.3em 1em;
   font-weight: 500;
   margin-top: 0.3em;
-  margin-bottom: 0.6em;
-  font-size: 0.97em;
+  font-size: 0.875rem;
 }
