@@ -5,6 +5,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import { motion, Variants } from "framer-motion";
+import maoBebe from "@/assets/mao-bebe.jpg";
 
 const About = () => {
   const navigate = useNavigate();
@@ -126,6 +127,44 @@ const About = () => {
           <p className="slogan text-center">
             — Equipa keepla
           </p>
+        </motion.div>
+
+        {/* Secção Emocional com Imagem */}
+        <motion.div 
+          className="mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
+        >
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto items-center">
+            {/* Imagem */}
+            <div className="order-2 md:order-1">
+              <div className="relative aspect-square rounded-2xl overflow-hidden shadow-keepla-intense">
+                <img 
+                  src={maoBebe} 
+                  alt="Mão de bebé sobre mão de adulto - símbolo de conexão entre gerações" 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+              </div>
+            </div>
+            
+            {/* Texto */}
+            <div className="order-1 md:order-2 text-center md:text-left">
+              <p className="section-tagline">O que nos inspira</p>
+              <h2 className="text-3xl md:text-4xl font-inter font-bold text-keepla-black mb-6">
+                Ligações que Atravessam o Tempo
+              </h2>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-6 font-inter">
+                Uma mão pequena que segura a nossa. Um gesto simples que contém todo o amor do mundo. 
+                São estes momentos — frágeis, irrepetíveis — que merecem ser guardados para sempre.
+              </p>
+              <blockquote className="testimonial-quote border-l-4 border-keepla-red pl-6">
+                "Guardamos hoje o que o coração quer dizer amanhã."
+              </blockquote>
+            </div>
+          </div>
         </motion.div>
 
         {/* Valores */}
