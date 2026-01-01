@@ -176,7 +176,7 @@ ALTER TABLE "public"."products" OWNER TO "postgres";
 CREATE TABLE IF NOT EXISTS "public"."cart_items" (
     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
     "user_id" "uuid" NOT NULL,
-    "product_id" "uuid" NOT NULL REFERENCES "public"."products"("id"),
+    "product_id" "uuid" NOT NULL,
     "product_title" "text" NOT NULL,
     "product_price" numeric(10,2) NOT NULL,
     "quantity" integer DEFAULT 1 NOT NULL,
@@ -206,7 +206,7 @@ CREATE TABLE IF NOT EXISTS "public"."deliveries" (
     "message" "text",
     "recipient_name" "text" NOT NULL,
     "payment_status" "text" DEFAULT 'pending'::"text",
-    "warehouse_item_id" "uuid" REFERENCES "public"."warehouse_items"("id")
+    "warehouse_item_id" "uuid"
 );
 
 
@@ -216,10 +216,22 @@ ALTER TABLE "public"."deliveries" OWNER TO "postgres";
 
 
 
+
+CREATE TABLE IF NOT EXISTS "public"."messages" (
+    "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
+    "user_id" "uuid" NOT NULL,
+    "content" "text",
+    "created_at" timestamp with time zone DEFAULT "now"(),
+    "updated_at" timestamp with time zone DEFAULT "now"()
+);
+
+ALTER TABLE "public"."messages" OWNER TO "postgres";
+
+
 CREATE TABLE IF NOT EXISTS "public"."notifications" (
     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
     "user_id" "uuid",
-    "delivery_id" "uuid" REFERENCES "public"."deliveries"("id"),
+    "delivery_id" "uuid",
     "type" "text" NOT NULL,
     "title" "text" NOT NULL,
     "message" "text" NOT NULL,
@@ -235,7 +247,7 @@ ALTER TABLE "public"."notifications" OWNER TO "postgres";
 CREATE TABLE IF NOT EXISTS "public"."payments" (
     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
     "user_id" "uuid" NOT NULL,
-    "cart_id" "uuid" REFERENCES "public"."cart_items"("id") ON DELETE SET NULL,
+    "cart_id" "uuid",
     "amount" numeric(10,2) NOT NULL,
     "currency" "text" DEFAULT 'EUR'::"text" NOT NULL,
     "status" "text" DEFAULT 'pending'::"text" NOT NULL,
@@ -303,7 +315,7 @@ CREATE TABLE IF NOT EXISTS "public"."scheduled_notifications" (
     "message" "text" NOT NULL,
     "status" "text" DEFAULT 'pending'::"text",
     "sent_at" timestamp with time zone,
-    "delivery_id" "uuid" REFERENCES "public"."deliveries"("id") ON DELETE CASCADE
+    "delivery_id" "uuid"
 );
 
 
@@ -369,7 +381,7 @@ ALTER SEQUENCE "public"."user_quests_id_seq" OWNED BY "public"."user_quests"."id
 
 
 CREATE TABLE IF NOT EXISTS "public"."warehouse_items" (
-    "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
+    "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL PRIMARY KEY,
     "client_name" "text" NOT NULL,
     "product_description" "text" NOT NULL,
     "received_date" "date" NOT NULL,
@@ -475,13 +487,11 @@ ALTER TABLE ONLY "public"."user_quests"
 
 
 
-ALTER TABLE ONLY "public"."user_stats"
-    ADD CONSTRAINT "user_stats_pkey" PRIMARY KEY ("user_id");
 
 
 
-ALTER TABLE ONLY "public"."warehouse_items"
-    ADD CONSTRAINT "warehouse_items_pkey" PRIMARY KEY ("id");
+
+
 
 
 
@@ -548,8 +558,7 @@ ALTER TABLE ONLY "public"."user_quests"
 
 
 
-ALTER TABLE ONLY "public"."user_stats"
-    ADD CONSTRAINT "user_stats_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "auth"."users"("id") ON DELETE CASCADE;
+
 
 
 
@@ -717,7 +726,7 @@ CREATE POLICY "User can access own quests" ON "public"."user_quests" USING (("us
 
 
 
-CREATE POLICY "User can access own stats" ON "public"."user_stats" USING (("user_id" = "auth"."uid"()));
+
 
 
 
@@ -737,11 +746,11 @@ CREATE POLICY "UserQuests: Only self" ON "public"."user_quests" USING ((("auth".
 
 
 
-CREATE POLICY "UserStats: Admin full access" ON "public"."user_stats" USING ((("auth"."jwt"() ->> 'role'::"text") = 'admin'::"text"));
 
 
 
-CREATE POLICY "UserStats: Only self" ON "public"."user_stats" USING ((("auth"."uid"() IS NOT NULL) AND ("user_id" = "auth"."uid"())));
+
+
 
 
 
@@ -897,7 +906,7 @@ ALTER TABLE "public"."user_achievements" ENABLE ROW LEVEL SECURITY;
 ALTER TABLE "public"."user_quests" ENABLE ROW LEVEL SECURITY;
 
 
-ALTER TABLE "public"."user_stats" ENABLE ROW LEVEL SECURITY;
+
 
 
 ALTER TABLE "public"."warehouse_items" ENABLE ROW LEVEL SECURITY;
@@ -1240,9 +1249,7 @@ GRANT ALL ON SEQUENCE "public"."user_quests_id_seq" TO "service_role";
 
 
 
-GRANT ALL ON TABLE "public"."user_stats" TO "anon";
-GRANT ALL ON TABLE "public"."user_stats" TO "authenticated";
-GRANT ALL ON TABLE "public"."user_stats" TO "service_role";
+
 
 
 
@@ -1313,3 +1320,22 @@ ALTER DEFAULT PRIVILEGES FOR ROLE "postgres" IN SCHEMA "public" GRANT ALL ON TAB
 
 
 RESET ALL;
+
+ 
+ A L T E R   T A B L E   O N L Y   " p u b l i c " . " n o t i f i c a t i o n s " 
+ 
+         A D D   C O N S T R A I N T   " n o t i f i c a t i o n s _ d e l i v e r y _ i d _ f k e y "   F O R E I G N   K E Y   ( " d e l i v e r y _ i d " )   R E F E R E N C E S   " p u b l i c " . " d e l i v e r i e s " ( " i d " ) ; 
+ 
+ 
+ 
+ A L T E R   T A B L E   O N L Y   " p u b l i c " . " p a y m e n t s " 
+ 
+         A D D   C O N S T R A I N T   " p a y m e n t s _ c a r t _ i d _ f k e y "   F O R E I G N   K E Y   ( " c a r t _ i d " )   R E F E R E N C E S   " p u b l i c " . " c a r t _ i t e m s " ( " i d " )   O N   D E L E T E   S E T   N U L L ; 
+ 
+ 
+ 
+ A L T E R   T A B L E   O N L Y   " p u b l i c " . " s c h e d u l e d _ n o t i f i c a t i o n s " 
+ 
+         A D D   C O N S T R A I N T   " s c h e d u l e d _ n o t i f i c a t i o n s _ d e l i v e r y _ i d _ f k e y "   F O R E I G N   K E Y   ( " d e l i v e r y _ i d " )   R E F E R E N C E S   " p u b l i c " . " d e l i v e r i e s " ( " i d " )   O N   D E L E T E   C A S C A D E ; 
+ 
+ 
