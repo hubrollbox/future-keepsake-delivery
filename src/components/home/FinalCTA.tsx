@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Star, Heart } from "lucide-react";
 import { motion } from "framer-motion";
+import memorialImage from "@/assets/memorial-pc.jpg";
 
 const FinalCTA = () => {
   const navigate = useNavigate();
@@ -12,35 +13,41 @@ const FinalCTA = () => {
   };
 
   return (
-    <section className="py-8 md:py-24 bg-muted relative" aria-label="Convite final para criar conta no keepla">
-      {/* Detalhe decorativo suave com gradiente vermelho */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="w-3/4 h-24 md:h-52 bg-primary/10 blur-3xl rounded-full absolute left-1/2 top-0 -translate-x-1/2" />
+    <section className="relative py-20 md:py-32" aria-label="Convite final para criar conta no keepla">
+      {/* Background fotográfico */}
+      <div className="absolute inset-0">
+        <img 
+          src={memorialImage} 
+          alt="Memorial - preservar memórias" 
+          className="w-full h-full object-cover grayscale contrast-110"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-black/60" />
       </div>
+
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-5xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto text-center">
           <motion.div 
-            className="flex justify-center mb-5 md:mb-12"
+            className="flex justify-center mb-8"
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <img 
-              src="/keepla-logo-red.png" 
+              src="/keepla-logo-white.png" 
               alt="keepla Logo" 
               width={100} 
               height={100} 
               className="drop-shadow-lg" 
-              aria-label="Logo" 
-              loading="eager" 
+              loading="lazy" 
               decoding="async" 
-              onError={(e) => { e.currentTarget.src = '/lovable-uploads/a58d6383-77f7-451e-b692-d10c4298397e.png'; }}
+              onError={(e) => { e.currentTarget.src = '/keepla-logo-red.png'; }}
             />
           </motion.div>
           
           <motion.h2 
-            className="text-4xl sm:text-5xl md:text-6xl font-inter font-bold mb-2 md:mb-4 leading-tight text-foreground"
+            className="text-4xl sm:text-5xl md:text-6xl font-inter font-bold mb-4 leading-tight text-white"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -53,7 +60,7 @@ const FinalCTA = () => {
           </motion.h2>
           
           <motion.p 
-            className="slogan mb-3 md:mb-6"
+            className="text-xl md:text-2xl font-georgia italic text-white/80 mb-6"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -63,7 +70,7 @@ const FinalCTA = () => {
           </motion.p>
           
           <motion.p 
-            className="hero-subtitle text-muted-foreground mb-4 md:mb-8 mx-auto"
+            className="text-lg text-white/70 mb-10 mx-auto max-w-2xl"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -74,7 +81,7 @@ const FinalCTA = () => {
           </motion.p>
           
           <motion.div 
-            className="flex flex-col sm:flex-row gap-3 md:gap-6 justify-center mb-7 md:mb-12"
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -82,7 +89,7 @@ const FinalCTA = () => {
           >
             <Button 
               size="lg" 
-              className="px-8 py-5 text-base md:text-lg min-h-[48px] md:min-h-[56px] group bg-primary hover:bg-secondary text-primary-foreground font-inter font-semibold shadow-keepla hover:shadow-keepla-intense hover:scale-105 transition-all duration-200"
+              className="px-8 py-6 text-lg group bg-primary hover:bg-primary/90 text-primary-foreground font-inter font-semibold shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-200"
               onClick={() => handleNavigation('/register')}
               aria-label="Criar conta gratuitamente"
             >
@@ -93,7 +100,7 @@ const FinalCTA = () => {
             <Button 
               variant="outline" 
               size="lg" 
-              className="px-8 py-5 text-base md:text-lg min-h-[48px] md:min-h-[56px] bg-background border-2 border-foreground text-foreground hover:bg-foreground/10 font-inter font-semibold transition-all duration-200"
+              className="px-8 py-6 text-lg bg-transparent border-2 border-white text-white hover:bg-white/10 font-inter font-semibold transition-all duration-200"
               onClick={() => handleNavigation('/contact')}
               aria-label="Falar com o suporte da keepla"
             >
@@ -102,7 +109,7 @@ const FinalCTA = () => {
           </motion.div>
           
           <motion.div 
-            className="flex flex-col sm:flex-row gap-4 md:gap-8 justify-center items-center text-muted-foreground"
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center text-white/70"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-100px" }}
