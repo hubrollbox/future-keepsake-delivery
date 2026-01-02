@@ -2,6 +2,7 @@
   "version": 2,
   "framework": "vite",
   "buildCommand": "npm run build",
+  "installCommand": "npm ci --legacy-peer-deps",
   "outputDirectory": "dist",
 
 
