@@ -1,6 +1,4 @@
-
 import React, { useState, useEffect } from "react";
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { trackLogin, trackFormSubmission, trackError } from "@/lib/analytics";
 import { z } from "zod";
+import memorialImage from "@/assets/memorial-pc.jpg";
 
 const loginSchema = z.object({
   email: z.string().email("Email inválido"),
@@ -36,7 +35,6 @@ const Login = () => {
     const { name, value } = e.target;
     setFormData((prev: typeof formData) => ({ ...prev, [name]: value }));
     
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev: Record<string, string>) => ({ ...prev, [name]: "" }));
     }
@@ -66,9 +64,7 @@ const Login = () => {
     
     if (!validateForm()) return;
     
-    // Track form submission
     trackFormSubmission('login_form');
-    
     setLoading(true);
     
     const { error } = await signIn(formData.email, formData.password);
@@ -76,12 +72,9 @@ const Login = () => {
     setLoading(false);
     
     if (!error) {
-      // Track successful login
       trackLogin('email');
-      // Navigate directly to dashboard after successful login
       navigate('/dashboard');
     } else {
-      // Track login error
       const errorMessage = error && typeof error === 'object' && 'message' in error 
         ? (error as { message: string }).message 
         : 'Login failed';
@@ -90,28 +83,41 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-keepla-white flex items-center justify-center px-4">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen relative flex items-center justify-center">
+      {/* Background fotográfico */}
+      <div className="absolute inset-0">
+        <img 
+          src={memorialImage} 
+          alt="Memorial - preservar memórias" 
+          className="w-full h-full object-cover grayscale contrast-110"
+          loading="eager"
+        />
+        <div className="absolute inset-0 bg-black/50" />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 w-full max-w-md px-4">
         <div className="text-center mb-8">
-  <img 
-    src="/keepla-logo-red.png" 
-    alt="keepla Logo" 
-    className="h-20 mx-auto mb-4" 
-    loading="eager" 
-    decoding="async" 
-    onError={(e) => { e.currentTarget.src = '/lovable-uploads/a58d6383-77f7-451e-b692-d10c4298397e.png'; }}
-  />
+          <img 
+            src="/keepla-logo-white.png" 
+            alt="keepla Logo" 
+            className="h-20 mx-auto mb-4" 
+            loading="eager" 
+            decoding="async" 
+            onError={(e) => { e.currentTarget.src = '/keepla-logo-red.png'; }}
+          />
         </div>
-        <Card className="emotion-card shadow-md border-0">
+        
+        <Card className="bg-white/95 backdrop-blur-sm shadow-2xl border-0">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-semibold text-keepla-black font-fraunces">
+            <CardTitle className="text-2xl font-semibold text-foreground font-inter">
               Entrar na keepla
             </CardTitle>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleLogin} className="space-y-4">
               <div>
-                <Label htmlFor="email" className="text-keepla-gray-dark">Email</Label>
+                <Label htmlFor="email" className="text-foreground">Email</Label>
                 <Input
                   id="email"
                   name="email"
@@ -119,16 +125,16 @@ const Login = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="teu@email.com"
-                  className={`border-keepla-red/30 focus:border-keepla-red ${errors.email ? "border-keepla-red" : ""}`}
+                  className={`bg-white border-border focus:border-primary focus:ring-primary ${errors.email ? "border-destructive" : ""}`}
                   required
                   autoComplete="email"
                 />
                 {errors.email && (
-                  <p className="text-keepla-red text-sm mt-1">{errors.email}</p>
+                  <p className="text-destructive text-sm mt-1">{errors.email}</p>
                 )}
               </div>
               <div>
-                <Label htmlFor="password" className="text-keepla-gray-dark">Palavra-passe</Label>
+                <Label htmlFor="password" className="text-foreground">Palavra-passe</Label>
                 <Input
                   id="password"
                   name="password"
@@ -137,29 +143,28 @@ const Login = () => {
                   onChange={handleInputChange}
                   placeholder="A tua palavra-passe"
                   autoComplete="current-password"
-                  className={`border-keepla-red/30 focus:border-keepla-red ${errors.password ? "border-keepla-red" : ""}`}
+                  className={`bg-white border-border focus:border-primary focus:ring-primary ${errors.password ? "border-destructive" : ""}`}
                   required
                 />
                 {errors.password && (
-                  <p className="text-keepla-red text-sm mt-1">{errors.password}</p>
+                  <p className="text-destructive text-sm mt-1">{errors.password}</p>
                 )}
               </div>
               <Button 
                 type="submit" 
-                variant="brand"
                 size="lg"
-                className="w-full"
+                className="w-full bg-primary hover:bg-secondary text-primary-foreground font-semibold"
                 disabled={loading}
               >
                 {loading ? "Entrando..." : "Entrar"}
               </Button>
             </form>
             <div className="mt-6 text-center">
-              <p className="text-sm text-keepla-gray-light">
+              <p className="text-sm text-muted-foreground">
                 Ainda não és um Guardião do Tempo?{" "}
                 <Button 
                   variant="link" 
-                  className="p-0 h-auto font-semibold text-keepla-red"
+                  className="p-0 h-auto font-semibold text-primary hover:text-secondary"
                   onClick={() => navigate('/register')}
                 >
                   Torna-te um aqui
@@ -168,11 +173,12 @@ const Login = () => {
             </div>
           </CardContent>
         </Card>
+        
         <div className="mt-8 text-center">
           <Button 
             variant="ghost" 
             onClick={() => navigate('/')}
-            className="text-keepla-gray-dark hover:text-keepla-red"
+            className="text-white/80 hover:text-white hover:bg-white/10"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Voltar ao início

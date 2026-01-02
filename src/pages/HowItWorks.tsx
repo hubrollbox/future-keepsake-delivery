@@ -2,7 +2,6 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import HowItWorksHero from "@/components/how-it-works/HowItWorksHero";
 import GamificationSystem from "@/components/how-it-works/GamificationSystem";
 import DeliveryTypesDetailed from "@/components/how-it-works/DeliveryTypesDetailed";
 import HowItWorksFAQ from "@/components/how-it-works/HowItWorksFAQ";
@@ -10,6 +9,7 @@ import SecurityGuarantees from "@/components/how-it-works/SecurityGuarantees";
 import HowItWorksCTA from "@/components/how-it-works/HowItWorksCTA";
 import SEOHead from "@/components/SEOHead";
 import { motion, Variants } from "framer-motion";
+import capsulaImage from "@/assets/capsula-escrita.jpg";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -53,15 +53,78 @@ const HowItWorks = () => {
         keywords="como funciona keepla, criar keepsake, agendar entrega, cápsula tempo"
       />
       <Navigation />
+
+      {/* Hero com fundo fotográfico */}
+      <section className="relative min-h-[50vh] flex items-center justify-center">
+        <div className="absolute inset-0">
+          <img 
+            src={capsulaImage} 
+            alt="Pessoa a escrever memórias" 
+            className="w-full h-full object-cover grayscale contrast-110"
+            loading="eager"
+          />
+          <div className="absolute inset-0 bg-black/50" />
+        </div>
+        
+        <motion.div 
+          className="relative z-10 text-center max-w-4xl mx-auto px-4 py-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+        >
+          <motion.div 
+            className="flex justify-center mb-6"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <img 
+              src="/keepla-logo-white.png" 
+              alt="keepla Logo" 
+              style={{width: 80, height: 80}} 
+              loading="eager"
+              decoding="async"
+              onError={(e) => { e.currentTarget.src = '/keepla-logo-red.png'; }}
+            />
+          </motion.div>
+          
+          <motion.h1 
+            className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight tracking-tight font-inter"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            Como funciona a{" "}
+            <span className="text-primary block md:inline font-georgia italic"> keepla</span>
+          </motion.h1>
+
+          <motion.p 
+            className="text-xl md:text-2xl text-primary font-georgia italic mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            "Transformamos momentos em memórias eternas, 
+            entregues no momento perfeito."
+          </motion.p>
+          
+          <motion.p 
+            className="text-lg text-white/80 font-inter"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            Somos o teu <strong className="text-primary">Guardião do Tempo</strong>.
+          </motion.p>
+        </motion.div>
+      </section>
+
       <motion.main 
-        className={`container mx-auto px-4 py-8 md:py-16 transition-opacity duration-300 ${isNavigating ? 'opacity-50' : 'opacity-100'}`}
+        className={`container mx-auto px-4 py-16 transition-opacity duration-300 ${isNavigating ? 'opacity-50' : 'opacity-100'}`}
         initial="hidden"
         animate="visible"
         variants={containerVariants}
       >
-        <motion.div variants={itemVariants}>
-          <HowItWorksHero />
-        </motion.div>
         <motion.div variants={itemVariants}>
           <GamificationSystem />
         </motion.div>
