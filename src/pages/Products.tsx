@@ -1,6 +1,7 @@
 import Navigation from "@/components/Navigation";
 import SEOHead from "@/components/SEOHead";
 import Footer from "@/components/Footer";
+import PhotoBackground from "@/components/layout/PhotoBackground";
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -23,6 +24,7 @@ import { useCart } from "@/contexts/useCart";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import memorialImage from "@/assets/memorial-pc.jpg";
 
 interface Product {
   id: string;
@@ -115,12 +117,12 @@ const Products = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-keepla-black">
         <Navigation />
         <div className="container mx-auto px-4 py-20">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto" />
-            <p className="text-muted-foreground mt-4">A carregar catálogo...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-keepla-red mx-auto" />
+            <p className="text-keepla-white/70 mt-4">A carregar catálogo...</p>
           </div>
         </div>
       </div>
@@ -128,7 +130,7 @@ const Products = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-keepla-black">
       <SEOHead
         title="Catálogo de Produtos - Keepla"
         description="Descobre todas as formas de guardar e enviar memórias através do tempo. Mensagens digitais, cápsulas físicas e muito mais."
@@ -136,21 +138,30 @@ const Products = () => {
       />
       <Navigation />
 
-      <main className="container mx-auto px-4 py-12 md:py-20">
-        {/* Hero Section */}
-        <div className="text-center mb-16 max-w-3xl mx-auto">
-          <Badge variant="secondary" className="mb-4">
+      {/* Hero Section with Photo Background */}
+      <PhotoBackground 
+        image={memorialImage} 
+        alt="Memorial de memórias"
+        overlay="dark"
+        className="min-h-[50vh] flex items-center"
+      >
+        <div className="container mx-auto px-4 py-20 text-center">
+          <Badge className="bg-keepla-white/20 text-keepla-white border-0 mb-4">
             <Sparkles className="h-3 w-3 mr-1" />
             Catálogo Completo
           </Badge>
-          <h1 className="text-4xl md:text-5xl font-bold text-keepla-black mb-6 font-inter">
+          <h1 className="text-4xl md:text-6xl font-inter font-bold text-keepla-white mb-6">
             Presentes com <span className="text-keepla-red">Alma</span>
           </h1>
-          <p className="text-lg text-muted-foreground font-inter">
+          <p className="text-lg md:text-xl text-keepla-white/80 max-w-2xl mx-auto font-inter">
             Cada presente é uma ponte entre o presente e o futuro, carregando o
             peso precioso das nossas intenções e emoções.
           </p>
         </div>
+      </PhotoBackground>
+
+      <main className="bg-keepla-white">
+        <div className="container mx-auto px-4 py-16">
 
         {/* Digital Products */}
         {digitalProducts.length > 0 && (
@@ -453,6 +464,7 @@ const Products = () => {
           >
             Criar Primeira Memória
           </Button>
+        </div>
         </div>
       </main>
 

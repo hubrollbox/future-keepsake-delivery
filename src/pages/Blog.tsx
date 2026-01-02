@@ -1,5 +1,6 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import PhotoBackground from "@/components/layout/PhotoBackground";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +10,7 @@ import { Plus } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import SEOHead from "@/components/SEOHead";
 import { motion, Variants } from "framer-motion";
+import cartaEscritaImage from "@/assets/carta-escrita.jpg";
 
 interface BlogPost {
   id: string;
@@ -93,45 +95,53 @@ const Blog = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-keepla-black">
       <SEOHead 
         title="Blog"
         description="Artigos sobre memórias, keepsakes, cápsulas do tempo e como guardar momentos especiais para o futuro."
         keywords="blog keepla, artigos memórias, cápsulas tempo, dicas presentes"
       />
       <Navigation />
-      <motion.main 
-        className="container mx-auto px-4 py-16"
-        initial="hidden"
-        animate="visible"
-        variants={containerVariants}
+      
+      {/* Hero Section with Photo Background */}
+      <PhotoBackground 
+        image={cartaEscritaImage} 
+        alt="Carta escrita"
+        overlay="dark"
+        className="min-h-[40vh] flex items-center"
       >
-        {/* Header */}
-        <motion.div 
-          className="flex items-center justify-between mb-10"
-          variants={itemVariants}
-        >
-          <div>
-            <h1 className="text-4xl md:text-5xl font-bold text-keepla-black tracking-tight">Blog</h1>
-            <p className="text-muted-foreground mt-2 font-serif italic">
-              Histórias, novidades e reflexões sobre guardar emoções.
-            </p>
+        <div className="container mx-auto px-4 py-16">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl md:text-6xl font-inter font-bold text-keepla-white tracking-tight">Blog</h1>
+              <p className="text-keepla-white/70 mt-2 font-georgia italic text-lg">
+                Histórias, novidades e reflexões sobre guardar emoções.
+              </p>
+            </div>
+            {isAdmin && (
+              <Button onClick={() => navigate('/admin/blog?new=1')} className="bg-keepla-red hover:bg-keepla-red/90 text-keepla-white">
+                <Plus className="h-4 w-4 mr-2" /> Criar Post
+              </Button>
+            )}
           </div>
-          {isAdmin && (
-            <Button onClick={() => navigate('/admin/blog?new=1')} variant="default">
-              <Plus className="h-4 w-4 mr-2" /> Criar Post
-            </Button>
-          )}
-        </motion.div>
+        </div>
+      </PhotoBackground>
 
-        {/* Error State */}
-        {error && (
-          <motion.div 
-            className="bg-card border border-keepla-red text-keepla-red p-6 mb-8 rounded-lg"
-            variants={itemVariants}
-          >
-            <p className="font-medium">{error}</p>
-            {isAdmin ? (
+      <main className="bg-keepla-white">
+        <motion.div 
+          className="container mx-auto px-4 py-16"
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+        >
+          {/* Error State */}
+          {error && (
+            <motion.div 
+              className="bg-card border border-keepla-red text-keepla-red p-6 mb-8 rounded-lg"
+              variants={itemVariants}
+            >
+              <p className="font-medium">{error}</p>
+              {isAdmin ? (
               <div className="mt-4">
                 <Button size="sm" onClick={() => navigate('/admin/blog?new=1')}>
                   Criar primeiro artigo
@@ -207,7 +217,8 @@ const Blog = () => {
             })}
           </motion.div>
         )}
-      </motion.main>
+        </motion.div>
+      </main>
       <Footer />
     </div>
   );

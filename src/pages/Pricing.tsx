@@ -1,6 +1,7 @@
 import Navigation from "@/components/Navigation";
 import SEOHead from "@/components/SEOHead";
 import Footer from "@/components/Footer";
+import PhotoBackground from "@/components/layout/PhotoBackground";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check, Clock, Mail, Package } from "lucide-react";
@@ -9,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { trackButtonClick } from "@/lib/analytics";
 import { useCart } from "@/contexts/CartContext";
+import capsuleImage from "@/assets/capsula-escrita.jpg";
 
 const plans = [
   {
@@ -130,7 +132,7 @@ function Pricing() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-keepla-black">
       <SEOHead
         title="Preços - Keepla"
         description="Escolhe a forma perfeita de enviar amor através do tempo. Sem subscrições, sem surpresas. Paga uma vez, guarda para sempre."
@@ -138,24 +140,35 @@ function Pricing() {
       />
       <Navigation />
 
-      <main className="container mx-auto px-4 py-12 md:py-20">
-        {/* Hero Section */}
-        <div className="text-center mb-16 max-w-3xl mx-auto">
-          <p className="section-tagline mb-4">Memórias que ficam, entregues para sempre</p>
-          <h1 className="text-4xl md:text-5xl font-bold text-keepla-black mb-6 font-inter leading-tight">
+      {/* Hero Section with Photo Background */}
+      <PhotoBackground 
+        image={capsuleImage} 
+        alt="Cápsula do tempo"
+        overlay="dark"
+        className="min-h-[50vh] flex items-center"
+      >
+        <div className="container mx-auto px-4 py-20 text-center">
+          <p className="text-keepla-white/70 font-georgia italic text-lg mb-4">
+            Memórias que ficam, entregues para sempre
+          </p>
+          <h1 className="text-4xl md:text-6xl font-inter font-bold text-keepla-white mb-6 leading-tight">
             Escolhe a forma perfeita de enviar{" "}
             <span className="text-keepla-red">amor</span> através do tempo
           </h1>
-          <p className="hero-subtitle text-muted-foreground mx-auto">
+          <p className="text-lg md:text-xl text-keepla-white/80 max-w-2xl mx-auto font-inter">
             Preços transparentes, memórias eternas. Sem subscrições, sem surpresas.
             Paga uma vez, guarda para sempre.
           </p>
         </div>
+      </PhotoBackground>
+
+      <main className="bg-keepla-white">
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto mb-20">
-          {plans.map((plan) => (
-            <div key={plan.id} className="relative">
+        <div className="container mx-auto px-4 py-16">
+          <div className="grid md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto mb-20">
+            {plans.map((plan) => (
+              <div key={plan.id} className="relative">
               {plan.highlighted && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
                   <span className="bg-keepla-red text-keepla-white text-sm px-4 py-1.5 rounded-full font-inter font-medium shadow-lg">
@@ -212,92 +225,93 @@ function Pricing() {
                   </Button>
                 </CardContent>
               </Card>
-            </div>
-          ))}
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Coming Soon Section */}
-        <div className="mb-20">
-          <div className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 bg-muted px-4 py-2 rounded-full mb-4">
-              <Clock className="h-4 w-4 text-keepla-red" />
-              <span className="text-sm font-medium text-keepla-black font-inter">
-                Brevemente
-              </span>
+          {/* Coming Soon Section */}
+          <div className="mb-20 container mx-auto px-4">
+            <div className="text-center mb-10">
+              <div className="inline-flex items-center gap-2 bg-muted px-4 py-2 rounded-full mb-4">
+                <Clock className="h-4 w-4 text-keepla-red" />
+                <span className="text-sm font-medium text-keepla-black font-inter">
+                  Brevemente
+                </span>
+              </div>
+              <h2 className="text-3xl font-bold text-keepla-black font-inter">
+                Presentes Físicos
+              </h2>
+              <p className="text-muted-foreground mt-2 font-inter">
+                Em breve, poderás enviar memórias que se podem tocar
+              </p>
             </div>
-            <h2 className="text-3xl font-bold text-keepla-black font-inter">
-              Presentes Físicos
+            <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+              {comingSoonProducts.map((product) => (
+                <Card
+                  key={product.name}
+                  className="border border-dashed border-border/60 bg-muted/30 opacity-75"
+                >
+                  <CardContent className="p-6 flex items-start gap-4">
+                    <div className="p-3 bg-background rounded-lg border border-border">
+                      <product.icon className="h-6 w-6 text-muted-foreground" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-keepla-black font-inter mb-1">
+                        {product.name}
+                      </h3>
+                      <p className="text-sm text-muted-foreground font-inter">
+                        {product.description}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          {/* FAQ Section */}
+          <div className="max-w-3xl mx-auto mb-16 container px-4">
+            <h2 className="text-3xl font-bold text-keepla-black mb-8 text-center font-inter">
+              Dúvidas Frequentes
             </h2>
-            <p className="text-muted-foreground mt-2 font-inter">
-              Em breve, poderás enviar memórias que se podem tocar
+            <div className="space-y-3">
+              {faqs.map((faq, index) => (
+                <details
+                  key={index}
+                  className="group bg-card p-5 rounded-lg border border-border hover:border-foreground/20 transition-colors"
+                >
+                  <summary className="font-medium cursor-pointer text-keepla-black font-inter flex items-center justify-between">
+                    {faq.question}
+                    <span className="ml-4 text-muted-foreground group-open:rotate-180 transition-transform">
+                      ▼
+                    </span>
+                  </summary>
+                  <p className="text-muted-foreground mt-3 font-inter text-sm leading-relaxed">
+                    {faq.answer}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </div>
+
+          {/* Final CTA */}
+          <div className="text-center bg-keepla-black text-keepla-white rounded-2xl p-10 md:p-16 max-w-4xl mx-auto mb-16">
+            <p className="font-georgia italic text-keepla-white/70 mb-4">O momento perfeito é agora</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 font-inter">
+              Pronto para criar a tua primeira memória?
+            </h2>
+            <p className="text-keepla-white/80 mb-8 font-inter">
+              Começa grátis. Sem cartão de crédito. Sem compromisso.
             </p>
+            <Button
+              onClick={() => navigate(user ? "/create-keepsake" : "/register")}
+              size="lg"
+              className="bg-keepla-red hover:bg-keepla-red/90 text-keepla-white font-inter font-semibold px-8 py-6 text-lg shadow-keepla hover:shadow-keepla-intense transition-all"
+            >
+              Começar Grátis Agora
+            </Button>
           </div>
-          <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-            {comingSoonProducts.map((product) => (
-              <Card
-                key={product.name}
-                className="border border-dashed border-border/60 bg-muted/30 opacity-75"
-              >
-                <CardContent className="p-6 flex items-start gap-4">
-                  <div className="p-3 bg-background rounded-lg border border-border">
-                    <product.icon className="h-6 w-6 text-muted-foreground" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-keepla-black font-inter mb-1">
-                      {product.name}
-                    </h3>
-                    <p className="text-sm text-muted-foreground font-inter">
-                      {product.description}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* FAQ Section */}
-        <div className="max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl font-bold text-keepla-black mb-8 text-center font-inter">
-            Dúvidas Frequentes
-          </h2>
-          <div className="space-y-3">
-            {faqs.map((faq, index) => (
-              <details
-                key={index}
-                className="group bg-card p-5 rounded-lg border border-border hover:border-foreground/20 transition-colors"
-              >
-                <summary className="font-medium cursor-pointer text-keepla-black font-inter flex items-center justify-between">
-                  {faq.question}
-                  <span className="ml-4 text-muted-foreground group-open:rotate-180 transition-transform">
-                    ▼
-                  </span>
-                </summary>
-                <p className="text-muted-foreground mt-3 font-inter text-sm leading-relaxed">
-                  {faq.answer}
-                </p>
-              </details>
-            ))}
-          </div>
-        </div>
-
-        {/* Final CTA */}
-        <div className="text-center bg-keepla-black text-keepla-white rounded-2xl p-10 md:p-16 max-w-4xl mx-auto">
-          <p className="font-georgia italic text-keepla-white/70 mb-4">O momento perfeito é agora</p>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 font-inter">
-            Pronto para criar a tua primeira memória?
-          </h2>
-          <p className="subtitle-emotional text-keepla-white/80 mb-8">
-            Começa grátis. Sem cartão de crédito. Sem compromisso.
-          </p>
-          <Button
-            onClick={() => navigate(user ? "/create-keepsake" : "/register")}
-            size="lg"
-            className="bg-keepla-red hover:bg-keepla-red/90 text-keepla-white font-inter font-semibold px-8 py-6 text-lg shadow-keepla hover:shadow-keepla-intense transition-all"
-          >
-            Começar Grátis Agora
-          </Button>
-        </div>
       </main>
 
       <Footer />

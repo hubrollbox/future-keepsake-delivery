@@ -1,7 +1,6 @@
-
-
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import PhotoBackground from "@/components/layout/PhotoBackground";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
   Accordion,
@@ -12,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Mail, MessageCircle } from "lucide-react";
+import ruaPalacioImage from "@/assets/rua-palacio.jpg";
 
 const FAQ = () => {
   const faqs = [
@@ -58,33 +58,41 @@ const FAQ = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-keepla-black">
       <Navigation />
       
-      <main className="py-16">
-        <div className="container mx-auto px-4 max-w-4xl">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-serif text-keepla-gray-dark mb-4">
-              Suporte & Perguntas Frequentes
-            </h1>
-            <p className="text-lg text-keepla-gray-light max-w-2xl mx-auto">
-              Encontra respostas para as tuas questões sobre cápsulas do tempo e os nossos serviços.
-            </p>
-          </div>
+      {/* Hero Section with Photo Background */}
+      <PhotoBackground 
+        image={ruaPalacioImage} 
+        alt="Rua do Palácio"
+        overlay="dark"
+        className="min-h-[40vh] flex items-center"
+      >
+        <div className="container mx-auto px-4 py-16 text-center">
+          <h1 className="text-4xl md:text-6xl font-inter font-bold text-keepla-white mb-4">
+            Suporte & Perguntas Frequentes
+          </h1>
+          <p className="text-lg md:text-xl text-keepla-white/80 max-w-2xl mx-auto font-inter">
+            Encontra respostas para as tuas questões sobre cápsulas do tempo e os nossos serviços.
+          </p>
+        </div>
+      </PhotoBackground>
 
+      <main className="bg-keepla-white py-16">
+        <div className="container mx-auto px-4 max-w-4xl">
           <div className="mb-12">
             <Accordion type="single" collapsible className="space-y-4">
               {faqs.map((faq, index) => (
                 <AccordionItem key={`faq-${faq.question.slice(0, 20).replace(/\s+/g, '-')}-${index}`} value={`item-${index}`}>
                   <Card className="border-keepla-red/20">
                     <AccordionTrigger className="px-6 py-4 hover:no-underline">
-                      <h3 className="text-left font-semibold text-keepla-gray-dark">
+                      <h3 className="text-left font-semibold text-keepla-black font-inter">
                         {faq.question}
                       </h3>
                     </AccordionTrigger>
                     <AccordionContent>
                       <CardContent className="pt-0 px-6 pb-6">
-                        <p className="text-keepla-gray-light leading-relaxed">
+                        <p className="text-muted-foreground leading-relaxed font-inter">
                           {faq.answer}
                         </p>
                       </CardContent>
@@ -96,24 +104,24 @@ const FAQ = () => {
           </div>
 
           <div className="text-center">
-            <Card className="bg-white/50 border-keepla-red/20">
+            <Card className="bg-keepla-black border-0">
               <CardHeader>
-                <CardTitle className="text-keepla-gray-dark font-serif">
+                <CardTitle className="text-keepla-white font-inter">
                   Ainda tens dúvidas?
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <p className="text-keepla-gray-light">
+                <p className="text-keepla-white/70 font-inter">
                   A nossa equipa está sempre disponível para te ajudar com qualquer questão sobre as tuas cápsulas do tempo.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link to="/contact">
-                    <Button className="flex items-center gap-2 bg-keepla-red hover:bg-keepla-red/90 text-white">
+                    <Button className="flex items-center gap-2 bg-keepla-red hover:bg-keepla-red/90 text-keepla-white font-inter">
                       <Mail className="h-4 w-4" />
                       Contactar por Email
                     </Button>
                   </Link>
-                  <Button variant="outline" className="flex items-center gap-2 border-keepla-red text-keepla-red hover:bg-keepla-red/10">
+                  <Button variant="outline" className="flex items-center gap-2 border-keepla-white text-keepla-white hover:bg-keepla-white/10 font-inter">
                     <MessageCircle className="h-4 w-4" />
                     Chat em Directo
                   </Button>
