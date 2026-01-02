@@ -82,7 +82,16 @@
     "type-check": "tsc --noEmit",
     "security-check": "npm audit --audit-level moderate",
     "security-fix": "npm audit fix",
-    "analyze": "npm run build:prod && npx vite-bundle-analyzer dist"
+    "analyze": "npm run build:prod && npx vite-bundle-analyzer dist",
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "supabase:status": "supabase status",
+    "supabase:status:json": "supabase status --output json",
+    "supabase:migrations:list:local": "supabase migration list --local --output json",
+    "supabase:migrations:list:remote": "supabase migration list --linked --output json",
+    "supabase:db:diff": "supabase db diff -f auto_migration",
+    "supabase:db:push": "supabase db push",
+    "supabase:db:pull": "supabase db pull"
   },
   "devDependencies": {
     "@headlessui/react": "^2.1.10",
