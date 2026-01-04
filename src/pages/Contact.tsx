@@ -39,14 +39,15 @@ const Contact = () => {
       />
       <Navigation />
 
-      {/* Hero com fundo fotográfico */}
-      <section className="relative min-h-[40vh] flex items-center justify-center">
-        <div className="absolute inset-0">
+      {/* Hero com fundo fotográfico - altura reduzida */}
+      <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 w-full h-full">
           <img 
             src={cartaImage} 
             alt="Mãos a segurar uma carta" 
-            className="w-full h-full object-cover grayscale contrast-110"
+            className="w-full h-full object-cover object-center grayscale contrast-110"
             loading="eager"
+            style={{ minWidth: '100%', minHeight: '100%' }}
           />
           <div className="absolute inset-0 bg-black/60" />
         </div>
@@ -81,33 +82,37 @@ const Contact = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Fala <span className="text-primary font-georgia italic">Connosco</span>
+            Fala <span className="text-keepla-red font-georgia italic">Connosco</span>
           </motion.h1>
           
           <motion.p 
-            className="text-xl text-white/90"
+            className="text-xl text-white/90 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            Estamos aqui para te ajudar a criar memórias eternas
+            Estamos aqui para te ajudar a criar memórias eternas. Tens uma pergunta, sugestão ou precisas de ajuda? A nossa equipa está pronta para te apoiar.
           </motion.p>
         </motion.div>
       </section>
 
+      {/* Secção principal com formulário e informações */}
       <motion.main 
-        className="container mx-auto px-4 py-16"
+        className="bg-keepla-white py-16"
         initial="hidden"
-        animate="visible"
+        whileInView="visible"
+        viewport={{ once: true }}
         variants={containerVariants}
       >
-        <motion.div 
-          className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto"
-          variants={itemVariants}
-        >
-          <ContactForm />
-          <ContactInfo />
-        </motion.div>
+        <div className="container mx-auto px-4">
+          <motion.div 
+            className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto"
+            variants={itemVariants}
+          >
+            <ContactForm />
+            <ContactInfo />
+          </motion.div>
+        </div>
       </motion.main>
 
       <Footer />

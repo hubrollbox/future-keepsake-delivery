@@ -32,9 +32,10 @@ const SectionWithPhoto = ({
           src={image} 
           alt={alt}
           className={cn(
-            "w-full h-full object-cover",
+            "w-full h-full object-cover object-center",
             grayscale && "grayscale contrast-110"
           )}
+          style={{ minWidth: '100%', minHeight: '100%' }}
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />

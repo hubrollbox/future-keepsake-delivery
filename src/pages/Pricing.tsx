@@ -296,18 +296,18 @@ function Pricing() {
           </div>
 
           {/* Final CTA */}
-          <div className="text-center bg-keepla-black text-keepla-white rounded-2xl p-10 md:p-16 max-w-4xl mx-auto mb-16">
-            <p className="font-georgia italic text-keepla-white/70 mb-4">O momento perfeito é agora</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 font-inter">
+          <div className="text-center bg-keepla-black text-white rounded-2xl p-10 md:p-16 max-w-4xl mx-auto mb-16 container">
+            <p className="font-georgia italic text-white/70 mb-4">O momento perfeito é agora</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 font-inter text-white">
               Pronto para criar a tua primeira memória?
             </h2>
-            <p className="text-keepla-white/80 mb-8 font-inter">
+            <p className="text-white/80 mb-8 font-inter">
               Começa grátis. Sem cartão de crédito. Sem compromisso.
             </p>
             <Button
               onClick={() => navigate(user ? "/create-keepsake" : "/register")}
               size="lg"
-              className="bg-keepla-red hover:bg-keepla-red/90 text-keepla-white font-inter font-semibold px-8 py-6 text-lg shadow-keepla hover:shadow-keepla-intense transition-all"
+              className="bg-keepla-red hover:bg-keepla-red/90 text-white font-inter font-semibold px-8 py-6 text-lg shadow-xl hover:shadow-2xl transition-all"
             >
               Começar Grátis Agora
             </Button>
