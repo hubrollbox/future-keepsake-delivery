@@ -1,5 +1,4 @@
 // Script para testar a Edge Function localmente usando fetch
-import fetch from 'node-fetch';
 import 'dotenv/config';
 
 async function testLocalFunction() {

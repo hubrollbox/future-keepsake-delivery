@@ -1,7 +1,6 @@
 // Script para verificar o status da implantação da Edge Function e do cron job
 import { createClient } from '@supabase/supabase-js';
 import 'dotenv/config';
-import fetch from 'node-fetch';
 
 async function checkDeploymentStatus() {
   try {
