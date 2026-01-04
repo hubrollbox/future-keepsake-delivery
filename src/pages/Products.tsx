@@ -447,18 +447,18 @@ const Products = () => {
         </section>
 
         {/* Final CTA */}
-        <div className="text-center bg-foreground text-background rounded-2xl p-10 md:p-16 max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 font-inter">
+        <div className="text-center bg-keepla-black rounded-2xl p-10 md:p-16 max-w-4xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 font-inter text-white">
             Começa a guardar memórias hoje
           </h2>
-          <p className="text-background/80 mb-8 font-inter text-lg">
+          <p className="text-white/80 mb-8 font-inter text-lg">
             A tua primeira mensagem é grátis. Experimenta a magia de enviar amor
             através do tempo.
           </p>
           <Button
             onClick={() => navigate(user ? "/create-keepsake" : "/register")}
             size="lg"
-            className="bg-primary hover:bg-secondary text-primary-foreground font-inter font-semibold px-8 py-6 text-lg"
+            className="bg-keepla-red hover:bg-keepla-red/90 text-white font-inter font-semibold px-8 py-6 text-lg"
           >
             Criar Primeira Memória
           </Button>

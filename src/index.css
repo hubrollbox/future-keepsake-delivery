@@ -89,12 +89,12 @@
     display: block;
   }
 
-  /* TÍTULOS: Preto para contraste máximo */
+  /* TÍTULOS: Herdam cor do contexto */
   h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     line-height: 1.2;
     letter-spacing: -0.02em;
-    color: hsl(var(--keepla-black));
+    /* Não forçar cor - permite herdar do pai para fundos escuros */
   }
 }
 
