@@ -269,11 +269,14 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
       const finalSlug = data.slug || slugify(data.title);
       
       if (finalSlug) {
-        const { data: existingPosts, error: slugError } = await supabase
+        let query = supabase
           .from('blog_posts')
           .select('id')
-          .eq('slug', finalSlug)
-          .neq('id', editId || '');
+          .eq('slug', finalSlug);
+        if (editId) {
+          query = query.neq('id', editId);
+        }
+        const { data: existingPosts, error: slugError } = await query;
 
         if (slugError) throw slugError;
         

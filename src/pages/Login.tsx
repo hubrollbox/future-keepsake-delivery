@@ -83,13 +83,12 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center">
-      {/* Background fotográfico */}
-      <div className="absolute inset-0">
+    <div className="min-h-screen relative flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 w-full h-full">
         <img 
           src={memorialImage} 
           alt="Memorial - preservar memórias" 
-          className="w-full h-full object-cover grayscale contrast-110"
+          className="absolute inset-0 w-full h-full object-cover grayscale contrast-110"
           loading="eager"
         />
         <div className="absolute inset-0 bg-black/50" />
