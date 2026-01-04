@@ -118,6 +118,11 @@ blockquote {
   max-width: 600px;
 }
 
+/* Hero header em homepage: subtítulo branco para fundo escuro */
+.home-hero .hero-subtitle {
+  color: var(--keepla-white);
+}
+
 /* Testimonial quotes */
 .testimonial-quote {
   font-family: 'Georgia', serif;
