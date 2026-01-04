@@ -9,6 +9,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import { gamificationService } from "@/services/gamificationService";
+import ReactMarkdown from "react-markdown";
 
 interface BlogPost {
   id: string;
@@ -166,7 +167,7 @@ const BlogPost = () => {
                     <img
                       src={post.cover_image_url}
                       alt={post.title}
-                      className="w-full h-64 object-cover rounded-lg"
+                      className="w-full h-48 object-cover rounded-lg"
                       style={{ minHeight: '200px', display: 'block', visibility: 'visible' }}
                     />
                   )}
@@ -219,10 +220,9 @@ const BlogPost = () => {
           </header>
 
           <div className="prose prose-lg dark:prose-invert max-w-none">
-            <div
-              className="whitespace-pre-wrap text-keepla-black leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, "<br/>") }}
-            />
+            <ReactMarkdown>
+              {post.content.replace(/\n/g, "  \n")}
+            </ReactMarkdown>
           </div>
         </article>
       </main>

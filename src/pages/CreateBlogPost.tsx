@@ -440,19 +440,22 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
           )}
         </div>
 
-        {/* Excerto */}
+        {/* Introdução */}
         <div className="space-y-2">
           <label htmlFor="excerpt" className="block text-sm font-medium text-gray-700">
-            Excerto
+            Introdução
           </label>
           <textarea
             id="excerpt"
             {...register('excerpt')}
-            placeholder="Breve descrição do post"
+            placeholder="Introdução editorial do artigo. 1–2 parágrafos que contextualizam e captam interesse."
             rows={3}
             className="w-full border border-keepla-gray-200 rounded-lg p-3 focus:ring-2 focus:ring-keepla-red focus:border-keepla-red resize-none"
-            aria-describedby={errors.excerpt ? 'excerpt-error excerpt-counter' : 'excerpt-counter'}
+            aria-describedby={errors.excerpt ? 'excerpt-error excerpt-help excerpt-counter' : 'excerpt-help excerpt-counter'}
           />
+          <p id="excerpt-help" className="text-sm text-gray-500">
+            Use a introdução para contextualizar o tema, definir expectativas e motivar a leitura.
+          </p>
           <div className="flex justify-between items-center">
             <p id="excerpt-counter" className="text-sm text-gray-500">
               {excerpt?.length || 0}/500 caracteres
@@ -470,6 +473,15 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
           <label htmlFor="content" className="block text-sm font-medium text-gray-700">
             Conteúdo *
           </label>
+          <div className="border border-gray-200 rounded-lg p-3 text-sm text-gray-700 bg-gray-50">
+            <div className="font-medium mb-1">Formatação básica (Markdown):</div>
+            <div className="space-y-1">
+              <p>Títulos: # Título, ## Subtítulo</p>
+              <p>Negrito: **texto**</p>
+              <p>Listas: - item da lista</p>
+              <p>Links: [texto do link](https://exemplo.com)</p>
+            </div>
+          </div>
           <textarea
             id="content"
             {...register('content')}
