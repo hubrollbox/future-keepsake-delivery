@@ -105,7 +105,10 @@ const AdminLayout = ({ children, activeSection }: AdminLayoutProps) => {
             </Button>
             <Button
               variant="ghost"
-              onClick={() => signOut().then(() => navigate('/'))}
+              onClick={async () => {
+                await signOut();
+                navigate('/');
+              }}
               className={`w-full ${isCollapsed ? 'justify-center px-2' : 'justify-start'} text-steel-blue hover:text-earthy-burgundy hover:bg-sand-beige/50`}
               title={isCollapsed ? "Sair" : undefined}
             >
