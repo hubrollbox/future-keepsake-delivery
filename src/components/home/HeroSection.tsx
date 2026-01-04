@@ -90,7 +90,7 @@ const HeroSection = () => {
             <Button 
               onClick={handleStartJourney}
               size="lg" 
-              className="text-lg px-8 py-6 bg-keepla-red hover:bg-keepla-red/90 text-keepla-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-lg font-semibold"
+              className="cta text-lg px-8 py-6 bg-keepla-red hover:bg-keepla-red/90 text-keepla-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-lg font-semibold"
             >
               {user ? "Ir para Dashboard" : "Começar a minha jornada"}
             </Button>
@@ -106,7 +106,7 @@ const HeroSection = () => {
 
           {/* Social proof - Minimalista */}
           <motion.div 
-            className="flex flex-wrap justify-center items-center gap-8 text-sm text-gray-300"
+            className="flex flex-wrap justify-center items-center gap-8 text-sm text-white/80"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}

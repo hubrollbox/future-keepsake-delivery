@@ -235,7 +235,7 @@ const Products = () => {
                       <Button
                         onClick={() => handleAddToCart(product)}
                         variant="brand"
-                        className="w-full"
+                        className="cta w-full"
                         size="lg"
                       >
                         {product.price === 0 ? (
@@ -310,7 +310,7 @@ const Products = () => {
                       <Button
                         onClick={() => handleAddToCart(product)}
                         variant="brand"
-                        className="w-full"
+                        className="cta w-full"
                         size="lg"
                       >
                         <ShoppingCart className="h-4 w-4 mr-2" />

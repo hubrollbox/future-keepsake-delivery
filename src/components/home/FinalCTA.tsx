@@ -13,7 +13,7 @@ const FinalCTA = () => {
   };
 
   return (
-    <section className="relative py-20 md:py-32" aria-label="Convite final para criar conta no keepla">
+    <section className="relative py-20 md:py-32 overflow-hidden" aria-label="Convite final para criar conta no keepla">
       {/* Background fotográfico */}
       <div className="absolute inset-0">
         <img 
@@ -89,7 +89,7 @@ const FinalCTA = () => {
           >
             <Button 
               size="lg" 
-              className="px-8 py-6 text-lg group bg-primary hover:bg-primary/90 text-primary-foreground font-inter font-semibold shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-200"
+              className="cta px-8 py-6 text-lg group bg-primary hover:bg-primary/90 text-primary-foreground font-inter font-semibold shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-200"
               onClick={() => handleNavigation('/register')}
               aria-label="Criar conta gratuitamente"
             >
