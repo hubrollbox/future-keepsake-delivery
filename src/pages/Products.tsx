@@ -234,11 +234,8 @@ const Products = () => {
                       )}
                       <Button
                         onClick={() => handleAddToCart(product)}
-                        className={`w-full ${
-                          isHighlighted
-                            ? "bg-keepla-red hover:bg-keepla-red/90 text-keepla-white"
-                            : "bg-keepla-black hover:bg-keepla-black/90 text-keepla-white"
-                        }`}
+                        variant="brand"
+                        className="w-full"
                         size="lg"
                       >
                         {product.price === 0 ? (
@@ -312,7 +309,8 @@ const Products = () => {
                       )}
                       <Button
                         onClick={() => handleAddToCart(product)}
-                        className="w-full bg-foreground hover:bg-foreground/90 text-background"
+                        variant="brand"
+                        className="w-full"
                         size="lg"
                       >
                         <ShoppingCart className="h-4 w-4 mr-2" />

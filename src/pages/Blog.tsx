@@ -189,15 +189,14 @@ const Blog = () => {
                       <img 
                         src={coverUrl} 
                         alt={post.title} 
-                        className="w-full h-48 object-cover grayscale group-hover:grayscale-0 transition-all duration-500" 
+                        className="w-full h-32 md:h-36 object-cover grayscale group-hover:grayscale-0 transition-all duration-500" 
                         onError={(e) => {
-                          // Fallback se a imagem não carregar
                           (e.target as HTMLImageElement).style.display = 'none';
                         }}
                       />
                     </div>
                   ) : (
-                    <div className="w-full h-48 bg-keepla-gray/10 flex items-center justify-center">
+                    <div className="w-full h-32 md:h-36 bg-keepla-gray/10 flex items-center justify-center">
                       <span className="text-muted-foreground font-serif italic">Sem imagem</span>
                     </div>
                   )}
