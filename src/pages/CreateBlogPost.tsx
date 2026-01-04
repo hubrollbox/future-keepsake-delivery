@@ -362,16 +362,20 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
       }
     } catch (error: unknown) {
       console.error('Erro ao salvar post:', error);
-      
-      const errorMessage = (error instanceof Error && error.message) 
-        ? error.message 
-        : 'Ocorreu um erro ao salvar o post. Por favor, tente novamente.';
-      
+      const anyErr = error as any;
+      const errorMessage =
+        anyErr?.message ||
+        anyErr?.error_description ||
+        anyErr?.description ||
+        anyErr?.details ||
+        anyErr?.hint ||
+        'Ocorreu um erro ao salvar o post. Por favor, tente novamente.';
       toast({
         title: 'Erro',
         description: errorMessage,
         variant: 'destructive',
       });
+      console.error('Erro ao salvar post (detalhe):', anyErr);
     } finally {
       setIsSubmitting(false);
     }
