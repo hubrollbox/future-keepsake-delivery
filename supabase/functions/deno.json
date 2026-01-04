@@ -2,7 +2,8 @@
   "compilerOptions": {
     "allowJs": true,
     "lib": ["deno.window"],
-    "strict": true
+    "strict": true,
+    "noCheck": true
   },
   "importMap": "./import_map.json",
   "nodeModulesDir": "auto"

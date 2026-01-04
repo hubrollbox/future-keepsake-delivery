@@ -257,20 +257,20 @@ const About = () => {
 
         {/* CTA Final com fundo escuro */}
         <motion.section 
-          className="py-16 bg-foreground text-background rounded-2xl max-w-5xl mx-auto"
+          className="py-16 bg-keepla-black rounded-2xl max-w-5xl mx-auto"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7 }}
         >
           <div className="text-center px-8">
-            <p className="text-primary font-georgia italic mb-4">
+            <p className="text-keepla-red font-georgia italic mb-4">
               A tua história começa aqui
             </p>
-            <h2 className="text-3xl md:text-4xl font-inter font-bold text-background mb-6">
+            <h2 className="text-3xl md:text-4xl font-inter font-bold text-white mb-6">
               Quer Fazer Parte da Nossa História?
             </h2>
-            <p className="text-xl text-background/80 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
               Junta-te à nossa comunidade e ajuda-nos a continuar a criar 
               momentos mágicos para milhares de pessoas.
             </p>
@@ -288,7 +288,7 @@ const About = () => {
                 variant="outline" 
                 size="lg" 
                 onClick={() => handleNavigation('/contact')}
-                className="px-8 py-6 text-lg bg-transparent border-2 border-background text-background hover:bg-background/10 font-inter font-semibold transition-all duration-200"
+                className="px-8 py-6 text-lg bg-transparent border-2 border-white text-white hover:bg-white/10 font-inter font-semibold transition-all duration-200"
               >
                 Falar Connosco
               </Button>

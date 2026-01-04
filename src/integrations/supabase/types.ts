@@ -631,6 +631,71 @@ export type Database = {
         }
         Relationships: []
       }
+      point_events: {
+        Row: {
+          action_type: string
+          created_at: string | null
+          id: string
+          metadata: Json | null
+          points: number
+          user_id: string
+        }
+        Insert: {
+          action_type: string
+          created_at?: string | null
+          id?: string
+          metadata?: Json | null
+          points: number
+          user_id: string
+        }
+        Update: {
+          action_type?: string
+          created_at?: string | null
+          id?: string
+          metadata?: Json | null
+          points?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "point_events_action_type_fkey"
+            columns: ["action_type"]
+            isOneToOne: false
+            referencedRelation: "point_rules"
+            referencedColumns: ["action_type"]
+          },
+        ]
+      }
+      point_rules: {
+        Row: {
+          action_type: string
+          created_at: string | null
+          daily_limit: number | null
+          description: string | null
+          is_active: boolean | null
+          min_interval_seconds: number | null
+          points: number
+        }
+        Insert: {
+          action_type: string
+          created_at?: string | null
+          daily_limit?: number | null
+          description?: string | null
+          is_active?: boolean | null
+          min_interval_seconds?: number | null
+          points: number
+        }
+        Update: {
+          action_type?: string
+          created_at?: string | null
+          daily_limit?: number | null
+          description?: string | null
+          is_active?: boolean | null
+          min_interval_seconds?: number | null
+          points?: number
+        }
+        Relationships: []
+      }
       products: {
         Row: {
           active: boolean | null
@@ -1056,6 +1121,42 @@ export type Database = {
         }
         Relationships: []
       }
+      user_stats: {
+        Row: {
+          created_at: string | null
+          current_level: number | null
+          current_streak: number | null
+          last_activity_date: string | null
+          longest_streak: number | null
+          milestones: Json | null
+          total_points: number | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          current_level?: number | null
+          current_streak?: number | null
+          last_activity_date?: string | null
+          longest_streak?: number | null
+          milestones?: Json | null
+          total_points?: number | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          current_level?: number | null
+          current_streak?: number | null
+          last_activity_date?: string | null
+          longest_streak?: number | null
+          milestones?: Json | null
+          total_points?: number | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       warehouse_items: {
         Row: {
           client_name: string
@@ -1115,6 +1216,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      add_points: {
+        Args: { p_action_type: string; p_metadata?: Json; p_user_id: string }
+        Returns: Json
+      }
       calculate_level:
         | { Args: never; Returns: number }
         | { Args: { points: number }; Returns: number }
@@ -1132,6 +1237,10 @@ export type Database = {
           recent_recipients: number
           total_recipients: number
         }[]
+      }
+      handle_gamification_action: {
+        Args: { p_action_type: string; p_metadata?: Json; p_user_id: string }
+        Returns: Json
       }
       is_admin_secure: { Args: never; Returns: boolean }
       log_security_event: {
