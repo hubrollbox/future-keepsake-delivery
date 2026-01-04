@@ -70,6 +70,7 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
     setValue,
     setError,
     clearErrors,
+    setFocus,
     formState: { errors, isDirty },
   } = useForm<BlogPostFormData>({
     resolver: zodResolver(blogPostSchema) as any,
@@ -281,6 +282,12 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
             type: 'manual',
             message: 'Já existe um post com este slug. Por favor, escolha outro.',
           });
+          setFocus('slug');
+          toast({
+            title: 'Slug duplicado',
+            description: 'Já existe um artigo com este slug. Altere o slug ou o título.',
+            variant: 'destructive',
+          });
           throw new Error('Slug já está em uso');
         }
       }
@@ -356,16 +363,15 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
     } catch (error: unknown) {
       console.error('Erro ao salvar post:', error);
       
-      // Não mostrar toast se o erro for de slug (já tratado no form)
-      if (error instanceof Error && error.message !== 'Slug já está em uso') {
-        const errorMessage = error.message || 'Ocorreu um erro ao salvar o post. Por favor, tente novamente.';
-        
-        toast({
-          title: 'Erro',
-          description: errorMessage,
-          variant: 'destructive',
-        });
-      }
+      const errorMessage = (error instanceof Error && error.message) 
+        ? error.message 
+        : 'Ocorreu um erro ao salvar o post. Por favor, tente novamente.';
+      
+      toast({
+        title: 'Erro',
+        description: errorMessage,
+        variant: 'destructive',
+      });
     } finally {
       setIsSubmitting(false);
     }
