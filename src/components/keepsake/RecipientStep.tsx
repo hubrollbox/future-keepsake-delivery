@@ -108,7 +108,7 @@ const RecipientStep = ({ formData, updateFormData, form }: RecipientStepProps) =
             <Input
               id="recipient_contact"
               type="email"
-              value={formData.recipient_contact}
+              value={formData.recipient_contact || ''}
               onChange={(e) => updateFormData({ recipient_contact: e.target.value })}
               placeholder={EMAIL_PLACEHOLDER}
               className="mt-1"
