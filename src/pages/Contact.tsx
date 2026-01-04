@@ -39,15 +39,14 @@ const Contact = () => {
       />
       <Navigation />
 
-      {/* Hero com fundo fotográfico - altura reduzida */}
-      <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 w-full h-full">
+      {/* Hero com fundo fotográfico - responsive */}
+      <section className="relative min-h-[50vh] flex items-center justify-center -mt-20 pt-20 overflow-hidden">
+        <div className="absolute inset-0 w-full h-full overflow-hidden">
           <img 
             src={cartaImage} 
             alt="Mãos a segurar uma carta" 
-            className="w-full h-full object-cover object-center grayscale contrast-110"
+            className="absolute inset-0 w-full h-full min-w-full min-h-full object-cover object-center grayscale contrast-110"
             loading="eager"
-            style={{ minWidth: '100%', minHeight: '100%' }}
           />
           <div className="absolute inset-0 bg-black/60" />
         </div>

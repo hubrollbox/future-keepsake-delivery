@@ -54,13 +54,13 @@ const HowItWorks = () => {
       />
       <Navigation />
 
-      {/* Hero com fundo fotográfico - ajustado para cobrir o header */}
+      {/* Hero com fundo fotográfico - responsive */}
       <section className="relative min-h-[60vh] flex items-center justify-center -mt-20 pt-20 overflow-hidden">
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 w-full h-full overflow-hidden">
           <img 
             src={capsulaImage} 
             alt="Pessoa a escrever memórias" 
-            className="w-full h-full object-cover object-center grayscale contrast-110"
+            className="absolute inset-0 w-full h-full min-w-full min-h-full object-cover object-center grayscale contrast-110"
             loading="eager"
           />
           <div className="absolute inset-0 bg-black/50" />

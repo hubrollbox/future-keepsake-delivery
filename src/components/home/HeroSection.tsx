@@ -18,12 +18,12 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background image visível com filtro ligeiro */}
-      <div className="absolute inset-0">
+      {/* Background image visível com filtro ligeiro - responsive */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden">
         <img 
           src={heroImage} 
           alt="Mãos a segurar uma carta – memória Keepla" 
-          className="w-full h-full object-cover opacity-90 contrast-110 brightness-95"
+          className="absolute inset-0 w-full h-full min-w-full min-h-full object-cover object-center opacity-90 contrast-110 brightness-95"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/25"></div>
       </div>
