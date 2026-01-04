@@ -90,7 +90,9 @@
     "supabase:migrations:list:remote": "supabase migration list --linked --output json",
     "supabase:db:diff": "supabase db diff -f auto_migration",
     "supabase:db:push": "supabase db push",
-    "supabase:db:pull": "supabase db pull"
+    "supabase:db:pull": "supabase db pull",
+    "deps:check:workbox": "echo Instalada: & npm ls vite-plugin-pwa --depth=0 & npm ls workbox-build --depth=3 & echo Latest: & npm view vite-plugin-pwa version; npm view workbox-build version",
+    "deps:update:workbox": "npm i vite-plugin-pwa@latest && npm ls workbox-build --depth=3 && npm run test"
   },
   "devDependencies": {
     "@headlessui/react": "^2.1.10",
