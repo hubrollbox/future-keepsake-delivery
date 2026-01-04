@@ -90,12 +90,15 @@ const AdminBlog = () => {
       const normalizedSlug = (form.slug || "").trim().toLowerCase();
       const finalSlug = normalizedSlug || slugify(form.title || "");
 
+      const isUuid = (val: string) =>
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(val);
+      const normalizedTags = (form.tags || []).map(t => t.trim()).filter(Boolean);
       const payload: any = {
         ...form,
         slug: finalSlug,
         content: sanitizeHtml(form.content || ""),
         excerpt: sanitizeInput(form.excerpt || ""),
-        tags: form.tags || [],
+        tags: normalizedTags.length === 0 ? null : (normalizedTags.every(isUuid) ? normalizedTags : null),
         updated_at: new Date().toISOString(),
       };
 

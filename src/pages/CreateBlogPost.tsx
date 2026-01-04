@@ -300,17 +300,21 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
       }
 
       // Preparar dados para inserção/atualização
+      const rawTags = data.tags
+        ? data.tags
+            .split(',')
+            .map((tag: string) => tag.trim())
+            .filter((tag: string) => tag.length > 0)
+        : [];
+      const isUuid = (val: string) =>
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(val);
+      const tagsValue = rawTags.length === 0 ? null : (rawTags.every(isUuid) ? rawTags : null);
       const postData = {
         title: data.title.trim(),
         slug: finalSlug,
         excerpt: data.excerpt?.trim() || null,
         content: data.content.trim(),
-        tags: data.tags
-          ? data.tags
-              .split(',')
-              .map((tag: string) => tag.trim())
-              .filter((tag: string) => tag.length > 0)
-          : [],
+        tags: tagsValue,
         status: data.publish ? 'published' : 'draft',
         author_id: userData.user.id,
         cover_image_url: coverUrl,
