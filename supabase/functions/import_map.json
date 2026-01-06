@@ -2,6 +2,6 @@
   "imports": {
     "https://deno.land/std@0.168.0/": "https://deno.land/std@0.168.0/",
     "https://esm.sh/": "https://esm.sh/",
-    "openai": "npm:openai@^4.52.5"
+    "openai": "https://esm.sh/openai@4.52.5"
   }
 }
