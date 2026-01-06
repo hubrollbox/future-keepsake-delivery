@@ -8,7 +8,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center py-8">
+    <div className="min-h-screen relative flex items-center justify-center py-8 overflow-hidden">
       {/* Background fotográfico */}
       <div className="absolute inset-0">
         <img 

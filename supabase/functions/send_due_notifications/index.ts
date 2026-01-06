@@ -7,15 +7,24 @@ serve(async () => {
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
   );
 
+  const { data, error: selectError } = await supabase
+    .from("scheduled_notifications")
+    .select("id");
+
+  if (selectError) {
+    return new Response(selectError.message, { status: 500 });
+  }
+
+  const ids = (data ?? []).map((row: { id: string }) => row.id);
+
+  if (ids.length === 0) {
+    return new Response("OK", { status: 200 });
+  }
+
   const { error } = await supabase
     .from("scheduled_notifications")
     .update({ status: "sent", sent_at: new Date().toISOString() })
-    .in(
-      "id",
-      supabase
-        .from("scheduled_notifications")
-        .select("id", { count: "exact", head: true })
-    );
+    .in("id", ids);
 
   if (error) {
     return new Response(error.message, { status: 500 });
