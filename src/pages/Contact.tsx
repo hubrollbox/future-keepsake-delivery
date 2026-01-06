@@ -4,7 +4,7 @@ import ContactForm from "@/components/contact/ContactForm";
 import ContactInfo from "@/components/contact/ContactInfo";
 import SEOHead from "@/components/SEOHead";
 import { motion, Variants } from "framer-motion";
-import cartaImage from "@/assets/carta-escrita.jpg";
+import carroClassicoImage from "@/assets/carro-classico.jpg";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -43,8 +43,8 @@ const Contact = () => {
       <section className="relative min-h-[50vh] flex items-center justify-center -mt-20 pt-20 overflow-hidden">
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <img 
-            src={cartaImage} 
-            alt="Mãos a segurar uma carta" 
+            src={carroClassicoImage} 
+            alt="Carro clássico em frente a edifício histórico" 
             className="absolute inset-0 w-full h-full min-w-full min-h-full object-cover object-center grayscale contrast-110"
             loading="eager"
           />

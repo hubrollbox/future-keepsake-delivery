@@ -1,6 +1,7 @@
 import { Heart, Clock, Star } from "lucide-react";
 import capsulaImage from "@/assets/capsula-escrita.jpg";
 import ruaPalacioImage from "@/assets/rua-palacio.jpg";
+import fachadaAzulejosImage from "@/assets/fachada-azulejos.jpg";
 import { motion, Variants } from "framer-motion";
 
 const StorySection = () => {
@@ -107,30 +108,31 @@ const StorySection = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto items-center">
-              {/* Imagem */}
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto items-center">
+              {/* Imagem 1 - Cápsula */}
               <motion.div 
-                className="order-2 md:order-1"
+                className="hidden md:block"
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
               >
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-keepla-intense">
+                <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-keepla-intense">
                   <img 
-                    src={capsulaImage} 
-                    alt="Pessoa a escrever memórias num parque" 
+                    src={fachadaAzulejosImage} 
+                    alt="Fachada portuguesa com azulejos tradicionais" 
                     className="w-full h-full object-cover image-bw-dramatic"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 </div>
               </motion.div>
               
-              {/* Texto */}
+              {/* Texto central */}
               <motion.div 
-                className="order-1 md:order-2 bg-card border border-border rounded-2xl p-8 md:p-12"
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                className="md:col-span-1 bg-card border border-border rounded-2xl p-8 md:p-12"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
               >
@@ -141,6 +143,25 @@ const StorySection = () => {
                 <p className="slogan">
                   — Porque o amor, quando guardado com cuidado, chega sempre na hora certa.
                 </p>
+              </motion.div>
+
+              {/* Imagem 2 - Cápsula escrita */}
+              <motion.div 
+                className="hidden md:block"
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
+              >
+                <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-keepla-intense">
+                  <img 
+                    src={capsulaImage} 
+                    alt="Pessoa a escrever memórias num parque" 
+                    className="w-full h-full object-cover image-bw-dramatic"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                </div>
               </motion.div>
             </div>
           </motion.div>

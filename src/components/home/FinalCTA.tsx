@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Star, Heart } from "lucide-react";
 import { motion } from "framer-motion";
-import memorialImage from "@/assets/memorial-pc.jpg";
+import noivosCasamentoImage from "@/assets/noivos-casamento.jpg";
 
 const FinalCTA = () => {
   const navigate = useNavigate();
@@ -17,9 +17,9 @@ const FinalCTA = () => {
       {/* Background fotográfico */}
       <div className="absolute inset-0">
         <img 
-          src={memorialImage} 
-          alt="Memorial - preservar memórias" 
-          className="w-full h-full object-cover grayscale contrast-110"
+          src={noivosCasamentoImage} 
+          alt="Noivos num momento de felicidade" 
+          className="w-full h-full object-cover object-top grayscale contrast-110"
           loading="lazy"
         />
         <div className="absolute inset-0 bg-black/60" />
