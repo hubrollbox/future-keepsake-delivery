@@ -1,5 +1,6 @@
 import { Shield, CheckCircle, MapPin } from "lucide-react";
 import { motion, Variants } from "framer-motion";
+import casalAntigoImage from "@/assets/casal-antigo.jpg";
 
 const TrustSection = () => {
   const containerVariants: Variants = {
@@ -22,8 +23,17 @@ const TrustSection = () => {
   };
 
   return (
-    <section className="py-20 md:py-28 bg-muted">
-      <div className="container mx-auto px-4">
+    <section className="py-20 md:py-28 bg-muted relative overflow-hidden">
+      {/* Background sutil com foto do casal antigo */}
+      <div className="absolute inset-0 opacity-5">
+        <img 
+          src={casalAntigoImage} 
+          alt="" 
+          className="w-full h-full object-cover grayscale"
+          loading="lazy"
+        />
+      </div>
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           <motion.div 
             className="text-center mb-16"
