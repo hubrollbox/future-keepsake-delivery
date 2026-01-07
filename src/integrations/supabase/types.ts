@@ -1257,8 +1257,10 @@ export type Database = {
         }
         Returns: undefined
       }
+      process_due_keepsakes: { Args: never; Returns: undefined }
       send_due_deliveries: { Args: never; Returns: undefined }
       send_due_keepsakes: { Args: never; Returns: undefined }
+      send_due_notifications_job: { Args: never; Returns: undefined }
       validate_checkout_session: {
         Args: { p_user_id: string }
         Returns: {
