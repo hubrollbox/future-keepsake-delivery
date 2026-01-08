@@ -3,13 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingSpinner from "@/components/ui/loading-spinner";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Tag } from "lucide-react";
+import { ArrowLeft, Share2, Facebook, Twitter, Linkedin, Copy, Check } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
 import { gamificationService } from "@/services/gamificationService";
 import ReactMarkdown from "react-markdown";
+import { motion } from "framer-motion";
 
 interface BlogPost {
   id: string;
@@ -29,20 +30,33 @@ const BlogPost = () => {
   const { toast } = useToast();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
+  const [copied, setCopied] = useState(false);
 
-  const handleShare = () => {
+  const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
+  
+  const shareLinks = {
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`,
+    twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(post?.title || '')}`,
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`,
+  };
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(currentUrl);
+    setCopied(true);
+    toast({
+      title: "Link copiado!",
+      description: "O link do artigo foi copiado para a área de transferência.",
+    });
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleNativeShare = () => {
     if (navigator.share) {
       navigator.share({
         title: post?.title || "Artigo Keepla",
         text: post?.excerpt || "",
-        url: window.location.href,
+        url: currentUrl,
       }).catch(console.error);
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      toast({
-        title: "Link copiado",
-        description: "Link do artigo copiado para a área de transferência",
-      });
     }
   };
 
@@ -128,12 +142,25 @@ const BlogPost = () => {
     );
   }
 
+  // Gerar URL absoluta da imagem para OG tags
+  const absoluteImageUrl = post.cover_image_url 
+    ? (post.cover_image_url.startsWith('http') 
+        ? post.cover_image_url 
+        : `${typeof window !== 'undefined' ? window.location.origin : ''}${post.cover_image_url}`)
+    : undefined;
+
   return (
     <div className="min-h-screen bg-background">
+      {/* SEO com imagem específica do post para redes sociais */}
       <SEOHead 
         title={post.title}
-        description={post.excerpt || "Artigo do blog Keepla"}
-        keywords={post.tags?.join(", ") || "blog, artigo"}
+        description={post.excerpt || `Leia "${post.title}" no blog Keepla - Memórias que ficam, entregues para sempre.`}
+        keywords={post.tags?.join(", ") || "blog, artigo, keepla, memórias"}
+        image={absoluteImageUrl || undefined}
+        url={currentUrl}
+        type="article"
+        author="Keepla"
+        publishedTime={post.published_at || undefined}
       />
       <Navigation />
       
@@ -148,82 +175,162 @@ const BlogPost = () => {
         </Button>
 
         <article className="max-w-4xl mx-auto">
-          <header className="mb-8">
+          <motion.header 
+            className="mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            {/* Imagem de capa otimizada para partilha (1200x630 ideal) */}
             {post.cover_image_url && (() => {
               const isVideo = /\.(mp4|webm|ogg)$/i.test(post.cover_image_url);
               return (
-                <div className="mb-6 rounded-lg overflow-hidden shadow-xl" style={{ minHeight: '200px' }}>
+                <div className="mb-8 rounded-xl overflow-hidden shadow-2xl aspect-[1200/630]">
                   {isVideo ? (
                     <video
                       controls
                       src={post.cover_image_url}
-                      className="w-full h-auto object-cover"
+                      className="w-full h-full object-cover"
                       autoPlay={false}
                       loop={false}
                       muted={false}
-                      style={{ display: 'block', visibility: 'visible' }}
                     />
                   ) : (
                     <img
                       src={post.cover_image_url}
                       alt={post.title}
-                      className="w-full h-48 object-cover rounded-lg"
-                      style={{ minHeight: '200px', display: 'block', visibility: 'visible' }}
+                      className="w-full h-full object-cover"
                     />
                   )}
                 </div>
               );
             })()}
 
-            <h1 className="text-4xl font-bold text-keepla-black mb-4">{post.title}</h1>
+            <h1 className="text-3xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
+              {post.title}
+            </h1>
+            
             {post.excerpt && (
-              <p className="text-xl text-muted-foreground mb-6">{post.excerpt}</p>
+              <p className="text-xl text-muted-foreground mb-6 font-serif italic leading-relaxed">
+                {post.excerpt}
+              </p>
             )}
 
+            {/* Tags */}
             {post.tags && post.tags.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-6">
                 {post.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-3 py-1 bg-keepla-red/10 text-keepla-red rounded-full text-sm"
+                    className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium"
                   >
-                    <Tag className="inline h-3 w-3 mr-1" />
-                    {tag}
+                    #{tag}
                   </span>
                 ))}
               </div>
             )}
 
-            <Button onClick={handleShare} variant="outline" className="mb-6 gap-2">
-              <div className="flex items-center gap-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-share-2"
-                >
-                  <circle cx="18" cy="5" r="3" />
-                  <circle cx="6" cy="12" r="3" />
-                  <circle cx="18" cy="19" r="3" />
-                  <line x1="8.59" x2="15.42" y1="13.51" y2="17.49" />
-                  <line x1="15.41" x2="8.59" y1="6.51" y2="10.49" />
-                </svg>
-                Partilhar Artigo
-              </div>
-            </Button>
-          </header>
+            {/* Botões de partilha social */}
+            <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-border">
+              <span className="text-sm text-muted-foreground font-medium">Partilhar:</span>
+              
+              <a 
+                href={shareLinks.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full bg-[#1877F2] text-white hover:bg-[#1877F2]/90 transition-colors"
+                aria-label="Partilhar no Facebook"
+              >
+                <Facebook className="h-4 w-4" />
+              </a>
+              
+              <a 
+                href={shareLinks.twitter}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full bg-[#1DA1F2] text-white hover:bg-[#1DA1F2]/90 transition-colors"
+                aria-label="Partilhar no Twitter"
+              >
+                <Twitter className="h-4 w-4" />
+              </a>
+              
+              <a 
+                href={shareLinks.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full bg-[#0A66C2] text-white hover:bg-[#0A66C2]/90 transition-colors"
+                aria-label="Partilhar no LinkedIn"
+              >
+                <Linkedin className="h-4 w-4" />
+              </a>
+              
+              <button
+                onClick={handleCopyLink}
+                className="p-2 rounded-full bg-muted text-muted-foreground hover:bg-muted/80 transition-colors"
+                aria-label="Copiar link"
+              >
+                {copied ? <Check className="h-4 w-4 text-green-600" /> : <Copy className="h-4 w-4" />}
+              </button>
 
-          <div className="prose prose-lg dark:prose-invert max-w-none">
+              {'share' in navigator && (
+                <button
+                  onClick={handleNativeShare}
+                  className="p-2 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                  aria-label="Mais opções de partilha"
+                >
+                  <Share2 className="h-4 w-4" />
+                </button>
+              )}
+            </div>
+          </motion.header>
+
+          <motion.div 
+            className="prose prose-lg dark:prose-invert max-w-none prose-headings:text-foreground prose-p:text-foreground/90 prose-a:text-primary"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <ReactMarkdown>
               {post.content.replace(/\n/g, "  \n")}
             </ReactMarkdown>
-          </div>
+          </motion.div>
+
+          {/* CTA final */}
+          <motion.div 
+            className="mt-12 p-8 bg-muted/50 rounded-xl text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            <h3 className="text-xl font-bold mb-2">Gostaste deste artigo?</h3>
+            <p className="text-muted-foreground mb-4">Partilha-o com quem também valoriza memórias.</p>
+            <div className="flex justify-center gap-3">
+              <a 
+                href={shareLinks.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 rounded-lg bg-[#1877F2] text-white hover:bg-[#1877F2]/90 transition-colors text-sm font-medium"
+              >
+                Facebook
+              </a>
+              <a 
+                href={shareLinks.twitter}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 rounded-lg bg-[#1DA1F2] text-white hover:bg-[#1DA1F2]/90 transition-colors text-sm font-medium"
+              >
+                Twitter
+              </a>
+              <a 
+                href={shareLinks.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 rounded-lg bg-[#0A66C2] text-white hover:bg-[#0A66C2]/90 transition-colors text-sm font-medium"
+              >
+                LinkedIn
+              </a>
+            </div>
+          </motion.div>
         </article>
       </main>
       <Footer />
