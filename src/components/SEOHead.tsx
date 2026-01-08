@@ -4,11 +4,11 @@ interface SEOHeadProps {
   title?: string;
   description?: string;
   keywords?: string;
-  image?: string;
+  image?: string | undefined;
   url?: string;
   type?: 'website' | 'article' | 'product';
   author?: string;
-  publishedTime?: string;
+  publishedTime?: string | undefined;
 }
 
 const DEFAULT_TITLE = 'Keepla - Memórias que ficam, entregues para sempre';
@@ -20,7 +20,7 @@ export default function SEOHead({
   title,
   description = DEFAULT_DESCRIPTION,
   keywords = 'keepsake, cápsula do tempo, memórias, presentes futuros, entrega programada, keepla',
-  image = DEFAULT_IMAGE,
+  image,
   url,
   type = 'website',
   author = 'Keepla',
@@ -28,9 +28,14 @@ export default function SEOHead({
 }: SEOHeadProps) {
   const fullTitle = title ? `${title} | ${SITE_NAME}` : DEFAULT_TITLE;
   const currentUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
-  const absoluteImage = image.startsWith('http') 
-    ? image 
-    : `${typeof window !== 'undefined' ? window.location.origin : ''}${image}`;
+  
+  // Usar imagem específica se fornecida, caso contrário usar default
+  const imageToUse = image || DEFAULT_IMAGE;
+  
+  // Garantir URL absoluta para a imagem
+  const absoluteImage = imageToUse.startsWith('http') 
+    ? imageToUse 
+    : `${typeof window !== 'undefined' ? window.location.origin : ''}${imageToUse.startsWith('/') ? '' : '/'}${imageToUse}`;
 
   useEffect(() => {
     // Update document title
@@ -58,25 +63,32 @@ export default function SEOHead({
     setMetaTag('keywords', keywords);
     setMetaTag('author', author);
 
-    // Open Graph tags
-    setMetaTag('og:title', fullTitle, true);
-    setMetaTag('og:description', description, true);
+    // Open Graph tags - essenciais para Facebook, LinkedIn, WhatsApp
+    setMetaTag('og:title', title ? title : DEFAULT_TITLE.split(' - ')[0], true);
+    setMetaTag('og:description', description ? description : DEFAULT_DESCRIPTION, true);
     setMetaTag('og:image', absoluteImage, true);
+    setMetaTag('og:image:width', '1200', true);
+    setMetaTag('og:image:height', '630', true);
+    setMetaTag('og:image:alt', title ? title : 'Keepla', true);
     setMetaTag('og:url', currentUrl, true);
     setMetaTag('og:type', type, true);
     setMetaTag('og:site_name', SITE_NAME, true);
     setMetaTag('og:locale', 'pt_PT', true);
 
-    // Twitter Card tags
+    // Twitter Card tags - essenciais para Twitter/X
     setMetaTag('twitter:card', 'summary_large_image');
-    setMetaTag('twitter:title', fullTitle);
-    setMetaTag('twitter:description', description);
+    setMetaTag('twitter:title', title ? title : DEFAULT_TITLE.split(' - ')[0]);
+    setMetaTag('twitter:description', description ? description : DEFAULT_DESCRIPTION);
     setMetaTag('twitter:image', absoluteImage);
+    setMetaTag('twitter:image:alt', title ? title : 'Keepla');
 
     // Article specific tags
-    if (type === 'article' && publishedTime) {
-      setMetaTag('article:published_time', publishedTime, true);
+    if (type === 'article') {
+      if (publishedTime) {
+        setMetaTag('article:published_time', publishedTime, true);
+      }
       setMetaTag('article:author', author, true);
+      setMetaTag('article:publisher', 'https://keepla.pt', true);
     }
 
     // Canonical URL
@@ -88,7 +100,7 @@ export default function SEOHead({
     }
     canonical.setAttribute('href', currentUrl);
 
-  }, [fullTitle, description, keywords, absoluteImage, currentUrl, type, author, publishedTime]);
+  }, [fullTitle, description, keywords, absoluteImage, currentUrl, type, author, publishedTime, title]);
 
   return null;
 }
