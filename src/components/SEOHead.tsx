@@ -64,9 +64,10 @@ export default function SEOHead({
     setMetaTag('author', author);
 
     // Open Graph tags - essenciais para Facebook, LinkedIn, WhatsApp
-    setMetaTag('og:title', title ? title : DEFAULT_TITLE.split(' - ')[0], true);
-    setMetaTag('og:description', description ? description : DEFAULT_DESCRIPTION, true);
-    setMetaTag('og:image', absoluteImage, true);
+    const ogTitle: string = title ?? (DEFAULT_TITLE.split(' - ')[0] ?? 'Keepla');
+    const ogDescription: string = description ?? DEFAULT_DESCRIPTION;
+    setMetaTag('og:title', ogTitle, true);
+    setMetaTag('og:description', ogDescription, true);
     setMetaTag('og:image:width', '1200', true);
     setMetaTag('og:image:height', '630', true);
     setMetaTag('og:image:alt', title ? title : 'Keepla', true);
@@ -77,10 +78,10 @@ export default function SEOHead({
 
     // Twitter Card tags - essenciais para Twitter/X
     setMetaTag('twitter:card', 'summary_large_image');
-    setMetaTag('twitter:title', title ? title : DEFAULT_TITLE.split(' - ')[0]);
-    setMetaTag('twitter:description', description ? description : DEFAULT_DESCRIPTION);
+    setMetaTag('twitter:title', ogTitle);
+    setMetaTag('twitter:description', description || DEFAULT_DESCRIPTION);
     setMetaTag('twitter:image', absoluteImage);
-    setMetaTag('twitter:image:alt', title ? title : 'Keepla');
+    setMetaTag('twitter:image:alt', ogTitle);
 
     // Article specific tags
     if (type === 'article') {
