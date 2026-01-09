@@ -230,7 +230,7 @@ const BlogPost = () => {
               </div>
             )}
 
-            {/* Botões de partilha social */}
+            {/* Botões de partilha social - seguindo manual da marca */}
             <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-border">
               <span className="text-sm text-muted-foreground font-medium">Partilhar:</span>
               
@@ -238,7 +238,7 @@ const BlogPost = () => {
                 href={shareLinks.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-full bg-[#1877F2] text-white hover:bg-[#1877F2]/90 transition-colors"
+                className="p-2 rounded-full border border-border bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors"
                 aria-label="Partilhar no Facebook"
               >
                 <Facebook className="h-4 w-4" />
@@ -248,7 +248,7 @@ const BlogPost = () => {
                 href={shareLinks.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-full bg-[#1DA1F2] text-white hover:bg-[#1DA1F2]/90 transition-colors"
+                className="p-2 rounded-full border border-border bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors"
                 aria-label="Partilhar no Twitter"
               >
                 <Twitter className="h-4 w-4" />
@@ -258,7 +258,7 @@ const BlogPost = () => {
                 href={shareLinks.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-full bg-[#0A66C2] text-white hover:bg-[#0A66C2]/90 transition-colors"
+                className="p-2 rounded-full border border-border bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors"
                 aria-label="Partilhar no LinkedIn"
               >
                 <Linkedin className="h-4 w-4" />
@@ -266,16 +266,16 @@ const BlogPost = () => {
               
               <button
                 onClick={handleCopyLink}
-                className="p-2 rounded-full bg-muted text-muted-foreground hover:bg-muted/80 transition-colors"
+                className="p-2 rounded-full border border-border bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors"
                 aria-label="Copiar link"
               >
-                {copied ? <Check className="h-4 w-4 text-green-600" /> : <Copy className="h-4 w-4" />}
+                {copied ? <Check className="h-4 w-4 text-[#E63946]" /> : <Copy className="h-4 w-4" />}
               </button>
 
               {'share' in navigator && (
                 <button
                   onClick={handleNativeShare}
-                  className="p-2 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                  className="p-2 rounded-full border border-[#E63946] bg-[#E63946] text-white hover:bg-[#E63946]/90 transition-colors"
                   aria-label="Mais opções de partilha"
                 >
                   <Share2 className="h-4 w-4" />
@@ -309,7 +309,7 @@ const BlogPost = () => {
                 href={shareLinks.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 rounded-lg bg-[#1877F2] text-white hover:bg-[#1877F2]/90 transition-colors text-sm font-medium"
+                className="px-4 py-2 rounded-lg border border-foreground bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors text-sm font-medium"
               >
                 Facebook
               </a>
@@ -317,7 +317,7 @@ const BlogPost = () => {
                 href={shareLinks.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 rounded-lg bg-[#1DA1F2] text-white hover:bg-[#1DA1F2]/90 transition-colors text-sm font-medium"
+                className="px-4 py-2 rounded-lg border border-foreground bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors text-sm font-medium"
               >
                 Twitter
               </a>
@@ -325,7 +325,7 @@ const BlogPost = () => {
                 href={shareLinks.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 rounded-lg bg-[#0A66C2] text-white hover:bg-[#0A66C2]/90 transition-colors text-sm font-medium"
+                className="px-4 py-2 rounded-lg border border-foreground bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors text-sm font-medium"
               >
                 LinkedIn
               </a>
