@@ -50,10 +50,15 @@ const HowItWorksSection = () => {
   };
 
   return (
-    <section className="py-20 md:py-28 bg-white/80 backdrop-blur-sm relative">
-      {/* Imagem de fundo subtil */}
-      <div className="absolute right-0 top-1/4 w-1/3 h-1/2 opacity-10 hidden lg:block">
-        <img src={bicicletaImage} alt="" className="w-full h-full object-cover grayscale rounded-l-3xl" />
+    <section className="py-20 md:py-28 bg-white/80 backdrop-blur-sm relative overflow-hidden">
+      {/* Imagem de fundo subtil - mobile fix */}
+      <div className="absolute right-0 top-1/4 w-1/3 h-1/2 opacity-10 hidden lg:block overflow-hidden">
+        <img 
+          src={bicicletaImage} 
+          alt="" 
+          className="absolute top-0 left-0 w-full h-full object-cover grayscale rounded-l-3xl"
+          style={{ minWidth: '100%', minHeight: '100%', width: '100%', height: '100%' }}
+        />
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
