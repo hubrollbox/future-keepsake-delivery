@@ -60,7 +60,6 @@ function CreateKeepsake() {
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, [hasUnsavedChanges, currentStep]);
 
-  // Renderizar loading se ainda a carregar autenticação
   if (authLoading) {
     return (
       <div className="min-h-screen bg-keepla-white flex items-center justify-center">
@@ -72,19 +71,16 @@ function CreateKeepsake() {
     );
   }
 
-  // Não renderizar se não autenticado (será redirecionado)
-  if (!user) {
-    return null;
-  }
+  if (!user) return null;
 
   const renderStepContent = () => {
-    const common = { form, nextStep, prevStep };
     const formData: KeepsakeFormData = { 
       ...form.getValues(), 
       total_cost: form.getValues().total_cost || 0, 
       channel_cost: form.getValues().channel_cost || 0,
       selected_products: form.getValues().selected_products || []
     } as KeepsakeFormData;
+
     const updateFormData = (data: Partial<KeepsakeFormData>) => {
       Object.entries(data).forEach(([k, v]) => form.setValue(k as keyof KeepsakeFormData, v));
     };
@@ -93,7 +89,7 @@ function CreateKeepsake() {
       case 1:
         return (
           <TypeStep
-            form={form as any}
+            form={form}
             selectedType={form.watch('type') as 'digital' | 'physical'}
             onTypeSelect={(v) => form.setValue('type', v)}
             onNext={nextStep}
@@ -102,28 +98,31 @@ function CreateKeepsake() {
       case 2:
         return (
           <RecipientStep
-            {...common}
             formData={formData}
             updateFormData={updateFormData}
-            form={form as any}
+            form={form}
+            nextStep={nextStep}
+            prevStep={prevStep}
           />
         );
       case 3:
         return (
           <MessageStep
-            {...common}
             formData={formData}
             updateFormData={updateFormData}
-            form={form as any}
+            form={form}
+            nextStep={nextStep}
+            prevStep={prevStep}
           />
         );
       case 4:
         return (
           <ProductsStep
-            {...common}
             formData={formData}
             updateFormData={updateFormData}
-            form={form as any}
+            form={form}
+            nextStep={nextStep}
+            prevStep={prevStep}
           />
         );
       case 5:
@@ -140,7 +139,7 @@ function CreateKeepsake() {
       default:
         return (
           <TypeStep
-            form={form as any}
+            form={form}
             selectedType={form.watch('type') as 'digital' | 'physical'}
             onTypeSelect={(v) => form.setValue('type', v)}
             onNext={nextStep}
@@ -149,20 +148,12 @@ function CreateKeepsake() {
     }
   };
 
-  const progressSteps = [
-    'Tipo',
-    'Destinatário', 
-    'Mensagem',
-    'Produtos',
-    'Revisão',
-    'Sucesso'
-  ];
+  const progressSteps = ['Tipo','Destinatário','Mensagem','Produtos','Revisão','Sucesso'];
 
   return (
     <div className="min-h-screen bg-keepla-black">
       <Navigation />
 
-      {/* Mini Hero */}
       <PhotoBackground 
         image={timeCapsuleImage} 
         alt="Cápsula do tempo"
@@ -196,7 +187,6 @@ function CreateKeepsake() {
 
       <main className="bg-keepla-white">
         <div className="container mx-auto px-4 py-8">
-          {/* Progress Stepper */}
           <div className="mb-8 max-w-4xl mx-auto">
             <ProgressStepper 
               steps={progressSteps} 
@@ -204,14 +194,12 @@ function CreateKeepsake() {
             />
           </div>
 
-          {/* Form Content */}
           <Card className="max-w-4xl mx-auto shadow-xl border-0 bg-white/80 backdrop-blur-sm">
             <CardContent className="p-8 pb-24 sm:pb-8">
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(submitKeepsake)} className="space-y-6">
                   {renderStepContent()}
 
-                  {/* Inline error feedback on Review step */}
                   {currentStep === 5 && formState.submissionError && (
                     <div className="rounded-md border border-keepla-red/30 bg-keepla-red/5 text-keepla-red p-3">
                       <p className="font-medium">Erro ao criar cápsula</p>
@@ -219,7 +207,6 @@ function CreateKeepsake() {
                     </div>
                   )}
                   
-                  {/* Navigation Buttons */}
                   {currentStep < 6 && (
                     <div className="fixed bottom-0 left-0 right-0 z-30 bg-white/95 backdrop-blur-md px-4 py-3 pb-[env(safe-area-inset-bottom)] shadow-lg sm:static sm:bg-transparent sm:shadow-none sm:px-0 sm:py-0 sm:border-t sm:border-gray-200">
                       <div className="max-w-4xl mx-auto flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
