@@ -1,6 +1,6 @@
 import { User, Mail } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
-import { KeepsakeFormValues } from "@/validations/keepsakeValidationSchema";
+import { KeepsakeFormData } from "@/hooks/useKeepsakeForm";
 import {
   FormControl,
   FormField,
@@ -12,10 +12,12 @@ import {
 interface RecipientStepProps {
   nextStep: () => void;
   prevStep: () => void;
-  form: UseFormReturn<KeepsakeFormValues>;
+  form: UseFormReturn<KeepsakeFormData>;
+  formData: KeepsakeFormData;
+  updateFormData: (data: Partial<KeepsakeFormData>) => void;
 }
 
-const RecipientStep = ({ form }: RecipientStepProps) => {
+const RecipientStep = ({ form, formData, updateFormData, nextStep, prevStep }: RecipientStepProps) => {
   const EMAIL_PLACEHOLDER = 'email@exemplo.com';
 
   return (
@@ -73,7 +75,6 @@ const RecipientStep = ({ form }: RecipientStepProps) => {
           />
         </div>
 
-        {/* Canal fixo: Email */}
         <div className="rounded-lg border border-white/50 p-4 bg-white/30">
           <div className="flex items-center gap-2 text-keepla-gray-dark">
             <Mail className="h-5 w-5 text-keepla-red" />
@@ -84,7 +85,6 @@ const RecipientStep = ({ form }: RecipientStepProps) => {
           </p>
         </div>
 
-        {/* Email do destinatário usando RHF */}
         <FormField
           control={form.control}
           name="recipient_contact"
