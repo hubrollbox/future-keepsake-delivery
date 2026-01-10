@@ -1,9 +1,4 @@
-
-
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { User, Mail } from "lucide-react";
-import { KeepsakeFormData } from "@/hooks/useKeepsakeForm";
 import { UseFormReturn } from "react-hook-form";
 import { KeepsakeFormValues } from "@/validations/keepsakeValidationSchema";
 import {
@@ -15,21 +10,13 @@ import {
 } from "@/components/ui/form";
 
 interface RecipientStepProps {
-  formData: KeepsakeFormData;
-  updateFormData: (data: Partial<KeepsakeFormData>) => void;
   nextStep: () => void;
   prevStep: () => void;
   form: UseFormReturn<KeepsakeFormValues>;
 }
 
-const RecipientStep = ({ formData, updateFormData, form }: RecipientStepProps) => {
+const RecipientStep = ({ form }: RecipientStepProps) => {
   const EMAIL_PLACEHOLDER = 'email@exemplo.com';
-
-  // Fluxo simplificado: canal fixo email, sem necessidade de alterar canal
-
-  
-
-  // Canal fixo: email
 
   return (
     <div className="space-y-6">
@@ -54,13 +41,10 @@ const RecipientStep = ({ formData, updateFormData, form }: RecipientStepProps) =
                   Nome do Destinatário *
                 </FormLabel>
                 <FormControl>
-                  <Input
+                  <input
                     placeholder="Nome completo"
                     {...field}
-                    onChange={(e) => {
-                      field.onChange(e);
-                      updateFormData({ recipient_name: e.target.value });
-                    }}
+                    className="w-full border rounded px-3 py-2"
                   />
                 </FormControl>
                 <FormMessage />
@@ -77,13 +61,10 @@ const RecipientStep = ({ formData, updateFormData, form }: RecipientStepProps) =
                   Relação
                 </FormLabel>
                 <FormControl>
-                  <Input
+                  <input
                     placeholder="Ex: filha, amigo, irmão"
                     {...field}
-                    onChange={(e) => {
-                      field.onChange(e);
-                      updateFormData({ relationship: e.target.value });
-                    }}
+                    className="w-full border rounded px-3 py-2"
                   />
                 </FormControl>
                 <FormMessage />
@@ -92,97 +73,40 @@ const RecipientStep = ({ formData, updateFormData, form }: RecipientStepProps) =
           />
         </div>
 
-        {/* Fluxo simplificado: canal de entrega fixo (Email) */}
+        {/* Canal fixo: Email */}
         <div className="rounded-lg border border-white/50 p-4 bg-white/30">
           <div className="flex items-center gap-2 text-keepla-gray-dark">
             <Mail className="h-5 w-5 text-keepla-red" />
             <span className="font-medium">Entrega por Email (Grátis)</span>
           </div>
-          <p className="text-sm text-keepla-gray-light mt-1">Usamos email para entregar a tua memória no futuro.</p>
+          <p className="text-sm text-keepla-gray-light mt-1">
+            Usamos email para entregar a tua memória no futuro.
+          </p>
         </div>
 
-        <div>
-            <Label htmlFor="recipient_contact" className="text-keepla-gray-dark font-medium">
-              Email do Destinatário *
-            </Label>
-            <Input
-              id="recipient_contact"
-              type="email"
-              value={formData.recipient_contact || ''}
-              onChange={(e) => updateFormData({ recipient_contact: e.target.value })}
-              placeholder={EMAIL_PLACEHOLDER}
-              className="mt-1"
-              required
-              
-            />
-          </div>
-
-        {false && (
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="md:col-span-2">
-              <Label htmlFor="street" className="text-keepla-gray-dark font-medium">Morada *</Label>
-              <Input
-                id="street"
-                type="text"
-                value={formData.street || ''}
-                onChange={(e) => updateFormData({ street: e.target.value })}
-                placeholder="Rua e número"
-                className="mt-1"
-                required
-              />
-            </div>
-            <div>
-              <Label htmlFor="postal_code" className="text-keepla-gray-dark font-medium">Código Postal *</Label>
-              <Input
-                id="postal_code"
-                type="text"
-                value={formData.postal_code || ''}
-                onChange={(e) => updateFormData({ postal_code: e.target.value })}
-                placeholder="0000-000"
-                className="mt-1"
-                required
-                pattern="^\\d{4}-\\d{3}$"
-              />
-            </div>
-            <div>
-              <Label htmlFor="city" className="text-keepla-gray-dark font-medium">Cidade *</Label>
-              <Input
-                id="city"
-                type="text"
-                value={formData.city || ''}
-                onChange={(e) => updateFormData({ city: e.target.value })}
-                placeholder="Cidade"
-                className="mt-1"
-                required
-              />
-            </div>
-            <div>
-              <Label htmlFor="state" className="text-keepla-gray-dark font-medium">Distrito</Label>
-              <Input
-                id="state"
-                type="text"
-                value={formData.state || ''}
-                onChange={(e) => updateFormData({ state: e.target.value })}
-                placeholder="Distrito"
-                className="mt-1"
-              />
-            </div>
-            <div>
-              <Label htmlFor="country" className="text-keepla-gray-dark font-medium">País</Label>
-              <Input
-                id="country"
-                type="text"
-                value={formData.country || 'Portugal'}
-                onChange={(e) => updateFormData({ country: e.target.value })}
-                placeholder="Portugal"
-                className="mt-1"
-              />
-            </div>
-          </div>
-        )}
+        {/* Email do destinatário usando RHF */}
+        <FormField
+          control={form.control}
+          name="recipient_contact"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel htmlFor="recipient_contact" className="text-keepla-gray-dark font-medium">
+                Email do Destinatário *
+              </FormLabel>
+              <FormControl>
+                <input
+                  id="recipient_contact"
+                  type="email"
+                  placeholder={EMAIL_PLACEHOLDER}
+                  {...field}
+                  className="w-full border rounded px-3 py-2 mt-1"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
       </div>
-
-      {/* Navegação controlada pela barra inferior de CreateKeepsake */}
     </div>
   );
 };
