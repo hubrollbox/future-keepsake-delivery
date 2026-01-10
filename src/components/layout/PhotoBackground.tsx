@@ -26,16 +26,16 @@ const PhotoBackground = ({
 
   return (
     <div className={cn("relative min-h-screen overflow-hidden", className)}>
-      {/* Background Image - responsive para todos os ecrãs */}
+      {/* Background Image - responsive mobile fix */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
         <img 
           src={image} 
           alt={alt}
           className={cn(
-            "absolute inset-0 w-full h-full object-cover object-center",
-            "min-w-full min-h-full",
+            "absolute top-0 left-0 w-full h-full object-cover object-center",
             grayscale && "grayscale contrast-110"
           )}
+          style={{ minWidth: '100%', minHeight: '100%', width: '100%', height: '100%' }}
           loading="eager"
         />
         <div className={cn("absolute inset-0", overlayClasses[overlay])} />

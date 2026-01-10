@@ -126,7 +126,8 @@ const StorySection = () => {
                   <img 
                     src={fachadaAzulejosImage} 
                     alt="Fachada portuguesa com azulejos tradicionais" 
-                    className="w-full h-full object-cover image-bw-dramatic"
+                    className="absolute top-0 left-0 w-full h-full object-cover image-bw-dramatic"
+                    style={{ minWidth: '100%', minHeight: '100%', width: '100%', height: '100%' }}
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
@@ -162,7 +163,8 @@ const StorySection = () => {
                   <img 
                     src={capsulaImage} 
                     alt="Pessoa a escrever memórias num parque" 
-                    className="w-full h-full object-cover image-bw-dramatic"
+                    className="absolute top-0 left-0 w-full h-full object-cover image-bw-dramatic"
+                    style={{ minWidth: '100%', minHeight: '100%', width: '100%', height: '100%' }}
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>

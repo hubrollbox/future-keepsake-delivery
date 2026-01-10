@@ -39,13 +39,14 @@ const Contact = () => {
       />
       <Navigation />
 
-      {/* Hero com fundo fotográfico - responsive */}
+      {/* Hero com fundo fotográfico - mobile fix */}
       <section className="relative min-h-[50vh] flex items-center justify-center -mt-20 pt-20 overflow-hidden">
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <img 
             src={carroClassicoImage} 
             alt="Carro clássico em frente a edifício histórico" 
-            className="absolute inset-0 w-full h-full min-w-full min-h-full object-cover object-center grayscale contrast-110"
+            className="absolute top-0 left-0 w-full h-full object-cover object-center grayscale contrast-110"
+            style={{ minWidth: '100%', minHeight: '100%', width: '100%', height: '100%' }}
             loading="eager"
           />
           <div className="absolute inset-0 bg-black/60" />
