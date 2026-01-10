@@ -24,12 +24,13 @@ const TrustSection = () => {
 
   return (
     <section className="py-20 md:py-28 bg-muted relative overflow-hidden">
-      {/* Background sutil com foto do casal antigo */}
-      <div className="absolute inset-0 opacity-5">
+      {/* Background sutil com foto do casal antigo - mobile fix */}
+      <div className="absolute inset-0 opacity-5 overflow-hidden">
         <img 
           src={casalAntigoImage} 
           alt="" 
-          className="w-full h-full object-cover grayscale"
+          className="absolute top-0 left-0 w-full h-full object-cover grayscale"
+          style={{ minWidth: '100%', minHeight: '100%', width: '100%', height: '100%' }}
           loading="lazy"
         />
       </div>
