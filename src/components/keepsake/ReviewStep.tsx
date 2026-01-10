@@ -1,166 +1,48 @@
-
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Calendar, User, Mail, Gift } from "lucide-react";
-import { KeepsakeFormData } from "@/hooks/useKeepsakeForm";
-import { computeTotalSimple, getBasePriceEur } from "@/lib/simplePricing";
+import { KeepsakeFormValues } from "@/validations/keepsakeValidationSchema";
 
 interface ReviewStepProps {
-  formData: KeepsakeFormData;
+  formData: KeepsakeFormValues;
   onBack: () => void;
-  onSubmit: () => Promise<void> | void;
+  onSubmit: () => Promise<void>;
   loading: boolean;
 }
 
-const ReviewStep = ({ formData }: ReviewStepProps) => {
-  const getChannelIcon = () => Mail;
-
-  const getChannelLabel = () => 'Email';
-
-  const ChannelIcon = getChannelIcon();
-  
-  const safeProducts = Array.isArray(formData.selected_products) ? formData.selected_products : [];
-  const safeChannelCost = typeof formData.channel_cost === 'number' ? formData.channel_cost : Number(formData.channel_cost) || 0;
-  const displayedTotal = computeTotalSimple({
-    ...formData,
-    selected_products: safeProducts,
-    channel_cost: safeChannelCost,
-  } as any);
-  const basePrice = getBasePriceEur({
-    ...formData,
-    selected_products: safeProducts,
-    channel_cost: safeChannelCost,
-  } as any);
-
+const ReviewStep = ({ formData, onBack, onSubmit, loading }: ReviewStepProps) => {
   return (
-    <div className="space-y-6">
-      <div className="text-center mb-8">
-        <Gift className="h-12 w-12 text-keepla-red mx-auto mb-4" />
-        <h2 className="text-2xl font-serif text-keepla-gray-dark mb-2">
-          Revisão Final
-        </h2>
-        <p className="text-keepla-gray-light">
-          Confirma os detalhes da tua cápsula antes de selar
-        </p>
+    <div className="space-y-6 text-center">
+      <h2 className="text-2xl font-serif text-keepla-gray-dark mb-2">
+        Revisão
+      </h2>
+      <p className="text-keepla-gray-light mb-4">
+        Verifique os dados antes de criar a cápsula
+      </p>
+
+      <div className="text-left max-w-xl mx-auto space-y-2">
+        <div><strong>Tipo:</strong> {formData.type}</div>
+        <div><strong>Destinatário:</strong> {formData.recipient_name}</div>
+        <div><strong>Email:</strong> {formData.recipient_contact}</div>
+        <div><strong>Título:</strong> {formData.title}</div>
+        <div><strong>Mensagem:</strong> {formData.message}</div>
+        <div><strong>Data de entrega:</strong> {formData.delivery_date}</div>
       </div>
 
-      <div className="space-y-4">
-        {/* Mensagem */}
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Calendar className="h-5 w-5 text-keepla-red" />
-              Mensagem
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <div>
-                <span className="font-medium text-keepla-gray-dark">Título:</span>
-                <p className="text-keepla-gray-light">{formData.title}</p>
-              </div>
-              <div>
-                <span className="font-medium text-keepla-gray-dark">Conteúdo:</span>
-                <p className="text-keepla-gray-light text-sm bg-keepla-gray/10 p-3 rounded-lg mt-1">
-                  {formData.message}
-                </p>
-              </div>
-              <div>
-                <span className="font-medium text-keepla-gray-dark">Data de Entrega:</span>
-                <p className="text-keepla-gray-light">
-                  {new Date(formData.delivery_date).toLocaleDateString('pt-PT', {
-                    weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Destinatário */}
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <User className="h-5 w-5 text-keepla-red" />
-              Destinatário
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-medium text-keepla-gray-dark">{formData.recipient_name}</p>
-                {formData.relationship && (
-                  <p className="text-sm text-keepla-gray-light">{formData.relationship}</p>
-                )}
-              </div>
-              <div className="text-right">
-                <div className="flex items-center gap-2">
-                  <ChannelIcon className="h-4 w-4 text-keepla-red" />
-                  <span className="text-sm text-keepla-gray-dark">{getChannelLabel()}</span>
-                </div>
-                <p className="text-sm text-keepla-gray-light">{formData.recipient_contact}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Produtos Selecionados */}
-        {safeProducts.length > 0 && (
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Gift className="h-5 w-5 text-keepla-red" />
-                Extras Selecionados
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                {safeProducts.map((product) => (
-                  <div key={product.id} className="flex justify-between items-center">
-                    <span className="text-keepla-gray-dark">{product.name}</span>
-                    <Badge variant="outline">{Number(product.price).toFixed(2)} €</Badge>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Resumo de Custos */}
-        <Card className="bg-white/50 border-keepla-red/20">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-lg text-keepla-gray-dark">Resumo de Custos</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              <div className="flex justify-between">
-                <span>Mensagem digital (preço base):</span>
-                <span>{basePrice === 0 ? 'Grátis' : `${basePrice.toFixed(2)} €`}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Canal de entrega ({getChannelLabel()}):</span>
-                <span>{safeChannelCost === 0 ? 'Grátis' : `${safeChannelCost.toFixed(2)} €`}</span>
-              </div>
-              {safeProducts.map((product) => (
-                <div key={product.id} className="flex justify-between">
-                  <span>{product.name}:</span>
-                  <span>{Number(product.price).toFixed(2)} €</span>
-                </div>
-              ))}
-              <div className="border-t border-keepla-red/20 pt-2 mt-2 flex justify-between font-semibold text-lg">
-                <span>Total:</span>
-                <span className="text-keepla-red">{Number(displayedTotal).toFixed(2)} €</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+      <div className="flex justify-center gap-4 mt-6">
+        <button
+          type="button"
+          onClick={onBack}
+          className="px-6 py-2 border rounded border-keepla-red text-keepla-red"
+        >
+          Anterior
+        </button>
+        <button
+          type="button"
+          onClick={onSubmit}
+          disabled={loading}
+          className="px-6 py-2 bg-keepla-red text-white rounded"
+        >
+          {loading ? 'A criar...' : 'Criar Cápsula'}
+        </button>
       </div>
-
-      {/* Navegação controlada pela barra inferior de CreateKeepsake */}
     </div>
   );
 };
