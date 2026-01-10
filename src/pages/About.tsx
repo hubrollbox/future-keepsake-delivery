@@ -200,6 +200,7 @@ const About = () => {
               alt="Casal antigo - amor que atravessa o tempo"
               imagePosition="right"
               grayscale={true}
+              imageFocus="center_25%"
             >
               <p className="text-sm uppercase tracking-wider text-keepla-red font-semibold mb-4">Histórias que perduram</p>
               <h2 className="text-3xl md:text-4xl font-inter font-bold text-keepla-black mb-6">
