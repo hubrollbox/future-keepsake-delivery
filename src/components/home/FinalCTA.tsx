@@ -14,12 +14,13 @@ const FinalCTA = () => {
 
   return (
     <section className="relative py-20 md:py-32 overflow-hidden" aria-label="Convite final para criar conta no keepla">
-      {/* Background fotográfico */}
-      <div className="absolute inset-0">
+      {/* Background fotográfico - mobile fix */}
+      <div className="absolute inset-0 overflow-hidden">
         <img 
           src={noivosCasamentoImage} 
           alt="Noivos num momento de felicidade" 
-          className="w-full h-full object-cover object-top grayscale contrast-110"
+          className="absolute top-0 left-0 w-full h-full object-cover object-top grayscale contrast-110"
+          style={{ minWidth: '100%', minHeight: '100%', width: '100%', height: '100%' }}
           loading="lazy"
         />
         <div className="absolute inset-0 bg-black/60" />

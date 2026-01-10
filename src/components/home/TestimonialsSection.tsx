@@ -46,9 +46,14 @@ const TestimonialsSection = () => {
 
   return (
     <section className="py-20 md:py-28 bg-white/80 backdrop-blur-sm relative overflow-hidden">
-      {/* Background com imagem */}
-      <div className="absolute inset-0 opacity-5">
-        <img src={memorialImage} alt="" className="w-full h-full object-cover grayscale" />
+      {/* Background com imagem - mobile fix */}
+      <div className="absolute inset-0 opacity-5 overflow-hidden">
+        <img 
+          src={memorialImage} 
+          alt="" 
+          className="absolute top-0 left-0 w-full h-full object-cover grayscale"
+          style={{ minWidth: '100%', minHeight: '100%', width: '100%', height: '100%' }}
+        />
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
