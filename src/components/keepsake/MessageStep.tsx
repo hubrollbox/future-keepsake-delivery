@@ -1,14 +1,20 @@
 import { UseFormReturn } from "react-hook-form";
 import { KeepsakeFormValues } from "@/validations/keepsakeValidationSchema";
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
 
 interface MessageStepProps {
   form: UseFormReturn<KeepsakeFormValues>;
-  nextStep: () => void;
-  prevStep: () => void;
+  _nextStep: () => void;
+  _prevStep: () => void;
 }
 
-const MessageStep = ({ form, nextStep, prevStep }: MessageStepProps) => {
+const MessageStep = ({ form, _nextStep, _prevStep }: MessageStepProps) => {
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-serif text-keepla-gray-dark mb-2 text-center">
