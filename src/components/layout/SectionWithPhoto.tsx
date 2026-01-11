@@ -10,6 +10,8 @@ interface SectionWithPhotoProps {
   grayscale?: boolean;
   /** Posição do foco da imagem em mobile (ex: "center", "top", "center_20%") */
   imageFocus?: string;
+  /** Rotação da imagem em graus (ex: 90, -90, 180) */
+  imageRotation?: number;
 }
 
 const SectionWithPhoto = ({ 
@@ -19,7 +21,8 @@ const SectionWithPhoto = ({
   className,
   imagePosition = "left",
   grayscale = true,
-  imageFocus = "center"
+  imageFocus = "center",
+  imageRotation = 0
 }: SectionWithPhotoProps) => {
   // Gerar estilo inline para object-position customizado
   const getObjectPosition = () => {
@@ -27,6 +30,26 @@ const SectionWithPhoto = ({
       return imageFocus.replace("_", " ");
     }
     return imageFocus;
+  };
+
+  // Escalar a imagem quando rodada para preencher o container
+  const getImageStyle = () => {
+    const baseStyle = {
+      minWidth: '100%', 
+      minHeight: '100%', 
+      width: '100%', 
+      height: '100%',
+      objectPosition: getObjectPosition()
+    };
+    
+    if (imageRotation !== 0) {
+      return {
+        ...baseStyle,
+        transform: `rotate(${imageRotation}deg) scale(1.4)`,
+        transformOrigin: 'center center'
+      };
+    }
+    return baseStyle;
   };
 
   return (
@@ -46,13 +69,7 @@ const SectionWithPhoto = ({
             "absolute top-0 left-0 w-full h-full object-cover",
             grayscale && "grayscale contrast-110"
           )}
-          style={{ 
-            minWidth: '100%', 
-            minHeight: '100%', 
-            width: '100%', 
-            height: '100%',
-            objectPosition: getObjectPosition()
-          }}
+          style={getImageStyle()}
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
