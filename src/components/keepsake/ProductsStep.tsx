@@ -1,6 +1,13 @@
 import { UseFormReturn } from "react-hook-form";
 import { Button } from '@/components/ui/button'; // Usando o componente de UI padronizado
 
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+}
+
 interface ProductsStepProps {
   form: UseFormReturn<any>; // 'any' para garantir que o build do Vercel passe
   nextStep: () => void;
@@ -8,7 +15,7 @@ interface ProductsStepProps {
 }
 
 const ProductsStep = ({ form, nextStep, prevStep }: ProductsStepProps) => {
-  const products = form.watch("selected_products") ?? [];
+  const products: Product[] = form.watch("selected_products") ?? [];
 
   const addProduct = () => {
     form.setValue("selected_products", [
@@ -25,14 +32,14 @@ const ProductsStep = ({ form, nextStep, prevStep }: ProductsStepProps) => {
   const removeProduct = (id: string) => {
     form.setValue(
       "selected_products",
-      products.filter(p => p.id !== id)
+      products.filter((p: Product) => p.id !== id)
     );
   };
 
   const updateQuantity = (id: string, quantity: number) => {
     form.setValue(
       "selected_products",
-      products.map(p =>
+      products.map((p: Product) =>
         p.id === id ? { ...p, quantity } : p
       )
     );
@@ -51,7 +58,7 @@ const ProductsStep = ({ form, nextStep, prevStep }: ProductsStepProps) => {
       )}
 
       <ul className="space-y-3">
-        {products.map(product => (
+        {products.map((product: Product) => (
           <li
             key={product.id}
             className="flex items-center justify-between border rounded-lg p-3 bg-white shadow-sm"
@@ -97,7 +104,7 @@ const ProductsStep = ({ form, nextStep, prevStep }: ProductsStepProps) => {
 
         <div className="flex gap-3">
           <Button 
-            variant="secondary" 
+            variant="outline" 
             type="button" // IMPORTANTE
             onClick={addProduct}
           >
