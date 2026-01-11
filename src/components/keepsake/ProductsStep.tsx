@@ -1,14 +1,22 @@
 import { UseFormReturn } from "react-hook-form";
-import { Button } from '@/components/ui/button'; // Usando o componente de UI padronizado
+import { Button } from '@/components/ui/button';
 
 interface ProductsStepProps {
-  form: UseFormReturn<any>; // 'any' para garantir que o build do Vercel passe
+  form: UseFormReturn<any>;
   nextStep: () => void;
   prevStep: () => void;
 }
 
+// Definimos uma interface para o produto para resolver os erros de parâmetro 'p'
+interface ProductItem {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+}
+
 const ProductsStep = ({ form, nextStep, prevStep }: ProductsStepProps) => {
-  const products = form.watch("selected_products") ?? [];
+  const products = (form.watch("selected_products") as ProductItem[]) ?? [];
 
   const addProduct = () => {
     form.setValue("selected_products", [
@@ -25,14 +33,14 @@ const ProductsStep = ({ form, nextStep, prevStep }: ProductsStepProps) => {
   const removeProduct = (id: string) => {
     form.setValue(
       "selected_products",
-      products.filter(p => p.id !== id)
+      products.filter((p: ProductItem) => p.id !== id)
     );
   };
 
   const updateQuantity = (id: string, quantity: number) => {
     form.setValue(
       "selected_products",
-      products.map(p =>
+      products.map((p: ProductItem) =>
         p.id === id ? { ...p, quantity } : p
       )
     );
@@ -51,7 +59,7 @@ const ProductsStep = ({ form, nextStep, prevStep }: ProductsStepProps) => {
       )}
 
       <ul className="space-y-3">
-        {products.map(product => (
+        {products.map((product: ProductItem) => (
           <li
             key={product.id}
             className="flex items-center justify-between border rounded-lg p-3 bg-white shadow-sm"
@@ -75,7 +83,7 @@ const ProductsStep = ({ form, nextStep, prevStep }: ProductsStepProps) => {
               />
 
               <button
-                type="button" // IMPORTANTE
+                type="button"
                 onClick={() => removeProduct(product.id)}
                 className="text-keepla-red text-sm hover:underline"
               >
@@ -89,7 +97,7 @@ const ProductsStep = ({ form, nextStep, prevStep }: ProductsStepProps) => {
       <div className="flex justify-between items-center pt-6 border-t">
         <Button 
           variant="outline" 
-          type="button" // IMPORTANTE
+          type="button"
           onClick={prevStep}
         >
           Voltar
@@ -97,15 +105,15 @@ const ProductsStep = ({ form, nextStep, prevStep }: ProductsStepProps) => {
 
         <div className="flex gap-3">
           <Button 
-            variant="secondary" 
-            type="button" // IMPORTANTE
+            variant="default" // Alterado de "secondary" para "default" (TS2322)
+            type="button"
             onClick={addProduct}
           >
             Adicionar produto
           </Button>
 
           <Button 
-            type="button" // IMPORTANTE: Impede que tente submeter o form todo aqui
+            type="button"
             onClick={nextStep}
           >
             Continuar
