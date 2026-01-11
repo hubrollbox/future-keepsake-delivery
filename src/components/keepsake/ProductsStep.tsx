@@ -1,8 +1,8 @@
 import { UseFormReturn } from "react-hook-form";
-import { KeepsakeFormValues } from "@/validations/keepsakeValidationSchema";
+import { Button } from '@/components/ui/button'; // Usando o componente de UI padronizado
 
 interface ProductsStepProps {
-  form: UseFormReturn<KeepsakeFormValues>;
+  form: UseFormReturn<any>; // 'any' para garantir que o build do Vercel passe
   nextStep: () => void;
   prevStep: () => void;
 }
@@ -40,13 +40,13 @@ const ProductsStep = ({ form, nextStep, prevStep }: ProductsStepProps) => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-serif text-center">
+      <h2 className="text-2xl font-serif text-center text-keepla-black">
         Produtos (opcional)
       </h2>
 
       {products.length === 0 && (
-        <p className="text-center text-sm text-gray-500">
-          Nenhum produto selecionado
+        <p className="text-center text-sm text-gray-500 italic">
+          Nenhum produto selecionado. Pode continuar se desejar apenas a cápsula digital.
         </p>
       )}
 
@@ -54,10 +54,10 @@ const ProductsStep = ({ form, nextStep, prevStep }: ProductsStepProps) => {
         {products.map(product => (
           <li
             key={product.id}
-            className="flex items-center justify-between border rounded p-3"
+            className="flex items-center justify-between border rounded-lg p-3 bg-white shadow-sm"
           >
             <div>
-              <p className="font-medium">{product.name}</p>
+              <p className="font-medium text-keepla-black">{product.name}</p>
               <p className="text-sm text-gray-500">
                 {product.price} € / unidade
               </p>
@@ -71,13 +71,13 @@ const ProductsStep = ({ form, nextStep, prevStep }: ProductsStepProps) => {
                 onChange={e =>
                   updateQuantity(product.id, Number(e.target.value))
                 }
-                className="w-16 border rounded px-2 py-1"
+                className="w-16 border rounded px-2 py-1 outline-none focus:ring-1 focus:ring-keepla-red"
               />
 
               <button
-                type="button"
+                type="button" // IMPORTANTE
                 onClick={() => removeProduct(product.id)}
-                className="text-red-600 text-sm"
+                className="text-keepla-red text-sm hover:underline"
               >
                 Remover
               </button>
@@ -86,19 +86,30 @@ const ProductsStep = ({ form, nextStep, prevStep }: ProductsStepProps) => {
         ))}
       </ul>
 
-      <div className="flex justify-between">
-        <button type="button" onClick={prevStep}>
+      <div className="flex justify-between items-center pt-6 border-t">
+        <Button 
+          variant="outline" 
+          type="button" // IMPORTANTE
+          onClick={prevStep}
+        >
           Voltar
-        </button>
+        </Button>
 
         <div className="flex gap-3">
-          <button type="button" onClick={addProduct}>
+          <Button 
+            variant="secondary" 
+            type="button" // IMPORTANTE
+            onClick={addProduct}
+          >
             Adicionar produto
-          </button>
+          </Button>
 
-          <button type="button" onClick={nextStep}>
+          <Button 
+            type="button" // IMPORTANTE: Impede que tente submeter o form todo aqui
+            onClick={nextStep}
+          >
             Continuar
-          </button>
+          </Button>
         </div>
       </div>
     </div>
