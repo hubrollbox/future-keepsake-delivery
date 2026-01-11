@@ -22,7 +22,7 @@ import timeCapsuleImage from "@/assets/time-capsule.jpg";
 function CreateKeepsake() {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
-  
+
   const {
     form,
     formState,
@@ -35,11 +35,10 @@ function CreateKeepsake() {
     submitKeepsake,
   } = useKeepsakeForm();
 
-  // Redirecionamento se não autenticado
   useEffect(() => {
     if (!authLoading && !user) {
-      navigate('/login', { 
-        state: { 
+      navigate('/login', {
+        state: {
           from: '/create-keepsake',
           message: 'Precisa de fazer login para criar uma cápsula do tempo'
         }
@@ -47,7 +46,6 @@ function CreateKeepsake() {
     }
   }, [user, authLoading, navigate]);
 
-  // Aviso sobre mudanças não guardadas
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (hasUnsavedChanges && currentStep < 6) {
@@ -74,57 +72,61 @@ function CreateKeepsake() {
   if (!user) return null;
 
   const renderStepContent = () => {
-    const formData: KeepsakeFormData = { 
-      ...form.getValues(), 
-      total_cost: form.getValues().total_cost || 0, 
+    const formData: KeepsakeFormData = {
+      ...form.getValues(),
+      total_cost: form.getValues().total_cost || 0,
       channel_cost: form.getValues().channel_cost || 0,
       selected_products: form.getValues().selected_products || []
     } as KeepsakeFormData;
 
     const updateFormData = (data: Partial<KeepsakeFormData>) => {
-      Object.entries(data).forEach(([k, v]) => form.setValue(k as keyof KeepsakeFormData, v));
+      Object.entries(data).forEach(([k, v]) =>
+        form.setValue(k as keyof KeepsakeFormData, v)
+      );
     };
 
     switch (currentStep) {
       case 1:
         return (
           <TypeStep
-            form={form}
+            _form={form}
             selectedType={form.watch('type') as 'digital' | 'physical'}
             onTypeSelect={(v) => form.setValue('type', v)}
             onNext={nextStep}
           />
         );
+
       case 2:
         return (
           <RecipientStep
-            formData={formData}
-            updateFormData={updateFormData}
             form={form}
-            nextStep={nextStep}
-            prevStep={prevStep}
+            _formData={formData}
+            _updateFormData={updateFormData}
+            _nextStep={nextStep}
+            _prevStep={prevStep}
           />
         );
+
       case 3:
         return (
           <MessageStep
-            formData={formData}
-            updateFormData={updateFormData}
             form={form}
-            nextStep={nextStep}
-            prevStep={prevStep}
+            _nextStep={nextStep}
+            _prevStep={prevStep}
           />
         );
+
       case 4:
         return (
           <ProductsStep
+            form={form}
             formData={formData}
             updateFormData={updateFormData}
-            form={form}
             nextStep={nextStep}
             prevStep={prevStep}
           />
         );
+
       case 5:
         return (
           <ReviewStep
@@ -134,34 +136,29 @@ function CreateKeepsake() {
             loading={formState.isSubmitting}
           />
         );
+
       case 6:
         return <SuccessStep formData={formData} />;
+
       default:
-        return (
-          <TypeStep
-            form={form}
-            selectedType={form.watch('type') as 'digital' | 'physical'}
-            onTypeSelect={(v) => form.setValue('type', v)}
-            onNext={nextStep}
-          />
-        );
+        return null;
     }
   };
 
-  const progressSteps = ['Tipo','Destinatário','Mensagem','Produtos','Revisão','Sucesso'];
+  const progressSteps = ['Tipo', 'Destinatário', 'Mensagem', 'Produtos', 'Revisão', 'Sucesso'];
 
   return (
     <div className="min-h-screen bg-keepla-black">
       <Navigation />
 
-      <PhotoBackground 
-        image={timeCapsuleImage} 
+      <PhotoBackground
+        image={timeCapsuleImage}
         alt="Cápsula do tempo"
         overlay="dark"
         className="py-12"
       >
         <div className="container mx-auto px-4">
-          <motion.div 
+          <motion.div
             className="text-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -173,9 +170,9 @@ function CreateKeepsake() {
             <h1 className="text-3xl md:text-4xl font-inter font-bold text-keepla-white mb-4">
               Criar Nova <span className="text-keepla-red">Cápsula do Tempo</span>
             </h1>
-            <Button 
-              variant="ghost" 
-              onClick={() => navigate('/dashboard')} 
+            <Button
+              variant="ghost"
+              onClick={() => navigate('/dashboard')}
               className="text-keepla-white hover:text-keepla-red hover:bg-keepla-white/10"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
@@ -188,90 +185,14 @@ function CreateKeepsake() {
       <main className="bg-keepla-white">
         <div className="container mx-auto px-4 py-8">
           <div className="mb-8 max-w-4xl mx-auto">
-            <ProgressStepper 
-              steps={progressSteps} 
-              currentStep={currentStep} 
-            />
+            <ProgressStepper steps={progressSteps} currentStep={currentStep} />
           </div>
 
           <Card className="max-w-4xl mx-auto shadow-xl border-0 bg-white/80 backdrop-blur-sm">
             <CardContent className="p-8 pb-24 sm:pb-8">
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(submitKeepsake)} className="space-y-6">
+                <form onSubmit={form.handleSubmit(submitKeepsake)}>
                   {renderStepContent()}
-
-                  {currentStep === 5 && formState.submissionError && (
-                    <div className="rounded-md border border-keepla-red/30 bg-keepla-red/5 text-keepla-red p-3">
-                      <p className="font-medium">Erro ao criar cápsula</p>
-                      <p className="text-sm mt-1">{formState.submissionError}</p>
-                    </div>
-                  )}
-                  
-                  {currentStep < 6 && (
-                    <div className="fixed bottom-0 left-0 right-0 z-30 bg-white/95 backdrop-blur-md px-4 py-3 pb-[env(safe-area-inset-bottom)] shadow-lg sm:static sm:bg-transparent sm:shadow-none sm:px-0 sm:py-0 sm:border-t sm:border-gray-200">
-                      <div className="max-w-4xl mx-auto flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-                        <div className="flex flex-wrap items-center gap-2 sm:gap-4 w-full sm:w-auto">
-                          {currentStep > 1 && (
-                            <Button
-                              type="button"
-                              variant="outline"
-                              onClick={prevStep}
-                              disabled={isSubmitting}
-                              className="border-keepla-red text-keepla-red hover:bg-keepla-red/10 hover:text-keepla-red focus-visible:ring-2 focus-visible:ring-keepla-red/40 w-full sm:w-auto"
-                            >
-                              Anterior
-                            </Button>
-                          )}
-
-                          <Button
-                            type="button"
-                            variant="outline"
-                            onClick={() => navigate('/dashboard')}
-                            disabled={isSubmitting}
-                            className="border-gray-300 text-gray-600 hover:bg-gray-100 w-full sm:w-auto"
-                          >
-                            <Home className="w-4 h-4 mr-2" />
-                            Dashboard
-                          </Button>
-                        </div>
-
-                        <div className="flex flex-wrap items-center gap-2 sm:gap-4 w-full sm:w-auto">
-                          {hasUnsavedChanges && (
-                            <div className="flex items-center text-amber-600 text-sm">
-                              <Save className="w-4 h-4 mr-1" />
-                              Alterações não guardadas
-                            </div>
-                          )}
-
-                          <Button
-                            type={currentStep === 5 ? "submit" : "button"}
-                            onClick={currentStep === 5 ? undefined : nextStep}
-                            disabled={isSubmitting || isValidating}
-                            className="bg-keepla-red hover:bg-keepla-red/90 text-white px-8 w-full sm:w-auto"
-                          >
-                            {isSubmitting ? (
-                              <>
-                                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                                A criar...
-                              </>
-                            ) : isValidating ? (
-                              <>
-                                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                                A validar...
-                              </>
-                            ) : currentStep === 5 ? (
-                              'Criar Cápsula'
-                            ) : (
-                              'Próximo'
-                            )}
-                            {currentStep < 5 && !isSubmitting && !isValidating && (
-                              <Zap className="w-4 h-4 ml-2" />
-                            )}
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  )}
                 </form>
               </Form>
             </CardContent>
