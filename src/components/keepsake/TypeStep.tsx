@@ -3,13 +3,18 @@ import { UseFormReturn } from "react-hook-form";
 import { KeepsakeFormValues } from "@/validations/keepsakeValidationSchema";
 
 interface TypeStepProps {
-  form: UseFormReturn<KeepsakeFormValues>;
-  selectedType: 'digital' | 'physical';
-  onTypeSelect: (type: 'digital' | 'physical') => void;
+  _form: UseFormReturn<KeepsakeFormValues>;
+  selectedType: "digital" | "physical";
+  onTypeSelect: (type: "digital" | "physical") => void;
   onNext: () => void;
 }
 
-const TypeStep = ({ form, selectedType, onTypeSelect, onNext }: TypeStepProps) => {
+const TypeStep = ({
+  _form,
+  selectedType,
+  onTypeSelect,
+  onNext,
+}: TypeStepProps) => {
   return (
     <div className="space-y-6 text-center">
       <h2 className="text-2xl font-serif text-keepla-gray-dark mb-2">
@@ -20,14 +25,14 @@ const TypeStep = ({ form, selectedType, onTypeSelect, onNext }: TypeStepProps) =
       </p>
       <div className="flex justify-center gap-4">
         <Button
-          variant={selectedType === 'digital' ? 'default' : 'outline'}
-          onClick={() => onTypeSelect('digital')}
+          variant={selectedType === "digital" ? "default" : "outline"}
+          onClick={() => onTypeSelect("digital")}
         >
           Digital
         </Button>
         <Button
-          variant={selectedType === 'physical' ? 'default' : 'outline'}
-          onClick={() => onTypeSelect('physical')}
+          variant={selectedType === "physical" ? "default" : "outline"}
+          onClick={() => onTypeSelect("physical")}
         >
           Física
         </Button>
