@@ -10,8 +10,6 @@ interface SectionWithPhotoProps {
   grayscale?: boolean;
   /** Posição do foco da imagem em mobile (ex: "center", "top", "center_20%") */
   imageFocus?: string;
-  /** Rotação da imagem em graus (ex: 90, 180, -90) */
-  rotation?: number;
 }
 
 const SectionWithPhoto = ({ 
@@ -21,8 +19,7 @@ const SectionWithPhoto = ({
   className,
   imagePosition = "left",
   grayscale = true,
-  imageFocus = "center",
-  rotation = 0
+  imageFocus = "center"
 }: SectionWithPhotoProps) => {
   // Gerar estilo inline para object-position customizado
   const getObjectPosition = () => {
@@ -50,13 +47,11 @@ const SectionWithPhoto = ({
             grayscale && "grayscale contrast-110"
           )}
           style={{ 
-            minWidth: rotation !== 0 ? '150%' : '100%', 
-            minHeight: rotation !== 0 ? '150%' : '100%', 
-            width: rotation !== 0 ? '150%' : '100%', 
-            height: rotation !== 0 ? '150%' : '100%',
-            objectPosition: getObjectPosition(),
-            transform: rotation !== 0 ? `rotate(${rotation}deg)` : undefined,
-            transformOrigin: 'center center'
+            minWidth: '100%', 
+            minHeight: '100%', 
+            width: '100%', 
+            height: '100%',
+            objectPosition: getObjectPosition()
           }}
           loading="lazy"
         />
