@@ -45,7 +45,7 @@ const SectionWithPhoto = ({
     if (imageRotation !== 0) {
       return {
         ...baseStyle,
-        transform: `rotate(${imageRotation}deg) scale(1.8)`,
+        transform: `rotate(${imageRotation}deg) scale(1.2)`,
         transformOrigin: 'center center'
       };
     }
