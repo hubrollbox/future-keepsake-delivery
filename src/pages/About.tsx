@@ -201,7 +201,7 @@ const About = () => {
               imagePosition="right"
               grayscale={true}
               imageFocus="center"
-              imageRotation={90}
+              imageRotation={-90}
             >
               <p className="text-sm uppercase tracking-wider text-keepla-red font-semibold mb-4">Histórias que perduram</p>
               <h2 className="text-3xl md:text-4xl font-inter font-bold text-keepla-black mb-6">
