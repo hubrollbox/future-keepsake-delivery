@@ -10,15 +10,21 @@ import {
 } from "@/components/ui/form";
 
 interface RecipientStepProps {
-  nextStep: () => void;
-  prevStep: () => void;
+  _nextStep: () => void;
+  _prevStep: () => void;
   form: UseFormReturn<KeepsakeFormData>;
-  formData: KeepsakeFormData;
-  updateFormData: (data: Partial<KeepsakeFormData>) => void;
+  _formData: KeepsakeFormData;
+  _updateFormData: (data: Partial<KeepsakeFormData>) => void;
 }
 
-const RecipientStep = ({ form, formData, updateFormData, nextStep, prevStep }: RecipientStepProps) => {
-  const EMAIL_PLACEHOLDER = 'email@exemplo.com';
+const RecipientStep = ({
+  form,
+  _formData,
+  _updateFormData,
+  _nextStep,
+  _prevStep,
+}: RecipientStepProps) => {
+  const EMAIL_PLACEHOLDER = "email@exemplo.com";
 
   return (
     <div className="space-y-6">
@@ -90,7 +96,10 @@ const RecipientStep = ({ form, formData, updateFormData, nextStep, prevStep }: R
           name="recipient_contact"
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="recipient_contact" className="text-keepla-gray-dark font-medium">
+              <FormLabel
+                htmlFor="recipient_contact"
+                className="text-keepla-gray-dark font-medium"
+              >
                 Email do Destinatário *
               </FormLabel>
               <FormControl>
