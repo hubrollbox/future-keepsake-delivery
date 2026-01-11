@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Home, Save, Zap, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -27,13 +27,15 @@ function CreateKeepsake() {
     form,
     formState,
     currentStep,
-    isSubmitting,
-    isValidating,
     hasUnsavedChanges,
     nextStep,
     prevStep,
     submitKeepsake,
-  } = useKeepsakeForm();
+  } = useKeepsakeForm({
+    defaultValues: {
+      delivery_channel: "email",
+    }
+  });
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -89,7 +91,7 @@ function CreateKeepsake() {
       case 1:
         return (
           <TypeStep
-            _form={form}
+            form={form}
             selectedType={form.watch('type') as 'digital' | 'physical'}
             onTypeSelect={(v) => form.setValue('type', v)}
             onNext={nextStep}
@@ -100,10 +102,10 @@ function CreateKeepsake() {
         return (
           <RecipientStep
             form={form}
-            _formData={formData}
-            _updateFormData={updateFormData}
-            _nextStep={nextStep}
-            _prevStep={prevStep}
+            formData={formData}
+            updateFormData={updateFormData}
+            nextStep={nextStep}
+            prevStep={prevStep}
           />
         );
 
@@ -111,8 +113,8 @@ function CreateKeepsake() {
         return (
           <MessageStep
             form={form}
-            _nextStep={nextStep}
-            _prevStep={prevStep}
+            nextStep={nextStep}
+            prevStep={prevStep}
           />
         );
 
