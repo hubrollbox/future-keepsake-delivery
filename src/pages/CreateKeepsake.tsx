@@ -18,7 +18,7 @@ import SuccessStep from '@/components/keepsake/SuccessStep';
 import { Form } from '@/components/ui/form';
 import { motion } from "framer-motion";
 import timeCapsuleImage from "@/assets/time-capsule.jpg";
-import { useKeepsakeForm, KeepsakeFormData } from '@/hooks/useKeepsakeForm';
+import { useKeepsakeForm } from '@/hooks/useKeepsakeForm';
 
 function CreateKeepsake() {
   const navigate = useNavigate();
@@ -57,14 +57,8 @@ function CreateKeepsake() {
   if (!user) return null;
 
   const renderStepContent = () => {
-    // Usamos cast 'as any' para evitar conflitos de validação rigorosa de tipos no build
-    const formData = form.getValues() as any;
-
-    const updateFormData = (data: Partial<KeepsakeFormData>) => {
-      Object.entries(data).forEach(([k, v]) =>
-        form.setValue(k as keyof KeepsakeFormData, v)
-      );
-    };
+    // Pegamos os valores atuais para o ReviewStep e SuccessStep
+    const currentValues = form.getValues() as any;
 
     switch (currentStep) {
       case 1:
@@ -99,7 +93,6 @@ function CreateKeepsake() {
         return (
           <ProductsStep
             form={form as any}
-            updateFormData={updateFormData}
             nextStep={nextStep}
             prevStep={prevStep}
           />
@@ -108,7 +101,7 @@ function CreateKeepsake() {
       case 5:
         return (
           <ReviewStep
-            formData={formData}
+            formData={currentValues}
             onBack={prevStep}
             onSubmit={async () => { await submitKeepsake(); }}
             loading={formState.isSubmitting}
@@ -116,7 +109,7 @@ function CreateKeepsake() {
         );
 
       case 6:
-        return <SuccessStep formData={formData} />;
+        return <SuccessStep formData={currentValues} />;
 
       default:
         return null;
@@ -133,7 +126,7 @@ function CreateKeepsake() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <h1 className="text-3xl font-bold text-keepla-white mb-4">Nova Cápsula</h1>
             <Button variant="ghost" onClick={() => navigate('/dashboard')} className="text-keepla-white">
-              <ArrowLeft className="h-4 w-4 mr-2" /> Voltar
+              <ArrowLeft className="h-4 w-4 mr-2" /> Voltar ao Dashboard
             </Button>
           </motion.div>
         </div>
