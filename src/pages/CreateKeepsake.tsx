@@ -1,8 +1,9 @@
+// src/pages/CreateKeepsake.tsx
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { Home, Save, Zap, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -11,13 +12,13 @@ import ProgressStepper from '../components/ProgressStepper';
 import MessageStep from '../components/keepsake/MessageStep';
 import RecipientStep from '../components/keepsake/RecipientStep';
 import ReviewStep from '../components/keepsake/ReviewStep';
-import { useKeepsakeForm, KeepsakeFormData } from '@/hooks/useKeepsakeForm';
 import TypeStep from '@/components/keepsake/TypeStep';
 import ProductsStep from '@/components/keepsake/ProductsStep';
 import SuccessStep from '@/components/keepsake/SuccessStep';
 import { Form } from '@/components/ui/form';
 import { motion } from "framer-motion";
 import timeCapsuleImage from "@/assets/time-capsule.jpg";
+import { useKeepsakeForm, KeepsakeFormData } from '@/hooks/useKeepsakeForm';
 
 function CreateKeepsake() {
   const navigate = useNavigate();
@@ -27,12 +28,15 @@ function CreateKeepsake() {
     form,
     formState,
     currentStep,
+    isSubmitting,
+    isValidating,
     hasUnsavedChanges,
     nextStep,
     prevStep,
     submitKeepsake,
   } = useKeepsakeForm();
 
+  // Bloqueio se não estiver autenticado
   useEffect(() => {
     if (!authLoading && !user) {
       navigate('/login', {
@@ -44,6 +48,7 @@ function CreateKeepsake() {
     }
   }, [user, authLoading, navigate]);
 
+  // Aviso de alterações não guardadas
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (hasUnsavedChanges && currentStep < 6) {
@@ -74,9 +79,8 @@ function CreateKeepsake() {
       ...form.getValues(),
       total_cost: form.getValues().total_cost || 0,
       channel_cost: form.getValues().channel_cost || 0,
-      selected_products: form.getValues().selected_products || [],
-      delivery_channel: 'email'
-    };
+      selected_products: form.getValues().selected_products || []
+    } as KeepsakeFormData;
 
     const updateFormData = (data: Partial<KeepsakeFormData>) => {
       Object.entries(data).forEach(([k, v]) =>
@@ -88,8 +92,7 @@ function CreateKeepsake() {
       case 1:
         return (
           <TypeStep
-            form={form}
-            selectedType={form.watch('type') as 'digital' | 'physical'}
+            selectedType={form.watch('type')}
             onTypeSelect={(v) => form.setValue('type', v)}
             onNext={nextStep}
           />
@@ -99,8 +102,8 @@ function CreateKeepsake() {
         return (
           <RecipientStep
             form={form}
-            nextStep={nextStep}
-            prevStep={prevStep}
+            onNext={nextStep}
+            onBack={prevStep}
           />
         );
 
@@ -108,8 +111,6 @@ function CreateKeepsake() {
         return (
           <MessageStep
             form={form}
-            nextStep={nextStep}
-            prevStep={prevStep}
           />
         );
 
@@ -129,7 +130,7 @@ function CreateKeepsake() {
           <ReviewStep
             formData={formData}
             onBack={prevStep}
-            onSubmit={submitKeepsake}
+            onSubmit={async () => { await submitKeepsake(); }}
             loading={formState.isSubmitting}
           />
         );
