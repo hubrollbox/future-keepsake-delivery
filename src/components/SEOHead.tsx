@@ -13,7 +13,7 @@ interface SEOHeadProps {
 
 const DEFAULT_TITLE = 'Keepla - Memórias que ficam, entregues para sempre';
 const DEFAULT_DESCRIPTION = 'Guarda hoje, entrega amanhã. Plataforma para agendar entregas de keepsakes digitais e físicos para datas futuras. Porque há memórias que merecem chegar no momento certo.';
-const DEFAULT_IMAGE = '/keepla-logo-red.png';
+const DEFAULT_IMAGE = '/og-image.png';
 const SITE_NAME = 'Keepla.pt';
 
 export default function SEOHead({
