@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingSpinner from "@/components/ui/loading-spinner";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Share2, Facebook, Twitter, Linkedin, Copy, Check, Instagram } from "lucide-react";
+import { ArrowLeft, Share2, Facebook, Twitter, Linkedin, Copy, Check, Instagram, MessageCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -38,6 +38,7 @@ const BlogPost = () => {
     facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`,
     twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(post?.title || '')}`,
     linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`,
+    whatsapp: `https://wa.me/?text=${encodeURIComponent((post?.title || '') + ' - ' + currentUrl)}`,
   };
 
   const handleCopyLink = () => {
@@ -267,6 +268,16 @@ const BlogPost = () => {
               <Linkedin className="h-4 w-4" />
               </a>
 
+              <a 
+                href={shareLinks.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full border border-border bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors"
+                aria-label="Partilhar no WhatsApp"
+              >
+                <MessageCircle className="h-4 w-4" />
+              </a>
+
               <button
                 onClick={handleInstagramShare}
                 className="p-2 rounded-full border border-border bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors"
@@ -339,6 +350,14 @@ const BlogPost = () => {
                 className="px-4 py-2 rounded-lg border border-foreground bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors text-sm font-medium"
               >
                 LinkedIn
+              </a>
+              <a 
+                href={shareLinks.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 rounded-lg border border-foreground bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors text-sm font-medium"
+              >
+                WhatsApp
               </a>
               <button
                 onClick={handleInstagramShare}
