@@ -151,8 +151,8 @@ const BlogPost = () => {
     );
   }
 
-  // Usar sempre o logo Keepla para OG tags (partilhas nas redes sociais)
-  const ogImageUrl = "/keepla-logo-red.png";
+  // Usar sempre a imagem OG da Keepla para partilhas nas redes sociais
+  const ogImageUrl = "/og-image.png";
 
   return (
     <div className="min-h-screen bg-background">
