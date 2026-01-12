@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingSpinner from "@/components/ui/loading-spinner";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Share2, Facebook, Twitter, Linkedin, Copy, Check } from "lucide-react";
+import { ArrowLeft, Share2, Facebook, Twitter, Linkedin, Copy, Check, Instagram } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -48,6 +48,14 @@ const BlogPost = () => {
       description: "O link do artigo foi copiado para a área de transferência.",
     });
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleInstagramShare = () => {
+    navigator.clipboard.writeText(currentUrl);
+    toast({
+      title: "Link copiado!",
+      description: "Cola o link no Instagram Stories ou na tua bio.",
+    });
   };
 
   const handleNativeShare = () => {
@@ -142,21 +150,16 @@ const BlogPost = () => {
     );
   }
 
-  // Gerar URL absoluta da imagem para OG tags
-  const absoluteImageUrl = post.cover_image_url 
-    ? (post.cover_image_url.startsWith('http') 
-        ? post.cover_image_url 
-        : `${typeof window !== 'undefined' ? window.location.origin : ''}${post.cover_image_url}`)
-    : undefined;
+  // Usar sempre o logo Keepla para OG tags (partilhas nas redes sociais)
+  const ogImageUrl = "/keepla-logo-red.png";
 
   return (
     <div className="min-h-screen bg-background">
-      {/* SEO com imagem específica do post para redes sociais */}
       <SEOHead 
         title={post.title}
         description={post.excerpt || `Leia "${post.title}" no blog Keepla - Memórias que ficam, entregues para sempre.`}
         keywords={post.tags?.join(", ") || "blog, artigo, keepla, memórias"}
-        image={absoluteImageUrl || undefined}
+        image={ogImageUrl}
         url={currentUrl}
         type="article"
         author="Keepla"
@@ -261,8 +264,16 @@ const BlogPost = () => {
                 className="p-2 rounded-full border border-border bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors"
                 aria-label="Partilhar no LinkedIn"
               >
-                <Linkedin className="h-4 w-4" />
+              <Linkedin className="h-4 w-4" />
               </a>
+
+              <button
+                onClick={handleInstagramShare}
+                className="p-2 rounded-full border border-border bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors"
+                aria-label="Partilhar no Instagram"
+              >
+                <Instagram className="h-4 w-4" />
+              </button>
               
               <button
                 onClick={handleCopyLink}
@@ -304,7 +315,7 @@ const BlogPost = () => {
           >
             <h3 className="text-xl font-bold mb-2">Gostaste deste artigo?</h3>
             <p className="text-muted-foreground mb-4">Partilha-o com quem também valoriza memórias.</p>
-            <div className="flex justify-center gap-3">
+            <div className="flex flex-wrap justify-center gap-3">
               <a 
                 href={shareLinks.facebook}
                 target="_blank"
@@ -329,6 +340,12 @@ const BlogPost = () => {
               >
                 LinkedIn
               </a>
+              <button
+                onClick={handleInstagramShare}
+                className="px-4 py-2 rounded-lg border border-foreground bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors text-sm font-medium"
+              >
+                Instagram
+              </button>
             </div>
           </motion.div>
         </article>
