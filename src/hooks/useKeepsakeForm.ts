@@ -102,6 +102,17 @@ export const useKeepsakeForm = () => {
     setFormState(prev => ({ ...prev, isValidating: true }));
     
     try {
+      // Passo 4 (Produtos) é opcional - sempre permitir avançar
+      if (step === 4) {
+        setFormState(prev => ({
+          ...prev,
+          stepValidation: { ...prev.stepValidation, [step]: true },
+          validationErrors: { ...prev.validationErrors, [step]: [] },
+          isValidating: false
+        }));
+        return true;
+      }
+
       const config = STEP_VALIDATION_CONFIG.find(c => c.step === step);
       if (!config) return true;
 
