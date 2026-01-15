@@ -8,6 +8,7 @@ interface PhotoBackgroundProps {
   className?: string;
   overlay?: "light" | "dark" | "gradient";
   grayscale?: boolean;
+  size?: "hero" | "banner" | "compact";
 }
 
 const PhotoBackground = ({ 
@@ -16,7 +17,8 @@ const PhotoBackground = ({
   children, 
   className,
   overlay = "gradient",
-  grayscale = true 
+  grayscale = true,
+  size = "hero"
 }: PhotoBackgroundProps) => {
   const overlayClasses = {
     light: "bg-white/70",
@@ -24,8 +26,14 @@ const PhotoBackground = ({
     gradient: "bg-gradient-to-b from-black/40 via-black/30 to-black/50"
   };
 
+  const sizeClasses = {
+    hero: "min-h-screen",
+    banner: "min-h-[40vh]",
+    compact: "min-h-[25vh]"
+  };
+
   return (
-    <div className={cn("relative min-h-screen overflow-hidden", className)}>
+    <div className={cn("relative overflow-hidden", sizeClasses[size], className)}>
       {/* Background Image - responsive mobile fix */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
         <img 

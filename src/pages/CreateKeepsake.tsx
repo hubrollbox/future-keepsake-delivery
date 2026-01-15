@@ -121,12 +121,12 @@ function CreateKeepsake() {
   return (
     <div className="min-h-screen bg-keepla-black">
       <Navigation />
-      <PhotoBackground image={timeCapsuleImage} alt="Cápsula" overlay="dark" className="py-12">
+      <PhotoBackground image={timeCapsuleImage} alt="Cápsula" overlay="dark" size="compact" className="py-8">
         <div className="container mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <h1 className="text-3xl font-bold text-keepla-white mb-4">Nova Cápsula</h1>
-            <Button variant="ghost" onClick={() => navigate('/dashboard')} className="text-keepla-white">
-              <ArrowLeft className="h-4 w-4 mr-2" /> Voltar ao Dashboard
+            <h1 className="text-2xl md:text-3xl font-bold text-keepla-white mb-2">Nova Cápsula</h1>
+            <Button variant="ghost" onClick={() => navigate('/dashboard')} className="text-keepla-white text-sm">
+              <ArrowLeft className="h-4 w-4 mr-1" /> Voltar
             </Button>
           </motion.div>
         </div>

@@ -326,60 +326,44 @@ const BlogPost = () => {
             </ReactMarkdown>
           </motion.div>
 
-          {/* CTA final */}
+          {/* CTA final - Design minimalista */}
           <motion.div 
-            className="mt-12 p-8 bg-muted/50 rounded-xl text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            className="mt-16 pt-8 border-t border-border text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <h3 className="text-xl font-bold mb-2">Gostaste deste artigo?</h3>
-            <p className="text-muted-foreground mb-4">Partilha-o com quem também valoriza memórias.</p>
-            <div className="flex flex-wrap justify-center gap-3">
-              <a 
-                href={shareLinks.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 rounded-lg border border-foreground bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors text-sm font-medium"
-              >
-                Facebook
-              </a>
-              <a 
-                href={shareLinks.twitter}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 rounded-lg border border-foreground bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors text-sm font-medium"
-              >
-                Twitter
-              </a>
-              <a 
-                href={shareLinks.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 rounded-lg border border-foreground bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors text-sm font-medium"
-              >
-                LinkedIn
-              </a>
-              <a 
-                href={shareLinks.whatsapp}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-2 rounded-lg border border-foreground bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors text-sm font-medium"
-              >
-                WhatsApp
-              </a>
-              <button
-                onClick={handleInstagramShare}
-                className="px-4 py-2 rounded-lg border border-foreground bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors text-sm font-medium"
-              >
-                Instagram
-              </button>
-              <a 
-                href={shareLinks.email}
-                className="px-4 py-2 rounded-lg border border-foreground bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors text-sm font-medium"
-              >
-                Email
-              </a>
+            <p className="text-lg text-muted-foreground font-serif italic mb-6">
+              Se este artigo te tocou, partilha-o com alguém que também valoriza memórias.
+            </p>
+            
+            <div className="flex justify-center items-center gap-4">
+              <span className="text-sm text-muted-foreground">Partilhar:</span>
+              <div className="flex gap-2">
+                <a 
+                  href={shareLinks.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-full border border-border hover:border-primary hover:text-primary transition-colors"
+                  aria-label="Partilhar no WhatsApp"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                </a>
+                <a 
+                  href={shareLinks.email}
+                  className="p-2 rounded-full border border-border hover:border-primary hover:text-primary transition-colors"
+                  aria-label="Partilhar por email"
+                >
+                  <Mail className="h-4 w-4" />
+                </a>
+                <button
+                  onClick={handleCopyLink}
+                  className="p-2 rounded-full border border-border hover:border-primary hover:text-primary transition-colors"
+                  aria-label="Copiar link"
+                >
+                  {copied ? <Check className="h-4 w-4 text-primary" /> : <Copy className="h-4 w-4" />}
+                </button>
+              </div>
             </div>
           </motion.div>
         </article>
