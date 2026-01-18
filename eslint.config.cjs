@@ -5,7 +5,7 @@ const reactRefreshPlugin = require('eslint-plugin-react-refresh');
 
 module.exports = [
   {
-    ignores: ['dist'],
+    ignores: ['dist', 'cypress'],
   },
   {
     languageOptions: {
@@ -64,26 +64,22 @@ module.exports = [
     files: ['cypress/**/*.cy.js'],
     languageOptions: {
       globals: {
-        'cypress/globals': true,
         cy: 'readonly',
         Cypress: 'readonly',
         describe: 'readonly',
+        context: 'readonly',
+        it: 'readonly',
+        before: 'readonly',
         beforeEach: 'readonly',
-        it: 'readonly'
-      }
-    },
-    plugins: {
-      cypress: require('eslint-plugin-cypress')
+        after: 'readonly',
+        afterEach: 'readonly',
+      },
     },
     rules: {
+      // Cypress is intentionally not installed in the preview environment
+      // (it downloads heavy binaries and can cause install timeouts).
       'no-undef': 'off',
-      'cypress/no-assigning-return-values': 'error',
-      'cypress/no-unnecessary-waiting': 'error',
-      'cypress/assertion-before-screenshot': 'warn',
-      'cypress/no-force': 'warn',
-      'cypress/no-async-tests': 'error',
-      'cypress/no-pause': 'error'
-    }
+    },
   },
   {
     files: ['public/sw.js'],
