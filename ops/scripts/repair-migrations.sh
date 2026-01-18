@@ -92,12 +92,12 @@ APPLIED_MIGRATION="20260111220652"
 echo "📋 Marcando ${#REVERTED_MIGRATIONS[@]} migrações como reverted..."
 for migration in "${REVERTED_MIGRATIONS[@]}"; do
   echo "  ↩️  $migration"
-  npx supabase migration repair --status reverted "$migration"
+  supabase migration repair --status reverted "$migration"
 done
 
 echo ""
 echo "✅ Marcando migração $APPLIED_MIGRATION como applied..."
-npx supabase migration repair --status applied "$APPLIED_MIGRATION"
+supabase migration repair --status applied "$APPLIED_MIGRATION"
 
 echo ""
-echo "🎉 Reparação concluída! Execute 'npx supabase db pull' novamente."
+echo "🎉 Reparação concluída! Execute 'supabase db pull' novamente."
