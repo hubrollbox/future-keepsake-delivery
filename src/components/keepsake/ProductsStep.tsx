@@ -276,7 +276,13 @@ const ProductsStep = ({ form, nextStep, prevStep }: ProductsStepProps) => {
           Voltar
         </Button>
 
-        <Button type="button" onClick={nextStep}>
+        <Button 
+          type="button" 
+          onClick={() => {
+            console.log('[ProductsStep] Continuar clicked, calling nextStep');
+            nextStep();
+          }}
+        >
           Continuar
         </Button>
       </div>

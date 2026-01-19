@@ -96,11 +96,13 @@ export const useKeepsakeForm = () => {
 
   // Validação avançada por etapa
   const validateStep = useCallback(async (step: number): Promise<boolean> => {
+    console.log('[useKeepsakeForm] validateStep called for step:', step);
     setFormState(prev => ({ ...prev, isValidating: true }));
     
     try {
       // Passo 4 (Produtos) é opcional - sempre permitir avançar
       if (step === 4) {
+        console.log('[useKeepsakeForm] Step 4 - products is optional, returning true');
         setFormState(prev => ({
           ...prev,
           stepValidation: { ...prev.stepValidation, [step]: true },
@@ -157,12 +159,17 @@ export const useKeepsakeForm = () => {
 
   // Funções de navegação entre etapas
   const nextStep = useCallback(async () => {
+    console.log('[useKeepsakeForm] nextStep called, currentStep:', formState.currentStep);
     const isValid = await validateStep(formState.currentStep);
+    console.log('[useKeepsakeForm] validateStep returned:', isValid);
     if (isValid) {
-      setFormState(prev => ({ 
-        ...prev, 
-        currentStep: Math.min(prev.currentStep + 1, 6) 
-      }));
+      setFormState(prev => {
+        const newStep = Math.min(prev.currentStep + 1, 6);
+        console.log('[useKeepsakeForm] Advancing to step:', newStep);
+        return { ...prev, currentStep: newStep };
+      });
+    } else {
+      console.log('[useKeepsakeForm] Validation failed, not advancing');
     }
   }, [formState.currentStep, validateStep]);
 
