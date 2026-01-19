@@ -87,7 +87,7 @@ const getEmotionalMessage = (step: number, hasErrors: boolean): string => {
   const idx = Math.max(0, Math.min(messages.length - 1, step - 1));
   const selected = messages[idx];
   const fallback = hasErrors ? errorMessages[0] : successMessages[0];
-  return selected !== undefined ? selected : fallback;
+  return (selected ?? fallback) as string;
 };
 
 export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({

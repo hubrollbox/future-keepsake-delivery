@@ -85,7 +85,7 @@ export function useAIQuota() {
       }
 
       const limit = QUOTA_LIMITS[tier];
-      const today = new Date().toISOString().split('T')[0] as string;
+      const today = new Date().toISOString().split('T')[0];
 
       // Buscar uso atual da API
       // Query à tabela 'api_usage' pelo campo 'user_id'
@@ -101,9 +101,10 @@ export function useAIQuota() {
       if (usageError && usageError.code === 'PGRST116') {
         // Registro não existe, criar um novo
         // Inserção na tabela 'api_usage' com 'user_id'
+        const insertData = { user_id: userId, date: today || '', huggingface_requests: 0 };
         const { data: newUsage, error: createError } = await supabase
           .from('api_usage')
-          .insert([{ user_id: userId, date: today, huggingface_requests: 0 }])
+          .insert([insertData])
           .select()
           .single();
 
@@ -118,13 +119,14 @@ export function useAIQuota() {
         currentUsage = (usage as ApiUsage)?.huggingface_requests || 0;
       }
 
+      const resetDate = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0] || '';
       const quotaData: AIQuotaData = {
         used: currentUsage,
         limit,
         remaining: Math.max(0, limit - currentUsage),
         tier,
         canUseAI: currentUsage < limit,
-        resetDate: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0] || ''
+        resetDate
       };
 
       setQuota(quotaData);
@@ -145,7 +147,7 @@ export function useAIQuota() {
     const userId: string = user.id;
 
     try {
-      const today = new Date().toISOString().split('T')[0] as string;
+      const today = new Date().toISOString().split('T')[0] || '';
       const newUsage = quota.used + 1;
 
       // Upsert na tabela 'api_usage' com 'user_id'
