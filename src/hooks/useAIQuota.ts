@@ -85,7 +85,7 @@ export function useAIQuota() {
       }
 
       const limit = QUOTA_LIMITS[tier];
-      const today = new Date().toISOString().split('T')[0];
+      const today = new Date().toISOString().slice(0, 10);
 
       // Buscar uso atual da API
       // Query à tabela 'api_usage' pelo campo 'user_id'
@@ -94,17 +94,17 @@ export function useAIQuota() {
         .select('*')
         .eq('user_id', userId)
         .eq('date', today)
-        .single();
+        .maybeSingle();
 
       // Se não há registro para hoje, criar um
       let currentUsage = 0;
-      if (usageError && usageError.code === 'PGRST116') {
+      if (usageError) {
+        throw usageError;
+      } else if (!usage) {
         // Registro não existe, criar um novo
-        // Inserção na tabela 'api_usage' com 'user_id'
-        const insertData = { user_id: userId, date: today || '', huggingface_requests: 0 };
         const { data: newUsage, error: createError } = await supabase
           .from('api_usage')
-          .insert([insertData])
+          .insert([{ user_id: userId, date: today, huggingface_requests: 0 }])
           .select()
           .single();
 
@@ -113,13 +113,11 @@ export function useAIQuota() {
         }
 
         currentUsage = (newUsage as ApiUsage)?.huggingface_requests || 0;
-      } else if (usageError) {
-        throw usageError;
       } else {
         currentUsage = (usage as ApiUsage)?.huggingface_requests || 0;
       }
 
-      const resetDate = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0] || '';
+      const resetDate = new Date(Date.now() + 86400000).toISOString().slice(0, 10);
       const quotaData: AIQuotaData = {
         used: currentUsage,
         limit,
@@ -147,7 +145,7 @@ export function useAIQuota() {
     const userId: string = user.id;
 
     try {
-      const today = new Date().toISOString().split('T')[0] || '';
+      const today = new Date().toISOString().slice(0, 10);
       const newUsage = quota.used + 1;
 
       // Upsert na tabela 'api_usage' com 'user_id'

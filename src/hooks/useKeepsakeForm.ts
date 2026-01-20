@@ -77,8 +77,12 @@ export const useKeepsakeForm = () => {
     stepValidation: {},
   });
   const submittingRef = useRef(false);
+  const currentStepRef = useRef(formState.currentStep);
 
-  // Configuração do React Hook Form com validação melhorada
+  // Keep ref in sync with state
+  useEffect(() => {
+    currentStepRef.current = formState.currentStep;
+  }, [formState.currentStep]);
   const form = useForm<z.input<typeof keepsakeFormSchema>>({
     resolver: zodResolver(keepsakeFormSchema),
     mode: 'onChange',
@@ -159,25 +163,27 @@ export const useKeepsakeForm = () => {
 
   // Funções de navegação entre etapas
   const nextStep = useCallback(async () => {
-    console.log('[useKeepsakeForm] nextStep called, currentStep:', formState.currentStep);
-    const isValid = await validateStep(formState.currentStep);
+    const step = currentStepRef.current;
+    console.log('[useKeepsakeForm] nextStep called, currentStep:', step);
+    const isValid = await validateStep(step);
     console.log('[useKeepsakeForm] validateStep returned:', isValid);
     if (isValid) {
       setFormState(prev => {
         const newStep = Math.min(prev.currentStep + 1, 6);
         console.log('[useKeepsakeForm] Advancing to step:', newStep);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         return { ...prev, currentStep: newStep };
       });
     } else {
       console.log('[useKeepsakeForm] Validation failed, not advancing');
     }
-  }, [formState.currentStep, validateStep]);
+  }, [validateStep]);
 
   const prevStep = useCallback(() => {
-    setFormState(prev => ({ 
-      ...prev, 
-      currentStep: Math.max(prev.currentStep - 1, 1) 
-    }));
+    setFormState(prev => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return { ...prev, currentStep: Math.max(prev.currentStep - 1, 1) };
+    });
   }, []);
 
   const goToStep = useCallback((step: number) => {
