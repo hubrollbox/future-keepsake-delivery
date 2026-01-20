@@ -37,11 +37,11 @@ function applyCSP() {
   cspMeta.httpEquiv = 'Content-Security-Policy';
   cspMeta.content = 
     "default-src 'self'; " +
-    "script-src 'self' https://js.stripe.com https://analytics.keepla.pt https://www.googletagmanager.com; " +
+    "script-src 'self' 'unsafe-eval' https://js.stripe.com https://analytics.keepla.pt https://www.googletagmanager.com https://va.vercel-scripts.com https://cdn.gpteng.co; " +
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
-    "img-src 'self' data: https://keepla-uploads.s3.amazonaws.com https://*.supabase.co; " +
+    "img-src 'self' data: blob: https://keepla-uploads.s3.amazonaws.com https://*.supabase.co https://*.lovable.app; " +
     "font-src 'self' https://fonts.gstatic.com; " +
-    "connect-src 'self' https://*.supabase.co https://api.stripe.com https://region1.google-analytics.com https://www.google-analytics.com; " +
+    "connect-src 'self' https://*.supabase.co https://api.stripe.com https://region1.google-analytics.com https://www.google-analytics.com https://va.vercel-scripts.com https://*.lovable.app https://*.lovableproject.com; " +
     "frame-src 'self' https://js.stripe.com;";
   
   // Add the meta element to the head
