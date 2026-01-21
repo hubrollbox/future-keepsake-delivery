@@ -269,10 +269,12 @@ export const useKeepsakeForm = () => {
         keepsake_id: string;
         name: string;
         email: string;
+        delivery_channel: string;
       } = {
         keepsake_id: keepsakeData.id,
         name: formData.recipient_name,
         email: formData.recipient_contact || '',
+        delivery_channel: formData.delivery_channel || 'email',
       };
 
       const { error: recipientError } = await supabase
