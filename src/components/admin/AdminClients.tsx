@@ -2,6 +2,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface Client {
   id: string;
@@ -17,51 +19,68 @@ interface Client {
   is_admin: boolean;
 }
 
+const PAGE_SIZE = 25;
+
 const AdminClients: React.FC = () => {
   const { profile } = useAuth();
   const isAdmin = profile?.role === "admin";
   const [clients, setClients] = useState<Client[]>([]);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
 
   const fetchClients = useCallback(async () => {
-      setLoading(true);
-      try {
-        // Fetch profiles with admin status
-        const { data: profilesData, error: profilesError } = await supabase
-          .from("profiles")
-          .select("*")
-          .order("created_at", { ascending: false });
+    setLoading(true);
+    try {
+      // Get total count for pagination
+      const { count, error: countError } = await supabase
+        .from("profiles")
+        .select("*", { count: "exact", head: true });
 
-        if (profilesError) throw profilesError;
+      if (countError) throw countError;
+      setTotalCount(count || 0);
 
-        // Fetch admin roles
-        const { data: adminData, error: adminError } = await supabase
-          .from("admin_roles")
-          .select("user_id, role");
+      // Fetch profiles with explicit field selection (security best practice)
+      const { data: profilesData, error: profilesError } = await supabase
+        .from("profiles")
+        .select("id, full_name, email, avatar_url, total_points, level, created_at, updated_at, plan_id")
+        .order("created_at", { ascending: false })
+        .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1);
 
-        if (adminError) throw adminError;
+      if (profilesError) throw profilesError;
 
-        // Combine data and map isAdmin to is_admin
-        const adminUserIds = new Set(adminData?.map(admin => admin.user_id) || []);
-        
-        const clientsWithAdminStatus = profilesData?.map(profile => ({
-          ...profile,
-          plan_type: 'free', // Default plan type from profiles table
-          is_admin: adminUserIds.has(profile.id)
-        })) || [];
+      // Fetch admin roles
+      const { data: adminData, error: adminError } = await supabase
+        .from("admin_roles")
+        .select("user_id");
 
-        setClients(clientsWithAdminStatus);
-      } catch (error) {
-        console.error("Error fetching clients:", error);
-      } finally {
-        setLoading(false);
-      }
-    }, []);
+      if (adminError) throw adminError;
+
+      // Combine data and map isAdmin to is_admin
+      const adminUserIds = new Set(adminData?.map(admin => admin.user_id) || []);
+      
+      const clientsWithAdminStatus = profilesData?.map(profile => ({
+        ...profile,
+        plan_type: 'free', // Default plan type from profiles table
+        is_admin: adminUserIds.has(profile.id)
+      })) || [];
+
+      setClients(clientsWithAdminStatus);
+    } catch (error) {
+      console.error("Error fetching clients:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [page]);
 
   useEffect(() => {
     if (profile?.role !== "admin") return;
     fetchClients();
-  }, [profile?.role, fetchClients]);
+  }, [profile?.role, fetchClients, page]);
+
+  const totalPages = Math.ceil(totalCount / PAGE_SIZE);
+  const canGoNext = page < totalPages - 1;
+  const canGoPrev = page > 0;
 
   const toggleAdminStatus = async (userId: string, currentIsAdmin: boolean) => {
     try {
@@ -170,6 +189,35 @@ const AdminClients: React.FC = () => {
           {clients.length === 0 && (
             <div className="text-center py-8 text-soft-gray">
               Nenhum cliente encontrado.
+            </div>
+          )}
+
+          {/* Pagination controls */}
+          {totalCount > PAGE_SIZE && (
+            <div className="flex items-center justify-between mt-6 pt-4 border-t border-dusty-rose/20">
+              <span className="text-sm text-soft-gray">
+                A mostrar {page * PAGE_SIZE + 1}-{Math.min((page + 1) * PAGE_SIZE, totalCount)} de {totalCount} clientes
+              </span>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setPage(p => p - 1)}
+                  disabled={!canGoPrev}
+                >
+                  <ChevronLeft className="h-4 w-4 mr-1" />
+                  Anterior
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setPage(p => p + 1)}
+                  disabled={!canGoNext}
+                >
+                  Seguinte
+                  <ChevronRight className="h-4 w-4 ml-1" />
+                </Button>
+              </div>
             </div>
           )}
         </div>

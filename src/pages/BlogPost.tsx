@@ -11,6 +11,7 @@ import SEOHead from "@/components/SEOHead";
 import { gamificationService } from "@/services/gamificationService";
 import ReactMarkdown from "react-markdown";
 import { motion } from "framer-motion";
+import DOMPurify from "dompurify";
 
 interface BlogPost {
   id: string;
@@ -322,7 +323,11 @@ const BlogPost = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <ReactMarkdown>
-              {post.content.replace(/\n/g, "  \n")}
+              {DOMPurify.sanitize(post.content.replace(/\n/g, "  \n"), {
+                ALLOWED_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'br', 'strong', 'em', 'u', 'a', 'ul', 'ol', 'li', 'blockquote', 'code', 'pre', 'img', 'hr'],
+                ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'target', 'rel'],
+                ALLOW_DATA_ATTR: false,
+              })}
             </ReactMarkdown>
           </motion.div>
 
