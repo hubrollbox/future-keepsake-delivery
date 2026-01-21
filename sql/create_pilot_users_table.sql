@@ -23,17 +23,11 @@ CREATE POLICY "Users can view own records" ON pilot_users
   TO authenticated 
   USING (true);
 
--- Allow admins to view all records
+-- Allow admins to view all records (using is_admin_secure function)
 CREATE POLICY "Admins can view all records" ON pilot_users
   FOR ALL 
   TO authenticated 
-  USING (
-    EXISTS (
-      SELECT 1 FROM profiles 
-      WHERE profiles.id = auth.uid() 
-      AND profiles.role = 'admin'
-    )
-  );
+  USING (is_admin_secure());
 
 -- Create index for better performance on email lookups
 CREATE INDEX IF NOT EXISTS idx_pilot_users_email ON pilot_users(email);

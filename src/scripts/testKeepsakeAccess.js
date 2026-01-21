@@ -1,9 +1,8 @@
-import { createClient } from '@supabase/supabase-js';
+// Test script for keepsake access - uses shared Supabase client
+// Note: This file is kept for backwards compatibility
+// For new tests, use the TypeScript version: testKeepsakeAccess.ts
 
-const supabaseUrl = 'https://mlxmymmoysbtnvcehggn.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1seG15bW1veXNidG52Y2VoZ2duIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk2MDM1MzIsImV4cCI6MjA2NTE3OTUzMn0.NWN13hyHErwzxD-9mW3U4v3S5kDBkSt5d0O49Eol90o';
-
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+import { supabase } from '../integrations/supabase/client.js';
 
 async function testKeepsakeAccess() {
   console.log('🔍 Testando acesso às cápsulas do tempo...');
@@ -77,20 +76,6 @@ async function testKeepsakeAccess() {
       console.log('🔐 is_admin_secure resultado:', isAdminResult);
     }
     
-    // Verificar políticas RLS na tabela keepsakes
-    console.log('🔍 Verificando informações da tabela keepsakes...');
-    const { data: tableInfo, error: tableError } = await supabase
-      .from('information_schema.tables')
-      .select('*')
-      .eq('table_name', 'keepsakes')
-      .eq('table_schema', 'public');
-    
-    if (tableError) {
-      console.error('❌ Erro ao verificar tabela:', tableError);
-    } else {
-      console.log('📋 Informações da tabela keepsakes:', tableInfo);
-    }
-    
   } catch (error) {
     console.error('❌ Erro inesperado:', error);
   }
@@ -99,8 +84,8 @@ async function testKeepsakeAccess() {
 // Executar o teste
 testKeepsakeAccess().then(() => {
   console.log('🏁 Teste concluído');
-  process.exit(0);
 }).catch((error) => {
   console.error('💥 Erro fatal:', error);
-  process.exit(1);
 });
+
+export { testKeepsakeAccess };
