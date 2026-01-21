@@ -42,11 +42,15 @@
     --primary-foreground: 0 0% 100%;
     --secondary: 351 76% 45%;         /* Darker red for hover */
     --secondary-foreground: 0 0% 100%;
-    --accent: 351 76% 55%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 0 0% 96%;               /* Light gray for hover states */
+    --accent-foreground: 0 0% 15%;    /* Dark text on accent */
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
     --ring: 351 76% 55%;
+    
+    /* Popover & Dropdown - CRITICAL for legibility */
+    --popover: 0 0% 100%;             /* White background */
+    --popover-foreground: 0 0% 15%;   /* Dark text for legibility */
 
     /* Brand Keepla - Official Palette */
     --keepla-red: 351 76% 55%;        /* #E63946 */
@@ -56,6 +60,10 @@
     /* Text colors */
     --text-primary: 0 0% 15%;         /* #262626 */
     --text-secondary: 0 0% 48%;       /* #7A7A7A */
+    
+    /* Input tokens */
+    --input: 0 0% 90%;
+    --input-foreground: 0 0% 15%;
   }
 
   .dark {
@@ -68,6 +76,12 @@
     --border: 0 0% 20%;
     --primary: 351 76% 55%;
     --primary-foreground: 0 0% 100%;
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 100%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 100%;
+    --input: 0 0% 20%;
+    --input-foreground: 0 0% 100%;
   }
 
   html, body {
