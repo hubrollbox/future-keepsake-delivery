@@ -2,6 +2,21 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
+// Startup secret validation
+const HUGGINGFACE_API_KEY = Deno.env.get('HUGGINGFACE_API_KEY');
+const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
+const SUPABASE_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY');
+
+if (!HUGGINGFACE_API_KEY || !SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  throw new Error(
+    `Missing required secrets: ${[
+      !HUGGINGFACE_API_KEY && "HUGGINGFACE_API_KEY",
+      !SUPABASE_URL && "SUPABASE_URL",
+      !SUPABASE_ANON_KEY && "SUPABASE_ANON_KEY",
+    ].filter(Boolean).join(", ")}`
+  );
+}
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -22,6 +37,32 @@ interface SuggestionRequest {
   userId: string;
 }
 
+// Prompt injection detection patterns
+const INJECTION_PATTERNS = [
+  /ignore\s+(previous|all|above)/i,
+  /system\s*:/i,
+  /\[system\]/i,
+  /\[assistant\]/i,
+  /override\s+instructions/i,
+  /forget\s+(everything|previous)/i,
+  /disregard\s+(previous|all)/i,
+  /new\s+instructions/i,
+  /you\s+are\s+now/i,
+  /pretend\s+(to\s+be|you\s+are)/i,
+];
+
+function detectPromptInjection(message: string): boolean {
+  return INJECTION_PATTERNS.some(pattern => pattern.test(message));
+}
+
+function sanitizeInput(message: string): string {
+  // Remove potentially dangerous characters
+  return message
+    .replace(/[<>]/g, '') // Remove angle brackets
+    .replace(/[\x00-\x1F\x7F]/g, '') // Remove control characters
+    .substring(0, 500); // Limit length
+}
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -30,8 +71,8 @@ serve(async (req) => {
 
   try {
     const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      SUPABASE_URL!,
+      SUPABASE_ANON_KEY!,
       {
         global: {
           headers: { Authorization: req.headers.get('Authorization')! },
@@ -97,8 +138,27 @@ serve(async (req) => {
       )
     }
 
+    // SECURITY: Detect and block prompt injection attempts
+    if (detectPromptInjection(message)) {
+      console.warn('Prompt injection attempt detected');
+      return new Response(
+        JSON.stringify({ 
+          suggestion: getFallbackSuggestion(keywords),
+          fallback: true,
+          message: 'Sugestão gerada localmente'
+        }),
+        {
+          status: 200,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      )
+    }
+
+    // Sanitize user input
+    const sanitizedMessage = sanitizeInput(message);
+
     // Criar prompt contextualizado baseado nas keywords
-    const contextPrompt = createContextualPrompt(message, keywords)
+    const contextPrompt = createContextualPrompt(sanitizedMessage, keywords)
 
     // Chamar Hugging Face API
     const huggingFaceResponse = await fetch(
@@ -106,7 +166,7 @@ serve(async (req) => {
       {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${Deno.env.get('HUGGINGFACE_API_KEY')}`,
+          'Authorization': `Bearer ${HUGGINGFACE_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({

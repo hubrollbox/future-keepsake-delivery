@@ -2,24 +2,37 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import Stripe from 'https://esm.sh/stripe@14.21.0'
 
-const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') || '', {
+// Startup secret validation
+const STRIPE_SECRET_KEY = Deno.env.get('STRIPE_SECRET_KEY');
+const STRIPE_WEBHOOK_SECRET = Deno.env.get('STRIPE_WEBHOOK_SECRET');
+const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+
+if (!STRIPE_SECRET_KEY || !STRIPE_WEBHOOK_SECRET || !SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+  throw new Error(
+    `Missing required secrets: ${[
+      !STRIPE_SECRET_KEY && "STRIPE_SECRET_KEY",
+      !STRIPE_WEBHOOK_SECRET && "STRIPE_WEBHOOK_SECRET",
+      !SUPABASE_URL && "SUPABASE_URL",
+      !SUPABASE_SERVICE_ROLE_KEY && "SUPABASE_SERVICE_ROLE_KEY",
+    ].filter(Boolean).join(", ")}`
+  );
+}
+
+const stripe = new Stripe(STRIPE_SECRET_KEY, {
   apiVersion: '2023-10-16',
   httpClient: Stripe.createFetchHttpClient(),
 })
 
-const supabase = createClient(
-  Deno.env.get('SUPABASE_URL') ?? '',
-  Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-)
+const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 
 const cryptoProvider = Stripe.createSubtleCryptoProvider()
 
 serve(async (request) => {
   const signature = request.headers.get('Stripe-Signature')
   const body = await request.text()
-  const webhookSecret = Deno.env.get('STRIPE_WEBHOOK_SECRET')
 
-  if (!signature || !webhookSecret) {
+  if (!signature) {
     return new Response('Webhook signature verification failed', { status: 400 })
   }
 
@@ -29,7 +42,7 @@ serve(async (request) => {
     event = await stripe.webhooks.constructEventAsync(
       body,
       signature,
-      webhookSecret,
+      STRIPE_WEBHOOK_SECRET!,
       undefined,
       cryptoProvider
     )
