@@ -18,7 +18,7 @@ const registerSchema = z.object({
   password: z.string().min(6, "A palavra-passe deve ter pelo menos 6 caracteres"),
   confirmPassword: z.string(),
   termsAccepted: z.literal(true, {
-    errorMap: () => ({ message: "É obrigatório aceitar os Termos e Condições." }),
+    message: "É obrigatório aceitar os Termos e Condições."
   }),
   marketingAccepted: z.boolean().optional(),
 })
@@ -72,7 +72,7 @@ const RegisterForm = () => {
     } catch (error) {
       if (error instanceof z.ZodError) {
         const newErrors: Record<string, string> = {};
-        error.errors.forEach((err) => {
+        error.issues.forEach((err: z.ZodIssue) => {
           if (err.path[0]) {
             newErrors[err.path[0] as string] = err.message;
           }
