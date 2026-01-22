@@ -17,11 +17,8 @@ CREATE POLICY "Allow anonymous insert" ON pilot_users
   TO anon 
   WITH CHECK (true);
 
--- Allow authenticated users to view their own records
-CREATE POLICY "Users can view own records" ON pilot_users
-  FOR SELECT 
-  TO authenticated 
-  USING (true);
+-- NOTE: No general user SELECT policy - pilot signups are pre-registration
+-- Only admins can view pilot user records via is_admin_secure() policy below
 
 -- Allow admins to view all records (using is_admin_secure function)
 CREATE POLICY "Admins can view all records" ON pilot_users
