@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import NotFound from './NotFound';
+import { describe, it, expect } from 'vitest';
 
 describe('NotFound Page', () => {
   it('renders the not found page correctly', () => {

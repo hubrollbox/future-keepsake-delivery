@@ -51,7 +51,7 @@ export function useSecureForm<T extends Record<string, unknown>>({
       return true;
     } catch (error) {
       if (error instanceof z.ZodError) {
-        const fieldError = error.errors.find(e => e.path.includes(field as string));
+        const fieldError = error.issues.find((e: z.ZodIssue) => e.path.includes(field as string));
         if (fieldError) {
           setErrors(prev => ({ ...prev, [field]: fieldError.message }));
         }
@@ -76,7 +76,7 @@ export function useSecureForm<T extends Record<string, unknown>>({
     } catch (error) {
       if (error instanceof z.ZodError) {
         const fieldErrors: Partial<Record<keyof T, string>> = {};
-        error.errors.forEach(err => {
+        error.issues.forEach((err: z.ZodIssue) => {
           if (err.path.length > 0) {
             const field = err.path[0] as keyof T;
             fieldErrors[field] = err.message;
@@ -106,7 +106,7 @@ export function useSecureForm<T extends Record<string, unknown>>({
     } catch (error) {
       if (error instanceof z.ZodError) {
         const fieldErrors: Partial<Record<keyof T, string>> = {};
-        error.errors.forEach(err => {
+        error.issues.forEach((err: z.ZodIssue) => {
           if (err.path.length > 0) {
             const field = err.path[0] as keyof T;
             fieldErrors[field] = err.message;
