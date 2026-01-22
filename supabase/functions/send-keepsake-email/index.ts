@@ -1,6 +1,21 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 
+// Startup secret validation
+const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
+const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+
+if (!RESEND_API_KEY || !SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+  throw new Error(
+    `Missing required secrets: ${[
+      !RESEND_API_KEY && "RESEND_API_KEY",
+      !SUPABASE_URL && "SUPABASE_URL",
+      !SUPABASE_SERVICE_ROLE_KEY && "SUPABASE_SERVICE_ROLE_KEY",
+    ].filter(Boolean).join(", ")}`
+  );
+}
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -26,6 +41,18 @@ function escapeHtml(unsafe: string): string {
     .replace(/'/g, '&#039;');
 }
 
+// Helper to mask email for logging
+function maskEmail(email: string): string {
+  const [user, domain] = email.split("@");
+  if (!domain) return "***@***";
+  const maskedUser = user.length > 2 ? user[0] + "***" + user[user.length - 1] : "***";
+  const domainParts = domain.split(".");
+  const maskedDomain = domainParts[0].length > 2 
+    ? domainParts[0][0] + "***" 
+    : "***";
+  return `${maskedUser}@${maskedDomain}.${domainParts.slice(1).join(".")}`;
+}
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -33,10 +60,7 @@ serve(async (req) => {
   }
 
   try {
-    const supabaseClient = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-    )
+    const supabaseClient = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!)
 
     const { keepsake_id, recipient_email, recipient_name, sender_name, title, message_content, delivery_date }: KeepsakeEmailData = await req.json()
 
@@ -95,18 +119,17 @@ serve(async (req) => {
       </html>
     `
 
-    // Send email using Supabase Edge Function or external service
-    // For now, we'll use a simple email service integration
+    // Send email using Resend API
     const emailResponse = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${Deno.env.get('RESEND_API_KEY')}`,
+        'Authorization': `Bearer ${RESEND_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         from: 'Future Keepsake <noreply@futurekeepsake.com>',
         to: [recipient_email],
-        subject: `🎁 Cápsula Digital: ${title}`,
+        subject: `🎁 Cápsula Digital: ${safeTitle.substring(0, 50)}`,
         html: emailHtml,
       }),
     })
@@ -132,7 +155,7 @@ serve(async (req) => {
     }
 
     const emailResult = await emailResponse.json()
-    console.log('Email sent successfully:', emailResult)
+    console.log('Email sent successfully to:', maskEmail(recipient_email))
 
     // Update notification status to sent
     const { error: updateError } = await supabaseClient

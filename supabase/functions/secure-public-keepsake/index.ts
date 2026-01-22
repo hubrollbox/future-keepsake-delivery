@@ -1,11 +1,30 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.53.0'
 import { corsHeaders } from '../_shared/cors.ts'
 
-// Initialize Supabase client
-const supabaseUrl = Deno.env.get('SUPABASE_URL')!
-const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+// Startup secret validation
+const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
-const supabase = createClient(supabaseUrl, supabaseServiceKey)
+if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+  throw new Error(
+    `Missing required secrets: ${[
+      !SUPABASE_URL && "SUPABASE_URL",
+      !SUPABASE_SERVICE_ROLE_KEY && "SUPABASE_SERVICE_ROLE_KEY",
+    ].filter(Boolean).join(", ")}`
+  );
+}
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
+
+// Helper to mask IP for logging
+function maskIP(ip: string): string {
+  if (ip === "unknown") return ip;
+  const parts = ip.split(".");
+  if (parts.length === 4) {
+    return `${parts[0]}.${parts[1]}.***.***`;
+  }
+  return ip.substring(0, 10) + "***";
+}
 
 // Simple cache with TTL
 const cache = new Map<string, { data: any; timestamp: number }>()
@@ -110,8 +129,9 @@ async function isRateLimited(ip: string, endpoint: string): Promise<boolean> {
       .single()
     
     if (error && error.code !== 'PGRST116') { // Not found is ok
-      console.error('Rate limit check error:', error)
-      return false // Fail open
+      console.error('Rate limit check error:', error.message)
+      // SECURITY: Fail-closed - deny request on database error
+      return true
     }
     
     const currentCount = data?.request_count || 0
@@ -134,8 +154,9 @@ async function isRateLimited(ip: string, endpoint: string): Promise<boolean> {
     
     return false
   } catch (error) {
-    console.error('Rate limiting error:', error)
-    return false // Fail open
+    console.error('Rate limiting error:', (error as Error).message)
+    // SECURITY: Fail-closed - deny request on error
+    return true
   }
 }
 
@@ -196,7 +217,7 @@ Deno.serve(async (req) => {
       )
     }
 
-    console.log(`Fetching public keepsake: ${id} for IP: ${clientIP}`)
+    console.log(`Fetching public keepsake: ${id} for IP: ${maskIP(clientIP)}`)
 
     const keepsake = await getPublicKeepsake(id)
 

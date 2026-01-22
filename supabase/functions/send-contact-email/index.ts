@@ -2,7 +2,22 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "https://esm.sh/resend@2.0.0?target=deno";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+// Startup secret validation
+const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+const SUPABASE_URL = Deno.env.get("SUPABASE_URL");
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+
+if (!RESEND_API_KEY || !SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+  throw new Error(
+    `Missing required secrets: ${[
+      !RESEND_API_KEY && "RESEND_API_KEY",
+      !SUPABASE_URL && "SUPABASE_URL",
+      !SUPABASE_SERVICE_ROLE_KEY && "SUPABASE_SERVICE_ROLE_KEY",
+    ].filter(Boolean).join(", ")}`
+  );
+}
+
+const resend = new Resend(RESEND_API_KEY);
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -21,10 +36,31 @@ interface ContactEmailRequest {
 const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
 const MAX_REQUESTS_PER_WINDOW = 5; // 5 requests per hour per IP
 
+// Helper to mask email for logging
+function maskEmail(email: string): string {
+  const [user, domain] = email.split("@");
+  if (!domain) return "***@***";
+  const maskedUser = user.length > 2 ? user[0] + "***" + user[user.length - 1] : "***";
+  const domainParts = domain.split(".");
+  const maskedDomain = domainParts[0].length > 2 
+    ? domainParts[0][0] + "***" 
+    : "***";
+  return `${maskedUser}@${maskedDomain}.${domainParts.slice(1).join(".")}`;
+}
+
+// Helper to mask IP for logging
+function maskIP(ip: string): string {
+  if (ip === "unknown") return ip;
+  const parts = ip.split(".");
+  if (parts.length === 4) {
+    return `${parts[0]}.${parts[1]}.***.***`;
+  }
+  // IPv6 or other format
+  return ip.substring(0, 10) + "***";
+}
+
 async function isRateLimited(clientIP: string): Promise<boolean> {
-  const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-  const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-  const supabase = createClient(supabaseUrl, supabaseServiceKey);
+  const supabase = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!);
 
   const windowStart = new Date(Date.now() - RATE_LIMIT_WINDOW_MS).toISOString();
   const endpoint = "send-contact-email";
@@ -40,13 +76,14 @@ async function isRateLimited(clientIP: string): Promise<boolean> {
       .single();
 
     if (selectError && selectError.code !== "PGRST116") {
-      console.error("Rate limit check error:", selectError);
-      return false; // Allow request on error
+      console.error("Rate limit check error:", selectError.message);
+      // SECURITY: Fail-closed - deny request on database error
+      return true;
     }
 
     if (existing) {
       if (existing.request_count >= MAX_REQUESTS_PER_WINDOW) {
-        console.log(`Rate limit exceeded for IP: ${clientIP}`);
+        console.log(`Rate limit exceeded for IP: ${maskIP(clientIP)}`);
         return true;
       }
 
@@ -67,8 +104,9 @@ async function isRateLimited(clientIP: string): Promise<boolean> {
 
     return false;
   } catch (error) {
-    console.error("Rate limiting error:", error);
-    return false; // Allow request on error
+    console.error("Rate limiting error:", (error as Error).message);
+    // SECURITY: Fail-closed - deny request on error
+    return true;
   }
 }
 
@@ -148,7 +186,7 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    console.log(`Processing contact email from: ${email} (IP: ${clientIP})`);
+    console.log(`Processing contact email from: ${maskEmail(email)} (IP: ${maskIP(clientIP)})`);
 
     // Send email to admin
     const adminEmailResponse = await resend.emails.send({
@@ -224,8 +262,8 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
-    console.log("Admin email sent:", adminEmailResponse);
-    console.log("User confirmation email sent:", userEmailResponse);
+    console.log("Admin email sent:", adminEmailResponse.data?.id || "success");
+    console.log("User confirmation email sent:", userEmailResponse.data?.id || "success");
 
     return new Response(
       JSON.stringify({ 
