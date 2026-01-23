@@ -3,6 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Trophy, Star, Target, Flame } from "lucide-react";
 import { useGamification } from "@/contexts/GamificationContext";
+import "./UserStats.css";
 
 interface UserStatsProps {
   totalDeliveries: number;
@@ -49,7 +50,7 @@ const UserStats = ({ totalDeliveries }: UserStatsProps) => {
               <div className="overflow-hidden h-3 mb-4 text-xs flex rounded bg-green-200">
                 <div 
                   className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-golden-honey transition-all duration-500"
-                  style={{ width: `${progress_to_next_level}%` }}
+                  style={{ '--progress-width': `${progress_to_next_level}%` } as React.CSSProperties}
                 ></div>
               </div>
             </div>
