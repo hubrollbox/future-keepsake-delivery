@@ -741,6 +741,7 @@ export type Database = {
       profiles: {
         Row: {
           avatar_url: string | null
+          bonus_keepsakes: number
           created_at: string | null
           email: string | null
           full_name: string | null
@@ -752,6 +753,7 @@ export type Database = {
         }
         Insert: {
           avatar_url?: string | null
+          bonus_keepsakes?: number
           created_at?: string | null
           email?: string | null
           full_name?: string | null
@@ -763,6 +765,7 @@ export type Database = {
         }
         Update: {
           avatar_url?: string | null
+          bonus_keepsakes?: number
           created_at?: string | null
           email?: string | null
           full_name?: string | null
@@ -1219,6 +1222,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      add_bonus_keepsakes: {
+        Args: { p_bonus_amount: number; p_user_id: string }
+        Returns: Json
+      }
       add_points: {
         Args: { p_action_type: string; p_metadata?: Json; p_user_id: string }
         Returns: Json
