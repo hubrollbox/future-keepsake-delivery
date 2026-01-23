@@ -1,5 +1,5 @@
-// Função para criar uma sessão de checkout Stripe via API própria ou Supabase Edge Function
-// Substitua a URL pelo endpoint real do backend
+// Função para criar uma sessão de checkout Stripe via Supabase Edge Function
+import { supabase } from "@/integrations/supabase/client";
 
 export async function createStripeCheckoutSession({
   amount,
@@ -14,12 +14,19 @@ export async function createStripeCheckoutSession({
   deliveryId: string;
   userEmail: string;
 }): Promise<string> {
-  const response = await fetch("/api/create-stripe-session", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ amount, currency, description, deliveryId, userEmail })
+  const { data, error } = await supabase.functions.invoke('create-checkout-session', {
+    body: { amount, currency, description, deliveryId, userEmail }
   });
-  if (!response.ok) throw new Error("Erro ao criar sessão de pagamento");
-  const data = await response.json();
-  return data.checkoutUrl; // URL do Stripe Checkout
+
+  if (error) {
+    console.error('Error creating checkout session:', error);
+    throw new Error("Erro ao criar sessão de pagamento");
+  }
+
+  if (!data?.id) {
+    throw new Error("Resposta inválida do servidor de pagamento");
+  }
+
+  // Construct Stripe checkout URL from session ID
+  return `https://checkout.stripe.com/pay/${data.id}`;
 }
