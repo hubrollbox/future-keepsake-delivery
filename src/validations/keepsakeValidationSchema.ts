@@ -191,11 +191,11 @@ export const relationshipSchema = z.string()
 
 // Esquemas para tipos enum
 export const keepsakeTypeSchema = z.enum(['digital', 'physical'], {
-  errorMap: () => ({ message: 'Selecione um tipo válido de cápsula' }),
+  message: 'Selecione um tipo válido de cápsula'
 });
 
 export const deliveryChannelSchema = z.enum(['email'], {
-  errorMap: () => ({ message: 'Canal de entrega fixo: email' }),
+  message: 'Canal de entrega fixo: email'
 }).default('email');
 
 // ============================================================================

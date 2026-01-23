@@ -98,7 +98,7 @@ export const createKeepsakeSchema = z.object({
     .regex(/^(\+351|351)?[0-9]{9}$/, 'Número de telefone inválido (formato português)')
     .optional(),
   type: z.enum(['digital', 'physical'], {
-    errorMap: () => ({ message: 'Tipo deve ser digital ou físico' })
+    message: 'Tipo deve ser digital ou físico'
   }),
   // Validação para garantir que o criador está incluído
   creator: z.string().uuid('ID do criador é obrigatório'),

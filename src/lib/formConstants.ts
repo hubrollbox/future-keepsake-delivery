@@ -29,16 +29,16 @@ export type ProfileFormValues = z.infer<typeof profileFormSchema>
 
 export const appearanceFormSchema = z.object({
   theme: z.enum(["light", "dark"], {
-    required_error: "Please select a theme.",
+    message: "Please select a theme.",
   }),
   font: z.enum(["inter", "lora", "raleway"], {
-    required_error: "Please select a font.",
+    message: "Please select a font.",
   }),
 })
 
 export const notificationsFormSchema = z.object({
   type: z.enum(["all", "mentions", "none"], {
-    required_error: "You have to select one item.",
+    message: "You have to select one item.",
   }),
   mobile: z.boolean().default(false).optional(),
   communication_emails: z.boolean().default(false).optional(),
@@ -56,7 +56,7 @@ export const accountFormSchema = z.object({
       message: "Name must not be longer than 30 characters.",
     }),
   dob: z.date({
-    required_error: "A date of birth is required.",
+    message: "A date of birth is required.",
   }),
 })
 
