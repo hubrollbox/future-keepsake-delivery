@@ -1,4 +1,6 @@
 import { stripePromise } from '@/lib/stripe';
+import { supabase } from '@/integrations/supabase/client';
+import { useState } from 'react';
 
 interface StripeCheckoutButtonProps {
   items: {
@@ -8,34 +10,58 @@ interface StripeCheckoutButtonProps {
 }
 
 export function StripeCheckoutButton({ items }: StripeCheckoutButtonProps) {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   const handleCheckout = async () => {
-    const stripe = await stripePromise;
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const stripe = await stripePromise;
 
-    const response = await fetch('/api/create-checkout-session', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ items }),
-    });
+      // Call Supabase Edge Function instead of non-existent API route
+      const { data, error: fnError } = await supabase.functions.invoke('create-checkout-session', {
+        body: { items }
+      });
 
-    const session = await response.json();
+      if (fnError) {
+        console.error('Error creating checkout session:', fnError);
+        setError('Erro ao iniciar pagamento. Tente novamente.');
+        return;
+      }
 
-    const result = await stripe?.redirectToCheckout({
-      sessionId: session.id,
-    });
+      if (!data?.id) {
+        setError('Resposta inválida do servidor.');
+        return;
+      }
 
-    if (result?.error) {
-      console.error(result.error.message);
+      const result = await stripe?.redirectToCheckout({
+        sessionId: data.id,
+      });
+
+      if (result?.error) {
+        console.error(result.error.message);
+        setError(result.error.message || 'Erro no checkout.');
+      }
+    } catch (err) {
+      console.error('Checkout error:', err);
+      setError('Erro inesperado. Tente novamente.');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <button
-      onClick={handleCheckout}
-      className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
-    >
-      Finalizar compra
-    </button>
+    <div>
+      <button
+        onClick={handleCheckout}
+        disabled={loading}
+        className="bg-primary text-primary-foreground px-4 py-2 rounded hover:bg-primary/90 disabled:opacity-50"
+      >
+        {loading ? 'A processar...' : 'Finalizar compra'}
+      </button>
+      {error && <p className="text-destructive text-sm mt-2">{error}</p>}
+    </div>
   );
 }

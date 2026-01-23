@@ -1,18 +1,18 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import NotFound from './NotFound';
 import { describe, it, expect } from 'vitest';
 
 describe('NotFound Page', () => {
   it('renders the not found page correctly', () => {
-    render(
+    const { getByText } = render(
       <BrowserRouter>
         <NotFound />
       </BrowserRouter>
     );
 
     expect(
-      screen.getByText(/memória não encontrada/i)
+      getByText(/memória não encontrada/i)
     ).toBeInTheDocument();
   });
 });
