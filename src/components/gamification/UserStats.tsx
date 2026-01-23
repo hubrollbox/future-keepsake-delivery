@@ -48,8 +48,8 @@ const UserStats = ({ totalDeliveries }: UserStatsProps) => {
               </div>
               <div className="overflow-hidden h-3 mb-4 text-xs flex rounded bg-green-200">
                 <div 
-                  style={{ width: `${progress_to_next_level}%` }} 
                   className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-golden-honey transition-all duration-500"
+                  style={{ width: `${progress_to_next_level}%` }}
                 ></div>
               </div>
             </div>

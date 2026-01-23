@@ -183,7 +183,9 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
                 {steps.map((_, index) => (
                   <button
                     key={index}
+                    type="button"
                     onClick={() => handleStepClick(index)}
+                    aria-label={`Ir para etapa ${index + 1}`}
                     className={`w-3 h-3 rounded-full transition-all duration-200 ${
                       index === currentStep 
                         ? 'bg-keepla-red scale-125' 
@@ -286,33 +288,12 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
       <div className="absolute top-20 left-10 opacity-30 animate-float">
         <Clock className="w-8 h-8 text-keepla-gray-dark" />
       </div>
-      <div className="absolute bottom-20 right-10 opacity-30 animate-float" style={{ animationDelay: '1s' }}>
+      <div className="absolute bottom-20 right-10 opacity-30 animate-float animate-float-delay-1">
         <Heart className="w-6 h-6 text-keepla-gray-dark" />
       </div>
-      <div className="absolute top-1/2 left-20 opacity-30 animate-float" style={{ animationDelay: '2s' }}>
+      <div className="absolute top-1/2 left-20 opacity-30 animate-float animate-float-delay-2">
         <Star className="w-5 h-5 text-keepla-red" />
       </div>
-
-      {/* Estilos CSS customizados */}
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(10deg); }
-        }
-        
-        @keyframes bounce-gentle {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
-        }
-        
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-        
-        .animate-bounce-gentle {
-          animation: bounce-gentle 2s ease-in-out infinite;
-        }
-      `}</style>
     </div>
   );
 };
