@@ -11,11 +11,9 @@ import { Button } from "@/components/ui/button";
 import type { Delivery } from "@/types/admin";
 import SEOHead from "@/components/SEOHead";
 import GuidedTour from "@/components/GuidedTour";
-import PhotoBackground from "@/components/layout/PhotoBackground";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PlusCircle, Clock, Package, CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
-import memorialImage from "@/assets/memorial-pc.jpg";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -53,30 +51,23 @@ const Dashboard = () => {
       <GuidedTour />
       <Navigation />
 
-      {/* Mini Hero */}
-      <PhotoBackground 
-        image={memorialImage} 
-        alt="Memorial de memórias"
-        overlay="dark"
-        size="compact"
-        className="py-8"
-      >
-        <div className="container mx-auto px-4">
+      {/* Simple Welcome Header */}
+      <div className="bg-keepla-black border-b border-keepla-red/10">
+        <div className="container mx-auto px-4 py-6">
           <motion.div 
-            className="text-center"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.4 }}
           >
-            <p className="text-keepla-white/70 font-georgia italic text-lg mb-2">
+            <p className="text-keepla-white/60 font-georgia italic text-sm mb-1">
               Bem-vindo de volta, {profile?.full_name || 'Guardião'}
             </p>
-            <h1 className="text-3xl md:text-4xl font-inter font-bold text-keepla-white">
+            <h1 className="text-2xl md:text-3xl font-inter font-bold text-keepla-white">
               A Tua Central de <span className="text-keepla-red">Memórias</span>
             </h1>
           </motion.div>
         </div>
-      </PhotoBackground>
+      </div>
 
       <main className="bg-keepla-white">
         <div className="container mx-auto max-w-7xl px-4 py-8">
