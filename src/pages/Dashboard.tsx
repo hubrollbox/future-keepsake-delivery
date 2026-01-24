@@ -58,7 +58,8 @@ const Dashboard = () => {
         image={memorialImage} 
         alt="Memorial de memórias"
         overlay="dark"
-        className="py-12"
+        size="compact"
+        className="py-8"
       >
         <div className="container mx-auto px-4">
           <motion.div 
