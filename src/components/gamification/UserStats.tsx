@@ -1,9 +1,6 @@
-
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Trophy, Star, Target, Flame } from "lucide-react";
 import { useGamification } from "@/contexts/GamificationContext";
-import "./UserStats.css";
 
 interface UserStatsProps {
   totalDeliveries: number;
