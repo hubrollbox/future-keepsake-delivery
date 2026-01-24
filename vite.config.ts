@@ -3,8 +3,6 @@ import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 import { fileURLToPath } from 'node:url';
 import { componentTagger } from "lovable-tagger";
-import autoprefixer from 'autoprefixer';
-import tailwindPostcss from '@tailwindcss/postcss';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = resolve(__filename, '..');
@@ -17,14 +15,6 @@ export default defineConfig(({ mode }) => ({
   define: {
     'process.env': {},
     global: 'globalThis',
-  },
-  // Tailwind CSS v4 moved the PostCSS plugin to `@tailwindcss/postcss`.
-  // Our `postcss.config.js` is read-only in this environment, so we configure
-  // PostCSS inline to unblock `vite build` / publishing.
-  css: {
-    postcss: {
-      plugins: [tailwindPostcss(), autoprefixer()],
-    },
   },
   server: {
     host: "::",
