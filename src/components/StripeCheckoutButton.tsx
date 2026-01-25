@@ -36,13 +36,9 @@ export function StripeCheckoutButton({ items }: StripeCheckoutButtonProps) {
         return;
       }
 
-      const result = await stripe?.redirectToCheckout({
-        sessionId: data.id,
-      });
-
-      if (result?.error) {
-        console.error(result.error.message);
-        setError(result.error.message || 'Erro no checkout.');
+      // In newer versions of Stripe.js, use redirect instead of redirectToCheckout
+      if (stripe) {
+        window.location.href = `https://checkout.stripe.com/pay/${data.id}`;
       }
     } catch (err) {
       console.error('Checkout error:', err);
