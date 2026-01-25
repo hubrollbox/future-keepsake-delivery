@@ -108,6 +108,8 @@ const AdminMessages = () => {
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
             className="px-3 py-2 border border-gray-300 rounded-md text-sm"
+            aria-label="Filtrar mensagens por estado"
+            title="Filtrar por estado de entrega"
           >
             <option value="all">Todos os estados</option>
             <option value="scheduled">Agendada</option>
