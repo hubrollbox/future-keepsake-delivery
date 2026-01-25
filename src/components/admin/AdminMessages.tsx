@@ -27,24 +27,31 @@ const AdminMessages = () => {
 
   const fetchMessages = useCallback(async () => {
     try {
+      // Use RPC function admin_get_deliveries to bypass RLS and get all deliveries
       const { data, error } = await supabase
-        .from("deliveries")
-        .select("id, title, description, delivery_date, status, created_at, user_id")
-        .order("created_at", { ascending: false });
+        .rpc("admin_get_deliveries", { p_limit: 1000, p_offset: 0 });
 
       if (error) {
+        console.error("RPC Error:", error);
         toast({
-          title: "Erro",
+          title: "Erro ao carregar entregas",
           description: error.message || "Não foi possível carregar as mensagens.",
           variant: "destructive",
         });
         setLoading(false);
         return;
       }
-      const mappedData = (data || []).map(delivery => ({
-        ...delivery,
-        content: delivery.description || ""
+
+      const mappedData = (data || []).map((delivery: any) => ({
+        id: delivery.id,
+        title: delivery.title,
+        content: delivery.description || "",
+        delivery_date: delivery.delivery_date,
+        status: delivery.status,
+        created_at: delivery.created_at,
+        user_id: delivery.user_id
       }));
+      
       setMessages(mappedData);
     } catch (error: unknown) {
       console.error("Error fetching messages:", error);

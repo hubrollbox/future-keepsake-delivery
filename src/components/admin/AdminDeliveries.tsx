@@ -44,10 +44,9 @@ const AdminDeliveries = () => {
 
   const fetchDeliveries = useCallback(async () => {
     try {
+      // Use RPC function admin_get_deliveries to bypass RLS
       const { data, error } = await supabase
-        .from("deliveries")
-        .select("*")
-        .order("delivery_date", { ascending: true });
+        .rpc("admin_get_deliveries", { p_limit: 1000, p_offset: 0 });
 
       if (error) throw error;
       setDeliveries(data || []);
