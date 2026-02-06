@@ -23,21 +23,26 @@ const AdminDashboard = () => {
   const fetchRecentData = useCallback(async () => {
     setLoadingLists(true);
     try {
-      // Fetch upcoming deliveries (next 30 days) using RPC
+      // Fetch upcoming keepsakes (next 30 days) using RPC
       const now = new Date();
       const thirtyDays = new Date();
       thirtyDays.setDate(now.getDate() + 30);
       
-      const { data: allDeliveries, error } = await supabase
-        .rpc("admin_get_deliveries", { p_limit: 1000, p_offset: 0 });
+      const { data: allKeepsakes, error } = await supabase
+        .rpc("admin_get_keepsakes", { p_limit: 1000, p_offset: 0 });
 
       if (error) throw error;
 
-      // Filter for upcoming deliveries client-side
-      const deliveriesData = (allDeliveries || []).filter((d: any) => {
-        const deliveryDate = new Date(d.delivery_date);
+      // Filter for upcoming keepsakes client-side
+      const deliveriesData = (allKeepsakes || []).filter((k: any) => {
+        const deliveryDate = new Date(k.delivery_date);
         return deliveryDate >= now && deliveryDate <= thirtyDays;
-      }).slice(0, 10);
+      }).map((k: any) => ({
+        id: k.id,
+        title: k.title,
+        delivery_date: k.delivery_date,
+        status: k.status || 'scheduled'
+      })).slice(0, 10);
       
       setRecentDeliveries(deliveriesData || []);
       

@@ -1230,6 +1230,51 @@ export type Database = {
         Args: { p_action_type: string; p_metadata?: Json; p_user_id: string }
         Returns: Json
       }
+      admin_get_deliveries: {
+        Args: { p_limit?: number; p_offset?: number }
+        Returns: {
+          created_at: string
+          delivery_date: string
+          description: string
+          digital_file_url: string
+          id: string
+          keepsake_id: string
+          location: string
+          payment_status: string
+          recipient_id: string
+          status: string
+          title: string
+          type: string
+          updated_at: string
+          user_id: string
+        }[]
+      }
+      admin_get_keepsakes: {
+        Args: { p_limit?: number; p_offset?: number }
+        Returns: {
+          created_at: string
+          delivery_date: string
+          id: string
+          is_public: boolean
+          message: string
+          message_content: string
+          message_type: string
+          payment_status: string
+          sent_at: string
+          status: string
+          title: string
+          total_cost: number
+          type: string
+          updated_at: string
+          user_id: string
+        }[]
+      }
+      admin_get_messages_count: {
+        Args: never
+        Returns: {
+          total_messages: number
+        }[]
+      }
       calculate_level:
         | { Args: never; Returns: number }
         | { Args: { points: number }; Returns: number }
