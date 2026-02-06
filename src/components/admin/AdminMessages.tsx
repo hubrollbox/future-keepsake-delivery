@@ -27,14 +27,14 @@ const AdminMessages = () => {
 
   const fetchMessages = useCallback(async () => {
     try {
-      // Use RPC function admin_get_deliveries to bypass RLS and get all deliveries
+      // Use RPC function admin_get_keepsakes to bypass RLS and get all keepsakes
       const { data, error } = await supabase
-        .rpc("admin_get_deliveries", { p_limit: 1000, p_offset: 0 });
+        .rpc("admin_get_keepsakes", { p_limit: 1000, p_offset: 0 });
 
       if (error) {
         console.error("RPC Error:", error);
         toast({
-          title: "Erro ao carregar entregas",
+          title: "Erro ao carregar keepsakes",
           description: error.message || "Não foi possível carregar as mensagens.",
           variant: "destructive",
         });
@@ -42,14 +42,14 @@ const AdminMessages = () => {
         return;
       }
 
-      const mappedData = (data || []).map((delivery: any) => ({
-        id: delivery.id,
-        title: delivery.title,
-        content: delivery.description || "",
-        delivery_date: delivery.delivery_date,
-        status: delivery.status,
-        created_at: delivery.created_at,
-        user_id: delivery.user_id
+      const mappedData = (data || []).map((keepsake: any) => ({
+        id: keepsake.id,
+        title: keepsake.title,
+        content: keepsake.message || keepsake.message_content || "",
+        delivery_date: keepsake.delivery_date,
+        status: keepsake.status || 'scheduled',
+        created_at: keepsake.created_at,
+        user_id: keepsake.user_id
       }));
       
       setMessages(mappedData);

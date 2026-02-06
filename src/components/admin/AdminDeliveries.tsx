@@ -44,12 +44,33 @@ const AdminDeliveries = () => {
 
   const fetchDeliveries = useCallback(async () => {
     try {
-      // Use RPC function admin_get_deliveries to bypass RLS
+      // Use RPC function admin_get_keepsakes to bypass RLS and get all keepsakes
       const { data, error } = await supabase
-        .rpc("admin_get_deliveries", { p_limit: 1000, p_offset: 0 });
+        .rpc("admin_get_keepsakes", { p_limit: 1000, p_offset: 0 });
 
       if (error) throw error;
-      setDeliveries(data || []);
+      
+      // Map keepsakes to delivery format for compatibility
+      const mappedData = (data || []).map((k: any) => ({
+        id: k.id,
+        title: k.title,
+        description: k.message || k.message_content || null,
+        type: k.type,
+        delivery_date: k.delivery_date,
+        status: k.status || 'scheduled',
+        created_at: k.created_at,
+        user_id: k.user_id,
+        keepsake_id: k.id,
+        keepsake_product_id: null,
+        warehouse_item_id: null,
+        recipient_id: null,
+        digital_file_url: null,
+        location: null,
+        payment_status: k.payment_status,
+        updated_at: k.updated_at
+      }));
+      
+      setDeliveries(mappedData);
     } catch (error) {
       console.error("Error fetching deliveries:", error);
       toast({
