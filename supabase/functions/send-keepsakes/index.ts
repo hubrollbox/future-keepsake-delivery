@@ -211,6 +211,7 @@ async function processKeepsakes() {
     
     // Buscar keepsakes digitais agendadas para hoje ou datas passadas com limite
     // Usando status 'pending' conforme especificado na função SQL
+    // Buscar keepsakes primeiro
     const { data: keepsakes, error: keepsakeError } = await supabase
       .from('keepsakes')
       .select(`
@@ -220,13 +221,7 @@ async function processKeepsakes() {
           name,
           email,
           delivery_channel,
-          contact_info,
           relationship
-        ),
-        profiles (
-          id,
-          email,
-          full_name
         )
       `)
       .eq('status', 'pending')
@@ -237,6 +232,25 @@ async function processKeepsakes() {
     
     if (keepsakeError) {
       throw new Error(`Erro ao buscar keepsakes: ${keepsakeError.message}`)
+    }
+    
+    // Buscar perfis dos remetentes separadamente
+    if (keepsakes && keepsakes.length > 0) {
+      const userIds = [...new Set(keepsakes.map(k => k.user_id))]
+      const { data: profiles, error: profilesError } = await supabase
+        .from('profiles')
+        .select('id, email, full_name')
+        .in('id', userIds)
+      
+      if (profilesError) {
+        logWithContext('warn', 'Erro ao buscar perfis', { error: profilesError.message })
+      }
+      
+      // Mapear perfis para keepsakes
+      const profilesMap = new Map(profiles?.map(p => [p.id, p]) || [])
+      keepsakes.forEach(k => {
+        (k as any).profiles = profilesMap.get(k.user_id) || null
+      })
     }
     
     if (!keepsakes || keepsakes.length === 0) {
