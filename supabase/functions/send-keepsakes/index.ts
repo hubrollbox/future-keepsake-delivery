@@ -176,7 +176,7 @@ async function sendEmailWithRetry(
   
   try {
     const result = await resend.emails.send({
-      from: `${fromName} <noreply@futurodopresente.com>`,
+      from: `${fromName} <noreply@keepla.pt>`,
       to: [to],
       subject: subject,
       html: htmlContent,
