@@ -536,6 +536,42 @@ export type Database = {
           },
         ]
       }
+      payment_history: {
+        Row: {
+          amount: number
+          created_at: string
+          currency: string
+          id: string
+          paid_at: string | null
+          status: string
+          stripe_invoice_id: string
+          stripe_subscription_id: string | null
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          currency?: string
+          id?: string
+          paid_at?: string | null
+          status: string
+          stripe_invoice_id: string
+          stripe_subscription_id?: string | null
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          currency?: string
+          id?: string
+          paid_at?: string | null
+          status?: string
+          stripe_invoice_id?: string
+          stripe_subscription_id?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       payments: {
         Row: {
           amount: number
@@ -748,6 +784,9 @@ export type Database = {
           id: string
           level: number | null
           plan_id: string | null
+          stripe_customer_id: string | null
+          subscription_plan: string | null
+          subscription_status: string | null
           total_points: number | null
           updated_at: string | null
         }
@@ -760,6 +799,9 @@ export type Database = {
           id: string
           level?: number | null
           plan_id?: string | null
+          stripe_customer_id?: string | null
+          subscription_plan?: string | null
+          subscription_status?: string | null
           total_points?: number | null
           updated_at?: string | null
         }
@@ -772,6 +814,9 @@ export type Database = {
           id?: string
           level?: number | null
           plan_id?: string | null
+          stripe_customer_id?: string | null
+          subscription_plan?: string | null
+          subscription_status?: string | null
           total_points?: number | null
           updated_at?: string | null
         }
@@ -1159,6 +1204,48 @@ export type Database = {
           milestones?: Json | null
           total_points?: number | null
           updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_subscriptions: {
+        Row: {
+          canceled_at: string | null
+          created_at: string
+          current_period_end: string | null
+          current_period_start: string | null
+          id: string
+          plan_type: string
+          status: string
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          canceled_at?: string | null
+          created_at?: string
+          current_period_end?: string | null
+          current_period_start?: string | null
+          id?: string
+          plan_type?: string
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          canceled_at?: string | null
+          created_at?: string
+          current_period_end?: string | null
+          current_period_start?: string | null
+          id?: string
+          plan_type?: string
+          status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          updated_at?: string
           user_id?: string
         }
         Relationships: []

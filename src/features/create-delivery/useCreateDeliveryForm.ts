@@ -104,9 +104,15 @@ export const useCreateDeliveryForm = () => {
       setError("");
 
       const uploadFile = async (file: File) => {
+        // User-scoped path required by RLS policy (storage.foldername(name))[1] = auth.uid()
+        const { data: { user: currentUser } } = await supabase.auth.getUser();
+        if (!currentUser) {
+          throw new Error('Utilizador não autenticado para upload de ficheiros.');
+        }
+        const filePath = `${currentUser.id}/${Date.now()}-${file.name}`;
         const { data, error } = await supabase.storage
           .from("digital-files")
-          .upload(`${Date.now()}-${file.name}`, file);
+          .upload(filePath, file);
         if (error) {
           throw new Error(`Erro ao fazer upload do ficheiro digital: ${error.message}`);
         }
