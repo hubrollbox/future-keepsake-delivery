@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast';
 import { AuthContext, UserProfile } from './useAuthContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { isProtectedRoute, isAdminRoute } from '@/middleware/security';
+import { logger } from '@/utils/logger';
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -24,7 +25,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (isProtectedRoute(pathname) && !session) {
       // Redirect to login page if not loading (to prevent redirect during initial auth check)
       if (!loading) {
-        console.info('Security: Redirecting unauthenticated user from protected route', pathname);
+        logger.info('Security: Redirecting unauthenticated user from protected route');
         navigate('/login', { state: { from: pathname } });
       }
     }
@@ -33,7 +34,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (isAdminRoute(pathname) && !isAdmin) {
       // Redirect to unauthorized page if not loading
       if (!loading) {
-        console.info('Security: Redirecting non-admin user from admin route', pathname);
+        logger.info('Security: Redirecting non-admin user from admin route');
         navigate('/unauthorized');
       }
     }
@@ -41,7 +42,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const fetchProfile = async (userId: string) => {
     try {
-      console.log('🔍 [AuthContext] fetchProfile: Starting for user:', userId);
+      logger.debug('fetchProfile: Starting');
       
       const { data: profileData, error: profileError } = await supabase
         .from('profiles')
@@ -49,11 +50,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .eq('id', userId)
         .single();
 
-      console.log('DEBUG: profileData', profileData);
-      console.log('DEBUG: profileError', JSON.stringify(profileError, null, 2));
+      logger.debug('Profile data received');
+      logger.debug('Profile error', profileError ? { code: profileError.code } : undefined);
 
       if (profileError) {
-        console.error('❌ [AuthContext] Error fetching profile:', profileError.message, JSON.stringify(profileError, null, 2));
+        logger.error('Error fetching profile', profileError);
         // Tentar fallback para dados básicos do auth.user
         const { data: { user: authUser } } = await supabase.auth.getUser();
         if (authUser) {
@@ -80,7 +81,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       }
 
-      console.log('📊 [AuthContext] fetchProfile: Profile data received:', profileData);
+      logger.debug('Profile data received');
 
       // If profileData is null, it means no profile was found or an error occurred that was handled above.
       // In this case, we should create a fallback profile.
@@ -118,10 +119,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .single();
 
       if (adminError && adminError.code !== 'PGRST116') { // PGRST116 means no rows found, which is fine for non-admins
-        console.warn('⚠️ [AuthContext] Warning fetching admin role:', adminError.message, adminError);
+        logger.warn('Warning fetching admin role', { code: adminError.code });
       }
 
-      console.log('👑 [AuthContext] fetchProfile: Admin data received:', adminData);
+      logger.debug('Admin status checked');
 
       const userProfile = {
         ...profileData,
@@ -129,11 +130,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         role: adminData?.role || null
       };
 
-      console.log('✅ [AuthContext] fetchProfile: Final profile set:', userProfile);
+      logger.debug('Profile set successfully');
       setProfile(userProfile);
       setIsAdmin(adminData?.role === 'admin');
     } catch (error: unknown) {
-      console.error('❌ [AuthContext] Error in fetchProfile:', JSON.stringify(error, null, 2));
+      logger.error('Error in fetchProfile', error);
       
       // Create fallback profile even on error to avoid infinite loading
       const { data: { user: authUser } } = await supabase.auth.getUser();
@@ -161,44 +162,44 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const refreshProfile = async () => {
     if (user?.id) {
-      console.log('🔄 [AuthContext] refreshProfile: Starting for user:', user.id);
+      logger.debug('refreshProfile: Starting');
       await fetchProfile(user.id);
     }
   };
 
   useEffect(() => {
-    console.log('🚀 [AuthContext] AuthProvider: Initializing...');
+    logger.debug('AuthProvider initializing');
     
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, currentSession) => {
-        console.log('🔐 [AuthContext] onAuthStateChange: Event:', event, 'User ID:', currentSession?.user?.id);
+        logger.debug('Auth state changed', { event });
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
         
         if (currentSession?.user && currentSession.user.id) {
-          console.log('⏳ [AuthContext] Fetching profile for user:', currentSession.user.id);
+          logger.debug('Fetching profile for authenticated user');
           fetchProfile(currentSession.user.id);
         } else {
-          console.log('👤 [AuthContext] onAuthStateChange: No user, clearing profile...');
+          logger.debug('No user, clearing profile');
           setProfile(null);
           setIsAdmin(false);
         }
 
         setLoading(false);
-        console.log('✅ [AuthContext] onAuthStateChange: Loading set to false. User:', !!(currentSession?.user));
+        logger.debug('Auth state change processed');
       }
     );
 
     // THEN check for existing session
     const checkSessionAndFetchProfile = async () => {
-      console.log('🔍 [AuthContext] getSession: Checking existing session...');
+      logger.debug('Checking existing session');
       const { data: { session: existingSession } } = await supabase.auth.getSession();
       setSession(existingSession);
       setUser(existingSession?.user ?? null);
       
       if (existingSession?.user && existingSession.user.id) {
-        console.log('👤 [AuthContext] getSession: Existing user found, scheduling profile fetch...');
+        logger.debug('Existing user found, scheduling profile fetch');
         setTimeout(() => {
           fetchProfile(existingSession.user.id);
         }, 0);
@@ -206,14 +207,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setProfile(null);
         setIsAdmin(false);
       }
-      console.log('✅ [AuthContext] getSession: Initial check complete. User:', !!(existingSession?.user), 'Profile will be set by fetchProfile');
+      logger.debug('Initial session check complete');
       setLoading(false); // Set loading to false after scheduling profile fetch
     };
 
     checkSessionAndFetchProfile();
 
     return () => {
-      console.log('🧹 [AuthContext] Cleanup: Cleaning up auth subscription');
+      logger.debug('Cleaning up auth subscription');
       subscription.unsubscribe();
     };
   }, []); // Empty dependency array to avoid infinite loops
@@ -221,7 +222,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signIn = async (email: string, password: string): Promise<{ error: unknown }> => {
     try {
       setLoading(true);
-      console.log('🔑 [AuthContext] signIn: Attempting sign-in for email:', email);
+      logger.debug('Attempting sign-in');
       
       // Validate input
       if (!email || !password) {
@@ -238,7 +239,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const { error } = await supabase.auth.signInWithPassword({ email, password });
 
       if (error) {
-        console.error('❌ [AuthContext] signIn: Supabase sign-in error:', error.message);
+        logger.error('Sign-in error', error);
         toast({
           title: 'Erro de Autenticação',
           description: error.message || 'Ocorreu um erro ao tentar fazer login.',
@@ -248,14 +249,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { error };
       }
 
-      console.log('✅ [AuthContext] signIn: Sign-in successful.');
+      logger.debug('Sign-in successful');
       toast({
         title: 'Login bem-sucedido',
         description: 'Você foi logado com sucesso!',
       });
       return { error: null };
     } catch (error) {
-      console.error('❌ [AuthContext] signIn: Unexpected error during sign-in:', error);
+      logger.error('Unexpected sign-in error', error);
       toast({
         title: 'Erro Inesperado',
         description: 'Ocorreu um erro inesperado ao tentar fazer login.',
@@ -270,11 +271,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signOut = async () => {
     try {
       setLoading(true);
-      console.log('🚪 [AuthContext] signOut: Attempting sign-out...');
+      logger.debug('Attempting sign-out');
       const { error } = await supabase.auth.signOut();
 
       if (error) {
-        console.error('❌ [AuthContext] signOut: Supabase sign-out error:', error.message);
+        logger.error('Sign-out error', error);
         toast({
           title: 'Erro ao Sair',
           description: error.message || 'Ocorreu um erro ao tentar sair.',
@@ -283,7 +284,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return;
       }
 
-      console.log('✅ [AuthContext] signOut: Sign-out successful.');
+      logger.debug('Sign-out successful');
       setUser(null);
       setSession(null);
       setProfile(null);
@@ -293,7 +294,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         description: 'Você foi desconectado com sucesso!',
       });
     } catch (error) {
-      console.error('❌ [AuthContext] signOut: Unexpected error during sign-out:', error);
+      logger.error('Unexpected sign-out error', error);
       toast({
         title: 'Erro Inesperado',
         description: 'Ocorreu um erro inesperado ao tentar sair.',
@@ -307,7 +308,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signUp = async (email: string, password: string): Promise<{ error: unknown }> => {
     try {
       setLoading(true);
-      console.log('📝 [AuthContext] signUp: Attempting sign-up for email:', email);
+      logger.debug('Attempting sign-up');
       
       // Validate input
       if (!email || !password) {
@@ -321,10 +322,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { error };
       }
 
-      const { data, error } = await supabase.auth.signUp({ email, password });
+      const { error } = await supabase.auth.signUp({ email, password });
 
       if (error) {
-        console.error('❌ [AuthContext] signUp: Supabase sign-up error:', error.message);
+        logger.error('Sign-up error', error);
         toast({
           title: 'Erro de Registro',
           description: error.message || 'Ocorreu um erro ao tentar registrar.',
@@ -334,14 +335,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { error };
       }
 
-      console.log('✅ [AuthContext] signUp: Sign-up successful. User:', data.user?.id);
+      logger.debug('Sign-up successful');
       toast({
         title: 'Registro bem-sucedido',
         description: 'Verifique seu e-mail para confirmar sua conta.',
       });
       return { error: null };
     } catch (error) {
-      console.error('❌ [AuthContext] signUp: Unexpected error during sign-up:', error);
+      logger.error('Unexpected sign-up error', error);
       toast({
         title: 'Erro Inesperado',
         description: 'Ocorreu um erro inesperado ao tentar registrar.',
@@ -356,7 +357,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const sendPasswordResetEmail = async (email: string) => {
     try {
       setLoading(true);
-      console.log('📧 [AuthContext] sendPasswordResetEmail: Attempting to send reset email to:', email);
+      logger.debug('Attempting to send reset email');
       
       if (!email) {
         toast({
@@ -373,7 +374,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       if (error) {
-        console.error('❌ [AuthContext] sendPasswordResetEmail: Supabase error:', error.message);
+        logger.error('Password reset error', error);
         toast({
           title: 'Erro ao Redefinir Senha',
           description: error.message || 'Ocorreu um erro ao tentar enviar o e-mail de redefinição.',
@@ -382,13 +383,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return;
       }
 
-      console.log('✅ [AuthContext] sendPasswordResetEmail: Password reset email sent successfully.');
+      logger.debug('Password reset email sent');
       toast({
         title: 'E-mail Enviado',
         description: 'Verifique seu e-mail para redefinir sua senha.',
       });
     } catch (error) {
-      console.error('❌ [AuthContext] sendPasswordResetEmail: Unexpected error:', error);
+      logger.error('Unexpected password reset error', error);
       toast({
         title: 'Erro Inesperado',
         description: 'Ocorreu um erro inesperado ao tentar enviar o e-mail de redefinição.',
@@ -402,7 +403,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const updatePassword = async (password: string) => {
     try {
       setLoading(true);
-      console.log('🔑 [AuthContext] updatePassword: Attempting to update password...');
+      logger.debug('Attempting to update password');
       
       if (!password) {
         toast({
@@ -417,7 +418,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const { error } = await supabase.auth.updateUser({ password });
 
       if (error) {
-        console.error('❌ [AuthContext] updatePassword: Supabase error:', error.message);
+        logger.error('Password update error', error);
         toast({
           title: 'Erro ao Atualizar Senha',
           description: error.message || 'Ocorreu um erro ao tentar atualizar sua senha.',
@@ -426,13 +427,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return;
       }
 
-      console.log('✅ [AuthContext] updatePassword: Password updated successfully.');
+      logger.debug('Password updated successfully');
       toast({
         title: 'Senha Atualizada',
         description: 'Sua senha foi atualizada com sucesso!',
       });
     } catch (error) {
-      console.error('❌ [AuthContext] updatePassword: Unexpected error:', error);
+      logger.error('Unexpected password update error', error);
       toast({
         title: 'Erro Inesperado',
         description: 'Ocorreu um erro inesperado ao tentar atualizar sua senha.',
