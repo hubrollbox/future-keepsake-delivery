@@ -17,23 +17,22 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="home-hero relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background image visível com filtro ligeiro - responsive mobile fix */}
+    <section className="home-hero relative min-h-[100svh] flex items-center justify-center overflow-hidden">
+      {/* Background image visível com filtro ligeiro */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
         <img 
           src={heroImage} 
           alt="Mãos a segurar uma carta – memória Keepla" 
-          className="absolute top-0 left-0 w-full h-full object-cover object-center opacity-90 contrast-110 brightness-95"
-          style={{ minWidth: '100%', minHeight: '100%', width: '100%', height: '100%' }}
+          className="absolute inset-0 w-full h-full object-cover object-center opacity-90 contrast-110 brightness-95"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/25"></div>
       </div>
 
-      <div className="container mx-auto px-4 text-center relative z-10">
+      <div className="container mx-auto px-5 sm:px-6 text-center relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Logo Keepla oficial */}
           <motion.div 
-            className="mb-8 mt-16"
+            className="mb-6 sm:mb-8 mt-12 sm:mt-16"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
@@ -41,16 +40,16 @@ const HeroSection = () => {
             <img 
                src="/keepla-logo-white.png?v=3" 
                alt="Keepla" 
-               className="mx-auto w-28 h-28 object-contain"
+               className="mx-auto w-20 h-20 sm:w-28 sm:h-28 object-contain"
                loading="eager"
                decoding="async"
                onError={(e) => { e.currentTarget.src = '/keepla-logo-white.png'; }}
             />
           </motion.div>
 
-          {/* Main headline - Inter Bold */}
+          {/* Main headline */}
           <motion.h1 
-            className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight font-inter"
+            className="text-3xl sm:text-5xl md:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight tracking-tight font-inter"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
@@ -59,9 +58,9 @@ const HeroSection = () => {
             <span className="block text-primary font-georgia italic">Futuro</span>
           </motion.h1>
 
-          {/* Subtitle - Georgia Emotivo */}
+          {/* Subtitle */}
           <motion.p 
-            className="hero-subtitle text-white drop-shadow-md mb-8 mx-auto font-medium"
+            className="text-base sm:text-lg md:text-xl text-white drop-shadow-md mb-6 sm:mb-8 mx-auto font-medium max-w-xl md:max-w-2xl leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
@@ -69,9 +68,9 @@ const HeroSection = () => {
             Cria cápsulas do tempo que guardam as tuas palavras, emoções e memórias para serem entregues no momento perfeito.
           </motion.p>
 
-          {/* Value proposition - Georgia Slogan */}
+          {/* Value proposition */}
           <motion.div 
-            className="mb-12 text-lg max-w-3xl mx-auto"
+            className="mb-8 sm:mb-12 text-sm sm:text-lg max-w-xl md:max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
@@ -81,9 +80,9 @@ const HeroSection = () => {
             </p>
           </motion.div>
 
-          {/* CTA Buttons - Identidade Keepla */}
+          {/* CTA Buttons */}
           <motion.div 
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-10 sm:mb-16 px-2"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
@@ -91,23 +90,23 @@ const HeroSection = () => {
             <Button 
               onClick={handleStartJourney}
               size="lg" 
-              className="cta text-lg px-8 py-6 bg-keepla-red hover:bg-keepla-red/90 text-keepla-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-lg font-semibold"
+              className="cta w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 bg-keepla-red hover:bg-keepla-red/90 text-keepla-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-lg font-semibold"
             >
               {user ? "Ir para Dashboard" : "Começar a minha jornada"}
             </Button>
             <Button 
               variant="outline" 
               size="lg" 
-              className="text-lg px-8 py-6 border-2 border-keepla-white text-keepla-white bg-transparent hover:bg-keepla-white/20 hover:text-keepla-white transition-all duration-300 rounded-lg font-semibold"
+              className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 border-2 border-keepla-white text-keepla-white bg-transparent hover:bg-keepla-white/20 hover:text-keepla-white transition-all duration-300 rounded-lg font-semibold"
               onClick={() => navigate("/how-it-works")}
             >
               Como funciona
             </Button>
           </motion.div>
 
-          {/* Social proof - Minimalista */}
+          {/* Social proof */}
           <motion.div 
-            className="flex flex-wrap justify-center items-center gap-8 text-sm text-white"
+            className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-3 sm:gap-8 text-xs sm:text-sm text-white"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
@@ -128,7 +127,7 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Scroll indicator - Keepla Red */}
+      {/* Scroll indicator */}
       <motion.div 
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce"
         initial={{ opacity: 0 }}

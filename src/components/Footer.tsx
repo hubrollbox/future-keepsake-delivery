@@ -5,24 +5,24 @@ const Footer = () => {
   const navigate = useNavigate();
 
   return (
-    <footer className="bg-keepla-black text-white py-16">
-      <div className="container mx-auto px-4">
+    <footer className="bg-keepla-black text-white py-10 sm:py-16">
+      <div className="container mx-auto px-5 sm:px-6">
         <div className="max-w-6xl mx-auto">
           {/* Main Footer Content */}
-          <div className="grid md:grid-cols-4 gap-8 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-8 sm:mb-12">
             {/* Brand Section */}
-            <div className="md:col-span-2">
+            <div className="col-span-2">
               <div className="flex items-center justify-start mb-6">
                 <img 
-                  src="/keepla-logo-white.png?v=3" 
-                  alt="Logo Monocromático" 
-                  style={{width: 120, height: 120}} 
-                  loading="eager" 
+                   src="/keepla-logo-white.png?v=3" 
+                   alt="Logo Monocromático" 
+                   className="w-20 h-20 sm:w-[120px] sm:h-[120px]"
+                   loading="eager" 
                   decoding="async"
                   onError={(e) => { e.currentTarget.src = '/lovable-uploads/a58d6383-77f7-451e-b692-d10c4298397e.png'; }}
                 />
               </div>
-              <p className="text-gray-400 leading-relaxed mb-6 max-w-md text-center md:text-left font-georgia italic">
+              <p className="text-gray-400 leading-relaxed mb-4 sm:mb-6 max-w-md text-sm sm:text-base text-center md:text-left font-georgia italic">
                 Guardamos emoções para o tempo certo. Cada entrega é uma ponte entre o presente e o futuro, 
                 criada com sensibilidade e amor.
               </p>

@@ -45,7 +45,7 @@ const TestimonialsSection = () => {
   };
 
   return (
-    <section className="py-20 md:py-28 bg-white/80 backdrop-blur-sm relative overflow-hidden">
+    <section className="py-12 sm:py-20 md:py-28 bg-white/80 backdrop-blur-sm relative overflow-hidden">
       {/* Background com imagem - mobile fix */}
       <div className="absolute inset-0 opacity-5 overflow-hidden">
         <img 
@@ -66,17 +66,17 @@ const TestimonialsSection = () => {
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
             <p className="section-tagline">O que dizem de nós</p>
-            <h2 className="text-4xl md:text-5xl font-inter font-bold text-foreground mb-6">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-inter font-bold text-foreground mb-4 sm:mb-6">
               Primeiros <span className="text-primary">Guardiões do Tempo</span>
             </h2>
-            <p className="hero-subtitle text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Os nossos primeiros utilizadores já estão a criar memórias especiais. 
               Estas são algumas das suas experiências.
             </p>
           </motion.div>
 
           <motion.div 
-            className="grid md:grid-cols-3 gap-8"
+            className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -84,7 +84,7 @@ const TestimonialsSection = () => {
           >
             {testimonials.map((testimonial, index) => (
               <motion.div key={index} variants={itemVariants}>
-                <Card className="bg-card border border-border rounded-2xl p-8 hover:shadow-keepla hover:scale-105 transition-all duration-300 group h-full">
+                <Card className="bg-card border border-border rounded-2xl p-5 sm:p-8 hover:shadow-keepla hover:scale-[1.02] sm:hover:scale-105 transition-all duration-300 group h-full">
                   <CardContent className="p-0 flex flex-col h-full">
                     <div className="flex justify-center mb-6">
                       <Quote className="h-8 w-8 text-primary" />

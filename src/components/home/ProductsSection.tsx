@@ -56,21 +56,21 @@ const ProductsSection = () => {
   };
 
   return (
-    <section className="py-20 md:py-28 bg-muted">
-      <div className="container mx-auto px-4">
+    <section className="py-12 sm:py-20 md:py-28 bg-muted">
+      <div className="container mx-auto px-5 sm:px-6">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-10 sm:mb-16"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <h2 className="text-4xl md:text-5xl font-inter font-bold text-foreground mb-6">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-inter font-bold text-foreground mb-4 sm:mb-6">
               Os Nossos <span className="text-primary">Presentes com Alma</span>
             </h2>
-            <p className="hero-subtitle text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Cada produto foi pensado para criar momentos únicos e inesquecíveis. 
               Escolhe a forma perfeita de enviar o teu amor através do tempo.
             </p>
@@ -78,7 +78,7 @@ const ProductsSection = () => {
 
           {/* Products Grid */}
           <motion.div 
-            className="grid lg:grid-cols-3 gap-8 mb-16"
+            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-10 sm:mb-16"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -87,11 +87,11 @@ const ProductsSection = () => {
             {products.map((product, index) => (
               <motion.div 
                 key={index} 
-                className={`bg-card border rounded-2xl p-8 h-full flex flex-col relative ${
+                className={`bg-card border rounded-2xl p-5 sm:p-8 h-full flex flex-col relative ${
                   product.highlight 
-                    ? 'border-2 border-primary shadow-keepla scale-105' 
+                    ? 'border-2 border-primary shadow-keepla sm:scale-105' 
                     : 'border-border'
-                } hover:shadow-keepla hover:scale-105 transition-all duration-300 group`}
+                } hover:shadow-keepla hover:scale-[1.02] sm:hover:scale-105 transition-all duration-300 group`}
                 variants={itemVariants}
               >
                 {product.highlight && (

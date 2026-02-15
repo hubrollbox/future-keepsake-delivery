@@ -13,7 +13,7 @@ const FinalCTA = () => {
   };
 
   return (
-    <section className="relative py-20 md:py-32 overflow-hidden" aria-label="Convite final para criar conta no keepla">
+    <section className="relative py-14 sm:py-20 md:py-32 overflow-hidden" aria-label="Convite final para criar conta no keepla">
       {/* Background fotográfico - mobile fix com foco nos noivos */}
       <div className="absolute inset-0 overflow-hidden">
         <img 
@@ -26,7 +26,7 @@ const FinalCTA = () => {
         <div className="absolute inset-0 bg-black/60" />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-5 sm:px-6 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div 
             className="flex justify-center mb-8"
@@ -48,7 +48,7 @@ const FinalCTA = () => {
           </motion.div>
           
           <motion.h2 
-            className="text-4xl sm:text-5xl md:text-6xl font-inter font-bold mb-4 leading-tight text-white"
+            className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-inter font-bold mb-4 leading-tight text-white"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -61,7 +61,7 @@ const FinalCTA = () => {
           </motion.h2>
           
           <motion.p 
-            className="text-xl md:text-2xl font-georgia italic text-white/80 mb-6"
+            className="text-base sm:text-xl md:text-2xl font-georgia italic text-white/80 mb-4 sm:mb-6"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -71,7 +71,7 @@ const FinalCTA = () => {
           </motion.p>
           
           <motion.p 
-            className="text-lg text-white/70 mb-10 mx-auto max-w-2xl"
+            className="text-sm sm:text-lg text-white/70 mb-8 sm:mb-10 mx-auto max-w-2xl leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -82,7 +82,7 @@ const FinalCTA = () => {
           </motion.p>
           
           <motion.div 
-            className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mb-8 sm:mb-12 px-2"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -90,7 +90,7 @@ const FinalCTA = () => {
           >
             <Button 
               size="lg" 
-              className="cta px-8 py-6 text-lg group bg-primary hover:bg-primary/90 text-primary-foreground font-inter font-semibold shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-200"
+              className="cta w-full sm:w-auto px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg group bg-primary hover:bg-primary/90 text-primary-foreground font-inter font-semibold shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-200"
               onClick={() => handleNavigation('/register')}
               aria-label="Criar conta gratuitamente"
             >
@@ -101,7 +101,7 @@ const FinalCTA = () => {
             <Button 
               variant="outline" 
               size="lg" 
-              className="px-8 py-6 text-lg bg-transparent border-2 border-white text-white hover:bg-white/10 font-inter font-semibold transition-all duration-200"
+              className="w-full sm:w-auto px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg bg-transparent border-2 border-white text-white hover:bg-white/10 font-inter font-semibold transition-all duration-200"
               onClick={() => handleNavigation('/contact')}
               aria-label="Falar com o suporte da keepla"
             >
@@ -110,7 +110,7 @@ const FinalCTA = () => {
           </motion.div>
           
           <motion.div 
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center text-white/70"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-6 justify-center items-center text-white/70 text-xs sm:text-base"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-100px" }}
