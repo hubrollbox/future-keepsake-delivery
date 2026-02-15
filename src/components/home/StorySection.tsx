@@ -25,33 +25,32 @@ const StorySection = () => {
   };
 
   return (
-    <section className="py-20 md:py-28 bg-white/80 backdrop-blur-sm relative overflow-hidden">
+    <section className="py-12 sm:py-20 md:py-28 bg-white/80 backdrop-blur-sm relative overflow-hidden">
       {/* Background decorativo - mobile fix */}
       <div className="absolute inset-0 opacity-5 overflow-hidden">
         <img 
           src={ruaPalacioImage} 
           alt="" 
-          className="absolute top-0 left-0 w-full h-full object-cover grayscale"
-          style={{ minWidth: '100%', minHeight: '100%', width: '100%', height: '100%' }}
+          className="absolute inset-0 w-full h-full object-cover grayscale"
         />
       </div>
       
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-5 sm:px-6 relative z-10">
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-10 sm:mb-16"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
             <p className="section-tagline">A nossa filosofia</p>
-            <h2 className="text-4xl md:text-5xl font-inter font-bold text-foreground mb-6">
-              Porque Há Coisas Que Só Fazem Sentido<br />
-              <span className="text-primary">No Momento Certo</span>
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-inter font-bold text-foreground mb-4 sm:mb-6">
+              Porque Há Coisas Que Só Fazem Sentido<br className="hidden sm:block" />
+              <span className="text-primary"> No Momento Certo</span>
             </h2>
-            <p className="hero-subtitle text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Vivemos num mundo acelerado, onde tudo é imediato — mas há palavras que precisam de amadurecer, 
               de esperar pelo momento perfeito para florescer.
             </p>
@@ -59,14 +58,14 @@ const StorySection = () => {
 
           {/* Story Cards */}
           <motion.div 
-            className="grid md:grid-cols-3 gap-8 mb-16"
+            className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-10 sm:mb-16"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
             <motion.div 
-              className="bg-card border border-border rounded-2xl p-8 text-center group hover:shadow-keepla hover:scale-105 transition-all duration-300"
+              className="bg-card border border-border rounded-2xl p-5 sm:p-8 text-center group hover:shadow-keepla hover:scale-[1.02] sm:hover:scale-105 transition-all duration-300"
               variants={itemVariants}
             >
               <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/20 transition-colors">
@@ -79,7 +78,7 @@ const StorySection = () => {
             </motion.div>
 
             <motion.div 
-              className="bg-card border border-border rounded-2xl p-8 text-center group hover:shadow-keepla hover:scale-105 transition-all duration-300"
+              className="bg-card border border-border rounded-2xl p-5 sm:p-8 text-center group hover:shadow-keepla hover:scale-[1.02] sm:hover:scale-105 transition-all duration-300"
               variants={itemVariants}
             >
               <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/20 transition-colors">
@@ -92,7 +91,7 @@ const StorySection = () => {
             </motion.div>
 
             <motion.div 
-              className="bg-card border border-border rounded-2xl p-8 text-center group hover:shadow-keepla hover:scale-105 transition-all duration-300"
+              className="bg-card border border-border rounded-2xl p-5 sm:p-8 text-center group hover:shadow-keepla hover:scale-[1.02] sm:hover:scale-105 transition-all duration-300 sm:col-span-2 md:col-span-1"
               variants={itemVariants}
             >
               <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/20 transition-colors">
