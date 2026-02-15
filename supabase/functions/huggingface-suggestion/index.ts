@@ -1,6 +1,7 @@
 /// <reference path="../_shared/types.ts" />
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { getCorsHeaders } from '../_shared/cors.ts';
 
 // Startup secret validation
 const HUGGINGFACE_API_KEY = Deno.env.get('HUGGINGFACE_API_KEY');
@@ -15,11 +16,6 @@ if (!HUGGINGFACE_API_KEY || !SUPABASE_URL || !SUPABASE_ANON_KEY) {
       !SUPABASE_ANON_KEY && "SUPABASE_ANON_KEY",
     ].filter(Boolean).join(", ")}`
   );
-}
-
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
 interface HuggingFaceRequest {
@@ -56,14 +52,15 @@ function detectPromptInjection(message: string): boolean {
 }
 
 function sanitizeInput(message: string): string {
-  // Remove potentially dangerous characters
   return message
-    .replace(/[<>]/g, '') // Remove angle brackets
-    .replace(/[\x00-\x1F\x7F]/g, '') // Remove control characters
-    .substring(0, 500); // Limit length
+    .replace(/[<>]/g, '')
+    .replace(/[\x00-\x1F\x7F]/g, '')
+    .substring(0, 500);
 }
 
 serve(async (req) => {
+  const corsHeaders = getCorsHeaders(req.headers.get('origin') || undefined);
+
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
@@ -185,7 +182,6 @@ serve(async (req) => {
       const errorText = await huggingFaceResponse.text()
       console.error('Hugging Face API error:', errorText)
       
-      // Fallback para sugestões pré-definidas
       const fallbackSuggestion = getFallbackSuggestion(keywords)
       
       return new Response(
@@ -210,10 +206,8 @@ serve(async (req) => {
       suggestion = result.generated_text
     }
 
-    // Limpar e melhorar a sugestão
     suggestion = cleanAndEnhanceSuggestion(suggestion, contextPrompt)
 
-    // Registrar uso da API
     await supabaseClient
       .from('api_usage')
       .upsert({
@@ -236,6 +230,7 @@ serve(async (req) => {
     )
 
   } catch (error) {
+    const corsHeaders = getCorsHeaders(req.headers.get('origin') || undefined);
     console.error('Error in huggingface-suggestion function:', error)
     return new Response(
       JSON.stringify({ 
@@ -272,23 +267,17 @@ function createContextualPrompt(message: string, keywords: string[]): string {
 }
 
 function cleanAndEnhanceSuggestion(suggestion: string, originalPrompt: string): string {
-  // Remover o prompt original da resposta
   let cleaned = suggestion.replace(originalPrompt, '').trim()
-  
-  // Remover aspas desnecessárias
   cleaned = cleaned.replace(/^["']|["']$/g, '')
   
-  // Limitar tamanho
   if (cleaned.length > 300) {
     cleaned = cleaned.substring(0, 300).trim()
-    // Tentar terminar em uma frase completa
     const lastPeriod = cleaned.lastIndexOf('.')
     if (lastPeriod > 200) {
       cleaned = cleaned.substring(0, lastPeriod + 1)
     }
   }
   
-  // Se a sugestão estiver muito curta ou vazia, usar fallback
   if (cleaned.length < 20) {
     return 'Sua mensagem está perfeita! Considere adicionar mais detalhes sobre seus sentimentos e memórias especiais.'
   }
