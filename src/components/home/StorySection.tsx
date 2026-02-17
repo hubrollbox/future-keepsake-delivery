@@ -46,7 +46,7 @@ const StorySection = () => {
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
             <p className="section-tagline">A nossa filosofia</p>
-            <h2 className="text-2xl sm:text-4xl md:text-5xl font-inter font-bold text-foreground mb-4 sm:mb-6">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-display font-bold text-foreground mb-4 sm:mb-6">
               Porque Há Coisas Que Só Fazem Sentido<br className="hidden sm:block" />
               <span className="text-primary"> No Momento Certo</span>
             </h2>

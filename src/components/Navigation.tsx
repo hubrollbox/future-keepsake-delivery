@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { Menu, X, User, LogOut, Settings } from "lucide-react";
@@ -17,8 +17,22 @@ import { useToast } from "@/hooks/use-toast";
 const Navigation = () => {
   const { user, profile, signOut } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const { toast } = useToast();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isScrolled, setIsScrolled] = React.useState(false);
+
+  const isHome = location.pathname === "/";
+  const isTransparent = isHome && !isScrolled && !isMenuOpen;
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleSignOut = async () => {
     try {
@@ -47,18 +61,25 @@ const Navigation = () => {
   ];
 
   return (
-    <nav className="bg-keepla-white shadow-keepla-sm border-b border-keepla-gray sticky top-0 z-50">
+    <>
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isTransparent
+          ? "bg-transparent shadow-none border-b border-transparent"
+          : "bg-keepla-white shadow-keepla-sm border-b border-keepla-gray"
+      }`}
+    >
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <img 
-               src="/keepla-logo-red.png?v=3" 
-               alt="keepla Logo" 
-               className="w-16 h-16"
-               loading="eager"
-               decoding="async"
-               onError={(e) => { e.currentTarget.src = '/lovable-uploads/a58d6383-77f7-451e-b692-d10c4298397e.png'; }}
+              src={isTransparent ? "/keepla-logo-white.png?v=3" : "/keepla-logo-red.png?v=3"}
+              alt="keepla Logo" 
+              className="w-16 h-16 transition-opacity duration-300"
+              loading="eager"
+              decoding="async"
+              onError={(e) => { e.currentTarget.src = '/lovable-uploads/a58d6383-77f7-451e-b692-d10c4298397e.png'; }}
             />
           </Link>
 
@@ -68,7 +89,11 @@ const Navigation = () => {
               <Link
                 key={item.name}
                 to={item.href}
-                className="text-keepla-black hover:text-keepla-red transition-colors font-semibold"
+                className={`transition-colors font-semibold ${
+                  isTransparent
+                    ? "text-white hover:text-keepla-red"
+                    : "text-keepla-black hover:text-keepla-red"
+                }`}
               >
                 {item.name}
               </Link>
@@ -80,7 +105,9 @@ const Navigation = () => {
             <Button 
               variant="brand-outline" 
               onClick={() => navigate("/blog")}
-              className="hidden md:flex"
+              className={`hidden md:flex ${
+                isTransparent ? "border-white text-white hover:bg-white/10" : ""
+              }`}
             >
               Caderno
             </Button>
@@ -140,7 +167,7 @@ const Navigation = () => {
             <Button
               variant="ghost"
               size="sm"
-              className="md:hidden touch-target"
+              className={`md:hidden touch-target ${isTransparent ? "text-white hover:bg-white/10" : ""}`}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -150,13 +177,17 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-keepla-gray py-4">
+          <div className={`md:hidden border-t py-4 ${isTransparent ? "border-white/20 bg-black/80 -mx-4 px-4" : "border-keepla-gray"}`}>
             <div className="flex flex-col space-y-2">
               {menuItems.map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
-                  className="text-keepla-black hover:text-keepla-red transition-colors font-semibold px-4 py-3 touch-target rounded-md hover:bg-keepla-gray"
+                  className={`transition-colors font-semibold px-4 py-3 touch-target rounded-md ${
+                    isTransparent
+                      ? "text-white hover:text-keepla-red hover:bg-white/10"
+                      : "text-keepla-black hover:text-keepla-red hover:bg-keepla-gray"
+                  }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
@@ -164,7 +195,11 @@ const Navigation = () => {
               ))}
               <Link
                 to="/blog"
-                className="text-keepla-black hover:text-keepla-red transition-colors font-semibold px-4 py-3 touch-target rounded-md hover:bg-keepla-gray"
+                className={`transition-colors font-semibold px-4 py-3 touch-target rounded-md ${
+                  isTransparent
+                    ? "text-white hover:text-keepla-red hover:bg-white/10"
+                    : "text-keepla-black hover:text-keepla-red hover:bg-keepla-gray"
+                }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Caderno
@@ -174,6 +209,9 @@ const Navigation = () => {
         )}
       </div>
     </nav>
+    {/* Spacer for fixed nav on non-home pages */}
+    {!isHome && <div className="h-16" />}
+    </>
   );
 };
 

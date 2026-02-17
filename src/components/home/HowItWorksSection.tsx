@@ -70,7 +70,7 @@ const HowItWorksSection = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
-            <h2 className="text-2xl sm:text-4xl md:text-5xl font-inter font-bold text-foreground mb-4 sm:mb-6">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-display font-bold text-foreground mb-4 sm:mb-6">
               Como <span className="text-primary">Funciona</span>
             </h2>
             <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
