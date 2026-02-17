@@ -50,13 +50,13 @@ const HeroSection = () => {
 
           {/* Main headline */}
           <motion.h1 
-            className="text-3xl sm:text-5xl md:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight tracking-tight font-inter"
+            className="text-3xl sm:text-5xl md:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight tracking-tight font-display"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
           >
             Presente no
-            <span className="block text-primary font-georgia italic">Futuro</span>
+            <span className="block text-primary italic">Futuro</span>
           </motion.h1>
 
           {/* Subtitle */}

@@ -66,7 +66,7 @@ const TestimonialsSection = () => {
             transition={{ duration: 0.7, ease: "easeOut" }}
           >
             <p className="section-tagline">O que dizem de nós</p>
-            <h2 className="text-2xl sm:text-4xl md:text-5xl font-inter font-bold text-foreground mb-4 sm:mb-6">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-display font-bold text-foreground mb-4 sm:mb-6">
               Primeiros <span className="text-primary">Guardiões do Tempo</span>
             </h2>
             <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">

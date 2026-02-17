@@ -48,7 +48,7 @@ const FinalCTA = () => {
           </motion.div>
           
           <motion.h2 
-            className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-inter font-bold mb-4 leading-tight text-white"
+            className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4 leading-tight text-white"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
