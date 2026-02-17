@@ -57,8 +57,8 @@ const Footer = () => {
 
             {/* Legal Links */}
             <div>
-              <h4 className="font-inter font-bold text-lg mb-4 text-white">Legal</h4>
-              <ul className="space-y-3">
+              <h3 className="text-white font-semibold mb-2">Legal</h3>
+              <ul className="space-y-1 text-sm">
                 <li>
                   <button 
                     onClick={() => {window.scrollTo(0,0); navigate('/terms')}}
