@@ -99,7 +99,7 @@ const Footer = () => {
           <div className="border-t border-gray-800 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
               <p className="text-gray-400 text-sm">
-                © 2025 keepla. Todos os direitos reservados.
+                © {new Date().getFullYear()} keepla. Todos os direitos reservados.
               </p>
               <div className="flex items-center space-x-2 text-gray-400 text-sm">
                 <span>Empresa 100% portuguesa</span>
