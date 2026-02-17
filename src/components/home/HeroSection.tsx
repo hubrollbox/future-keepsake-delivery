@@ -19,11 +19,12 @@ const HeroSection = () => {
   return (
     <section className="home-hero relative min-h-[100svh] flex items-center justify-center overflow-hidden">
       {/* Background image visível com filtro ligeiro */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden">
         <img 
           src={heroImage} 
           alt="Mãos a segurar uma carta – memória Keepla" 
-          className="absolute inset-0 w-full h-full object-cover object-center opacity-90 contrast-110 brightness-95"
+          className="w-full h-full object-cover object-center opacity-90"
+          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', minWidth: '100%', minHeight: '100%' }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/25"></div>
       </div>
