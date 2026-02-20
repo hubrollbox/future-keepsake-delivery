@@ -15,6 +15,7 @@ const AdminProducts = lazy(() => import("@/components/admin/AdminProducts"));
 const AdminPlans = lazy(() => import("@/components/admin/AdminPlans"));
 const AdminContent = lazy(() => import("@/components/admin/AdminContent"));
 const AdminBlog = lazy(() => import("@/components/admin/AdminBlog"));
+const AdminEditorial = lazy(() => import("@/components/admin/AdminEditorial"));
 
 const AdminDashboardPage = () => {
   const { user, isAdmin, loading } = useAuth();
@@ -60,6 +61,7 @@ const AdminDashboardPage = () => {
           <Route path="plans" element={<AdminPlans />} />
           <Route path="content" element={<AdminContent />} />
           <Route path="blog" element={<AdminBlog />} />
+          <Route path="editorial" element={<AdminEditorial />} />
           <Route path="messages" element={<AdminMessages />} />
           <Route path="payments" element={<AdminPayments />} />
           <Route path="clients" element={<AdminClients />} />
