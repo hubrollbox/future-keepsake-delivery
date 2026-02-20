@@ -38,44 +38,10 @@ const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({
   const [isAnimating] = useState(false);
   const [autoPlay, setAutoPlay] = useState(false);
 
-  // Mock data para demonstração
-  const mockEvents: TimelineEvent[] = [
-    {
-      id: '1',
-      title: 'Carta de Aniversário para Maria',
-      description: 'Uma mensagem especial para o 25º aniversário',
-      deliveryDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 dias
-      type: 'digital',
-      status: 'scheduled',
-      emotion: 'love',
-      recipient: 'Maria Silva',
-      daysUntil: 7
-    },
-    {
-      id: '2',
-      title: 'Cápsula de Formatura',
-      description: 'Memórias da universidade para abrir em 5 anos',
-      deliveryDate: new Date(Date.now() + 365 * 5 * 24 * 60 * 60 * 1000), // 5 anos
-      type: 'physical',
-      status: 'pending',
-      emotion: 'nostalgia',
-      recipient: 'Eu mesmo',
-      daysUntil: 1825
-    },
-    {
-      id: '3',
-      title: 'Vídeo para o Bebê',
-      description: 'Primeira mensagem para quando completar 18 anos',
-      deliveryDate: new Date(Date.now() + 365 * 18 * 24 * 60 * 60 * 1000), // 18 anos
-      type: 'digital',
-      status: 'scheduled',
-      emotion: 'hope',
-      recipient: 'João Pedro',
-      daysUntil: 6570
-    }
-  ];
-
-  const displayEvents = events.length > 0 ? events : mockEvents;
+  const displayEvents = events;
+  const nextDeliveryInDays = displayEvents.length > 0
+    ? Math.min(...displayEvents.map((event) => event.daysUntil))
+    : 0;
 
   const getEmotionColor = (emotion: string) => {
     // Simplified palette: only neutral gray blocks and a subtle red accent for 'love'
@@ -296,7 +262,7 @@ const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({
         <Card>
           <CardContent className="p-4 text-center">
             <div className="text-2xl font-bold text-purple-500">
-              {Math.min(...displayEvents.map(e => e.daysUntil))}
+              {nextDeliveryInDays}
             </div>
             <div className="text-sm text-keepla-gray-light">Dias até próxima</div>
           </CardContent>

@@ -5,7 +5,6 @@ import { isValidFile } from "./utils";
 import { validateStep } from "./validation";
 import { useDeliveryFormState } from "./useDeliveryFormState";
 import { useAuth } from "@/hooks/useAuth";
-import { onDeliveryCreated } from "@/features/create-delivery/onDeliveryCreated";
 
 interface DeliveryInsertData {
   title: string;
@@ -175,14 +174,6 @@ export const useCreateDeliveryForm = () => {
         //     status: "pending"
         //   }
         // ]);
-
-        onDeliveryCreated({
-          id: `${Date.now()}`,
-          userEmail: user.email || '',
-          recipientEmail: formData.recipient_email,
-          deliveryDate: formData.deliveryDate,
-          message: formData.message,
-        });
 
         toast({ title: "Sucesso", description: "Entrega criada com sucesso!" });
         setCurrentStep(4);
