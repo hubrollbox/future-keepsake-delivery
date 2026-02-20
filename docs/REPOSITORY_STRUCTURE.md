@@ -1,67 +1,46 @@
 # Estrutura do Repositório
 
-## Organização de Pastas
+## Organização Atual
 
 ### `/src`
-Código-fonte da aplicação React + TypeScript
+Código-fonte da aplicação React + TypeScript.
 - `/components` - Componentes React reutilizáveis
-- `/pages` - Páginas da aplicação
-- `/hooks` - Custom hooks
-- `/integrations` - Integrações com serviços externos (Supabase, Stripe)
+- `/pages` - Páginas/rotas
+- `/hooks` - Hooks customizados
 - `/lib` - Utilitários e funções auxiliares
 - `/contexts` - Context API do React
+- `/services` - Serviços de dados/lógica
 - `/styles` - Estilos globais CSS
-- `/__tests__` - Testes unitários e de integração
+- `/types` - Tipagens TypeScript
 
 ### `/docs`
-Documentação do projeto
-- `/brand` - Manual de identidade visual, guidelines, paleta de cores
-- `/marketing` - Templates de email, materiais de marketing
-- `/security` - Documentação de segurança e auditorias
-- `/development` - Documentação técnica, changelog, guias de contribuição
+Documentação do projeto.
+- `/brand` - Manual de identidade visual
+- `/development` - Documentação técnica e contribuição
+- `/security` - Auditorias e segurança
+- `/reports` - Relatórios e diagnósticos históricos
 
 ### `/ops`
-Operações, infraestrutura e automação
-- `/scripts` - Scripts de deployment, testes, otimização
-- Ficheiros de configuração de CI/CD ficam em `.github/workflows`
+Operações, infraestrutura e automação.
+- `/scripts` - Scripts de deployment, testes e manutenção
 
 ### `/supabase`
-Configuração e código do backend Supabase
-- `/functions` - Edge Functions (serverless)
-- `/migrations` - Migrações de base de dados (read-only)
+Configuração e código backend Supabase.
+- `/functions` - Edge Functions
+- `/migrations` - Migrações de base de dados
 - `config.toml` - Configuração do Supabase
 
-### `/cypress`
-Testes end-to-end com Cypress
-- `/e2e` - Testes E2E organizados por fluxo
+### Outras pastas relevantes
+- `/cypress/e2e` - Testes E2E
+- `/legal` - Documentos legais
+- `/public` - Assets estáticos
+- `/scripts` - Scripts de suporte de produto/editorial
+- `/sql` - SQL utilitário (seed/apoio)
 
-### `/legal`
-Documentos legais (GDPR, privacidade, termos)
+## Regras de Manutenção
 
-### `/public`
-Assets estáticos servidos publicamente
-
-## Ficheiros de Configuração (Raiz)
-
-- `vite.config.ts` - Configuração do Vite
-- `vitest.config.ts` - Configuração dos testes
-- `tailwind.config.ts` - Configuração do Tailwind CSS
-- `tsconfig.json` - Configuração do TypeScript
-- `vercel.json` - Configuração do deploy Vercel
-- `.env` - Variáveis de ambiente (não versionado)
-
-## Guidelines
-
-1. **Código da aplicação** → `/src`
-2. **Documentação** → `/docs`
-3. **Scripts e automação** → `/ops/scripts`
-4. **Testes E2E** → `/cypress/e2e`
-5. **Testes unitários** → `/src/__tests__`
-6. **Configuração CI/CD** → `.github/workflows`
-
-## Benefícios desta Estrutura
-
-- ✅ Separação clara entre código, docs e ops
-- ✅ Facilita onboarding de novos developers
-- ✅ Automação mais simples (scripts centralizados)
-- ✅ Melhor organização para crescimento do projeto
+1. Código de app deve permanecer em `/src`.
+2. Documentação deve ficar em `/docs` (usar subpastas por domínio).
+3. Evitar ficheiros temporários na raiz (logs, outputs de comandos).
+4. Scripts operacionais em `/ops/scripts`; scripts de domínio em `/scripts`.
+5. Atualizar `README.md` quando a estrutura principal mudar.

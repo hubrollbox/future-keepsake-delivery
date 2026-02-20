@@ -109,21 +109,38 @@
 
 ```
 /
-├── public/              # Assets estáticos
-├── src/
-│   ├── components/      # Componentes React reutilizáveis
-│   │   ├── dashboard/   # Componentes específicos do dashboard
-│   │   ├── gamification/# Componentes de gamificação
-│   │   └── ui/          # Componentes base (shadcn)
-│   ├── contexts/        # React Contexts (Auth, Gamification, Cart)
-│   ├── hooks/           # Custom React Hooks
-│   ├── integrations/    # Configurações de serviços externos (Supabase)
-│   ├── pages/           # Páginas da aplicação (Rotas)
-│   ├── services/        # Camada de serviço (API calls, lógica de negócios)
-│   └── styles/          # Arquivos CSS globais
-├── supabase/            # Migrations e configurações do Supabase
-└── docs/                # Documentação detalhada do projeto
+├── .github/                 # Workflows CI/CD e automações do repositório
+├── cypress/e2e/             # Testes end-to-end (fluxos principais)
+├── docs/                    # Documentação funcional/técnica
+│   ├── development/         # Guias de contribuição, changelog e padrões
+│   ├── security/            # Auditorias e políticas de segurança
+│   ├── reports/             # Relatórios e diagnósticos históricos
+│   └── brand/               # Manual oficial da marca
+├── legal/                   # Termos legais (GDPR, privacidade, ToS)
+├── ops/scripts/             # Scripts operacionais e manutenção
+├── public/                  # Assets estáticos públicos
+├── scripts/                 # Scripts de produto/editorial
+├── sql/                     # SQL utilitário (seed e scripts auxiliares)
+├── src/                     # Código principal da aplicação
+│   ├── components/          # Componentes React reutilizáveis
+│   ├── pages/               # Páginas/rotas
+│   ├── hooks/               # Hooks customizados
+│   ├── services/            # Serviços de acesso a dados e regras
+│   ├── lib/                 # Utilitários compartilhados
+│   ├── contexts/            # Providers e contextos globais
+│   ├── styles/              # Estilos globais
+│   └── types/               # Tipagens TypeScript
+├── supabase/                # Configuração, migrations e edge functions
+└── README.md                # Documento principal do projeto
 ```
+
+### Regras de Organização (manter daqui para a frente)
+
+- **Código de aplicação** fica sempre em `src/` (evitar ficheiros de lógica na raiz).
+- **Documentação nova** deve ir para `docs/` no subdiretório certo (`development/`, `security/`, `reports/`, etc.).
+- **Scripts operacionais** vão para `ops/scripts/`; scripts de negócio/editorial ficam em `scripts/`.
+- **Ficheiros temporários de debug/log local** não devem ser versionados na raiz.
+- **Quando criar novas pastas**, atualizar esta árvore no `README.md` para manter onboarding simples.
 
 ---
 
