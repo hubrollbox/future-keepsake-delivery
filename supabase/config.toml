@@ -114,11 +114,11 @@ policy = "per_worker"
 inspector_port = 8083
 deno_version = 2
 
-[functions.send_due_notifications]
+[functions.send-due-notifications]
 enabled = true
 verify_jwt = true
-import_map = "./functions/send_due_notifications/deno.json"
-entrypoint = "./functions/send_due_notifications/index.ts"
+import_map = "./functions/send-due-notifications/deno.json"
+entrypoint = "./functions/send-due-notifications/index.ts"
 
 [analytics]
 enabled = false
