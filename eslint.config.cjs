@@ -1,7 +1,6 @@
 const tsParser = require('@typescript-eslint/parser');
 const tsEslintPlugin = require('@typescript-eslint/eslint-plugin');
 const reactHooksPlugin = require('eslint-plugin-react-hooks');
-const reactRefreshPlugin = require('eslint-plugin-react-refresh');
 
 module.exports = [
   {
@@ -31,23 +30,17 @@ module.exports = [
     plugins: {
       '@typescript-eslint': tsEslintPlugin,
       'react-hooks': reactHooksPlugin,
-      'react-refresh': reactRefreshPlugin,
     },
     rules: {
-      // Rules from eslint:recommended
+      // Base
       'no-unused-vars': 'warn',
       'no-undef': 'warn',
 
-      // Rules from plugin:@typescript-eslint/recommended
-
-
-      // Rules from plugin:react-hooks/recommended
+      // React Hooks
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
+
+      // TypeScript
       '@typescript-eslint/no-unused-vars': 'error',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/prefer-as-const': 'error',
@@ -76,8 +69,6 @@ module.exports = [
       },
     },
     rules: {
-      // Cypress is intentionally not installed in the preview environment
-      // (it downloads heavy binaries and can cause install timeouts).
       'no-undef': 'off',
     },
   },
