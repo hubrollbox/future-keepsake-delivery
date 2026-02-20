@@ -15,6 +15,7 @@ import {
   Crown,
   FileText,
   BookOpen,
+  FolderTree,
   Menu,
   X,
 } from "lucide-react";
@@ -30,18 +31,32 @@ const AdminLayout = ({ children, activeSection }: AdminLayoutProps) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const { signOut } = useAuth();
 
-  const menuItems = [
-    { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, path: "/admin" },
-    { id: "clients", label: "Clientes", icon: Users, path: "/admin/clients" },
-    { id: "deliveries", label: "Entregas", icon: Package, path: "/admin/deliveries" },
-    { id: "products", label: "Produtos", icon: ShoppingCart, path: "/admin/products" },
-    { id: "plans", label: "Planos", icon: Crown, path: "/admin/plans" },
-    { id: "content", label: "Conteúdo", icon: FileText, path: "/admin/content" },
-    { id: "blog", label: "Blog", icon: FileText, path: "/admin/blog" },
-    { id: "editorial", label: "Editorial", icon: BookOpen, path: "/admin/editorial" },
-    { id: "messages", label: "Mensagens", icon: MessageSquare, path: "/admin/messages" },
-    { id: "payments", label: "Pagamentos", icon: CreditCard, path: "/admin/payments" },
-    { id: "warehouse", label: "Armazém", icon: Warehouse, path: "/admin/warehouse" },
+  const menuGroups = [
+    {
+      id: "operations",
+      label: "Operações",
+      items: [
+        { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, path: "/admin" },
+        { id: "clients", label: "Clientes", icon: Users, path: "/admin/clients" },
+        { id: "deliveries", label: "Entregas", icon: Package, path: "/admin/deliveries" },
+        { id: "products", label: "Produtos", icon: ShoppingCart, path: "/admin/products" },
+        { id: "plans", label: "Planos", icon: Crown, path: "/admin/plans" },
+        { id: "messages", label: "Mensagens", icon: MessageSquare, path: "/admin/messages" },
+        { id: "payments", label: "Pagamentos", icon: CreditCard, path: "/admin/payments" },
+        { id: "warehouse", label: "Armazém", icon: Warehouse, path: "/admin/warehouse" },
+      ],
+    },
+    {
+      id: "content-family",
+      label: "Família de Conteúdo",
+      items: [
+        { id: "blog", label: "Blog", icon: FileText, path: "/admin/blog" },
+      ],
+      children: [
+        { id: "editorial", label: "Editorial", icon: BookOpen, path: "/admin/editorial" },
+        { id: "content", label: "Conteúdo", icon: FolderTree, path: "/admin/content" },
+      ],
+    },
   ];
 
   return (
@@ -72,27 +87,63 @@ const AdminLayout = ({ children, activeSection }: AdminLayoutProps) => {
             </div>
           </div>
 
-          <nav className="p-4 space-y-2">
-            {menuItems.map((item) => {
-              const IconComponent = item.icon;
-              const isActive = activeSection === item.id;
-              
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => navigate(item.path)}
-                  className={`w-full flex items-center ${isCollapsed ? 'justify-center px-2' : 'space-x-3 px-4'} py-3 rounded-xl text-left transition-all duration-200 ${
-                    isActive
-                      ? "bg-earthy-burgundy/10 text-earthy-burgundy border border-earthy-burgundy/20"
-                      : "text-steel-blue hover:bg-sand-beige/50 hover:text-earthy-burgundy"
-                  }`}
-                  title={isCollapsed ? item.label : undefined}
-                >
-                  <IconComponent className="h-5 w-5" />
-                  {!isCollapsed && <span className="font-medium">{item.label}</span>}
-                </button>
-              );
-            })}
+          <nav className="p-4 space-y-4">
+            {menuGroups.map((group) => (
+              <div key={group.id} className="space-y-2">
+                {!isCollapsed && (
+                  <p className="px-2 text-xs font-semibold uppercase tracking-wide text-misty-gray/90">
+                    {group.label}
+                  </p>
+                )}
+
+                <div className="space-y-2">
+                  {group.items.map((item) => {
+                    const IconComponent = item.icon;
+                    const isActive = activeSection === item.id;
+
+                    return (
+                      <button
+                        key={item.id}
+                        onClick={() => navigate(item.path)}
+                        className={`w-full flex items-center ${isCollapsed ? 'justify-center px-2' : 'space-x-3 px-4'} py-3 rounded-xl text-left transition-all duration-200 ${
+                          isActive
+                            ? "bg-earthy-burgundy/10 text-earthy-burgundy border border-earthy-burgundy/20"
+                            : "text-steel-blue hover:bg-sand-beige/50 hover:text-earthy-burgundy"
+                        }`}
+                        title={isCollapsed ? item.label : undefined}
+                      >
+                        <IconComponent className="h-5 w-5" />
+                        {!isCollapsed && <span className="font-medium">{item.label}</span>}
+                      </button>
+                    );
+                  })}
+
+                  {!isCollapsed && group.children?.length ? (
+                    <div className="ml-5 border-l border-dusty-rose/30 pl-3 space-y-1">
+                      {group.children.map((item) => {
+                        const IconComponent = item.icon;
+                        const isActive = activeSection === item.id;
+
+                        return (
+                          <button
+                            key={item.id}
+                            onClick={() => navigate(item.path)}
+                            className={`w-full flex items-center space-x-2 px-3 py-2 rounded-lg text-left transition-all duration-200 ${
+                              isActive
+                                ? "bg-earthy-burgundy/10 text-earthy-burgundy"
+                                : "text-steel-blue/90 hover:bg-sand-beige/50 hover:text-earthy-burgundy"
+                            }`}
+                          >
+                            <IconComponent className="h-4 w-4" />
+                            <span className="text-sm font-medium">{item.label}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            ))}
           </nav>
 
           <div className="absolute bottom-4 left-4 right-4 space-y-2">
