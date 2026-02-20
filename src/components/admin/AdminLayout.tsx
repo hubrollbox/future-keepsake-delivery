@@ -14,8 +14,9 @@ import {
   ShoppingCart,
   Crown,
   FileText,
+  BookOpen,
   Menu,
-  X
+  X,
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -37,6 +38,7 @@ const AdminLayout = ({ children, activeSection }: AdminLayoutProps) => {
     { id: "plans", label: "Planos", icon: Crown, path: "/admin/plans" },
     { id: "content", label: "Conteúdo", icon: FileText, path: "/admin/content" },
     { id: "blog", label: "Blog", icon: FileText, path: "/admin/blog" },
+    { id: "editorial", label: "Editorial", icon: BookOpen, path: "/admin/editorial" },
     { id: "messages", label: "Mensagens", icon: MessageSquare, path: "/admin/messages" },
     { id: "payments", label: "Pagamentos", icon: CreditCard, path: "/admin/payments" },
     { id: "warehouse", label: "Armazém", icon: Warehouse, path: "/admin/warehouse" },
