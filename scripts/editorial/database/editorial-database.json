@@ -1,0 +1,146 @@
+{
+  "meta": {
+    "project": "Keepla Blog",
+    "description": "Banco editorial de temas para o blog Keepla",
+    "version": "1.0.0",
+    "last_updated": "2026-02-20"
+  },
+  "pillars": [
+    {
+      "id": "emocoes-e-memorias",
+      "name": "Emoções & Memórias",
+      "description": "Conteúdo emocional sobre preservação de memórias e legado familiar"
+    },
+    {
+      "id": "datas-e-celebracoes",
+      "name": "Datas & Celebrações",
+      "description": "Guias e inspiração para datas especiais e momentos de celebração"
+    },
+    {
+      "id": "produto-e-como-usar",
+      "name": "Produto & Como Usar",
+      "description": "Tutoriais, casos de uso e apresentação de funcionalidades Keepla"
+    },
+    {
+      "id": "reflexao-e-legado",
+      "name": "Reflexão & Legado",
+      "description": "Artigos profundos sobre legado, tempo e o que deixamos para os outros"
+    }
+  ],
+  "topics": [
+    {
+      "id": "topic-001",
+      "pillar": "emocoes-e-memorias",
+      "status": "por_escrever",
+      "priority": "alta",
+      "title": "Como as memórias afetam a nossa identidade: o que a ciência diz",
+      "angle": "Educativo / Curiosidade científica",
+      "target_keyword": "memórias e identidade",
+      "secondary_keywords": ["psicologia da memória", "como o cérebro guarda memórias", "nostalgia"],
+      "target_audience": "Adultos 30-55 anos, curiosos sobre psicologia e emoções",
+      "tone": "Cálido, informativo, com um toque de maravilha",
+      "estimated_word_count": 1700,
+      "cta": "Criar o teu primeiro keepsake na Keepla",
+      "notes": "Citar estudos reais. Evitar percentagens sem fonte. Usar exemplos do quotidiano português.",
+      "created_at": "2026-02-20",
+      "generation_date": null,
+      "published_date": null,
+      "slug": null
+    },
+    {
+      "id": "topic-002",
+      "pillar": "datas-e-celebracoes",
+      "status": "por_escrever",
+      "priority": "alta",
+      "title": "Ideias de presentes únicos para o Dia do Pai que ele vai guardar para sempre",
+      "angle": "Guia prático / Listicle emocional",
+      "target_keyword": "presentes Dia do Pai originais",
+      "secondary_keywords": ["presente personalizado pai", "dia do pai 2025", "keepsake pai"],
+      "target_audience": "Filhos adultos (25-45) à procura de ideias para o pai",
+      "tone": "Afetivo, prático, inspirador",
+      "estimated_word_count": 1600,
+      "cta": "Enviar uma cápsula do tempo ao teu pai",
+      "notes": "Publicar 3-4 semanas antes do Dia do Pai (1.º Domingo de agosto em Portugal). Incluir dicas práticas e emocionais.",
+      "created_at": "2026-02-20",
+      "generation_date": null,
+      "published_date": null,
+      "slug": null
+    },
+    {
+      "id": "topic-003",
+      "pillar": "produto-e-como-usar",
+      "status": "por_escrever",
+      "priority": "media",
+      "title": "O que é uma cápsula do tempo digital e como criar a tua",
+      "angle": "Tutorial / Introdução ao produto",
+      "target_keyword": "cápsula do tempo digital",
+      "secondary_keywords": ["como criar cápsula do tempo", "keepsake digital", "carta para o futuro"],
+      "target_audience": "Utilizadores novos à descoberta da Keepla",
+      "tone": "Simples, acolhedor, encorajador",
+      "estimated_word_count": 1800,
+      "cta": "Criar a tua cápsula do tempo gratuitamente",
+      "notes": "Explicar o conceito de forma acessível. Incluir um passo-a-passo da plataforma Keepla. SEO fundamental.",
+      "created_at": "2026-02-20",
+      "generation_date": null,
+      "published_date": null,
+      "slug": null
+    },
+    {
+      "id": "topic-004",
+      "pillar": "reflexao-e-legado",
+      "status": "por_escrever",
+      "priority": "media",
+      "title": "Cartas para os filhos: o que escrever e por que isso importa",
+      "angle": "Emocional / Guia reflexivo",
+      "target_keyword": "carta para os filhos",
+      "secondary_keywords": ["carta ao filho no futuro", "legado familiar", "mensagem para os filhos"],
+      "target_audience": "Pais com filhos (qualquer idade), 28-50 anos",
+      "tone": "Íntimo, profundo, encorajador",
+      "estimated_word_count": 1900,
+      "cta": "Guardar uma mensagem para o futuro dos teus filhos",
+      "notes": "Dar exemplos concretos do que escrever. Incluir prompts que ajudem o leitor a começar. Muito emocional.",
+      "created_at": "2026-02-20",
+      "generation_date": null,
+      "published_date": null,
+      "slug": null
+    },
+    {
+      "id": "topic-005",
+      "pillar": "emocoes-e-memorias",
+      "status": "por_escrever",
+      "priority": "baixa",
+      "title": "A ciência da nostalgia: por que nos sentimos bem ao recordar?",
+      "angle": "Educativo / Psicologia positiva",
+      "target_keyword": "nostalgia psicologia",
+      "secondary_keywords": ["sentimento de nostalgia", "por que somos nostálgicos", "memórias afetivas"],
+      "target_audience": "Adultos curiosos, leitores de conteúdo de bem-estar",
+      "tone": "Reflexivo, científico mas acessível",
+      "estimated_word_count": 1600,
+      "cta": "Preservar as tuas memórias com a Keepla",
+      "notes": "Mencionar investigação de Constantine Sedikides (nostalgia como emoção positiva). Não inventar dados.",
+      "created_at": "2026-02-20",
+      "generation_date": null,
+      "published_date": null,
+      "slug": null
+    },
+    {
+      "id": "topic-006",
+      "pillar": "datas-e-celebracoes",
+      "status": "por_escrever",
+      "priority": "alta",
+      "title": "Presentes de aniversário que ficam para sempre: ideias para cada idade",
+      "angle": "Guia prático / SEO de ocasião",
+      "target_keyword": "presentes de aniversário originais",
+      "secondary_keywords": ["presente de aniversário único", "ideia de aniversário especial", "presente personalizado"],
+      "target_audience": "Pessoas à procura de presentes significativos para entes queridos",
+      "tone": "Prático, caloroso, inspirador",
+      "estimated_word_count": 1700,
+      "cta": "Enviar um keepsake de aniversário personalizado",
+      "notes": "Organizar por faixas etárias. Incluir Keepla como opção premium. Bom para tráfego evergreen.",
+      "created_at": "2026-02-20",
+      "generation_date": null,
+      "published_date": null,
+      "slug": null
+    }
+  ]
+}

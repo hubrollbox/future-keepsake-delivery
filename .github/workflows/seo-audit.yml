@@ -1,0 +1,77 @@
+name: "📊 Auditoria SEO Mensal do Blog"
+
+on:
+  # Corre automaticamente no 1.º dia de cada mês às 9:00 UTC
+  schedule:
+    - cron: "0 9 1 * *"
+
+  # Pode ser acionado manualmente a qualquer momento
+  workflow_dispatch:
+    inputs:
+      generate_report:
+        description: "Gerar relatório Markdown e criar PR"
+        required: false
+        default: true
+        type: boolean
+
+jobs:
+  seo-audit:
+    name: "Auditoria SEO"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: "📥 Checkout"
+        uses: actions/checkout@v4
+
+      - name: "🟢 Setup Node.js"
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: "📦 Instalar dependências"
+        run: npm ci
+
+      - name: "🔍 Executar auditoria SEO"
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          npx ts-node scripts/editorial/seoAudit.ts --report
+
+      - name: "📊 Criar PR com relatório"
+        if: ${{ inputs.generate_report != false }}
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "docs(seo): relatório de auditoria SEO mensal"
+          title: "📊 Insights SEO — ${{ github.event.schedule && 'Relatório Mensal' || 'Auditoria Manual' }}"
+          body: |
+            ## 📊 Relatório de Auditoria SEO — Blog Keepla
+
+            Este relatório foi gerado automaticamente pelo sistema de auditoria SEO.
+
+            **Quando:** ${{ github.event.schedule && 'Agendado (1.º do mês)' || 'Acionado manualmente por ' }}${{ github.actor }}
+
+            ### O que encontrará no relatório:
+            - Score SEO de cada post publicado
+            - Issues críticos a resolver
+            - Sugestões de melhoria por post
+            - Recomendações editoriais para o próximo mês
+
+            ### Próximos passos:
+            1. Rever o relatório em `scripts/editorial/reports/`
+            2. Identificar os posts com menor score
+            3. Planear melhorias no banco editorial
+            4. Fazer merge quando o relatório estiver revisto
+
+            ---
+            *Gerado automaticamente pelo sistema editorial Keepla.*
+          branch: "seo/audit-${{ github.run_id }}"
+          base: main
+          labels: |
+            seo-audit
+            editorial

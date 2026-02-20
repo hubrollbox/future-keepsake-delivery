@@ -1,0 +1,139 @@
+name: "📝 Criar Rascunho de Blog (AI)"
+
+on:
+  workflow_dispatch:
+    inputs:
+      topic_id:
+        description: "ID do tema a gerar (ex: topic-001)"
+        required: true
+        type: string
+      ai_model:
+        description: "Modelo de IA a usar"
+        required: false
+        default: "google/gemini-3-flash-preview"
+        type: choice
+        options:
+          - "google/gemini-3-flash-preview"
+          - "google/gemini-2.5-flash"
+          - "gpt-4o-mini"
+          - "gpt-4o"
+      dry_run:
+        description: "Dry run (não cria PR, apenas gera o ficheiro)"
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  generate-draft:
+    name: "Gerar Rascunho Editorial"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: "📥 Checkout do código"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: "🟢 Setup Node.js"
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: "📦 Instalar dependências"
+        run: npm ci
+
+      - name: "🔍 Listar temas disponíveis"
+        run: |
+          echo "=== Temas disponíveis no banco editorial ==="
+          npx ts-node scripts/editorial/selectTopic.ts list por_escrever || true
+
+      - name: "🤖 Gerar rascunho com IA"
+        env:
+          AI_API_KEY: ${{ secrets.AI_API_KEY }}
+          AI_BASE_URL: ${{ vars.AI_BASE_URL || 'https://ai.gateway.lovable.dev/v1' }}
+          AI_MODEL: ${{ inputs.ai_model }}
+        run: |
+          echo "=== A gerar rascunho para tema: ${{ inputs.topic_id }} ==="
+          npx ts-node scripts/editorial/generateDraft.ts ${{ inputs.topic_id }}
+
+      - name: "📄 Formatar draft em Markdown"
+        run: |
+          npx ts-node scripts/editorial/formatDraft.ts ${{ inputs.topic_id }}
+          echo "=== Ficheiros na pasta drafts/ ==="
+          ls -la scripts/editorial/drafts/ || echo "Pasta vazia"
+
+      - name: "✅ Validar ficheiro gerado"
+        run: |
+          DRAFT_FILE=$(ls scripts/editorial/drafts/*.md | head -1)
+          if [ -z "$DRAFT_FILE" ]; then
+            echo "❌ Nenhum ficheiro de draft encontrado!"
+            exit 1
+          fi
+          echo "A validar: $DRAFT_FILE"
+          npx ts-node scripts/editorial/formatDraft.ts validate "$DRAFT_FILE"
+
+      - name: "📊 Mostrar resumo do draft"
+        run: |
+          DRAFT_FILE=$(ls scripts/editorial/drafts/*.md | head -1)
+          echo "=== RESUMO DO DRAFT GERADO ==="
+          echo "Ficheiro: $DRAFT_FILE"
+          wc -w "$DRAFT_FILE" | awk '{print "Palavras (aprox.):", $1}'
+          echo ""
+          echo "=== FRONTMATTER ==="
+          head -30 "$DRAFT_FILE"
+
+      - name: "🔀 Criar Pull Request"
+        if: ${{ !inputs.dry_run }}
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "feat(blog): rascunho gerado para '${{ inputs.topic_id }}'"
+          title: "📝 Conteúdo: ${{ inputs.topic_id }} — Aguarda Revisão Editorial"
+          body: |
+            ## 📝 Rascunho de Blog Gerado por IA
+
+            **Tema ID:** `${{ inputs.topic_id }}`
+            **Modelo de IA:** `${{ inputs.ai_model }}`
+            **Gerado em:** ${{ github.event.head_commit.timestamp || 'agora' }}
+
+            ---
+
+            ### ✅ Checklist de Revisão Editorial
+
+            Antes de fazer merge, a equipa editorial deve verificar:
+
+            - [ ] **Conteúdo**: Leu e aprovou o artigo completo
+            - [ ] **Factos**: Verificou todos os dados e referências mencionados
+            - [ ] **Tom**: O texto soa à voz Keepla (cálido, autêntico, próximo)
+            - [ ] **SEO**: A palavra-chave principal aparece naturalmente no texto
+            - [ ] **Imagem de capa**: Fez upload no Supabase Storage e atualizou `cover_image_url`
+            - [ ] **Excerpt**: É apelativo e tem menos de 160 caracteres
+            - [ ] **Status**: Alterou `status: draft` para `status: published` quando pronto
+
+            ---
+
+            ### 🚀 Após o merge
+
+            O workflow `sync-blog-to-supabase.yml` irá sincronizar automaticamente o post com o Supabase. Se `status: published`, o post fica visível no blog imediatamente.
+
+            ---
+
+            *Gerado automaticamente pelo sistema editorial Keepla.*
+          branch: "blog/draft-${{ inputs.topic_id }}-${{ github.run_id }}"
+          base: main
+          labels: |
+            blog-draft
+            revisao-editorial
+            ai-generated
+          draft: false
+
+      - name: "ℹ️ Dry run — sem PR criado"
+        if: ${{ inputs.dry_run }}
+        run: |
+          echo "=== DRY RUN ATIVO ==="
+          echo "Ficheiro gerado mas PR NÃO criado."
+          echo "Para criar o PR, execute o workflow sem o dry_run ativo."

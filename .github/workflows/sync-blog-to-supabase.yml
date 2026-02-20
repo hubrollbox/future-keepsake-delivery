@@ -1,0 +1,123 @@
+name: "🚀 Sincronizar Blog com Supabase"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/editorial/drafts/**/*.md"
+      - "scripts/editorial/database/editorial-database.json"
+
+  # Permite executar manualmente para sincronizar um ficheiro específico
+  workflow_dispatch:
+    inputs:
+      file_path:
+        description: "Caminho do ficheiro .md a sincronizar (relativo à raiz)"
+        required: false
+        type: string
+      sync_all:
+        description: "Sincronizar todos os ficheiros na pasta drafts/"
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  sync-to-supabase:
+    name: "Sincronizar com Supabase"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "📥 Checkout do código"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: "🟢 Setup Node.js"
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: "📦 Instalar dependências"
+        run: npm ci
+
+      - name: "🔍 Identificar ficheiros alterados (push automático)"
+        if: ${{ github.event_name == 'push' }}
+        id: changed-files
+        run: |
+          # Obter lista de ficheiros .md adicionados ou modificados neste push
+          CHANGED=$(git diff --name-only --diff-filter=AM HEAD~1 HEAD -- 'scripts/editorial/drafts/*.md' 2>/dev/null || echo "")
+          echo "Ficheiros alterados:"
+          echo "$CHANGED"
+          echo "changed_files=$CHANGED" >> $GITHUB_OUTPUT
+
+          if [ -z "$CHANGED" ]; then
+            echo "Nenhum ficheiro .md alterado."
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: "🔄 Sincronizar ficheiros alterados (push automático)"
+        if: ${{ github.event_name == 'push' && steps.changed-files.outputs.has_changes == 'true' }}
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          echo "=== A sincronizar ficheiros alterados ==="
+          CHANGED="${{ steps.changed-files.outputs.changed_files }}"
+          
+          SYNC_SUCCESS=0
+          SYNC_ERRORS=0
+          
+          for FILE in $CHANGED; do
+            if [ -f "$FILE" ]; then
+              echo ""
+              echo "--- Sincronizando: $FILE ---"
+              if npx ts-node scripts/editorial/syncToSupabase.ts "$FILE"; then
+                SYNC_SUCCESS=$((SYNC_SUCCESS + 1))
+              else
+                SYNC_ERRORS=$((SYNC_ERRORS + 1))
+                echo "❌ Erro ao sincronizar: $FILE"
+              fi
+            else
+              echo "⚠️  Ficheiro não encontrado (pode ter sido removido): $FILE"
+            fi
+          done
+          
+          echo ""
+          echo "=== RESUMO ==="
+          echo "✅ Sincronizados com sucesso: $SYNC_SUCCESS"
+          echo "❌ Erros: $SYNC_ERRORS"
+          
+          if [ "$SYNC_ERRORS" -gt 0 ]; then
+            exit 1
+          fi
+
+      - name: "🔄 Sincronizar ficheiro específico (manual)"
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.file_path != '' }}
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          echo "=== A sincronizar ficheiro: ${{ inputs.file_path }} ==="
+          npx ts-node scripts/editorial/syncToSupabase.ts "${{ inputs.file_path }}"
+
+      - name: "🔄 Sincronizar todos os drafts (manual)"
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.sync_all == true }}
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          echo "=== A sincronizar todos os drafts ==="
+          npx ts-node scripts/editorial/syncToSupabase.ts --all
+
+      - name: "📊 Resumo da sincronização"
+        if: always()
+        run: |
+          echo ""
+          echo "=== 🏁 SINCRONIZAÇÃO CONCLUÍDA ==="
+          echo "Projeto: Keepla Blog"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Executado por: ${{ github.actor }}"
+          echo "Timestamp: $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
