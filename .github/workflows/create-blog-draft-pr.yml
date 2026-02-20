@@ -66,19 +66,27 @@ jobs:
           echo "=== Ficheiros na pasta drafts/ ==="
           ls -la scripts/editorial/drafts/ || echo "Pasta vazia"
 
-      - name: "✅ Validar ficheiro gerado"
+      - name: "📌 Resolver ficheiro gerado"
+        id: resolve-draft
         run: |
-          DRAFT_FILE=$(ls scripts/editorial/drafts/*.md | head -1)
+          DRAFT_FILE=$(find scripts/editorial/drafts -maxdepth 1 -type f -name '*.md' -print0 | xargs -0 ls -1t 2>/dev/null | head -n 1)
           if [ -z "$DRAFT_FILE" ]; then
             echo "❌ Nenhum ficheiro de draft encontrado!"
             exit 1
           fi
+
+          echo "draft_file=$DRAFT_FILE" >> "$GITHUB_OUTPUT"
+          echo "Draft resolvido: $DRAFT_FILE"
+
+      - name: "✅ Validar ficheiro gerado"
+        run: |
+          DRAFT_FILE="${{ steps.resolve-draft.outputs.draft_file }}"
           echo "A validar: $DRAFT_FILE"
           npx ts-node scripts/editorial/formatDraft.ts validate "$DRAFT_FILE"
 
       - name: "📊 Mostrar resumo do draft"
         run: |
-          DRAFT_FILE=$(ls scripts/editorial/drafts/*.md | head -1)
+          DRAFT_FILE="${{ steps.resolve-draft.outputs.draft_file }}"
           echo "=== RESUMO DO DRAFT GERADO ==="
           echo "Ficheiro: $DRAFT_FILE"
           wc -w "$DRAFT_FILE" | awk '{print "Palavras (aprox.):", $1}'
