@@ -26,6 +26,7 @@ Contém:
 - [🛠️ Desenvolvimento](development/CONTRIBUTING.md)
 - [🔐 Segurança](security/)
 - [🗄️ Base de Dados](database_schema_keepsakes.md)
+- [🧾 Relatórios Históricos](reports/)
 
 ---
 

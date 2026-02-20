@@ -53,3 +53,11 @@ coverage
 
 # Test files are now tracked for proper testing
 .vercel
+
+# Local command outputs / debug artifacts
+*_output.txt
+/db_pull_output.txt
+/install_output.txt
+/lint_output.txt
+/diff_output.sql
+/npx
