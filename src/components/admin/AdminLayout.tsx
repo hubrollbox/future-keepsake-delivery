@@ -32,24 +32,36 @@ const AdminLayout = ({ children, activeSection }: AdminLayoutProps) => {
 
   const menuGroups = [
     {
-      id: "operations",
-      label: "Operações",
+      id: "general",
+      label: "Geral",
       items: [
         { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, path: "/admin" },
-        { id: "clients", label: "Clientes", icon: Users, path: "/admin/clients" },
-        { id: "deliveries", label: "Entregas", icon: Package, path: "/admin/deliveries" },
-        { id: "products", label: "Produtos", icon: ShoppingCart, path: "/admin/products" },
-        { id: "plans", label: "Planos", icon: Crown, path: "/admin/plans" },
-        { id: "messages", label: "Mensagens", icon: MessageSquare, path: "/admin/messages" },
-        { id: "payments", label: "Pagamentos", icon: CreditCard, path: "/admin/payments" },
-        { id: "warehouse", label: "Armazém", icon: Warehouse, path: "/admin/warehouse" },
       ],
     },
     {
-      id: "content",
-      label: "Conteúdo",
+      id: "operations",
+      label: "Gestão Operacional",
+      items: [
+        { id: "clients", label: "Clientes", icon: Users, path: "/admin/clients" },
+        { id: "messages", label: "Mensagens", icon: MessageSquare, path: "/admin/messages" },
+        { id: "deliveries", label: "Entregas", icon: Package, path: "/admin/deliveries" },
+        { id: "payments", label: "Pagamentos", icon: CreditCard, path: "/admin/payments" },
+      ],
+    },
+    {
+      id: "products_plans",
+      label: "Produtos e Planos",
+      items: [
+        { id: "products", label: "Produtos", icon: ShoppingCart, path: "/admin/products" },
+        { id: "plans", label: "Planos", icon: Crown, path: "/admin/plans" },
+      ],
+    },
+    {
+      id: "content_warehouse",
+      label: "Conteúdos e Logística",
       items: [
         { id: "blog", label: "Blog", icon: FileText, path: "/admin/blog" },
+        { id: "warehouse", label: "Armazém", icon: Warehouse, path: "/admin/warehouse" },
         { id: "gamification", label: "Gamificação", icon: Trophy, path: "/admin/gamification" },
       ],
     },
@@ -63,7 +75,6 @@ const AdminLayout = ({ children, activeSection }: AdminLayoutProps) => {
           <div className="p-6 border-b border-dusty-rose/20">
             <div className="flex items-center justify-between">
               <div className={`flex items-center space-x-3 ${isCollapsed ? 'justify-center' : ''}`}>
-                {/* Replace old icon with updated brand logo */}
                 <img src="/keepla-logo-red.png" alt="keepla" className="w-8 h-8" />
                 {!isCollapsed && (
                   <div>
@@ -83,16 +94,16 @@ const AdminLayout = ({ children, activeSection }: AdminLayoutProps) => {
             </div>
           </div>
 
-          <nav className="p-4 space-y-4">
+          <nav className="p-4 space-y-6">
             {menuGroups.map((group) => (
               <div key={group.id} className="space-y-2">
                 {!isCollapsed && (
-                  <p className="px-2 text-xs font-semibold uppercase tracking-wide text-misty-gray/90">
+                  <p className="px-2 text-[10px] font-bold uppercase tracking-wider text-misty-gray/60 mb-2">
                     {group.label}
                   </p>
                 )}
 
-                <div className="space-y-2">
+                <div className="space-y-1">
                   {group.items.map((item) => {
                     const IconComponent = item.icon;
                     const isActive = activeSection === item.id;
@@ -101,7 +112,7 @@ const AdminLayout = ({ children, activeSection }: AdminLayoutProps) => {
                       <button
                         key={item.id}
                         onClick={() => navigate(item.path)}
-                        className={`w-full flex items-center ${isCollapsed ? 'justify-center px-2' : 'space-x-3 px-4'} py-3 rounded-xl text-left transition-all duration-200 ${
+                        className={`w-full flex items-center ${isCollapsed ? 'justify-center px-2' : 'space-x-3 px-4'} py-2.5 rounded-xl text-left transition-all duration-200 ${
                           isActive
                             ? "bg-earthy-burgundy/10 text-earthy-burgundy border border-earthy-burgundy/20"
                             : "text-steel-blue hover:bg-sand-beige/50 hover:text-earthy-burgundy"
@@ -109,11 +120,10 @@ const AdminLayout = ({ children, activeSection }: AdminLayoutProps) => {
                         title={isCollapsed ? item.label : undefined}
                       >
                         <IconComponent className="h-5 w-5" />
-                        {!isCollapsed && <span className="font-medium">{item.label}</span>}
+                        {!isCollapsed && <span className="font-medium text-sm">{item.label}</span>}
                       </button>
                     );
                   })}
-
                 </div>
               </div>
             ))}
