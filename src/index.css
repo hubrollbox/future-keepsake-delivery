@@ -1,9 +1,7 @@
 /* ================================
    TAILWIND BASE (OBRIGATÓRIO PRIMEIRO)
    ================================ */
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import 'tailwindcss';
 
 /* ================================
    FONTES
