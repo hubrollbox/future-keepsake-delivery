@@ -1,4 +1,3 @@
-/* eslint-env node */
 const { execSync } = require('child_process');
 
 try {
