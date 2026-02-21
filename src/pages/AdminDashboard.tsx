@@ -13,9 +13,8 @@ const AdminPayments = lazy(() => import("@/components/admin/AdminPayments"));
 const AdminClients = lazy(() => import("@/components/admin/AdminClients"));
 const AdminProducts = lazy(() => import("@/components/admin/AdminProducts"));
 const AdminPlans = lazy(() => import("@/components/admin/AdminPlans"));
-const AdminContent = lazy(() => import("@/components/admin/AdminContent"));
+const AdminGamification = lazy(() => import("@/components/admin/AdminContent"));
 const AdminBlog = lazy(() => import("@/components/admin/AdminBlog"));
-const AdminEditorial = lazy(() => import("@/components/admin/AdminEditorial"));
 
 const AdminDashboardPage = () => {
   const { user, isAdmin, loading } = useAuth();
@@ -59,9 +58,8 @@ const AdminDashboardPage = () => {
           <Route path="warehouse" element={<AdminWarehouse />} />
           <Route path="products" element={<AdminProducts />} />
           <Route path="plans" element={<AdminPlans />} />
-          <Route path="content" element={<AdminContent />} />
+          <Route path="gamification" element={<AdminGamification />} />
           <Route path="blog" element={<AdminBlog />} />
-          <Route path="editorial" element={<AdminEditorial />} />
           <Route path="messages" element={<AdminMessages />} />
           <Route path="payments" element={<AdminPayments />} />
           <Route path="clients" element={<AdminClients />} />

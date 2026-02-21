@@ -14,8 +14,7 @@ import {
   ShoppingCart,
   Crown,
   FileText,
-  BookOpen,
-  FolderTree,
+  Trophy,
   Menu,
   X,
 } from "lucide-react";
@@ -47,14 +46,11 @@ const AdminLayout = ({ children, activeSection }: AdminLayoutProps) => {
       ],
     },
     {
-      id: "content-family",
-      label: "Família de Conteúdo",
+      id: "content",
+      label: "Conteúdo",
       items: [
         { id: "blog", label: "Blog", icon: FileText, path: "/admin/blog" },
-      ],
-      children: [
-        { id: "editorial", label: "Editorial", icon: BookOpen, path: "/admin/editorial" },
-        { id: "content", label: "Conteúdo", icon: FolderTree, path: "/admin/content" },
+        { id: "gamification", label: "Gamificação", icon: Trophy, path: "/admin/gamification" },
       ],
     },
   ];
@@ -118,29 +114,6 @@ const AdminLayout = ({ children, activeSection }: AdminLayoutProps) => {
                     );
                   })}
 
-                  {!isCollapsed && group.children?.length ? (
-                    <div className="ml-5 border-l border-dusty-rose/30 pl-3 space-y-1">
-                      {group.children.map((item) => {
-                        const IconComponent = item.icon;
-                        const isActive = activeSection === item.id;
-
-                        return (
-                          <button
-                            key={item.id}
-                            onClick={() => navigate(item.path)}
-                            className={`w-full flex items-center space-x-2 px-3 py-2 rounded-lg text-left transition-all duration-200 ${
-                              isActive
-                                ? "bg-earthy-burgundy/10 text-earthy-burgundy"
-                                : "text-steel-blue/90 hover:bg-sand-beige/50 hover:text-earthy-burgundy"
-                            }`}
-                          >
-                            <IconComponent className="h-4 w-4" />
-                            <span className="text-sm font-medium">{item.label}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  ) : null}
                 </div>
               </div>
             ))}

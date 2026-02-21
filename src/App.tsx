@@ -45,9 +45,7 @@ import TermsConditions from "@/pages/TermsConditions";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import LandingPage from "@/pages/LandingPage";
 import Blog from "./pages/Blog";
-import BlogPost from "./pages/BlogPost"; // Agora é VISUALIZAÇÃO, não edição
-import BlogAdmin from "./pages/admin/BlogAdmin";
-// NÃO importe CreateBlogPost aqui - ele é usado dentro de BlogAdmin via query params
+import BlogPost from "./pages/BlogPost";
 
 const queryClient = new QueryClient();
 
@@ -90,10 +88,7 @@ function App() {
                   <Route path="/partnerships" element={<Partnerships />} />
                   <Route path="/checkout" element={<Checkout />} />
                   
-                  {/* Admin do Blog - TUDO é gerido pelo BlogAdmin */}
-                  <Route path="/admin/blog" element={<BlogAdmin />} />
-                  
-                  {/* Admin Dashboard geral */}
+                  {/* Admin Dashboard - todas as secções */}
                   <Route path="/admin/*" element={<AdminDashboard />} />
                   
                   {/* Legal pages */}

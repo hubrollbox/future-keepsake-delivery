@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Progress } from "@/components/ui/progress";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { 
@@ -25,12 +26,18 @@ import {
   Search,
   MoreVertical,
   AlertTriangle,
-  X
+  X,
+  Clock,
+  BarChart3,
+  BookOpen,
+  Sparkles,
+  Eye,
 } from "lucide-react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { sanitizeHtml, sanitizeInput } from "@/components/auth/SecureInputValidation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import editorialData from "../../../scripts/editorial/database/editorial-database.json";
 
 interface BlogPost {
   id?: string;
@@ -58,6 +65,7 @@ const AdminBlog = () => {
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [activeTab, setActiveTab] = useState<string>("content");
+  const [mainTab, setMainTab] = useState<string>("articles");
   const [form, setForm] = useState<BlogPost>({ 
     title: "", 
     slug: "", 
@@ -373,6 +381,32 @@ const AdminBlog = () => {
   const titleScore = titleLength > 0 && titleLength <= 60 ? 100 : titleLength > 60 ? Math.max(0, 100 - (titleLength - 60) * 5) : 0;
   const excerptScore = excerptLength > 0 && excerptLength <= 160 ? 100 : excerptLength > 160 ? Math.max(0, 100 - (excerptLength - 160) * 3) : 0;
 
+  // Editorial data
+  const topics = editorialData.topics;
+  const pillars = editorialData.pillars;
+  const topicsToWrite = useMemo(() => topics.filter(t => t.status === "por_escrever"), [topics]);
+  const highPriority = useMemo(() => topics.filter(t => t.priority === "alta"), [topics]);
+  const topicsPublished = useMemo(() => topics.filter(t => t.status === "publicado"), [topics]);
+  const coveragePercent = Math.round((topicsPublished.length / topics.length) * 100);
+
+  const pillarStats = useMemo(() => pillars.map(p => {
+    const pillarTopics = topics.filter(t => t.pillar === p.id);
+    const done = pillarTopics.filter(t => t.status === "publicado").length;
+    return { ...p, total: pillarTopics.length, done, percent: pillarTopics.length > 0 ? Math.round((done / pillarTopics.length) * 100) : 0 };
+  }), [pillars, topics]);
+
+  const STATUS_CONFIG: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
+    por_escrever: { label: "Por escrever", color: "bg-muted text-muted-foreground", icon: <FileText className="h-3 w-3" /> },
+    em_andamento: { label: "Em andamento", color: "bg-blue-100 text-blue-800", icon: <Clock className="h-3 w-3" /> },
+    publicado: { label: "Publicado", color: "bg-green-100 text-green-800", icon: <CheckCircle2 className="h-3 w-3" /> },
+  };
+
+  const PRIORITY_CONFIG: Record<string, string> = {
+    alta: "text-destructive font-semibold",
+    media: "text-amber-600",
+    baixa: "text-muted-foreground",
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -380,13 +414,29 @@ const AdminBlog = () => {
         <div>
           <h1 className="text-2xl font-fraunces text-foreground">Gestão de Blog</h1>
           <p className="text-sm text-muted-foreground mt-1">
-            {publishedCount} publicados · {draftCount} rascunhos
+            {publishedCount} publicados · {draftCount} rascunhos · {topicsToWrite.length} por escrever
           </p>
         </div>
         <Button onClick={openNewDialog} className="bg-primary hover:bg-primary/90">
           <Plus className="h-4 w-4 mr-2" /> Novo Artigo
         </Button>
       </div>
+
+      {/* Main Tabs: Articles | Editorial */}
+      <Tabs value={mainTab} onValueChange={setMainTab}>
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="articles" className="flex items-center gap-2">
+            <FileText className="h-4 w-4" />
+            Artigos
+          </TabsTrigger>
+          <TabsTrigger value="editorial" className="flex items-center gap-2">
+            <BookOpen className="h-4 w-4" />
+            Editorial
+          </TabsTrigger>
+        </TabsList>
+
+        {/* === ARTICLES TAB === */}
+        <TabsContent value="articles" className="space-y-4">
 
       {/* Search */}
       <div className="relative">
@@ -515,6 +565,169 @@ const AdminBlog = () => {
           </Table>
         </CardContent>
       </Card>
+        </TabsContent>
+
+        {/* === EDITORIAL TAB === */}
+        <TabsContent value="editorial" className="space-y-6">
+          {/* Metrics */}
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-2 text-muted-foreground text-sm mb-1">
+                  <FileText className="h-4 w-4" /> Por escrever
+                </div>
+                <p className="text-3xl font-bold text-foreground">{topicsToWrite.length}</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-2 text-muted-foreground text-sm mb-1">
+                  <AlertTriangle className="h-4 w-4" /> Prioridade alta
+                </div>
+                <p className="text-3xl font-bold text-destructive">{highPriority.length}</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-2 text-muted-foreground text-sm mb-1">
+                  <CheckCircle2 className="h-4 w-4" /> Publicados
+                </div>
+                <p className="text-3xl font-bold text-foreground">{publishedCount}</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-2 text-muted-foreground text-sm mb-1">
+                  <BarChart3 className="h-4 w-4" /> Cobertura
+                </div>
+                <p className="text-3xl font-bold text-foreground">{coveragePercent}%</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Pillar Progress */}
+          <Card>
+            <CardContent className="pt-6 space-y-4">
+              <h3 className="font-semibold text-foreground">Progresso por pilar</h3>
+              {pillarStats.map(p => (
+                <div key={p.id} className="space-y-1">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-foreground">{p.name}</span>
+                    <span className="text-muted-foreground">{p.done}/{p.total}</span>
+                  </div>
+                  <Progress value={p.percent} className="h-2" />
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+
+          {/* Pipeline Topics */}
+          <Card>
+            <CardContent className="p-0">
+              <div className="p-4 border-b">
+                <h3 className="font-semibold text-foreground flex items-center gap-2">
+                  <Sparkles className="h-4 w-4" /> Pipeline editorial
+                </h3>
+              </div>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[40%]">Tópico</TableHead>
+                    <TableHead>Pilar</TableHead>
+                    <TableHead>Prioridade</TableHead>
+                    <TableHead>Estado</TableHead>
+                    <TableHead className="text-right">Ação</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {topics.map(topic => {
+                    const statusCfg = STATUS_CONFIG[topic.status] ?? STATUS_CONFIG["por_escrever"]!;
+                    const priorityCls = PRIORITY_CONFIG[topic.priority] ?? "";
+                    return (
+                      <TableRow key={topic.id}>
+                        <TableCell>
+                          <p className="font-medium text-foreground text-sm">{topic.title}</p>
+                          <p className="text-xs text-muted-foreground">{topic.target_keyword}</p>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="outline" className="text-xs">
+                            {pillars.find(p => p.id === topic.pillar)?.name || topic.pillar}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <span className={`text-sm capitalize ${priorityCls}`}>{topic.priority}</span>
+                        </TableCell>
+                        <TableCell>
+                          <Badge className={`${statusCfg.color} border-0 gap-1`}>
+                            {statusCfg.icon}
+                            {statusCfg.label}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          {topic.status === "por_escrever" && (
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                toast({
+                                  title: "Gerar rascunho",
+                                  description: `Dispara o workflow GitHub Actions com topic_id=${topic.id}`,
+                                });
+                              }}
+                            >
+                              Gerar
+                            </Button>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+
+          {/* Drafts pending approval */}
+          {draftCount > 0 && (
+            <Card>
+              <CardContent className="p-0">
+                <div className="p-4 border-b">
+                  <h3 className="font-semibold text-foreground flex items-center gap-2">
+                    <Eye className="h-4 w-4" /> Rascunhos pendentes de aprovação ({draftCount})
+                  </h3>
+                </div>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Título</TableHead>
+                      <TableHead>Criado</TableHead>
+                      <TableHead className="text-right">Ações</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {posts.filter(p => p.status === "draft").map(post => (
+                      <TableRow key={post.id}>
+                        <TableCell className="font-medium text-foreground">{post.title}</TableCell>
+                        <TableCell className="text-sm text-muted-foreground">
+                          {post.created_at ? new Date(post.created_at).toLocaleDateString('pt-PT') : '-'}
+                        </TableCell>
+                        <TableCell className="text-right space-x-2">
+                          <Button size="sm" variant="outline" onClick={() => openEditDialog(post)}>
+                            <Edit className="h-3 w-3 mr-1" /> Editar
+                          </Button>
+                          <Button size="sm" onClick={() => publishToggle(post)} className="bg-primary hover:bg-primary/90">
+                            <UploadCloud className="h-3 w-3 mr-1" /> Publicar
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          )}
+        </TabsContent>
+      </Tabs>
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
