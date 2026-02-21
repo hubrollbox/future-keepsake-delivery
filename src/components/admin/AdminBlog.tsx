@@ -37,7 +37,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { sanitizeHtml, sanitizeInput } from "@/components/auth/SecureInputValidation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import editorialData from "../../../scripts/editorial/database/editorial-database.json";
+import editorialData from "@/data/editorial-database.json";
 
 interface BlogPost {
   id?: string;
