@@ -837,7 +837,7 @@ export type Database = {
           id: number
           reward: number
           target: number
-          time_limit: unknown
+          time_limit: string | null
           title: string
         }
         Insert: {
@@ -846,7 +846,7 @@ export type Database = {
           id?: number
           reward: number
           target: number
-          time_limit?: unknown
+          time_limit?: string | null
           title: string
         }
         Update: {
@@ -855,7 +855,7 @@ export type Database = {
           id?: number
           reward?: number
           target?: number
-          time_limit?: unknown
+          time_limit?: string | null
           title?: string
         }
         Relationships: []
