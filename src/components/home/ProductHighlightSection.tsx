@@ -50,8 +50,8 @@ const ProductHighlightSection = () => {
               <div className="w-20 h-20 bg-keepla-red/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-keepla-red/20 transition-colors">
                 <product.icon className="h-10 w-10 text-keepla-red" />
               </div>
-              <h3 className="text-xl font-semibold text-keepla-gray-800 mb-3 font-fraunces">{product.title}</h3>
-              <p className="text-keepla-gray text-sm mb-4 leading-relaxed">{product.description}</p>
+              <h3 className="text-xl font-semibold text-foreground mb-3 font-fraunces">{product.title}</h3>
+              <p className="text-muted-foreground text-sm mb-4 leading-relaxed">{product.description}</p>
               <div className="text-lg font-bold text-keepla-red mb-4">{product.price}</div>
               <ul className="space-y-2 mb-6">
                 {product.features.map((feature, i) => (
