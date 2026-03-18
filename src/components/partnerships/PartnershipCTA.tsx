@@ -24,7 +24,7 @@ const PartnershipCTA = () => {
         <Button 
           variant="outline" 
           size="lg" 
-          className="text-lg px-8 py-6 border-keepla-red text-keepla-red hover:bg-keepla-red/10 font-inter"
+          className="text-lg px-8 py-6 border-primary text-primary hover:bg-primary/10 font-inter"
           onClick={() => navigate('/contact')}
         >
           Saber Mais

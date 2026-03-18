@@ -32,8 +32,8 @@ const GamificationPreview = () => {
         </div>
         <div className="text-center hover:scale-105 transition-transform duration-300">
           <Star className="h-8 w-8 md:h-10 md:w-10 text-gold mx-auto mb-2 md:mb-3" />
-          <p className="text-sm md:text-base font-semibold text-black mb-1">Missões Temporais</p>
-          <p className="text-xs md:text-sm text-gray-600">Desafios únicos</p>
+          <p className="text-sm md:text-base font-semibold text-foreground mb-1">Missões Temporais</p>
+          <p className="text-xs md:text-sm text-muted-foreground">Desafios únicos</p>
         </div>
       </div>
     </div>

@@ -24,8 +24,8 @@ const HowItWorksHero = () => {
         entregues no momento perfeito."
       </p>
       
-      <p className="text-lg md:text-xl text-keepla-gray-700 max-w-3xl mx-auto leading-relaxed font-inter">
-        Somos o teu <strong className="text-keepla-red"> Guardião do Tempo</strong>.
+      <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-inter">
+        Somos o teu <strong className="text-primary"> Guardião do Tempo</strong>.
       </p>
     </div>
   );

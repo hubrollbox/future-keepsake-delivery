@@ -27,7 +27,7 @@ const ManifestoSection = () => {
           </p>
           
           <p className="text-lg">
-            <strong className="text-keepla-red">Guardamos aquilo que é importante.</strong> Protegemos aquilo que é íntimo. 
+            <strong className="text-primary">Guardamos aquilo que é importante.</strong> Protegemos aquilo que é íntimo. 
             Acreditamos que a entrega certa pode mudar o dia — ou até a vida — de quem a recebe.
           </p>
 

@@ -55,7 +55,7 @@ const ProductHighlightSection = () => {
               <div className="text-lg font-bold text-keepla-red mb-4">{product.price}</div>
               <ul className="space-y-2 mb-6">
                 {product.features.map((feature, i) => (
-                  <li key={i} className="flex items-center text-sm text-keepla-gray">
+                  <li key={i} className="flex items-center text-sm text-muted-foreground">
                     <Star className="h-4 w-4 text-keepla-red mr-2 flex-shrink-0" />
                     {feature}
                   </li>
