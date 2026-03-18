@@ -15,9 +15,9 @@ const ManifestoSection = () => {
           </div>
         </div>
         
-        <h2 className="text-3xl md:text-4xl font-bold text-keepla-black mb-8 font-inter">
+        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 font-inter">
           Porque Há Coisas Que Só Fazem Sentido<br />
-          <span className="text-keepla-red">No Momento Certo</span>
+          <span className="text-primary">No Momento Certo</span>
         </h2>
 
         <div className="space-y-6 text-keepla-gray-700 leading-relaxed mb-8 font-inter">
