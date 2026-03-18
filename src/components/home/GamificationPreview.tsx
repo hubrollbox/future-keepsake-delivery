@@ -17,8 +17,8 @@ const GamificationPreview = () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
         <div className="text-center hover:scale-105 transition-transform duration-300">
           <Target className="h-8 w-8 md:h-10 md:w-10 text-gold mx-auto mb-2 md:mb-3" />
-          <p className="text-sm md:text-base font-semibold text-black mb-1">Selos Temporais Únicos</p>
-          <p className="text-xs md:text-sm text-gray-600">Colecciona marcos especiais</p>
+          <p className="text-sm md:text-base font-semibold text-foreground mb-1">Selos Temporais Únicos</p>
+          <p className="text-xs md:text-sm text-muted-foreground">Colecciona marcos especiais</p>
         </div>
         <div className="text-center hover:scale-105 transition-transform duration-300">
           <Trophy className="h-8 w-8 md:h-10 md:w-10 text-gold mx-auto mb-2 md:mb-3" />
