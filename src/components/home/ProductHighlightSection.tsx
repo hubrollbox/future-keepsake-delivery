@@ -37,7 +37,7 @@ const ProductHighlightSection = () => {
         <h2 className="text-section-title-sm md:text-section-title text-foreground mb-4 md:mb-6 font-fraunces">
           Presentes com Alma
         </h2>
-        <p className="text-body md:text-body-large text-keepla-gray mb-8 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-body md:text-body-large text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
           Cada presente é uma promessa ao futuro, guardada com o carinho do presente. 
           <span className="text-keepla-red font-medium"> Escolhe como queres tocar o coração de quem amas.</span>
         </p>
