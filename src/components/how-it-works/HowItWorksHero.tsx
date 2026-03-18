@@ -18,7 +18,7 @@ const HowItWorksHero = () => {
         <span className="text-primary block md:inline"> keepla</span>
       </h1>
 
-      <p className="text-xl md:text-2xl lg:text-3xl text-keepla-red mb-6 md:mb-8 max-w-4xl mx-auto font-bold leading-relaxed font-georgia italic">
+      <p className="text-xl md:text-2xl lg:text-3xl text-primary mb-6 md:mb-8 max-w-4xl mx-auto font-bold leading-relaxed font-georgia italic">
         "Transformamos momentos em memórias eternas, 
         <br className="hidden md:block" />
         entregues no momento perfeito."
