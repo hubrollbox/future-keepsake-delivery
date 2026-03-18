@@ -24,8 +24,8 @@ const DeliveryTypesSection = () => {
         <Card className="emotion-card text-center p-6 md:p-8 hover:shadow-soft hover:scale-105 transition-all duration-300 border border-keepla-gray/20 group">
           <CardContent className="pt-6">
             <Mail className="h-12 w-12 md:h-16 md:w-16 text-keepla-red mx-auto mb-4 md:mb-6 group-hover:animate-bounce-gentle" />
-            <h3 className="font-bold mb-2 md:mb-3 text-lg md:text-xl text-keepla-gray-800 font-fraunces">Mensagem Digital</h3>
-            <p className="text-keepla-gray text-sm md:text-base mb-3 md:mb-4 leading-relaxed">
+            <h3 className="font-bold mb-2 md:mb-3 text-lg md:text-xl text-foreground font-fraunces">Mensagem Digital</h3>
+            <p className="text-muted-foreground text-sm md:text-base mb-3 md:mb-4 leading-relaxed">
               Cartas escritas do coração, vídeos pessoais, fotos especiais. Tudo protegido com tecnologia blockchain.
             </p>
             <p className="text-keepla-red font-semibold text-sm md:text-base">Verificação de autenticidade incluída</p>
