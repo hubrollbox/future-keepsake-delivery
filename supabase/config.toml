@@ -116,9 +116,11 @@ deno_version = 2
 
 [functions.send-due-notifications]
 enabled = true
-verify_jwt = true
-import_map = "./functions/send-due-notifications/deno.json"
-entrypoint = "./functions/send-due-notifications/index.ts"
+verify_jwt = false
+
+[functions.generate-blog-draft]
+enabled = true
+verify_jwt = false
 
 [analytics]
 enabled = false
