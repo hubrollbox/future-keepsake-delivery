@@ -14,7 +14,7 @@ const DeliveryTypesSection = () => {
           <CardContent className="pt-6">
             <Gift className="h-12 w-12 md:h-16 md:w-16 text-keepla-red mx-auto mb-4 md:mb-6 group-hover:animate-bounce-gentle" />
             <h3 className="font-bold mb-2 md:mb-3 text-lg md:text-xl text-foreground font-fraunces">Presente Físico</h3>
-            <p className="text-keepla-gray text-sm md:text-base mb-3 md:mb-4 leading-relaxed">
+            <p className="text-muted-foreground text-sm md:text-base mb-3 md:mb-4 leading-relaxed">
               Guardamos o teu presente numa instalação segura e climatizada. Desde jóias a livros, cartas a brinquedos.
             </p>
             <p className="text-keepla-red font-semibold text-sm md:text-base">A partir de 1,90€/mês</p>
