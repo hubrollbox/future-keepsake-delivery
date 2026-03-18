@@ -7,10 +7,10 @@ const PartnershipCTA = () => {
 
   return (
     <div className="text-center bg-keepla-white border border-keepla-gray rounded-2xl p-8 max-w-3xl mx-auto">
-      <h3 className="text-3xl font-bold text-keepla-black mb-4 font-inter">
+      <h3 className="text-3xl font-bold text-foreground mb-4 font-inter">
         Pronto para Ser Nosso Parceiro?
       </h3>
-      <p className="text-lg text-keepla-gray-700 mb-6 font-inter">
+      <p className="text-lg text-muted-foreground mb-6 font-inter">
         Vamos criar juntos o futuro das entregas temporais e experiências memoráveis.
       </p>
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
