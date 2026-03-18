@@ -15,19 +15,19 @@ const ManifestoSection = () => {
           </div>
         </div>
         
-        <h2 className="text-3xl md:text-4xl font-bold text-keepla-black mb-8 font-inter">
+        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 font-inter">
           Porque Há Coisas Que Só Fazem Sentido<br />
-          <span className="text-keepla-red">No Momento Certo</span>
+          <span className="text-primary">No Momento Certo</span>
         </h2>
 
-        <div className="space-y-6 text-keepla-gray-700 leading-relaxed mb-8 font-inter">
-          <p className="text-xl font-medium text-keepla-black">
+        <div className="space-y-6 text-muted-foreground leading-relaxed mb-8 font-inter">
+          <p className="text-xl font-medium text-foreground">
             Vivemos num mundo acelerado, onde tudo é imediato — mas há palavras que precisam de amadurecer, 
             de esperar pelo momento perfeito para florescer.
           </p>
           
           <p className="text-lg">
-            <strong className="text-keepla-red">Guardamos aquilo que é importante.</strong> Protegemos aquilo que é íntimo. 
+            <strong className="text-primary">Guardamos aquilo que é importante.</strong> Protegemos aquilo que é íntimo. 
             Acreditamos que a entrega certa pode mudar o dia — ou até a vida — de quem a recebe.
           </p>
 

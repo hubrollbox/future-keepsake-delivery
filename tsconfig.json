@@ -43,5 +43,8 @@
     "src",
     "src/types",
     "src/types/react.d.ts"
+  ],
+  "exclude": [
+    "src/scripts"
   ]
 }
