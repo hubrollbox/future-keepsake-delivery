@@ -665,18 +665,53 @@ const AdminBlog = () => {
                           </Badge>
                         </TableCell>
                         <TableCell className="text-right">
-                          {topic.status === "por_escrever" && (
+                          {(topic.status === "por_escrever" || topic.status === "gerado") && (
                             <Button
                               variant="outline"
                               size="sm"
-                              onClick={() => {
-                                toast({
-                                  title: "Gerar rascunho",
-                                  description: `Dispara o workflow GitHub Actions com topic_id=${topic.id}`,
-                                });
+                              disabled={generatingTopicId === topic.id}
+                              onClick={async () => {
+                                setGeneratingTopicId(topic.id);
+                                try {
+                                  const { data, error } = await supabase.functions.invoke('generate-blog-draft', {
+                                    body: { topic },
+                                  });
+                                  
+                                  if (error) throw error;
+                                  
+                                  if (data?.success) {
+                                    toast({
+                                      title: "Rascunho gerado!",
+                                      description: data.message || `"${topic.title}" está pronto para revisão na aba Artigos.`,
+                                    });
+                                    await fetchPosts();
+                                    setMainTab("articles");
+                                  } else {
+                                    throw new Error(data?.error || 'Erro desconhecido');
+                                  }
+                                } catch (err: any) {
+                                  console.error('Erro a gerar rascunho:', err);
+                                  toast({
+                                    title: "Erro ao gerar rascunho",
+                                    description: err?.message || "Não foi possível gerar o rascunho. Tenta novamente.",
+                                    variant: "destructive",
+                                  });
+                                } finally {
+                                  setGeneratingTopicId(null);
+                                }
                               }}
                             >
-                              Gerar
+                              {generatingTopicId === topic.id ? (
+                                <>
+                                  <Clock className="h-3 w-3 mr-1 animate-spin" />
+                                  A gerar...
+                                </>
+                              ) : (
+                                <>
+                                  <Sparkles className="h-3 w-3 mr-1" />
+                                  Gerar
+                                </>
+                              )}
                             </Button>
                           )}
                         </TableCell>
