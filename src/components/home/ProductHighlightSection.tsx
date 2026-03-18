@@ -34,7 +34,7 @@ const ProductHighlightSection = () => {
   return (
     <div className="mb-16 md:mb-20 animate-fade-in">
       <div className="text-center mb-12">
-        <h2 className="text-section-title-sm md:text-section-title text-keepla-gray-dark mb-4 md:mb-6 font-fraunces">
+        <h2 className="text-section-title-sm md:text-section-title text-foreground mb-4 md:mb-6 font-fraunces">
           Presentes com Alma
         </h2>
         <p className="text-body md:text-body-large text-keepla-gray mb-8 max-w-3xl mx-auto leading-relaxed">
