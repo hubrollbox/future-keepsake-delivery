@@ -7,10 +7,10 @@ const GamificationPreview = () => {
       <div className="flex justify-center mb-6">
         <Trophy className="h-12 w-12 md:h-16 md:w-16 text-gold animate-bounce-gentle" />
       </div>
-      <h2 className="text-section-title-sm md:text-section-title text-black mb-4 md:mb-6">
+      <h2 className="text-section-title-sm md:text-section-title text-foreground mb-4 md:mb-6">
         Torna-te um Verdadeiro Guardião do Tempo
       </h2>
-      <p className="text-body md:text-body-large text-gray-700 mb-6 md:mb-8 leading-relaxed">
+      <p className="text-body md:text-body-large text-muted-foreground mb-6 md:mb-8 leading-relaxed">
         Cada entrega que crias é uma missão temporal única. Conquista selos exclusivos, 
         desbloqueia níveis de prestígio e constrói a tua própria árvore de memórias através do tempo.
       </p>
