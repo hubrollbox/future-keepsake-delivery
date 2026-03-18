@@ -66,6 +66,7 @@ const AdminBlog = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [activeTab, setActiveTab] = useState<string>("content");
   const [mainTab, setMainTab] = useState<string>("articles");
+  const [generatingTopicId, setGeneratingTopicId] = useState<string | null>(null);
   const [form, setForm] = useState<BlogPost>({ 
     title: "", 
     slug: "", 
