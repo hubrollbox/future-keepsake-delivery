@@ -20,8 +20,8 @@ const ManifestoSection = () => {
           <span className="text-primary">No Momento Certo</span>
         </h2>
 
-        <div className="space-y-6 text-keepla-gray-700 leading-relaxed mb-8 font-inter">
-          <p className="text-xl font-medium text-keepla-black">
+        <div className="space-y-6 text-muted-foreground leading-relaxed mb-8 font-inter">
+          <p className="text-xl font-medium text-foreground">
             Vivemos num mundo acelerado, onde tudo é imediato — mas há palavras que precisam de amadurecer, 
             de esperar pelo momento perfeito para florescer.
           </p>
