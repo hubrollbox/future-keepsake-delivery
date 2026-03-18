@@ -6,7 +6,7 @@ const DeliveryTypesSection = () => {
   return (
     <div className="mb-16 md:mb-20 animate-fade-in">
       <h2 className="text-section-title-sm md:text-section-title text-foreground mb-4 md:mb-6 text-center font-fraunces">Três Formas de Viajar no Tempo</h2>
-      <p className="text-body md:text-body-large text-keepla-gray mb-8 md:mb-12 text-center max-w-3xl mx-auto leading-relaxed">
+      <p className="text-body md:text-body-large text-muted-foreground mb-8 md:mb-12 text-center max-w-3xl mx-auto leading-relaxed">
         Cada tipo de entrega é uma experiência única, adaptada às tuas necessidades e sonhos.
       </p>
       <div className="grid md:grid-cols-3 gap-6 md:gap-8">
