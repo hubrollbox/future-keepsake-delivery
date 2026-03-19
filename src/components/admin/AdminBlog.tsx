@@ -517,47 +517,63 @@ const AdminBlog = () => {
                       </div>
                     </TableCell>
                     <TableCell className="text-right">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                            <MoreVertical className="h-4 w-4" />
+                      <div className="flex items-center justify-end gap-1">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="h-7 text-xs"
+                          onClick={() => openEditDialog(post)}
+                        >
+                          <Edit className="h-3 w-3 mr-1" />
+                          Editar
+                        </Button>
+                        {post.status === "draft" && (
+                          <Button
+                            size="sm"
+                            className="h-7 text-xs bg-primary hover:bg-primary/90"
+                            onClick={() => publishToggle(post)}
+                          >
+                            <UploadCloud className="h-3 w-3 mr-1" />
+                            Publicar
                           </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuItem onClick={() => openEditDialog(post)}>
-                            <Edit className="h-4 w-4 mr-2" />
-                            Editar
-                          </DropdownMenuItem>
-                          {post.status === "published" && (
-                            <DropdownMenuItem onClick={() => window.open(`/blog/${post.slug}`, '_blank')}>
-                              <ExternalLink className="h-4 w-4 mr-2" />
-                              Ver no site
-                            </DropdownMenuItem>
-                          )}
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem onClick={() => publishToggle(post)}>
-                            {post.status === "published" ? (
+                        )}
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="sm" className="h-7 w-7 p-0">
+                              <MoreVertical className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            {post.status === "published" && (
                               <>
-                                <CircleSlash2 className="h-4 w-4 mr-2" />
-                                Despublicar
-                              </>
-                            ) : (
-                              <>
-                                <UploadCloud className="h-4 w-4 mr-2" />
-                                Publicar
+                                <DropdownMenuItem onClick={() => window.open(`/blog/${post.slug}`, '_blank')}>
+                                  <ExternalLink className="h-4 w-4 mr-2" />
+                                  Ver no site
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem onClick={() => publishToggle(post)}>
+                                  <CircleSlash2 className="h-4 w-4 mr-2" />
+                                  Despublicar
+                                </DropdownMenuItem>
                               </>
                             )}
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem 
-                            onClick={() => confirmDelete(post)}
-                            className="text-destructive focus:text-destructive"
-                          >
-                            <Trash2 className="h-4 w-4 mr-2" />
-                            Eliminar
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
+                            {post.status === "draft" && (
+                              <DropdownMenuItem onClick={() => window.open(`/blog/${post.slug}`, '_blank')}>
+                                <Eye className="h-4 w-4 mr-2" />
+                                Pré-visualizar
+                              </DropdownMenuItem>
+                            )}
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem 
+                              onClick={() => confirmDelete(post)}
+                              className="text-destructive focus:text-destructive"
+                            >
+                              <Trash2 className="h-4 w-4 mr-2" />
+                              Eliminar
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))
