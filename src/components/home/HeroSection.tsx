@@ -26,7 +26,7 @@ const HeroSection = () => {
           className="w-full h-full object-cover object-center opacity-90"
           style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', minWidth: '100%', minHeight: '100%' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/25"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/60"></div>
       </div>
 
       <div className="container mx-auto px-5 sm:px-6 text-center relative z-10">
