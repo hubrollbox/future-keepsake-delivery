@@ -56,7 +56,7 @@ const HeroSection = () => {
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
           >
             Presente no
-            <span className="block text-primary italic">Futuro</span>
+            <span className="block text-white italic" style={{ textShadow: '0 2px 20px hsl(351 76% 55% / 0.6)' }}>Futuro</span>
           </motion.h1>
 
           {/* Subtitle */}
