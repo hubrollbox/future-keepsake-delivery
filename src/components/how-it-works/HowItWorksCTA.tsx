@@ -23,7 +23,7 @@ const HowItWorksCTA = ({ onNavigate }: HowItWorksCTAProps) => {
       </p>
       <p className="text-lg md:text-xl text-muted-foreground mb-8 md:mb-10 leading-relaxed max-w-4xl mx-auto font-inter">
         Começa a criar memórias para o futuro e desbloqueia os teus primeiros selos temporais. 
-        <strong className="text-earthy-burgundy"> Junta-te a milhares de Guardiões do Tempo</strong>.
+        <strong className="text-primary"> Junta-te a milhares de Guardiões do Tempo</strong>.
       </p>
       
       <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center">
