@@ -23,7 +23,7 @@ const PhotoBackground = ({
   const overlayClasses = {
     light: "bg-white/70",
     dark: "bg-black/60",
-    gradient: "bg-gradient-to-b from-black/40 via-black/30 to-black/50"
+    gradient: "bg-gradient-to-b from-black/70 via-black/60 to-black/70"
   };
 
   const sizeClasses = {
