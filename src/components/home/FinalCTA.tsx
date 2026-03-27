@@ -71,7 +71,7 @@ const FinalCTA = () => {
           </motion.p>
           
           <motion.p 
-            className="text-sm sm:text-lg text-white/70 mb-8 sm:mb-10 mx-auto max-w-2xl leading-relaxed"
+            className="text-sm sm:text-lg text-white/90 mb-8 sm:mb-10 mx-auto max-w-2xl leading-relaxed drop-shadow-md"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
