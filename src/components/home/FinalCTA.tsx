@@ -110,22 +110,22 @@ const FinalCTA = () => {
           </motion.div>
           
           <motion.div 
-            className="flex flex-col sm:flex-row gap-3 sm:gap-6 justify-center items-center text-white/70 text-xs sm:text-base"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-6 justify-center items-center text-white/90 text-xs sm:text-base"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
           >
             <div className="flex items-center space-x-2">
-              <Star className="h-5 w-5 text-primary" aria-label="Ícone garantia" />
+              <Star className="h-5 w-5 text-white" aria-label="Ícone garantia" />
               <span className="font-inter">Sem compromissos</span>
             </div>
             <div className="flex items-center space-x-2">
-              <Star className="h-5 w-5 text-primary" aria-label="Ícone garantia" />
+              <Star className="h-5 w-5 text-white" aria-label="Ícone garantia" />
               <span className="font-inter">Cancelamento a qualquer momento</span>
             </div>
             <div className="flex items-center space-x-2">
-              <Star className="h-5 w-5 text-primary" aria-label="Ícone garantia" />
+              <Star className="h-5 w-5 text-white" aria-label="Ícone garantia" />
               <span className="font-inter">Suporte português</span>
             </div>
           </motion.div>
