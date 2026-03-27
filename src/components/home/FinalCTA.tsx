@@ -55,7 +55,7 @@ const FinalCTA = () => {
             transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
           >
             Pronto para a Tua Primeira<br />
-            <span className="text-primary font-georgia italic">
+            <span className="text-white font-georgia italic" style={{ textShadow: '0 2px 20px hsl(351 76% 55% / 0.6)' }}>
               Viagem no Tempo?
             </span>
           </motion.h2>
