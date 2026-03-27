@@ -6,7 +6,7 @@ const PartnershipCTA = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="text-center bg-keepla-white border border-keepla-gray rounded-2xl p-8 max-w-3xl mx-auto">
+    <div className="text-center bg-card border border-border rounded-2xl p-8 max-w-3xl mx-auto">
       <h3 className="text-3xl font-bold text-foreground mb-4 font-inter">
         Pronto para Ser Nosso Parceiro?
       </h3>

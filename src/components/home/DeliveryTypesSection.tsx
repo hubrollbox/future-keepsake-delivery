@@ -10,7 +10,7 @@ const DeliveryTypesSection = () => {
         Cada tipo de entrega é uma experiência única, adaptada às tuas necessidades e sonhos.
       </p>
       <div className="grid md:grid-cols-3 gap-6 md:gap-8">
-        <Card className="emotion-card text-center p-6 md:p-8 hover:shadow-soft hover:scale-105 transition-all duration-300 border border-keepla-gray/20 group">
+        <Card className="emotion-card text-center p-6 md:p-8 hover:shadow-soft hover:scale-105 transition-all duration-300 border border-border/20 group">
           <CardContent className="pt-6">
             <Gift className="h-12 w-12 md:h-16 md:w-16 text-keepla-red mx-auto mb-4 md:mb-6 group-hover:animate-bounce-gentle" />
             <h3 className="font-bold mb-2 md:mb-3 text-lg md:text-xl text-foreground font-fraunces">Presente Físico</h3>
@@ -21,7 +21,7 @@ const DeliveryTypesSection = () => {
           </CardContent>
         </Card>
 
-        <Card className="emotion-card text-center p-6 md:p-8 hover:shadow-soft hover:scale-105 transition-all duration-300 border border-keepla-gray/20 group">
+        <Card className="emotion-card text-center p-6 md:p-8 hover:shadow-soft hover:scale-105 transition-all duration-300 border border-border/20 group">
           <CardContent className="pt-6">
             <Mail className="h-12 w-12 md:h-16 md:w-16 text-keepla-red mx-auto mb-4 md:mb-6 group-hover:animate-bounce-gentle" />
             <h3 className="font-bold mb-2 md:mb-3 text-lg md:text-xl text-foreground font-fraunces">Mensagem Digital</h3>
@@ -32,7 +32,7 @@ const DeliveryTypesSection = () => {
           </CardContent>
         </Card>
 
-        <Card className="emotion-card text-center p-6 md:p-8 hover:shadow-soft hover:scale-105 transition-all duration-300 border border-keepla-gray/20 group">
+        <Card className="emotion-card text-center p-6 md:p-8 hover:shadow-soft hover:scale-105 transition-all duration-300 border border-border/20 group">
           <CardContent className="pt-6">
             <Heart className="h-12 w-12 md:h-16 md:w-16 text-keepla-red mx-auto mb-4 md:mb-6 group-hover:animate-bounce-gentle" />
             <h3 className="font-bold mb-2 md:mb-3 text-lg md:text-xl text-foreground font-fraunces">Cápsula do Tempo</h3>

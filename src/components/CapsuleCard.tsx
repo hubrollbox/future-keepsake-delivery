@@ -49,7 +49,7 @@ const CapsuleCard = ({
   };
 
   return (
-    <Card className="border-keepla-gray hover:border-keepla-red transition-colors">
+    <Card className="border-border hover:border-keepla-red transition-colors">
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-2">

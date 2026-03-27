@@ -61,7 +61,7 @@ const ProductsSection = () => {
 
   const ProductCard = ({ product }: { product: Product }) => {
     return (
-      <Card className="h-full border-keepla-gray/20 hover:border-keepla-red/40 transition-all duration-300 hover:shadow-keepla-sm bg-keepla-white">
+      <Card className="h-full border-border/20 hover:border-keepla-red/40 transition-all duration-300 hover:shadow-keepla-sm bg-card">
         <CardHeader className="pb-3">
           <div className="flex items-start justify-between">
             <div className="flex-1">
@@ -101,7 +101,7 @@ const ProductsSection = () => {
 
   if (loading) {
     return (
-      <div className="py-16 bg-keepla-white">
+      <div className="py-16 bg-card">
         <div className="container mx-auto px-4">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-keepla-red mx-auto"></div>
@@ -117,7 +117,7 @@ const ProductsSection = () => {
   const serviceProducts = getProductsByType('service');
 
   return (
-    <div className="py-16 bg-keepla-white">
+    <div className="py-16 bg-card">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-serif text-keepla-black mb-4">

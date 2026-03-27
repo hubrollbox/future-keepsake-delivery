@@ -12,22 +12,22 @@ const GamificationSystem = () => {
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-        <div className="text-center p-4 md:p-6 bg-keepla-white border border-keepla-gray/20 rounded-2xl hover:bg-keepla-white/70 transition-all hover:scale-105">
+        <div className="text-center p-4 md:p-6 bg-card border border-border/20 rounded-2xl hover:bg-card/70 transition-all hover:scale-105">
           <Target className="h-12 w-12 md:h-14 md:w-14 text-keepla-red mx-auto mb-4" />
           <h4 className="text-lg md:text-xl font-bold mb-3 text-keepla-black font-inter">Selos Temporais</h4>
           <p className="text-sm md:text-base text-keepla-gray-700 leading-relaxed font-inter">Conquista selos únicos baseados na distância das entregas</p>
         </div>
-        <div className="text-center p-4 md:p-6 bg-keepla-white border border-keepla-gray/20 rounded-2xl hover:bg-keepla-white/70 transition-all hover:scale-105">
+        <div className="text-center p-4 md:p-6 bg-card border border-border/20 rounded-2xl hover:bg-card/70 transition-all hover:scale-105">
           <Trophy className="h-12 w-12 md:h-14 md:w-14 text-keepla-red mx-auto mb-4" />
           <h4 className="text-lg md:text-xl font-bold mb-3 text-keepla-black font-inter">Níveis de Guardião</h4>
           <p className="text-sm md:text-base text-keepla-gray-700 leading-relaxed font-inter">Desbloqueia prestígio com entregas mais distantes</p>
         </div>
-        <div className="text-center p-4 md:p-6 bg-keepla-white border border-keepla-gray/20 rounded-2xl hover:bg-keepla-white/70 transition-all hover:scale-105">
+        <div className="text-center p-4 md:p-6 bg-card border border-border/20 rounded-2xl hover:bg-card/70 transition-all hover:scale-105">
           <Gift className="h-12 w-12 md:h-14 md:w-14 text-keepla-red mx-auto mb-4" />
           <h4 className="text-lg md:text-xl font-bold mb-3 text-keepla-black font-inter">Árvore de Memórias</h4>
           <p className="text-sm md:text-base text-keepla-gray-700 leading-relaxed font-inter">Timeline visual das tuas cápsulas temporais</p>
         </div>
-        <div className="text-center p-4 md:p-6 bg-keepla-white border border-keepla-gray/20 rounded-2xl hover:bg-keepla-white/70 transition-all hover:scale-105">
+        <div className="text-center p-4 md:p-6 bg-card border border-border/20 rounded-2xl hover:bg-card/70 transition-all hover:scale-105">
           <Calendar className="h-12 w-12 md:h-14 md:w-14 text-keepla-red mx-auto mb-4" />
           <h4 className="text-lg md:text-xl font-bold mb-3 text-keepla-black font-inter">Missões Temporais</h4>
           <p className="text-sm md:text-base text-keepla-gray-700 leading-relaxed font-inter">Desafios especiais para Guardiões dedicados</p>

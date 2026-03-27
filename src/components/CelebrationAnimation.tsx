@@ -159,7 +159,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
             </div>
           </div>
 
-          <div className="bg-white border-2 border-keepla-gray rounded-xl p-6 mb-8 animate-slide-up" style={{ animationDelay: '0.6s' }}>
+          <div className="bg-white border-2 border-border rounded-xl p-6 mb-8 animate-slide-up" style={{ animationDelay: '0.6s' }}>
             <CheckCircle className="w-8 h-8 text-green-600 mx-auto mb-3" />
             <p className="text-foreground leading-relaxed">
               <strong>Sua cápsula está segura!</strong> Ela será entregue automaticamente na data programada. 
