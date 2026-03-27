@@ -147,7 +147,7 @@ const About = () => {
             transition={{ duration: 0.7 }}
           >
             <p className="text-sm uppercase tracking-wider text-keepla-red font-semibold mb-4 text-center">A nossa promessa</p>
-            <h2 className="text-3xl md:text-4xl font-inter font-bold text-keepla-black mb-6 text-center">
+            <h2 className="text-3xl md:text-4xl font-inter font-bold text-foreground mb-6 text-center">
               A Nossa Missão
             </h2>
             <blockquote className="text-xl md:text-2xl text-muted-foreground font-georgia italic text-center mb-6 leading-relaxed">
@@ -174,14 +174,14 @@ const About = () => {
               grayscale={false}
             >
               <p className="text-sm uppercase tracking-wider text-keepla-red font-semibold mb-4">O que nos inspira</p>
-              <h2 className="text-3xl md:text-4xl font-inter font-bold text-keepla-black mb-6">
+              <h2 className="text-3xl md:text-4xl font-inter font-bold text-foreground mb-6">
                 Ligações que Atravessam o Tempo
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-6 font-inter">
                 Uma mão pequena que segura a nossa. Um gesto simples que contém todo o amor do mundo. 
                 São estes momentos — frágeis, irrepetíveis — que merecem ser guardados para sempre.
               </p>
-              <blockquote className="text-xl text-keepla-black font-georgia italic border-l-4 border-keepla-red pl-6">
+              <blockquote className="text-xl text-foreground font-georgia italic border-l-4 border-keepla-red pl-6">
                 "Guardamos hoje o que o coração quer dizer amanhã."
               </blockquote>
             </SectionWithPhoto>
@@ -204,14 +204,14 @@ const About = () => {
               imageRotation={-90}
             >
               <p className="text-sm uppercase tracking-wider text-keepla-red font-semibold mb-4">Histórias que perduram</p>
-              <h2 className="text-3xl md:text-4xl font-inter font-bold text-keepla-black mb-6">
+              <h2 className="text-3xl md:text-4xl font-inter font-bold text-foreground mb-6">
                 O Amor Não Tem Prazo
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-6 font-inter">
                 As fotografias amareladas dos nossos avós contam histórias que o tempo não apagou. 
                 Queremos que as tuas memórias também atravessem gerações.
               </p>
-              <blockquote className="text-xl text-keepla-black font-georgia italic border-l-4 border-keepla-red pl-6">
+              <blockquote className="text-xl text-foreground font-georgia italic border-l-4 border-keepla-red pl-6">
                 "O que guardas com amor, vive para sempre."
               </blockquote>
             </SectionWithPhoto>
@@ -231,7 +231,7 @@ const About = () => {
               imagePosition="left"
             >
               <p className="text-sm uppercase tracking-wider text-keepla-red font-semibold mb-4">A magia do tempo</p>
-              <h2 className="text-3xl md:text-4xl font-inter font-bold text-keepla-black mb-6">
+              <h2 className="text-3xl md:text-4xl font-inter font-bold text-foreground mb-6">
                 Escrever é Preservar
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-6 font-inter">
@@ -239,7 +239,7 @@ const About = () => {
                 é um ato revolucionário de amor. Cada palavra que guardas é uma semente 
                 plantada no futuro.
               </p>
-              <blockquote className="text-xl text-keepla-black font-georgia italic border-l-4 border-keepla-red pl-6">
+              <blockquote className="text-xl text-foreground font-georgia italic border-l-4 border-keepla-red pl-6">
                 "As palavras escritas com o coração têm o poder de atravessar o tempo."
               </blockquote>
             </SectionWithPhoto>
@@ -255,7 +255,7 @@ const About = () => {
           >
             <motion.p className="text-sm uppercase tracking-wider text-keepla-red font-semibold mb-4 text-center" variants={itemVariants}>O que nos move</motion.p>
             <motion.h2 
-              className="text-3xl md:text-4xl font-inter font-bold text-keepla-black mb-12 text-center"
+              className="text-3xl md:text-4xl font-inter font-bold text-foreground mb-12 text-center"
               variants={itemVariants}
             >
               A Nossa Essência
@@ -273,7 +273,7 @@ const About = () => {
                   <div className="w-16 h-16 bg-keepla-red/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-keepla-red/20 transition-colors">
                     <value.icon className="h-8 w-8 text-keepla-red" />
                   </div>
-                  <h3 className="text-xl font-inter font-semibold text-keepla-black mb-4">{value.title}</h3>
+                  <h3 className="text-xl font-inter font-semibold text-foreground mb-4">{value.title}</h3>
                   <p className="text-muted-foreground leading-relaxed font-georgia italic">{value.description}</p>
                 </motion.div>
               ))}

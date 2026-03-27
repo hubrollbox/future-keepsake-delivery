@@ -200,7 +200,7 @@ const Products = () => {
                       <div className="mx-auto p-3 bg-muted rounded-full w-fit mb-4">
                         <IconComponent className="h-6 w-6 text-primary" />
                       </div>
-                      <CardTitle className="text-xl font-bold text-keepla-black font-inter">
+                      <CardTitle className="text-xl font-bold text-foreground font-inter">
                         {product.name}
                       </CardTitle>
                       <div className="mt-4">

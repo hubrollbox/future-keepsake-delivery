@@ -184,7 +184,7 @@ function Pricing() {
                 }`}
               >
                 <CardHeader className="text-center pb-2 pt-8">
-                  <CardTitle className="text-2xl font-bold text-keepla-black font-inter mb-2">
+                  <CardTitle className="text-2xl font-bold text-foreground font-inter mb-2">
                     {plan.name}
                   </CardTitle>
                   <div className="mt-4 mb-2">
@@ -206,7 +206,7 @@ function Pricing() {
                     {plan.features.map((feature, index) => (
                       <li key={index} className="flex items-start gap-3">
                         <Check className="h-5 w-5 text-keepla-red mt-0.5 flex-shrink-0" />
-                        <span className="text-sm text-keepla-black font-inter">
+                        <span className="text-sm text-foreground font-inter">
                           {feature}
                         </span>
                       </li>
@@ -235,11 +235,11 @@ function Pricing() {
             <div className="text-center mb-10">
               <div className="inline-flex items-center gap-2 bg-muted px-4 py-2 rounded-full mb-4">
                 <Clock className="h-4 w-4 text-keepla-red" />
-                <span className="text-sm font-medium text-keepla-black font-inter">
+                <span className="text-sm font-medium text-foreground font-inter">
                   Brevemente
                 </span>
               </div>
-              <h2 className="text-3xl font-bold text-keepla-black font-inter">
+              <h2 className="text-3xl font-bold text-foreground font-inter">
                 Presentes Físicos
               </h2>
               <p className="text-muted-foreground mt-2 font-inter">
@@ -257,7 +257,7 @@ function Pricing() {
                       <product.icon className="h-6 w-6 text-muted-foreground" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-keepla-black font-inter mb-1">
+                      <h3 className="font-semibold text-foreground font-inter mb-1">
                         {product.name}
                       </h3>
                       <p className="text-sm text-muted-foreground font-inter">
@@ -272,7 +272,7 @@ function Pricing() {
 
           {/* FAQ Section */}
           <div className="max-w-3xl mx-auto mb-16 container px-4">
-            <h2 className="text-3xl font-bold text-keepla-black mb-8 text-center font-inter">
+            <h2 className="text-3xl font-bold text-foreground mb-8 text-center font-inter">
               Dúvidas Frequentes
             </h2>
             <div className="space-y-3">
@@ -281,7 +281,7 @@ function Pricing() {
                   key={index}
                   className="group bg-card p-5 rounded-lg border border-border hover:border-foreground/20 transition-colors"
                 >
-                  <summary className="font-medium cursor-pointer text-keepla-black font-inter flex items-center justify-between">
+                  <summary className="font-medium cursor-pointer text-foreground font-inter flex items-center justify-between">
                     {faq.question}
                     <span className="ml-4 text-muted-foreground group-open:rotate-180 transition-transform">
                       ▼

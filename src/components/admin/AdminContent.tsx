@@ -473,7 +473,7 @@ const AdminContent = () => {
         <TabsContent value="notifications" className="space-y-4">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-semibold">Notificações ({filteredNotifications.length})</h2>
-            <Button onClick={() => { resetNotificationForm(); setIsNotificationDialogOpen(true); }} className="bg-earthy-burgundy hover:bg-earthy-burgundy/90">
+            <Button onClick={() => { resetNotificationForm(); setIsNotificationDialogOpen(true); }} className="bg-primary hover:bg-primary/90">
               <Plus className="h-4 w-4 mr-2" />
               Nova Notificação
             </Button>
@@ -483,7 +483,7 @@ const AdminContent = () => {
             <CardContent>
               {loading ? (
                 <div className="text-center py-8">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-earthy-burgundy mx-auto"></div>
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
                   <p className="text-misty-gray mt-2">Carregando...</p>
                 </div>
               ) : (
@@ -556,7 +556,7 @@ const AdminContent = () => {
         <TabsContent value="achievements" className="space-y-4">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-semibold">Conquistas ({filteredAchievements.length})</h2>
-            <Button onClick={() => { resetAchievementForm(); setIsAchievementDialogOpen(true); }} className="bg-earthy-burgundy hover:bg-earthy-burgundy/90">
+            <Button onClick={() => { resetAchievementForm(); setIsAchievementDialogOpen(true); }} className="bg-primary hover:bg-primary/90">
               <Plus className="h-4 w-4 mr-2" />
               Nova Conquista
             </Button>
@@ -566,7 +566,7 @@ const AdminContent = () => {
             <CardContent>
               {loading ? (
                 <div className="text-center py-8">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-earthy-burgundy mx-auto"></div>
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
                   <p className="text-misty-gray mt-2">Carregando...</p>
                 </div>
               ) : (
@@ -637,7 +637,7 @@ const AdminContent = () => {
         <TabsContent value="quests" className="space-y-4">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-fraunces font-semibold text-steel-blue">Missões ({filteredQuests.length})</h2>
-            <Button onClick={() => { resetQuestForm(); setIsQuestDialogOpen(true); }} className="bg-earthy-burgundy hover:bg-earthy-burgundy/90">
+            <Button onClick={() => { resetQuestForm(); setIsQuestDialogOpen(true); }} className="bg-primary hover:bg-primary/90">
               <Plus className="h-4 w-4 mr-2" />
               Nova Missão
             </Button>
@@ -647,7 +647,7 @@ const AdminContent = () => {
             <CardContent>
               {loading ? (
                 <div className="text-center py-8">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-earthy-burgundy mx-auto"></div>
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
                   <p className="text-misty-gray mt-2">Carregando...</p>
                 </div>
               ) : (
@@ -778,7 +778,7 @@ const AdminContent = () => {
               <Button type="button" variant="outline" onClick={() => setIsNotificationDialogOpen(false)}>
                 Cancelar
               </Button>
-              <Button type="submit" className="bg-earthy-burgundy hover:bg-earthy-burgundy/90">
+              <Button type="submit" className="bg-primary hover:bg-primary/90">
                 {editingNotification ? "Atualizar" : "Criar"} Notificação
               </Button>
             </div>
@@ -841,7 +841,7 @@ const AdminContent = () => {
               <Button type="button" variant="outline" onClick={() => setIsAchievementDialogOpen(false)}>
                 Cancelar
               </Button>
-              <Button type="submit" className="bg-earthy-burgundy hover:bg-earthy-burgundy/90">
+              <Button type="submit" className="bg-primary hover:bg-primary/90">
                 {editingAchievement ? "Atualizar" : "Criar"} Conquista
               </Button>
             </div>
@@ -907,7 +907,7 @@ const AdminContent = () => {
               <Button type="button" variant="outline" onClick={() => setIsQuestDialogOpen(false)}>
                 Cancelar
               </Button>
-              <Button type="submit" className="bg-earthy-burgundy hover:bg-earthy-burgundy/90">
+              <Button type="submit" className="bg-primary hover:bg-primary/90">
                 {editingQuest ? "Atualizar" : "Criar"} Missão
               </Button>
             </div>

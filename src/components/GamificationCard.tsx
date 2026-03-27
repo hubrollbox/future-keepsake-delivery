@@ -42,12 +42,12 @@ const GamificationCard = ({
   const progressPercentage = (progress / maxProgress) * 100;
 
   return (
-    <Card className={`border-keepla-gray hover:border-keepla-red transition-colors ${!unlocked ? 'opacity-75' : ''}`}>
+    <Card className={`border-border hover:border-keepla-red transition-colors ${!unlocked ? 'opacity-75' : ''}`}>
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-2">
             {getTypeIcon()}
-            <CardTitle className="text-lg font-inter text-keepla-black">{title}</CardTitle>
+            <CardTitle className="text-lg font-inter text-foreground">{title}</CardTitle>
           </div>
           {unlocked && (
             <Badge className={getTypeColor()}>
@@ -62,7 +62,7 @@ const GamificationCard = ({
         {maxProgress > 0 && (
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
-              <span className="text-keepla-black font-medium">Progresso</span>
+              <span className="text-foreground font-medium">Progresso</span>
               <span className="text-gray-600">{progress}/{maxProgress}</span>
             </div>
             <div className="w-full bg-keepla-gray rounded-full h-2">
@@ -75,9 +75,9 @@ const GamificationCard = ({
         )}
 
         {reward && (
-          <div className="pt-2 border-t border-keepla-gray">
+          <div className="pt-2 border-t border-border">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-keepla-black font-medium">Recompensa:</span>
+              <span className="text-foreground font-medium">Recompensa:</span>
               <span className="text-keepla-red font-medium">{reward}</span>
             </div>
           </div>

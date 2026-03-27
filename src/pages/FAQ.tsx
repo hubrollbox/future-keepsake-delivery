@@ -86,7 +86,7 @@ const FAQ = () => {
                 <AccordionItem key={`faq-${faq.question.slice(0, 20).replace(/\s+/g, '-')}-${index}`} value={`item-${index}`}>
                   <Card className="border-keepla-red/20">
                     <AccordionTrigger className="px-6 py-4 hover:no-underline">
-                      <h3 className="text-left font-semibold text-keepla-black font-inter">
+                      <h3 className="text-left font-semibold text-foreground font-inter">
                         {faq.question}
                       </h3>
                     </AccordionTrigger>
