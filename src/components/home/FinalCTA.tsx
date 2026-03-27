@@ -23,7 +23,7 @@ const FinalCTA = () => {
           style={{ minWidth: '100%', minHeight: '100%', width: '100%', height: '100%' }}
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-black/70" />
       </div>
 
       <div className="container mx-auto px-5 sm:px-6 relative z-10">
@@ -55,7 +55,7 @@ const FinalCTA = () => {
             transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
           >
             Pronto para a Tua Primeira<br />
-            <span className="text-primary font-georgia italic">
+            <span className="text-white font-georgia italic" style={{ textShadow: '0 2px 20px hsl(351 76% 55% / 0.6)' }}>
               Viagem no Tempo?
             </span>
           </motion.h2>
@@ -71,13 +71,13 @@ const FinalCTA = () => {
           </motion.p>
           
           <motion.p 
-            className="text-sm sm:text-lg text-white/70 mb-8 sm:mb-10 mx-auto max-w-2xl leading-relaxed"
+            className="text-sm sm:text-lg text-white/90 mb-8 sm:mb-10 mx-auto max-w-2xl leading-relaxed drop-shadow-md"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
           >
-            Junta-te aos nossos <span className="text-primary font-semibold">primeiros utilizadores</span> que já estão a criar memórias para o futuro. 
+            Junta-te aos nossos <span className="text-white font-semibold">primeiros utilizadores</span> que já estão a criar memórias para o futuro. 
             Começa gratuitamente e descobre a magia de receber algo especial no momento perfeito.
           </motion.p>
           
@@ -110,22 +110,22 @@ const FinalCTA = () => {
           </motion.div>
           
           <motion.div 
-            className="flex flex-col sm:flex-row gap-3 sm:gap-6 justify-center items-center text-white/70 text-xs sm:text-base"
+            className="flex flex-col sm:flex-row gap-3 sm:gap-6 justify-center items-center text-white/90 text-xs sm:text-base"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
           >
             <div className="flex items-center space-x-2">
-              <Star className="h-5 w-5 text-primary" aria-label="Ícone garantia" />
+              <Star className="h-5 w-5 text-white" aria-label="Ícone garantia" />
               <span className="font-inter">Sem compromissos</span>
             </div>
             <div className="flex items-center space-x-2">
-              <Star className="h-5 w-5 text-primary" aria-label="Ícone garantia" />
+              <Star className="h-5 w-5 text-white" aria-label="Ícone garantia" />
               <span className="font-inter">Cancelamento a qualquer momento</span>
             </div>
             <div className="flex items-center space-x-2">
-              <Star className="h-5 w-5 text-primary" aria-label="Ícone garantia" />
+              <Star className="h-5 w-5 text-white" aria-label="Ícone garantia" />
               <span className="font-inter">Suporte português</span>
             </div>
           </motion.div>
