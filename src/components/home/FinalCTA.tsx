@@ -23,7 +23,7 @@ const FinalCTA = () => {
           style={{ minWidth: '100%', minHeight: '100%', width: '100%', height: '100%' }}
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-black/70" />
       </div>
 
       <div className="container mx-auto px-5 sm:px-6 relative z-10">
