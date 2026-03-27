@@ -119,7 +119,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
             </div>
           </div>
 
-          <h1 className="text-4xl font-georgia text-keepla-black mb-4 animate-slide-up">
+          <h1 className="text-4xl font-georgia text-foreground mb-4 animate-slide-up">
             🎉 Cápsula Criada com Sucesso!
           </h1>
 
@@ -135,7 +135,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
                 <div className="w-12 h-12 mx-auto bg-white rounded-full flex items-center justify-center shadow-md">
                   <Sparkles className="w-6 h-6 text-keepla-red" />
                 </div>
-                <h3 className="font-semibold text-keepla-black">Título</h3>
+                <h3 className="font-semibold text-foreground">Título</h3>
                 <p className="text-sm text-gray-600 font-medium">"{keepsakeTitle}"</p>
               </div>
 
@@ -143,7 +143,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
                 <div className="w-12 h-12 mx-auto bg-white rounded-full flex items-center justify-center shadow-md">
                   <Calendar className="w-6 h-6 text-keepla-red" />
                 </div>
-                <h3 className="font-semibold text-keepla-black">Entrega</h3>
+                <h3 className="font-semibold text-foreground">Entrega</h3>
                 <p className="text-sm text-gray-600 font-medium">{formatDate(deliveryDate)}</p>
               </div>
 
@@ -151,7 +151,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
                 <div className="w-12 h-12 mx-auto bg-white rounded-full flex items-center justify-center shadow-md">
                   <Heart className="w-6 h-6 text-keepla-red" />
                 </div>
-                <h3 className="font-semibold text-keepla-black">Destinatários</h3>
+                <h3 className="font-semibold text-foreground">Destinatários</h3>
                 <p className="text-sm text-gray-600 font-medium">
                   {recipientCount} {recipientCount === 1 ? 'pessoa' : 'pessoas'}
                 </p>
@@ -161,7 +161,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
 
           <div className="bg-white border-2 border-keepla-gray rounded-xl p-6 mb-8 animate-slide-up" style={{ animationDelay: '0.6s' }}>
             <CheckCircle className="w-8 h-8 text-green-600 mx-auto mb-3" />
-            <p className="text-keepla-black leading-relaxed">
+            <p className="text-foreground leading-relaxed">
               <strong>Sua cápsula está segura!</strong> Ela será entregue automaticamente na data programada. 
               Você receberá uma confirmação quando a mensagem for enviada.
             </p>
@@ -191,7 +191,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
             <Button
               variant="ghost"
               onClick={() => window.location.href = '/dashboard'}
-              className="text-gray-600 hover:text-keepla-black px-8 py-3"
+              className="text-gray-600 hover:text-foreground px-8 py-3"
             >
               <Eye className="w-5 h-5 mr-2" />
               Ver Dashboard

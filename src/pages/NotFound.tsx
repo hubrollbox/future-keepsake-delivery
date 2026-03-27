@@ -71,7 +71,7 @@ const NotFound = () => {
           {/* Emotional Message */}
           <motion.h1
             variants={itemVariants}
-            className="text-3xl md:text-4xl font-bold text-keepla-black mb-4"
+            className="text-3xl md:text-4xl font-bold text-foreground mb-4"
           >
             Memória não encontrada
           </motion.h1>

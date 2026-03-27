@@ -36,7 +36,7 @@ const Dashboard = () => {
       <div className="min-h-screen bg-keepla-white flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-keepla-red mx-auto mb-4"></div>
-          <h2 className="text-xl font-serif text-keepla-black">A carregar o seu dashboard...</h2>
+          <h2 className="text-xl font-serif text-foreground">A carregar o seu dashboard...</h2>
         </div>
       </div>
     );
@@ -86,7 +86,7 @@ const Dashboard = () => {
               {/* Keepsakes Section */}
               <div className="space-y-3" data-tour="keepsakes-list">
                 <div className="flex justify-between items-center">
-                  <h3 className="text-lg font-serif font-semibold text-keepla-black">
+                  <h3 className="text-lg font-serif font-semibold text-foreground">
                     Minhas Cápsulas
                   </h3>
                   <Button
@@ -148,7 +148,7 @@ const Dashboard = () => {
                     <div className="w-12 h-12 bg-keepla-red/20 rounded-full flex items-center justify-center mr-4">
                       <span className="text-2xl">💌</span>
                     </div>
-                    <h3 className="text-lg font-serif font-semibold text-keepla-black">
+                    <h3 className="text-lg font-serif font-semibold text-foreground">
                       Nova Cápsula
                     </h3>
                   </div>
@@ -165,7 +165,7 @@ const Dashboard = () => {
                     <div className="w-12 h-12 bg-keepla-red/20 rounded-full flex items-center justify-center mr-4">
                       <span className="text-2xl">⚙️</span>
                     </div>
-                    <h3 className="text-lg font-serif font-semibold text-keepla-black">
+                    <h3 className="text-lg font-serif font-semibold text-foreground">
                       Perfil
                     </h3>
                   </div>

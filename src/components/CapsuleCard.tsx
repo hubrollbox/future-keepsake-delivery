@@ -23,10 +23,10 @@ const CapsuleCard = ({
 }: CapsuleCardProps) => {
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "pending": return "bg-keepla-gray text-keepla-black";
+      case "pending": return "bg-keepla-gray text-foreground";
       case "delivered": return "bg-keepla-red/10 text-keepla-red";
-      case "scheduled": return "bg-keepla-gray-neutral text-keepla-black";
-      default: return "bg-keepla-gray text-keepla-black";
+      case "scheduled": return "bg-keepla-gray-neutral text-foreground";
+      default: return "bg-keepla-gray text-foreground";
     }
   };
 
@@ -54,7 +54,7 @@ const CapsuleCard = ({
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-2">
             {getTypeIcon(type)}
-            <CardTitle className="text-lg font-inter text-keepla-black">{title}</CardTitle>
+            <CardTitle className="text-lg font-inter text-foreground">{title}</CardTitle>
           </div>
           <Badge className={`${getStatusColor(status)} border-0 font-medium`}>
             {getStatusText(status)}
@@ -66,11 +66,11 @@ const CapsuleCard = ({
         
         <div className="space-y-2 text-sm">
           <div className="flex items-center justify-between">
-            <span className="text-keepla-black font-medium">Para:</span>
+            <span className="text-foreground font-medium">Para:</span>
             <span className="text-gray-600">{recipient}</span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-keepla-black font-medium">Entrega:</span>
+            <span className="text-foreground font-medium">Entrega:</span>
             <span className="text-gray-600">{deliveryDate}</span>
           </div>
         </div>

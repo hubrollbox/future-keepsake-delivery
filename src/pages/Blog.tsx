@@ -148,7 +148,7 @@ const Blog = () => {
                 </Button>
               </div>
             ) : (
-              <p className="text-keepla-black mt-3">
+              <p className="text-foreground mt-3">
                 Se o problema persistir, por favor{" "}
                 <a href="/contact" className="underline hover:text-keepla-red transition-colors">
                   contacta o suporte
@@ -201,7 +201,7 @@ const Blog = () => {
                     </div>
                   )}
                   <div className="p-6">
-                    <h2 className="text-xl font-bold text-keepla-black group-hover:text-keepla-red transition-colors">
+                    <h2 className="text-xl font-bold text-foreground group-hover:text-keepla-red transition-colors">
                       {post.title}
                     </h2>
                     {post.excerpt && (
