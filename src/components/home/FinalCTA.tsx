@@ -77,7 +77,7 @@ const FinalCTA = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
           >
-            Junta-te aos nossos <span className="text-primary font-semibold">primeiros utilizadores</span> que já estão a criar memórias para o futuro. 
+            Junta-te aos nossos <span className="text-white font-semibold">primeiros utilizadores</span> que já estão a criar memórias para o futuro. 
             Começa gratuitamente e descobre a magia de receber algo especial no momento perfeito.
           </motion.p>
           
