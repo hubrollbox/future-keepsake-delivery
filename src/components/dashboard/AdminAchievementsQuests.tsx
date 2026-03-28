@@ -124,7 +124,7 @@ const AdminAchievementsQuests: React.FC = () => {
                 value={newAchievement.description}
                 onChange={e => setNewAchievement(a => ({ ...a, description: e.target.value }))}
               />
-              <button onClick={addAchievement} className="px-3 py-1 bg-blue-500 text-white rounded">+</button>
+              <button onClick={addAchievement} className="px-3 py-1 bg-primary text-white rounded">+</button>
             </div>
             <div className="space-y-2">
               {achievements.map(a => (
@@ -144,13 +144,13 @@ const AdminAchievementsQuests: React.FC = () => {
                         onChange={e => setEditValues(v => ({ ...v, description: e.target.value }))}
                       />
                       <button onClick={() => saveEditAchievement(a.id)} className="px-2 py-1 bg-green-500 text-white rounded text-xs">✓</button>
-                      <button onClick={() => setEditingAchievement(null)} className="px-2 py-1 bg-gray-500 text-white rounded text-xs">✗</button>
+                      <button onClick={() => setEditingAchievement(null)} className="px-2 py-1 bg-muted0 text-white rounded text-xs">✗</button>
                     </>
                   ) : (
                     <>
                       <div className="flex-1">
                         <div className="font-medium">{a.title}</div>
-                        <div className="text-sm text-gray-600">{a.description}</div>
+                        <div className="text-sm text-muted-foreground">{a.description}</div>
                       </div>
                       <button onClick={() => startEditAchievement(a)} className="px-2 py-1 bg-yellow-500 text-white rounded text-xs">✏</button>
                       <button onClick={() => removeAchievement(a.id)} className="px-2 py-1 bg-red-500 text-white rounded text-xs">✗</button>
@@ -177,7 +177,7 @@ const AdminAchievementsQuests: React.FC = () => {
                 value={newQuest.description}
                 onChange={e => setNewQuest(q => ({ ...q, description: e.target.value }))}
               />
-              <button onClick={addQuest} className="px-3 py-1 bg-blue-500 text-white rounded">+</button>
+              <button onClick={addQuest} className="px-3 py-1 bg-primary text-white rounded">+</button>
             </div>
             <div className="space-y-2">
               {quests.map(q => (
@@ -197,13 +197,13 @@ const AdminAchievementsQuests: React.FC = () => {
                         onChange={e => setEditValues(v => ({ ...v, description: e.target.value }))}
                       />
                       <button onClick={() => saveEditQuest(q.id)} className="px-2 py-1 bg-green-500 text-white rounded text-xs">✓</button>
-                      <button onClick={() => setEditingQuest(null)} className="px-2 py-1 bg-gray-500 text-white rounded text-xs">✗</button>
+                      <button onClick={() => setEditingQuest(null)} className="px-2 py-1 bg-muted0 text-white rounded text-xs">✗</button>
                     </>
                   ) : (
                     <>
                       <div className="flex-1">
                         <div className="font-medium">{q.title}</div>
-                        <div className="text-sm text-gray-600">{q.description}</div>
+                        <div className="text-sm text-muted-foreground">{q.description}</div>
                       </div>
                       <button onClick={() => startEditQuest(q)} className="px-2 py-1 bg-yellow-500 text-white rounded text-xs">✏</button>
                       <button onClick={() => removeQuest(q.id)} className="px-2 py-1 bg-red-500 text-white rounded text-xs">✗</button>

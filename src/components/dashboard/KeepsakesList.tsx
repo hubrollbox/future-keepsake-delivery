@@ -20,10 +20,10 @@ interface KeepsakesListProps {
 // Componente para exibir um card de keepsake
 const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEdit: (id: string) => void, onDelete: (id: string) => void }) => {
   const statusColors: Record<KeepsakeStatus, string> = {
-    'pending': 'bg-orange-100 text-orange-800 border-orange-200',
-    'scheduled': 'bg-blue-100 text-blue-800 border-blue-200',
-    'sent': 'bg-green-100 text-green-800 border-green-200',
-    'delivered': 'bg-emerald-100 text-emerald-800 border-emerald-200',
+    'pending': 'bg-primary/10 text-foreground border-primary/20',
+    'scheduled': 'bg-primary/10 text-foreground border-primary/20',
+    'sent': 'bg-primary/10 text-foreground border-primary/20',
+    'delivered': 'bg-primary/10 text-foreground border-primary/20',
     'failed': 'bg-red-100 text-red-800 border-red-200'
   };
 
@@ -73,14 +73,14 @@ const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEd
             <Badge variant="outline" className="capitalize text-xs">
               {typeText[keepsake.type as keyof typeof typeText]}
             </Badge>
-            <Badge className={`text-xs border ${statusColors[keepsake.status] || 'bg-gray-100 text-gray-800 border-gray-200'}`}>
+            <Badge className={`text-xs border ${statusColors[keepsake.status] || 'bg-muted text-foreground border-border'}`}>
               <StatusIcon className="h-3 w-3 mr-1" />
               {statusText[keepsake.status] || 'Desconhecido'}
             </Badge>
           </div>
         </div>
         <CardDescription className="space-y-1 mt-1">
-          <div className="flex items-center text-sm text-gray-600">
+          <div className="flex items-center text-sm text-muted-foreground">
             <Calendar className="h-4 w-4 mr-1" />
             <span>Entrega programada: {formattedDate}</span>
           </div>
@@ -105,18 +105,18 @@ const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEd
         </CardDescription>
       </CardHeader>
       <CardContent className="keepsake-card-content pb-2">
-        <p className="text-sm text-gray-700 line-clamp-2 mb-3">
+        <p className="text-sm text-foreground line-clamp-2 mb-3">
           {keepsake.message_content || 'Sem conteúdo'}
         </p>
         <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2">
           {keepsake.recipient_email && (
-            <div className="flex items-center text-xs text-gray-500 break-all">
+            <div className="flex items-center text-xs text-muted-foreground break-all">
               <Mail className="h-3 w-3 mr-1 flex-shrink-0" /> 
               <span className="truncate">{keepsake.recipient_email}</span>
             </div>
           )}
           {keepsake.recipient_phone && (
-            <div className="flex items-center text-xs text-gray-500">
+            <div className="flex items-center text-xs text-muted-foreground">
               <Phone className="h-3 w-3 mr-1 flex-shrink-0" /> {keepsake.recipient_phone}
             </div>
           )}
@@ -266,7 +266,7 @@ const handleEdit = (id: string) => {
       
       {data?.pages[0]?.length === 0 && (
         <div className="text-center py-8">
-          <p className="text-gray-500">{getEmptyMessage()}</p>
+          <p className="text-muted-foreground">{getEmptyMessage()}</p>
           {!statusFilter && (
             <Button 
               className="mt-4" 

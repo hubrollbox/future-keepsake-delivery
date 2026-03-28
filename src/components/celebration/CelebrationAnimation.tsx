@@ -106,7 +106,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
             animationDuration: '2s'
           }}
         >
-          <Sparkles className="w-4 h-4 text-keepla-red opacity-70" />
+          <Sparkles className="w-4 h-4 text-primary opacity-70" />
         </div>
       ))}
 
@@ -115,7 +115,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
         isVisible ? 'scale-100 translate-y-0' : 'scale-75 translate-y-10'
       }`}>
         {/* Header */}
-        <div className={`h-2 bg-keepla-red`} />
+        <div className={`h-2 bg-primary`} />
         
         <CardContent className="p-8 text-center">
           {/* Ícone Principal Animado */}
@@ -124,26 +124,26 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
               {config.emoji}
             </div>
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="animate-ping absolute inline-flex h-20 w-20 rounded-full bg-keepla-gray opacity-12"></div>
-              <div className="animate-pulse absolute inline-flex h-16 w-16 rounded-full bg-keepla-gray opacity-16"></div>
+              <div className="animate-ping absolute inline-flex h-20 w-20 rounded-full bg-muted opacity-12"></div>
+              <div className="animate-pulse absolute inline-flex h-16 w-16 rounded-full bg-muted opacity-16"></div>
             </div>
           </div>
 
           {/* Título */}
-          <h2 className="text-2xl font-serif font-bold text-keepla-gray-800 mb-4">
+          <h2 className="text-2xl font-serif font-bold text-muted-foreground-800 mb-4">
             {title}
           </h2>
 
           {/* Mensagem */}
-          <p className="text-lg text-keepla-gray mb-6 leading-relaxed">
+          <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
             {message || config.defaultMessage}
           </p>
 
           {/* Ícones Decorativos */}
           <div className="flex justify-center items-center gap-4 mb-6">
-            <Star className="w-6 h-6 text-keepla-gray animate-pulse" />
-            <IconComponent className="w-8 h-8 text-keepla-red animate-bounce" />
-            <Heart className="w-6 h-6 text-keepla-red animate-pulse" style={{ animationDelay: '0.5s' }} />
+            <Star className="w-6 h-6 text-muted-foreground animate-pulse" />
+            <IconComponent className="w-8 h-8 text-primary animate-bounce" />
+            <Heart className="w-6 h-6 text-primary animate-pulse" style={{ animationDelay: '0.5s' }} />
           </div>
 
           {/* Botão de Ação */}
@@ -153,7 +153,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
                 setIsVisible(false);
                 setTimeout(onClose, 500);
               }}
-              className="bg-keepla-red hover:bg-keepla-red/90 text-white px-8 py-2"
+              className="bg-primary hover:bg-primary/90 text-white px-8 py-2"
             >
               Continuar
             </Button>
@@ -162,9 +162,9 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
           {/* Indicador de Auto-close */}
           {autoClose && (
             <div className="mt-4">
-              <div className="w-full bg-gray-200 rounded-full h-1">
+              <div className="w-full bg-muted rounded-full h-1">
                 <div 
-                  className={`bg-keepla-red h-1 rounded-full transition-all ease-linear`}
+                  className={`bg-primary h-1 rounded-full transition-all ease-linear`}
                   style={{ 
                     width: '100%',
                     animation: `shrink ${duration}ms linear`
@@ -191,7 +191,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
                 animationDuration: `${2 + Math.random() * 2}s`
               }}
             >
-              <div className={`w-2 h-2 bg-keepla-red rounded-full opacity-60`} />
+              <div className={`w-2 h-2 bg-primary rounded-full opacity-60`} />
             </div>
           ))}
         </div>

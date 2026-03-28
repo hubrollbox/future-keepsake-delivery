@@ -135,7 +135,7 @@ const EmotionalJourneyGuide: React.FC = () => {
           key={item.id}
           variant={context[field] === item.id ? "default" : "outline"}
           className={`h-auto p-4 flex flex-col items-center space-y-2 transition-all duration-300 hover:scale-105 ${
-            context[field] === item.id ? 'bg-keepla-red text-white' : 'hover:bg-keepla-gray'
+            context[field] === item.id ? 'bg-primary text-white' : 'hover:bg-muted'
           }`}
           onClick={() => handleSelection(field, item.id)}
         >
@@ -163,8 +163,8 @@ const EmotionalJourneyGuide: React.FC = () => {
               <div
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
                   index <= currentStep
-                    ? 'bg-keepla-red text-white'
-                    : 'bg-gray-200 text-gray-500'
+                    ? 'bg-primary text-white'
+                    : 'bg-muted text-muted-foreground'
                 }`}
               >
                 <step.icon className="w-5 h-5" />
@@ -172,14 +172,14 @@ const EmotionalJourneyGuide: React.FC = () => {
               {index < journeySteps.length - 1 && (
                 <div
                   className={`flex-1 h-1 mx-2 transition-all duration-300 ${
-                    index < currentStep ? 'bg-keepla-red' : 'bg-gray-200'
+                    index < currentStep ? 'bg-primary' : 'bg-muted'
                   }`}
                 />
               )}
             </div>
           ))}
         </div>
-        <p className="text-center text-sm text-keepla-gray-light">
+        <p className="text-center text-sm text-muted-foreground-light">
           Passo {currentStep + 1} de {journeySteps.length}
         </p>
       </div>
@@ -187,11 +187,11 @@ const EmotionalJourneyGuide: React.FC = () => {
       {/* Current Step Content */}
       <Card className={`transition-all duration-500 ${isAnimating ? 'opacity-50 scale-95' : 'opacity-100 scale-100'}`}>
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-serif text-keepla-gray-dark flex items-center justify-center gap-2">
-            <currentStepData.icon className="w-6 h-6 text-keepla-red" />
+          <CardTitle className="text-2xl font-serif text-muted-foreground-dark flex items-center justify-center gap-2">
+            <currentStepData.icon className="w-6 h-6 text-primary" />
             {currentStepData.title}
           </CardTitle>
-          <p className="text-keepla-gray-light">{currentStepData.description}</p>
+          <p className="text-muted-foreground-light">{currentStepData.description}</p>
         </CardHeader>
         <CardContent className="space-y-6">
           {/* Selection Grid */}
@@ -201,15 +201,15 @@ const EmotionalJourneyGuide: React.FC = () => {
           {currentStep === 3 && renderSelectionGrid(timeframes, 'timeframe')}
 
           {/* Suggestions */}
-          <div className="bg-keepla-gray/10 rounded-lg p-4">
-            <h4 className="font-semibold text-keepla-gray-dark mb-2 flex items-center gap-2">
+          <div className="bg-muted/10 rounded-lg p-4">
+            <h4 className="font-semibold text-muted-foreground-dark mb-2 flex items-center gap-2">
               <Sparkles className="w-4 h-4" />
               Dicas para esta etapa:
             </h4>
-            <ul className="space-y-1 text-sm text-keepla-gray-light">
+            <ul className="space-y-1 text-sm text-muted-foreground-light">
               {currentStepData.suggestions.map((suggestion, index) => (
                 <li key={index} className="flex items-start gap-2">
-                  <Star className="w-3 h-3 text-keepla-red mt-1 flex-shrink-0" />
+                  <Star className="w-3 h-3 text-primary mt-1 flex-shrink-0" />
                   {suggestion}
                 </li>
               ))}
@@ -218,15 +218,15 @@ const EmotionalJourneyGuide: React.FC = () => {
 
           {/* Personalized Suggestions (Final Step) */}
           {currentStep === journeySteps.length - 1 && context.timeframe && (
-            <div className="bg-keepla-red/10 rounded-lg p-4 border border-keepla-red/20">
-              <h4 className="font-semibold text-keepla-red mb-3 flex items-center gap-2">
+            <div className="bg-primary/10 rounded-lg p-4 border border-primary/20">
+              <h4 className="font-semibold text-primary mb-3 flex items-center gap-2">
                 <Heart className="w-4 h-4" />
                 Sugestões personalizadas para sua cápsula:
               </h4>
               <ul className="space-y-2 text-sm">
                 {getPersonalizedSuggestions().map((suggestion, index) => (
                   <li key={index} className="flex items-start gap-2">
-                    <div className="w-2 h-2 bg-keepla-red rounded-full mt-2 flex-shrink-0" />
+                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0" />
                     {suggestion}
                   </li>
                 ))}
@@ -246,7 +246,7 @@ const EmotionalJourneyGuide: React.FC = () => {
             
             {currentStep === journeySteps.length - 1 && context.timeframe ? (
               <Button
-                className="bg-keepla-red hover:bg-keepla-red/90 text-white"
+                className="bg-primary hover:bg-primary/90 text-white"
                 onClick={() => {
                   // Aqui seria a navegação para o formulário de criação com o contexto
                   console.log('Contexto emocional:', context);
@@ -258,7 +258,7 @@ const EmotionalJourneyGuide: React.FC = () => {
               <Button
                 variant="ghost"
                 disabled={!context[currentStepData.id as keyof EmotionalContext]}
-                className="text-keepla-gray-light"
+                className="text-muted-foreground-light"
               >
                 {context[currentStepData.id as keyof EmotionalContext] ? 'Próximo passo automático' : 'Faça uma seleção'}
               </Button>

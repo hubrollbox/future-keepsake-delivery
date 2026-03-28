@@ -119,20 +119,20 @@ function CreateKeepsake() {
   const progressSteps = ['Tipo', 'Destinatário', 'Mensagem', 'Produtos', 'Revisão', 'Sucesso'];
 
   return (
-    <div className="min-h-screen bg-keepla-black">
+    <div className="min-h-screen bg-foreground">
       <Navigation />
       <PhotoBackground image={timeCapsuleImage} alt="Cápsula" overlay="dark" size="compact" className="py-8">
         <div className="container mx-auto px-4 text-center">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <h1 className="text-2xl md:text-3xl font-bold text-keepla-white mb-2">Nova Cápsula</h1>
-            <Button variant="ghost" onClick={() => navigate('/dashboard')} className="text-keepla-white text-sm">
+            <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">Nova Cápsula</h1>
+            <Button variant="ghost" onClick={() => navigate('/dashboard')} className="text-white text-sm">
               <ArrowLeft className="h-4 w-4 mr-1" /> Voltar
             </Button>
           </motion.div>
         </div>
       </PhotoBackground>
 
-      <main className="bg-keepla-white py-8">
+      <main className="bg-background py-8">
         <div className="container mx-auto px-4">
           <ProgressStepper steps={progressSteps} currentStep={currentStep} />
           <Card className="max-w-4xl mx-auto mt-8 shadow-xl">

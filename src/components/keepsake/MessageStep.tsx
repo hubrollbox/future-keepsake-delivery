@@ -32,12 +32,12 @@ const MessageStep: React.FC<MessageStepProps> = ({ form, nextStep, prevStep }) =
 
   return (
     <div className="flex flex-col space-y-6">
-      <h2 className="text-xl font-bold text-keepla-black">Detalhes da tua cápsula</h2>
+      <h2 className="text-xl font-bold text-foreground">Detalhes da tua cápsula</h2>
       
       {/* Campo Título */}
       <div className="space-y-2">
-        <label htmlFor="title" className="text-sm font-medium text-keepla-black">
-          Título da cápsula <span className="text-keepla-red">*</span>
+        <label htmlFor="title" className="text-sm font-medium text-foreground">
+          Título da cápsula <span className="text-primary">*</span>
         </label>
         <Input
           id="title"
@@ -54,8 +54,8 @@ const MessageStep: React.FC<MessageStepProps> = ({ form, nextStep, prevStep }) =
 
       {/* Campo Mensagem */}
       <div className="space-y-2">
-        <label htmlFor="message" className="text-sm font-medium text-keepla-black">
-          Mensagem <span className="text-keepla-red">*</span>
+        <label htmlFor="message" className="text-sm font-medium text-foreground">
+          Mensagem <span className="text-primary">*</span>
         </label>
         <Textarea
           id="message"
@@ -72,8 +72,8 @@ const MessageStep: React.FC<MessageStepProps> = ({ form, nextStep, prevStep }) =
 
       {/* Campo Data de Entrega */}
       <div className="space-y-2">
-        <label className="text-sm font-medium text-keepla-black">
-          Data de entrega <span className="text-keepla-red">*</span>
+        <label className="text-sm font-medium text-foreground">
+          Data de entrega <span className="text-primary">*</span>
         </label>
         <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
           <PopoverTrigger asChild>

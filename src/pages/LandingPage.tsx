@@ -69,7 +69,7 @@ const LandingPage: React.FC = () => {
       <Navigation />
 
       {/* Hero Section com identidade Keepla */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-keepla-black/20">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-foreground/20">
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="max-w-4xl mx-auto">
             {/* Logo Keepla */}
@@ -87,7 +87,7 @@ const LandingPage: React.FC = () => {
             {/* Headline alinhada com marca */}
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
               E se pudesses enviar uma memória...
-              <span className="block text-keepla-red italic">para o futuro?</span>
+              <span className="block text-primary italic">para o futuro?</span>
             </h1>
 
             {/* Subheadline */}
@@ -111,18 +111,18 @@ const LandingPage: React.FC = () => {
       {/* Explicação curta com identidade visual */}
       <section className="py-16 md:py-24 bg-white/80 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-4 text-center">
-          <p className="text-xl md:text-2xl text-keepla-gray-light font-fraunces leading-relaxed mb-8">
+          <p className="text-xl md:text-2xl text-muted-foreground-light font-fraunces leading-relaxed mb-8">
             Alguns momentos merecem chegar na altura certa. Guarda mensagens e memórias — e recebe-as no futuro.
           </p>
           <div className="flex flex-col sm:flex-row justify-center items-center space-y-8 sm:space-y-0 sm:space-x-16">
             <div className="emotion-card p-6">
-              <p className="text-keepla-gray-dark font-fraunces font-semibold">Mensagem</p>
+              <p className="text-muted-foreground-dark font-fraunces font-semibold">Mensagem</p>
             </div>
             <div className="emotion-card p-6">
-              <p className="text-keepla-gray-dark font-fraunces font-semibold">Tempo</p>
+              <p className="text-muted-foreground-dark font-fraunces font-semibold">Tempo</p>
             </div>
             <div className="emotion-card p-6">
-              <p className="text-keepla-gray-dark font-fraunces font-semibold">Emoção</p>
+              <p className="text-muted-foreground-dark font-fraunces font-semibold">Emoção</p>
             </div>
           </div>
         </div>
@@ -133,12 +133,12 @@ const LandingPage: React.FC = () => {
         <div className="max-w-md mx-auto px-4">
           <Card className="emotion-card">
             <CardHeader>
-              <CardTitle className="text-keepla-gray-dark font-fraunces">Inscreve-te agora</CardTitle>
+              <CardTitle className="text-muted-foreground-dark font-fraunces">Inscreve-te agora</CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <Label htmlFor="name" className="text-keepla-gray-dark font-medium">Nome *</Label>
+                  <Label htmlFor="name" className="text-muted-foreground-dark font-medium">Nome *</Label>
                   <Input
                     type="text"
                     id="name"
@@ -146,13 +146,13 @@ const LandingPage: React.FC = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="mt-2 rounded-xl border-gray-200"
+                    className="mt-2 rounded-xl border-border"
                     placeholder="O teu nome completo"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="email" className="text-keepla-gray-dark font-medium">Email *</Label>
+                  <Label htmlFor="email" className="text-muted-foreground-dark font-medium">Email *</Label>
                   <Input
                     type="email"
                     id="email"
@@ -160,7 +160,7 @@ const LandingPage: React.FC = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="mt-2 rounded-xl border-gray-200"
+                    className="mt-2 rounded-xl border-border"
                     placeholder="o.teu.email@exemplo.com"
                   />
                 </div>

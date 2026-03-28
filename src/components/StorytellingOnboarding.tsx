@@ -157,7 +157,7 @@ const StorytellingOnboarding: React.FC<StorytellingOnboardingProps> = ({
 
   // No gradients or decorative color themes allowed. Keep a neutral header bar.
   const getEmotionTheme = (_emotion: string) => {
-    return 'bg-keepla-gray';
+    return 'bg-muted';
   };
 
   useEffect(() => {
@@ -170,7 +170,7 @@ const StorytellingOnboarding: React.FC<StorytellingOnboardingProps> = ({
   }, [currentStep, currentStoryStep?.interactive, showInteractive]);
 
   return (
-    <div className="min-h-screen bg-keepla-white flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
       {/* Background Image */}
       <div 
         className="absolute inset-0 opacity-20 bg-cover bg-center"
@@ -181,14 +181,14 @@ const StorytellingOnboarding: React.FC<StorytellingOnboardingProps> = ({
         {/* Progress Bar */}
         <div className="mb-8">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-sm text-keepla-gray-dark font-medium">
+            <span className="text-sm text-muted-foreground-dark font-medium">
               Passo {currentStep + 1} de {storySteps.length}
             </span>
             <Button
               variant="ghost"
               size="sm"
               onClick={onSkip}
-              className="text-keepla-gray-light hover:text-keepla-gray-dark"
+              className="text-muted-foreground-light hover:text-muted-foreground-dark"
             >
               Pular introdução
             </Button>
@@ -205,14 +205,14 @@ const StorytellingOnboarding: React.FC<StorytellingOnboardingProps> = ({
           
           <CardContent className="p-0">
             {/* Visual Section */}
-            <div className="text-center py-12 px-8 bg-keepla-white">
+            <div className="text-center py-12 px-8 bg-background">
               <div className="text-8xl mb-6 animate-pulse">
                 {currentStoryStep.visual}
               </div>
-              <h1 className="text-4xl md:text-5xl font-serif text-keepla-gray-dark mb-4">
+              <h1 className="text-4xl md:text-5xl font-serif text-muted-foreground-dark mb-4">
                 {currentStoryStep.title}
               </h1>
-              <p className="text-xl text-keepla-red font-light">
+              <p className="text-xl text-primary font-light">
                 {currentStoryStep.subtitle}
               </p>
             </div>
@@ -220,14 +220,14 @@ const StorytellingOnboarding: React.FC<StorytellingOnboardingProps> = ({
             {/* Story Content */}
             <div className="px-8 py-12">
               <div className="max-w-3xl mx-auto">
-                <p className="text-lg md:text-xl text-keepla-gray-light leading-relaxed text-center font-light">
+                <p className="text-lg md:text-xl text-muted-foreground-light leading-relaxed text-center font-light">
                   {currentStoryStep.story}
                 </p>
 
                 {/* Interactive Section */}
                 {currentStoryStep.interactive && showInteractive && (
-                  <div className="mt-12 p-8 bg-keepla-gray/10 rounded-2xl border border-keepla-red/20">
-                    <h3 className="text-xl font-semibold text-keepla-gray-dark mb-6 text-center">
+                  <div className="mt-12 p-8 bg-muted/10 rounded-2xl border border-primary/20">
+                    <h3 className="text-xl font-semibold text-muted-foreground-dark mb-6 text-center">
                       {currentStoryStep.interactive.question}
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -236,11 +236,11 @@ const StorytellingOnboarding: React.FC<StorytellingOnboardingProps> = ({
                           key={index}
                           variant="outline"
                           onClick={() => handleChoice(option)}
-                          className="p-6 h-auto text-left justify-start hover:bg-keepla-red/10 hover:text-keepla-red hover:border-keepla-red transition-all duration-300 transform hover:scale-105"
+                          className="p-6 h-auto text-left justify-start hover:bg-primary/10 hover:text-primary hover:border-primary transition-all duration-300 transform hover:scale-105"
                         >
                           <div className="flex items-center space-x-3">
-                            <div className="w-8 h-8 rounded-full bg-keepla-red/20 flex items-center justify-center">
-                              <span className="text-keepla-red font-semibold">
+                            <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                              <span className="text-primary font-semibold">
                                 {String.fromCharCode(65 + index)}
                               </span>
                             </div>
@@ -255,7 +255,7 @@ const StorytellingOnboarding: React.FC<StorytellingOnboardingProps> = ({
                 {/* Auto-advance indicator */}
                 {currentStoryStep.interactive && !showInteractive && (
                   <div className="mt-8 text-center">
-                    <div className="inline-flex items-center space-x-2 text-keepla-gray-light">
+                    <div className="inline-flex items-center space-x-2 text-muted-foreground-light">
                       <Sparkles className="w-4 h-4 animate-spin" />
                       <span className="text-sm">A história continua...</span>
                     </div>
@@ -283,9 +283,9 @@ const StorytellingOnboarding: React.FC<StorytellingOnboardingProps> = ({
                       key={index}
                       className={`w-2 h-2 rounded-full transition-all duration-300 ${
                         index === currentStep
-                          ? 'bg-keepla-red w-8'
+                          ? 'bg-primary w-8'
                           : index < currentStep
-                          ? 'bg-keepla-red/60'
+                          ? 'bg-primary/60'
                           : 'bg-gray-300'
                       }`}
                     />
@@ -295,7 +295,7 @@ const StorytellingOnboarding: React.FC<StorytellingOnboardingProps> = ({
                 <Button
                   onClick={handleNext}
                   disabled={currentStoryStep.interactive && showInteractive}
-                  className="flex items-center space-x-2 bg-keepla-red hover:bg-keepla-red/90"
+                  className="flex items-center space-x-2 bg-primary hover:bg-primary/90"
                 >
                   <span>
                     {currentStep === storySteps.length - 1 ? 'Começar' : 'Próximo'}
@@ -309,13 +309,13 @@ const StorytellingOnboarding: React.FC<StorytellingOnboardingProps> = ({
 
         {/* Floating Elements */}
         <div className="absolute top-20 left-10 opacity-30 animate-float">
-          <Clock className="w-8 h-8 text-keepla-red" />
+          <Clock className="w-8 h-8 text-primary" />
         </div>
         <div className="absolute bottom-20 right-10 opacity-30 animate-float" style={{ animationDelay: '1s' }}>
-          <Heart className="w-6 h-6 text-keepla-gray-dark" />
+          <Heart className="w-6 h-6 text-muted-foreground-dark" />
         </div>
         <div className="absolute top-1/2 left-20 opacity-30 animate-float" style={{ animationDelay: '2s' }}>
-          <Star className="w-5 h-5 text-keepla-red" />
+          <Star className="w-5 h-5 text-primary" />
         </div>
       </div>
 

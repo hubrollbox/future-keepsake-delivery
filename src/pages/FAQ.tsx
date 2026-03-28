@@ -58,7 +58,7 @@ const FAQ = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-keepla-black">
+    <div className="min-h-screen bg-foreground">
       <Navigation />
       
       {/* Hero Section with Photo Background */}
@@ -69,22 +69,22 @@ const FAQ = () => {
         className="min-h-[40vh] flex items-center"
       >
         <div className="container mx-auto px-4 py-16 text-center">
-          <h1 className="text-4xl md:text-6xl font-inter font-bold text-keepla-white mb-4">
+          <h1 className="text-4xl md:text-6xl font-inter font-bold text-white mb-4">
             Suporte & Perguntas Frequentes
           </h1>
-          <p className="text-lg md:text-xl text-keepla-white/80 max-w-2xl mx-auto font-inter">
+          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-inter">
             Encontra respostas para as tuas questões sobre cápsulas do tempo e os nossos serviços.
           </p>
         </div>
       </PhotoBackground>
 
-      <main className="bg-keepla-white py-16">
+      <main className="bg-background py-16">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="mb-12">
             <Accordion type="single" collapsible className="space-y-4">
               {faqs.map((faq, index) => (
                 <AccordionItem key={`faq-${faq.question.slice(0, 20).replace(/\s+/g, '-')}-${index}`} value={`item-${index}`}>
-                  <Card className="border-keepla-red/20">
+                  <Card className="border-primary/20">
                     <AccordionTrigger className="px-6 py-4 hover:no-underline">
                       <h3 className="text-left font-semibold text-foreground font-inter">
                         {faq.question}
@@ -104,24 +104,24 @@ const FAQ = () => {
           </div>
 
           <div className="text-center">
-            <Card className="bg-keepla-black border-0">
+            <Card className="bg-foreground border-0">
               <CardHeader>
-                <CardTitle className="text-keepla-white font-inter">
+                <CardTitle className="text-white font-inter">
                   Ainda tens dúvidas?
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <p className="text-keepla-white/70 font-inter">
+                <p className="text-white/70 font-inter">
                   A nossa equipa está sempre disponível para te ajudar com qualquer questão sobre as tuas cápsulas do tempo.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link to="/contact">
-                    <Button className="flex items-center gap-2 bg-keepla-red hover:bg-keepla-red/90 text-keepla-white font-inter">
+                    <Button className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white font-inter">
                       <Mail className="h-4 w-4" />
                       Contactar por Email
                     </Button>
                   </Link>
-                  <Button variant="outline" className="flex items-center gap-2 border-keepla-white text-keepla-white hover:bg-keepla-white/10 font-inter">
+                  <Button variant="outline" className="flex items-center gap-2 border-white text-white hover:bg-background/10 font-inter">
                     <MessageCircle className="h-4 w-4" />
                     Chat em Directo
                   </Button>

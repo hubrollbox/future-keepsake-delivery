@@ -26,23 +26,23 @@ const GamificationCard = ({
 }: GamificationCardProps) => {
   const getTypeIcon = () => {
     switch (type) {
-      case "achievement": return <Trophy className="h-5 w-5 text-keepla-red" />;
-      case "level": return <Star className="h-5 w-5 text-keepla-red" />;
-      case "quest": return <Target className="h-5 w-5 text-keepla-red" />;
-      case "streak": return <Zap className="h-5 w-5 text-keepla-red" />;
-      default: return icon || <Star className="h-5 w-5 text-keepla-red" />;
+      case "achievement": return <Trophy className="h-5 w-5 text-primary" />;
+      case "level": return <Star className="h-5 w-5 text-primary" />;
+      case "quest": return <Target className="h-5 w-5 text-primary" />;
+      case "streak": return <Zap className="h-5 w-5 text-primary" />;
+      default: return icon || <Star className="h-5 w-5 text-primary" />;
     }
   };
 
   const getTypeColor = () => {
-    if (!unlocked) return "bg-keepla-gray text-gray-600";
-    return "bg-keepla-red/10 text-keepla-red";
+    if (!unlocked) return "bg-muted text-muted-foreground";
+    return "bg-primary/10 text-primary";
   };
 
   const progressPercentage = (progress / maxProgress) * 100;
 
   return (
-    <Card className={`border-border hover:border-keepla-red transition-colors ${!unlocked ? 'opacity-75' : ''}`}>
+    <Card className={`border-border hover:border-primary transition-colors ${!unlocked ? 'opacity-75' : ''}`}>
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-2">
@@ -57,17 +57,17 @@ const GamificationCard = ({
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-gray-600 text-sm leading-relaxed">{description}</p>
+        <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
         
         {maxProgress > 0 && (
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
               <span className="text-foreground font-medium">Progresso</span>
-              <span className="text-gray-600">{progress}/{maxProgress}</span>
+              <span className="text-muted-foreground">{progress}/{maxProgress}</span>
             </div>
-            <div className="w-full bg-keepla-gray rounded-full h-2">
+            <div className="w-full bg-muted rounded-full h-2">
               <div 
-                className="bg-keepla-red h-2 rounded-full transition-all duration-300"
+                className="bg-primary h-2 rounded-full transition-all duration-300"
                 style={{ width: `${progressPercentage}%` }}
               />
             </div>
@@ -78,7 +78,7 @@ const GamificationCard = ({
           <div className="pt-2 border-t border-border">
             <div className="flex items-center justify-between text-sm">
               <span className="text-foreground font-medium">Recompensa:</span>
-              <span className="text-keepla-red font-medium">{reward}</span>
+              <span className="text-primary font-medium">{reward}</span>
             </div>
           </div>
         )}

@@ -28,14 +28,14 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-800 p-4">
+        <div className="flex flex-col items-center justify-center min-h-screen bg-muted text-foreground p-4">
           <h1 className="text-4xl font-bold mb-4">Oops! Algo deu errado.</h1>
           <p className="text-lg text-center mb-8">
             Lamentamos, mas ocorreu um erro inesperado. Por favor, tente novamente mais tarde.
           </p>
           <button
             onClick={() => window.location.reload()}
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition-colors"
+            className="px-6 py-3 bg-primary text-white rounded-lg shadow-md hover:bg-secondary transition-colors"
           >
             Recarregar Página
           </button>

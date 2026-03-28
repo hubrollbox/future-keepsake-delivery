@@ -91,14 +91,14 @@ const HeroSection = () => {
             <Button 
               onClick={handleStartJourney}
               size="lg" 
-              className="cta w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 bg-keepla-red hover:bg-keepla-red/90 text-keepla-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-lg font-semibold"
+              className="cta w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 bg-primary hover:bg-primary/90 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-lg font-semibold"
             >
               {user ? "Ir para Dashboard" : "Começar a minha jornada"}
             </Button>
             <Button 
               variant="outline" 
               size="lg" 
-              className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 border-2 border-keepla-white text-keepla-white bg-transparent hover:bg-keepla-white/20 hover:text-keepla-white transition-all duration-300 rounded-lg font-semibold"
+              className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 border-2 border-white text-white bg-transparent hover:bg-background/20 hover:text-white transition-all duration-300 rounded-lg font-semibold"
               onClick={() => navigate("/how-it-works")}
             >
               Como funciona
@@ -113,15 +113,15 @@ const HeroSection = () => {
             transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
           >
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 bg-keepla-red rounded-full"></span>
+              <span className="w-2 h-2 bg-primary rounded-full"></span>
               <span>Entregas seguras</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 bg-keepla-red rounded-full"></span>
+              <span className="w-2 h-2 bg-primary rounded-full"></span>
               <span>Memórias preservadas</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 bg-keepla-red rounded-full"></span>
+              <span className="w-2 h-2 bg-primary rounded-full"></span>
               <span>Momentos eternizados</span>
             </div>
           </motion.div>
@@ -135,8 +135,8 @@ const HeroSection = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 1, ease: "easeOut" }}
       >
-        <div className="w-6 h-10 border-2 border-keepla-red rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-keepla-red rounded-full mt-2 animate-pulse"></div>
+        <div className="w-6 h-10 border-2 border-primary rounded-full flex justify-center">
+          <div className="w-1 h-3 bg-primary rounded-full mt-2 animate-pulse"></div>
         </div>
       </motion.div>
     </section>

@@ -117,12 +117,12 @@ const Products = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-keepla-black">
+      <div className="min-h-screen bg-foreground">
         <Navigation />
         <div className="container mx-auto px-4 py-20">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-keepla-red mx-auto" />
-            <p className="text-keepla-white/70 mt-4">A carregar catálogo...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto" />
+            <p className="text-white/70 mt-4">A carregar catálogo...</p>
           </div>
         </div>
       </div>
@@ -130,7 +130,7 @@ const Products = () => {
   }
 
   return (
-    <div className="min-h-screen bg-keepla-black">
+    <div className="min-h-screen bg-foreground">
       <SEOHead
         title="Catálogo de Produtos - Keepla"
         description="Descobre todas as formas de guardar e enviar memórias através do tempo. Mensagens digitais, cápsulas físicas e muito mais."
@@ -146,21 +146,21 @@ const Products = () => {
         className="min-h-[50vh] flex items-center"
       >
         <div className="container mx-auto px-4 py-20 text-center">
-          <Badge className="bg-keepla-white/20 text-keepla-white border-0 mb-4">
+          <Badge className="bg-background/20 text-white border-0 mb-4">
             <Sparkles className="h-3 w-3 mr-1" />
             Catálogo Completo
           </Badge>
-          <h1 className="text-4xl md:text-6xl font-inter font-bold text-keepla-white mb-6">
-            Presentes com <span className="text-keepla-red">Alma</span>
+          <h1 className="text-4xl md:text-6xl font-inter font-bold text-white mb-6">
+            Presentes com <span className="text-primary">Alma</span>
           </h1>
-          <p className="text-lg md:text-xl text-keepla-white/80 max-w-2xl mx-auto font-inter">
+          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-inter">
             Cada presente é uma ponte entre o presente e o futuro, carregando o
             peso precioso das nossas intenções e emoções.
           </p>
         </div>
       </PhotoBackground>
 
-      <main className="bg-keepla-white">
+      <main className="bg-background">
         <div className="container mx-auto px-4 py-16">
 
         {/* Digital Products */}
@@ -185,13 +185,13 @@ const Products = () => {
                     key={product.id}
                     className={`relative h-full transition-all duration-300 ${
                       isHighlighted
-                        ? "border-2 border-keepla-red shadow-xl scale-[1.02]"
+                        ? "border-2 border-primary shadow-xl scale-[1.02]"
                         : "border border-border hover:border-foreground/30 hover:shadow-lg"
                     }`}
                   >
                     {isHighlighted && (
                       <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
-                        <Badge className="bg-keepla-red text-keepla-white">
+                        <Badge className="bg-primary text-white">
                           Mais Popular
                         </Badge>
                       </div>
@@ -204,7 +204,7 @@ const Products = () => {
                         {product.name}
                       </CardTitle>
                       <div className="mt-4">
-                        <span className="text-4xl font-bold text-keepla-red">
+                        <span className="text-4xl font-bold text-primary">
                           {product.price === 0
                             ? "Grátis"
                             : `${product.price.toFixed(2).replace(".", ",")}€`}
@@ -447,7 +447,7 @@ const Products = () => {
         </section>
 
         {/* Final CTA */}
-        <div className="text-center bg-keepla-black rounded-2xl p-10 md:p-16 max-w-4xl mx-auto">
+        <div className="text-center bg-foreground rounded-2xl p-10 md:p-16 max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 font-inter text-white">
             Começa a guardar memórias hoje
           </h2>
@@ -458,7 +458,7 @@ const Products = () => {
           <Button
             onClick={() => navigate(user ? "/create-keepsake" : "/register")}
             size="lg"
-            className="bg-keepla-red hover:bg-keepla-red/90 text-white font-inter font-semibold px-8 py-6 text-lg"
+            className="bg-primary hover:bg-primary/90 text-white font-inter font-semibold px-8 py-6 text-lg"
           >
             Criar Primeira Memória
           </Button>

@@ -173,7 +173,7 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
       }`}>
         
         {/* Header com Progress (neutral) */}
-        <div className="h-2 bg-keepla-gray" />
+        <div className="h-2 bg-muted" />
         
         <CardContent className="p-0">
           {/* Progress Bar */}
@@ -188,15 +188,15 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
                     aria-label={`Ir para etapa ${index + 1}`}
                     className={`w-3 h-3 rounded-full transition-all duration-200 ${
                       index === currentStep 
-                        ? 'bg-keepla-red scale-125' 
+                        ? 'bg-primary scale-125' 
                         : index < currentStep || completedSteps.has(index)
-                        ? 'bg-keepla-red/60' 
+                        ? 'bg-primary/60' 
                         : 'bg-gray-300'
                     }`}
                   />
                 ))}
               </div>
-              <span className="text-sm text-keepla-gray-light">
+              <span className="text-sm text-muted-foreground-light">
                 {currentStep + 1} de {steps.length}
               </span>
             </div>
@@ -207,7 +207,7 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
           <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[500px]">
             
             {/* Lado Visual */}
-            <div className="bg-keepla-white p-8 flex flex-col items-center justify-center text-center">
+            <div className="bg-background p-8 flex flex-col items-center justify-center text-center">
               <div className="text-8xl mb-6 animate-bounce-gentle">
                 {currentStepData.visual}
               </div>
@@ -216,18 +216,18 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
                 {currentStepData.icon}
               </div>
               
-              <h1 className="text-3xl md:text-4xl font-serif text-keepla-gray-dark mb-2">
+              <h1 className="text-3xl md:text-4xl font-serif text-muted-foreground-dark mb-2">
                 {currentStepData.title}
               </h1>
               
-              <p className="text-lg text-keepla-gray-light font-medium">
+              <p className="text-lg text-muted-foreground-light font-medium">
                 {currentStepData.subtitle}
               </p>
             </div>
 
             {/* Lado do Conteúdo */}
             <div className="p-8 flex flex-col justify-center">
-              <p className="text-lg text-keepla-gray-dark leading-relaxed mb-6">
+              <p className="text-lg text-muted-foreground-dark leading-relaxed mb-6">
                 {currentStepData.description}
               </p>
 
@@ -235,8 +235,8 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
               <div className="space-y-3 mb-8">
                 {currentStepData.tips.map((tip, index) => (
                   <div key={index} className="flex items-start space-x-3">
-                    <CheckCircle className="w-5 h-5 text-keepla-red mt-0.5 flex-shrink-0" />
-                    <span className="text-keepla-gray-dark">{tip}</span>
+                    <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                    <span className="text-muted-foreground-dark">{tip}</span>
                   </div>
                 ))}
               </div>
@@ -245,7 +245,7 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
               {currentStepData.action && (
                 <Button
                   onClick={currentStepData.action.onClick}
-                  className="mb-6 bg-keepla-red hover:bg-keepla-red/90 text-white"
+                  className="mb-6 bg-primary hover:bg-primary/90 text-white"
                 >
                   {currentStepData.action.text}
                 </Button>
@@ -266,14 +266,14 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
                 <Button
                   variant="ghost"
                   onClick={onSkip}
-                  className="text-keepla-gray hover:text-keepla-gray-dark"
+                  className="text-muted-foreground hover:text-muted-foreground-dark"
                 >
                   Pular Tutorial
                 </Button>
 
                 <Button
                   onClick={handleNext}
-                  className="flex items-center space-x-2 bg-keepla-red hover:bg-keepla-red/90 text-white"
+                  className="flex items-center space-x-2 bg-primary hover:bg-primary/90 text-white"
                 >
                   <span>{currentStep === steps.length - 1 ? 'Começar' : 'Próximo'}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -286,13 +286,13 @@ const OnboardingFlow: React.FC<OnboardingFlowProps> = ({
 
       {/* Elementos Flutuantes Decorativos */}
       <div className="absolute top-20 left-10 opacity-30 animate-float">
-        <Clock className="w-8 h-8 text-keepla-gray-dark" />
+        <Clock className="w-8 h-8 text-muted-foreground-dark" />
       </div>
       <div className="absolute bottom-20 right-10 opacity-30 animate-float animate-float-delay-1">
-        <Heart className="w-6 h-6 text-keepla-gray-dark" />
+        <Heart className="w-6 h-6 text-muted-foreground-dark" />
       </div>
       <div className="absolute top-1/2 left-20 opacity-30 animate-float animate-float-delay-2">
-        <Star className="w-5 h-5 text-keepla-red" />
+        <Star className="w-5 h-5 text-primary" />
       </div>
     </div>
   );

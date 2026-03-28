@@ -412,7 +412,7 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
   };
 
   const getScoreBadge = (score: number) => {
-    if (score >= 80) return 'bg-green-100 text-green-800';
+    if (score >= 80) return 'bg-primary/10 text-foreground';
     if (score >= 50) return 'bg-yellow-100 text-yellow-800';
     return 'bg-red-100 text-red-800';
   };
@@ -656,7 +656,7 @@ Parágrafo introdutório com **texto em negrito** e *itálico*.
                       <div className="border rounded-lg overflow-hidden">
                         <div className="bg-[#f0f2f5] px-3 py-2 flex items-center gap-2">
                           <Facebook className="h-4 w-4 text-[#1877F2]" />
-                          <span className="text-xs font-medium text-gray-600">Facebook</span>
+                          <span className="text-xs font-medium text-muted-foreground">Facebook</span>
                         </div>
                         <div className="bg-white">
                           {(imagePreview || existingCoverUrl) ? (
@@ -671,11 +671,11 @@ Parágrafo introdutório com **texto em negrito** e *itálico*.
                             </div>
                           )}
                           <div className="p-3 border-t">
-                            <p className="text-[11px] text-gray-500 uppercase">keepla.pt</p>
-                            <p className="font-semibold text-[15px] text-gray-900 line-clamp-2 mt-0.5">
+                            <p className="text-[11px] text-muted-foreground uppercase">keepla.pt</p>
+                            <p className="font-semibold text-[15px] text-foreground line-clamp-2 mt-0.5">
                               {title || 'Título do artigo'}
                             </p>
-                            <p className="text-[13px] text-gray-500 line-clamp-1 mt-0.5">
+                            <p className="text-[13px] text-muted-foreground line-clamp-1 mt-0.5">
                               {excerpt || 'Descrição do artigo...'}
                             </p>
                           </div>
@@ -701,13 +701,13 @@ Parágrafo introdutório com **texto em negrito** e *itálico*.
                             </div>
                           )}
                           <div className="p-3 border-t">
-                            <p className="font-medium text-[15px] text-gray-900 line-clamp-2">
+                            <p className="font-medium text-[15px] text-foreground line-clamp-2">
                               {title || 'Título do artigo'}
                             </p>
-                            <p className="text-[13px] text-gray-500 line-clamp-2 mt-0.5">
+                            <p className="text-[13px] text-muted-foreground line-clamp-2 mt-0.5">
                               {excerpt || 'Descrição do artigo...'}
                             </p>
-                            <p className="text-[13px] text-gray-400 mt-1">keepla.pt</p>
+                            <p className="text-[13px] text-muted-foreground mt-1">keepla.pt</p>
                           </div>
                         </div>
                       </div>
@@ -731,10 +731,10 @@ Parágrafo introdutório com **texto em negrito** e *itálico*.
                             </div>
                           )}
                           <div className="p-3 border-t">
-                            <p className="font-semibold text-sm text-gray-900 line-clamp-2">
+                            <p className="font-semibold text-sm text-foreground line-clamp-2">
                               {title || 'Título do artigo'}
                             </p>
-                            <p className="text-xs text-gray-500 mt-1">keepla.pt</p>
+                            <p className="text-xs text-muted-foreground mt-1">keepla.pt</p>
                           </div>
                         </div>
                       </div>

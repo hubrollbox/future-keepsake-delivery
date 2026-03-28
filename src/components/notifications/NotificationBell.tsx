@@ -20,9 +20,9 @@ const NotificationBell = () => {
       <PopoverTrigger asChild>
         <Button variant="ghost" size="sm" className="relative">
           {unreadCount > 0 ? (
-            <BellDot className="h-5 w-5 text-keepla-red" />
+            <BellDot className="h-5 w-5 text-primary" />
           ) : (
-            <Bell className="h-5 w-5 text-keepla-gray" />
+            <Bell className="h-5 w-5 text-muted-foreground" />
           )}
           {unreadCount > 0 && (
             <Badge 

@@ -15,7 +15,7 @@ interface UserStatsSectionProps {
 const UserStatsSection = ({ totalDeliveries }: Omit<UserStatsSectionProps, 'profile'>) => {
   return (
     <div className="mb-8">
-      <Card className="shadow-soft border-green-200">
+      <Card className="shadow-soft border-primary/20">
         <CardHeader>
           <CardTitle className="text-xl font-serif text-green-900 flex items-center gap-2">
             <Trophy className="h-5 w-5" />
@@ -26,7 +26,7 @@ const UserStatsSection = ({ totalDeliveries }: Omit<UserStatsSectionProps, 'prof
           <UserStats totalDeliveries={totalDeliveries} />
           <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h4 className="font-semibold mb-3 text-green-800 flex items-center gap-2">
+              <h4 className="font-semibold mb-3 text-foreground flex items-center gap-2">
                 <Award className="h-4 w-4" />
                 Conquistas
               </h4>
@@ -42,7 +42,7 @@ const UserStatsSection = ({ totalDeliveries }: Omit<UserStatsSectionProps, 'prof
               />
             </div>
             <div>
-              <h4 className="font-semibold mb-3 text-green-800 flex items-center gap-2">
+              <h4 className="font-semibold mb-3 text-foreground flex items-center gap-2">
                 <Target className="h-4 w-4" />
                 Missões Ativas
               </h4>

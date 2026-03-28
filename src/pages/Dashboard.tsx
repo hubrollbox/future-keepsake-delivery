@@ -33,9 +33,9 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-keepla-white flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-keepla-red mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary mx-auto mb-4"></div>
           <h2 className="text-xl font-serif text-foreground">A carregar o seu dashboard...</h2>
         </div>
       </div>
@@ -43,7 +43,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-keepla-black">
+    <div className="min-h-screen bg-foreground">
       <SEOHead 
         title="Dashboard"
         description="Gere os teus keepsakes, acompanha entregas e descobre as tuas estatísticas. A tua central de memórias."
@@ -52,24 +52,24 @@ const Dashboard = () => {
       <Navigation />
 
       {/* Simple Welcome Header */}
-      <div className="bg-keepla-black border-b border-keepla-red/10">
+      <div className="bg-foreground border-b border-primary/10">
         <div className="container mx-auto px-4 py-6">
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <p className="text-keepla-white/60 font-georgia italic text-sm mb-1">
+            <p className="text-white/60 font-georgia italic text-sm mb-1">
               Bem-vindo de volta, {profile?.full_name || 'Guardião'}
             </p>
-            <h1 className="text-2xl md:text-3xl font-inter font-bold text-keepla-white">
-              A Tua Central de <span className="text-keepla-red">Memórias</span>
+            <h1 className="text-2xl md:text-3xl font-inter font-bold text-white">
+              A Tua Central de <span className="text-primary">Memórias</span>
             </h1>
           </motion.div>
         </div>
       </div>
 
-      <main className="bg-keepla-white">
+      <main className="bg-background">
         <div className="container mx-auto max-w-7xl px-4 py-8">
           <div data-tour="profile">
             <ProfileHeader />
@@ -92,7 +92,7 @@ const Dashboard = () => {
                   <Button
                     onClick={() => navigate("/create-keepsake")}
                     size="sm"
-                    className="flex items-center gap-1 bg-keepla-red hover:bg-keepla-red/90"
+                    className="flex items-center gap-1 bg-primary hover:bg-primary/90"
                     data-tour="create-keepsake"
                   >
                     <PlusCircle className="h-4 w-4" /> Nova Cápsula
@@ -142,10 +142,10 @@ const Dashboard = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <button
                   onClick={() => navigate("/create-keepsake")}
-                  className="p-6 text-left hover:shadow-lg transition-all duration-300 bg-keepla-white border-2 border-keepla-red/20 rounded-xl hover:border-keepla-red/40"
+                  className="p-6 text-left hover:shadow-lg transition-all duration-300 bg-background border-2 border-primary/20 rounded-xl hover:border-primary/40"
                 >
                   <div className="flex items-center mb-3">
-                    <div className="w-12 h-12 bg-keepla-red/20 rounded-full flex items-center justify-center mr-4">
+                    <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mr-4">
                       <span className="text-2xl">💌</span>
                     </div>
                     <h3 className="text-lg font-serif font-semibold text-foreground">
@@ -159,10 +159,10 @@ const Dashboard = () => {
 
                 <button
                   onClick={() => navigate("/profile")}
-                  className="p-6 text-left hover:shadow-lg transition-all duration-300 bg-keepla-white border-2 border-keepla-red/20 rounded-xl hover:border-keepla-red/40"
+                  className="p-6 text-left hover:shadow-lg transition-all duration-300 bg-background border-2 border-primary/20 rounded-xl hover:border-primary/40"
                 >
                   <div className="flex items-center mb-3">
-                    <div className="w-12 h-12 bg-keepla-red/20 rounded-full flex items-center justify-center mr-4">
+                    <div className="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mr-4">
                       <span className="text-2xl">⚙️</span>
                     </div>
                     <h3 className="text-lg font-serif font-semibold text-foreground">

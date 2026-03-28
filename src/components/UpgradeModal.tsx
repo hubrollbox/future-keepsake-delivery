@@ -58,7 +58,7 @@ const UPGRADE_OPTIONS: Record<string, UpgradeOption[]> = {
         'Música de fundo'
       ],
       badge: 'Mais Popular',
-      color: 'text-keepla-gray-dark',
+      color: 'text-muted-foreground-dark',
       gradient: ''
     },
     {
@@ -73,7 +73,7 @@ const UPGRADE_OPTIONS: Record<string, UpgradeOption[]> = {
         'Filtros especiais',
         'Download em alta resolução'
       ],
-      color: 'text-keepla-gray-dark',
+      color: 'text-muted-foreground-dark',
       gradient: ''
     }
   ],
@@ -92,7 +92,7 @@ const UPGRADE_OPTIONS: Record<string, UpgradeOption[]> = {
         'Entrega em data especial'
       ],
       badge: 'Oferta Especial',
-      color: 'text-keepla-gray-dark',
+      color: 'text-muted-foreground-dark',
       gradient: ''
     },
     {
@@ -107,7 +107,7 @@ const UPGRADE_OPTIONS: Record<string, UpgradeOption[]> = {
         'Filtro vintage',
         'Qualidade premium'
       ],
-      color: 'text-keepla-gray-dark',
+      color: 'text-muted-foreground-dark',
       gradient: ''
     }
   ],
@@ -126,7 +126,7 @@ const UPGRADE_OPTIONS: Record<string, UpgradeOption[]> = {
         'Entrega em casa'
       ],
       badge: 'Edição Limitada',
-      color: 'text-keepla-gray-dark',
+      color: 'text-muted-foreground-dark',
       gradient: ''
     },
     {
@@ -141,7 +141,7 @@ const UPGRADE_OPTIONS: Record<string, UpgradeOption[]> = {
         'Compartilhamento social',
         'Certificado digital'
       ],
-      color: 'text-keepla-gray-dark',
+      color: 'text-muted-foreground-dark',
       gradient: ''
     }
   ],
@@ -159,7 +159,7 @@ const UPGRADE_OPTIONS: Record<string, UpgradeOption[]> = {
         'Compartilhamento privado'
       ],
       badge: 'Família',
-      color: 'text-keepla-gray-dark',
+      color: 'text-muted-foreground-dark',
       gradient: ''
     }
   ],
@@ -176,7 +176,7 @@ const UPGRADE_OPTIONS: Record<string, UpgradeOption[]> = {
         'Stickers exclusivos',
         'Lembrança permanente'
       ],
-      color: 'text-keepla-gray-dark',
+      color: 'text-muted-foreground-dark',
       gradient: ''
     }
   ]
@@ -197,7 +197,7 @@ const DEFAULT_OPTIONS: UpgradeOption[] = [
       'Suporte prioritário'
     ],
     badge: 'Recomendado',
-    color: 'text-keepla-gray-dark',
+    color: 'text-muted-foreground-dark',
     gradient: ''
   },
   {
@@ -212,7 +212,7 @@ const DEFAULT_OPTIONS: UpgradeOption[] = [
       'Correção automática',
       'Ideias criativas'
     ],
-    color: 'text-keepla-gray-dark',
+    color: 'text-muted-foreground-dark',
     gradient: ''
   }
 ];
@@ -315,12 +315,12 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               className="text-center space-y-2"
             >
               <div className="text-4xl mb-2">{getKeywordEmoji(keywords)}</div>
-              <DialogTitle className="text-2xl font-bold text-keepla-gray-dark">
+              <DialogTitle className="text-2xl font-bold text-muted-foreground-dark">
                 {getPersonalizedTitle(keywords)}
               </DialogTitle>
-              <p className="text-gray-600">
+              <p className="text-muted-foreground">
                 Detectamos que sua cápsula é sobre{' '}
-                <span className="font-semibold text-keepla-gray-dark">
+                <span className="font-semibold text-muted-foreground-dark">
                   {keywords.join(', ')}
                 </span>
                 . Aqui estão algumas opções especiais para você!
@@ -348,7 +348,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
                   >
                     {option.badge && (
                       <div className="absolute -top-2 -right-2 z-10">
-                        <Badge className={`bg-keepla-gray-dark text-white`}>
+                        <Badge className={`bg-muted-dark text-white`}>
                           <Star className="w-3 h-3 mr-1" />
                           {option.badge}
                         </Badge>
@@ -356,27 +356,27 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
                     )}
                     
                     <CardHeader className="text-center pb-2">
-                      <div className={`w-12 h-12 mx-auto mb-2 p-2 rounded-full bg-keepla-gray text-white`}>
+                      <div className={`w-12 h-12 mx-auto mb-2 p-2 rounded-full bg-muted text-white`}>
                         <IconComponent className="w-full h-full" />
                       </div>
                       <CardTitle className="text-lg font-bold">{option.title}</CardTitle>
-                      <p className="text-sm text-gray-600">{option.description}</p>
+                      <p className="text-sm text-muted-foreground">{option.description}</p>
                     </CardHeader>
                     
                     <CardContent className="pt-0">
                       <div className="text-center mb-4">
                         <div className="flex items-center justify-center space-x-2">
                           {option.originalPrice && (
-                            <span className="text-sm text-gray-500 line-through">
+                            <span className="text-sm text-muted-foreground line-through">
                               €{option.originalPrice.toFixed(2)}
                             </span>
                           )}
-                          <span className={`text-2xl font-bold text-keepla-gray-dark`}>
+                          <span className={`text-2xl font-bold text-muted-foreground-dark`}>
                             €{option.price.toFixed(2)}
                           </span>
                         </div>
                         {option.originalPrice && (
-                          <div className="text-xs text-keepla-gray font-medium">
+                          <div className="text-xs text-muted-foreground font-medium">
                             Economize €{(option.originalPrice - option.price).toFixed(2)}!
                           </div>
                         )}
@@ -384,15 +384,15 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
                       
                       <ul className="space-y-2 mb-4">
                         {option.features.map((feature, idx) => (
-                          <li key={idx} className="flex items-center text-sm text-gray-600">
-                            <Check className="w-4 h-4 text-keepla-gray mr-2 flex-shrink-0" />
+                          <li key={idx} className="flex items-center text-sm text-muted-foreground">
+                            <Check className="w-4 h-4 text-muted-foreground mr-2 flex-shrink-0" />
                             {feature}
                           </li>
                         ))}
                       </ul>
                       
                       <Button
-                        className={`w-full bg-keepla-red hover:opacity-90 transition-all duration-200`}
+                        className={`w-full bg-primary hover:opacity-90 transition-all duration-200`}
                         disabled={isLoading}
                         onClick={(e) => {
                           e.stopPropagation();
@@ -422,13 +422,13 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="mt-6 p-4 bg-keepla-red/5 rounded-lg border border-keepla-red/30"
+            className="mt-6 p-4 bg-primary/5 rounded-lg border border-primary/30"
           >
-            <div className="flex items-center space-x-2 text-keepla-red mb-2">
+            <div className="flex items-center space-x-2 text-primary mb-2">
               <Sparkles className="w-5 h-5" />
               <span className="font-semibold">Por que fazer upgrade?</span>
             </div>
-            <ul className="text-sm text-keepla-red space-y-1">
+            <ul className="text-sm text-primary space-y-1">
               <li>• Torne sua cápsula mais impactante e memorável</li>
               <li>• Recursos exclusivos não disponíveis na versão gratuita</li>
               <li>• Suporte prioritário e entrega garantida</li>
@@ -440,7 +440,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
             <Button
               variant="ghost"
               onClick={onClose}
-              className="text-gray-500 hover:text-gray-700"
+              className="text-muted-foreground hover:text-foreground"
             >
               Continuar com versão gratuita
             </Button>

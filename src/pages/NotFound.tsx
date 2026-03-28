@@ -51,8 +51,8 @@ const NotFound = () => {
       <div className="min-h-screen flex items-center justify-center bg-background relative overflow-hidden">
         {/* Background decorative elements */}
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-keepla-red/5 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-keepla-red/3 rounded-full blur-3xl" />
+          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/3 rounded-full blur-3xl" />
         </div>
 
         <motion.div
@@ -63,7 +63,7 @@ const NotFound = () => {
         >
           {/* 404 Number */}
           <motion.div variants={itemVariants} className="mb-6">
-            <span className="text-[12rem] md:text-[16rem] font-bold text-keepla-red/10 leading-none select-none">
+            <span className="text-[12rem] md:text-[16rem] font-bold text-primary/10 leading-none select-none">
               404
             </span>
           </motion.div>

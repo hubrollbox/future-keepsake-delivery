@@ -11,7 +11,7 @@ interface RecipientStepProps {
 const RecipientStep: React.FC<RecipientStepProps> = ({ form, onNext, onBack }) => {
   return (
     <div className="flex flex-col space-y-4">
-      <h2 className="text-xl font-bold text-keepla-black">Informações do destinatário</h2>
+      <h2 className="text-xl font-bold text-foreground">Informações do destinatário</h2>
       <div className="space-y-2">
         <label className="text-sm font-medium">Nome do destinatário</label>
         <input

@@ -399,7 +399,7 @@ const AdminBlog = () => {
   const STATUS_CONFIG: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
     por_escrever: { label: "Por escrever", color: "bg-muted text-muted-foreground", icon: <FileText className="h-3 w-3" /> },
     em_andamento: { label: "Em andamento", color: "bg-blue-100 text-blue-800", icon: <Clock className="h-3 w-3" /> },
-    publicado: { label: "Publicado", color: "bg-green-100 text-green-800", icon: <CheckCircle2 className="h-3 w-3" /> },
+    publicado: { label: "Publicado", color: "bg-primary/10 text-foreground", icon: <CheckCircle2 className="h-3 w-3" /> },
   };
 
   const PRIORITY_CONFIG: Record<string, string> = {
@@ -499,7 +499,7 @@ const AdminBlog = () => {
                     </TableCell>
                     <TableCell>
                       {post.status === "published" ? (
-                        <Badge variant="default" className="bg-green-100 text-green-800 hover:bg-green-100">
+                        <Badge variant="default" className="bg-primary/10 text-foreground hover:bg-primary/10">
                           <CheckCircle2 className="h-3 w-3 mr-1" />
                           Publicado
                         </Badge>

@@ -344,7 +344,7 @@ const AdminPlans = () => {
                                 <AlertDialogCancel>Cancelar</AlertDialogCancel>
                                 <AlertDialogAction
                                   onClick={() => handleDeletePlan(plan.id)}
-                                  className="bg-keepla-red hover:bg-keepla-red/90 text-white"
+                                  className="bg-primary hover:bg-primary/90 text-white"
                                 >
                                   Remover
                                 </AlertDialogAction>
@@ -444,7 +444,7 @@ const AdminPlans = () => {
                 id="active"
                 checked={formData.active}
                 onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
-                className="rounded border-gray-300"
+                className="rounded border-border"
                 title="Plano ativo"
                 aria-label="Plano ativo"
               />

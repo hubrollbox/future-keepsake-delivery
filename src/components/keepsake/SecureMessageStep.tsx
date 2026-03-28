@@ -73,17 +73,17 @@ const SecureMessageStep: React.FC<SecureMessageStepProps> = ({
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-serif text-keepla-gray-dark mb-2">
+        <h2 className="text-2xl font-serif text-muted-foreground-dark mb-2">
           A Tua Mensagem para o Futuro
         </h2>
-        <p className="text-keepla-gray-light">
+        <p className="text-muted-foreground-light">
           Escreve uma mensagem que será entregue no momento perfeito
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-2">
-          <Label htmlFor="title" className="text-keepla-gray-dark font-medium">
+          <Label htmlFor="title" className="text-muted-foreground-dark font-medium">
             Título da Cápsula *
           </Label>
           <Input
@@ -92,7 +92,7 @@ const SecureMessageStep: React.FC<SecureMessageStepProps> = ({
             onChange={(e) => updateField('title', e.target.value)}
             placeholder="Ex: Para a minha filha aos 18 anos"
             className={cn(
-              "border-white/50 focus:border-keepla-red",
+              "border-white/50 focus:border-primary",
               errors.title && "border-red-500"
             )}
             maxLength={200}
@@ -103,7 +103,7 @@ const SecureMessageStep: React.FC<SecureMessageStepProps> = ({
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="message" className="text-keepla-gray-dark font-medium">
+          <Label htmlFor="message" className="text-muted-foreground-dark font-medium">
             Mensagem *
           </Label>
           <Textarea
@@ -112,7 +112,7 @@ const SecureMessageStep: React.FC<SecureMessageStepProps> = ({
             onChange={(e) => updateField('message', e.target.value)}
             placeholder="Escreve aqui a tua mensagem para o futuro..."
             className={cn(
-              "min-h-[150px] border-white/50 focus:border-keepla-red resize-none",
+              "min-h-[150px] border-white/50 focus:border-primary resize-none",
               errors.message && "border-red-500"
             )}
             maxLength={5000}
@@ -120,13 +120,13 @@ const SecureMessageStep: React.FC<SecureMessageStepProps> = ({
           {errors.message && (
             <p className="text-sm text-red-500">{errors.message}</p>
           )}
-          <p className="text-sm text-keepla-gray-light">
+          <p className="text-sm text-muted-foreground-light">
             {data.message?.length || 0}/5000 caracteres
           </p>
         </div>
 
         <div className="space-y-2">
-          <Label className="text-keepla-gray-dark font-medium">Data de Entrega *</Label>
+          <Label className="text-muted-foreground-dark font-medium">Data de Entrega *</Label>
           <Popover>
             <PopoverTrigger asChild>
               <Button

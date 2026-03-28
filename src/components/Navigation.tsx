@@ -66,7 +66,7 @@ const Navigation = () => {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isTransparent
           ? "bg-transparent shadow-none border-b border-transparent"
-          : "bg-keepla-white shadow-keepla-sm border-b border-keepla-gray"
+          : "bg-background shadow-sm border-b border-border"
       }`}
     >
       <div className="container mx-auto px-4">
@@ -91,8 +91,8 @@ const Navigation = () => {
                 to={item.href}
                 className={`transition-colors font-semibold ${
                   isTransparent
-                    ? "text-white hover:text-keepla-red"
-                    : "text-keepla-black hover:text-keepla-red"
+                    ? "text-white hover:text-primary"
+                    : "text-foreground hover:text-primary"
                 }`}
               >
                 {item.name}
@@ -106,7 +106,7 @@ const Navigation = () => {
               variant="brand-outline" 
               onClick={() => navigate("/blog")}
               className={`hidden md:flex ${
-                isTransparent ? "border-white text-white hover:bg-white/10" : ""
+                isTransparent ? "border-white text-white hover:bg-white/10" : "border-border text-foreground"
               }`}
             >
               Caderno
@@ -118,7 +118,7 @@ const Navigation = () => {
                   <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                     <Avatar className="h-8 w-8">
                       <AvatarImage src={profile?.avatar_url || ""} alt={profile?.full_name || ""} />
-                      <AvatarFallback className="bg-keepla-red text-white">
+                      <AvatarFallback className="bg-primary text-white">
                         {profile?.full_name
                           ? profile.full_name.charAt(0).toUpperCase()
                           : user.email?.charAt(0).toUpperCase()}
@@ -177,7 +177,7 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className={`md:hidden border-t py-4 ${isTransparent ? "border-white/20 bg-black/80 -mx-4 px-4" : "border-keepla-gray"}`}>
+          <div className={`md:hidden border-t py-4 ${isTransparent ? "border-white/20 bg-black/80 -mx-4 px-4" : "border-border"}`}>
             <div className="flex flex-col space-y-2">
               {menuItems.map((item) => (
                 <Link
@@ -185,8 +185,8 @@ const Navigation = () => {
                   to={item.href}
                   className={`transition-colors font-semibold px-4 py-3 touch-target rounded-md ${
                     isTransparent
-                      ? "text-white hover:text-keepla-red hover:bg-white/10"
-                      : "text-keepla-black hover:text-keepla-red hover:bg-keepla-gray"
+                      ? "text-white hover:text-primary hover:bg-white/10"
+                      : "text-foreground hover:text-primary hover:bg-muted"
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -197,8 +197,8 @@ const Navigation = () => {
                 to="/blog"
                 className={`transition-colors font-semibold px-4 py-3 touch-target rounded-md ${
                   isTransparent
-                    ? "text-white hover:text-keepla-red hover:bg-white/10"
-                    : "text-keepla-black hover:text-keepla-red hover:bg-keepla-gray"
+                    ? "text-white hover:text-primary hover:bg-white/10"
+                    : "text-foreground hover:text-primary hover:bg-muted"
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >

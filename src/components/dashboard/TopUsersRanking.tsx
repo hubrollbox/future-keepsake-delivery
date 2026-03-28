@@ -10,11 +10,11 @@ const TopUsersRanking = ({ users }: TopUsersRankingProps) => {
   const getRankIcon = (index: number) => {
     switch (index) {
       case 0:
-        return <Trophy className="h-5 w-5 text-keepla-red" />;
+        return <Trophy className="h-5 w-5 text-primary" />;
       case 1:
-        return <Medal className="h-5 w-5 text-keepla-gray" />;
+        return <Medal className="h-5 w-5 text-muted-foreground" />;
       case 2:
-        return <Award className="h-5 w-5 text-keepla-gray" />;
+        return <Award className="h-5 w-5 text-muted-foreground" />;
       default:
         return (
           <div className="h-5 w-5 rounded-full bg-lavender-mist text-steel-blue text-xs flex items-center justify-center font-bold">
@@ -30,20 +30,20 @@ const TopUsersRanking = ({ users }: TopUsersRankingProps) => {
         <p className="text-misty-gray text-center py-8">Nenhum utilizador encontrado</p>
       ) : (
         users.map((user, index) => (
-          <div key={user.id} className="flex items-center gap-4 p-3 rounded-xl bg-keepla-gray/40 hover:bg-keepla-gray/50 transition-colors">
+          <div key={user.id} className="flex items-center gap-4 p-3 rounded-xl bg-muted/40 hover:bg-muted/50 transition-colors">
             <div className="flex-shrink-0">
               {getRankIcon(index)}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-medium text-keepla-gray-800 truncate">
+              <p className="font-medium text-muted-foreground-800 truncate">
                 {user.full_name || user.email}
               </p>
-              <p className="text-sm text-keepla-gray">
+              <p className="text-sm text-muted-foreground">
                 {user.keepsakeCount} {user.keepsakeCount === 1 ? 'entrega' : 'entregas'}
               </p>
             </div>
             <div className="flex-shrink-0">
-              <div className="bg-keepla-gray/20 text-keepla-gray px-3 py-1 rounded-full text-sm font-semibold">
+              <div className="bg-muted/20 text-muted-foreground px-3 py-1 rounded-full text-sm font-semibold">
                 #{index + 1}
               </div>
             </div>

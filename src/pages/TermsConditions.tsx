@@ -10,7 +10,7 @@ const TermsConditions = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-keepla-white">
+    <div className="min-h-screen bg-background">
       <Navigation />
 
       <main className="container mx-auto px-4 py-8">
@@ -19,7 +19,7 @@ const TermsConditions = () => {
           <Button 
             variant="ghost" 
             onClick={() => navigate('/')} 
-            className="flex items-center space-x-2 text-keepla-gray-dark hover:text-keepla-red"
+            className="flex items-center space-x-2 text-muted-foreground-dark hover:text-primary"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Voltar ao Início</span>
@@ -37,23 +37,23 @@ const TermsConditions = () => {
               e.currentTarget.src = "/keepla-logo-red.png?v=3";
             }}
           />
-          <h1 className="text-hero text-keepla-gray-dark font-fraunces mb-2">Termos e Condições – KEEPLA.PT</h1>
-          <p className="text-keepla-gray">Versão MVP / Beta Fechada</p>
-          <p className="text-keepla-gray-light">Última atualização: 5 de janeiro de 2026</p>
+          <h1 className="text-hero text-muted-foreground-dark font-fraunces mb-2">Termos e Condições – KEEPLA.PT</h1>
+          <p className="text-muted-foreground">Versão MVP / Beta Fechada</p>
+          <p className="text-muted-foreground-light">Última atualização: 5 de janeiro de 2026</p>
         </div>
 
         <Card className="max-w-4xl mx-auto emotion-card">
           <CardContent className="p-8">
-            <div className="space-y-8 text-keepla-gray">
+            <div className="space-y-8 text-muted-foreground">
               <section>
-                <h2 className="text-xl font-semibold text-keepla-gray-dark mb-4 font-fraunces">1. Identificação</h2>
+                <h2 className="text-xl font-semibold text-muted-foreground-dark mb-4 font-fraunces">1. Identificação</h2>
                 <p className="leading-relaxed">
                   A plataforma keepla.pt é operada pela Obtain Success Unipessoal Lda, NIF 515 811 165, com sede em Matosinhos, Portugal, doravante designada por Keepla.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-xl font-semibold text-keepla-gray-dark mb-4 font-fraunces">2. Natureza do Serviço (Beta)</h2>
+                <h2 className="text-xl font-semibold text-muted-foreground-dark mb-4 font-fraunces">2. Natureza do Serviço (Beta)</h2>
                 <p className="leading-relaxed">A Keepla encontra-se em fase MVP / beta fechada. O serviço consiste numa plataforma digital experimental que permite:</p>
                 <ul className="list-disc ml-6 space-y-2">
                   <li>criação de conta de utilizador;</li>
@@ -69,7 +69,7 @@ const TermsConditions = () => {
               </section>
 
               <section>
-                <h2 className="text-xl font-semibold text-keepla-gray-dark mb-4 font-fraunces">3. Acesso e Convites</h2>
+                <h2 className="text-xl font-semibold text-muted-foreground-dark mb-4 font-fraunces">3. Acesso e Convites</h2>
                 <p className="leading-relaxed">O acesso ao beta é:</p>
                 <ul className="list-disc ml-6 space-y-2">
                   <li>limitado;</li>
@@ -79,7 +79,7 @@ const TermsConditions = () => {
               </section>
 
               <section>
-                <h2 className="text-xl font-semibold text-keepla-gray-dark mb-4 font-fraunces">4. Registo e Conta</h2>
+                <h2 className="text-xl font-semibold text-muted-foreground-dark mb-4 font-fraunces">4. Registo e Conta</h2>
                 <p className="leading-relaxed">O utilizador compromete-se a fornecer dados verdadeiros e atualizados. É responsável:</p>
                 <ul className="list-disc ml-6 space-y-2">
                   <li>pela segurança das credenciais;</li>
@@ -89,7 +89,7 @@ const TermsConditions = () => {
               </section>
 
               <section>
-                <h2 className="text-xl font-semibold text-keepla-gray-dark mb-4 font-fraunces">5. Conteúdos do Utilizador</h2>
+                <h2 className="text-xl font-semibold text-muted-foreground-dark mb-4 font-fraunces">5. Conteúdos do Utilizador</h2>
                 <p className="leading-relaxed">O utilizador é o único responsável pelos conteúdos carregados, garantindo que:</p>
                 <ul className="list-disc ml-6 space-y-2">
                   <li>tem legitimidade para os utilizar;</li>
@@ -104,7 +104,7 @@ const TermsConditions = () => {
               </section>
 
               <section>
-                <h2 className="text-xl font-semibold text-keepla-gray-dark mb-4 font-fraunces">6. Pagamentos</h2>
+                <h2 className="text-xl font-semibold text-muted-foreground-dark mb-4 font-fraunces">6. Pagamentos</h2>
                 <p className="leading-relaxed">Durante a fase MVP / beta fechada:</p>
                 <ul className="list-disc ml-6 space-y-2">
                   <li>o serviço pode ser gratuito ou pago;</li>
@@ -114,12 +114,12 @@ const TermsConditions = () => {
               </section>
 
               <section>
-                <h2 className="text-xl font-semibold text-keepla-gray-dark mb-4 font-fraunces">7. Direito de Livre Resolução</h2>
+                <h2 className="text-xl font-semibold text-muted-foreground-dark mb-4 font-fraunces">7. Direito de Livre Resolução</h2>
                 <p className="leading-relaxed">Quando aplicável, o utilizador beneficia do direito de livre resolução nos termos do DL n.º 24/2014, com as limitações legais aplicáveis a serviços digitais já iniciados ou conteúdos personalizados.</p>
               </section>
 
               <section>
-                <h2 className="text-xl font-semibold text-keepla-gray-dark mb-4 font-fraunces">8. Proteção de Dados Pessoais</h2>
+                <h2 className="text-xl font-semibold text-muted-foreground-dark mb-4 font-fraunces">8. Proteção de Dados Pessoais</h2>
                 <p className="leading-relaxed">A Keepla atua como Responsável pelo Tratamento, nos termos do RGPD.</p>
                 <p className="leading-relaxed mt-2">Os dados pessoais são tratados para:</p>
                 <ul className="list-disc ml-6 space-y-2">
@@ -132,12 +132,12 @@ const TermsConditions = () => {
               </section>
 
               <section>
-                <h2 className="text-xl font-semibold text-keepla-gray-dark mb-4 font-fraunces">9. Menores</h2>
+                <h2 className="text-xl font-semibold text-muted-foreground-dark mb-4 font-fraunces">9. Menores</h2>
                 <p className="leading-relaxed">O serviço não se destina a menores de 13 anos. O acesso por menores depende de consentimento parental válido.</p>
               </section>
 
               <section>
-                <h2 className="text-xl font-semibold text-keepla-gray-dark mb-4 font-fraunces">10. Limitação de Responsabilidade (Beta)</h2>
+                <h2 className="text-xl font-semibold text-muted-foreground-dark mb-4 font-fraunces">10. Limitação de Responsabilidade (Beta)</h2>
                 <p className="leading-relaxed">Atendendo à natureza experimental do serviço, a Keepla:</p>
                 <ul className="list-disc ml-6 space-y-2">
                   <li>não garante disponibilidade contínua;</li>
@@ -148,7 +148,7 @@ const TermsConditions = () => {
               </section>
 
               <section>
-                <h2 className="text-xl font-semibold text-keepla-gray-dark mb-4 font-fraunces">11. Alterações e Encerramento</h2>
+                <h2 className="text-xl font-semibold text-muted-foreground-dark mb-4 font-fraunces">11. Alterações e Encerramento</h2>
                 <p className="leading-relaxed">A Keepla pode:</p>
                 <ul className="list-disc ml-6 space-y-2">
                   <li>alterar estes Termos;</li>
@@ -159,7 +159,7 @@ const TermsConditions = () => {
               </section>
 
               <section>
-                <h2 className="text-xl font-semibold text-keepla-gray-dark mb-4 font-fraunces">12. Lei Aplicável e Litígios</h2>
+                <h2 className="text-xl font-semibold text-muted-foreground-dark mb-4 font-fraunces">12. Lei Aplicável e Litígios</h2>
                 <p className="leading-relaxed">Aplica-se a lei portuguesa. O consumidor pode recorrer a entidade de Resolução Alternativa de Litígios legalmente competente.</p>
               </section>
             </div>

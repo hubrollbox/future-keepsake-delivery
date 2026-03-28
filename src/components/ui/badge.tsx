@@ -10,10 +10,10 @@ const badgeVariants = cva(
         default: "bg-foreground text-background",
         outline: "border border-border text-foreground",
         muted: "bg-muted text-muted-foreground",
-        highlight: "bg-keepla-red text-white",
+        highlight: "bg-primary text-white",
 
         // Compatibilidade com uso existente
-        secondary: "bg-keepla-gray-200 text-keepla-gray-700",
+        secondary: "bg-muted-200 text-muted-foreground",
         destructive: "bg-red-600 text-white",
       },
     },

@@ -133,38 +133,38 @@ const AdminClients: React.FC = () => {
           <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-dusty-rose/20">
-                <th className="text-left py-2 px-4 font-medium text-gray-700">Nome</th>
-                <th className="text-left py-2 px-4 font-medium text-gray-700">Email</th>
-                <th className="text-left py-2 px-4 font-medium text-gray-700">Plano</th>
-                <th className="text-left py-2 px-4 font-medium text-gray-700">Pontos</th>
-                <th className="text-left py-2 px-4 font-medium text-gray-700">Nível</th>
-                <th className="text-left py-2 px-4 font-medium text-gray-700">Admin</th>
-                <th className="text-left py-2 px-4 font-medium text-gray-700">Ações</th>
+                <th className="text-left py-2 px-4 font-medium text-foreground">Nome</th>
+                <th className="text-left py-2 px-4 font-medium text-foreground">Email</th>
+                <th className="text-left py-2 px-4 font-medium text-foreground">Plano</th>
+                <th className="text-left py-2 px-4 font-medium text-foreground">Pontos</th>
+                <th className="text-left py-2 px-4 font-medium text-foreground">Nível</th>
+                <th className="text-left py-2 px-4 font-medium text-foreground">Admin</th>
+                <th className="text-left py-2 px-4 font-medium text-foreground">Ações</th>
               </tr>
             </thead>
             <tbody>
               {clients.map(client => (
                 <tr key={client.id} className="border-b border-dusty-rose/10">
-                  <td className="py-2 px-4 text-gray-600">
+                  <td className="py-2 px-4 text-muted-foreground">
                     {client.full_name || "Nome não definido"}
                   </td>
-                  <td className="py-2 px-4 text-gray-600">
+                  <td className="py-2 px-4 text-muted-foreground">
                     {client.email || "Email não definido"}
                   </td>
-                  <td className="py-2 px-4 text-gray-600 capitalize">
+                  <td className="py-2 px-4 text-muted-foreground capitalize">
                     {client.plan_type || "free"}
                   </td>
-                  <td className="py-2 px-4 text-gray-600">
+                  <td className="py-2 px-4 text-muted-foreground">
                     {client.total_points || 0}
                   </td>
-                  <td className="py-2 px-4 text-gray-600">
+                  <td className="py-2 px-4 text-muted-foreground">
                     {client.level || 1}
                   </td>
                   <td className="py-2 px-4">
                     <span className={`px-2 py-1 rounded-full text-xs ${
                       client.is_admin 
-                        ? "bg-keepla-red/20 text-keepla-red" 
-                        : "bg-keepla-gray-light/20 text-keepla-gray-light"
+                        ? "bg-primary/20 text-primary" 
+                        : "bg-muted-light/20 text-muted-foreground-light"
                     }`}>
                       {client.is_admin ? "Admin" : "User"}
                     </span>
@@ -175,7 +175,7 @@ const AdminClients: React.FC = () => {
                       className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
                         client.is_admin
                           ? "bg-red-100 text-red-700 hover:bg-red-200"
-                          : "bg-green-100 text-green-700 hover:bg-green-200"
+                          : "bg-primary/10 text-green-700 hover:bg-green-200"
                       }`}
                     >
                       {client.is_admin ? "Remover Admin" : "Tornar Admin"}

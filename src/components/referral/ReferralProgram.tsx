@@ -42,9 +42,9 @@ const ReferralProgram = () => {
       <Card>
         <CardContent className="p-6">
           <div className="animate-pulse space-y-4">
-            <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-            <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-            <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+            <div className="h-4 bg-muted rounded w-3/4"></div>
+            <div className="h-4 bg-muted rounded w-1/2"></div>
+            <div className="h-4 bg-muted rounded w-2/3"></div>
           </div>
         </CardContent>
       </Card>
@@ -54,7 +54,7 @@ const ReferralProgram = () => {
   return (
     <div className="space-y-6">
       {/* Banner Principal */}
-      <Card className="bg-keepla-gray-dark text-white overflow-hidden">
+      <Card className="bg-muted-dark text-white overflow-hidden">
         <CardContent className="p-8 relative">
           <div className="flex items-center justify-between">
             <div>
@@ -82,41 +82,41 @@ const ReferralProgram = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <CardContent className="p-6 text-center">
-              <Users className="w-8 h-8 text-keepla-gray mx-auto mb-2" />
-              <div className="text-2xl font-bold text-keepla-gray-800">
+              <Users className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
+              <div className="text-2xl font-bold text-muted-foreground-800">
               {stats?.total_referrals || 0}
             </div>
-              <div className="text-sm text-keepla-gray">Total de Convites</div>
+              <div className="text-sm text-muted-foreground">Total de Convites</div>
           </CardContent>
         </Card>
 
         <Card>
             <CardContent className="p-6 text-center">
-            <CheckCircle className="w-8 h-8 text-keepla-gray mx-auto mb-2" />
-              <div className="text-2xl font-bold text-keepla-gray-800">
+            <CheckCircle className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
+              <div className="text-2xl font-bold text-muted-foreground-800">
               {stats?.completed_referrals || 0}
             </div>
-              <div className="text-sm text-keepla-gray">Registros Completos</div>
+              <div className="text-sm text-muted-foreground">Registros Completos</div>
           </CardContent>
         </Card>
 
         <Card>
             <CardContent className="p-6 text-center">
-            <Clock className="w-8 h-8 text-keepla-gray mx-auto mb-2" />
-              <div className="text-2xl font-bold text-keepla-gray-800">
+            <Clock className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
+              <div className="text-2xl font-bold text-muted-foreground-800">
               {stats?.pending_referrals || 0}
             </div>
-              <div className="text-sm text-keepla-gray">Pendentes</div>
+              <div className="text-sm text-muted-foreground">Pendentes</div>
           </CardContent>
         </Card>
 
         <Card>
             <CardContent className="p-6 text-center">
-            <Trophy className="w-8 h-8 text-keepla-gray mx-auto mb-2" />
-              <div className="text-2xl font-bold text-keepla-gray-800">
+            <Trophy className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
+              <div className="text-2xl font-bold text-muted-foreground-800">
               {stats?.total_bonus_keepsakes || 0}
             </div>
-              <div className="text-sm text-keepla-gray">Cápsulas Bônus</div>
+              <div className="text-sm text-muted-foreground">Cápsulas Bônus</div>
           </CardContent>
         </Card>
       </div>
@@ -141,16 +141,16 @@ const ReferralProgram = () => {
             <Button 
               onClick={handleSendInvite}
               disabled={!inviteEmail || isInviting}
-              className="bg-keepla-red hover:bg-keepla-red/90"
+              className="bg-primary hover:bg-primary/90"
             >
               {isInviting ? 'Enviando...' : 'Enviar Convite'}
             </Button>
           </div>
 
-          <div className="flex items-center gap-2 p-4 bg-gray-50 rounded-lg">
+          <div className="flex items-center gap-2 p-4 bg-muted rounded-lg">
             <div className="flex-1">
-                <div className="text-sm text-keepla-gray mb-1">Seu código de referência:</div>
-                <div className="font-mono text-lg font-bold text-keepla-gray-800">
+                <div className="text-sm text-muted-foreground mb-1">Seu código de referência:</div>
+                <div className="font-mono text-lg font-bold text-muted-foreground-800">
                 {stats?.referral_code || 'Carregando...'}
               </div>
             </div>
@@ -176,24 +176,24 @@ const ReferralProgram = () => {
           <CardContent>
             <div className="space-y-3">
               {referrals.map((referral) => (
-                <div key={referral.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div key={referral.id} className="flex items-center justify-between p-3 bg-muted rounded-lg">
                   <div>
-                    <div className="font-medium text-keepla-gray-dark">
+                    <div className="font-medium text-muted-foreground-dark">
                       {referral.referred_email}
                     </div>
-                    <div className="text-sm text-keepla-gray-light">
+                    <div className="text-sm text-muted-foreground-light">
                       Convidado em {new Date(referral.created_at).toLocaleDateString('pt-PT')}
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     <Badge 
                       variant={referral.status === 'completed' ? 'default' : 'secondary'}
-                      className={referral.status === 'completed' ? 'bg-keepla-gray/10 text-keepla-gray' : ''}
+                      className={referral.status === 'completed' ? 'bg-muted/10 text-muted-foreground' : ''}
                     >
                       {referral.status === 'completed' ? 'Completo' : 'Pendente'}
                     </Badge>
                     {referral.status === 'completed' && (
-                      <div className="text-sm text-keepla-gray font-medium">
+                      <div className="text-sm text-muted-foreground font-medium">
                         +{referral.bonus_keepsakes} cápsulas
                       </div>
                     )}
@@ -213,31 +213,31 @@ const ReferralProgram = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
-                <div className="w-12 h-12 bg-keepla-gray/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Share2 className="w-6 h-6 text-blue-600" />
+                <div className="w-12 h-12 bg-muted/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Share2 className="w-6 h-6 text-primary" />
               </div>
               <h3 className="font-semibold mb-2">1. Partilhe</h3>
-                <p className="text-sm text-keepla-gray">
+                <p className="text-sm text-muted-foreground">
                 Envie seu link de referência para amigos e familiares
               </p>
             </div>
 
             <div className="text-center">
-                <div className="w-12 h-12 bg-keepla-gray/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Users className="w-6 h-6 text-keepla-gray" />
+                <div className="w-12 h-12 bg-muted/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Users className="w-6 h-6 text-muted-foreground" />
               </div>
               <h3 className="font-semibold mb-2">2. Eles se Registram</h3>
-                <p className="text-sm text-keepla-gray">
+                <p className="text-sm text-muted-foreground">
                 Seus amigos criam uma conta usando seu código
               </p>
             </div>
 
             <div className="text-center">
-                <div className="w-12 h-12 bg-keepla-gray/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Gift className="w-6 h-6 text-keepla-gray" />
+                <div className="w-12 h-12 bg-muted/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Gift className="w-6 h-6 text-muted-foreground" />
               </div>
               <h3 className="font-semibold mb-2">3. Ganhe Recompensas</h3>
-                <p className="text-sm text-keepla-gray">
+                <p className="text-sm text-muted-foreground">
                 Receba 3 cápsulas grátis para cada amigo que se registrar
               </p>
             </div>

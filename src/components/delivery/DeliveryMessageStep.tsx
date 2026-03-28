@@ -72,11 +72,11 @@ const DeliveryMessageStep = ({ formData, handleInputChange, handleFileChange, de
             accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.mp4,.mov,.mp3"
             aria-describedby="file-restriction"
           />
-          <p id="file-restriction" className="text-xs text-gray-500 mt-1">
+          <p id="file-restriction" className="text-xs text-muted-foreground mt-1">
             Tipos permitidos: PDF, DOC, JPG, PNG, MP4, MOV, MP3. Máx: 20MB.
           </p>
           {formData.digitalFile && (
-            <p className="text-sm text-gray-700 mt-1">Ficheiro selecionado: {formData.digitalFile.name}</p>
+            <p className="text-sm text-foreground mt-1">Ficheiro selecionado: {formData.digitalFile.name}</p>
           )}
         </div>
       )}

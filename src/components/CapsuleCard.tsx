@@ -23,10 +23,10 @@ const CapsuleCard = ({
 }: CapsuleCardProps) => {
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "pending": return "bg-keepla-gray text-foreground";
-      case "delivered": return "bg-keepla-red/10 text-keepla-red";
-      case "scheduled": return "bg-keepla-gray-neutral text-foreground";
-      default: return "bg-keepla-gray text-foreground";
+      case "pending": return "bg-muted text-foreground";
+      case "delivered": return "bg-primary/10 text-primary";
+      case "scheduled": return "bg-muted-neutral text-foreground";
+      default: return "bg-muted text-foreground";
     }
   };
 
@@ -49,7 +49,7 @@ const CapsuleCard = ({
   };
 
   return (
-    <Card className="border-border hover:border-keepla-red transition-colors">
+    <Card className="border-border hover:border-primary transition-colors">
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-2">
@@ -62,16 +62,16 @@ const CapsuleCard = ({
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-gray-600 text-sm leading-relaxed">{description}</p>
+        <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
         
         <div className="space-y-2 text-sm">
           <div className="flex items-center justify-between">
             <span className="text-foreground font-medium">Para:</span>
-            <span className="text-gray-600">{recipient}</span>
+            <span className="text-muted-foreground">{recipient}</span>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-foreground font-medium">Entrega:</span>
-            <span className="text-gray-600">{deliveryDate}</span>
+            <span className="text-muted-foreground">{deliveryDate}</span>
           </div>
         </div>
 
@@ -79,7 +79,7 @@ const CapsuleCard = ({
           <Button 
             variant="outline" 
             size="sm" 
-            className="w-full group border-keepla-red text-keepla-red hover:bg-keepla-red hover:text-keepla-white"
+            className="w-full group border-primary text-primary hover:bg-primary hover:text-white"
           >
             Ver Detalhes
             <ArrowRight className="h-3 w-3 ml-1 group-hover:translate-x-1 transition-transform" />

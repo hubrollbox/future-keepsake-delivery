@@ -16,12 +16,12 @@ const buttonVariants = cva(
         destructive: "bg-red-600 text-white hover:bg-red-700",
 
         // Keepla design system
-        brand: "bg-keepla-red text-white hover:bg-keepla-red/85",
+        brand: "bg-primary text-white hover:bg-primary/85",
         "brand-outline":
-          "border border-keepla-red text-keepla-red hover:bg-keepla-red/15 hover:text-black",
+          "border border-primary text-primary hover:bg-primary/15 hover:text-black",
         gentle:
-          "bg-keepla-gray-100 text-foreground hover:bg-keepla-gray-200",
-        link: "text-keepla-red underline-offset-4 hover:underline",
+          "bg-muted-100 text-foreground hover:bg-muted-200",
+        link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
         default: "h-10 px-4",

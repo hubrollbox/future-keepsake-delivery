@@ -7,10 +7,10 @@ interface SuccessStepProps {
 const SuccessStep = ({ formData }: SuccessStepProps) => {
   return (
     <div className="text-center space-y-6">
-      <h2 className="text-3xl font-bold text-keepla-red">
+      <h2 className="text-3xl font-bold text-primary">
         Cápsula criada com sucesso!
       </h2>
-      <p className="text-keepla-gray-light">
+      <p className="text-muted-foreground-light">
         A cápsula para {formData.recipient_name} será entregue na data selecionada.
       </p>
     </div>

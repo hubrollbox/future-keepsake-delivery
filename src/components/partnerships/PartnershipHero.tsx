@@ -12,7 +12,7 @@ const PartnershipHero = () => {
         Junta-te à nossa rede de parceiros e ajuda-nos a transformar a forma como as pessoas experienciam o tempo e as memórias.
       </p>
       <div className="flex justify-center mb-8">
-        <Handshake className="h-16 w-16 text-keepla-red" />
+        <Handshake className="h-16 w-16 text-primary" />
       </div>
     </div>
   );
