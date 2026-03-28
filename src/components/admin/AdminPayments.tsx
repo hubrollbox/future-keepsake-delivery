@@ -76,12 +76,12 @@ const AdminPayments = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "completed":
-        return "bg-green-100 text-green-800";
+        return "bg-primary/10 text-foreground";
       case "failed":
         return "bg-red-100 text-red-800";
       case "pending":
       default:
-        return "bg-orange-100 text-orange-800";
+        return "bg-primary/10 text-foreground";
     }
   };
 

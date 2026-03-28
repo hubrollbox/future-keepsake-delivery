@@ -18,9 +18,9 @@ const TimeCapsuleSection = ({ deliveries, loading, onDelete }: TimeCapsuleSectio
   const getStatusColor = (status: string | null) => {
     switch (status) {
       case "scheduled": return "bg-warm-yellow text-warm-brown";
-      case "delivered": return "bg-green-100 text-keepla-gray-dark";
-      case "cancelled": return "bg-keepla-red/10 text-keepla-red";
-      default: return "bg-keepla-gray-light/20 text-keepla-gray-dark";
+      case "delivered": return "bg-primary/10 text-muted-foreground-dark";
+      case "cancelled": return "bg-primary/10 text-primary";
+      default: return "bg-muted-light/20 text-muted-foreground-dark";
     }
   };
 

@@ -61,27 +61,27 @@ const ProductsSection = () => {
 
   const ProductCard = ({ product }: { product: Product }) => {
     return (
-      <Card className="h-full border-border/20 hover:border-keepla-red/40 transition-all duration-300 hover:shadow-keepla-sm bg-card">
+      <Card className="h-full border-border/20 hover:border-primary/40 transition-all duration-300 hover:shadow-keepla-sm bg-card">
         <CardHeader className="pb-3">
           <div className="flex items-start justify-between">
             <div className="flex-1">
-              <CardTitle className="text-lg text-keepla-black font-serif">
+              <CardTitle className="text-lg text-foreground font-serif">
                 {product.name}
               </CardTitle>
             </div>
             <div className="text-right ml-4">
-              <div className="font-semibold text-keepla-black">
+              <div className="font-semibold text-foreground">
                 {product.price === 0 ? 'Grátis' : `€${product.price.toFixed(2)}`}
               </div>
             </div>
           </div>
         </CardHeader>
         <CardContent className="pt-0 space-y-4">
-          <p className="text-sm text-keepla-black mb-3">
+          <p className="text-sm text-foreground mb-3">
             {product.description}
           </p>
           {product.poetry && (
-            <p className="text-sm italic text-keepla-red font-serif mb-4">
+            <p className="text-sm italic text-primary font-serif mb-4">
               "{product.poetry}"
             </p>
           )}
@@ -104,8 +104,8 @@ const ProductsSection = () => {
       <div className="py-16 bg-card">
         <div className="container mx-auto px-4">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-keepla-red mx-auto"></div>
-            <p className="text-keepla-black mt-4">A carregar produtos...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+            <p className="text-foreground mt-4">A carregar produtos...</p>
           </div>
         </div>
       </div>
@@ -120,17 +120,17 @@ const ProductsSection = () => {
     <div className="py-16 bg-card">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-serif text-keepla-black mb-4">
+          <h1 className="text-4xl font-serif text-foreground mb-4">
             Presentes com Alma
           </h1>
-          <p className="text-lg text-keepla-black max-w-2xl mx-auto">
+          <p className="text-lg text-foreground max-w-2xl mx-auto">
             Cada presente é uma ponte entre o presente e o futuro, carregando o peso precioso das nossas intenções.
           </p>
         </div>
 
         {digitalProducts.length > 0 && (
           <div className="mb-16">
-            <h2 className="text-2xl font-serif text-keepla-black mb-6 text-center">
+            <h2 className="text-2xl font-serif text-foreground mb-6 text-center">
               Produtos Digitais
             </h2>
             <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
@@ -143,7 +143,7 @@ const ProductsSection = () => {
 
         {physicalProducts.length > 0 && (
           <div className="mb-16">
-            <h2 className="text-2xl font-serif text-keepla-black mb-6 text-center">
+            <h2 className="text-2xl font-serif text-foreground mb-6 text-center">
               Produtos Físicos
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
@@ -156,7 +156,7 @@ const ProductsSection = () => {
 
         {serviceProducts.length > 0 && (
           <div className="mb-16">
-            <h2 className="text-2xl font-serif text-keepla-black mb-6 text-center">
+            <h2 className="text-2xl font-serif text-foreground mb-6 text-center">
               Serviços Adicionais
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
@@ -169,7 +169,7 @@ const ProductsSection = () => {
 
         {products.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-keepla-black">Nenhum produto disponível no momento.</p>
+            <p className="text-foreground">Nenhum produto disponível no momento.</p>
           </div>
         )}
 

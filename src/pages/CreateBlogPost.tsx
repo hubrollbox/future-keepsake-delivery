@@ -412,7 +412,7 @@ const CreateBlogPost = ({ editId, onSaved }: Props) => {
   };
 
   const getScoreBadge = (score: number) => {
-    if (score >= 80) return 'bg-green-100 text-green-800';
+    if (score >= 80) return 'bg-primary/10 text-foreground';
     if (score >= 50) return 'bg-yellow-100 text-yellow-800';
     return 'bg-red-100 text-red-800';
   };

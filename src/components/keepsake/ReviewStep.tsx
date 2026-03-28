@@ -10,10 +10,10 @@ interface ReviewStepProps {
 const ReviewStep = ({ formData, onBack, onSubmit, loading }: ReviewStepProps) => {
   return (
     <div className="space-y-6 text-center">
-      <h2 className="text-2xl font-serif text-keepla-gray-dark mb-2">
+      <h2 className="text-2xl font-serif text-muted-foreground-dark mb-2">
         Revisão
       </h2>
-      <p className="text-keepla-gray-light mb-4">
+      <p className="text-muted-foreground-light mb-4">
         Verifique os dados antes de criar a cápsula
       </p>
 
@@ -30,7 +30,7 @@ const ReviewStep = ({ formData, onBack, onSubmit, loading }: ReviewStepProps) =>
         <button
           type="button"
           onClick={onBack}
-          className="px-6 py-2 border rounded border-keepla-red text-keepla-red"
+          className="px-6 py-2 border rounded border-primary text-primary"
         >
           Anterior
         </button>
@@ -38,7 +38,7 @@ const ReviewStep = ({ formData, onBack, onSubmit, loading }: ReviewStepProps) =>
           type="button"
           onClick={onSubmit}
           disabled={loading}
-          className="px-6 py-2 bg-keepla-red text-white rounded"
+          className="px-6 py-2 bg-primary text-white rounded"
         >
           {loading ? 'A criar...' : 'Criar Cápsula'}
         </button>

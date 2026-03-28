@@ -95,7 +95,7 @@ const Blog = () => {
   };
 
   return (
-    <div className="min-h-screen bg-keepla-black">
+    <div className="min-h-screen bg-foreground">
       <SEOHead 
         title="Blog"
         description="Artigos sobre memórias, keepsakes, cápsulas do tempo e como guardar momentos especiais para o futuro."
@@ -113,13 +113,13 @@ const Blog = () => {
         <div className="container mx-auto px-4 py-16">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl md:text-6xl font-inter font-bold text-keepla-white tracking-tight">Blog</h1>
-              <p className="text-keepla-white/70 mt-2 font-georgia italic text-lg">
+              <h1 className="text-4xl md:text-6xl font-inter font-bold text-white tracking-tight">Blog</h1>
+              <p className="text-white/70 mt-2 font-georgia italic text-lg">
                 Histórias, novidades e reflexões sobre guardar emoções.
               </p>
             </div>
             {isAdmin && (
-              <Button onClick={() => navigate('/admin/blog?new=1')} className="bg-keepla-red hover:bg-keepla-red/90 text-keepla-white">
+              <Button onClick={() => navigate('/admin/blog?new=1')} className="bg-primary hover:bg-primary/90 text-white">
                 <Plus className="h-4 w-4 mr-2" /> Criar Post
               </Button>
             )}
@@ -127,7 +127,7 @@ const Blog = () => {
         </div>
       </PhotoBackground>
 
-      <main className="bg-keepla-white">
+      <main className="bg-background">
         <motion.div 
           className="container mx-auto px-4 py-16"
           initial="hidden"
@@ -137,7 +137,7 @@ const Blog = () => {
           {/* Error State */}
           {error && (
             <motion.div 
-              className="bg-card border border-keepla-red text-keepla-red p-6 mb-8 rounded-lg"
+              className="bg-card border border-primary text-primary p-6 mb-8 rounded-lg"
               variants={itemVariants}
             >
               <p className="font-medium">{error}</p>
@@ -150,7 +150,7 @@ const Blog = () => {
             ) : (
               <p className="text-foreground mt-3">
                 Se o problema persistir, por favor{" "}
-                <a href="/contact" className="underline hover:text-keepla-red transition-colors">
+                <a href="/contact" className="underline hover:text-primary transition-colors">
                   contacta o suporte
                 </a>.
               </p>
@@ -196,12 +196,12 @@ const Blog = () => {
                       />
                     </div>
                   ) : (
-                    <div className="w-full h-32 md:h-36 bg-keepla-gray/10 flex items-center justify-center">
+                    <div className="w-full h-32 md:h-36 bg-muted/10 flex items-center justify-center">
                       <span className="text-muted-foreground font-serif italic">Sem imagem</span>
                     </div>
                   )}
                   <div className="p-6">
-                    <h2 className="text-xl font-bold text-foreground group-hover:text-keepla-red transition-colors">
+                    <h2 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
                       {post.title}
                     </h2>
                     {post.excerpt && (

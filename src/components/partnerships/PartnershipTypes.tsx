@@ -31,17 +31,17 @@ const PartnershipTypes = () => {
         {partnershipTypes.map((type, index) => (
           <Card key={index} className="bg-white shadow-lg hover:shadow-xl transition-shadow border border-border">
             <CardHeader className="text-center">
-              <type.icon className="h-12 w-12 text-keepla-gray-dark mx-auto mb-4" />
+              <type.icon className="h-12 w-12 text-muted-foreground-dark mx-auto mb-4" />
               <CardTitle className="text-xl text-black">{type.title}</CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground mb-4">{type.description}</p>
               <div className="space-y-2">
-                <h4 className="font-semibold text-keepla-gray-dark text-sm">Benefícios:</h4>
+                <h4 className="font-semibold text-muted-foreground-dark text-sm">Benefícios:</h4>
                 <ul className="space-y-1">
                   {type.benefits.map((benefit, idx) => (
                     <li key={idx} className="text-sm text-muted-foreground flex items-center">
-                      <Star className="h-3 w-3 text-keepla-gray-dark mr-2" />
+                      <Star className="h-3 w-3 text-muted-foreground-dark mr-2" />
                       {benefit}
                     </li>
                   ))}

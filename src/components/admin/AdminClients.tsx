@@ -163,8 +163,8 @@ const AdminClients: React.FC = () => {
                   <td className="py-2 px-4">
                     <span className={`px-2 py-1 rounded-full text-xs ${
                       client.is_admin 
-                        ? "bg-keepla-red/20 text-keepla-red" 
-                        : "bg-keepla-gray-light/20 text-keepla-gray-light"
+                        ? "bg-primary/20 text-primary" 
+                        : "bg-muted-light/20 text-muted-foreground-light"
                     }`}>
                       {client.is_admin ? "Admin" : "User"}
                     </span>
@@ -175,7 +175,7 @@ const AdminClients: React.FC = () => {
                       className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
                         client.is_admin
                           ? "bg-red-100 text-red-700 hover:bg-red-200"
-                          : "bg-green-100 text-green-700 hover:bg-green-200"
+                          : "bg-primary/10 text-green-700 hover:bg-green-200"
                       }`}
                     >
                       {client.is_admin ? "Remover Admin" : "Tornar Admin"}

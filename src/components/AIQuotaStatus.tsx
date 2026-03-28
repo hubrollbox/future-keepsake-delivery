@@ -56,7 +56,7 @@ export function AIQuotaStatus({
       case 'premium':
         return 'bg-blue-100 text-blue-800';
       case 'family':
-        return 'bg-purple-100 text-purple-800';
+        return 'bg-primary/10 text-primary';
       default:
         return 'bg-muted text-foreground';
     }

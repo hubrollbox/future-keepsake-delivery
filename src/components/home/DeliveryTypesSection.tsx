@@ -12,34 +12,34 @@ const DeliveryTypesSection = () => {
       <div className="grid md:grid-cols-3 gap-6 md:gap-8">
         <Card className="emotion-card text-center p-6 md:p-8 hover:shadow-soft hover:scale-105 transition-all duration-300 border border-border/20 group">
           <CardContent className="pt-6">
-            <Gift className="h-12 w-12 md:h-16 md:w-16 text-keepla-red mx-auto mb-4 md:mb-6 group-hover:animate-bounce-gentle" />
+            <Gift className="h-12 w-12 md:h-16 md:w-16 text-primary mx-auto mb-4 md:mb-6 group-hover:animate-bounce-gentle" />
             <h3 className="font-bold mb-2 md:mb-3 text-lg md:text-xl text-foreground font-fraunces">Presente Físico</h3>
             <p className="text-muted-foreground text-sm md:text-base mb-3 md:mb-4 leading-relaxed">
               Guardamos o teu presente numa instalação segura e climatizada. Desde jóias a livros, cartas a brinquedos.
             </p>
-            <p className="text-keepla-red font-semibold text-sm md:text-base">A partir de 1,90€/mês</p>
+            <p className="text-primary font-semibold text-sm md:text-base">A partir de 1,90€/mês</p>
           </CardContent>
         </Card>
 
         <Card className="emotion-card text-center p-6 md:p-8 hover:shadow-soft hover:scale-105 transition-all duration-300 border border-border/20 group">
           <CardContent className="pt-6">
-            <Mail className="h-12 w-12 md:h-16 md:w-16 text-keepla-red mx-auto mb-4 md:mb-6 group-hover:animate-bounce-gentle" />
+            <Mail className="h-12 w-12 md:h-16 md:w-16 text-primary mx-auto mb-4 md:mb-6 group-hover:animate-bounce-gentle" />
             <h3 className="font-bold mb-2 md:mb-3 text-lg md:text-xl text-foreground font-fraunces">Mensagem Digital</h3>
             <p className="text-muted-foreground text-sm md:text-base mb-3 md:mb-4 leading-relaxed">
               Cartas escritas do coração, vídeos pessoais, fotos especiais. Tudo protegido com tecnologia blockchain.
             </p>
-            <p className="text-keepla-red font-semibold text-sm md:text-base">Verificação de autenticidade incluída</p>
+            <p className="text-primary font-semibold text-sm md:text-base">Verificação de autenticidade incluída</p>
           </CardContent>
         </Card>
 
         <Card className="emotion-card text-center p-6 md:p-8 hover:shadow-soft hover:scale-105 transition-all duration-300 border border-border/20 group">
           <CardContent className="pt-6">
-            <Heart className="h-12 w-12 md:h-16 md:w-16 text-keepla-red mx-auto mb-4 md:mb-6 group-hover:animate-bounce-gentle" />
+            <Heart className="h-12 w-12 md:h-16 md:w-16 text-primary mx-auto mb-4 md:mb-6 group-hover:animate-bounce-gentle" />
             <h3 className="font-bold mb-2 md:mb-3 text-lg md:text-xl text-foreground font-fraunces">Cápsula do Tempo</h3>
             <p className="text-muted-foreground text-sm md:text-base mb-3 md:mb-4 leading-relaxed">
               Combina elementos físicos e digitais numa experiência única. Perfeito para marcos importantes da vida.
             </p>
-            <p className="text-keepla-red font-semibold text-sm md:text-base">Experiências personalizadas</p>
+            <p className="text-primary font-semibold text-sm md:text-base">Experiências personalizadas</p>
           </CardContent>
         </Card>
       </div>

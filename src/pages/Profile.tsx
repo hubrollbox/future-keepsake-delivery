@@ -19,7 +19,7 @@ const Profile = () => {
 
   if (!user || !profile) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-keepla-white">
+      <div className="min-h-screen flex items-center justify-center bg-background">
         <Card className="p-8 shadow-md">
           <CardHeader>
             <CardTitle className="text-center text-2xl font-serif text-gentle-black">Precisas de iniciar sessão</CardTitle>
@@ -33,11 +33,11 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-keepla-white py-12">
+    <div className="min-h-screen bg-background py-12">
       <div className="container mx-auto px-4 max-w-xl">
-        <Card className="shadow-md border-keepla-red/20">
+        <Card className="shadow-md border-primary/20">
           <CardHeader className="flex flex-col items-center gap-2 pb-4">
-            <div className="w-24 h-24 rounded-full bg-keepla-red flex items-center justify-center shadow-md mb-2">
+            <div className="w-24 h-24 rounded-full bg-primary flex items-center justify-center shadow-md mb-2">
               <User className="h-16 w-16 text-white" />
             </div>
             <CardTitle className="text-3xl font-serif font-semibold text-gentle-black text-center">{profile.full_name || "Guardião Temporal"}</CardTitle>
@@ -49,12 +49,12 @@ const Profile = () => {
           <CardContent className="flex flex-col items-center gap-6">
             <div className="w-full flex flex-col gap-4">
               <div className="flex items-center gap-3">
-                <Award className="h-6 w-6 text-keepla-red" />
+                <Award className="h-6 w-6 text-primary" />
                 <span className="font-medium text-gentle-black">Nível:</span>
                 <span className="font-serif text-xl text-gentle-black">{profile.level || 1}</span>
               </div>
               <div className="flex items-center gap-3">
-                <Award className="h-6 w-6 text-keepla-red" />
+                <Award className="h-6 w-6 text-primary" />
                 <span className="font-medium text-gentle-black">Pontos:</span>
                 <span className="font-serif text-xl text-gentle-black">{profile.total_points || 0}</span>
               </div>

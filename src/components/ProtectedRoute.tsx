@@ -14,10 +14,10 @@ const ProtectedRoute = ({ children, requireAdmin = false }: ProtectedRouteProps)
   // Show loading while checking authentication
   if (loading) {
     return (
-      <div className="min-h-screen bg-keepla-white flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="flex items-center space-x-2">
-          <Loader2 className="h-8 w-8 animate-spin text-keepla-gray" />
-          <span className="text-keepla-gray font-medium">A carregar...</span>
+          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+          <span className="text-muted-foreground font-medium">A carregar...</span>
         </div>
       </div>
     );

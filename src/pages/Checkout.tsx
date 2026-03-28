@@ -149,7 +149,7 @@ const Checkout = () => {
         description: (
           <span>
             O seu pedido foi registado.<br />
-            <a href={paymentLink} target="_blank" rel="noopener noreferrer" className="text-keepla-red underline">Clique aqui para pagar</a>.
+            <a href={paymentLink} target="_blank" rel="noopener noreferrer" className="text-primary underline">Clique aqui para pagar</a>.
           </span>
         ),
       });
@@ -170,7 +170,7 @@ const Checkout = () => {
   // Mostrar estado de carregamento do carrinho
   if (cartLoading) {
     return (
-      <div className="min-h-screen bg-keepla-white">
+      <div className="min-h-screen bg-background">
         <Navigation />
         <div className="container mx-auto px-4 py-16">
           <Card className="max-w-md mx-auto emotion-card">
@@ -190,7 +190,7 @@ const Checkout = () => {
   // Exibir mensagem quando carrinho estiver vazio (após carregar)
   if (!cartLoading && items.length === 0) {
     return (
-      <div className="min-h-screen bg-keepla-white">
+      <div className="min-h-screen bg-background">
         <Navigation />
         <div className="container mx-auto px-4 py-16">
           <Card className="max-w-md mx-auto emotion-card">
@@ -210,12 +210,12 @@ const Checkout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-keepla-white">
+    <div className="min-h-screen bg-background">
       <Navigation />
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-keepla-gray-dark mb-4 font-serif">Finalizar Compra</h1>
+            <h1 className="text-4xl font-bold text-muted-foreground-dark mb-4 font-serif">Finalizar Compra</h1>
             <p className="text-emotional">Quase lá! Complete os seus dados para receber os seus presentes com alma.</p>
           </div>
           
@@ -224,31 +224,31 @@ const Checkout = () => {
               <Card className="emotion-card">
                 <CardHeader>
                     <CardTitle className="flex items-center space-x-3 text-gentle-black font-serif">
-                    <User className="h-5 w-5 text-keepla-red" />
+                    <User className="h-5 w-5 text-primary" />
                     <span>Informações de Contacto</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div>
-                    <Label htmlFor="email" className="text-keepla-gray-dark font-medium">Email *</Label>
+                    <Label htmlFor="email" className="text-muted-foreground-dark font-medium">Email *</Label>
                     <Input
                       id="email"
                       type="email"
                       value={contactInfo.email}
                       onChange={(e) => handleInputChange('contact', 'email', e.target.value)}
-                      className={`mt-2 rounded-xl ${errors.email ? 'border-keepla-red' : 'border-border'}`}
+                      className={`mt-2 rounded-xl ${errors.email ? 'border-primary' : 'border-border'}`}
                       placeholder="seu@email.com"
                       required
                     />
                     {errors.email && (
-                      <div className="flex items-center space-x-1 mt-1 text-keepla-red text-sm">
+                      <div className="flex items-center space-x-1 mt-1 text-primary text-sm">
                         <AlertTriangle className="h-4 w-4" />
                         <span>{errors.email}</span>
                       </div>
                     )}
                   </div>
                   <div>
-                    <Label htmlFor="notes" className="text-keepla-gray-dark font-medium">Notas especiais (opcional)</Label>
+                    <Label htmlFor="notes" className="text-muted-foreground-dark font-medium">Notas especiais (opcional)</Label>
                     <Textarea
                       id="notes"
                       value={contactInfo.notes}
@@ -264,40 +264,40 @@ const Checkout = () => {
               <Card className="emotion-card">
                 <CardHeader>
                     <CardTitle className="flex items-center space-x-3 text-gentle-black font-serif">
-                    <MapPin className="h-5 w-5 text-keepla-red" />
+                    <MapPin className="h-5 w-5 text-primary" />
                     <span>Endereço de Entrega</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div>
-                    <Label htmlFor="name" className="text-keepla-gray-dark font-medium">Nome Completo *</Label>
+                    <Label htmlFor="name" className="text-muted-foreground-dark font-medium">Nome Completo *</Label>
                     <Input
                       id="name"
                       value={shippingInfo.name}
                       onChange={(e) => handleInputChange('shipping', 'name', e.target.value)}
-                      className={`mt-2 rounded-xl ${errors.name ? 'border-keepla-red' : 'border-border'}`}
+                      className={`mt-2 rounded-xl ${errors.name ? 'border-primary' : 'border-border'}`}
                       placeholder="João Silva"
                       required
                     />
                     {errors.name && (
-                      <div className="flex items-center space-x-1 mt-1 text-keepla-red text-sm">
+                      <div className="flex items-center space-x-1 mt-1 text-primary text-sm">
                         <AlertTriangle className="h-4 w-4" />
                         <span>{errors.name}</span>
                       </div>
                     )}
                   </div>
                   <div>
-                    <Label htmlFor="address" className="text-keepla-gray-dark font-medium">Endereço *</Label>
+                    <Label htmlFor="address" className="text-muted-foreground-dark font-medium">Endereço *</Label>
                     <Input
                       id="address"
                       value={shippingInfo.address}
                       onChange={(e) => handleInputChange('shipping', 'address', e.target.value)}
-                      className={`mt-2 rounded-xl ${errors.address ? 'border-keepla-red' : 'border-border'}`}
+                      className={`mt-2 rounded-xl ${errors.address ? 'border-primary' : 'border-border'}`}
                       placeholder="Rua das Flores, 123, 2º Esq."
                       required
                     />
                     {errors.address && (
-                      <div className="flex items-center space-x-1 mt-1 text-keepla-red text-sm">
+                      <div className="flex items-center space-x-1 mt-1 text-primary text-sm">
                         <AlertTriangle className="h-4 w-4" />
                         <span>{errors.address}</span>
                       </div>
@@ -305,35 +305,35 @@ const Checkout = () => {
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="city" className="text-keepla-gray-dark font-medium">Cidade *</Label>
+                      <Label htmlFor="city" className="text-muted-foreground-dark font-medium">Cidade *</Label>
                       <Input
                         id="city"
                         value={shippingInfo.city}
                         onChange={(e) => handleInputChange('shipping', 'city', e.target.value)}
-                        className={`mt-2 rounded-xl ${errors.city ? 'border-keepla-red' : 'border-border'}`}
+                        className={`mt-2 rounded-xl ${errors.city ? 'border-primary' : 'border-border'}`}
                         placeholder="Lisboa"
                         required
                       />
                       {errors.city && (
-                        <div className="flex items-center space-x-1 mt-1 text-keepla-red text-sm">
+                        <div className="flex items-center space-x-1 mt-1 text-primary text-sm">
                           <AlertTriangle className="h-4 w-4" />
                           <span>{errors.city}</span>
                         </div>
                       )}
                     </div>
                     <div>
-                      <Label htmlFor="postalCode" className="text-keepla-gray-dark font-medium">Código Postal *</Label>
+                      <Label htmlFor="postalCode" className="text-muted-foreground-dark font-medium">Código Postal *</Label>
                       <Input
                         id="postalCode"
                         value={shippingInfo.postalCode}
                         onChange={(e) => handleInputChange('shipping', 'postalCode', e.target.value)}
-                        className={`mt-2 rounded-xl ${errors.postalCode ? 'border-keepla-red' : 'border-border'}`}
+                        className={`mt-2 rounded-xl ${errors.postalCode ? 'border-primary' : 'border-border'}`}
                         placeholder="4450-123"
                         maxLength={8}
                         required
                       />
                       {errors.postalCode && (
-                        <div className="flex items-center space-x-1 mt-1 text-keepla-red text-sm">
+                        <div className="flex items-center space-x-1 mt-1 text-primary text-sm">
                           <AlertTriangle className="h-4 w-4" />
                           <span>{errors.postalCode}</span>
                         </div>
@@ -341,19 +341,19 @@ const Checkout = () => {
                     </div>
                   </div>
                   <div>
-                    <Label htmlFor="phone" className="text-keepla-gray-dark font-medium">Telefone *</Label>
+                    <Label htmlFor="phone" className="text-muted-foreground-dark font-medium">Telefone *</Label>
                     <Input
                       id="phone"
                       type="tel"
                       value={shippingInfo.phone}
                       onChange={(e) => handleInputChange('shipping', 'phone', e.target.value)}
-                      className={`mt-2 rounded-xl ${errors.phone ? 'border-keepla-red' : 'border-border'}`}
+                      className={`mt-2 rounded-xl ${errors.phone ? 'border-primary' : 'border-border'}`}
                       placeholder="912 345 678"
                       maxLength={11}
                       required
                     />
                     {errors.phone && (
-                      <div className="flex items-center space-x-1 mt-1 text-keepla-red text-sm">
+                      <div className="flex items-center space-x-1 mt-1 text-primary text-sm">
                         <AlertTriangle className="h-4 w-4" />
                         <span>{errors.phone}</span>
                       </div>
@@ -367,7 +367,7 @@ const Checkout = () => {
               <Card className="emotion-card sticky top-8">
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-3 text-gentle-black font-serif">
-                    <CreditCard className="h-5 w-5 text-keepla-red" />
+                    <CreditCard className="h-5 w-5 text-primary" />
                     <span>Resumo do Pedido</span>
                   </CardTitle>
                 </CardHeader>
@@ -385,7 +385,7 @@ const Checkout = () => {
                         <div key={item.id} className="py-3 border-b border-gray-100 last:border-0">
                           <div className="flex justify-between items-start">
                             <div className="flex-1">
-                              <h4 className="font-medium text-keepla-gray-dark">{item.product_title}</h4>
+                              <h4 className="font-medium text-muted-foreground-dark">{item.product_title}</h4>
                               <p className="text-sm text-emotional">Quantidade: {item.quantity}</p>
                               {(item as any).planId && (
                                 <p className="text-xs text-muted-foreground mt-1">Plano: {(item as any).planId}</p>
@@ -402,7 +402,7 @@ const Checkout = () => {
                                   €{originalPrice.toFixed(2)}
                                 </p>
                               )}
-                              <p className="font-semibold text-keepla-gray-dark">
+                              <p className="font-semibold text-muted-foreground-dark">
                                 €{calculatedPrice.toFixed(2)}
                               </p>
                             </div>
@@ -436,8 +436,8 @@ const Checkout = () => {
                               </div>
                             )}
                             <div className="flex justify-between items-center text-xl font-bold">
-                              <span className="text-keepla-gray-dark">Total:</span>
-                              <span className="text-keepla-red">€{totalCalculated.toFixed(2)}</span>
+                              <span className="text-muted-foreground-dark">Total:</span>
+                              <span className="text-primary">€{totalCalculated.toFixed(2)}</span>
                             </div>
                           </div>
                         );

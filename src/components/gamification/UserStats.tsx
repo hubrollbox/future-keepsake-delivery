@@ -67,7 +67,7 @@ const UserStats = ({ totalDeliveries }: UserStatsProps) => {
             </div>
             <div className="space-y-1 p-2 bg-background/50 rounded-lg">
               <div className="flex items-center justify-center gap-1">
-                <Target className="h-4 w-4 text-keepla-red" />
+                <Target className="h-4 w-4 text-primary" />
                 <span className="text-xs font-medium text-foreground">Entregas</span>
               </div>
               <p className="text-lg font-bold text-foreground">{totalDeliveries}</p>

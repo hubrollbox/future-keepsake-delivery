@@ -14,7 +14,7 @@ const HowItWorksCTA = ({ onNavigate }: HowItWorksCTAProps) => {
 
   return (
     <div className="text-center bg-card border border-border rounded-2xl p-8 md:p-12 max-w-5xl mx-auto">
-      <Heart className="h-16 w-16 md:h-20 md:w-20 text-keepla-red mx-auto mb-6" />
+      <Heart className="h-16 w-16 md:h-20 md:w-20 text-primary mx-auto mb-6" />
       <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 md:mb-8 font-inter">
         Pronto para Te Tornares um Guardião do Tempo?
       </h2>

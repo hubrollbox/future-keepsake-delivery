@@ -13,21 +13,21 @@ interface ServiceCardProps {
 
 const ServiceCard = ({ title, description, features, icon, onLearnMore }: ServiceCardProps) => {
   return (
-    <Card className="emotion-card border-keepla-red/20 gentle-hover group">
+    <Card className="emotion-card border-primary/20 gentle-hover group">
       <CardHeader className="text-center pb-4">
-        <div className="mx-auto mb-4 w-16 h-16 bg-keepla-red/10 rounded-2xl flex items-center justify-center text-keepla-red group-hover:bg-keepla-red/15 transition-colors duration-200">
+        <div className="mx-auto mb-4 w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary group-hover:bg-primary/15 transition-colors duration-200">
           {icon}
         </div>
-        <CardTitle className="text-xl font-fraunces text-keepla-gray-dark mb-2">{title}</CardTitle>
-        <p className="text-keepla-gray-light text-sm leading-relaxed">{description}</p>
+        <CardTitle className="text-xl font-fraunces text-muted-foreground-dark mb-2">{title}</CardTitle>
+        <p className="text-muted-foreground-light text-sm leading-relaxed">{description}</p>
       </CardHeader>
       
       <CardContent className="space-y-6">
         <ul className="space-y-2">
           {features.map((feature, index) => (
             <li key={index} className="flex items-start space-x-2">
-              <div className="w-1.5 h-1.5 bg-keepla-red rounded-full mt-2 flex-shrink-0" />
-              <span className="text-keepla-gray-dark text-sm leading-relaxed">{feature}</span>
+              <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0" />
+              <span className="text-muted-foreground-dark text-sm leading-relaxed">{feature}</span>
             </li>
           ))}
         </ul>

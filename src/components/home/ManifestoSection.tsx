@@ -10,8 +10,8 @@ const ManifestoSection = () => {
     <section className="py-section-lg">
       <div className="bg-card border border-border rounded-2xl max-w-4xl mx-auto p-8 md:p-12 text-center">
         <div className="flex justify-center mb-8">
-          <div className="w-16 h-16 bg-keepla-red/10 rounded-2xl flex items-center justify-center">
-            <Heart className="h-8 w-8 text-keepla-red" />
+          <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center">
+            <Heart className="h-8 w-8 text-primary" />
           </div>
         </div>
         

@@ -84,28 +84,28 @@ const RecipientInput: React.FC<RecipientInputProps> = ({
       {/* Lista de Destinatários */}
       {recipients.length > 0 && (
         <div className="space-y-2">
-          <h4 className="text-sm font-medium text-keepla-gray-dark">Destinatários ({recipients.length})</h4>
+          <h4 className="text-sm font-medium text-muted-foreground-dark">Destinatários ({recipients.length})</h4>
           <div className="flex flex-wrap gap-2">
             {recipients.map((recipient) => (
               <Badge
                 key={recipient.id}
                 variant="secondary"
-                className="px-3 py-1 bg-keepla-gray/10 border border-keepla-red/20 text-keepla-gray-dark"
+                className="px-3 py-1 bg-muted/10 border border-primary/20 text-muted-foreground-dark"
               >
                 <span className="inline-flex items-center gap-2">
-                  <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-keepla-red/20">
-                    <User className="w-3 h-3 text-keepla-red" />
+                  <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary/20">
+                    <User className="w-3 h-3 text-primary" />
                   </span>
                   <span className="font-medium">{recipient.name}</span>
-                  <span className="text-keepla-gray-light text-xs">{`<${recipient.email}>`}</span>
+                  <span className="text-muted-foreground-light text-xs">{`<${recipient.email}>`}</span>
                   <button
                     type="button"
                     onClick={() => removeRecipient(recipient.id)}
-                    className="ml-1 inline-flex items-center justify-center w-4 h-4 rounded hover:bg-keepla-red/20 focus:outline-none"
+                    className="ml-1 inline-flex items-center justify-center w-4 h-4 rounded hover:bg-primary/20 focus:outline-none"
                     aria-label={`Remover ${recipient.email}`}
                     title="Remover"
                   >
-                    <X className="w-3 h-3 text-keepla-gray-dark" />
+                    <X className="w-3 h-3 text-muted-foreground-dark" />
                   </button>
                 </span>
               </Badge>
@@ -118,7 +118,7 @@ const RecipientInput: React.FC<RecipientInputProps> = ({
       <div className="space-y-2">
         <div className="flex flex-col md:flex-row gap-2">
           <div className="flex-1 flex items-center gap-2">
-            <User className="w-4 h-4 text-keepla-red" />
+            <User className="w-4 h-4 text-primary" />
             <Input
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -127,7 +127,7 @@ const RecipientInput: React.FC<RecipientInputProps> = ({
             />
           </div>
           <div className="flex-[2] flex items-center gap-2">
-            <Mail className="w-4 h-4 text-keepla-red" />
+            <Mail className="w-4 h-4 text-primary" />
             <Input
               ref={inputRef}
               value={email}
@@ -137,13 +137,13 @@ const RecipientInput: React.FC<RecipientInputProps> = ({
               onKeyDown={onKeyDown}
             />
           </div>
-          <Button type="button" onClick={addRecipient} className="bg-keepla-red hover:bg-keepla-red/90 inline-flex items-center gap-1">
+          <Button type="button" onClick={addRecipient} className="bg-primary hover:bg-primary/90 inline-flex items-center gap-1">
             <Plus className="w-4 h-4" /> Adicionar
           </Button>
         </div>
 
         {errors.length > 0 && (
-          <div className="text-sm text-keepla-red flex flex-col gap-1">
+          <div className="text-sm text-primary flex flex-col gap-1">
             {errors.map((err, i) => (
               <div key={i} className="inline-flex items-center gap-1">
                 <AlertCircle className="w-4 h-4" />

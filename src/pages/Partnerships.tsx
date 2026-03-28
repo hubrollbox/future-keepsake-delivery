@@ -14,7 +14,7 @@ const Partnerships = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-keepla-black">
+    <div className="min-h-screen bg-foreground">
       <Navigation />
 
       {/* Hero Section with Photo Background */}
@@ -25,19 +25,19 @@ const Partnerships = () => {
         className="min-h-[50vh] flex items-center"
       >
         <div className="container mx-auto px-4 py-20 text-center">
-          <p className="text-keepla-white/70 font-georgia italic text-lg mb-4">
+          <p className="text-white/70 font-georgia italic text-lg mb-4">
             Juntos criamos memórias inesquecíveis
           </p>
-          <h1 className="text-4xl md:text-6xl font-inter font-bold text-keepla-white mb-6">
-            Parcerias <span className="text-keepla-red">Keepla</span>
+          <h1 className="text-4xl md:text-6xl font-inter font-bold text-white mb-6">
+            Parcerias <span className="text-primary">Keepla</span>
           </h1>
-          <p className="text-lg md:text-xl text-keepla-white/80 max-w-2xl mx-auto font-inter">
+          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-inter">
             Colabora connosco para oferecer experiências únicas aos teus clientes.
           </p>
           <Button 
             variant="ghost" 
             onClick={() => navigate('/')} 
-            className="mt-8 text-keepla-white hover:text-keepla-red hover:bg-keepla-white/10"
+            className="mt-8 text-white hover:text-primary hover:bg-background/10"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             <span>Voltar ao Início</span>
@@ -45,7 +45,7 @@ const Partnerships = () => {
         </div>
       </PhotoBackground>
 
-      <main className="bg-keepla-white">
+      <main className="bg-background">
         <div className="container mx-auto px-4 py-16">
           <PartnershipTypes />
           <PartnershipBenefits />

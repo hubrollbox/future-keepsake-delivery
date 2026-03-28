@@ -82,7 +82,7 @@ const Contact = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Fala <span className="text-keepla-red font-georgia italic">Connosco</span>
+            Fala <span className="text-primary font-georgia italic">Connosco</span>
           </motion.h1>
           
           <motion.p 
@@ -98,7 +98,7 @@ const Contact = () => {
 
       {/* Secção principal com formulário e informações */}
       <motion.main 
-        className="bg-keepla-white py-16"
+        className="bg-background py-16"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}

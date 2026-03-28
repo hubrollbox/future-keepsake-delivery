@@ -20,10 +20,10 @@ interface KeepsakesListProps {
 // Componente para exibir um card de keepsake
 const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEdit: (id: string) => void, onDelete: (id: string) => void }) => {
   const statusColors: Record<KeepsakeStatus, string> = {
-    'pending': 'bg-orange-100 text-orange-800 border-orange-200',
+    'pending': 'bg-primary/10 text-foreground border-primary/20',
     'scheduled': 'bg-primary/10 text-foreground border-primary/20',
-    'sent': 'bg-green-100 text-green-800 border-green-200',
-    'delivered': 'bg-emerald-100 text-emerald-800 border-emerald-200',
+    'sent': 'bg-primary/10 text-foreground border-primary/20',
+    'delivered': 'bg-primary/10 text-foreground border-primary/20',
     'failed': 'bg-red-100 text-red-800 border-red-200'
   };
 

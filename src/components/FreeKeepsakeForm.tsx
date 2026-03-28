@@ -259,7 +259,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
             className="space-y-6"
           >
             <div className="text-center space-y-2">
-              <Heart className="w-12 h-12 text-keepla-red mx-auto" />
+              <Heart className="w-12 h-12 text-primary mx-auto" />
               <h3 className="text-2xl font-bold text-foreground">Título da Cápsula</h3>
               <p className="text-muted-foreground">Dê um nome especial que represente este momento único</p>
             </div>
@@ -307,7 +307,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
             className="space-y-6"
           >
             <div className="text-center space-y-2">
-              <Sparkles className="w-12 h-12 text-keepla-red mx-auto" />
+              <Sparkles className="w-12 h-12 text-primary mx-auto" />
               <h3 className="text-2xl font-bold text-foreground">Sua Mensagem</h3>
               <p className="text-muted-foreground">Escreva do coração. Suas palavras serão entregues no futuro</p>
             </div>
@@ -320,7 +320,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
                 id="message"
                 {...register('message')}
                 placeholder="Querido eu do futuro...\n\nEscreva aqui sua mensagem especial. Conte sobre seus sonhos, sentimentos ou memórias que quer preservar."
-                className={`min-h-[120px] transition-all duration-200 ${errors.message ? 'border-red-500 focus:border-red-500' : 'focus:border-keepla-red'}`}
+                className={`min-h-[120px] transition-all duration-200 ${errors.message ? 'border-red-500 focus:border-red-500' : 'focus:border-primary'}`}
                 maxLength={500}
               />
               {errors.message && (
@@ -342,7 +342,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
                     size="sm"
                     onClick={getAISuggestion}
                     disabled={isGettingSuggestion || !canUseAI}
-                    className="flex items-center gap-2 text-keepla-red border-keepla-gray hover:bg-keepla-gray"
+                    className="flex items-center gap-2 text-primary border-border hover:bg-muted"
                   >
                     <Wand2 className={`h-4 w-4 ${isGettingSuggestion ? 'animate-spin' : ''}`} />
                     {isGettingSuggestion ? 'Gerando...' : 'Sugestão IA'}
@@ -367,13 +367,13 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -10, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
-                  className="p-4 rounded-lg border border-keepla-gray bg-keepla-gray"
+                  className="p-4 rounded-lg border border-border bg-muted"
                 >
                   <div className="flex items-start gap-3">
-                    <Sparkles className="h-5 w-5 text-keepla-red mt-0.5" />
+                    <Sparkles className="h-5 w-5 text-primary mt-0.5" />
                     <div className="flex-1">
-                      <h4 className="font-medium text-keepla-red mb-2">Sugestão da IA ✨</h4>
-                      <p className="text-foreground text-sm leading-relaxed mb-3 bg-white/50 p-3 rounded border border-keepla-gray">
+                      <h4 className="font-medium text-primary mb-2">Sugestão da IA ✨</h4>
+                      <p className="text-foreground text-sm leading-relaxed mb-3 bg-white/50 p-3 rounded border border-border">
                         {aiSuggestion}
                       </p>
                       <div className="flex gap-2">
@@ -381,7 +381,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
                           type="button"
                           size="sm"
                           onClick={applySuggestion}
-                          className="bg-keepla-red hover:bg-keepla-red/90 text-white"
+                          className="bg-primary hover:bg-primary/90 text-white"
                         >
                           Usar esta sugestão
                         </Button>
@@ -390,7 +390,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
                           variant="outline"
                           size="sm"
                           onClick={() => setAiSuggestion('')}
-                          className="border-keepla-gray text-keepla-red hover:bg-keepla-gray"
+                          className="border-border text-primary hover:bg-muted"
                         >
                           Descartar
                         </Button>
@@ -419,7 +419,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
             className="space-y-6"
           >
             <div className="text-center space-y-2">
-              <Calendar className="w-12 h-12 text-keepla-red mx-auto" />
+              <Calendar className="w-12 h-12 text-primary mx-auto" />
               <h3 className="text-2xl font-bold text-foreground">Programar Entrega</h3>
               <p className="text-muted-foreground">Quando e para quem sua cápsula deve ser entregue</p>
             </div>
@@ -434,7 +434,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
                   type="date"
                   {...register('deliveryDate')}
                   min={new Date(Date.now() + 86400000).toISOString().split('T')[0]}
-                  className={`transition-all duration-200 ${errors.deliveryDate ? 'border-red-500 focus:border-red-500' : 'focus:border-keepla-red'}`}
+                  className={`transition-all duration-200 ${errors.deliveryDate ? 'border-red-500 focus:border-red-500' : 'focus:border-primary'}`}
                 />
                 {errors.deliveryDate && (
                   <motion.p
@@ -458,7 +458,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
                     type="email"
                     {...register('recipientEmail')}
                     placeholder="exemplo@email.com"
-                    className={`pl-10 transition-all duration-200 ${errors.recipientEmail ? 'border-red-500 focus:border-red-500' : 'focus:border-keepla-red'}`}
+                    className={`pl-10 transition-all duration-200 ${errors.recipientEmail ? 'border-red-500 focus:border-red-500' : 'focus:border-primary'}`}
                   />
                 </div>
                 {errors.recipientEmail && (
@@ -500,10 +500,10 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
                 <div
                   key={step.id}
                   className={`flex items-center space-x-1 ${
-                  currentStep >= step.id ? 'text-keepla-red font-medium' : ''
+                  currentStep >= step.id ? 'text-primary font-medium' : ''
                 }`}
                 >
-                <step.icon className="w-3 h-3 text-keepla-gray" />
+                <step.icon className="w-3 h-3 text-muted-foreground" />
                 <span>{step.title}</span>
               </div>
             ))}
@@ -536,7 +536,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
               <Button
                 type="button"
                 onClick={nextStep}
-                className="flex items-center space-x-2 bg-keepla-red hover:bg-keepla-red/90 text-white"
+                className="flex items-center space-x-2 bg-primary hover:bg-primary/90 text-white"
               >
                 <span>Próximo</span>
                 <ChevronRight className="w-4 h-4" />
@@ -545,7 +545,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
               <Button
                 type="submit"
                 disabled={isLoading || !isValid}
-                className="flex items-center space-x-2 bg-keepla-red hover:bg-keepla-red/90 text-white"
+                className="flex items-center space-x-2 bg-primary hover:bg-primary/90 text-white"
               >
                 {isLoading ? (
                   <>

@@ -22,7 +22,7 @@ const ProgressStepper: React.FC<ProgressStepperProps> = ({ steps, currentStep })
             <div 
               className={`step-number flex items-center justify-center w-10 h-10 rounded-full border-2 font-bold transition-colors duration-300 ${
                 isActive 
-                  ? 'bg-keepla-red border-keepla-red text-white' 
+                  ? 'bg-primary border-primary text-white' 
                   : 'bg-white border-border text-foreground'
               }`}
             >
@@ -30,7 +30,7 @@ const ProgressStepper: React.FC<ProgressStepperProps> = ({ steps, currentStep })
             </div>
             <div 
               className={`step-label mt-2 text-sm transition-colors duration-300 ${
-                isActive ? 'text-keepla-red font-semibold' : 'text-muted-foreground'
+                isActive ? 'text-primary font-semibold' : 'text-muted-foreground'
               }`}
             >
               {step}

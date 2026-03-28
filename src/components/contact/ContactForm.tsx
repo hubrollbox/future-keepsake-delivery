@@ -124,7 +124,7 @@ const ContactForm = () => {
   return (
     <Card className="bg-white border border-border shadow-lg">
       <CardHeader>
-        <CardTitle className="text-2xl text-keepla-black font-inter font-bold">
+        <CardTitle className="text-2xl text-foreground font-inter font-bold">
           Enviar Mensagem
         </CardTitle>
         <p className="text-muted-foreground font-inter text-sm">
@@ -145,14 +145,14 @@ const ContactForm = () => {
           </div>
 
           <div>
-            <Label htmlFor="name" className="text-keepla-black font-inter font-medium">
+            <Label htmlFor="name" className="text-foreground font-inter font-medium">
               Nome completo *
             </Label>
             <Input
               id="name"
               {...register("name")}
               placeholder="O teu nome"
-              className="border-border focus:border-keepla-red bg-white mt-2"
+              className="border-border focus:border-primary bg-white mt-2"
               aria-required="true"
               aria-invalid={errors.name ? "true" : "false"}
               aria-describedby={errors.name ? "name-error" : undefined}
@@ -165,7 +165,7 @@ const ContactForm = () => {
           </div>
 
           <div>
-            <Label htmlFor="email" className="text-keepla-black font-inter font-medium">
+            <Label htmlFor="email" className="text-foreground font-inter font-medium">
               Email *
             </Label>
             <Input
@@ -173,7 +173,7 @@ const ContactForm = () => {
               type="email"
               {...register("email")}
               placeholder="teu@email.com"
-              className="border-border focus:border-keepla-red bg-white mt-2"
+              className="border-border focus:border-primary bg-white mt-2"
               aria-required="true"
               aria-invalid={errors.email ? "true" : "false"}
               aria-describedby={errors.email ? "email-error" : undefined}
@@ -186,14 +186,14 @@ const ContactForm = () => {
           </div>
 
           <div>
-            <Label htmlFor="subject" className="text-keepla-black font-inter font-medium">
+            <Label htmlFor="subject" className="text-foreground font-inter font-medium">
               Assunto *
             </Label>
             <Input
               id="subject"
               {...register("subject")}
               placeholder="Como podemos ajudar?"
-              className="border-border focus:border-keepla-red bg-white mt-2"
+              className="border-border focus:border-primary bg-white mt-2"
               aria-required="true"
               aria-invalid={errors.subject ? "true" : "false"}
               aria-describedby={errors.subject ? "subject-error" : undefined}
@@ -206,7 +206,7 @@ const ContactForm = () => {
           </div>
 
           <div>
-            <Label htmlFor="message" className="text-keepla-black font-inter font-medium">
+            <Label htmlFor="message" className="text-foreground font-inter font-medium">
               Mensagem *
             </Label>
             <Textarea
@@ -214,7 +214,7 @@ const ContactForm = () => {
               {...register("message")}
               placeholder="Conta-nos mais detalhes..."
               rows={5}
-              className="border-border focus:border-keepla-red bg-white resize-none mt-2"
+              className="border-border focus:border-primary bg-white resize-none mt-2"
               aria-required="true"
               aria-invalid={errors.message ? "true" : "false"}
               aria-describedby={errors.message ? "message-error message-counter" : "message-counter"}
@@ -233,7 +233,7 @@ const ContactForm = () => {
 
           <Button
             type="submit"
-            className="w-full bg-keepla-red text-white hover:bg-keepla-red/90 font-inter font-semibold py-6 text-lg transition-all duration-200"
+            className="w-full bg-primary text-white hover:bg-primary/90 font-inter font-semibold py-6 text-lg transition-all duration-200"
             disabled={isSubmitting}
           >
             {isSubmitting ? "A enviar..." : "Enviar Mensagem"}

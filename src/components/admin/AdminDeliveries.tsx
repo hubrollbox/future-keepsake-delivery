@@ -126,9 +126,9 @@ const AdminDeliveries = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "delivered":
-        return "bg-green-100 text-green-800";
+        return "bg-primary/10 text-foreground";
       case "scheduled":
-        return "bg-orange-100 text-orange-800";
+        return "bg-primary/10 text-foreground";
       default:
         return "bg-muted text-foreground";
     }

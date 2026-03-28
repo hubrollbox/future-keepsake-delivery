@@ -103,19 +103,19 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
           : 'opacity-0 scale-75 translate-y-10'
       }`}>
         
-        <div className="h-3 bg-keepla-red" />
+        <div className="h-3 bg-primary" />
         
         <CardContent className="p-8 text-center">
           
           <div className="relative mb-6">
-            <div className="w-24 h-24 mx-auto bg-keepla-red rounded-full flex items-center justify-center animate-pulse-gentle">
+            <div className="w-24 h-24 mx-auto bg-primary rounded-full flex items-center justify-center animate-pulse-gentle">
               <Gift className="w-12 h-12 text-white" />
             </div>
             
             <div className="absolute inset-0 animate-spin-slow">
-              <Sparkles className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2 w-6 h-6 text-keepla-red" />
-              <Heart className="absolute right-0 top-1/2 transform translate-x-2 -translate-y-1/2 w-5 h-5 text-keepla-red" />
-              <Star className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-2 w-5 h-5 text-keepla-red" />
+              <Sparkles className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2 w-6 h-6 text-primary" />
+              <Heart className="absolute right-0 top-1/2 transform translate-x-2 -translate-y-1/2 w-5 h-5 text-primary" />
+              <Star className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-2 w-5 h-5 text-primary" />
             </div>
           </div>
 
@@ -127,13 +127,13 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
             Sua mensagem especial está programada para tocar corações
           </p>
 
-          <div className="bg-keepla-gray rounded-xl p-6 mb-8 animate-slide-up" style={{ animationDelay: '0.4s' }}>
+          <div className="bg-muted rounded-xl p-6 mb-8 animate-slide-up" style={{ animationDelay: '0.4s' }}>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
               
               <div className="space-y-2">
                 <div className="w-12 h-12 mx-auto bg-white rounded-full flex items-center justify-center shadow-md">
-                  <Sparkles className="w-6 h-6 text-keepla-red" />
+                  <Sparkles className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="font-semibold text-foreground">Título</h3>
                 <p className="text-sm text-muted-foreground font-medium">"{keepsakeTitle}"</p>
@@ -141,7 +141,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
 
               <div className="space-y-2">
                 <div className="w-12 h-12 mx-auto bg-white rounded-full flex items-center justify-center shadow-md">
-                  <Calendar className="w-6 h-6 text-keepla-red" />
+                  <Calendar className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="font-semibold text-foreground">Entrega</h3>
                 <p className="text-sm text-muted-foreground font-medium">{formatDate(deliveryDate)}</p>
@@ -149,7 +149,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
 
               <div className="space-y-2">
                 <div className="w-12 h-12 mx-auto bg-white rounded-full flex items-center justify-center shadow-md">
-                  <Heart className="w-6 h-6 text-keepla-red" />
+                  <Heart className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="font-semibold text-foreground">Destinatários</h3>
                 <p className="text-sm text-muted-foreground font-medium">
@@ -171,7 +171,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
             
             <Button
               onClick={onClose}
-              className="bg-keepla-red hover:bg-keepla-red/90 text-white px-8 py-3"
+              className="bg-primary hover:bg-primary/90 text-white px-8 py-3"
             >
               <CheckCircle className="w-5 h-5 mr-2" />
               Perfeito!
@@ -181,7 +181,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
               <Button
                 variant="outline"
                 onClick={handleShare}
-                className="border-keepla-red text-keepla-red hover:bg-keepla-red/10 hover:text-keepla-red px-8 py-3"
+                className="border-primary text-primary hover:bg-primary/10 hover:text-primary px-8 py-3"
               >
                 <Share2 className="w-5 h-5 mr-2" />
                 Compartilhar
