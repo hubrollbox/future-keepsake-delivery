@@ -62,16 +62,16 @@ const CapsuleCard = ({
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-gray-600 text-sm leading-relaxed">{description}</p>
+        <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
         
         <div className="space-y-2 text-sm">
           <div className="flex items-center justify-between">
             <span className="text-foreground font-medium">Para:</span>
-            <span className="text-gray-600">{recipient}</span>
+            <span className="text-muted-foreground">{recipient}</span>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-foreground font-medium">Entrega:</span>
-            <span className="text-gray-600">{deliveryDate}</span>
+            <span className="text-muted-foreground">{deliveryDate}</span>
           </div>
         </div>
 

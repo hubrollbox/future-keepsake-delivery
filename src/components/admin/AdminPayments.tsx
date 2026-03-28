@@ -112,8 +112,8 @@ const AdminPayments = () => {
           {[...Array(3)].map((_, i) => (
             <Card key={i} className="border-dusty-rose/20">
               <CardContent className="p-6">
-                <div className="h-6 bg-gray-200 rounded w-1/2 mb-4"></div>
-                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                <div className="h-6 bg-muted rounded w-1/2 mb-4"></div>
+                <div className="h-4 bg-muted rounded w-3/4"></div>
               </CardContent>
             </Card>
           ))}
@@ -128,7 +128,7 @@ const AdminPayments = () => {
         <h1 className="text-2xl font-fraunces font-bold text-steel-blue">Pagamentos</h1>
         <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input
               placeholder="Pesquisar pagamentos..."
               value={searchTerm}
@@ -139,7 +139,7 @@ const AdminPayments = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-md text-sm"
+            className="px-3 py-2 border border-border rounded-md text-sm"
           >
             <option value="all">Todos os estados</option>
             <option value="pending">Pendente</option>
@@ -175,7 +175,7 @@ const AdminPayments = () => {
                     </span>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-600">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-muted-foreground">
                     {payment.payment_method && (
                       <div>
                         <strong>Método:</strong> {payment.payment_method}
@@ -209,8 +209,8 @@ const AdminPayments = () => {
       {filteredPayments.length === 0 && (
         <Card>
           <CardContent className="p-8 text-center">
-            <CreditCard className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-600">Nenhum pagamento encontrado.</p>
+            <CreditCard className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <p className="text-muted-foreground">Nenhum pagamento encontrado.</p>
           </CardContent>
         </Card>
       )}

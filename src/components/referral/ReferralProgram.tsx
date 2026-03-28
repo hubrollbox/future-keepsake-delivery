@@ -42,9 +42,9 @@ const ReferralProgram = () => {
       <Card>
         <CardContent className="p-6">
           <div className="animate-pulse space-y-4">
-            <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-            <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-            <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+            <div className="h-4 bg-muted rounded w-3/4"></div>
+            <div className="h-4 bg-muted rounded w-1/2"></div>
+            <div className="h-4 bg-muted rounded w-2/3"></div>
           </div>
         </CardContent>
       </Card>
@@ -147,7 +147,7 @@ const ReferralProgram = () => {
             </Button>
           </div>
 
-          <div className="flex items-center gap-2 p-4 bg-gray-50 rounded-lg">
+          <div className="flex items-center gap-2 p-4 bg-muted rounded-lg">
             <div className="flex-1">
                 <div className="text-sm text-keepla-gray mb-1">Seu código de referência:</div>
                 <div className="font-mono text-lg font-bold text-keepla-gray-800">
@@ -176,7 +176,7 @@ const ReferralProgram = () => {
           <CardContent>
             <div className="space-y-3">
               {referrals.map((referral) => (
-                <div key={referral.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <div key={referral.id} className="flex items-center justify-between p-3 bg-muted rounded-lg">
                   <div>
                     <div className="font-medium text-keepla-gray-dark">
                       {referral.referred_email}

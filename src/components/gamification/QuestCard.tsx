@@ -28,14 +28,14 @@ const QuestCard = ({ quest }: QuestCardProps) => {
         <div className="flex items-start justify-between mb-3">
           <div className="flex items-center space-x-2">
             <Target className="h-5 w-5 text-primary" />
-            <h4 className="font-semibold text-gray-800">{title}</h4>
+            <h4 className="font-semibold text-foreground">{title}</h4>
           </div>
           <Badge className="bg-primary">
             +{reward} XP
           </Badge>
         </div>
 
-        <p className="text-sm text-gray-600 mb-3">{description}</p>
+        <p className="text-sm text-muted-foreground mb-3">{description}</p>
 
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
@@ -46,7 +46,7 @@ const QuestCard = ({ quest }: QuestCardProps) => {
         </div>
 
         {timeLimit && (
-          <div className="flex items-center space-x-1 mt-2 text-xs text-gray-500">
+          <div className="flex items-center space-x-1 mt-2 text-xs text-muted-foreground">
             <Clock className="h-3 w-3" />
             <span>{timeLimit}</span>
           </div>

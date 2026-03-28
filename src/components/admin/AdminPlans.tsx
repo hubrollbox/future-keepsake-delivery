@@ -444,7 +444,7 @@ const AdminPlans = () => {
                 id="active"
                 checked={formData.active}
                 onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
-                className="rounded border-gray-300"
+                className="rounded border-border"
                 title="Plano ativo"
                 aria-label="Plano ativo"
               />

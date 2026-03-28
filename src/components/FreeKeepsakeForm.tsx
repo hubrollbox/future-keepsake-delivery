@@ -260,12 +260,12 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
           >
             <div className="text-center space-y-2">
               <Heart className="w-12 h-12 text-keepla-red mx-auto" />
-              <h3 className="text-2xl font-bold text-gray-900">Título da Cápsula</h3>
-              <p className="text-gray-600">Dê um nome especial que represente este momento único</p>
+              <h3 className="text-2xl font-bold text-foreground">Título da Cápsula</h3>
+              <p className="text-muted-foreground">Dê um nome especial que represente este momento único</p>
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="title" className="text-sm font-medium text-gray-700">
+              <Label htmlFor="title" className="text-sm font-medium text-foreground">
                 Título *
               </Label>
               <Input
@@ -284,7 +284,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
                   {errors.title.message}
                 </motion.p>
               )}
-              <div className="text-right text-xs text-gray-500">
+              <div className="text-right text-xs text-muted-foreground">
                 {(watchedFields.title || '').length}/100
               </div>
             </div>
@@ -308,12 +308,12 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
           >
             <div className="text-center space-y-2">
               <Sparkles className="w-12 h-12 text-keepla-red mx-auto" />
-              <h3 className="text-2xl font-bold text-gray-900">Sua Mensagem</h3>
-              <p className="text-gray-600">Escreva do coração. Suas palavras serão entregues no futuro</p>
+              <h3 className="text-2xl font-bold text-foreground">Sua Mensagem</h3>
+              <p className="text-muted-foreground">Escreva do coração. Suas palavras serão entregues no futuro</p>
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="message" className="text-sm font-medium text-gray-700">
+              <Label htmlFor="message" className="text-sm font-medium text-foreground">
                 Mensagem *
               </Label>
               <Textarea
@@ -353,7 +353,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
                   )}
                 </div>
                 
-                <div className="text-right text-xs text-gray-500">
+                <div className="text-right text-xs text-muted-foreground">
                   {(watchedFields.message || '').length}/500
                 </div>
               </div>
@@ -373,7 +373,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
                     <Sparkles className="h-5 w-5 text-keepla-red mt-0.5" />
                     <div className="flex-1">
                       <h4 className="font-medium text-keepla-red mb-2">Sugestão da IA ✨</h4>
-                      <p className="text-gray-700 text-sm leading-relaxed mb-3 bg-white/50 p-3 rounded border border-keepla-gray">
+                      <p className="text-foreground text-sm leading-relaxed mb-3 bg-white/50 p-3 rounded border border-keepla-gray">
                         {aiSuggestion}
                       </p>
                       <div className="flex gap-2">
@@ -420,13 +420,13 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
           >
             <div className="text-center space-y-2">
               <Calendar className="w-12 h-12 text-keepla-red mx-auto" />
-              <h3 className="text-2xl font-bold text-gray-900">Programar Entrega</h3>
-              <p className="text-gray-600">Quando e para quem sua cápsula deve ser entregue</p>
+              <h3 className="text-2xl font-bold text-foreground">Programar Entrega</h3>
+              <p className="text-muted-foreground">Quando e para quem sua cápsula deve ser entregue</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="deliveryDate" className="text-sm font-medium text-gray-700">
+                <Label htmlFor="deliveryDate" className="text-sm font-medium text-foreground">
                   Data de Entrega *
                 </Label>
                 <Input
@@ -448,11 +448,11 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="recipientEmail" className="text-sm font-medium text-gray-700">
+                <Label htmlFor="recipientEmail" className="text-sm font-medium text-foreground">
                   Email do Destinatário *
                 </Label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                   <Input
                     id="recipientEmail"
                     type="email"
@@ -484,10 +484,10 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
     <Card className="w-full max-w-2xl mx-auto shadow-lg">
       <CardHeader className="space-y-4">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-2xl font-bold text-gray-900">
+          <CardTitle className="text-2xl font-bold text-foreground">
             Criar Cápsula Gratuita
           </CardTitle>
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-muted-foreground">
             {currentStep}/{STEPS.length}
           </div>
         </div>
@@ -495,7 +495,7 @@ export const FreeKeepsakeForm: React.FC<FreeKeepsakeFormProps> = ({
         {/* Barra de Progresso */}
         <div className="space-y-2">
           <Progress value={progress} className="h-2" />
-          <div className="flex justify-between text-xs text-gray-500">
+          <div className="flex justify-between text-xs text-muted-foreground">
             {STEPS.map((step) => (
                 <div
                   key={step.id}

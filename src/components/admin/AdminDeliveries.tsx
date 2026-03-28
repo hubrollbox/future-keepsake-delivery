@@ -119,7 +119,7 @@ const AdminDeliveries = () => {
       case "scheduled":
         return <Clock className="h-4 w-4 text-orange-600" />;
       default:
-        return <Package className="h-4 w-4 text-gray-400" />;
+        return <Package className="h-4 w-4 text-muted-foreground" />;
     }
   };
 
@@ -130,7 +130,7 @@ const AdminDeliveries = () => {
       case "scheduled":
         return "bg-orange-100 text-orange-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-muted text-foreground";
     }
   };
 
@@ -155,8 +155,8 @@ const AdminDeliveries = () => {
           {[...Array(3)].map((_, i) => (
             <Card key={i} className="border-dusty-rose/20">
               <CardContent className="p-6">
-                <div className="h-6 bg-gray-200 rounded w-1/2 mb-4"></div>
-                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                <div className="h-6 bg-muted rounded w-1/2 mb-4"></div>
+                <div className="h-4 bg-muted rounded w-3/4"></div>
               </CardContent>
             </Card>
           ))}
@@ -208,7 +208,7 @@ const AdminDeliveries = () => {
                     </span>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-600">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-muted-foreground">
                     <div>
                       <strong>Tipo:</strong> {delivery.type}
                     </div>
@@ -221,7 +221,7 @@ const AdminDeliveries = () => {
                   </div>
                   
                   {delivery.description && (
-                    <p className="text-sm text-gray-600 mt-2">
+                    <p className="text-sm text-muted-foreground mt-2">
                       <strong>Descrição:</strong> {delivery.description.substring(0, 100)}
                       {delivery.description.length > 100 && "..."}
                     </p>
@@ -257,8 +257,8 @@ const AdminDeliveries = () => {
       {filteredDeliveries.length === 0 && (
         <Card>
           <CardContent className="p-8 text-center">
-            <Package className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-600">
+            <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <p className="text-muted-foreground">
               {deliveries.length === 0 
                 ? "Nenhuma entrega encontrada." 
                 : "Nenhuma entrega corresponde aos filtros aplicados."}

@@ -62,7 +62,7 @@ const TimeCapsuleSection = ({ deliveries, loading, onDelete }: TimeCapsuleSectio
           ) : deliveries.length === 0 ? (
             <div className="text-center py-8">
               <Mail className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-              <p className="text-gray-500 mb-4">Ainda não tens mensagens na tua cápsula do tempo.</p>
+              <p className="text-muted-foreground mb-4">Ainda não tens mensagens na tua cápsula do tempo.</p>
               {/* Removido o botão duplicado de criar mensagem */}
             </div>
           ) : (
@@ -73,8 +73,8 @@ const TimeCapsuleSection = ({ deliveries, loading, onDelete }: TimeCapsuleSectio
           <div className="flex justify-between items-start mb-2">
                       <div className="flex-1">
                         <h4 className="font-semibold text-foreground">{delivery.title || "Mensagem"}</h4>
-                        <p className="text-sm text-gray-600">Para: {delivery.recipient_name || "Destinatário"}</p>
-                        <div className="flex flex-col gap-1 mt-1 text-xs text-gray-500">
+                        <p className="text-sm text-muted-foreground">Para: {delivery.recipient_name || "Destinatário"}</p>
+                        <div className="flex flex-col gap-1 mt-1 text-xs text-muted-foreground">
                           <p className="flex items-center gap-1">
                             <Calendar className="h-3 w-3" />
                             Criado: {new Date(delivery.created_at).toLocaleDateString('pt-PT')}
@@ -90,7 +90,7 @@ const TimeCapsuleSection = ({ deliveries, loading, onDelete }: TimeCapsuleSectio
                       </Badge>
                     </div>
                     {delivery.message && (
-                      <p className="text-gray-700 text-sm mb-3 line-clamp-2">{delivery.message}</p>
+                      <p className="text-foreground text-sm mb-3 line-clamp-2">{delivery.message}</p>
                     )}
                     <div className="flex gap-2">
                       {delivery.status === "scheduled" && (

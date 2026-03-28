@@ -79,7 +79,7 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
           <h3 className="text-xl font-semibold text-keepla-black mb-2">
             Você tem uma cápsula do tempo!
           </h3>
-          <p className="text-gray-600 mb-4">
+          <p className="text-muted-foreground mb-4">
             "{data.title}" está pronta para ser aberta
           </p>
           <Button 
@@ -114,7 +114,7 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
         <div className="text-center mb-6">
           <div className="text-4xl mb-4 animate-bounce">💖</div>
           <h2 className="text-3xl font-georgia text-keepla-black mb-2">{data.title}</h2>
-          <p className="text-gray-600">De você para {data.recipientName}</p>
+          <p className="text-muted-foreground">De você para {data.recipientName}</p>
         </div>
         
         <div className="bg-keepla-gray rounded-2xl p-6 mb-6">
@@ -227,7 +227,7 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
               </div>
               <div>
                 <h2 className="text-2xl font-georgia text-keepla-black">{data.title}</h2>
-                <p className="text-gray-600">Cápsula do tempo {data.type === 'digital' ? 'digital' : 'física'}</p>
+                <p className="text-muted-foreground">Cápsula do tempo {data.type === 'digital' ? 'digital' : 'física'}</p>
               </div>
             </div>
             <Badge className="bg-keepla-gray text-keepla-black border-0">
@@ -237,8 +237,8 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
 
           <div className="bg-keepla-gray rounded-xl p-6 mb-6">
             <div className="flex items-center space-x-2 mb-4">
-              <User className="w-4 h-4 text-gray-600" />
-              <span className="text-sm text-gray-600">Para: {data.recipientName}</span>
+              <User className="w-4 h-4 text-muted-foreground" />
+              <span className="text-sm text-muted-foreground">Para: {data.recipientName}</span>
             </div>
             <p className="text-keepla-black leading-relaxed mb-4">
               {data.message.length > 200 ? `${data.message.substring(0, 200)}...` : data.message}
@@ -255,7 +255,7 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
               <Calendar className="w-5 h-5 text-keepla-red" />
               <div>
                 <div className="font-semibold text-keepla-black">Data de Entrega</div>
-                <div className="text-sm text-gray-600">
+                <div className="text-sm text-muted-foreground">
                   {data.deliveryDate.toLocaleDateString('pt-PT')}
                 </div>
               </div>
@@ -264,7 +264,7 @@ const ImmersivePreview: React.FC<ImmersivePreviewProps> = ({
               <Clock className="w-5 h-5 text-keepla-red" />
               <div>
                 <div className="font-semibold text-keepla-black">Tempo Restante</div>
-                <div className="text-sm text-gray-600">
+                <div className="text-sm text-muted-foreground">
                   {formatDeliveryDate(data.deliveryDate)}
                 </div>
               </div>

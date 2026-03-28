@@ -318,7 +318,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
               <DialogTitle className="text-2xl font-bold text-keepla-gray-dark">
                 {getPersonalizedTitle(keywords)}
               </DialogTitle>
-              <p className="text-gray-600">
+              <p className="text-muted-foreground">
                 Detectamos que sua cápsula é sobre{' '}
                 <span className="font-semibold text-keepla-gray-dark">
                   {keywords.join(', ')}
@@ -360,14 +360,14 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
                         <IconComponent className="w-full h-full" />
                       </div>
                       <CardTitle className="text-lg font-bold">{option.title}</CardTitle>
-                      <p className="text-sm text-gray-600">{option.description}</p>
+                      <p className="text-sm text-muted-foreground">{option.description}</p>
                     </CardHeader>
                     
                     <CardContent className="pt-0">
                       <div className="text-center mb-4">
                         <div className="flex items-center justify-center space-x-2">
                           {option.originalPrice && (
-                            <span className="text-sm text-gray-500 line-through">
+                            <span className="text-sm text-muted-foreground line-through">
                               €{option.originalPrice.toFixed(2)}
                             </span>
                           )}
@@ -384,7 +384,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
                       
                       <ul className="space-y-2 mb-4">
                         {option.features.map((feature, idx) => (
-                          <li key={idx} className="flex items-center text-sm text-gray-600">
+                          <li key={idx} className="flex items-center text-sm text-muted-foreground">
                             <Check className="w-4 h-4 text-keepla-gray mr-2 flex-shrink-0" />
                             {feature}
                           </li>
@@ -440,7 +440,7 @@ export const UpgradeModal: React.FC<UpgradeModalProps> = ({
             <Button
               variant="ghost"
               onClick={onClose}
-              className="text-gray-500 hover:text-gray-700"
+              className="text-muted-foreground hover:text-foreground"
             >
               Continuar com versão gratuita
             </Button>

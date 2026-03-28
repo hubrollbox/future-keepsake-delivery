@@ -87,8 +87,8 @@ const AdminMessages = () => {
           {[...Array(3)].map((_, i) => (
             <Card key={i} className="border-dusty-rose/20">
               <CardContent className="p-6">
-                <div className="h-6 bg-gray-200 rounded w-1/2 mb-4"></div>
-                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                <div className="h-6 bg-muted rounded w-1/2 mb-4"></div>
+                <div className="h-4 bg-muted rounded w-3/4"></div>
               </CardContent>
             </Card>
           ))}
@@ -103,7 +103,7 @@ const AdminMessages = () => {
         <h1 className="text-2xl font-fraunces font-bold text-steel-blue">Mensagens</h1>
         <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
             <Input
               placeholder="Pesquisar mensagens..."
               value={searchTerm}
@@ -114,7 +114,7 @@ const AdminMessages = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-md text-sm"
+            className="px-3 py-2 border border-border rounded-md text-sm"
             aria-label="Filtrar mensagens por estado"
             title="Filtrar por estado de entrega"
           >
@@ -138,7 +138,7 @@ const AdminMessages = () => {
                     </h3>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-600">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-muted-foreground">
                     <div className="flex items-center gap-1">
                       <Calendar className="h-4 w-4" />
                       <strong>Entrega:</strong> {new Date(message.delivery_date).toLocaleDateString('pt-PT')}
@@ -148,12 +148,12 @@ const AdminMessages = () => {
                     </div>
                   </div>
                   
-                  <p className="text-sm text-gray-600 mt-2">
+                  <p className="text-sm text-muted-foreground mt-2">
                     <strong>Preview:</strong> {message.content.substring(0, 100)}
                     {message.content.length > 100 && "..."}
                   </p>
 
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-muted-foreground">
                     Criada em: {new Date(message.created_at).toLocaleDateString('pt-PT')} às {new Date(message.created_at).toLocaleTimeString('pt-PT')}
                   </p>
                 </div>
@@ -171,7 +171,7 @@ const AdminMessages = () => {
                         <DialogTitle className="font-fraunces text-steel-blue">{message.title}</DialogTitle>
                       </DialogHeader>
                       <div className="space-y-4">
-                        <div className="bg-gray-50 p-4 rounded-md">
+                        <div className="bg-muted p-4 rounded-md">
                           <h4 className="font-semibold mb-2">Detalhes</h4>
                           <div className="grid grid-cols-2 gap-2 text-sm">
                             <div><strong>Data de entrega:</strong> {new Date(message.delivery_date).toLocaleDateString('pt-PT')}</div>
@@ -197,8 +197,8 @@ const AdminMessages = () => {
       {filteredMessages.length === 0 && (
         <Card>
           <CardContent className="p-8 text-center">
-            <MessageSquare className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-600">Nenhuma mensagem encontrada.</p>
+            <MessageSquare className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <p className="text-muted-foreground">Nenhuma mensagem encontrada.</p>
           </CardContent>
         </Card>
       )}

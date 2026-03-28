@@ -22,8 +22,8 @@ export function AIQuotaStatus({
   if (loading) {
     return (
       <div className="animate-pulse">
-        <div className="h-4 bg-gray-200 rounded w-32 mb-2"></div>
-        <div className="h-2 bg-gray-200 rounded w-full"></div>
+        <div className="h-4 bg-muted rounded w-32 mb-2"></div>
+        <div className="h-2 bg-muted rounded w-full"></div>
       </div>
     );
   }
@@ -52,13 +52,13 @@ export function AIQuotaStatus({
   const getTierColor = () => {
     switch (quota.tier) {
       case 'free':
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-muted text-foreground';
       case 'premium':
         return 'bg-blue-100 text-blue-800';
       case 'family':
         return 'bg-purple-100 text-purple-800';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-muted text-foreground';
     }
   };
 
@@ -114,7 +114,7 @@ export function AIQuotaStatus({
               '[&>div]:bg-green-500'
             }`}
           />
-          <div className="flex justify-between text-xs text-gray-500">
+          <div className="flex justify-between text-xs text-muted-foreground">
             <span>{status?.message}</span>
             <span>{quota.remaining} restantes</span>
           </div>
@@ -132,8 +132,8 @@ export function AIQuotaStatus({
           <div className="border-t pt-4">
             <div className="space-y-2">
               <h4 className="font-medium text-sm">{upgradeMessage.title}</h4>
-              <p className="text-xs text-gray-600">{upgradeMessage.description}</p>
-              <ul className="text-xs text-gray-600 space-y-1">
+              <p className="text-xs text-muted-foreground">{upgradeMessage.description}</p>
+              <ul className="text-xs text-muted-foreground space-y-1">
                 {upgradeMessage.benefits.map((benefit, index) => (
                   <li key={index} className="flex items-center gap-1">
                     <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
@@ -154,7 +154,7 @@ export function AIQuotaStatus({
         )}
 
         {/* Reset Timer */}
-        <div className="text-xs text-gray-500 border-t pt-2">
+        <div className="text-xs text-muted-foreground border-t pt-2">
           <div className="flex items-center justify-between">
             <span>Quota reseta em:</span>
             <ResetTimer resetDate={quota.resetDate} />

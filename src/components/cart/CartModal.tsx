@@ -53,7 +53,7 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
         {items.length === 0 ? (
           <div className="text-center py-8">
             <ShoppingCart className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-600 mb-4">O seu carrinho está vazio</p>
+            <p className="text-muted-foreground mb-4">O seu carrinho está vazio</p>
             <Button onClick={onClose} variant="outline">
               Continuar a comprar
             </Button>
@@ -64,8 +64,8 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
               {items.map((item) => (
                 <div key={item.id} className="flex items-center justify-between p-4 border rounded-lg">
                   <div className="flex-1">
-                    <h4 className="font-medium text-gray-900">{item.product_title}</h4>
-                    <p className="text-sm text-gray-600">€{item.product_price.toFixed(2)}</p>
+                    <h4 className="font-medium text-foreground">{item.product_title}</h4>
+                    <p className="text-sm text-muted-foreground">€{item.product_price.toFixed(2)}</p>
                   </div>
                   
                   <div className="flex items-center space-x-3">

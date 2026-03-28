@@ -146,7 +146,7 @@ const LandingPage: React.FC = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="mt-2 rounded-xl border-gray-200"
+                    className="mt-2 rounded-xl border-border"
                     placeholder="O teu nome completo"
                   />
                 </div>
@@ -160,7 +160,7 @@ const LandingPage: React.FC = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="mt-2 rounded-xl border-gray-200"
+                    className="mt-2 rounded-xl border-border"
                     placeholder="o.teu.email@exemplo.com"
                   />
                 </div>

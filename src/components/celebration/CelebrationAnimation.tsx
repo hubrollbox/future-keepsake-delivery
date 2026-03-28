@@ -162,7 +162,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
           {/* Indicador de Auto-close */}
           {autoClose && (
             <div className="mt-4">
-              <div className="w-full bg-gray-200 rounded-full h-1">
+              <div className="w-full bg-muted rounded-full h-1">
                 <div 
                   className={`bg-keepla-red h-1 rounded-full transition-all ease-linear`}
                   style={{ 

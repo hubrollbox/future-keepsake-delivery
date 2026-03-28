@@ -31,18 +31,18 @@ const AdminCapsules = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="text-gray-700">ID</TableHead>
-                    <TableHead className="text-gray-700">Tipo</TableHead>
-                    <TableHead className="text-gray-700">Local Físico</TableHead>
-                    <TableHead className="text-gray-700">Link Digital</TableHead>
-                    <TableHead className="text-gray-700">Data Criação</TableHead>
-                    <TableHead className="text-gray-700">Data Entrega</TableHead>
-                    <TableHead className="text-gray-700">Status</TableHead>
-                    <TableHead className="text-gray-700">Remetente</TableHead>
-                    <TableHead className="text-gray-700">Contato</TableHead>
-                    <TableHead className="text-gray-700">Destinatário</TableHead>
-                    <TableHead className="text-gray-700">Contato</TableHead>
-                    <TableHead className="text-gray-700">Notas</TableHead>
+                    <TableHead className="text-foreground">ID</TableHead>
+                    <TableHead className="text-foreground">Tipo</TableHead>
+                    <TableHead className="text-foreground">Local Físico</TableHead>
+                    <TableHead className="text-foreground">Link Digital</TableHead>
+                    <TableHead className="text-foreground">Data Criação</TableHead>
+                    <TableHead className="text-foreground">Data Entrega</TableHead>
+                    <TableHead className="text-foreground">Status</TableHead>
+                    <TableHead className="text-foreground">Remetente</TableHead>
+                    <TableHead className="text-foreground">Contato</TableHead>
+                    <TableHead className="text-foreground">Destinatário</TableHead>
+                    <TableHead className="text-foreground">Contato</TableHead>
+                    <TableHead className="text-foreground">Notas</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -76,7 +76,7 @@ const AdminCapsules = () => {
                           <span className={`px-2 py-1 rounded text-xs ${
                             capsule.status === 'delivered' ? 'bg-primary/20 text-primary' :
                             capsule.status === 'scheduled' ? 'bg-primary/20 text-primary' :
-                            'bg-gray-100 text-gray-600'
+                            'bg-muted text-muted-foreground'
                           }`}>
                             {capsule.status}
                           </span>

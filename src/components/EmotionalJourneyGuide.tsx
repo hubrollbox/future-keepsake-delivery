@@ -164,7 +164,7 @@ const EmotionalJourneyGuide: React.FC = () => {
                 className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
                   index <= currentStep
                     ? 'bg-keepla-red text-white'
-                    : 'bg-gray-200 text-gray-500'
+                    : 'bg-muted text-muted-foreground'
                 }`}
               >
                 <step.icon className="w-5 h-5" />
@@ -172,7 +172,7 @@ const EmotionalJourneyGuide: React.FC = () => {
               {index < journeySteps.length - 1 && (
                 <div
                   className={`flex-1 h-1 mx-2 transition-all duration-300 ${
-                    index < currentStep ? 'bg-keepla-red' : 'bg-gray-200'
+                    index < currentStep ? 'bg-keepla-red' : 'bg-muted'
                   }`}
                 />
               )}

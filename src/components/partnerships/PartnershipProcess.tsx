@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 const PartnershipProcess = () => {
   return (
     <div className="mb-16">
-      <Card className="bg-white shadow-lg max-w-4xl mx-auto border border-gray-200">
+      <Card className="bg-white shadow-lg max-w-4xl mx-auto border border-border">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl text-keepla-gray-dark">Como Tornar-se Parceiro</CardTitle>
         </CardHeader>
@@ -15,7 +15,7 @@ const PartnershipProcess = () => {
                 1
               </div>
               <h4 className="font-semibold mb-2">Contacta-nos</h4>
-              <p className="text-gray-600 text-sm">
+              <p className="text-muted-foreground text-sm">
                 Envia-nos uma proposta através do nosso formulário de contacto
               </p>
             </div>
@@ -24,7 +24,7 @@ const PartnershipProcess = () => {
                 2
               </div>
               <h4 className="font-semibold mb-2">Avaliação</h4>
-              <p className="text-gray-600 text-sm">
+              <p className="text-muted-foreground text-sm">
                 Analisamos a compatibilidade e o potencial da parceria
               </p>
             </div>
@@ -33,7 +33,7 @@ const PartnershipProcess = () => {
                 3
               </div>
               <h4 className="font-semibold mb-2">Integração</h4>
-              <p className="text-gray-600 text-sm">
+              <p className="text-muted-foreground text-sm">
                 Formação e integração com as nossas plataformas e processos
               </p>
             </div>

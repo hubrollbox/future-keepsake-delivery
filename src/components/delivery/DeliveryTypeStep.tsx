@@ -33,21 +33,21 @@ const DeliveryTypeStep = ({ deliveryType, setDeliveryType, onNext }: Props) => {
           onValueChange={setDeliveryType}
           className="mt-2"
         >
-          <div className="flex items-center space-x-2 p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+          <div className="flex items-center space-x-2 p-4 border rounded-lg hover:bg-muted transition-colors">
             <RadioGroupItem value="digital" id="digital" />
             <Label htmlFor="digital" className="flex-1 cursor-pointer">
               <div>
                 <p className="font-medium">Presente Digital</p>
-                <p className="text-sm text-gray-600">Carta, vídeo, ou ficheiro digital</p>
+                <p className="text-sm text-muted-foreground">Carta, vídeo, ou ficheiro digital</p>
               </div>
             </Label>
           </div>
-          <div className="flex items-center space-x-2 p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+          <div className="flex items-center space-x-2 p-4 border rounded-lg hover:bg-muted transition-colors">
             <RadioGroupItem value="physical" id="physical" />
             <Label htmlFor="physical" className="flex-1 cursor-pointer">
               <div>
                 <p className="font-medium">Presente Físico</p>
-                <p className="text-sm text-gray-600">Objeto que será guardado e entregue</p>
+                <p className="text-sm text-muted-foreground">Objeto que será guardado e entregue</p>
               </div>
             </Label>
           </div>

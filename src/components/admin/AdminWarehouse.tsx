@@ -197,7 +197,7 @@ const AdminWarehouse = () => {
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <Label htmlFor="name" className="text-gray-700">Nome</Label>
+                <Label htmlFor="name" className="text-foreground">Nome</Label>
                 <Input
                   id="name"
                   value={formData.name}

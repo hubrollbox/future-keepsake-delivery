@@ -21,7 +21,7 @@ const AchievementCard = ({ achievement }: AchievementCardProps) => {
   return (
     <Card className={`transition-all duration-300 ${unlocked 
       ? 'bg-gradient-to-br from-yellow-50 to-amber-50 border-amber-200 shadow-md' 
-      : 'bg-gray-50 border-gray-200 opacity-60'
+      : 'bg-muted border-border opacity-60'
     }`}>
       <CardContent className="p-4">
         <div className="flex items-center space-x-3">
@@ -29,13 +29,13 @@ const AchievementCard = ({ achievement }: AchievementCardProps) => {
             ? 'bg-gradient-to-r from-amber-500 to-yellow-500'
             : 'bg-gray-300'
           }`}>
-            <Icon className={`h-5 w-5 ${unlocked ? 'text-white' : 'text-gray-500'}`} />
+            <Icon className={`h-5 w-5 ${unlocked ? 'text-white' : 'text-muted-foreground'}`} />
           </div>
           <div className="flex-1">
-            <h4 className={`font-semibold text-sm ${unlocked ? 'text-gray-800' : 'text-gray-500'}`}>
+            <h4 className={`font-semibold text-sm ${unlocked ? 'text-foreground' : 'text-muted-foreground'}`}>
               {title}
             </h4>
-            <p className={`text-xs ${unlocked ? 'text-gray-600' : 'text-gray-400'}`}>
+            <p className={`text-xs ${unlocked ? 'text-muted-foreground' : 'text-muted-foreground'}`}>
               {description}
             </p>
           </div>

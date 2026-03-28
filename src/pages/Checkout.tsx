@@ -176,8 +176,8 @@ const Checkout = () => {
           <Card className="max-w-md mx-auto emotion-card">
             <CardContent className="p-8 text-center">
               <div className="animate-pulse">
-                <div className="h-6 bg-gray-200 rounded w-3/4 mx-auto mb-4" />
-                <div className="h-4 bg-gray-200 rounded w-1/2 mx-auto" />
+                <div className="h-6 bg-muted rounded w-3/4 mx-auto mb-4" />
+                <div className="h-4 bg-muted rounded w-1/2 mx-auto" />
               </div>
             </CardContent>
           </Card>
@@ -195,7 +195,7 @@ const Checkout = () => {
         <div className="container mx-auto px-4 py-16">
           <Card className="max-w-md mx-auto emotion-card">
             <CardContent className="p-8 text-center">
-              <ShoppingCart className="h-16 w-16 text-gray-400 mx-auto mb-4" />
+              <ShoppingCart className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
               <h2 className="text-xl font-semibold mb-2 font-serif">Carrinho vazio</h2>
               <p className="text-emotional mb-6">Adicione produtos ao carrinho antes de finalizar a compra.</p>
               <Button onClick={() => navigate("/products")} className="btn-primary">
@@ -236,7 +236,7 @@ const Checkout = () => {
                       type="email"
                       value={contactInfo.email}
                       onChange={(e) => handleInputChange('contact', 'email', e.target.value)}
-                      className={`mt-2 rounded-xl ${errors.email ? 'border-keepla-red' : 'border-gray-200'}`}
+                      className={`mt-2 rounded-xl ${errors.email ? 'border-keepla-red' : 'border-border'}`}
                       placeholder="seu@email.com"
                       required
                     />
@@ -253,7 +253,7 @@ const Checkout = () => {
                       id="notes"
                       value={contactInfo.notes}
                       onChange={(e) => handleInputChange('contact', 'notes', e.target.value)}
-                      className="mt-2 rounded-xl border-gray-200"
+                      className="mt-2 rounded-xl border-border"
                       placeholder="Instruções especiais para entrega..."
                       rows={3}
                     />
@@ -275,7 +275,7 @@ const Checkout = () => {
                       id="name"
                       value={shippingInfo.name}
                       onChange={(e) => handleInputChange('shipping', 'name', e.target.value)}
-                      className={`mt-2 rounded-xl ${errors.name ? 'border-keepla-red' : 'border-gray-200'}`}
+                      className={`mt-2 rounded-xl ${errors.name ? 'border-keepla-red' : 'border-border'}`}
                       placeholder="João Silva"
                       required
                     />
@@ -292,7 +292,7 @@ const Checkout = () => {
                       id="address"
                       value={shippingInfo.address}
                       onChange={(e) => handleInputChange('shipping', 'address', e.target.value)}
-                      className={`mt-2 rounded-xl ${errors.address ? 'border-keepla-red' : 'border-gray-200'}`}
+                      className={`mt-2 rounded-xl ${errors.address ? 'border-keepla-red' : 'border-border'}`}
                       placeholder="Rua das Flores, 123, 2º Esq."
                       required
                     />
@@ -310,7 +310,7 @@ const Checkout = () => {
                         id="city"
                         value={shippingInfo.city}
                         onChange={(e) => handleInputChange('shipping', 'city', e.target.value)}
-                        className={`mt-2 rounded-xl ${errors.city ? 'border-keepla-red' : 'border-gray-200'}`}
+                        className={`mt-2 rounded-xl ${errors.city ? 'border-keepla-red' : 'border-border'}`}
                         placeholder="Lisboa"
                         required
                       />
@@ -327,7 +327,7 @@ const Checkout = () => {
                         id="postalCode"
                         value={shippingInfo.postalCode}
                         onChange={(e) => handleInputChange('shipping', 'postalCode', e.target.value)}
-                        className={`mt-2 rounded-xl ${errors.postalCode ? 'border-keepla-red' : 'border-gray-200'}`}
+                        className={`mt-2 rounded-xl ${errors.postalCode ? 'border-keepla-red' : 'border-border'}`}
                         placeholder="4450-123"
                         maxLength={8}
                         required
@@ -347,7 +347,7 @@ const Checkout = () => {
                       type="tel"
                       value={shippingInfo.phone}
                       onChange={(e) => handleInputChange('shipping', 'phone', e.target.value)}
-                      className={`mt-2 rounded-xl ${errors.phone ? 'border-keepla-red' : 'border-gray-200'}`}
+                      className={`mt-2 rounded-xl ${errors.phone ? 'border-keepla-red' : 'border-border'}`}
                       placeholder="912 345 678"
                       maxLength={11}
                       required
@@ -388,7 +388,7 @@ const Checkout = () => {
                               <h4 className="font-medium text-keepla-gray-dark">{item.product_title}</h4>
                               <p className="text-sm text-emotional">Quantidade: {item.quantity}</p>
                               {(item as any).planId && (
-                                <p className="text-xs text-gray-500 mt-1">Plano: {(item as any).planId}</p>
+                                <p className="text-xs text-muted-foreground mt-1">Plano: {(item as any).planId}</p>
                               )}
                               {hasDiscount && (
                                 <p className="text-xs text-green-600 mt-1">
@@ -398,7 +398,7 @@ const Checkout = () => {
                             </div>
                             <div className="text-right">
                               {hasDiscount && (
-                                <p className="text-sm text-gray-400 line-through">
+                                <p className="text-sm text-muted-foreground line-through">
                                   €{originalPrice.toFixed(2)}
                                 </p>
                               )}
@@ -411,7 +411,7 @@ const Checkout = () => {
                       );
                     })}
                     
-                    <div className="pt-4 border-t border-gray-200">
+                    <div className="pt-4 border-t border-border">
                       {(() => {
                         const totalCalculated = items.reduce((sum, item) => {
                           const calculation = calculatePricing(item.product_id || 'default');
@@ -425,8 +425,8 @@ const Checkout = () => {
                           <div className="space-y-2">
                             {totalSavings > 0 && (
                               <div className="flex justify-between items-center text-sm">
-                                <span className="text-gray-600">Subtotal:</span>
-                                <span className="text-gray-400 line-through">€{totalOriginal.toFixed(2)}</span>
+                                <span className="text-muted-foreground">Subtotal:</span>
+                                <span className="text-muted-foreground line-through">€{totalOriginal.toFixed(2)}</span>
                               </div>
                             )}
                             {totalSavings > 0 && (

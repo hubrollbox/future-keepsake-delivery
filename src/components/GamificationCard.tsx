@@ -35,7 +35,7 @@ const GamificationCard = ({
   };
 
   const getTypeColor = () => {
-    if (!unlocked) return "bg-keepla-gray text-gray-600";
+    if (!unlocked) return "bg-keepla-gray text-muted-foreground";
     return "bg-keepla-red/10 text-keepla-red";
   };
 
@@ -57,13 +57,13 @@ const GamificationCard = ({
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-gray-600 text-sm leading-relaxed">{description}</p>
+        <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
         
         {maxProgress > 0 && (
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
               <span className="text-foreground font-medium">Progresso</span>
-              <span className="text-gray-600">{progress}/{maxProgress}</span>
+              <span className="text-muted-foreground">{progress}/{maxProgress}</span>
             </div>
             <div className="w-full bg-keepla-gray rounded-full h-2">
               <div 

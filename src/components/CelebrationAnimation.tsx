@@ -123,7 +123,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
             🎉 Cápsula Criada com Sucesso!
           </h1>
 
-          <p className="text-xl text-gray-600 mb-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          <p className="text-xl text-muted-foreground mb-8 animate-slide-up" style={{ animationDelay: '0.2s' }}>
             Sua mensagem especial está programada para tocar corações
           </p>
 
@@ -136,7 +136,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
                   <Sparkles className="w-6 h-6 text-keepla-red" />
                 </div>
                 <h3 className="font-semibold text-foreground">Título</h3>
-                <p className="text-sm text-gray-600 font-medium">"{keepsakeTitle}"</p>
+                <p className="text-sm text-muted-foreground font-medium">"{keepsakeTitle}"</p>
               </div>
 
               <div className="space-y-2">
@@ -144,7 +144,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
                   <Calendar className="w-6 h-6 text-keepla-red" />
                 </div>
                 <h3 className="font-semibold text-foreground">Entrega</h3>
-                <p className="text-sm text-gray-600 font-medium">{formatDate(deliveryDate)}</p>
+                <p className="text-sm text-muted-foreground font-medium">{formatDate(deliveryDate)}</p>
               </div>
 
               <div className="space-y-2">
@@ -152,7 +152,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
                   <Heart className="w-6 h-6 text-keepla-red" />
                 </div>
                 <h3 className="font-semibold text-foreground">Destinatários</h3>
-                <p className="text-sm text-gray-600 font-medium">
+                <p className="text-sm text-muted-foreground font-medium">
                   {recipientCount} {recipientCount === 1 ? 'pessoa' : 'pessoas'}
                 </p>
               </div>
@@ -191,7 +191,7 @@ const CelebrationAnimation: React.FC<CelebrationAnimationProps> = ({
             <Button
               variant="ghost"
               onClick={() => window.location.href = '/dashboard'}
-              className="text-gray-600 hover:text-foreground px-8 py-3"
+              className="text-muted-foreground hover:text-foreground px-8 py-3"
             >
               <Eye className="w-5 h-5 mr-2" />
               Ver Dashboard

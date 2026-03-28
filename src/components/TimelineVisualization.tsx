@@ -62,7 +62,7 @@ const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({
       case 'scheduled':
         return <Clock className="w-4 h-4 text-blue-500" />;
       default:
-        return <Calendar className="w-4 h-4 text-gray-500" />;
+        return <Calendar className="w-4 h-4 text-muted-foreground" />;
     }
   };
 
@@ -201,7 +201,7 @@ const TimelineVisualization: React.FC<TimelineVisualizationProps> = ({
         
         <div className="flex items-center space-x-4">
           {/* View Toggle */}
-          <div className="flex bg-gray-100 rounded-lg p-1">
+          <div className="flex bg-muted rounded-lg p-1">
             <Button
               variant={currentView === 'timeline' ? 'default' : 'ghost'}
               size="sm"
