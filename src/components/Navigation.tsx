@@ -106,7 +106,7 @@ const Navigation = () => {
               variant="brand-outline" 
               onClick={() => navigate("/blog")}
               className={`hidden md:flex ${
-                isTransparent ? "border-white text-white hover:bg-white/10" : ""
+                isTransparent ? "border-white text-white hover:bg-white/10" : "border-border text-foreground"
               }`}
             >
               Caderno
