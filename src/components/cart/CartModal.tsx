@@ -33,7 +33,7 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
             <DialogTitle>Carrinho de Compras</DialogTitle>
           </DialogHeader>
           <div className="flex items-center justify-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gold"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
           </div>
         </DialogContent>
       </Dialog>
@@ -105,7 +105,7 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
             <div className="border-t pt-4">
               <div className="flex justify-between items-center mb-4">
                 <span className="text-lg font-semibold">Total:</span>
-                <span className="text-xl font-bold text-gold">€{getTotalPrice().toFixed(2)}</span>
+                <span className="text-xl font-bold text-primary">€{getTotalPrice().toFixed(2)}</span>
               </div>
               
               <div className="flex space-x-3">
@@ -114,7 +114,7 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose }) => {
                 </Button>
                 <Button 
                   onClick={handleCheckout}
-                  className="flex-1 bg-gold-gradient text-black hover:opacity-90"
+                  className="flex-1 bg-primary text-black hover:opacity-90"
                 >
                   Finalizar Compra
                 </Button>

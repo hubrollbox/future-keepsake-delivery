@@ -23,14 +23,14 @@ const QuestCard = ({ quest }: QuestCardProps) => {
   const isCompleted = progress >= target;
 
   return (
-    <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
+    <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-primary/20">
       <CardContent className="p-4">
         <div className="flex items-start justify-between mb-3">
           <div className="flex items-center space-x-2">
-            <Target className="h-5 w-5 text-blue-600" />
+            <Target className="h-5 w-5 text-primary" />
             <h4 className="font-semibold text-gray-800">{title}</h4>
           </div>
-          <Badge className="bg-blue-500">
+          <Badge className="bg-primary">
             +{reward} XP
           </Badge>
         </div>

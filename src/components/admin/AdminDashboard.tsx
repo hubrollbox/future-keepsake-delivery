@@ -122,8 +122,8 @@ const AdminDashboard = () => {
                         {new Date(delivery.delivery_date).toLocaleDateString('pt-PT')}
                       </p>
                       <span className={`text-xs px-2 py-1 rounded ${
-                        delivery.status === 'scheduled' ? 'bg-golden-honey/20 text-golden-honey' :
-                        delivery.status === 'delivered' ? 'bg-sage-green/20 text-sage-green' :
+                        delivery.status === 'scheduled' ? 'bg-primary/20 text-primary' :
+                        delivery.status === 'delivered' ? 'bg-primary/20 text-primary' :
                         'bg-misty-gray/20 text-misty-gray'
                       }`}>
                         {delivery.status === 'scheduled' ? 'Agendado' :

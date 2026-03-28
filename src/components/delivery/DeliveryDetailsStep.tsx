@@ -29,7 +29,7 @@ const DeliveryDetailsStep = ({ formData, handleInputChange, deliveryType, prevSt
         <Label htmlFor="title">
           Título da Entrega
           <TooltipHelp text="Dê um nome fácil de identificar para esta entrega.">
-            <span className="ml-1 text-blue-500 cursor-help">?</span>
+            <span className="ml-1 text-primary cursor-help">?</span>
           </TooltipHelp>
         </Label>
         <Input
@@ -45,7 +45,7 @@ const DeliveryDetailsStep = ({ formData, handleInputChange, deliveryType, prevSt
         <Label htmlFor="recipient">
           Destinatário
           <TooltipHelp text="Nome da pessoa que irá receber a keepsake.">
-            <span className="ml-1 text-blue-500 cursor-help">?</span>
+            <span className="ml-1 text-primary cursor-help">?</span>
           </TooltipHelp>
         </Label>
         <Input

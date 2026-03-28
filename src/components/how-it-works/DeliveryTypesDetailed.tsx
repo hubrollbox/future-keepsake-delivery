@@ -66,7 +66,7 @@ const DeliveryTypesDetailed = () => {
           <CardContent className="pt-6 text-center">
             <div className="relative mb-6">
               <Package className="h-16 w-16 md:h-20 md:w-20 text-earthy-burgundy mx-auto group-hover:animate-bounce-gentle" />
-              <Badge className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs">Físico</Badge>
+              <Badge className="absolute -top-2 -right-2 bg-primary text-white text-xs">Físico</Badge>
             </div>
             <h3 className="text-xl md:text-2xl font-bold mb-4 text-steel-blue font-fraunces">Presentes Físicos</h3>
             <p className="text-misty-gray mb-6 leading-relaxed">

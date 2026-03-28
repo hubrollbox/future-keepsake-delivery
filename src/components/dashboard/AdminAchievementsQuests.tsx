@@ -124,7 +124,7 @@ const AdminAchievementsQuests: React.FC = () => {
                 value={newAchievement.description}
                 onChange={e => setNewAchievement(a => ({ ...a, description: e.target.value }))}
               />
-              <button onClick={addAchievement} className="px-3 py-1 bg-blue-500 text-white rounded">+</button>
+              <button onClick={addAchievement} className="px-3 py-1 bg-primary text-white rounded">+</button>
             </div>
             <div className="space-y-2">
               {achievements.map(a => (
@@ -177,7 +177,7 @@ const AdminAchievementsQuests: React.FC = () => {
                 value={newQuest.description}
                 onChange={e => setNewQuest(q => ({ ...q, description: e.target.value }))}
               />
-              <button onClick={addQuest} className="px-3 py-1 bg-blue-500 text-white rounded">+</button>
+              <button onClick={addQuest} className="px-3 py-1 bg-primary text-white rounded">+</button>
             </div>
             <div className="space-y-2">
               {quests.map(q => (

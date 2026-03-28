@@ -74,8 +74,8 @@ const AdminCapsules = () => {
                         <TableCell>{new Date(capsule.delivery_date).toLocaleDateString()}</TableCell>
                         <TableCell>
                           <span className={`px-2 py-1 rounded text-xs ${
-                            capsule.status === 'delivered' ? 'bg-sage-green/20 text-sage-green' :
-                            capsule.status === 'scheduled' ? 'bg-golden-honey/20 text-golden-honey' :
+                            capsule.status === 'delivered' ? 'bg-primary/20 text-primary' :
+                            capsule.status === 'scheduled' ? 'bg-primary/20 text-primary' :
                             'bg-gray-100 text-gray-600'
                           }`}>
                             {capsule.status}

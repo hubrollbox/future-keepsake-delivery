@@ -21,7 +21,7 @@ interface KeepsakesListProps {
 const KeepsakeCard = ({ keepsake, onEdit, onDelete }: { keepsake: Keepsake, onEdit: (id: string) => void, onDelete: (id: string) => void }) => {
   const statusColors: Record<KeepsakeStatus, string> = {
     'pending': 'bg-orange-100 text-orange-800 border-orange-200',
-    'scheduled': 'bg-blue-100 text-blue-800 border-blue-200',
+    'scheduled': 'bg-primary/10 text-foreground border-primary/20',
     'sent': 'bg-green-100 text-green-800 border-green-200',
     'delivered': 'bg-emerald-100 text-emerald-800 border-emerald-200',
     'failed': 'bg-red-100 text-red-800 border-red-200'

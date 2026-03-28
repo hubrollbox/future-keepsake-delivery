@@ -41,9 +41,9 @@ const TimeCapsuleSection = ({ deliveries, loading, onDelete }: TimeCapsuleSectio
 
   return (
     <div className="mb-8">
-      <Card className="shadow-md border-blue-200">
+      <Card className="shadow-md border-primary/20">
         <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="text-xl font-serif text-blue-900 flex items-center gap-2">
+          <CardTitle className="text-xl font-serif text-foreground flex items-center gap-2">
             <Mail className="h-5 w-5" />
             Cápsula do Tempo
           </CardTitle>
@@ -61,18 +61,18 @@ const TimeCapsuleSection = ({ deliveries, loading, onDelete }: TimeCapsuleSectio
             </div>
           ) : deliveries.length === 0 ? (
             <div className="text-center py-8">
-              <Mail className="h-12 w-12 mx-auto text-blue-300 mb-4" />
+              <Mail className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
               <p className="text-gray-500 mb-4">Ainda não tens mensagens na tua cápsula do tempo.</p>
               {/* Removido o botão duplicado de criar mensagem */}
             </div>
           ) : (
             <div className="space-y-4 max-h-96 overflow-y-auto">
               {deliveries.map((delivery) => (
-                <Card key={delivery.id} className="border border-blue-100 bg-blue-50/50">
+                <Card key={delivery.id} className="border border-primary/10 bg-primary/5">
                   <CardContent className="p-4">
           <div className="flex justify-between items-start mb-2">
                       <div className="flex-1">
-                        <h4 className="font-semibold text-blue-900">{delivery.title || "Mensagem"}</h4>
+                        <h4 className="font-semibold text-foreground">{delivery.title || "Mensagem"}</h4>
                         <p className="text-sm text-gray-600">Para: {delivery.recipient_name || "Destinatário"}</p>
                         <div className="flex flex-col gap-1 mt-1 text-xs text-gray-500">
                           <p className="flex items-center gap-1">
