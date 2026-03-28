@@ -177,7 +177,7 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className={`md:hidden border-t py-4 ${isTransparent ? "border-white/20 bg-black/80 -mx-4 px-4" : "border-keepla-gray"}`}>
+          <div className={`md:hidden border-t py-4 ${isTransparent ? "border-white/20 bg-black/80 -mx-4 px-4" : "border-border"}`}>
             <div className="flex flex-col space-y-2">
               {menuItems.map((item) => (
                 <Link
@@ -185,8 +185,8 @@ const Navigation = () => {
                   to={item.href}
                   className={`transition-colors font-semibold px-4 py-3 touch-target rounded-md ${
                     isTransparent
-                      ? "text-white hover:text-keepla-red hover:bg-white/10"
-                      : "text-keepla-black hover:text-keepla-red hover:bg-keepla-gray"
+                      ? "text-white hover:text-primary hover:bg-white/10"
+                      : "text-foreground hover:text-primary hover:bg-muted"
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -197,8 +197,8 @@ const Navigation = () => {
                 to="/blog"
                 className={`transition-colors font-semibold px-4 py-3 touch-target rounded-md ${
                   isTransparent
-                    ? "text-white hover:text-keepla-red hover:bg-white/10"
-                    : "text-keepla-black hover:text-keepla-red hover:bg-keepla-gray"
+                    ? "text-white hover:text-primary hover:bg-white/10"
+                    : "text-foreground hover:text-primary hover:bg-muted"
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
