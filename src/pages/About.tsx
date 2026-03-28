@@ -56,7 +56,7 @@ const About = () => {
   };
 
   return (
-    <div className="min-h-screen bg-keepla-black">
+    <div className="min-h-screen bg-foreground">
       <SEOHead 
         title="Sobre Nós"
         description="Conhece a Keepla: uma plataforma dedicada à preservação de memória, sensibilidade e presença."
@@ -91,7 +91,7 @@ const About = () => {
           </motion.div>
           
           <motion.p 
-            className="text-keepla-white/70 font-georgia italic text-lg mb-4"
+            className="text-white/70 font-georgia italic text-lg mb-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
@@ -100,23 +100,23 @@ const About = () => {
           </motion.p>
           
           <motion.h1 
-            className="text-4xl md:text-6xl font-inter font-bold text-keepla-white mb-6 leading-tight"
+            className="text-4xl md:text-6xl font-inter font-bold text-white mb-6 leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             Somos a{" "}
-            <span className="text-keepla-red font-georgia italic">keepla</span>
+            <span className="text-primary font-georgia italic">keepla</span>
           </motion.h1>
           
           <motion.p 
-            className="text-lg md:text-xl text-keepla-white/80 max-w-2xl mx-auto font-inter"
+            className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-inter"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             Dedicados à preservação de{" "}
-            <span className="text-keepla-red font-semibold">memória, sensibilidade e presença.</span>
+            <span className="text-primary font-semibold">memória, sensibilidade e presença.</span>
           </motion.p>
           
           <motion.div
@@ -127,7 +127,7 @@ const About = () => {
             <Button 
               variant="ghost" 
               onClick={() => navigate('/')} 
-              className="mt-8 text-keepla-white hover:text-keepla-red hover:bg-keepla-white/10"
+              className="mt-8 text-white hover:text-primary hover:bg-background/10"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               <span>Voltar ao Início</span>
@@ -136,7 +136,7 @@ const About = () => {
         </div>
       </PhotoBackground>
 
-      <main className="bg-keepla-white">
+      <main className="bg-background">
         <div className="container mx-auto px-4 py-16">
           {/* Missão */}
           <motion.div 
@@ -146,7 +146,7 @@ const About = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7 }}
           >
-            <p className="text-sm uppercase tracking-wider text-keepla-red font-semibold mb-4 text-center">A nossa promessa</p>
+            <p className="text-sm uppercase tracking-wider text-primary font-semibold mb-4 text-center">A nossa promessa</p>
             <h2 className="text-3xl md:text-4xl font-inter font-bold text-foreground mb-6 text-center">
               A Nossa Missão
             </h2>
@@ -154,7 +154,7 @@ const About = () => {
               "Acreditamos que há momentos que merecem ser guardados com o cuidado de quem sabe 
               que o tempo é o nosso bem mais precioso."
             </blockquote>
-            <p className="text-keepla-red font-semibold text-center">
+            <p className="text-primary font-semibold text-center">
               — Equipa keepla
             </p>
           </motion.div>
@@ -173,7 +173,7 @@ const About = () => {
               imagePosition="left"
               grayscale={false}
             >
-              <p className="text-sm uppercase tracking-wider text-keepla-red font-semibold mb-4">O que nos inspira</p>
+              <p className="text-sm uppercase tracking-wider text-primary font-semibold mb-4">O que nos inspira</p>
               <h2 className="text-3xl md:text-4xl font-inter font-bold text-foreground mb-6">
                 Ligações que Atravessam o Tempo
               </h2>
@@ -181,7 +181,7 @@ const About = () => {
                 Uma mão pequena que segura a nossa. Um gesto simples que contém todo o amor do mundo. 
                 São estes momentos — frágeis, irrepetíveis — que merecem ser guardados para sempre.
               </p>
-              <blockquote className="text-xl text-foreground font-georgia italic border-l-4 border-keepla-red pl-6">
+              <blockquote className="text-xl text-foreground font-georgia italic border-l-4 border-primary pl-6">
                 "Guardamos hoje o que o coração quer dizer amanhã."
               </blockquote>
             </SectionWithPhoto>
@@ -203,7 +203,7 @@ const About = () => {
               imageFocus="center"
               imageRotation={-90}
             >
-              <p className="text-sm uppercase tracking-wider text-keepla-red font-semibold mb-4">Histórias que perduram</p>
+              <p className="text-sm uppercase tracking-wider text-primary font-semibold mb-4">Histórias que perduram</p>
               <h2 className="text-3xl md:text-4xl font-inter font-bold text-foreground mb-6">
                 O Amor Não Tem Prazo
               </h2>
@@ -211,7 +211,7 @@ const About = () => {
                 As fotografias amareladas dos nossos avós contam histórias que o tempo não apagou. 
                 Queremos que as tuas memórias também atravessem gerações.
               </p>
-              <blockquote className="text-xl text-foreground font-georgia italic border-l-4 border-keepla-red pl-6">
+              <blockquote className="text-xl text-foreground font-georgia italic border-l-4 border-primary pl-6">
                 "O que guardas com amor, vive para sempre."
               </blockquote>
             </SectionWithPhoto>
@@ -230,7 +230,7 @@ const About = () => {
               alt="Pessoa a escrever memórias"
               imagePosition="left"
             >
-              <p className="text-sm uppercase tracking-wider text-keepla-red font-semibold mb-4">A magia do tempo</p>
+              <p className="text-sm uppercase tracking-wider text-primary font-semibold mb-4">A magia do tempo</p>
               <h2 className="text-3xl md:text-4xl font-inter font-bold text-foreground mb-6">
                 Escrever é Preservar
               </h2>
@@ -239,7 +239,7 @@ const About = () => {
                 é um ato revolucionário de amor. Cada palavra que guardas é uma semente 
                 plantada no futuro.
               </p>
-              <blockquote className="text-xl text-foreground font-georgia italic border-l-4 border-keepla-red pl-6">
+              <blockquote className="text-xl text-foreground font-georgia italic border-l-4 border-primary pl-6">
                 "As palavras escritas com o coração têm o poder de atravessar o tempo."
               </blockquote>
             </SectionWithPhoto>
@@ -253,7 +253,7 @@ const About = () => {
             viewport={{ once: true, margin: "-100px" }}
             variants={containerVariants}
           >
-            <motion.p className="text-sm uppercase tracking-wider text-keepla-red font-semibold mb-4 text-center" variants={itemVariants}>O que nos move</motion.p>
+            <motion.p className="text-sm uppercase tracking-wider text-primary font-semibold mb-4 text-center" variants={itemVariants}>O que nos move</motion.p>
             <motion.h2 
               className="text-3xl md:text-4xl font-inter font-bold text-foreground mb-12 text-center"
               variants={itemVariants}
@@ -270,8 +270,8 @@ const About = () => {
                   className="bg-card border border-border rounded-2xl text-center p-8 hover:shadow-xl hover:scale-105 transition-all duration-300 group"
                   variants={itemVariants}
                 >
-                  <div className="w-16 h-16 bg-keepla-red/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-keepla-red/20 transition-colors">
-                    <value.icon className="h-8 w-8 text-keepla-red" />
+                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-primary/20 transition-colors">
+                    <value.icon className="h-8 w-8 text-primary" />
                   </div>
                   <h3 className="text-xl font-inter font-semibold text-foreground mb-4">{value.title}</h3>
                   <p className="text-muted-foreground leading-relaxed font-georgia italic">{value.description}</p>
@@ -282,20 +282,20 @@ const About = () => {
 
           {/* CTA Final */}
           <motion.section 
-            className="py-16 bg-keepla-black rounded-2xl max-w-5xl mx-auto"
+            className="py-16 bg-foreground rounded-2xl max-w-5xl mx-auto"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7 }}
           >
             <div className="text-center px-8">
-              <p className="text-keepla-red font-georgia italic mb-4">
+              <p className="text-primary font-georgia italic mb-4">
                 A tua história começa aqui
               </p>
-              <h2 className="text-3xl md:text-4xl font-inter font-bold text-keepla-white mb-6">
+              <h2 className="text-3xl md:text-4xl font-inter font-bold text-white mb-6">
                 Quer Fazer Parte da Nossa História?
               </h2>
-              <p className="text-xl text-keepla-white/80 mb-8 max-w-2xl mx-auto">
+              <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
                 Junta-te à nossa comunidade e ajuda-nos a continuar a criar 
                 momentos mágicos para milhares de pessoas.
               </p>
@@ -303,7 +303,7 @@ const About = () => {
                 <Button 
                   size="lg" 
                   onClick={() => handleNavigation('/register')}
-                  className="px-8 py-6 text-lg group bg-keepla-red hover:bg-keepla-red/90 text-keepla-white font-inter font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200"
+                  className="px-8 py-6 text-lg group bg-primary hover:bg-primary/90 text-white font-inter font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200"
                 >
                   <Heart className="mr-2 h-5 w-5 group-hover:animate-bounce" />
                   Começar Agora
@@ -313,7 +313,7 @@ const About = () => {
                   variant="outline" 
                   size="lg" 
                   onClick={() => handleNavigation('/contact')}
-                  className="px-8 py-6 text-lg bg-transparent border-2 border-keepla-white text-keepla-white hover:bg-keepla-white/10 font-inter font-semibold transition-all duration-200"
+                  className="px-8 py-6 text-lg bg-transparent border-2 border-white text-white hover:bg-background/10 font-inter font-semibold transition-all duration-200"
                 >
                   Falar Connosco
                 </Button>
