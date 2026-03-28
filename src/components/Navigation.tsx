@@ -91,8 +91,8 @@ const Navigation = () => {
                 to={item.href}
                 className={`transition-colors font-semibold ${
                   isTransparent
-                    ? "text-white hover:text-keepla-red"
-                    : "text-keepla-black hover:text-keepla-red"
+                    ? "text-white hover:text-primary"
+                    : "text-foreground hover:text-primary"
                 }`}
               >
                 {item.name}
