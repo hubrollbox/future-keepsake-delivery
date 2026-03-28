@@ -22,8 +22,8 @@ const PhotoBackground = ({
 }: PhotoBackgroundProps) => {
   const overlayClasses = {
     light: "bg-white/70",
-    dark: "bg-black/60",
-    gradient: "bg-gradient-to-b from-black/70 via-black/60 to-black/70"
+    dark: "bg-black/75",
+    gradient: "bg-gradient-to-b from-black/75 via-black/65 to-black/75"
   };
 
   const sizeClasses = {
