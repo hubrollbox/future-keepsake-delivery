@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import Joyride, { CallBackProps, STATUS, Step } from 'react-joyride';
 
 const TOUR_KEY = 'keepla_tour_completed';
 
@@ -8,11 +7,16 @@ interface GuidedTourProps {
   onComplete?: () => void;
 }
 
-const tourSteps: Step[] = [
+interface TourStep {
+  target: string;
+  content: string;
+  placement: string;
+}
+
+const tourSteps: TourStep[] = [
   {
     target: '[data-tour="profile"]',
     content: 'Aqui podes ver o teu perfil, nível e pontos acumulados. Quanto mais usas a Keepla, mais recompensas ganhas!',
-    disableBeacon: true,
     placement: 'bottom',
   },
   {
@@ -37,91 +41,66 @@ export default function GuidedTour({ run: externalRun, onComplete }: GuidedTourP
   const [stepIndex, setStepIndex] = useState(0);
 
   useEffect(() => {
-    // Check if tour was already completed
     const tourCompleted = localStorage.getItem(TOUR_KEY);
-    
     if (externalRun !== undefined) {
       setRun(externalRun);
     } else if (!tourCompleted) {
-      // Auto-start tour for first-time users after a short delay
-      const timer = setTimeout(() => {
-        setRun(true);
-      }, 1500);
+      const timer = setTimeout(() => setRun(true), 1500);
       return () => clearTimeout(timer);
     }
     return undefined;
   }, [externalRun]);
 
-  const handleJoyrideCallback = (data: CallBackProps) => {
-    const { status, index, type } = data;
-    const finishedStatuses: string[] = [STATUS.FINISHED, STATUS.SKIPPED];
-
-    if (finishedStatuses.includes(status)) {
-      setRun(false);
-      localStorage.setItem(TOUR_KEY, 'true');
-      onComplete?.();
-    }
-
-    if (type === 'step:after') {
-      setStepIndex(index + 1);
-    }
+  const handleFinish = () => {
+    setRun(false);
+    localStorage.setItem(TOUR_KEY, 'true');
+    onComplete?.();
   };
 
+  if (!run || stepIndex >= tourSteps.length) return null;
+
+  const step = tourSteps[stepIndex]!;
+
   return (
-    <Joyride
-      steps={tourSteps}
-      run={run}
-      stepIndex={stepIndex}
-      continuous
-      showProgress
-      showSkipButton
-      scrollToFirstStep
-      disableOverlayClose
-      callback={handleJoyrideCallback}
-      locale={{
-        back: 'Anterior',
-        close: 'Fechar',
-        last: 'Concluir',
-        next: 'Seguinte',
-        skip: 'Saltar tour',
-      }}
-      styles={{
-        options: {
-          primaryColor: '#E63946',
-          textColor: '#000000',
-          backgroundColor: '#FFFFFF',
-          arrowColor: '#FFFFFF',
-          overlayColor: 'rgba(0, 0, 0, 0.5)',
-          zIndex: 10000,
-        },
-        buttonNext: {
-          backgroundColor: '#E63946',
-          color: '#FFFFFF',
-          borderRadius: '0.5rem',
-          padding: '0.75rem 1.5rem',
-        },
-        buttonBack: {
-          color: '#000000',
-          marginRight: '0.5rem',
-        },
-        buttonSkip: {
-          color: '#666666',
-        },
-        tooltip: {
-          borderRadius: '0.75rem',
-          padding: '1.5rem',
-        },
-        tooltipContent: {
-          fontFamily: 'Inter, sans-serif',
-          fontSize: '0.95rem',
-          lineHeight: '1.5',
-        },
-      }}
-    />
+    <>
+      {/* Overlay */}
+      <div className="fixed inset-0 bg-black/50 z-[9999]" onClick={handleFinish} />
+      {/* Tooltip */}
+      <div className="fixed z-[10000] bottom-4 left-4 right-4 mx-auto max-w-sm bg-white rounded-xl p-5 shadow-2xl">
+        <p className="text-sm text-foreground leading-relaxed mb-4">{step.content}</p>
+        <div className="flex items-center justify-between">
+          <button onClick={handleFinish} className="text-xs text-muted-foreground hover:underline">
+            Saltar tour
+          </button>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-muted-foreground">{stepIndex + 1}/{tourSteps.length}</span>
+            {stepIndex > 0 && (
+              <button
+                onClick={() => setStepIndex(i => i - 1)}
+                className="px-3 py-1.5 text-xs rounded-md border border-border"
+              >
+                Anterior
+              </button>
+            )}
+            <button
+              onClick={() => {
+                if (stepIndex < tourSteps.length - 1) {
+                  setStepIndex(i => i + 1);
+                } else {
+                  handleFinish();
+                }
+              }}
+              className="px-3 py-1.5 text-xs rounded-md bg-primary text-primary-foreground"
+            >
+              {stepIndex < tourSteps.length - 1 ? 'Seguinte' : 'Concluir'}
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 
-// Hook to manually trigger tour
 export function useTour() {
   const [shouldRun, setShouldRun] = useState(false);
 
