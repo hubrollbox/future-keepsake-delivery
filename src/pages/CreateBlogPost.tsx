@@ -652,7 +652,7 @@ Parágrafo introdutório com **texto em negrito** e *itálico*.
                       {/* Facebook Preview */}
                       <div className="border rounded-lg overflow-hidden">
                         <div className="bg-[#f0f2f5] px-3 py-2 flex items-center gap-2">
-                          <Facebook className="h-4 w-4 text-[#1877F2]" />
+                          <Share2 className="h-4 w-4 text-[#1877F2]" />
                           <span className="text-xs font-medium text-muted-foreground">Facebook</span>
                         </div>
                         <div className="bg-white">

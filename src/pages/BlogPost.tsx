@@ -244,37 +244,37 @@ const BlogPost = () => {
                 href={shareLinks.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-full border border-border bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors"
+                className="p-2 rounded-full border border-border bg-background text-foreground hover:border-primary hover:text-primary transition-colors"
                 aria-label="Partilhar no Facebook"
               >
-                <Facebook className="h-4 w-4" />
+                <Share2 className="h-4 w-4" />
               </a>
               
               <a 
                 href={shareLinks.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-full border border-border bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors"
+                className="p-2 rounded-full border border-border bg-background text-foreground hover:border-primary hover:text-primary transition-colors"
                 aria-label="Partilhar no Twitter"
               >
-                <Twitter className="h-4 w-4" />
+                <Mail className="h-4 w-4" />
               </a>
               
               <a 
                 href={shareLinks.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-full border border-border bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors"
+                className="p-2 rounded-full border border-border bg-background text-foreground hover:border-primary hover:text-primary transition-colors"
                 aria-label="Partilhar no LinkedIn"
               >
-              <Linkedin className="h-4 w-4" />
+                <Share2 className="h-4 w-4" />
               </a>
 
               <a 
                 href={shareLinks.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-full border border-border bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors"
+                className="p-2 rounded-full border border-border bg-background text-foreground hover:border-primary hover:text-primary transition-colors"
                 aria-label="Partilhar no WhatsApp"
               >
                 <MessageCircle className="h-4 w-4" />
@@ -282,10 +282,10 @@ const BlogPost = () => {
 
               <button
                 onClick={handleInstagramShare}
-                className="p-2 rounded-full border border-border bg-background text-foreground hover:border-[#E63946] hover:text-[#E63946] transition-colors"
+                className="p-2 rounded-full border border-border bg-background text-foreground hover:border-primary hover:text-primary transition-colors"
                 aria-label="Partilhar no Instagram"
               >
-                <Instagram className="h-4 w-4" />
+                <Copy className="h-4 w-4" />
               </button>
 
               <a 
