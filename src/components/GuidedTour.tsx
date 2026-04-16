@@ -59,7 +59,7 @@ export default function GuidedTour({ run: externalRun, onComplete }: GuidedTourP
 
   if (!run || stepIndex >= tourSteps.length) return null;
 
-  const step = tourSteps[stepIndex];
+  const step = tourSteps[stepIndex]!;
 
   return (
     <>
