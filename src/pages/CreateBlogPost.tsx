@@ -682,7 +682,7 @@ Parágrafo introdutório com **texto em negrito** e *itálico*.
                       {/* Twitter Preview */}
                       <div className="border rounded-xl overflow-hidden">
                         <div className="bg-black px-3 py-2 flex items-center gap-2">
-                          <Twitter className="h-4 w-4 text-white" />
+                          <Share2 className="h-4 w-4 text-white" />
                           <span className="text-xs font-medium text-white">Twitter / X</span>
                         </div>
                         <div className="bg-white">
@@ -712,7 +712,7 @@ Parágrafo introdutório com **texto em negrito** e *itálico*.
                       {/* LinkedIn Preview */}
                       <div className="border rounded-lg overflow-hidden">
                         <div className="bg-[#0A66C2] px-3 py-2 flex items-center gap-2">
-                          <Linkedin className="h-4 w-4 text-white" />
+                          <Share2 className="h-4 w-4 text-white" />
                           <span className="text-xs font-medium text-white">LinkedIn</span>
                         </div>
                         <div className="bg-white">
