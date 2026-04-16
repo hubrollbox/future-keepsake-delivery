@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import LoadingSpinner from "@/components/ui/loading-spinner";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Share2, Facebook, Twitter, Linkedin, Copy, Check, Instagram, MessageCircle, Mail } from "lucide-react";
+import { ArrowLeft, Share2, Copy, Check, MessageCircle, Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import Joyride, { CallBackProps, STATUS, Step } from 'react-joyride';
+import { Joyride, STATUS } from 'react-joyride';
+import type { Step } from 'react-joyride';
 
 const TOUR_KEY = 'keepla_tour_completed';
 

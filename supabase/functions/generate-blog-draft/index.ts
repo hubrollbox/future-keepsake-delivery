@@ -17,6 +17,7 @@ interface TopicData {
   estimated_word_count: number;
   cta: string;
   notes: string;
+  slug?: string;
 }
 
 function slugify(text: string): string {
