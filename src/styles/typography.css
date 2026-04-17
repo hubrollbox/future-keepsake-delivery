@@ -6,13 +6,13 @@
  */
 
 /* ===== HEADINGS COM INTER =====
- * Use :where() to keep specificity at 0 so Tailwind utilities (text-white,
- * text-foreground, etc.) always win without needing !important.
+ * No `color` here — headings inherit from their context so they remain
+ * legible over both light and dark (photo) backgrounds. Use Tailwind
+ * utilities (text-white, text-foreground, etc.) on the element itself.
  */
 :where(h1, h2, h3, h4, h5, h6) {
   font-family: 'Inter', sans-serif;
   font-weight: 700;
-  color: var(--keepla-black);
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
