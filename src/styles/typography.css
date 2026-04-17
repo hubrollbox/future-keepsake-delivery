@@ -73,8 +73,8 @@ body, html {
   line-height: 1.6;
 }
 
-/* Corpo de texto */
-p {
+/* Corpo de texto — :where() keeps specificity at 0 so utilities can override */
+:where(p) {
   font-family: 'Inter', sans-serif;
   font-size: clamp(0.875rem, 1.2vw, 1rem);
   line-height: 1.6;
