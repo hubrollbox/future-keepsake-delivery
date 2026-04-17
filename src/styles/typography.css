@@ -5,8 +5,11 @@
  * Regra: Clareza digital (Inter) + Emoção narrativa (Georgia)
  */
 
-/* ===== HEADINGS COM INTER ===== */
-h1, h2, h3, h4, h5, h6 {
+/* ===== HEADINGS COM INTER =====
+ * Use :where() to keep specificity at 0 so Tailwind utilities (text-white,
+ * text-foreground, etc.) always win without needing !important.
+ */
+:where(h1, h2, h3, h4, h5, h6) {
   font-family: 'Inter', sans-serif;
   font-weight: 700;
   color: var(--keepla-black);
