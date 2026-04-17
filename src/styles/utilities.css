@@ -79,7 +79,7 @@
 }
 
 .image-bw-dramatic {
-  filter: grayscale(100%) contrast(1.15) brightness(0.95);
+  filter: grayscale(100%) contrast(1.25) brightness(0.7);
 }
 
 /* Card styles */
