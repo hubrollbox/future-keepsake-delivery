@@ -5,11 +5,14 @@
  * Regra: Clareza digital (Inter) + Emoção narrativa (Georgia)
  */
 
-/* ===== HEADINGS COM INTER ===== */
-h1, h2, h3, h4, h5, h6 {
+/* ===== HEADINGS COM INTER =====
+ * No `color` here — headings inherit from their context so they remain
+ * legible over both light and dark (photo) backgrounds. Use Tailwind
+ * utilities (text-white, text-foreground, etc.) on the element itself.
+ */
+:where(h1, h2, h3, h4, h5, h6) {
   font-family: 'Inter', sans-serif;
   font-weight: 700;
-  color: var(--keepla-black);
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
@@ -70,12 +73,12 @@ body, html {
   line-height: 1.6;
 }
 
-/* Corpo de texto */
-p {
+/* Corpo de texto — no `color` here so paragraphs inherit from context.
+ * Use Tailwind utilities on the element to set color explicitly. */
+:where(p) {
   font-family: 'Inter', sans-serif;
   font-size: clamp(0.875rem, 1.2vw, 1rem);
   line-height: 1.6;
-  color: var(--keepla-gray-900);
 }
 
 /* Texto emotivo com Georgia itálico */
