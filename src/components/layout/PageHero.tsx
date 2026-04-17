@@ -38,17 +38,17 @@ const PageHero = ({
       <div className="container mx-auto px-4 text-center">
         {/* Quote opcional */}
         {quote && (
-          <p className="text-white/70 font-georgia italic text-lg mb-4">
+          <p className="text-on-image-soft text-white/90 font-georgia italic text-lg mb-4">
             {quote}
           </p>
         )}
         
         {/* Título */}
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-inter font-bold text-white mb-6">
+        <h1 className="text-on-image text-4xl md:text-5xl lg:text-6xl font-inter font-bold text-white mb-6">
           {title.includes("keepla") ? (
             <>
               {title.split("keepla")[0]}
-              <span className="text-primary">keepla</span>
+              <span className="text-primary" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.9)' }}>keepla</span>
               {title.split("keepla")[1]}
             </>
           ) : (
@@ -58,7 +58,7 @@ const PageHero = ({
         
         {/* Subtítulo */}
         {subtitle && (
-          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-inter">
+          <p className="text-on-image-soft text-lg md:text-xl text-white/95 max-w-2xl mx-auto font-inter">
             {subtitle}
           </p>
         )}

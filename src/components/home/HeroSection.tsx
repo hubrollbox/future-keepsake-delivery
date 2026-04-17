@@ -26,7 +26,7 @@ const HeroSection = () => {
           className="w-full h-full object-cover object-center opacity-70 image-bw-dramatic"
           style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', minWidth: '100%', minHeight: '100%' }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/65 to-black/75"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/75 to-black/85"></div>
       </div>
 
       <div className="container mx-auto px-5 sm:px-6 text-center relative z-10">
@@ -50,18 +50,18 @@ const HeroSection = () => {
 
           {/* Main headline */}
           <motion.h1 
-            className="text-3xl sm:text-5xl md:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight tracking-tight font-display"
+            className="text-on-image text-3xl sm:text-5xl md:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight tracking-tight font-display"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
           >
             Presente no
-            <span className="block text-white italic" style={{ textShadow: '0 2px 20px hsl(351 76% 55% / 0.6)' }}>Futuro</span>
+            <span className="block text-white italic" style={{ textShadow: '0 2px 20px hsl(351 76% 55% / 0.6), 0 2px 8px rgba(0,0,0,0.9)' }}>Futuro</span>
           </motion.h1>
 
           {/* Subtitle */}
           <motion.p 
-            className="text-base sm:text-lg md:text-xl text-white drop-shadow-md mb-6 sm:mb-8 mx-auto font-medium max-w-xl md:max-w-2xl leading-relaxed"
+            className="text-on-image-soft text-base sm:text-lg md:text-xl text-white mb-6 sm:mb-8 mx-auto font-medium max-w-xl md:max-w-2xl leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
@@ -76,7 +76,7 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
           >
-            <p className="slogan text-white font-medium drop-shadow-md">
+            <p className="slogan text-on-image-soft text-white font-medium">
               "Uma carta para o futuro é uma ponte entre quem somos hoje e quem seremos amanhã."
             </p>
           </motion.div>
