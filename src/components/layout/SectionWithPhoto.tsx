@@ -72,7 +72,7 @@ const SectionWithPhoto = ({
           style={getImageStyle()}
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
       </div>
       
       {/* Content */}
