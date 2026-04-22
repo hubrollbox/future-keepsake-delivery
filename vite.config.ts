@@ -38,11 +38,12 @@ export default defineConfig(({ mode }) => ({
         // '@supabase/supabase-js'
       ],
       output: {
-        manualChunks(id) {
+        manualChunks: (id: string) => {
           if (id.includes('react-dom') || id.includes('react/')) return 'react';
           if (id.includes('@supabase/ssr')) return 'supabase';
           if (id.includes('@radix-ui/')) return 'ui';
           if (id.includes('react-router-dom') || id.includes('date-fns')) return 'utils';
+          return undefined;
         },
         chunkFileNames: 'assets/[name]-[hash].js',
         entryFileNames: 'assets/[name]-[hash].js',
