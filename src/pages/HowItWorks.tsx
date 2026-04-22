@@ -8,11 +8,10 @@ import HowItWorksFAQ from "@/components/how-it-works/HowItWorksFAQ";
 import SecurityGuarantees from "@/components/how-it-works/SecurityGuarantees";
 import HowItWorksCTA from "@/components/how-it-works/HowItWorksCTA";
 import SEOHead from "@/components/SEOHead";
-import PhotoBackground from "@/components/layout/PhotoBackground";
+import HowItWorksHero from "@/components/how-it-works/HowItWorksHero";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { motion, Variants } from "framer-motion";
-import capsulaImage from "@/assets/capsula-escrita.jpg";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -57,74 +56,20 @@ const HowItWorks = () => {
       />
       <Navigation />
 
-      {/* Hero com fundo fotográfico */}
-      <PhotoBackground 
-        image={capsulaImage} 
-        alt="Pessoa a escrever memórias"
-        overlay="gradient"
-        className="min-h-[60vh] flex items-center"
-      >
-        <div className="container mx-auto px-4 py-20 text-center">
-          <motion.div 
-            className="flex justify-center mb-6"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
+      {/* Hero Editorial */}
+      <HowItWorksHero />
+      <div className="bg-white border-b border-black/10">
+        <div className="container mx-auto px-6 md:px-12 py-4">
+          <Button 
+            variant="ghost" 
+            onClick={() => navigate('/')} 
+            className="text-black/70 hover:text-[#E63946] hover:bg-transparent px-0"
           >
-            <img 
-              src="/keepla-logo-white.png" 
-              alt="keepla Logo" 
-              style={{width: 80, height: 80}} 
-              loading="eager"
-              decoding="async"
-              onError={(e) => { e.currentTarget.src = '/keepla-logo-red.png'; }}
-            />
-          </motion.div>
-          
-          <motion.p 
-            className="text-white/70 font-georgia italic text-lg mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            "Transformamos momentos em memórias eternas"
-          </motion.p>
-          
-          <motion.h1 
-            className="text-4xl md:text-6xl font-inter font-bold text-white mb-6 leading-tight"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            Como funciona a{" "}
-            <span className="text-primary font-georgia italic">keepla</span>
-          </motion.h1>
-          
-          <motion.p 
-            className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-inter"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            Somos o teu <strong className="text-primary">Guardião do Tempo</strong>.
-          </motion.p>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <Button 
-              variant="ghost" 
-              onClick={() => navigate('/')} 
-              className="mt-8 text-white hover:text-primary hover:bg-background/10"
-            >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              <span>Voltar ao Início</span>
-            </Button>
-          </motion.div>
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            <span>Voltar ao Início</span>
+          </Button>
         </div>
-      </PhotoBackground>
+      </div>
 
       <motion.main 
         className={`bg-background transition-opacity duration-300 ${isNavigating ? 'opacity-50' : 'opacity-100'}`}

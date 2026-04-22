@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import SEOHead from "@/components/SEOHead";
-import PhotoBackground from "@/components/layout/PhotoBackground";
+import EditorialHero from "@/components/layout/EditorialHero";
 import SectionWithPhoto from "@/components/layout/SectionWithPhoto";
 import { motion, Variants } from "framer-motion";
 import maoBebe from "@/assets/mao-bebe.jpg";
@@ -64,77 +64,27 @@ const About = () => {
       />
       <Navigation />
 
-      {/* Hero com fundo fotográfico */}
-      <PhotoBackground 
-        image={ruaPalacioImage} 
-        alt="Rua de Lisboa - herança e memória"
-        overlay="gradient"
-        className="min-h-[60vh] flex items-center"
+      {/* Hero Editorial */}
+      <EditorialHero
+        eyebrow="Sobre a Keepla"
+        variant="dark"
+        size="medium"
+        title={
+          <>
+            Somos a <span className="italic">keepla.</span>
+          </>
+        }
+        subtitle="Uma plataforma dedicada à preservação de memória, sensibilidade e presença."
       >
-        <div className="container mx-auto px-4 py-20 text-center">
-          <motion.div 
-            className="flex justify-center mb-8"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-          >
-            <img 
-              src="/keepla-logo-white.png" 
-              alt="Logo" 
-              width={80} 
-              height={80} 
-              className="drop-shadow-lg" 
-              loading="eager" 
-              decoding="async" 
-              onError={(e) => { e.currentTarget.src = '/keepla-logo-red.png'; }}
-            />
-          </motion.div>
-          
-          <motion.p 
-            className="text-white/70 font-georgia italic text-lg mb-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            Uma plataforma dedicada à preservação de memória
-          </motion.p>
-          
-          <motion.h1 
-            className="text-4xl md:text-6xl font-inter font-bold text-white mb-6 leading-tight"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            Somos a{" "}
-            <span className="text-primary font-georgia italic">keepla</span>
-          </motion.h1>
-          
-          <motion.p 
-            className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-inter"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            Dedicados à preservação de{" "}
-            <span className="text-primary font-semibold">memória, sensibilidade e presença.</span>
-          </motion.p>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            <Button 
-              variant="ghost" 
-              onClick={() => navigate('/')} 
-              className="mt-8 text-white hover:text-primary hover:bg-background/10"
-            >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              <span>Voltar ao Início</span>
-            </Button>
-          </motion.div>
-        </div>
-      </PhotoBackground>
+        <Button 
+          variant="ghost" 
+          onClick={() => navigate('/')} 
+          className="text-white hover:text-[#E63946] hover:bg-white/5 px-0"
+        >
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          <span>Voltar ao Início</span>
+        </Button>
+      </EditorialHero>
 
       <main className="bg-background">
         <div className="container mx-auto px-4 py-16">
