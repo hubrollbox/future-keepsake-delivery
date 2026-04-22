@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import EditorialHero from "@/components/layout/EditorialHero";
+import ImageBlock from "@/components/layout/ImageBlock";
 import heroImage from "@/assets/carta-escrita.jpg";
-import { motion } from "framer-motion";
 
 const HeroSection = () => {
   const navigate = useNavigate();
@@ -17,129 +18,45 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="home-hero relative min-h-[100svh] flex items-center justify-center overflow-hidden">
-      {/* Background image visível com filtro ligeiro */}
-      <div className="absolute inset-0 overflow-hidden">
-        <img 
-          src={heroImage} 
-          alt="Mãos a segurar uma carta – memória Keepla" 
-          className="w-full h-full object-cover object-center opacity-70 image-bw-dramatic"
-          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', minWidth: '100%', minHeight: '100%' }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/75 to-black/85"></div>
-      </div>
-
-      <div className="container mx-auto px-5 sm:px-6 text-center relative z-10">
-        <div className="max-w-4xl mx-auto">
-          {/* Logo Keepla oficial */}
-          <motion.div 
-            className="mb-6 sm:mb-8 mt-12 sm:mt-16"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          >
-            <img 
-               src="/keepla-logo-white.png?v=3" 
-               alt="Keepla" 
-               className="mx-auto w-20 h-20 sm:w-28 sm:h-28 object-contain"
-               loading="eager"
-               decoding="async"
-               onError={(e) => { e.currentTarget.src = '/keepla-logo-white.png'; }}
-            />
-          </motion.div>
-
-          {/* Main headline */}
-          <motion.h1 
-            className="text-on-image text-3xl sm:text-5xl md:text-7xl font-bold text-white mb-4 sm:mb-6 leading-tight tracking-tight font-display"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          >
-            Presente no
-            <span className="block text-white italic" style={{ textShadow: '0 2px 20px hsl(351 76% 55% / 0.6), 0 2px 8px rgba(0,0,0,0.9)' }}>Futuro</span>
-          </motion.h1>
-
-          {/* Subtitle */}
-          <motion.p 
-            className="text-on-image-soft text-base sm:text-lg md:text-xl text-white mb-6 sm:mb-8 mx-auto font-medium max-w-xl md:max-w-2xl leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-          >
-            Cria cápsulas do tempo que guardam as tuas palavras, emoções e memórias para serem entregues no momento perfeito.
-          </motion.p>
-
-          {/* Value proposition */}
-          <motion.div 
-            className="mb-8 sm:mb-12 text-sm sm:text-lg max-w-xl md:max-w-3xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
-          >
-            <p className="slogan text-on-image-soft text-white font-medium">
-              "Uma carta para o futuro é uma ponte entre quem somos hoje e quem seremos amanhã."
-            </p>
-          </motion.div>
-
-          {/* CTA Buttons */}
-          <motion.div 
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-10 sm:mb-16 px-2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
-          >
-            <Button 
-              onClick={handleStartJourney}
-              size="lg" 
-              className="cta w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 bg-primary hover:bg-primary/90 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 rounded-lg font-semibold"
-            >
-              {user ? "Ir para Dashboard" : "Começar a minha jornada"}
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 border-2 border-white text-white bg-transparent hover:bg-background/20 hover:text-white transition-all duration-300 rounded-lg font-semibold"
-              onClick={() => navigate("/how-it-works")}
-            >
-              Como funciona
-            </Button>
-          </motion.div>
-
-          {/* Social proof */}
-          <motion.div 
-            className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-3 sm:gap-8 text-xs sm:text-sm text-white"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.8, ease: "easeOut" }}
-          >
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 bg-primary rounded-full"></span>
-              <span>Entregas seguras</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 bg-primary rounded-full"></span>
-              <span>Memórias preservadas</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 bg-primary rounded-full"></span>
-              <span>Momentos eternizados</span>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <motion.div 
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 1, ease: "easeOut" }}
+    <>
+      <EditorialHero
+        eyebrow="Keepla — Guardiões do tempo"
+        size="large"
+        variant="dark"
+        title={
+          <>
+            Guarda o que <br />
+            o tempo <br />
+            <span className="italic">não pode levar.</span>
+          </>
+        }
+        subtitle="Mensagens, cartas e cápsulas para o futuro. Cria memórias que serão entregues no momento certo — porque há palavras que merecem chegar amanhã."
       >
-        <div className="w-6 h-10 border-2 border-primary rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-primary rounded-full mt-2 animate-pulse"></div>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Button
+            onClick={handleStartJourney}
+            size="lg"
+            className="bg-[#E63946] hover:bg-[#c92d3a] text-white px-8 py-6 text-base font-inter font-semibold rounded-none shadow-none transition-colors"
+          >
+            {user ? "Ir para o Dashboard" : "Criar memória"}
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={() => navigate("/how-it-works")}
+            className="border-2 border-white text-white bg-transparent hover:bg-white hover:text-black px-8 py-6 text-base font-inter font-semibold rounded-none transition-colors"
+          >
+            Ver como funciona
+          </Button>
         </div>
-      </motion.div>
-    </section>
+      </EditorialHero>
+
+      <ImageBlock
+        image={heroImage}
+        alt="Mãos a segurar uma carta — uma memória Keepla"
+        caption="Uma carta para o futuro é uma ponte entre quem somos hoje e quem seremos amanhã."
+      />
+    </>
   );
 };
 
