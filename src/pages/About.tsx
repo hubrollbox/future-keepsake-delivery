@@ -8,7 +8,7 @@ import EditorialHero from "@/components/layout/EditorialHero";
 import SectionWithPhoto from "@/components/layout/SectionWithPhoto";
 import { motion, Variants } from "framer-motion";
 import maoBebe from "@/assets/mao-bebe.jpg";
-import ruaPalacioImage from "@/assets/rua-palacio.jpg";
+
 import capsulaImage from "@/assets/capsula-escrita.jpg";
 import casalAntigoImage from "@/assets/casal-antigo.jpg";
 
