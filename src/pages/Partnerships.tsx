@@ -3,12 +3,11 @@ import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import PhotoBackground from "@/components/layout/PhotoBackground";
+import EditorialHero from "@/components/layout/EditorialHero";
 import PartnershipTypes from "@/components/partnerships/PartnershipTypes";
 import PartnershipBenefits from "@/components/partnerships/PartnershipBenefits";
 import PartnershipProcess from "@/components/partnerships/PartnershipProcess";
 import PartnershipCTA from "@/components/partnerships/PartnershipCTA";
-import bicicletaImage from "@/assets/bicicleta-marginal.jpg";
 
 const Partnerships = () => {
   const navigate = useNavigate();
@@ -17,33 +16,27 @@ const Partnerships = () => {
     <div className="min-h-screen bg-foreground">
       <Navigation />
 
-      {/* Hero Section with Photo Background */}
-      <PhotoBackground 
-        image={bicicletaImage} 
-        alt="Bicicleta na marginal"
-        overlay="dark"
-        className="min-h-[50vh] flex items-center"
+      {/* Hero Editorial */}
+      <EditorialHero
+        eyebrow="Parcerias"
+        variant="dark"
+        size="medium"
+        title={
+          <>
+            Parcerias <span className="italic">Keepla.</span>
+          </>
+        }
+        subtitle="Junta-te à nossa rede e ajuda-nos a transformar a forma como as pessoas experienciam o tempo e as memórias."
       >
-        <div className="container mx-auto px-4 py-20 text-center">
-          <p className="text-white/70 font-georgia italic text-lg mb-4">
-            Juntos criamos memórias inesquecíveis
-          </p>
-          <h1 className="text-4xl md:text-6xl font-inter font-bold text-white mb-6">
-            Parcerias <span className="text-primary">Keepla</span>
-          </h1>
-          <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-inter">
-            Colabora connosco para oferecer experiências únicas aos teus clientes.
-          </p>
-          <Button 
-            variant="ghost" 
-            onClick={() => navigate('/')} 
-            className="mt-8 text-white hover:text-primary hover:bg-background/10"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            <span>Voltar ao Início</span>
-          </Button>
-        </div>
-      </PhotoBackground>
+        <Button 
+          variant="ghost" 
+          onClick={() => navigate('/')} 
+          className="text-white hover:text-[#E63946] hover:bg-white/5 px-0"
+        >
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          <span>Voltar ao Início</span>
+        </Button>
+      </EditorialHero>
 
       <main className="bg-background">
         <div className="container mx-auto px-4 py-16">
