@@ -177,7 +177,7 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className={`md:hidden border-t py-4 ${isTransparent ? "border-white/20 bg-black/80 -mx-4 px-4" : "border-border"}`}>
+          <div className={`lg:hidden border-t py-4 ${isTransparent ? "border-white/20 bg-black/80 -mx-4 px-4" : "border-border"}`}>
             <div className="flex flex-col space-y-2">
               {menuItems.map((item) => (
                 <Link
