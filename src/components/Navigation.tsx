@@ -84,12 +84,12 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-6">
             {menuItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
-                className={`transition-colors font-semibold ${
+                className={`transition-colors font-semibold whitespace-nowrap text-sm ${
                   isTransparent
                     ? "text-white hover:text-primary"
                     : "text-foreground hover:text-primary"
@@ -105,8 +105,8 @@ const Navigation = () => {
             <Button 
               variant="brand-outline" 
               onClick={() => navigate("/blog")}
-              className={`hidden md:flex ${
-                isTransparent ? "border-white text-white hover:bg-white/10" : "border-border text-foreground"
+              className={`hidden lg:flex whitespace-nowrap ${
+                isTransparent ? "border-white text-white hover:bg-white/10" : "border-foreground text-foreground hover:bg-foreground hover:text-background"
               }`}
             >
               Caderno
@@ -167,7 +167,7 @@ const Navigation = () => {
             <Button
               variant="ghost"
               size="sm"
-              className={`md:hidden touch-target ${isTransparent ? "text-white hover:bg-white/10" : ""}`}
+              className={`lg:hidden touch-target ${isTransparent ? "text-white hover:bg-white/10" : ""}`}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -177,7 +177,7 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className={`md:hidden border-t py-4 ${isTransparent ? "border-white/20 bg-black/80 -mx-4 px-4" : "border-border"}`}>
+          <div className={`lg:hidden border-t py-4 ${isTransparent ? "border-white/20 bg-black/80 -mx-4 px-4" : "border-border"}`}>
             <div className="flex flex-col space-y-2">
               {menuItems.map((item) => (
                 <Link
