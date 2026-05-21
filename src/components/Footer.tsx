@@ -14,7 +14,7 @@ const Footer = () => {
             <div className="col-span-2">
               <div className="flex items-center justify-start mb-6">
                 <img 
-                   src="/keepla-logo-white.png?v=3" 
+                   src="/keepla-logo-red.png?v=3" 
                    alt="Logo Monocromático" 
                    className="w-20 h-20 sm:w-[120px] sm:h-[120px]"
                    loading="eager" 
