@@ -92,7 +92,9 @@ serve(async (req) => {
       )
     }
 
-    const { message, keywords, userId }: SuggestionRequest = await req.json()
+    const { message, keywords }: SuggestionRequest = await req.json()
+    // SECURITY: Always use the server-verified authenticated user id, never trust client-supplied userId
+    const userId = user.id
 
     // Verificar quota do usuário
     const { data: usage, error: usageError } = await supabaseClient
@@ -100,7 +102,7 @@ serve(async (req) => {
       .select('*')
       .eq('user_id', userId)
       .eq('date', new Date().toISOString().split('T')[0])
-      .single()
+      .maybeSingle()
 
     if (usageError && usageError.code !== 'PGRST116') {
       throw usageError
@@ -111,7 +113,7 @@ serve(async (req) => {
       .from('users')
       .select('subscription_tier')
       .eq('id', userId)
-      .single()
+      .maybeSingle()
 
     const tier = userProfile?.subscription_tier || 'free'
     const limits = {
