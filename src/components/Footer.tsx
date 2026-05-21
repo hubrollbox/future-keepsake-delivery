@@ -26,9 +26,9 @@ const Footer = () => {
                 Guardamos emoções para o tempo certo. Cada entrega é uma ponte entre o presente e o futuro, 
                 criada com sensibilidade e amor.
               </p>
-              <div className="flex items-center justify-center md:justify-start space-x-2 text-primary mb-4">
+              <div className="flex items-center justify-center md:justify-start space-x-2 mb-4 text-background/70">
                 <span className="text-sm">Desenvolvido com</span>
-                <Heart className="h-4 w-4 fill-current" />
+                <Heart className="h-4 w-4 fill-[hsl(var(--keepla-red))] text-[hsl(var(--keepla-red))]" />
                 <span className="text-sm">em Portugal</span>
               </div>
             </div>
@@ -62,7 +62,7 @@ const Footer = () => {
                 <li>
                   <button 
                     onClick={() => {window.scrollTo(0,0); navigate('/terms')}}
-                    className="text-background/60 hover:text-primary transition-colors duration-200"
+                    className="text-background/70 hover:text-primary hover:underline underline-offset-4 transition-colors duration-200"
                   >
                     Termos e Condições
                   </button>
@@ -70,7 +70,7 @@ const Footer = () => {
                 <li>
                   <button 
                     onClick={() => {window.scrollTo(0,0); navigate('/privacy')}}
-                    className="text-background/60 hover:text-primary transition-colors duration-200"
+                    className="text-background/70 hover:text-primary hover:underline underline-offset-4 transition-colors duration-200"
                   >
                     Política de Privacidade
                   </button>
@@ -78,7 +78,7 @@ const Footer = () => {
                 <li>
                   <button 
                     onClick={() => {window.scrollTo(0,0); navigate('/partnerships')}}
-                    className="text-background/60 hover:text-primary transition-colors duration-200"
+                    className="text-background/70 hover:text-primary hover:underline underline-offset-4 transition-colors duration-200"
                   >
                     Parcerias
                   </button>
@@ -86,7 +86,7 @@ const Footer = () => {
                 <li>
                   <button 
                     onClick={() => {window.scrollTo(0,0); navigate('/faq')}}
-                    className="text-background/60 hover:text-primary transition-colors duration-200"
+                    className="text-background/70 hover:text-primary hover:underline underline-offset-4 transition-colors duration-200"
                   >
                     Suporte
                   </button>
