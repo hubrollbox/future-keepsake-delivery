@@ -84,12 +84,12 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-6">
             {menuItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
-                className={`transition-colors font-semibold ${
+                className={`transition-colors font-semibold whitespace-nowrap text-sm ${
                   isTransparent
                     ? "text-white hover:text-primary"
                     : "text-foreground hover:text-primary"
