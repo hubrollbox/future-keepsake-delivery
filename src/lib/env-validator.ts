@@ -36,11 +36,8 @@ const requiredEnvVars: EnvVariable[] = [
     required: false,
     description: 'ID de medição do Google Analytics'
   },
-  {
-    name: 'VITE_RESEND_API_KEY',
-    required: false,
-    description: 'Chave da API Resend para envio de emails'
-  }
+  // NOTE: RESEND_API_KEY is a server-only secret used in Supabase Edge Functions.
+  // It must NEVER be prefixed with VITE_ (which would expose it in the client bundle).
 ];
 
 /**

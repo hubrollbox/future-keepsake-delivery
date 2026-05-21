@@ -58,7 +58,36 @@ serve(async (req) => {
   }
 
   try {
+    // SECURITY: require authenticated user, and verify they own the keepsake
+    const authHeader = req.headers.get('Authorization');
+    const cronSecret = Deno.env.get('CRON_SECRET');
+    const providedCron = req.headers.get('x-cron-secret');
+    const isCron = !!(cronSecret && providedCron && providedCron === cronSecret);
+
+    if (!isCron && !authHeader?.startsWith('Bearer ')) {
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const supabaseClient = createClient(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!)
+
+    let authedUserId: string | null = null;
+    if (!isCron) {
+      const authClient = createClient(SUPABASE_URL!, Deno.env.get('SUPABASE_ANON_KEY') ?? '', {
+        global: { headers: { Authorization: authHeader! } },
+      });
+      const token = authHeader!.replace('Bearer ', '');
+      const { data: u, error: uErr } = await authClient.auth.getUser(token);
+      if (uErr || !u?.user) {
+        return new Response(
+          JSON.stringify({ error: 'Unauthorized' }),
+          { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      authedUserId = u.user.id;
+    }
 
     const { keepsake_id, recipient_email, recipient_name, sender_name, title, message_content, delivery_date }: KeepsakeEmailData = await req.json()
 
@@ -68,6 +97,21 @@ serve(async (req) => {
         JSON.stringify({ error: 'Missing required fields' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       )
+    }
+
+    // Verify the keepsake belongs to the authenticated caller (skip for cron)
+    if (!isCron) {
+      const { data: ks, error: ksErr } = await supabaseClient
+        .from('keepsakes')
+        .select('id, user_id')
+        .eq('id', keepsake_id)
+        .maybeSingle();
+      if (ksErr || !ks || ks.user_id !== authedUserId) {
+        return new Response(
+          JSON.stringify({ error: 'Forbidden' }),
+          { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
     }
 
     // Sanitize user inputs to prevent XSS

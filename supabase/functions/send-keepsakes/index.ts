@@ -661,6 +661,16 @@ Deno.serve(async (req) => {
       return new Response(null, { headers: corsHeaders })
     }
     
+    // SECURITY: require cron secret for this scheduled mass-delivery endpoint
+    const cronSecret = Deno.env.get('CRON_SECRET');
+    const providedCron = req.headers.get('x-cron-secret');
+    if (!cronSecret || providedCron !== cronSecret) {
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized', requestId }),
+        { status: 401, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      );
+    }
+
     // Verificar se a requisição é um POST
     if (req.method === 'POST') {
       try {
