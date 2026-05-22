@@ -46,6 +46,8 @@ import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import LandingPage from "@/pages/LandingPage";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import Unauthorized from "@/pages/Unauthorized";
+import UpdatePassword from "@/pages/UpdatePassword";
 
 const queryClient = new QueryClient();
 
@@ -94,6 +96,11 @@ function App() {
                   {/* Legal pages */}
                   <Route path="/terms" element={<TermsConditions />} />
                   <Route path="/privacy" element={<PrivacyPolicy />} />
+
+                  {/* Auth utility pages */}
+                  <Route path="/unauthorized" element={<Unauthorized />} />
+                  <Route path="/update-password" element={<UpdatePassword />} />
+                  <Route path="/reset-password" element={<UpdatePassword />} />
                   
                   {/* 404 - deve ser a última rota */}
                   <Route path="*" element={<NotFound />} />

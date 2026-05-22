@@ -80,7 +80,7 @@ const EditorialHero = ({
             <motion.div
               className={cn(
                 "text-lg md:text-xl font-inter leading-relaxed max-w-2xl mb-10",
-                isDark ? "text-white/80" : "text-black/75"
+                isDark ? "text-white/95" : "text-black/85"
               )}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}

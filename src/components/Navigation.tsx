@@ -109,7 +109,7 @@ const Navigation = () => {
                 isTransparent ? "border-white text-white hover:bg-white/10" : "border-foreground text-foreground hover:bg-foreground hover:text-background"
               }`}
             >
-              Caderno
+              Blog
             </Button>
 
             {user ? (
@@ -158,8 +158,13 @@ const Navigation = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button variant="brand" onClick={() => navigate(user ? "/create-keepsake" : "/login")}>
-                Criar Cápsula
+              <Button
+                variant="brand"
+                onClick={() => navigate("/login")}
+                className="hidden sm:inline-flex whitespace-nowrap"
+                title="Entra ou regista-te para criar a tua cápsula"
+              >
+                Começar a criar
               </Button>
             )}
 
@@ -202,8 +207,22 @@ const Navigation = () => {
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
-                Caderno
+                Blog
               </Link>
+
+              {/* CTA principal no mobile */}
+              <div className="pt-3">
+                <Button
+                  variant="brand"
+                  className="w-full"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    navigate(user ? "/create-keepsake" : "/login");
+                  }}
+                >
+                  {user ? "Criar Cápsula" : "Começar a criar"}
+                </Button>
+              </div>
             </div>
           </div>
         )}
