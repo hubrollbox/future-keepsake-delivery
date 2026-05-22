@@ -66,7 +66,7 @@ const Navigation = () => {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isTransparent
           ? "bg-transparent shadow-none border-b border-transparent"
-          : "bg-background shadow-sm border-b border-border"
+          : "bg-background/95 backdrop-blur-md shadow-sm border-b border-border"
       }`}
     >
       <div className="container mx-auto px-4">
@@ -182,7 +182,7 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className={`lg:hidden border-t py-4 ${isTransparent ? "border-white/20 bg-black/80 -mx-4 px-4" : "border-border"}`}>
+          <div className="lg:hidden border-t border-border bg-background -mx-4 px-4 py-4 shadow-lg">
             <div className="flex flex-col space-y-2">
               {menuItems.map((item) => (
                 <Link
