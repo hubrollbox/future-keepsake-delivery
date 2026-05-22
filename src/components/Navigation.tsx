@@ -188,11 +188,7 @@ const Navigation = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`transition-colors font-semibold px-4 py-3 touch-target rounded-md ${
-                    isTransparent
-                      ? "text-white hover:text-primary hover:bg-white/10"
-                      : "text-foreground hover:text-primary hover:bg-muted"
-                  }`}
+                  className="transition-colors font-semibold px-4 py-3 touch-target rounded-md text-foreground hover:text-primary hover:bg-muted"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
@@ -200,11 +196,7 @@ const Navigation = () => {
               ))}
               <Link
                 to="/blog"
-                className={`transition-colors font-semibold px-4 py-3 touch-target rounded-md ${
-                  isTransparent
-                    ? "text-white hover:text-primary hover:bg-white/10"
-                    : "text-foreground hover:text-primary hover:bg-muted"
-                }`}
+                className="transition-colors font-semibold px-4 py-3 touch-target rounded-md text-foreground hover:text-primary hover:bg-muted"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Blog
