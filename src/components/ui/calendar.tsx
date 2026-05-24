@@ -1,12 +1,10 @@
-
 import * as React from "react";
-import {  } from "lucide-react";
 import { DayPicker } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
-export type CalendarProps = Omit<React.ComponentProps<typeof DayPicker>, "initialFocus"> & {
+export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
   initialFocus?: boolean;
 };
 
@@ -16,12 +14,12 @@ function Calendar({
   showOutsideDays = true,
   initialFocus: _initialFocus,
   ...props
-}: CalendarProps) {
+}: any) {
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
       className={cn("p-3 pointer-events-auto bg-popover text-popover-foreground", className)}
-      classNames={({
+      classNames={{
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
         caption: "flex justify-center pt-1 relative items-center",
@@ -54,7 +52,7 @@ function Calendar({
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",
         ...classNames,
-      } as any)}
+      } as any}
       {...props}
     />
   );
