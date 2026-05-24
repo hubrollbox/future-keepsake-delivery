@@ -6,12 +6,15 @@ import { DayPicker } from "react-day-picker";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>;
+export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
+  initialFocus?: boolean;
+};
 
 function Calendar({
   className,
   classNames,
   showOutsideDays = true,
+  initialFocus: _initialFocus,
   ...props
 }: CalendarProps) {
   return (
@@ -19,6 +22,8 @@ function Calendar({
       showOutsideDays={showOutsideDays}
       className={cn("p-3 pointer-events-auto bg-popover text-popover-foreground", className)}
       classNames={{
+        // Cast as any to support both react-day-picker v8 and v9 class name keys
+        ...({
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
         caption: "flex justify-center pt-1 relative items-center",
@@ -51,6 +56,7 @@ function Calendar({
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",
         ...classNames,
+      } as any),
       }}
       {...props}
     />
