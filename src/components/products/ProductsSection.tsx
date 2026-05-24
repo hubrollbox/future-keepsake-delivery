@@ -61,27 +61,28 @@ const ProductsSection = () => {
 
   const ProductCard = ({ product }: { product: Product }) => {
     return (
-      <Card className="h-full border-border/20 hover:border-primary/40 transition-all duration-300 hover:shadow-keepla-sm bg-card">
-        <CardHeader className="pb-3">
-          <div className="flex items-start justify-between">
-            <div className="flex-1">
-              <CardTitle className="text-lg text-foreground font-serif">
+      <Card className="h-full border-border/20 hover:border-primary/40 transition-all duration-300 hover:shadow-keepla-sm bg-card flex flex-col">
+        <CardHeader className="pb-2">
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex items-center gap-2 flex-1 min-w-0">
+              {product.icon && (
+                <span className="text-xl shrink-0" aria-hidden="true">{product.icon}</span>
+              )}
+              <CardTitle className="text-base text-foreground font-serif truncate">
                 {product.name}
               </CardTitle>
             </div>
-            <div className="text-right ml-4">
-              <div className="font-semibold text-foreground">
-                {product.price === 0 ? 'Grátis' : `€${product.price.toFixed(2)}`}
-              </div>
+            <div className="font-semibold text-foreground whitespace-nowrap">
+              {product.price === 0 ? 'Grátis' : `€${product.price.toFixed(2)}`}
             </div>
           </div>
         </CardHeader>
-        <CardContent className="pt-0 space-y-4">
-          <p className="text-sm text-foreground mb-3">
+        <CardContent className="pt-0 flex flex-col flex-1">
+          <p className="text-sm text-foreground/80 mb-3 line-clamp-2">
             {product.description}
           </p>
           {product.poetry && (
-            <p className="text-sm italic text-primary font-serif mb-4">
+            <p className="text-xs italic text-primary/80 font-serif mb-4 line-clamp-1">
               "{product.poetry}"
             </p>
           )}
@@ -89,10 +90,10 @@ const ProductsSection = () => {
             onClick={() => handleAddToCart(product)}
             variant="brand"
             size="sm"
-            className="w-full"
+            className="w-full mt-auto"
           >
             <ShoppingCart className="h-4 w-4 mr-2" />
-            Adicionar ao Carrinho
+            Adicionar
           </Button>
         </CardContent>
       </Card>
