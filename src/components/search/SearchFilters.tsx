@@ -233,7 +233,7 @@ const SearchFilters = ({
                     <CalendarComponent
                       mode="single"
                       selected={filters.dateFrom}
-                      onSelect={(date) => updateFilter("dateFrom", date)}
+                      onSelect={(date: Date | undefined) => updateFilter("dateFrom", date)}
                       initialFocus
                     />
                   </div>
@@ -259,7 +259,7 @@ const SearchFilters = ({
                     <CalendarComponent
                       mode="single"
                       selected={filters.dateTo}
-                      onSelect={(date) => updateFilter("dateTo", date)}
+                      onSelect={(date: Date | undefined) => updateFilter("dateTo", date)}
                       initialFocus
                     />
                   </div>
