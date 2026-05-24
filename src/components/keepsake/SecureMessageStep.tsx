@@ -150,7 +150,7 @@ const SecureMessageStep: React.FC<SecureMessageStepProps> = ({
                 mode="single"
                 selected={selectedDate}
                 onSelect={handleDateSelect}
-                disabled={(date) => date < minDate}
+                disabled={(date: Date) => date < minDate}
                 initialFocus
               />
             </PopoverContent>
