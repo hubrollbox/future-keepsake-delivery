@@ -96,7 +96,7 @@ const MessageStep: React.FC<MessageStepProps> = ({ form, nextStep, prevStep }) =
               mode="single"
               selected={selectedDate}
               onSelect={handleDateSelect}
-              disabled={(date) => date < tomorrow}
+              disabled={(date: Date) => date < tomorrow}
               initialFocus
               className="pointer-events-auto"
             />
