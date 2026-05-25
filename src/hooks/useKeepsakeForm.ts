@@ -290,6 +290,15 @@ export const useKeepsakeForm = () => {
       } 
       */
 
+      // Enviar email de confirmação ao criador (não bloquear em caso de falha)
+      try {
+        await supabase.functions.invoke('send-keepsake-confirmation', {
+          body: { keepsake_id: keepsakeData.id },
+        });
+      } catch (e) {
+        console.warn('Confirmation email failed (non-blocking):', e);
+      }
+
       toast({
         title: 'Cápsula criada com sucesso!',
         description: 'A sua cápsula do tempo foi criada e será entregue na data especificada.',
