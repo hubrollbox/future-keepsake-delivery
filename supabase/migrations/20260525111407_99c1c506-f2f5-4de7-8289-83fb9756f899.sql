@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS payments_user_delete ON public.payments;
