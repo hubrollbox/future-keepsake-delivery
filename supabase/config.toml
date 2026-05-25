@@ -122,5 +122,13 @@ verify_jwt = false
 enabled = true
 verify_jwt = false
 
+[functions.send-keepsake-reminders]
+enabled = true
+verify_jwt = false
+
+[functions.send-keepsake-confirmation]
+enabled = true
+verify_jwt = true
+
 [analytics]
 enabled = false
