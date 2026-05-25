@@ -441,6 +441,8 @@ export type Database = {
       keepsakes: {
         Row: {
           created_at: string | null
+          creator_confirmation_sent_at: string | null
+          creator_delivery_notice_sent_at: string | null
           delivery_date: string
           id: string
           is_public: boolean | null
@@ -448,6 +450,7 @@ export type Database = {
           message_content: string | null
           message_type: string
           payment_status: string | null
+          reminder_1day_sent_at: string | null
           sent_at: string | null
           status: string | null
           title: string
@@ -458,6 +461,8 @@ export type Database = {
         }
         Insert: {
           created_at?: string | null
+          creator_confirmation_sent_at?: string | null
+          creator_delivery_notice_sent_at?: string | null
           delivery_date: string
           id?: string
           is_public?: boolean | null
@@ -465,6 +470,7 @@ export type Database = {
           message_content?: string | null
           message_type?: string
           payment_status?: string | null
+          reminder_1day_sent_at?: string | null
           sent_at?: string | null
           status?: string | null
           title: string
@@ -475,6 +481,8 @@ export type Database = {
         }
         Update: {
           created_at?: string | null
+          creator_confirmation_sent_at?: string | null
+          creator_delivery_notice_sent_at?: string | null
           delivery_date?: string
           id?: string
           is_public?: boolean | null
@@ -482,6 +490,7 @@ export type Database = {
           message_content?: string | null
           message_type?: string
           payment_status?: string | null
+          reminder_1day_sent_at?: string | null
           sent_at?: string | null
           status?: string | null
           title?: string
