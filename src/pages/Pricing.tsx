@@ -229,7 +229,10 @@ function Pricing() {
                   </Button>
                 </CardContent>
               </Card>
-              </div>
+        </div>
+
+        <ImageBlock image={sealedMemory} alt="Cápsula selada" caption="O preço de uma memória? O tempo que lhe dedicas." />
+
             ))}
           </div>
         </div>
@@ -271,7 +274,10 @@ function Pricing() {
                   </CardContent>
                 </Card>
               ))}
-            </div>
+          </div>
+
+          <ImageBlock image={writingMemories} alt="Escrever memórias à mão" caption="Cada pergunta tem resposta. Cada memória, o seu lugar." />
+
           </div>
 
           {/* FAQ Section */}
@@ -296,7 +302,10 @@ function Pricing() {
                   </p>
                 </details>
               ))}
-            </div>
+          </div>
+
+          <ImageBlock image={cartaEscrita} alt="Carta a ser escrita" caption="A tua próxima memória começa com uma palavra." />
+
           </div>
 
           {/* Final CTA */}
