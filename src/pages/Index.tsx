@@ -10,8 +10,15 @@ import TrustSection from "@/components/home/TrustSection";
 import FinalCTA from "@/components/home/FinalCTA";
 import OnboardingModal from "@/components/OnboardingModal";
 import SEOHead from "@/components/SEOHead";
+import ImageBlock from "@/components/layout/ImageBlock";
 import { Suspense } from "react";
 import LoadingSpinner from "@/components/ui/loading-spinner";
+
+import cartaEscrita from "@/assets/carta-escrita.jpg";
+import maoBebe from "@/assets/mao-bebe.jpg";
+import casalAntigo from "@/assets/casal-antigo.jpg";
+import sealedMemory from "@/assets/sealed-memory.jpg";
+import noivosCasamento from "@/assets/noivos-casamento.jpg";
 
 const Index = () => {
   return (
@@ -26,13 +33,27 @@ const Index = () => {
 
       <main>
         <HeroSection />
-        
+
+        <ImageBlock image={cartaEscrita} alt="Mãos a escrever uma carta para o futuro" caption="Cada palavra, uma promessa." />
+
         <Suspense fallback={<LoadingSpinner size="lg" text="A carregar secções..." className="py-20" />}>
           <StorySection />
+
+          <ImageBlock image={maoBebe} alt="Mão de bebé sobre mão de adulto" caption="Pequenos gestos, memórias eternas." />
+
           <ProductsSection />
+
+          <ImageBlock image={sealedMemory} alt="Cápsula selada à espera do tempo" caption="Selado hoje. Aberto no momento certo." />
+
           <HowItWorksSection />
+
+          <ImageBlock image={casalAntigo} alt="Casal antigo — o amor que atravessa décadas" caption="O que guardas com amor, vive para sempre." />
+
           <TestimonialsSection />
           <TrustSection />
+
+          <ImageBlock image={noivosCasamento} alt="Noivos — promessas que ficam" caption="Para os momentos que não queres esquecer." />
+
           <FinalCTA />
         </Suspense>
       </main>

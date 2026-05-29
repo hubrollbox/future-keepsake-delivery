@@ -11,6 +11,10 @@ import { toast } from "sonner";
 import { trackButtonClick } from "@/lib/analytics";
 import { useCart } from "@/contexts/CartContext";
 import capsuleImage from "@/assets/capsula-escrita.jpg";
+import ImageBlock from "@/components/layout/ImageBlock";
+import sealedMemory from "@/assets/sealed-memory.jpg";
+import writingMemories from "@/assets/writing-memories.jpg";
+import cartaEscrita from "@/assets/carta-escrita.jpg";
 
 const plans = [
   {
@@ -230,6 +234,9 @@ function Pricing() {
           </div>
         </div>
 
+        <ImageBlock image={sealedMemory} alt="Cápsula selada" caption="O preço de uma memória? O tempo que lhe dedicas." />
+
+
           {/* Coming Soon Section */}
           <div className="mb-20 container mx-auto px-4">
             <div className="text-center mb-10">
@@ -270,6 +277,9 @@ function Pricing() {
             </div>
           </div>
 
+          <ImageBlock image={writingMemories} alt="Escrever memórias à mão" caption="Cada pergunta tem resposta. Cada memória, o seu lugar." />
+
+
           {/* FAQ Section */}
           <div className="max-w-3xl mx-auto mb-16 container px-4">
             <h2 className="text-3xl font-bold text-foreground mb-8 text-center font-inter">
@@ -294,6 +304,9 @@ function Pricing() {
               ))}
             </div>
           </div>
+
+          <ImageBlock image={cartaEscrita} alt="Carta a ser escrita" caption="A tua próxima memória começa com uma palavra." />
+
 
           {/* Final CTA */}
           <div className="text-center bg-foreground text-white rounded-2xl p-10 md:p-16 max-w-4xl mx-auto mb-16 container">
