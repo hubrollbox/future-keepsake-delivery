@@ -14,11 +14,11 @@ import ImageBlock from "@/components/layout/ImageBlock";
 import { Suspense } from "react";
 import LoadingSpinner from "@/components/ui/loading-spinner";
 
-import cartaEscrita from "@/assets/carta-escrita.jpg";
+import timeCapsule from "@/assets/time-capsule.jpg";
 import maoBebe from "@/assets/mao-bebe.jpg";
-import casalAntigo from "@/assets/casal-antigo.jpg";
 import sealedMemory from "@/assets/sealed-memory.jpg";
-import noivosCasamento from "@/assets/noivos-casamento.jpg";
+import carroClassico from "@/assets/carro-classico.jpg";
+import heroMemory from "@/assets/hero-memory.jpg";
 
 const Index = () => {
   return (
