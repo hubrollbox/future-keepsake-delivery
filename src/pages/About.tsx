@@ -202,8 +202,13 @@ const About = () => {
               </blockquote>
             </SectionWithPhoto>
           </motion.div>
+        </div>
 
+        <ImageBlock image={sealedMemory} alt="Memória selada" caption="Hoje guardada. Amanhã revelada." />
+
+        <div className="container mx-auto px-4 py-16">
           {/* Valores */}
+
           <motion.div 
             className="mb-20"
             initial="hidden"
