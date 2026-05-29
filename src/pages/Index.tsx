@@ -34,7 +34,7 @@ const Index = () => {
       <main>
         <HeroSection />
 
-        <ImageBlock image={cartaEscrita} alt="Mãos a escrever uma carta para o futuro" caption="Cada palavra, uma promessa." />
+        <ImageBlock image={timeCapsule} alt="Cápsula do tempo" caption="Cada palavra, uma promessa." />
 
         <Suspense fallback={<LoadingSpinner size="lg" text="A carregar secções..." className="py-20" />}>
           <StorySection />
@@ -47,12 +47,12 @@ const Index = () => {
 
           <HowItWorksSection />
 
-          <ImageBlock image={casalAntigo} alt="Casal antigo — o amor que atravessa décadas" caption="O que guardas com amor, vive para sempre." />
+          <ImageBlock image={carroClassico} alt="Carro clássico — memórias que viajam no tempo" caption="O que guardas com amor, vive para sempre." />
 
           <TestimonialsSection />
           <TrustSection />
 
-          <ImageBlock image={noivosCasamento} alt="Noivos — promessas que ficam" caption="Para os momentos que não queres esquecer." />
+          <ImageBlock image={heroMemory} alt="Memória preservada" caption="Para os momentos que não queres esquecer." />
 
           <FinalCTA />
         </Suspense>
