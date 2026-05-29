@@ -8,6 +8,9 @@ import EditorialHero from "@/components/layout/EditorialHero";
 import SectionWithPhoto from "@/components/layout/SectionWithPhoto";
 import { motion, Variants } from "framer-motion";
 import maoBebe from "@/assets/mao-bebe.jpg";
+import ImageBlock from "@/components/layout/ImageBlock";
+import noivosCasamento from "@/assets/noivos-casamento.jpg";
+import sealedMemory from "@/assets/sealed-memory.jpg";
 
 import capsulaImage from "@/assets/capsula-escrita.jpg";
 import casalAntigoImage from "@/assets/casal-antigo.jpg";
