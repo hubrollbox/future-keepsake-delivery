@@ -111,6 +111,11 @@ const About = () => {
               — Equipa keepla
             </p>
           </motion.div>
+        </div>
+
+        <ImageBlock image={noivosCasamento} alt="Noivos" caption="Os momentos que escolhemos lembrar." />
+
+        <div className="container mx-auto px-4 py-16">
 
           {/* Secção com Foto - Conexões */}
           <motion.div 
