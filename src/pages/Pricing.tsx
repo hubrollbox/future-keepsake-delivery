@@ -11,6 +11,10 @@ import { toast } from "sonner";
 import { trackButtonClick } from "@/lib/analytics";
 import { useCart } from "@/contexts/CartContext";
 import capsuleImage from "@/assets/capsula-escrita.jpg";
+import ImageBlock from "@/components/layout/ImageBlock";
+import sealedMemory from "@/assets/sealed-memory.jpg";
+import writingMemories from "@/assets/writing-memories.jpg";
+import cartaEscrita from "@/assets/carta-escrita.jpg";
 
 const plans = [
   {
