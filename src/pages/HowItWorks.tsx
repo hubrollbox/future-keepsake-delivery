@@ -12,6 +12,10 @@ import HowItWorksHero from "@/components/how-it-works/HowItWorksHero";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { motion, Variants } from "framer-motion";
+import ImageBlock from "@/components/layout/ImageBlock";
+import writingMemories from "@/assets/writing-memories.jpg";
+import sealedMemory from "@/assets/sealed-memory.jpg";
+import cartaEscrita from "@/assets/carta-escrita.jpg";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -81,15 +85,30 @@ const HowItWorks = () => {
           <motion.div variants={itemVariants}>
             <GamificationSystem />
           </motion.div>
+        </div>
+
+        <ImageBlock image={writingMemories} alt="Escrever uma carta" caption="Cada passo é uma promessa ao futuro." />
+
+        <div className="container mx-auto px-4 py-16">
           <motion.div variants={itemVariants}>
             <DeliveryTypesDetailed />
           </motion.div>
           <motion.div variants={itemVariants}>
             <HowItWorksFAQ />
           </motion.div>
+        </div>
+
+        <ImageBlock image={sealedMemory} alt="Cápsula selada" caption="Selado hoje. Aberto no momento certo." />
+
+        <div className="container mx-auto px-4 py-16">
           <motion.div variants={itemVariants}>
             <SecurityGuarantees />
           </motion.div>
+        </div>
+
+        <ImageBlock image={cartaEscrita} alt="Carta manuscrita" caption="O teu testemunho, intocado pelo tempo." />
+
+        <div className="container mx-auto px-4 py-16">
           <motion.div variants={itemVariants}>
             <HowItWorksCTA onNavigate={handleNavigation} />
           </motion.div>

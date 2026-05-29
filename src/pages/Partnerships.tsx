@@ -8,6 +8,9 @@ import PartnershipTypes from "@/components/partnerships/PartnershipTypes";
 import PartnershipBenefits from "@/components/partnerships/PartnershipBenefits";
 import PartnershipProcess from "@/components/partnerships/PartnershipProcess";
 import PartnershipCTA from "@/components/partnerships/PartnershipCTA";
+import ImageBlock from "@/components/layout/ImageBlock";
+import fachadaAzulejos from "@/assets/fachada-azulejos.jpg";
+import ruaPalacio from "@/assets/rua-palacio.jpg";
 
 const Partnerships = () => {
   const navigate = useNavigate();
@@ -42,7 +45,17 @@ const Partnerships = () => {
         <div className="container mx-auto px-4 py-16">
           <PartnershipTypes />
           <PartnershipBenefits />
+        </div>
+
+        <ImageBlock image={fachadaAzulejos} alt="Fachada de azulejos portugueses" caption="Tradição que atravessa gerações." />
+
+        <div className="container mx-auto px-4 py-16">
           <PartnershipProcess />
+        </div>
+
+        <ImageBlock image={ruaPalacio} alt="Rua histórica" caption="Construímos memórias com quem partilha a nossa visão." />
+
+        <div className="container mx-auto px-4 py-16">
           <PartnershipCTA />
         </div>
       </main>
