@@ -86,7 +86,7 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden lg:flex items-center space-x-6">
+          <div className="hidden xl:flex items-center space-x-6">
             {menuItems.map((item) => (
               <Link
                 key={item.name}
@@ -107,7 +107,7 @@ const Navigation = () => {
             <Button 
               variant="brand-outline" 
               onClick={() => navigate("/blog")}
-              className={`hidden lg:flex whitespace-nowrap ${
+              className={`hidden xl:flex whitespace-nowrap ${
                 isTransparent ? "border-white text-white hover:bg-white/10" : "border-foreground text-foreground hover:bg-foreground hover:text-background"
               }`}
             >
@@ -174,7 +174,7 @@ const Navigation = () => {
             <Button
               variant="ghost"
               size="sm"
-              className={`lg:hidden touch-target ${isTransparent ? "text-white hover:bg-white/10" : ""}`}
+              className={`xl:hidden touch-target ${isTransparent ? "text-white hover:bg-white/10" : ""}`}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -184,7 +184,7 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden border-t border-border bg-white dark:bg-background -mx-4 px-4 py-4 shadow-lg">
+          <div className="xl:hidden border-t border-border bg-white dark:bg-background -mx-4 px-4 py-4 shadow-lg">
             <div className="flex flex-col space-y-2">
               {menuItems.map((item) => (
                 <Link
