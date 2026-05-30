@@ -86,7 +86,7 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden lg:flex items-center space-x-6">
+          <div className="hidden xl:flex items-center space-x-6">
             {menuItems.map((item) => (
               <Link
                 key={item.name}
