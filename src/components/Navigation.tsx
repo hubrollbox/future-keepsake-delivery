@@ -174,7 +174,7 @@ const Navigation = () => {
             <Button
               variant="ghost"
               size="sm"
-              className={`lg:hidden touch-target ${isTransparent ? "text-white hover:bg-white/10" : ""}`}
+              className={`xl:hidden touch-target ${isTransparent ? "text-white hover:bg-white/10" : ""}`}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
