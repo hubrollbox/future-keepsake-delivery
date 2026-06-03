@@ -42,9 +42,9 @@ const Index = () => {
 
           <ProductsSection />
 
-          <ImageBlock image={sealedMemory} alt="Cápsula selada à espera do tempo" caption="Selado hoje. Aberto no momento certo." />
-
           <HowItWorksSection />
+
+          <ImageBlock image={carroClassico} alt="Carro clássico" caption="O tempo passa. As memórias permanecem." />
 
           <TestimonialsSection />
           <TrustSection />
