@@ -17,7 +17,7 @@ import LoadingSpinner from "@/components/ui/loading-spinner";
 import timeCapsule from "@/assets/time-capsule.jpg";
 import maoBebe from "@/assets/mao-bebe.jpg";
 import sealedMemory from "@/assets/sealed-memory.jpg";
-import carroClassico from "@/assets/carro-classico.jpg";
+
 
 const Index = () => {
   return (
@@ -45,8 +45,6 @@ const Index = () => {
           <ImageBlock image={sealedMemory} alt="Cápsula selada à espera do tempo" caption="Selado hoje. Aberto no momento certo." />
 
           <HowItWorksSection />
-
-          <ImageBlock image={carroClassico} alt="Carro clássico — memórias que viajam no tempo" caption="O que guardas com amor, vive para sempre." />
 
           <TestimonialsSection />
           <TrustSection />
