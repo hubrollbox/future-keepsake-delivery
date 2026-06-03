@@ -7,6 +7,7 @@ interface ImageBlockProps {
   grayscale?: boolean;
   fullBleed?: boolean;
   className?: string;
+  objectPosition?: string;
 }
 
 const ImageBlock = ({
@@ -16,6 +17,7 @@ const ImageBlock = ({
   grayscale = true,
   fullBleed = true,
   className,
+  objectPosition = "center",
 }: ImageBlockProps) => {
   return (
     <figure className={cn("w-full bg-white", className)}>
@@ -30,9 +32,10 @@ const ImageBlock = ({
           src={image}
           alt={alt}
           className={cn(
-            "w-full h-full object-cover object-center",
+            "w-full h-full object-cover",
             grayscale && "grayscale contrast-[1.1]"
           )}
+          style={{ objectPosition }}
           loading="lazy"
           decoding="async"
         />
