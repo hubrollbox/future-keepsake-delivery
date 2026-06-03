@@ -18,7 +18,7 @@ import timeCapsule from "@/assets/time-capsule.jpg";
 import maoBebe from "@/assets/mao-bebe.jpg";
 import sealedMemory from "@/assets/sealed-memory.jpg";
 import carroClassico from "@/assets/carro-classico.jpg";
-import heroMemory from "@/assets/hero-memory.jpg";
+import carroClassico from "@/assets/carro-classico.jpg";
 
 const Index = () => {
   return (
@@ -51,8 +51,6 @@ const Index = () => {
 
           <TestimonialsSection />
           <TrustSection />
-
-          <ImageBlock image={heroMemory} alt="Memória preservada" caption="Para os momentos que não queres esquecer." />
 
           <FinalCTA />
         </Suspense>
