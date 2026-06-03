@@ -44,7 +44,7 @@ const Index = () => {
 
           <HowItWorksSection />
 
-          <ImageBlock image={carroClassico} alt="Carro clássico" caption="O tempo passa. As memórias permanecem." />
+          <ImageBlock image={carroClassico} alt="Carro clássico" caption="O tempo passa. As memórias permanecem." objectPosition="center 35%" />
 
           <TestimonialsSection />
           <TrustSection />
