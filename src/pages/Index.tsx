@@ -14,7 +14,6 @@ import ImageBlock from "@/components/layout/ImageBlock";
 import { Suspense } from "react";
 import LoadingSpinner from "@/components/ui/loading-spinner";
 
-import timeCapsule from "@/assets/time-capsule.jpg";
 import maoBebe from "@/assets/mao-bebe.jpg";
 import carroClassico from "@/assets/carro-classico.jpg";
 
@@ -32,8 +31,6 @@ const Index = () => {
 
       <main>
         <HeroSection />
-
-        <ImageBlock image={timeCapsule} alt="Cápsula do tempo" caption="Cada palavra, uma promessa." />
 
         <Suspense fallback={<LoadingSpinner size="lg" text="A carregar secções..." className="py-20" />}>
           <StorySection />
